@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.3.1" headerPath="../../Source">
+  <MAINGROUP id="zy2ady" name="BenTo">
+    <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
+      <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
+        <GROUP id="{AA53C9C4-83BE-D8AE-2509-C14F27B31F7B}" name="patterns">
+          <FILE id="FvEKwY" name="noise.png" compile="0" resource="1" file="Resources/models/patterns/noise.png"/>
+          <FILE id="RsqK7d" name="rainbow.png" compile="0" resource="1" file="Resources/models/patterns/rainbow.png"/>
+          <FILE id="voiSzD" name="solidcolor.png" compile="0" resource="1" file="Resources/models/patterns/solidcolor.png"/>
+          <FILE id="Bp9Tp7" name="strobe.png" compile="0" resource="1" file="Resources/models/patterns/strobe.png"/>
+        </GROUP>
+        <FILE id="YXpoR5" name="dmx.png" compile="0" resource="1" file="Resources/models/dmx.png"/>
+        <FILE id="LKRegx" name="node.png" compile="0" resource="1" file="Resources/models/node.png"/>
+        <FILE id="ORWduc" name="script.png" compile="0" resource="1" file="Resources/models/script.png"/>
+        <FILE id="Ybe2Tj" name="timeline.png" compile="0" resource="1" file="Resources/models/timeline.png"/>
+        <FILE id="jmA52F" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>
+      </GROUP>
+      <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
+    </GROUP>
+    <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{102A14FE-203D-7048-FD34-335BF3C28E15}" name="LightBlock">
+        <GROUP id="{048BDCCA-51F2-B1DF-AC0B-49ECF3B81664}" name="model">
+          <GROUP id="{CE00199C-474B-BD58-0F61-5FF5F410A6CD}" name="ui">
+            <FILE id="zc95pL" name="LightBlockModelGroupUI.cpp" compile="1" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp"/>
+            <FILE id="M4rmmU" name="LightBlockModelGroupUI.h" compile="0" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelGroupUI.h"/>
+            <FILE id="e6Gaan" name="LightBlockModelLibraryUI.cpp" compile="1" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelLibraryUI.cpp"/>
+            <FILE id="XGeQ8G" name="LightBlockModelLibraryUI.h" compile="0" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelLibraryUI.h"/>
+            <FILE id="TJRY8c" name="LightBlockModelManagerUI.cpp" compile="1" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelManagerUI.cpp"/>
+            <FILE id="BAcGeM" name="LightBlockModelManagerUI.h" compile="0" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelManagerUI.h"/>
+            <FILE id="lOAZZd" name="LightBlockModelParameterEditor.cpp" compile="1"
+                  resource="0" file="Source/LightBlock/model/ui/LightBlockModelParameterEditor.cpp"/>
+            <FILE id="LKbDI8" name="LightBlockModelParameterEditor.h" compile="0"
+                  resource="0" file="Source/LightBlock/model/ui/LightBlockModelParameterEditor.h"/>
+            <FILE id="XMpLZl" name="LightBlockModelParameterManagerEditor.cpp"
+                  compile="1" resource="0" file="Source/LightBlock/model/ui/LightBlockModelParameterManagerEditor.cpp"/>
+            <FILE id="PWqyWY" name="LightBlockModelParameterManagerEditor.h" compile="0"
+                  resource="0" file="Source/LightBlock/model/ui/LightBlockModelParameterManagerEditor.h"/>
+            <FILE id="T62oxT" name="LightBlockModelUI.cpp" compile="1" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelUI.cpp"/>
+            <FILE id="DQkpAe" name="LightBlockModelUI.h" compile="0" resource="0"
+                  file="Source/LightBlock/model/ui/LightBlockModelUI.h"/>
+          </GROUP>
+          <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
+            <GROUP id="{92F68118-A594-AF2A-31EE-FF862BF23B1F}" name="dmx">
+              <FILE id="FSKMZd" name="DMXBlock.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/dmx/DMXBlock.cpp"/>
+              <FILE id="XVCum1" name="DMXBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/dmx/DMXBlock.h"/>
+            </GROUP>
+            <GROUP id="{40CD7123-FB3D-52B3-808A-2429C88F4ADF}" name="video">
+              <FILE id="fNmZwX" name="VideoBlock.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
+              <FILE id="FSizg9" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
+            </GROUP>
+            <GROUP id="{C3E304E5-69B5-CD46-F35F-67763032BEA6}" name="pattern">
+              <GROUP id="{2E466EF7-276A-70A8-4F10-0B47F4E95DE3}" name="patterns"/>
+              <FILE id="RcwkQf" name="PatternBlock.cpp" compile="1" resource="0"
+                    file="Source/LightBlock/model/blocks/pattern/PatternBlock.cpp"/>
+              <FILE id="qnd4Dp" name="PatternBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PatternBlock.h"/>
+            </GROUP>
+            <GROUP id="{44802627-FF3C-1EE6-7861-1A5D57732488}" name="timeline">
+              <FILE id="gDwEqG" name="TimelineBlock.cpp" compile="1" resource="0"
+                    file="Source/LightBlock/model/blocks/timeline/TimelineBlock.cpp"/>
+              <FILE id="LU8ewB" name="TimelineBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/timeline/TimelineBlock.h"/>
+            </GROUP>
+            <GROUP id="{65EF9CB3-D01F-96FC-4333-04140ECFDA46}" name="node">
+              <FILE id="N7GTzt" name="NodeBlock.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.cpp"/>
+              <FILE id="dbYEkI" name="NodeBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.h"/>
+            </GROUP>
+            <GROUP id="{5F6001C4-8152-D9AB-3AB2-916147B8D27B}" name="script">
+              <FILE id="qs3dXw" name="ScriptBlock.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/script/ScriptBlock.cpp"/>
+              <FILE id="ylGCjQ" name="ScriptBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/script/ScriptBlock.h"/>
+            </GROUP>
+          </GROUP>
+          <FILE id="VHwqee" name="LightBlockModel.cpp" compile="1" resource="0"
+                file="Source/LightBlock/model/LightBlockModel.cpp"/>
+          <FILE id="Ajpb7J" name="LightBlockModel.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModel.h"/>
+          <FILE id="otbCaY" name="LightBlockModelLibrary.cpp" compile="1" resource="0"
+                file="Source/LightBlock/model/LightBlockModelLibrary.cpp"/>
+          <FILE id="AofgKJ" name="LightBlockModelLibrary.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModelLibrary.h"/>
+          <FILE id="NHwheO" name="UserLightBlockModelManager.cpp" compile="1"
+                resource="0" file="Source/LightBlock/model/UserLightBlockModelManager.cpp"/>
+          <FILE id="ADg9k0" name="UserLightBlockModelManager.h" compile="0" resource="0"
+                file="Source/LightBlock/model/UserLightBlockModelManager.h"/>
+          <FILE id="n5EBxM" name="LightBlockModelParameter.cpp" compile="1" resource="0"
+                file="Source/LightBlock/model/LightBlockModelParameter.cpp"/>
+          <FILE id="EKccTi" name="LightBlockModelParameter.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModelParameter.h"/>
+          <FILE id="V3YwN7" name="LightBlockModelParameterManager.cpp" compile="1"
+                resource="0" file="Source/LightBlock/model/LightBlockModelParameterManager.cpp"/>
+          <FILE id="XpCNmm" name="LightBlockModelParameterManager.h" compile="0"
+                resource="0" file="Source/LightBlock/model/LightBlockModelParameterManager.h"/>
+        </GROUP>
+        <GROUP id="{E3755DE0-2D73-B32C-D6C2-0DB2AFDA7CFF}" name="ui">
+          <FILE id="gRPpm7" name="LightBlockEditor.cpp" compile="1" resource="0"
+                file="Source/LightBlock/ui/LightBlockEditor.cpp"/>
+          <FILE id="G2S8OQ" name="LightBlockEditor.h" compile="0" resource="0"
+                file="Source/LightBlock/ui/LightBlockEditor.h"/>
+          <FILE id="KEmlPS" name="LightBlockUI.cpp" compile="1" resource="0"
+                file="Source/LightBlock/ui/LightBlockUI.cpp"/>
+          <FILE id="i9EmVY" name="LightBlockUI.h" compile="0" resource="0" file="Source/LightBlock/ui/LightBlockUI.h"/>
+        </GROUP>
+        <FILE id="EzNjt1" name="LightBlock.cpp" compile="1" resource="0" file="Source/LightBlock/LightBlock.cpp"/>
+        <FILE id="tXTVXG" name="LightBlock.h" compile="0" resource="0" file="Source/LightBlock/LightBlock.h"/>
+        <FILE id="I8onqX" name="LightBlockFactory.cpp" compile="1" resource="0"
+              file="Source/LightBlock/LightBlockFactory.cpp"/>
+        <FILE id="HBDKR8" name="LightBlockFactory.h" compile="0" resource="0"
+              file="Source/LightBlock/LightBlockFactory.h"/>
+      </GROUP>
+      <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
+        <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
+          <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="pois">
+            <GROUP id="{7218EFF0-B1E8-198A-5504-2ACE573BFECC}" name="flowpoi">
+              <FILE id="CfegzY" name="FlowPoiProp.cpp" compile="1" resource="0" file="Source/Prop/props/pois/flowpoi/FlowPoiProp.cpp"/>
+              <FILE id="Ch71al" name="FlowPoiProp.h" compile="0" resource="0" file="Source/Prop/props/pois/flowpoi/FlowPoiProp.h"/>
+            </GROUP>
+          </GROUP>
+          <GROUP id="{F80423DF-79F2-F098-4B4E-528DEA20191A}" name="balls">
+            <GROUP id="{87622B0C-AA97-4D64-0748-39C57CE96B1F}" name="flowball">
+              <FILE id="iPxsZT" name="FlowBallProp.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/balls/flowball/FlowBallProp.cpp"/>
+              <FILE id="Wyn7gM" name="FlowBallProp.h" compile="0" resource="0" file="Source/Prop/props/balls/flowball/FlowBallProp.h"/>
+            </GROUP>
+          </GROUP>
+          <GROUP id="{C522011C-89AC-576D-FB1C-E685E5E8AE23}" name="clubs">
+            <GROUP id="{2C0E173A-9C6F-B342-9EA6-65ADF0209454}" name="flowclub">
+              <FILE id="p04VxP" name="FlowClubProp.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/clubs/flowclub/FlowClubProp.cpp"/>
+              <FILE id="h3dcn5" name="FlowClubProp.h" compile="0" resource="0" file="Source/Prop/props/clubs/flowclub/FlowClubProp.h"/>
+            </GROUP>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{2D4445E7-66E2-A651-74EF-D1FC94C498A0}" name="ui">
+          <FILE id="VxuHVc" name="PropManagerUI.cpp" compile="1" resource="0"
+                file="Source/Prop/ui/PropManagerUI.cpp"/>
+          <FILE id="RgPZml" name="PropManagerUI.h" compile="0" resource="0" file="Source/Prop/ui/PropManagerUI.h"/>
+          <FILE id="o10cFp" name="PropUI.cpp" compile="1" resource="0" file="Source/Prop/ui/PropUI.cpp"/>
+          <FILE id="mHIBXO" name="PropUI.h" compile="0" resource="0" file="Source/Prop/ui/PropUI.h"/>
+        </GROUP>
+        <FILE id="uU9x0j" name="Prop.cpp" compile="1" resource="0" file="Source/Prop/Prop.cpp"/>
+        <FILE id="Z57bbm" name="Prop.h" compile="0" resource="0" file="Source/Prop/Prop.h"/>
+        <FILE id="e3SfwF" name="PropManager.cpp" compile="1" resource="0" file="Source/Prop/PropManager.cpp"/>
+        <FILE id="PX1SDd" name="PropManager.h" compile="0" resource="0" file="Source/Prop/PropManager.h"/>
+      </GROUP>
+      <FILE id="z7KsWh" name="BentoEngine.cpp" compile="1" resource="0" file="Source/BentoEngine.cpp"/>
+      <FILE id="zg8iGH" name="BentoEngine.h" compile="0" resource="0" file="Source/BentoEngine.h"/>
+      <FILE id="NA8DkH" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
+      <FILE id="L8PHCK" name="MainComponent.cpp" compile="1" resource="0"
+            file="Source/MainComponent.cpp"/>
+      <FILE id="GLnIoj" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
+    </GROUP>
+  </MAINGROUP>
+  <LIVE_SETTINGS>
+    <WINDOWS/>
+  </LIVE_SETTINGS>
+  <EXPORTFORMATS>
+    <VS2017 targetFolder="Builds/VisualStudio2017" smallIcon="YlXmhK" bigIcon="YlXmhK">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/Debug"/>
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_core" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="../Perso/Projects/JUCE Modules"/>
+      </MODULEPATHS>
+    </VS2017>
+  </EXPORTFORMATS>
+  <MODULES>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+  </MODULES>
+  <JUCEOPTIONS/>
+</JUCERPROJECT>
