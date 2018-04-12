@@ -19,4 +19,13 @@ class LightBlockModelManagerUI :
 public:
 	LightBlockModelManagerUI(const String &name, UserLightBlockModelManager * manager);
 	~LightBlockModelManagerUI();
+
+	int thumbSize = 64;
+	const int gap = 2;
+	const int headerHeight = 16;
+	const int headerGap = 4;
+
+	void paint(Graphics &g) override;
+	void resized() override;
+
 };

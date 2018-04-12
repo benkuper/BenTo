@@ -24,9 +24,7 @@ public:
 	ControllableContainer liveFeedBlocks;
 	UserLightBlockModelManager userBlocks;	
 
-	//Generic
-	ScopedPointer<LightBlockModel> timelineBlock;
-	//Patterns
+	//Generic / Patterns
 	ScopedPointer<LightBlockModel> solidColorBlock;
 	ScopedPointer<LightBlockModel> rainbowBlock;
 	ScopedPointer<LightBlockModel> strobeBlock;
@@ -35,4 +33,13 @@ public:
 	//Live Feed
 	ScopedPointer<LightBlockModel> videoBlock;
 	ScopedPointer<LightBlockModel> dmxBlock;
+
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
+	static LightBlockModel * showAllModelsAndGet();
+
+	
+
 };

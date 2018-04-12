@@ -11,7 +11,7 @@
 #include "JuceHeader.h"
 #include "BentoEngine.h"
 #include "MainComponent.h"
-
+#include "BlockViz/BlockVizPanel.h"
 
 
 static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }

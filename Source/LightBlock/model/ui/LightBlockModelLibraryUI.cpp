@@ -21,6 +21,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	addAndMakeVisible(&genericGroupUI);
 	addAndMakeVisible(&liveFeedGroupUI);
 	addAndMakeVisible(&userModelManagerUI);
+	
 }
 
 LightBlockModelLibraryUI::~LightBlockModelLibraryUI()
@@ -35,8 +36,11 @@ void LightBlockModelLibraryUI::resized()
 {
 	Rectangle<int> r = getLocalBounds();
 
+	if (genericGroupUI.getWidth() == 0) genericGroupUI.setBounds(r);
 	genericGroupUI.setBounds(r.removeFromTop(genericGroupUI.getHeight()));
 	r.removeFromTop(10);
+
+	if (liveFeedGroupUI.getWidth() == 0) liveFeedGroupUI.setBounds(r);
 	liveFeedGroupUI.setBounds(r.removeFromTop(liveFeedGroupUI.getHeight()));
 	r.removeFromTop(10);
 	userModelManagerUI.setBounds(r);

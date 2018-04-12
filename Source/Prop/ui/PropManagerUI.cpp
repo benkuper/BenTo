@@ -13,6 +13,7 @@
 PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 	BaseManagerShapeShifterUI(name, m)
 {
+	setDefaultLayout(HORIZONTAL);
 }
 
 PropManagerUI::~PropManagerUI()

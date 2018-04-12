@@ -20,6 +20,7 @@ public:
 	~LightBlockModelUI();
 
 	Image modelImage;
+	const int imageSize = 40;
 
 	void paint(Graphics &g) override;
 	void resized() override;

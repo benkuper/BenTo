@@ -5,20 +5,25 @@
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
         <GROUP id="{AA53C9C4-83BE-D8AE-2509-C14F27B31F7B}" name="patterns">
-          <FILE id="FvEKwY" name="noise.png" compile="0" resource="1" file="Resources/models/patterns/noise.png"/>
-          <FILE id="RsqK7d" name="rainbow.png" compile="0" resource="1" file="Resources/models/patterns/rainbow.png"/>
-          <FILE id="voiSzD" name="solidcolor.png" compile="0" resource="1" file="Resources/models/patterns/solidcolor.png"/>
-          <FILE id="Bp9Tp7" name="strobe.png" compile="0" resource="1" file="Resources/models/patterns/strobe.png"/>
+          <FILE id="KrzbHq" name="noise.png" compile="0" resource="1" file="Resources/models/patterns/noise.png"/>
+          <FILE id="dcD1tm" name="rainbow.png" compile="0" resource="1" file="Resources/models/patterns/rainbow.png"/>
+          <FILE id="Dr7vTV" name="solidColor.png" compile="0" resource="1" file="Resources/models/patterns/solidColor.png"/>
+          <FILE id="WOljwS" name="strobe.png" compile="0" resource="1" file="Resources/models/patterns/strobe.png"/>
         </GROUP>
-        <FILE id="YXpoR5" name="dmx.png" compile="0" resource="1" file="Resources/models/dmx.png"/>
-        <FILE id="LKRegx" name="node.png" compile="0" resource="1" file="Resources/models/node.png"/>
-        <FILE id="ORWduc" name="script.png" compile="0" resource="1" file="Resources/models/script.png"/>
-        <FILE id="Ybe2Tj" name="timeline.png" compile="0" resource="1" file="Resources/models/timeline.png"/>
-        <FILE id="jmA52F" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>
+        <FILE id="S1AUx7" name="dmx.png" compile="0" resource="1" file="Resources/models/dmx.png"/>
+        <FILE id="OO6Nta" name="node.png" compile="0" resource="1" file="Resources/models/node.png"/>
+        <FILE id="a1DDEw" name="script.png" compile="0" resource="1" file="Resources/models/script.png"/>
+        <FILE id="Rlqbru" name="timeline.png" compile="0" resource="1" file="Resources/models/timeline.png"/>
+        <FILE id="ZghcER" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>
       </GROUP>
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{DC424058-7D3A-9ECF-4700-F3A41EC48DC1}" name="BlockViz">
+        <FILE id="SAoLE9" name="BlockVizPanel.cpp" compile="1" resource="0"
+              file="Source/BlockViz/BlockVizPanel.cpp"/>
+        <FILE id="kHpdT8" name="BlockVizPanel.h" compile="0" resource="0" file="Source/BlockViz/BlockVizPanel.h"/>
+      </GROUP>
       <GROUP id="{102A14FE-203D-7048-FD34-335BF3C28E15}" name="LightBlock">
         <GROUP id="{048BDCCA-51F2-B1DF-AC0B-49ECF3B81664}" name="model">
           <GROUP id="{CE00199C-474B-BD58-0F61-5FF5F410A6CD}" name="ui">
@@ -57,7 +62,7 @@
               <FILE id="FSizg9" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
             </GROUP>
             <GROUP id="{C3E304E5-69B5-CD46-F35F-67763032BEA6}" name="pattern">
-              <GROUP id="{2E466EF7-276A-70A8-4F10-0B47F4E95DE3}" name="patterns"/>
+              <FILE id="VKxV3L" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PerlinNoise.hpp"/>
               <FILE id="RcwkQf" name="PatternBlock.cpp" compile="1" resource="0"
                     file="Source/LightBlock/model/blocks/pattern/PatternBlock.cpp"/>
               <FILE id="qnd4Dp" name="PatternBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PatternBlock.h"/>
@@ -142,6 +147,8 @@
           <FILE id="RgPZml" name="PropManagerUI.h" compile="0" resource="0" file="Source/Prop/ui/PropManagerUI.h"/>
           <FILE id="o10cFp" name="PropUI.cpp" compile="1" resource="0" file="Source/Prop/ui/PropUI.cpp"/>
           <FILE id="mHIBXO" name="PropUI.h" compile="0" resource="0" file="Source/Prop/ui/PropUI.h"/>
+          <FILE id="CmrKhv" name="PropViz.cpp" compile="1" resource="0" file="Source/Prop/ui/PropViz.cpp"/>
+          <FILE id="NC7SlZ" name="PropViz.h" compile="0" resource="0" file="Source/Prop/ui/PropViz.h"/>
         </GROUP>
         <FILE id="uU9x0j" name="Prop.cpp" compile="1" resource="0" file="Source/Prop/Prop.cpp"/>
         <FILE id="Z57bbm" name="Prop.h" compile="0" resource="0" file="Source/Prop/Prop.h"/>

@@ -11,10 +11,28 @@
 #include "PropUI.h"
 
 PropUI::PropUI(Prop * p) :
-	BaseItemUI(p)
+	BaseItemUI(p),
+	viz(p)
 {
+	idUI = p->id->createStepper();
+	idUI->showLabel = true;
+
+	addAndMakeVisible(idUI);
+
+	addAndMakeVisible(&viz);
 }
 
 PropUI::~PropUI()
 {
+}
+
+void PropUI::resizedInternalHeader(Rectangle<int>& r)
+{
+	r.removeFromRight(2);
+	idUI->setBounds(r.removeFromRight(60));
+}
+
+void PropUI::resizedInternalContent(Rectangle<int> &r)
+{
+	viz.setBounds(r.reduced(2));
 }

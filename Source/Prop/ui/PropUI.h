@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../Prop.h"
+#include "PropViz.h"
 
 class PropUI :
 	public BaseItemUI<Prop>
@@ -18,4 +19,10 @@ class PropUI :
 public:
 	PropUI(Prop * p);
 	~PropUI();
+
+	PropViz viz;
+	ScopedPointer<IntStepperUI> idUI;
+
+	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resizedInternalContent(Rectangle<int> &r) override;
 };

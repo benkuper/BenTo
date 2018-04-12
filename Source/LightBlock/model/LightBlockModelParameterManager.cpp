@@ -15,6 +15,7 @@ LightBlockModelParameterManager::LightBlockModelParameterManager() :
 	BaseManager("arguments")
 {
 	selectItemWhenCreated = false;
+	userCanAddItemsManually = false;
 }
 
 LightBlockModelParameter * LightBlockModelParameterManager::addItemWithParam(Parameter * p, var data, bool fromUndoableAction)

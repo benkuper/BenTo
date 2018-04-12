@@ -23,6 +23,7 @@ public:
     ~MainComponent();
 
 	void init() override;
+	void clear() override;
 
 private:
     //==============================================================================

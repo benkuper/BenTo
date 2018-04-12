@@ -22,27 +22,32 @@ Author:  Ben
 
 
 #include "LightBlockModel.h"
+#include "../LightBlock.h"
 #include "Prop/Prop.h"
 
 LightBlockModel::LightBlockModel(const String &name, var params) :
 	BaseItem(name, false)
 {
 	itemDataType = "LightBlockModel";
-	addChildControllableContainer(&parameters);
-	parameters.addBaseManagerListener(this); 
-
+	paramsContainer = new ControllableContainer("Parameters");
+	addChildControllableContainer(paramsContainer);
 }
 
 LightBlockModel::~LightBlockModel()
 {
-	parameters.removeBaseManagerListener(this);
 }
 
-Array<Colour> LightBlockModel::getColours(Prop * prop, var params)
+Array<WeakReference<Parameter>> LightBlockModel::getModelParameters()
+{
+	if (paramsContainer == nullptr) return Array<WeakReference<Parameter>>();
+	return paramsContainer->getAllParameters();
+}
+
+
+Array<Colour> LightBlockModel::getColors(LightBlock * block, var params)
 {
 	//default behavior, must be overriden by child classes
-
-	int numColors = prop->resolution->intValue();
+	int numColors = block->prop->resolution->intValue();
 	Array<Colour> result;
 	for (int i = 0; i < numColors; i++)
 	{
@@ -55,14 +60,14 @@ Array<Colour> LightBlockModel::getColours(Prop * prop, var params)
 var LightBlockModel::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("arguments", parameters.getJSONData());
+	if(paramsContainer != nullptr) data.getDynamicObject()->setProperty("parameters", paramsContainer->getJSONData());
 	return data;
 }
 
 void LightBlockModel::loadJSONDataInternal(var data)
 {
 	DBG("Load jsondata internal " << niceName);
-	parameters.loadJSONData(data.getProperty("arguments", var()));
+	if(paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("parameters", var()));
 }
 
 void LightBlockModel::onContainerParameterChangedInternal(Parameter * p)
@@ -72,21 +77,10 @@ void LightBlockModel::onContainerParameterChangedInternal(Parameter * p)
 
 void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if (cc == &parameters) modelListeners.call(&ModelListener::modelParametersChanged, this);
+	if (cc == paramsContainer) modelListeners.call(&ModelListener::modelParametersChanged, this);
 }
 
-void LightBlockModel::itemAdded(LightBlockModelParameter *)
+void LightBlockModel::childStructureChanged(ControllableContainer * cc)
 {
-	modelListeners.call(&ModelListener::modelParametersChanged, this);
+	if (cc == paramsContainer) modelListeners.call(&ModelListener::modelParametersChanged, this);
 }
-
-void LightBlockModel::itemRemoved(LightBlockModelParameter *)
-{
-	modelListeners.call(&ModelListener::modelParametersChanged, this);
-}
-
-void LightBlockModel::itemsReordered()
-{
-	modelListeners.call(&ModelListener::modelParametersChanged, this);
-}
-

@@ -17,9 +17,12 @@ class PropManager :
 {
 public:
 	juce_DeclareSingleton(PropManager, true)
-
-	Factory<Prop> factory;
-
+	
 	PropManager();
 	~PropManager();
+
+	Factory<Prop> factory;
+	Trigger * autoAssignIdTrigger;
+
+	void onContainerTriggerTriggered(Trigger * t) override;
 };

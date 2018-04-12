@@ -106,7 +106,7 @@ static const unsigned char temp_binary_data_1[] =
 
 const char* rainbow_png = (const char*) temp_binary_data_1;
 
-//================== solidcolor.png ==================
+//================== solidColor.png ==================
 static const unsigned char temp_binary_data_2[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,128,0,0,0,128,8,6,0,0,0,195,62,97,203,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,3,132,0,0,3,132,1,3,5,185,225,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,17,31,73,68,65,84,120,218,237,157,121,116,84,213,29,199,197,211,186,117,211,30,91,219,158,246,216,115,186,185,245,216,86,17,136,32,144,76,64,131,108,97,147,170,184,85,173,75,101,149,
@@ -171,7 +171,7 @@ static const unsigned char temp_binary_data_2[] =
 144,38,210,252,103,235,91,70,101,253,89,161,0,64,217,87,45,231,251,33,166,164,226,180,113,227,75,63,209,126,252,254,9,179,94,31,211,124,170,236,107,120,233,185,43,9,0,233,218,63,216,188,97,130,238,64,161,143,247,57,3,173,230,92,203,230,13,11,229,126,
 15,196,136,145,0,194,214,205,75,117,197,159,118,152,85,45,231,76,202,134,179,90,216,244,181,108,90,63,61,25,175,253,127,16,1,55,251,137,14,238,107,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* solidcolor_png = (const char*) temp_binary_data_2;
+const char* solidColor_png = (const char*) temp_binary_data_2;
 
 //================== strobe.png ==================
 static const unsigned char temp_binary_data_3[] =
@@ -1924,7 +1924,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) noexc
     {
         case 0x3c71eb84:  numBytes = 1839; return noise_png;
         case 0x54c4b020:  numBytes = 4481; return rainbow_png;
-        case 0x14f85102:  numBytes = 4514; return solidcolor_png;
+        case 0x8c6a70e2:  numBytes = 4514; return solidColor_png;
         case 0xcb10de0b:  numBytes = 5621; return strobe_png;
         case 0x6ab746f9:  numBytes = 3170; return dmx_png;
         case 0x42f5be6c:  numBytes = 3682; return node_png;
@@ -1943,7 +1943,7 @@ const char* namedResourceList[] =
 {
     "noise_png",
     "rainbow_png",
-    "solidcolor_png",
+    "solidColor_png",
     "strobe_png",
     "dmx_png",
     "node_png",
@@ -1957,7 +1957,7 @@ const char* originalFilenames[] =
 {
     "noise.png",
     "rainbow.png",
-    "solidcolor.png",
+    "solidColor.png",
     "strobe.png",
     "dmx.png",
     "node.png",

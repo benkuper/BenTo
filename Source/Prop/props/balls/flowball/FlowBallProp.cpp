@@ -11,7 +11,7 @@
 #include "FlowBallProp.h"
 
 FlowBallProp::FlowBallProp(var params) :
-	Prop(params)
+	Prop(getTypeString(),params)
 {
 	resolution->setValue(1);
 }

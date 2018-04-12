@@ -11,7 +11,7 @@
 #include "FlowPoiProp.h"
 
 FlowPoiProp::FlowPoiProp(var params) :
-	Prop(params)
+	Prop(getTypeString(),params)
 {
 	resolution->setValue(1);
 }

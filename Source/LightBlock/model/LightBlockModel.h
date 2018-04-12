@@ -12,29 +12,29 @@
 
 #include "LightBlockModelParameterManager.h"
 
+class LightBlock;
+
 class Prop;
 
 class LightBlockModel :
-	public BaseItem,
-	public LightBlockModelParameterManager::Listener
+	public BaseItem
 {
 public:
 	LightBlockModel(const String &name = "LightBlockModel", var params = var());
 	~LightBlockModel();
 
-	LightBlockModelParameterManager parameters;
+	ScopedPointer<ControllableContainer> paramsContainer;
 
-	virtual Array<Colour> getColours(Prop * prop, var params);
+	virtual Array<WeakReference<Parameter>> getModelParameters();
+	virtual Array<Colour> getColors(LightBlock * block, var params = var());
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
-	void itemAdded(LightBlockModelParameter *) override;
-	void itemRemoved(LightBlockModelParameter *) override;
-	void itemsReordered() override;
-
+	void childStructureChanged(ControllableContainer * cc) override;
+	
 	class ModelListener
 	{
 	public:

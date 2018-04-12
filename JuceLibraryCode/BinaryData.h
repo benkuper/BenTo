@@ -14,8 +14,8 @@ namespace BinaryData
     extern const char*   rainbow_png;
     const int            rainbow_pngSize = 4481;
 
-    extern const char*   solidcolor_png;
-    const int            solidcolor_pngSize = 4514;
+    extern const char*   solidColor_png;
+    const int            solidColor_pngSize = 4514;
 
     extern const char*   strobe_png;
     const int            strobe_pngSize = 5621;
