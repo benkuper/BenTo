@@ -11,7 +11,7 @@
 #include "NodeBlock.h"
 
 NodeBlock::NodeBlock(var params) :
-	LightBlockModel("Node", params)
+	LightBlockModel(getTypeString(), params)
 {
 }
 

@@ -14,31 +14,32 @@
 LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	 BaseItemMinimalUI(model)
 {
-	int numBytes;
+	updateThumbnail();
 	
-	const char * imgData = BinaryData::getNamedResource((StringUtil::toShortName(model->getTypeString()) + "_png").getCharPointer(), numBytes);
-	modelImage = ImageCache::getFromMemory(imgData, numBytes);
-	setSize(64,64);
+	setSize(64, 64);
 
 	setRepaintsOnMouseActivity(true);
 	removeMouseListener(this);
+
+	model->addAsyncModelListener(this);
 } 
 
 LightBlockModelUI::~LightBlockModelUI()
 {
+	if (item != nullptr) item->removeAsyncModelListener(this);
 }
 
 void LightBlockModelUI::paint(Graphics & g)
 {
 	g.setColour(Colours::white.withAlpha(.1f));
 	g.fillRoundedRectangle(getLocalBounds().toFloat(), 8);
-	g.setColour(Colours::white.withAlpha(isMouseOver() ? .5f : 1.f));
+	g.setColour(Colours::white.withAlpha(isMouseOver() ? .2f : 1.f));
 	if (modelImage.getWidth() > 0) g.drawImage(modelImage, getLocalBounds().withSizeKeepingCentre(imageSize, imageSize).toFloat());
 
 	if (modelImage.getWidth() == 0 || isMouseOver())
 	{
 		g.setColour(Colours::white);
-		g.drawText(item->niceName, getLocalBounds(), Justification::centred);
+		g.drawFittedText(item->niceName, getLocalBounds().reduced(4), Justification::centred, 3);
 	}
 }
 
@@ -46,11 +47,39 @@ void LightBlockModelUI::resized()
 {
 }
 
+void LightBlockModelUI::updateThumbnail()
+{
+	if (item->customThumbnailPath.isNotEmpty())
+	{
+		modelImage = ImageCache::getFromFile(item->customThumbnailPath);
+
+	}
+
+	if (item->customThumbnailPath.isEmpty() || modelImage.getWidth() == 0)
+	{
+		int numBytes;
+		const char * imgData = BinaryData::getNamedResource((StringUtil::toShortName(item->getTypeString()) + "_png").getCharPointer(), numBytes);
+		modelImage = ImageCache::getFromMemory(imgData, numBytes);
+	}
+
+	repaint();
+}
+
+
 void LightBlockModelUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
 
-	if (e.mods.isRightButtonDown() && e.mods.isPopupMenu())
+	if (e.mods.isLeftButtonDown())
+	{
+		if (e.mods.isAltDown())
+		{
+			for (auto & p : PropManager::getInstance()->items)
+			{
+				p->activeProvider->setValueFromTarget(item);
+			}
+		}
+	}else if (e.mods.isRightButtonDown())
 	{
 		PopupMenu menu;
 		PopupMenu assignMenu;
@@ -78,5 +107,16 @@ void LightBlockModelUI::mouseDown(const MouseEvent & e)
 			Prop * p = PropManager::getInstance()->items[result - 1];
 			p->activeProvider->setValueFromTarget(item);
 		}
+	}
+}
+
+
+void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent & e)
+{
+	switch (e.type)
+	{
+	case LightBlockModel::ModelEvent::CUSTOM_THUMBNAIL_CHANGED:
+		updateThumbnail();
+		break;
 	}
 }

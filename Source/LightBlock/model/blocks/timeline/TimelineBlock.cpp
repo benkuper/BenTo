@@ -12,7 +12,7 @@
 
 
 TimelineBlock::TimelineBlock(var params) :
-	LightBlockModel("Timeline", params)
+	LightBlockModel(getTypeString(), params)
 {
 }
 

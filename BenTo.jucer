@@ -26,6 +26,10 @@
       </GROUP>
       <GROUP id="{102A14FE-203D-7048-FD34-335BF3C28E15}" name="LightBlock">
         <GROUP id="{048BDCCA-51F2-B1DF-AC0B-49ECF3B81664}" name="model">
+          <FILE id="jOUL4M" name="LightBlockModelGroup.cpp" compile="1" resource="0"
+                file="Source/LightBlock/model/LightBlockModelGroup.cpp"/>
+          <FILE id="VPjW7n" name="LightBlockModelGroup.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModelGroup.h"/>
           <FILE id="K7pG3d" name="LightBlockColorProvider.cpp" compile="1" resource="0"
                 file="Source/LightBlock/model/LightBlockColorProvider.cpp"/>
           <FILE id="h3OveU" name="LightBlockColorProvider.h" compile="0" resource="0"
@@ -116,21 +120,8 @@
           <FILE id="XpCNmm" name="LightBlockModelParameterManager.h" compile="0"
                 resource="0" file="Source/LightBlock/model/LightBlockModelParameterManager.h"/>
         </GROUP>
-        <GROUP id="{E3755DE0-2D73-B32C-D6C2-0DB2AFDA7CFF}" name="ui">
-          <FILE id="gRPpm7" name="LightBlockEditor.cpp" compile="1" resource="0"
-                file="Source/LightBlock/ui/LightBlockEditor.cpp"/>
-          <FILE id="G2S8OQ" name="LightBlockEditor.h" compile="0" resource="0"
-                file="Source/LightBlock/ui/LightBlockEditor.h"/>
-          <FILE id="KEmlPS" name="LightBlockUI.cpp" compile="1" resource="0"
-                file="Source/LightBlock/ui/LightBlockUI.cpp"/>
-          <FILE id="i9EmVY" name="LightBlockUI.h" compile="0" resource="0" file="Source/LightBlock/ui/LightBlockUI.h"/>
-        </GROUP>
         <FILE id="EzNjt1" name="LightBlock.cpp" compile="1" resource="0" file="Source/LightBlock/LightBlock.cpp"/>
         <FILE id="tXTVXG" name="LightBlock.h" compile="0" resource="0" file="Source/LightBlock/LightBlock.h"/>
-        <FILE id="I8onqX" name="LightBlockFactory.cpp" compile="1" resource="0"
-              file="Source/LightBlock/LightBlockFactory.cpp"/>
-        <FILE id="HBDKR8" name="LightBlockFactory.h" compile="0" resource="0"
-              file="Source/LightBlock/LightBlockFactory.h"/>
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">

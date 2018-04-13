@@ -12,7 +12,7 @@
 
 
 VideoBlock::VideoBlock(var params) :
-	LightBlockModel("Video", params)
+	LightBlockModel(getTypeString(), params)
 {
 }
 

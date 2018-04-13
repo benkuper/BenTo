@@ -38,9 +38,11 @@ void LightBlockModelPreset::updateColorsForBlock(LightBlock * b, var params)
 
 void LightBlockModelPreset::rebuildArgsFromModel(bool syncValues)
 {
-	var pData = paramsContainer.getJSONData();
+
 	Array<WeakReference<Parameter>> params = model->getModelParameters();
-	
+
+	if (params.size() > 0) previousData = paramsContainer.getJSONData();
+
 	paramsContainer.clear();
 
 	for (auto &sp : params)
@@ -66,9 +68,8 @@ void LightBlockModelPreset::rebuildArgsFromModel(bool syncValues)
 	}
 
 	hideInEditor = controllables.size() == 0;
-	paramsContainer.loadJSONData(pData);
 
-	
+	paramsContainer.loadJSONData(previousData);
 }
 
 void LightBlockModelPreset::childStructureChanged(ControllableContainer * cc)
@@ -91,7 +92,8 @@ var LightBlockModelPreset::getJSONData()
 void LightBlockModelPreset::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	paramsContainer.loadJSONData(data.getProperty("params", var()));
+	previousData = data.getProperty("params", var());
+	paramsContainer.loadJSONData(previousData);
 }
 
 Array<WeakReference<Parameter>> LightBlockModelPreset::getModelParameters()

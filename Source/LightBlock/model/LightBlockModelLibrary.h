@@ -11,6 +11,7 @@
 #pragma once
 
 #include "UserLightBlockModelManager.h"
+#include "LightBlockModelGroup.h"
 
 class LightBlockModelLibrary :
 	public ControllableContainer
@@ -22,8 +23,8 @@ public:
 	
 
 
-	ControllableContainer genericBlocks;
-	ControllableContainer liveFeedBlocks;
+	LightBlockModelGroup genericBlocks;
+	LightBlockModelGroup liveFeedBlocks;
 	UserLightBlockModelManager userBlocks;	
 
 	//Generic / Patterns

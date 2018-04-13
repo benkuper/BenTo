@@ -57,8 +57,10 @@ public:
 	ListenerList<PropListener> propListeners;
 	void addPropListener(PropListener* newListener) { propListeners.add(newListener); }
 	void removePropListener(PropListener* listener) { propListeners.remove(listener); }
+	
 
-
+	static var updateColorRGBFromScript(const var::NativeFunctionArgs &args);
+	static var updateColorHSVFromScript(const var::NativeFunctionArgs &args);
 
 	// ASYNC
 	class  PropEvent

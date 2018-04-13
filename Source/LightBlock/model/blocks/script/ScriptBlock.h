@@ -13,13 +13,28 @@
 #include "../../LightBlockModel.h"
 
 class ScriptBlock :
-	public LightBlockModel
+	public LightBlockModel,
+	public Script::AsyncListener
 {
 public:
 	ScriptBlock(var params = var());
 	~ScriptBlock();
 
-	String getTypeString() const override { return "Script"; }
+	const Identifier updateColorsFunc = "updateColors";
+	Script script;
 
+	virtual Array<WeakReference<Parameter>> getModelParameters();
+
+	void updateColorsForBlock(LightBlock * prop, var params = var()) override;
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *) override;
+	void childStructureChanged(ControllableContainer * cc) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+	
+	void newMessage(const Script::ScriptEvent &e) override;
+
+	String getTypeString() const override { return "Script"; }
 	static ScriptBlock * create(var params) { return new ScriptBlock(params); }
 };

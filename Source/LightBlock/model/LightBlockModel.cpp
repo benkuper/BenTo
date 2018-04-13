@@ -27,7 +27,8 @@ Author:  Ben
 
 LightBlockModel::LightBlockModel(const String &name, var params) :
 	LightBlockColorProvider(name, false),
-	presetManager(this)
+	presetManager(this),
+	modelNotifier(5)
 {
 	itemDataType = "LightBlockModel";
 	paramsContainer = new ControllableContainer("Parameters");
@@ -61,6 +62,13 @@ void LightBlockModel::updateColorsForBlock(LightBlock * block, var params)
 	{
 		block->prop->colors.set(i, Colours::black);
 	}
+}
+
+void LightBlockModel::setCustomThumbnail(String path)
+{
+	customThumbnailPath = path;
+	modelListeners.call(&ModelListener::customThumbnailChanged, this);
+	modelNotifier.addMessage(new ModelEvent(ModelEvent::CUSTOM_THUMBNAIL_CHANGED, this));
 }
 
 var LightBlockModel::getJSONData()

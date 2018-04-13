@@ -11,7 +11,7 @@
 #include "DMXBlock.h"
 
 DMXBlock::DMXBlock(var params) :
-	LightBlockModel("DMX", params)
+	LightBlockModel(getTypeString(), params)
 {
 }
 

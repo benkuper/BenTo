@@ -11,7 +11,6 @@
 #include "LightBlock.h"
 
 #include "LightBlock.h"
-#include "ui/LightBlockEditor.h"
 #include "Prop/Prop.h"
 
 LightBlock::LightBlock(LightBlockColorProvider * provider, Prop * prop, var params) :

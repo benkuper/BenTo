@@ -26,6 +26,8 @@ public:
 	WeakReference<Inspectable> modelRef;
 	ControllableContainer paramsContainer;
 
+	var previousData; //for keeping overriden value and saved dynamic values
+
 	void updateColorsForBlock(LightBlock * b, var params = var()) override;
 
 	void rebuildArgsFromModel(bool syncValues = true);

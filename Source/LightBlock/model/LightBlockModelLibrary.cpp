@@ -22,9 +22,6 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	genericBlocks("Generic"),
 	liveFeedBlocks("Live Feed")
 {
-	genericBlocks.saveAndLoadRecursiveData = true;
-	liveFeedBlocks.saveAndLoadRecursiveData = true;
-
 	//patterns
 	solidColorBlock = new SolidColorPattern();
 	rainbowBlock = new RainbowPattern();

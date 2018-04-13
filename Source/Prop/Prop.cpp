@@ -26,6 +26,9 @@ Prop::Prop(const String &name, var) :
 	activeProvider= addTargetParameter("Active Block", "The current active block for this prop");
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
+
+	scriptObject.setMethod("setRGB", &Prop::updateColorRGBFromScript);
+	scriptObject.setMethod("setHSV", &Prop::updateColorHSVFromScript);
 }
 
 Prop::~Prop()
@@ -93,4 +96,34 @@ void Prop::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	if (currentBlock != nullptr) currentBlock->loadJSONData(data.getProperty("block", var()));
+}
+
+var Prop::updateColorRGBFromScript(const var::NativeFunctionArgs & args)
+{
+	Prop * p = getObjectFromJS<Prop>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments < 4)
+	{
+		NLOGERROR(p->niceName, "SetColor RGB from script not enough parameters");
+		return var();
+	}
+	int index = args.arguments[0];
+	p->colors.set(index, Colour::fromRGB((float)args.arguments[1] * 255, (float)args.arguments[2] * 255, (float)args.arguments[3] * 255));
+
+	return var();
+}
+
+var Prop::updateColorHSVFromScript(const var::NativeFunctionArgs & args)
+{
+	Prop * p = getObjectFromJS<Prop>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments < 4)
+	{
+		NLOGERROR(p->niceName, "SetColor HSV from script not enough parameters");
+		return var();
+	}
+	int index = args.arguments[0];
+	p->colors.set(index, Colour::fromHSV((float)args.arguments[1], (float)args.arguments[2], (float)args.arguments[3],1));
+
+	return var();
 }

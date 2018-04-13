@@ -13,7 +13,8 @@
 #include "../LightBlockModel.h"
 
 class LightBlockModelUI :
-	public BaseItemMinimalUI<LightBlockModel>
+	public BaseItemMinimalUI<LightBlockModel>,
+	public LightBlockModel::AsyncListener
 {
 public:
 	LightBlockModelUI(LightBlockModel * model);
@@ -24,6 +25,10 @@ public:
 
 	void paint(Graphics &g) override;
 	void resized() override;
+
+	void updateThumbnail();
+
+	void newMessage(const LightBlockModel::ModelEvent &e) override;
 
 	void mouseDown(const MouseEvent &e) override;
 };
