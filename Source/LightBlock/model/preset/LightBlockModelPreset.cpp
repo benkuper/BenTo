@@ -1,60 +1,47 @@
 /*
   ==============================================================================
 
-    LightBlock.cpp
-    Created: 10 Apr 2018 6:56:47pm
+    LightBlockModelPreset.cpp
+    Created: 12 Apr 2018 1:10:55pm
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "LightBlock.h"
+#include "LightBlockModelPreset.h"
+#include "../LightBlockModel.h"
 
-#include "LightBlock.h"
-#include "ui/LightBlockEditor.h"
-#include "Prop/Prop.h"
-
-LightBlock::LightBlock(LightBlockColorProvider * provider, Prop * prop, var params) :
-	BaseItem(provider->niceName),
-	prop(prop),
-	provider(provider),
+LightBlockModelPreset::LightBlockModelPreset(LightBlockModel * model, var) :
+	LightBlockColorProvider("Preset", false),
+	model(model),
+	modelRef(model),
 	paramsContainer("Parameters")
 {
-	addChildControllableContainer(&paramsContainer);
-
-	userCanRemove = false;
-
+	isSelectable = false;
+	model->addControllableContainerListener(this);
 	rebuildArgsFromModel();
-	provider->addColorProviderListener(this);
-
-	startTimerHz(50);
+	
+	paramsContainer.editorCanBeCollapsed = false;
+	paramsContainer.hideEditorHeader = true;
+	addChildControllableContainer(&paramsContainer);
 }
 
-LightBlock::~LightBlock()
+LightBlockModelPreset::~LightBlockModelPreset()
 {
-	if (!provider.wasObjectDeleted()) provider->removeColorProviderListener(this);
+	if (!modelRef.wasObjectDeleted()) model->removeControllableContainerListener(this);
 }
 
-void LightBlock::timerCallback()
+void LightBlockModelPreset::updateColorsForBlock(LightBlock * b, var params)
 {
-	if (provider.wasObjectDeleted())
-	{
-		DBG("Provider has been deleted !");
-		stopTimer();
-		return;
-	}
-
-	provider->updateColorsForBlock(this);
-	blockListeners.call(&LightBlockListener::colorsUpdated);
+	model->updateColorsForBlock(b, params);
 }
 
-void LightBlock::rebuildArgsFromModel()
+void LightBlockModelPreset::rebuildArgsFromModel(bool syncValues)
 {
 	var pData = paramsContainer.getJSONData();
-
+	Array<WeakReference<Parameter>> params = model->getModelParameters();
+	
 	paramsContainer.clear();
-
-	Array<WeakReference<Parameter>> params = provider->getModelParameters();
 
 	for (auto &sp : params)
 	{
@@ -72,31 +59,42 @@ void LightBlock::rebuildArgsFromModel()
 
 		if (p != nullptr)
 		{
+			p->forceSaveValue = true;
 			p->setControllableFeedbackOnly(sp->isControllableFeedbackOnly);
 			paramsContainer.addParameter(p);
 		}
-		
 	}
 
-	paramsContainer.hideInEditor = paramsContainer.controllables.size() == 0;
+	hideInEditor = controllables.size() == 0;
 	paramsContainer.loadJSONData(pData);
+
+	
 }
 
-void LightBlock::providerParametersChanged(LightBlockColorProvider *)
+void LightBlockModelPreset::childStructureChanged(ControllableContainer * cc)
 {
 	rebuildArgsFromModel();
 }
 
-var LightBlock::getJSONData()
+void LightBlockModelPreset::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *)
+{
+	if(cc == &paramsContainer) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+}
+
+var LightBlockModelPreset::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("params", paramsContainer.getJSONData());
 	return data;
-
 }
 
-void LightBlock::loadJSONDataInternal(var data)
+void LightBlockModelPreset::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	paramsContainer.loadJSONData(data.getProperty("params", var()));
+}
+
+Array<WeakReference<Parameter>> LightBlockModelPreset::getModelParameters()
+{
+	return paramsContainer.getAllParameters();
 }

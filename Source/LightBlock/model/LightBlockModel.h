@@ -11,40 +11,37 @@
 #pragma once
 
 #include "LightBlockModelParameterManager.h"
+#include "preset/LightBlockModelPresetManager.h"
+#include "LightBlockColorProvider.h"
 
 class LightBlock;
 
 class Prop;
 
 class LightBlockModel :
-	public BaseItem
+	public LightBlockColorProvider
 {
 public:
 	LightBlockModel(const String &name = "LightBlockModel", var params = var());
 	~LightBlockModel();
 
-	ScopedPointer<ControllableContainer> paramsContainer;
+	void clear() override;
 
-	virtual Array<WeakReference<Parameter>> getModelParameters();
-	virtual Array<Colour> getColors(LightBlock * block, var params = var());
+	ScopedPointer<ControllableContainer> paramsContainer;
+	LightBlockModelPresetManager presetManager;
+
+	virtual Array<WeakReference<Parameter>> getModelParameters() override;
+
+	virtual void updateColorsForBlock(LightBlock * block, var params = var()) override;
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+	void childStructureChanged(ControllableContainer * cc) override;
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
-	void childStructureChanged(ControllableContainer * cc) override;
 	
-	class ModelListener
-	{
-	public:
-		virtual ~ModelListener() {}
-		virtual void modelParametersChanged(LightBlockModel *) {}
-	};
-
-	ListenerList<ModelListener> modelListeners;
-	void addCommandModelListener(ModelListener* newListener) { modelListeners.add(newListener); }
-	void removeCommandModelListener(ModelListener* listener) { modelListeners.remove(listener); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LightBlockModel)
 };

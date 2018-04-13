@@ -14,7 +14,9 @@
 #include "LightBlock/LightBlock.h"
 
 class Prop :
-	public BaseItem
+	public BaseItem,
+	public Inspectable::InspectableListener,
+	public LightBlock::LightBlockListener
 {
 public:
 	enum Shape { CLUB, BALL, POI, HOOP };
@@ -30,12 +32,17 @@ public:
 
 	ScopedPointer<LightBlock> currentBlock;
 
-	TargetParameter * targetModel; 
+	TargetParameter * activeProvider; 
 
-	void setBlockFromModel(LightBlockModel * model);
-	void setColors(Array<Colour> newColors);
+	void setBlockFromProvider(LightBlockColorProvider * model);
 
 	void onContainerParameterChanged(Parameter * p) override;
+	void inspectableDestroyed(Inspectable *) override;
+
+	void colorsUpdated() override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	//Listener
 	class  PropListener

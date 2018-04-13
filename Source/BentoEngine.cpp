@@ -24,8 +24,14 @@ BentoEngine::BentoEngine(ApplicationProperties * appProperties, const String &ap
 
 BentoEngine::~BentoEngine()
 {
-	LightBlockModelLibrary::deleteInstance();
 	PropManager::deleteInstance();
+	LightBlockModelLibrary::deleteInstance();
+}
+
+void BentoEngine::clearInternal()
+{
+	PropManager::getInstance()->clear();
+	LightBlockModelLibrary::getInstance()->clear();
 }
 
 var BentoEngine::getJSONData()

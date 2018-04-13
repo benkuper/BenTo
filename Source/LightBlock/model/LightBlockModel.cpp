@@ -26,15 +26,25 @@ Author:  Ben
 #include "Prop/Prop.h"
 
 LightBlockModel::LightBlockModel(const String &name, var params) :
-	BaseItem(name, false)
+	LightBlockColorProvider(name, false),
+	presetManager(this)
 {
 	itemDataType = "LightBlockModel";
 	paramsContainer = new ControllableContainer("Parameters");
 	addChildControllableContainer(paramsContainer);
+	addChildControllableContainer(&presetManager);
 }
 
 LightBlockModel::~LightBlockModel()
 {
+}
+
+void LightBlockModel::clear()
+{
+	presetManager.clear();
+
+	Array<WeakReference<Parameter>> pList = getModelParameters();
+	for (auto &p : pList) p->resetValue();
 }
 
 Array<WeakReference<Parameter>> LightBlockModel::getModelParameters()
@@ -43,44 +53,35 @@ Array<WeakReference<Parameter>> LightBlockModel::getModelParameters()
 	return paramsContainer->getAllParameters();
 }
 
-
-Array<Colour> LightBlockModel::getColors(LightBlock * block, var params)
+void LightBlockModel::updateColorsForBlock(LightBlock * block, var params)
 {
-	//default behavior, must be overriden by child classes
-	int numColors = block->prop->resolution->intValue();
-	Array<Colour> result;
-	for (int i = 0; i < numColors; i++)
+	//To be overriden by child classes
+	int numLeds = block->prop->resolution->intValue();
+	for (int i = 0; i < numLeds; i++)
 	{
-		result.add(Colours::black);
+		block->prop->colors.set(i, Colours::black);
 	}
-
-	return result;
 }
 
 var LightBlockModel::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	if(paramsContainer != nullptr) data.getDynamicObject()->setProperty("parameters", paramsContainer->getJSONData());
+	data.getDynamicObject()->setProperty("presets", presetManager.getJSONData());
 	return data;
 }
 
 void LightBlockModel::loadJSONDataInternal(var data)
 {
-	DBG("Load jsondata internal " << niceName);
 	if(paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("parameters", var()));
+	presetManager.loadJSONData(data.getProperty("presets", var()));
 }
-
-void LightBlockModel::onContainerParameterChangedInternal(Parameter * p)
+void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *)
 {
-
-}
-
-void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
-{
-	if (cc == paramsContainer) modelListeners.call(&ModelListener::modelParametersChanged, this);
+	if (cc == paramsContainer) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }
 
 void LightBlockModel::childStructureChanged(ControllableContainer * cc)
 {
-	if (cc == paramsContainer) modelListeners.call(&ModelListener::modelParametersChanged, this);
+	if (cc == paramsContainer) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }

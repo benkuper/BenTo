@@ -18,55 +18,79 @@ Prop::Prop(const String &name, var) :
 {
 	id = addIntParameter("ID", "Prop ID", 0, 0, 100);
 	resolution = addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1, INT32_MAX);
+	colors.resize(resolution->intValue());
 
 	shape = addEnumParameter("Shape", "The shape of the prop");
 	shape->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP);
 
-	targetModel = addTargetParameter("Target Block", "The current active block for this prop");
-	targetModel->targetType = TargetParameter::CONTAINER;
-	targetModel->customGetTargetContainerFunc = &LightBlockModelLibrary::showAllModelsAndGet;
+	activeProvider= addTargetParameter("Active Block", "The current active block for this prop");
+	activeProvider->targetType = TargetParameter::CONTAINER;
+	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 }
 
 Prop::~Prop()
 {
+	setBlockFromProvider(nullptr);
 }
 
-void Prop::setBlockFromModel(LightBlockModel * model)
+void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 {
 	if (currentBlock == nullptr && model == nullptr) return;
-	if (model != nullptr && currentBlock != nullptr && currentBlock->model == model) return;
+	if (model != nullptr && currentBlock != nullptr && currentBlock->provider == model) return;
 
 	if (currentBlock != nullptr)
 	{
 		removeChildControllableContainer(currentBlock);
+		if(!currentBlock->provider.wasObjectDeleted()) currentBlock->provider->removeInspectableListener(this);
+		currentBlock->removeLightBlockListener(this);
 		currentBlock = nullptr;
 	}
 
-	currentBlock = new LightBlock(model, this);
+	if(model != nullptr) currentBlock = new LightBlock(model, this);
 	
 
 	if (currentBlock != nullptr)
 	{
 		addChildControllableContainer(currentBlock);
+		currentBlock->provider->addInspectableListener(this);
+		currentBlock->addLightBlockListener(this);
 	}
 
 	propListeners.call(&PropListener::propBlockChanged, this);
 	propNotifier.addMessage(new PropEvent(PropEvent::BLOCK_CHANGED, this));
 }
 
-void Prop::setColors(Array<Colour> newColors)
+void Prop::onContainerParameterChanged(Parameter * p)
 {
-	jassert(newColors.size() == resolution->intValue());
-	colors = Array<Colour>(newColors);
-	
+	if (p == activeProvider)
+	{
+		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
+	} else if (p == resolution)
+	{
+		colors.resize(resolution->intValue());
+	}
+}
+
+void Prop::inspectableDestroyed(Inspectable * i)
+{
+	if (currentBlock != nullptr && i == currentBlock->provider) setBlockFromProvider(nullptr);
+}
+
+void Prop::colorsUpdated()
+{
 	propListeners.call(&PropListener::colorsUpdated, this);
 	propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
 }
 
-void Prop::onContainerParameterChanged(Parameter * p)
+var Prop::getJSONData()
 {
-	if (p == targetModel)
-	{
-		setBlockFromModel(dynamic_cast<LightBlockModel *>(targetModel->targetContainer.get()));
-	}
+	var data = BaseItem::getJSONData();
+	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("block", currentBlock->getJSONData());
+	return data;
+}
+
+void Prop::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	if (currentBlock != nullptr) currentBlock->loadJSONData(data.getProperty("block", var()));
 }

@@ -51,6 +51,7 @@ void PropViz::newMessage(const Prop::PropEvent & e)
 	switch (e.type)
 	{
 	case Prop::PropEvent::BLOCK_CHANGED:
+		repaint();
 		break;
 	case Prop::PropEvent::COLORS_UPDATED:
 		repaint();

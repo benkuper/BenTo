@@ -15,28 +15,39 @@
 
 class LightBlock :
 	public BaseItem,
-	public LightBlockModel::ModelListener,
+	public LightBlockColorProvider::ProviderListener,
 	public Timer
 {
 public:
-	LightBlock(LightBlockModel * model, Prop * prop, var params = var());
+	LightBlock(LightBlockColorProvider * provider, Prop * prop, var params = var());
 	virtual ~LightBlock();
 
 	Prop * prop; 
-	LightBlockModel * model;
-	WeakReference<Inspectable> modelRef;
+	WeakReference<LightBlockColorProvider> provider;
 	
 	ControllableContainer paramsContainer;
-
-	Array<Colour> getColors();
 
 	void timerCallback();
 
 	void rebuildArgsFromModel();
-	void modelParametersChanged(LightBlockModel *) override;
+	void providerParametersChanged(LightBlockColorProvider *) override;
 	 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+	class  LightBlockListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~LightBlockListener() {}
+		virtual void colorsUpdated() {}
+	};
+
+	ListenerList<LightBlockListener> blockListeners;
+	void addLightBlockListener(LightBlockListener* newListener) { blockListeners.add(newListener); }
+	void removeLightBlockListener(LightBlockListener* listener) { blockListeners.remove(listener); }
+
+
 
 	static LightBlock * create(LightBlockModel * model, Prop * prop, var params) { return new LightBlock(model, prop, params); }
 

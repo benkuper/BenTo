@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LightBlockModelLibrary.cpp
-    Created: 10 Apr 2018 10:57:18pm
-    Author:  Ben
+	LightBlockModelLibrary.cpp
+	Created: 10 Apr 2018 10:57:18pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -49,6 +49,15 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 
 LightBlockModelLibrary::~LightBlockModelLibrary()
 {
+
+}
+
+
+void LightBlockModelLibrary::clear()
+{
+	Array<LightBlockModel *> models = getAllModels(false);
+	for (auto &m : models) m->clear();
+	userBlocks.clear();
 }
 
 var LightBlockModelLibrary::getJSONData()
@@ -68,47 +77,144 @@ void LightBlockModelLibrary::loadJSONDataInternal(var data)
 	userBlocks.loadJSONData(data.getProperty("userBlocks", var()));
 }
 
-LightBlockModel * LightBlockModelLibrary::showAllModelsAndGet()
+Array<LightBlockModel*> LightBlockModelLibrary::getAllModels(bool includeUserModels)
+{
+	Array<LightBlockModel*> result;
+
+	for (auto &cc : genericBlocks.controllableContainers)
+	{
+		LightBlockModel * m = dynamic_cast<LightBlockModel *>(cc.get());
+		if (m == nullptr) continue;
+		result.add(m);
+	}
+
+	for (auto &cc : liveFeedBlocks.controllableContainers)
+	{
+		LightBlockModel * m = dynamic_cast<LightBlockModel *>(cc.get());
+		if (m == nullptr) continue;
+		result.add(m);
+	}
+
+	if (includeUserModels)
+	{
+		for (auto & m : userBlocks.items) result.add(m);
+	}
+
+	return result;
+}
+
+LightBlockColorProvider * LightBlockModelLibrary::showProvidersAndGet()
+{
+	return showAllModelsAndGet(true);
+}
+
+LightBlockColorProvider * LightBlockModelLibrary::showAllModelsAndGet(bool includePresets)
+{
+	PopupMenu menu;
+	Array<LightBlockColorProvider *> mList = fillProvidersMenu(menu, includePresets);
+	int result = menu.show();
+
+	if (result > 0) return mList[result - 1];
+	return nullptr;
+}
+
+Array<LightBlockColorProvider *> LightBlockModelLibrary::fillProvidersMenu(PopupMenu &menu, bool includePresets, int startIndex)
 {
 	PopupMenu genericMenu;
 	PopupMenu liveFeedMenu;
 	PopupMenu userMenu;
 
-	Array<LightBlockModel *> mList;
+	Array<LightBlockColorProvider *> mList;
 
-	int index = 1;
+	int index = startIndex;
 	for (auto &cc : LightBlockModelLibrary::getInstance()->genericBlocks.controllableContainers)
 	{
 		LightBlockModel * m = dynamic_cast<LightBlockModel *>(cc.get());
 		if (m == nullptr) continue;
-		mList.add(m);
-		genericMenu.addItem(index, m->niceName);
-		index++;
+
+		if (includePresets)
+		{
+			PopupMenu modelMenu;
+
+			modelMenu.addItem(index, "Default");
+			mList.add(m);
+			index++;
+
+			for (auto &mp : m->presetManager.items)
+			{
+				modelMenu.addItem(index, mp->niceName);
+				mList.add(mp);
+				index++;
+			}
+
+			genericMenu.addSubMenu(m->niceName, modelMenu);
+		} else
+		{
+			genericMenu.addItem(index, m->niceName);
+			mList.add(m);
+			index++;
+		}
+
+
 	}
 
 	for (auto &cc : LightBlockModelLibrary::getInstance()->liveFeedBlocks.controllableContainers)
 	{
 		LightBlockModel * m = dynamic_cast<LightBlockModel *>(cc.get());
 		if (m == nullptr) continue;
-		mList.add(m);
-		liveFeedMenu.addItem(index, m->niceName);
-		index++;
+
+		if (includePresets)
+		{
+			PopupMenu modelMenu;
+
+			modelMenu.addItem(index, "Default");
+			mList.add(m);
+			index++;
+
+			for (auto &mp : m->presetManager.items)
+			{
+				modelMenu.addItem(index, mp->niceName);
+				mList.add(mp);
+				index++;
+			}
+
+			liveFeedMenu.addSubMenu(m->niceName, modelMenu);
+		} else
+		{
+			liveFeedMenu.addItem(index, m->niceName);
+			mList.add(m);
+			index++;
+		}
 	}
 
-	for (auto & m: LightBlockModelLibrary::getInstance()->userBlocks.items)
+	for (auto & m : LightBlockModelLibrary::getInstance()->userBlocks.items)
 	{
-		mList.add(m);
-		userMenu.addItem(index, m->niceName);
-		index++;
+		if (includePresets)
+		{
+			PopupMenu modelMenu;
+
+			modelMenu.addItem(index, "Default");
+			mList.add(m);
+			index++;
+			for (auto &mp : m->presetManager.items)
+			{
+				modelMenu.addItem(index, mp->niceName);
+				mList.add(mp);
+				index++;
+			}
+
+			userMenu.addSubMenu(m->niceName, modelMenu);
+		} else
+		{
+			userMenu.addItem(index, m->niceName);
+			mList.add(m);
+			index++;
+		}
 	}
-	
-	PopupMenu menu;
+
 	menu.addSubMenu(LightBlockModelLibrary::getInstance()->genericBlocks.niceName, genericMenu);
 	menu.addSubMenu(LightBlockModelLibrary::getInstance()->liveFeedBlocks.niceName, liveFeedMenu);
 	menu.addSubMenu(LightBlockModelLibrary::getInstance()->userBlocks.niceName, userMenu);
 
-	int result = menu.show();
-
-	if (result > 0) return mList[result - 1];
-	return nullptr;
+	return mList;
 }

@@ -26,6 +26,20 @@
       </GROUP>
       <GROUP id="{102A14FE-203D-7048-FD34-335BF3C28E15}" name="LightBlock">
         <GROUP id="{048BDCCA-51F2-B1DF-AC0B-49ECF3B81664}" name="model">
+          <FILE id="K7pG3d" name="LightBlockColorProvider.cpp" compile="1" resource="0"
+                file="Source/LightBlock/model/LightBlockColorProvider.cpp"/>
+          <FILE id="h3OveU" name="LightBlockColorProvider.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockColorProvider.h"/>
+          <GROUP id="{D095B248-F9F6-57FA-ADF5-9C28C09825C8}" name="preset">
+            <FILE id="UJIOru" name="LightBlockModelPreset.cpp" compile="1" resource="0"
+                  file="Source/LightBlock/model/preset/LightBlockModelPreset.cpp"/>
+            <FILE id="gwQJ0I" name="LightBlockModelPreset.h" compile="0" resource="0"
+                  file="Source/LightBlock/model/preset/LightBlockModelPreset.h"/>
+            <FILE id="wTJJc0" name="LightBlockModelPresetManager.cpp" compile="1"
+                  resource="0" file="Source/LightBlock/model/preset/LightBlockModelPresetManager.cpp"/>
+            <FILE id="hjSRxz" name="LightBlockModelPresetManager.h" compile="0"
+                  resource="0" file="Source/LightBlock/model/preset/LightBlockModelPresetManager.h"/>
+          </GROUP>
           <GROUP id="{CE00199C-474B-BD58-0F61-5FF5F410A6CD}" name="ui">
             <FILE id="zc95pL" name="LightBlockModelGroupUI.cpp" compile="1" resource="0"
                   file="Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp"/>

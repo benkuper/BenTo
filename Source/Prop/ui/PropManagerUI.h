@@ -21,5 +21,7 @@ public:
 	PropManagerUI(const String &name, PropManager * manager);
 	~PropManagerUI();
 
+	void showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos) override;
+
 	static PropManagerUI * create(const String &contentName) { return new PropManagerUI(contentName, PropManager::getInstance()); }
 };

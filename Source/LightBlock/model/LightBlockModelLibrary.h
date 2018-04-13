@@ -19,6 +19,8 @@ public:
 	juce_DeclareSingleton(LightBlockModelLibrary, true)
 	LightBlockModelLibrary();
 	~LightBlockModelLibrary();
+	
+
 
 	ControllableContainer genericBlocks;
 	ControllableContainer liveFeedBlocks;
@@ -34,12 +36,15 @@ public:
 	ScopedPointer<LightBlockModel> videoBlock;
 	ScopedPointer<LightBlockModel> dmxBlock;
 
+	void clear() override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static LightBlockModel * showAllModelsAndGet();
+	Array<LightBlockModel *> getAllModels(bool includeUserModels = true);
 
-	
+	static LightBlockColorProvider * showProvidersAndGet();
+	static LightBlockColorProvider * showAllModelsAndGet(bool includePresets);
+	static Array<LightBlockColorProvider *> fillProvidersMenu(PopupMenu &menu, bool includePresets, int startIndex = 1);
 
 };

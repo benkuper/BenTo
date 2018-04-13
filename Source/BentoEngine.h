@@ -19,6 +19,8 @@ public:
 	BentoEngine(ApplicationProperties * appProperties, const String &appVersion);
 	~BentoEngine();
 
+	void clearInternal() override;
+
 	var getJSONData() override;
 	void loadJSONDataInternalEngine(var data, ProgressTask * loadingTask) override;
 

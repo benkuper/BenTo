@@ -26,7 +26,7 @@ public:
 	~BlockViz();
 
 	Prop vizProp;
-	ScopedPointer<LightBlock> vizBlock;
+	LightBlock * vizBlock;
 
 	ScopedPointer<PropViz> propViz;
 
@@ -34,17 +34,10 @@ public:
 	ScopedPointer<ParameterUI> resolutionUI;
 	ScopedPointer<ParameterUI> shapeUI;
 
-	LightBlock * currentBlock;
-	
-	WeakReference<Inspectable> blockRef;
-
 	Rectangle<int> vizBounds;
 
 	void resized() override;
 
-	void setCurrentBlock(LightBlock * b);
-
-	void inspectableDestroyed(Inspectable *) override;
 	void inspectablesSelectionChanged() override;
 
 	static BlockViz * create(const String &contentName) { return new BlockViz(contentName); }

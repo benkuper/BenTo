@@ -9,6 +9,7 @@
 */
 
 #include "LightBlockModelUI.h"
+#include "Prop/PropManager.h"
 
 LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	 BaseItemMinimalUI(model)
@@ -20,6 +21,7 @@ LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	setSize(64,64);
 
 	setRepaintsOnMouseActivity(true);
+	removeMouseListener(this);
 } 
 
 LightBlockModelUI::~LightBlockModelUI()
@@ -42,4 +44,39 @@ void LightBlockModelUI::paint(Graphics & g)
 
 void LightBlockModelUI::resized()
 {
+}
+
+void LightBlockModelUI::mouseDown(const MouseEvent & e)
+{
+	BaseItemMinimalUI::mouseDown(e);
+
+	if (e.mods.isRightButtonDown() && e.mods.isPopupMenu())
+	{
+		PopupMenu menu;
+		PopupMenu assignMenu;
+
+		int index = 1;
+		for (auto & p : PropManager::getInstance()->items)
+		{
+			assignMenu.addItem(index, p->niceName);
+			index++;
+		}
+		
+		menu.addItem(-1, "Assign to all");
+		menu.addSubMenu("Assign to...", assignMenu);
+		
+		int result = menu.show();
+		if (result == 0) return;
+		if (result == -1)
+		{
+			for (auto & p : PropManager::getInstance()->items)
+			{
+				p->activeProvider->setValueFromTarget(item);
+			}
+		}if (result > 0 && result <= PropManager::getInstance()->items.size())
+		{
+			Prop * p = PropManager::getInstance()->items[result - 1];
+			p->activeProvider->setValueFromTarget(item);
+		}
+	}
 }
