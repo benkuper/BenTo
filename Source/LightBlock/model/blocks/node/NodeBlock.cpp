@@ -13,6 +13,7 @@
 NodeBlock::NodeBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {
+	addChildControllableContainer(&manager);
 }
 
 NodeBlock::~NodeBlock()

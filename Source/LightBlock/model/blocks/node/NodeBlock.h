@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../../LightBlockModel.h"
+#include "Node/NodeManager.h"
 
 class NodeBlock :
 	public LightBlockModel
@@ -18,6 +19,8 @@ class NodeBlock :
 public:
 	NodeBlock(var params = var());
 	~NodeBlock();
+
+	NodeManager manager;
 
 	String getTypeString() const override { return "Node"; }
 

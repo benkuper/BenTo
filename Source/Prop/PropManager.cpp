@@ -23,20 +23,26 @@ PropManager::PropManager() :
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 
-	String text = "";
+	String localIp = "";
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
 	for (auto &ip : ad)
 	{
 		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1.") || ip.toString().startsWith("10.1.10."))
 		{
-			text = ip.toString();
+			localIp = ip.toString();
 			break;
 		}
 	}
 
-	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.",text);
-	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs","192.168.1.255");
+	StringArray a;
+	a.addTokens(localIp, ".", "\"");
+	String broadcastIp = a[0] + "." + a[1] + "." + a[2] + ".255";
+
+	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.",localIp);
+	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs",broadcastIp);
+
+	
 
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowClub", FlowClubProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowPoi", FlowPoiProp::create));

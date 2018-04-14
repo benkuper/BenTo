@@ -8,6 +8,10 @@
 #define BT_SHORTPRESS 2
 #define BT_LONGPRESS 3
 
+#define BT_PRESS_DEBOUNCE 10
+
+int pressCount;
+
 class ButtonManager
 {
 public:
@@ -35,7 +39,12 @@ public:
   void update()
   {
     bool v = digitalRead(BUTTON_PIN);
-    if(v != pressed) //button state changed
+    if(v) pressCount = min(pressCount+1,BT_PRESS_DEBOUNCE);
+    else pressCount = max(pressCount-1, 0);
+
+    bool newPress = pressed?pressCount ==  0:pressCount == BT_PRESS_DEBOUNCE;
+    
+    if(newPress != pressed) //button state changed
     {
       pressed = v;
       longPress = false;

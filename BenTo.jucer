@@ -19,6 +19,73 @@
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{B442BAE5-1BDF-4D74-47E1-DC8E4A866FEF}" name="Node">
+        <GROUP id="{983B72E8-0A02-C1C3-CCCB-B64FE65F2FEA}" name="nodes">
+          <GROUP id="{1666FCD0-6E9D-B464-E9FF-C20C2EFBB292}" name="colorRemap">
+            <FILE id="YOIq8a" name="ColorRemapNode.cpp" compile="1" resource="0"
+                  file="Source/Node/nodes/colorRemap/ColorRemapNode.cpp"/>
+            <FILE id="yg2hnS" name="ColorRemapNode.h" compile="0" resource="0"
+                  file="Source/Node/nodes/colorRemap/ColorRemapNode.h"/>
+          </GROUP>
+          <GROUP id="{23658F53-DE1D-7840-2B0C-614B281BF395}" name="composite">
+            <FILE id="wlYlRj" name="CompositeNode.cpp" compile="1" resource="0"
+                  file="Source/Node/nodes/composite/CompositeNode.cpp"/>
+            <FILE id="uCipSU" name="CompositeNode.h" compile="0" resource="0" file="Source/Node/nodes/composite/CompositeNode.h"/>
+          </GROUP>
+          <GROUP id="{13E079EF-A9DB-467E-15FA-8D37DE16D246}" name="model">
+            <FILE id="ilRrfU" name="ModelNode.cpp" compile="1" resource="0" file="Source/Node/nodes/model/ModelNode.cpp"/>
+            <FILE id="Xx2lGU" name="ModelNode.h" compile="0" resource="0" file="Source/Node/nodes/model/ModelNode.h"/>
+          </GROUP>
+          <GROUP id="{392509D7-15A5-446F-8961-24B4A8A18EAC}" name="parameter">
+            <FILE id="cqtjG9" name="ParameterNode.cpp" compile="1" resource="0"
+                  file="Source/Node/nodes/parameter/ParameterNode.cpp"/>
+            <FILE id="HLC90L" name="ParameterNode.h" compile="0" resource="0" file="Source/Node/nodes/parameter/ParameterNode.h"/>
+          </GROUP>
+          <GROUP id="{4508CB87-148C-0100-4C59-E5641C3F7B3D}" name="positionRemap">
+            <FILE id="qkP2Vs" name="PositionRemapNode.cpp" compile="1" resource="0"
+                  file="Source/Node/nodes/positionRemap/PositionRemapNode.cpp"/>
+            <FILE id="WYJQYL" name="PositionRemapNode.h" compile="0" resource="0"
+                  file="Source/Node/nodes/positionRemap/PositionRemapNode.h"/>
+          </GROUP>
+          <GROUP id="{2AC482D2-9704-5954-0E98-A7DEDEEB0F48}" name="prop">
+            <FILE id="TMgKEq" name="PropNode.cpp" compile="1" resource="0" file="Source/Node/nodes/prop/PropNode.cpp"/>
+            <FILE id="LzEvbu" name="PropNode.h" compile="0" resource="0" file="Source/Node/nodes/prop/PropNode.h"/>
+          </GROUP>
+          <GROUP id="{24AC6255-53FB-1A8A-D9A4-A045697D9F9B}" name="solidcolor">
+            <FILE id="H9OYkb" name="SolidColorNode.cpp" compile="1" resource="0"
+                  file="Source/Node/nodes/solidcolor/SolidColorNode.cpp"/>
+            <FILE id="fbMBaW" name="SolidColorNode.h" compile="0" resource="0"
+                  file="Source/Node/nodes/solidcolor/SolidColorNode.h"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{8AFF8E07-3FDB-1A8C-B05B-8047DBECAC01}" name="ui">
+          <FILE id="Rks54Q" name="NodeBlockEditor.cpp" compile="1" resource="0"
+                file="Source/Node/ui/NodeBlockEditor.cpp"/>
+          <FILE id="Miy5QU" name="NodeBlockEditor.h" compile="0" resource="0"
+                file="Source/Node/ui/NodeBlockEditor.h"/>
+          <FILE id="wY2rKo" name="NodeConnectionUI.cpp" compile="1" resource="0"
+                file="Source/Node/ui/NodeConnectionUI.cpp"/>
+          <FILE id="w2TrzQ" name="NodeConnectionUI.h" compile="0" resource="0"
+                file="Source/Node/ui/NodeConnectionUI.h"/>
+          <FILE id="GRiz1t" name="NodeManagerUI.cpp" compile="1" resource="0"
+                file="Source/Node/ui/NodeManagerUI.cpp"/>
+          <FILE id="vwlqIL" name="NodeManagerUI.h" compile="0" resource="0" file="Source/Node/ui/NodeManagerUI.h"/>
+          <FILE id="lfyYS8" name="NodeViewUI.cpp" compile="1" resource="0" file="Source/Node/ui/NodeViewUI.cpp"/>
+          <FILE id="JfaD8d" name="NodeViewUI.h" compile="0" resource="0" file="Source/Node/ui/NodeViewUI.h"/>
+        </GROUP>
+        <FILE id="WU85tK" name="Node.cpp" compile="1" resource="0" file="Source/Node/Node.cpp"/>
+        <FILE id="kjw6qV" name="Node.h" compile="0" resource="0" file="Source/Node/Node.h"/>
+        <FILE id="xi4R0C" name="NodeConnection.cpp" compile="1" resource="0"
+              file="Source/Node/NodeConnection.cpp"/>
+        <FILE id="dSYzQi" name="NodeConnection.h" compile="0" resource="0"
+              file="Source/Node/NodeConnection.h"/>
+        <FILE id="u5KAnY" name="NodeConnectionManager.cpp" compile="1" resource="0"
+              file="Source/Node/NodeConnectionManager.cpp"/>
+        <FILE id="NxpspL" name="NodeConnectionManager.h" compile="0" resource="0"
+              file="Source/Node/NodeConnectionManager.h"/>
+        <FILE id="gG1epK" name="NodeManager.cpp" compile="1" resource="0" file="Source/Node/NodeManager.cpp"/>
+        <FILE id="aFtS4M" name="NodeManager.h" compile="0" resource="0" file="Source/Node/NodeManager.h"/>
+      </GROUP>
       <GROUP id="{DC424058-7D3A-9ECF-4700-F3A41EC48DC1}" name="BlockViz">
         <FILE id="SAoLE9" name="BlockVizPanel.cpp" compile="1" resource="0"
               file="Source/BlockViz/BlockVizPanel.cpp"/>
