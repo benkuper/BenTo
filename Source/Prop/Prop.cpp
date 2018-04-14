@@ -27,6 +27,11 @@ Prop::Prop(const String &name, var) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 
+	battery = addFloatParameter("Battery", "The battery level, between 0 and 1", 0);
+	battery->setControllableFeedbackOnly(true);
+
+	findPropMode = addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
+
 	scriptObject.setMethod("setRGB", &Prop::updateColorRGBFromScript);
 	scriptObject.setMethod("setHSV", &Prop::updateColorHSVFromScript);
 }
@@ -34,6 +39,8 @@ Prop::Prop(const String &name, var) :
 Prop::~Prop()
 {
 	setBlockFromProvider(nullptr);
+	colors.fill(Colours::black);
+	sendColorsToProp();
 }
 
 void Prop::setBlockFromProvider(LightBlockColorProvider * model)
@@ -71,6 +78,11 @@ void Prop::onContainerParameterChanged(Parameter * p)
 	} else if (p == resolution)
 	{
 		colors.resize(resolution->intValue());
+	} else if (p == findPropMode)
+	{
+		colors.fill(findPropMode->boolValue() ? Colours::white.withBrightness(.2f) : Colours::black);
+		DBG("here send colors");
+		sendColorsToProp();
 	}
 }
 
@@ -83,12 +95,15 @@ void Prop::colorsUpdated()
 {
 	propListeners.call(&PropListener::colorsUpdated, this);
 	propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
+
+	if(!findPropMode->boolValue()) sendColorsToProp();
 }
 
 var Prop::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("block", currentBlock->getJSONData());
+	if (propId.isNotEmpty()) data.getDynamicObject()->setProperty("propId", propId);
 	return data;
 }
 
@@ -96,6 +111,7 @@ void Prop::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	if (currentBlock != nullptr) currentBlock->loadJSONData(data.getProperty("block", var()));
+	propId = data.getProperty("propId", "");
 }
 
 var Prop::updateColorRGBFromScript(const var::NativeFunctionArgs & args)

@@ -53,9 +53,9 @@ void RainbowPattern::updateColorsForBlock(LightBlock * block, var params)
 NoisePattern::NoisePattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
-	scale = paramsContainer->addFloatParameter("Scale", "", 1, 0.1f, 20);
+	scale = paramsContainer->addFloatParameter("Scale", "", 3, 0.1f, 20);
 	speed = paramsContainer->addFloatParameter("Speed", "", 1, 0.1f, 20);
-	contrast = paramsContainer->addFloatParameter("Contrast", "", 1, 0, 5);
+	contrast = paramsContainer->addFloatParameter("Contrast", "", 3, 0, 10);
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 0, -1, 1);
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the animation depending on id of the prop", 0, 0, 10);
@@ -64,7 +64,7 @@ NoisePattern::NoisePattern(var params) :
 void NoisePattern::updateColorsForBlock(LightBlock * block, var params)
 {
 	int numLeds = block->prop->resolution->intValue();
-
+	int id = block->prop->id->intValue();
 	float bScale = block->paramsContainer.getParameterByName("scale")->floatValue();
 	float bSpeed = block->paramsContainer.getParameterByName("speed")->floatValue();
 	float bContrast = block->paramsContainer.getParameterByName("contrast")->floatValue();
@@ -76,7 +76,7 @@ void NoisePattern::updateColorsForBlock(LightBlock * block, var params)
 
 	for (int i = 0; i < numLeds; i++)
 	{
-		float v = (perlin.noise0_1(((i*bScale) + (block->prop->id->intValue()*bIdOffset)) / numLeds, curTime) - .5f)*bContrast + .5f + bBrightness;
+		float v = (perlin.noise0_1((i*bScale) / numLeds, curTime, id*bIdOffset) - .5f)*bContrast + .5f + bBrightness;
 		block->prop->colors.set(i, bColor.withBrightness(v));
 	}
 

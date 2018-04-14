@@ -125,24 +125,23 @@
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
-          <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="pois">
-            <GROUP id="{7218EFF0-B1E8-198A-5504-2ACE573BFECC}" name="flowpoi">
-              <FILE id="CfegzY" name="FlowPoiProp.cpp" compile="1" resource="0" file="Source/Prop/props/pois/flowpoi/FlowPoiProp.cpp"/>
-              <FILE id="Ch71al" name="FlowPoiProp.h" compile="0" resource="0" file="Source/Prop/props/pois/flowpoi/FlowPoiProp.h"/>
-            </GROUP>
-          </GROUP>
-          <GROUP id="{F80423DF-79F2-F098-4B4E-528DEA20191A}" name="balls">
-            <GROUP id="{87622B0C-AA97-4D64-0748-39C57CE96B1F}" name="flowball">
-              <FILE id="iPxsZT" name="FlowBallProp.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/balls/flowball/FlowBallProp.cpp"/>
-              <FILE id="Wyn7gM" name="FlowBallProp.h" compile="0" resource="0" file="Source/Prop/props/balls/flowball/FlowBallProp.h"/>
-            </GROUP>
-          </GROUP>
-          <GROUP id="{C522011C-89AC-576D-FB1C-E685E5E8AE23}" name="clubs">
+          <GROUP id="{F8143F18-668C-9A7E-6413-ADBA39BD6BC6}" name="flowtoys">
+            <FILE id="JqhwMB" name="FlowtoysProp.cpp" compile="1" resource="0"
+                  file="Source/Prop/props/flowtoys/FlowtoysProp.cpp"/>
+            <FILE id="e7gr10" name="FlowtoysProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/FlowtoysProp.h"/>
             <GROUP id="{2C0E173A-9C6F-B342-9EA6-65ADF0209454}" name="flowclub">
-              <FILE id="p04VxP" name="FlowClubProp.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/clubs/flowclub/FlowClubProp.cpp"/>
-              <FILE id="h3dcn5" name="FlowClubProp.h" compile="0" resource="0" file="Source/Prop/props/clubs/flowclub/FlowClubProp.h"/>
+              <FILE id="L3ttpc" name="FlowClubProp.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/flowtoys/flowclub/FlowClubProp.cpp"/>
+              <FILE id="qBroMp" name="FlowClubProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/flowclub/FlowClubProp.h"/>
+            </GROUP>
+            <GROUP id="{87622B0C-AA97-4D64-0748-39C57CE96B1F}" name="flowball">
+              <FILE id="mobQxn" name="FlowBallProp.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/flowtoys/flowball/FlowBallProp.cpp"/>
+              <FILE id="yXwxx3" name="FlowBallProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/flowball/FlowBallProp.h"/>
+            </GROUP>
+            <GROUP id="{7218EFF0-B1E8-198A-5504-2ACE573BFECC}" name="flowpoi">
+              <FILE id="XrA2Jx" name="FlowPoiProp.cpp" compile="1" resource="0" file="Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.cpp"/>
+              <FILE id="zsULQY" name="FlowPoiProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.h"/>
             </GROUP>
           </GROUP>
         </GROUP>
@@ -192,6 +191,7 @@
         <MODULEPATH id="juce_audio_formats" path="../../Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../../Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../Perso/Projects/JUCE Modules"/>
+        <MODULEPATH id="juce_osc" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -209,6 +209,7 @@
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <JUCEOPTIONS/>

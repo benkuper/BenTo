@@ -10,10 +10,10 @@
 
 #pragma once
 
-#include "../../../Prop.h"
+#include "../FlowtoysProp.h"
 
 class FlowPoiProp :
-	public Prop
+	public FlowtoysProp
 {
 public:
 	FlowPoiProp(var params);

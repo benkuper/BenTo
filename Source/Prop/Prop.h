@@ -28,7 +28,12 @@ public:
 	IntParameter * resolution;
 	EnumParameter * shape;
 
+	FloatParameter * battery;
+	BoolParameter * findPropMode;
+
 	Array<Colour> colors;
+
+	String propId;
 
 	ScopedPointer<LightBlock> currentBlock;
 
@@ -40,6 +45,7 @@ public:
 	void inspectableDestroyed(Inspectable *) override;
 
 	void colorsUpdated() override;
+	virtual void sendColorsToProp() {} // to override
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

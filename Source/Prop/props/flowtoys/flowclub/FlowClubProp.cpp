@@ -11,7 +11,7 @@
 #include "FlowClubProp.h"
 
 FlowClubProp::FlowClubProp(var params) :
-	Prop(getTypeString(),params)
+	FlowtoysProp(getTypeString(),params)
 {
 	resolution->setValue(32);
 }

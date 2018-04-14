@@ -1,21 +1,21 @@
 /*
   ==============================================================================
 
-    FlowBallProp.cpp
-    Created: 10 Apr 2018 10:30:28pm
+    FlowPoiProp.cpp
+    Created: 10 Apr 2018 10:31:01pm
     Author:  Ben
 
   ==============================================================================
 */
 
-#include "FlowBallProp.h"
+#include "FlowPoiProp.h"
 
-FlowBallProp::FlowBallProp(var params) :
-	Prop(getTypeString(),params)
+FlowPoiProp::FlowPoiProp(var params) :
+	FlowtoysProp(getTypeString(),params)
 {
 	resolution->setValue(1);
 }
 
-FlowBallProp::~FlowBallProp()
+FlowPoiProp::~FlowPoiProp()
 {
 }

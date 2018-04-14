@@ -18,9 +18,12 @@ PropUI::PropUI(Prop * p) :
 	idUI = p->id->createStepper();
 	idUI->showLabel = true;
 	targetUI = p->activeProvider->createTargetUI();
+	batteryUI = p->battery->createSlider();
+	batteryUI->showLabel = false;
 
 	addAndMakeVisible(targetUI);
 	addAndMakeVisible(idUI);
+	addAndMakeVisible(batteryUI); 
 	addAndMakeVisible(&viz);
 	
 }
@@ -37,7 +40,19 @@ void PropUI::mouseDown(const MouseEvent & e)
 	{
 		LightBlockColorProvider * p = LightBlockModelLibrary::showProvidersAndGet();
 		if (p != nullptr) item->activeProvider->setValueFromTarget(p);
+	} else if (e.mods.isLeftButtonDown())
+	{
+		if (e.mods.isAltDown())
+		{
+			item->findPropMode->setValue(true);
+		}
 	}
+}
+
+void PropUI::mouseUp(const MouseEvent & e)
+{
+	BaseItemUI::mouseUp(e);
+	item->findPropMode->setValue(false);
 }
 
 void PropUI::resizedInternalHeader(Rectangle<int>& r)
@@ -49,6 +64,7 @@ void PropUI::resizedInternalHeader(Rectangle<int>& r)
 void PropUI::resizedInternalContent(Rectangle<int> &r)
 {
 	targetUI->setBounds(r.removeFromTop(16));
+	batteryUI->setBounds(r.removeFromTop(10));
 	r.removeFromTop(2);
 	viz.setBounds(r.reduced(2));
 }

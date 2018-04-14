@@ -10,10 +10,10 @@
 
 #pragma once
 
-#include "../../../Prop.h"
+#include "../FlowtoysProp.h"
 
 class FlowClubProp :
-	public Prop
+	public FlowtoysProp
 {
 public:
 	FlowClubProp(var params);
@@ -21,5 +21,5 @@ public:
 
 	String getTypeString() const override { return "FlowClub"; }
 
-	static FlowClubProp * create(var params) { return new FlowClubProp(params); }
+	static FlowClubProp * create(var params) { return new FlowClubProp(params); } 
 };

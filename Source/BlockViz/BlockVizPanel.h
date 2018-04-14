@@ -17,7 +17,7 @@
 
 class BlockViz :
 	public ShapeShifterContentComponent,
-	public InspectableSelectionManager::Listener,
+	public InspectableSelectionManager::AsyncListener,
 	public Inspectable::InspectableListener
 {
 public:
@@ -38,7 +38,7 @@ public:
 
 	void resized() override;
 
-	void inspectablesSelectionChanged() override;
+	void newMessage(const InspectableSelectionManager::SelectionEvent &e) override;
 
 	static BlockViz * create(const String &contentName) { return new BlockViz(contentName); }
 

@@ -26,12 +26,12 @@ BlockViz::BlockViz(const String & contentName) :
 	addAndMakeVisible(shapeUI);
 
 	
-	InspectableSelectionManager::mainSelectionManager->addSelectionListener(this);
+	InspectableSelectionManager::mainSelectionManager->addAsyncSelectionManagerListener(this);
 }
 
 BlockViz::~BlockViz()
 {
-	if(InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeSelectionListener(this);
+	if(InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeAsyncSelectionManagerListener(this);
 }
 
 void BlockViz::resized()
@@ -49,34 +49,37 @@ void BlockViz::resized()
 	if(propViz != nullptr) propViz->setBounds(r);
 }
 
-
-void BlockViz::inspectablesSelectionChanged()
+void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 {
-	LightBlockColorProvider * m = InspectableSelectionManager::mainSelectionManager->getInspectableAs<LightBlockColorProvider>();
-	if (m != nullptr)
+	if (e.type == InspectableSelectionManager::SelectionEvent::SELECTION_CHANGED)
 	{
-		idUI->setVisible(true);
-		resolutionUI->setVisible(true);
-		shapeUI->setVisible(true);
-		vizProp.setBlockFromProvider(m);
-		if (propViz != nullptr) removeChildComponent(propViz);
-		propViz = new PropViz(&vizProp);
-		addAndMakeVisible(propViz);
-		resized();
-		return;
-	}
+		LightBlockColorProvider * m = InspectableSelectionManager::mainSelectionManager->getInspectableAs<LightBlockColorProvider>();
+		if (m != nullptr)
+		{
+			idUI->setVisible(true);
+			resolutionUI->setVisible(true);
+			shapeUI->setVisible(true);
+			vizProp.setBlockFromProvider(m);
+			if (propViz != nullptr) removeChildComponent(propViz);
+			propViz = new PropViz(&vizProp);
+			addAndMakeVisible(propViz);
+			resized();
+			return;
+		}
 
-	Prop * p = InspectableSelectionManager::mainSelectionManager->getInspectableAs<Prop>();
-	if (p != nullptr)
-	{
-		idUI->setVisible(false);
-		resolutionUI->setVisible(false);
-		shapeUI->setVisible(false);
-		vizProp.setBlockFromProvider(m);
-		if (propViz != nullptr) removeChildComponent(propViz);
-		propViz = new PropViz(p);
-		addAndMakeVisible(propViz);
-		resized();
-		return;
+		Prop * p = InspectableSelectionManager::mainSelectionManager->getInspectableAs<Prop>();
+		if (p != nullptr)
+		{
+			idUI->setVisible(false);
+			resolutionUI->setVisible(false);
+			shapeUI->setVisible(false);
+			vizProp.setBlockFromProvider(m);
+			if (propViz != nullptr) removeChildComponent(propViz);
+			propViz = new PropViz(p);
+			addAndMakeVisible(propViz);
+			resized();
+			return;
+		}
 	}
+	
 }
