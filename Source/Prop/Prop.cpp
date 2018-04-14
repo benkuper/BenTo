@@ -86,6 +86,13 @@ void Prop::onContainerParameterChanged(Parameter * p)
 	{
 		colors.fill(findPropMode->boolValue() ? Colours::white.withBrightness(.2f) : Colours::black);
 		sendColorsToProp();
+	} else if (p == enabled)
+	{
+		if (!enabled->boolValue())
+		{
+			colors.fill(Colours::black);
+			sendColorsToProp(true);
+		}
 	}
 }
 
@@ -100,6 +107,12 @@ void Prop::colorsUpdated()
 	propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
 
 	if(!findPropMode->boolValue()) sendColorsToProp();
+}
+
+void Prop::sendColorsToProp(bool forceSend)
+{
+	if (!enabled->boolValue() && !forceSend) return;
+	sendColorsToPropInternal();
 }
 
 var Prop::getJSONData()

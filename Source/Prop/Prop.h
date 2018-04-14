@@ -47,7 +47,8 @@ public:
 	void inspectableDestroyed(Inspectable *) override;
 
 	void colorsUpdated() override;
-	virtual void sendColorsToProp() {} // to override
+	void sendColorsToProp(bool forceSend = false);
+	virtual void sendColorsToPropInternal() {}
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

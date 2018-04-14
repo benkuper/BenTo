@@ -22,10 +22,8 @@ FlowtoysProp::~FlowtoysProp()
 {
 }
 
-void FlowtoysProp::sendColorsToProp()
+void FlowtoysProp::sendColorsToPropInternal()
 {
-	if (!enabled->boolValue()) return;
-
 	const int numLeds = resolution->intValue();
 	Array<uint8> data;
 

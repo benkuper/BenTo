@@ -25,6 +25,6 @@ public:
 
 	const int remotePort = 8888; //Bento udp streaming is done on this port, period.
 
-	virtual void sendColorsToProp() override;
+	virtual void sendColorsToPropInternal() override;
 
 };
