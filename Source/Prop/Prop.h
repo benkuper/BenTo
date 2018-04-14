@@ -22,7 +22,7 @@ public:
 	enum Shape { CLUB, BALL, POI, HOOP };
 
 	Prop(const String &name = "Prop", var params = var());
-	~Prop();
+	virtual ~Prop();
 
 	IntParameter * id;
 	IntParameter * resolution;
@@ -38,6 +38,8 @@ public:
 	ScopedPointer<LightBlock> currentBlock;
 
 	TargetParameter * activeProvider; 
+
+	virtual void clearItem() override;
 
 	void setBlockFromProvider(LightBlockColorProvider * model);
 

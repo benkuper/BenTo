@@ -39,6 +39,10 @@ Prop::Prop(const String &name, var) :
 Prop::~Prop()
 {
 	setBlockFromProvider(nullptr);
+}
+
+void Prop::clearItem()
+{
 	colors.fill(Colours::black);
 	sendColorsToProp();
 }
@@ -81,7 +85,6 @@ void Prop::onContainerParameterChanged(Parameter * p)
 	} else if (p == findPropMode)
 	{
 		colors.fill(findPropMode->boolValue() ? Colours::white.withBrightness(.2f) : Colours::black);
-		DBG("here send colors");
 		sendColorsToProp();
 	}
 }
