@@ -9,3 +9,24 @@
 */
 
 #pragma once
+#include "../../ColorNode.h"
+
+class CompositeNode :
+	public ColorNode
+{
+public:
+	CompositeNode(var params = var());
+	~CompositeNode();
+
+	enum BlendMode { ADD, SUBTRACT, MIX, MAX, MIN};
+
+	ColorSlot * c1;
+	ColorSlot * c2;
+
+	EnumParameter * blendMode;
+
+	Array<Colour> getColorsForProp(Prop * p) override;
+
+	String getTypeString() const override { return "Composite"; }
+	static CompositeNode * create(var params) { return new CompositeNode(params); }
+};

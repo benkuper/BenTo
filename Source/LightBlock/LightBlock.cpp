@@ -34,6 +34,12 @@ LightBlock::~LightBlock()
 	if (!provider.wasObjectDeleted()) provider->removeColorProviderListener(this);
 }
 
+void LightBlock::update()
+{
+	provider->updateColorsForBlock(this);
+	blockListeners.call(&LightBlockListener::colorsUpdated);
+}
+
 void LightBlock::timerCallback()
 {
 	if (provider.wasObjectDeleted())
@@ -43,8 +49,7 @@ void LightBlock::timerCallback()
 		return;
 	}
 
-	provider->updateColorsForBlock(this);
-	blockListeners.call(&LightBlockListener::colorsUpdated);
+	update();
 }
 
 void LightBlock::rebuildArgsFromModel()

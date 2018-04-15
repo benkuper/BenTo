@@ -37,6 +37,12 @@
             <FILE id="Xx2lGU" name="ModelNode.h" compile="0" resource="0" file="Source/Node/nodes/model/ModelNode.h"/>
           </GROUP>
           <GROUP id="{392509D7-15A5-446F-8961-24B4A8A18EAC}" name="parameter">
+            <GROUP id="{A15A1A3B-44EF-6472-996C-4C76BEB64F29}" name="ui">
+              <FILE id="VATU8S" name="ParameterNodeViewUI.cpp" compile="1" resource="0"
+                    file="Source/Node/nodes/parameter/ParameterNodeViewUI.cpp"/>
+              <FILE id="DRyOf1" name="ParameterNodeViewUI.h" compile="0" resource="0"
+                    file="Source/Node/nodes/parameter/ParameterNodeViewUI.h"/>
+            </GROUP>
             <FILE id="cqtjG9" name="ParameterNode.cpp" compile="1" resource="0"
                   file="Source/Node/nodes/parameter/ParameterNode.cpp"/>
             <FILE id="HLC90L" name="ParameterNode.h" compile="0" resource="0" file="Source/Node/nodes/parameter/ParameterNode.h"/>
@@ -59,10 +65,18 @@
           </GROUP>
         </GROUP>
         <GROUP id="{8AFF8E07-3FDB-1A8C-B05B-8047DBECAC01}" name="ui">
+          <FILE id="fOM5Vo" name="ColorNodeViewUI.cpp" compile="1" resource="0"
+                file="Source/Node/ui/ColorNodeViewUI.cpp"/>
+          <FILE id="QWOPFs" name="ColorNodeViewUI.h" compile="0" resource="0"
+                file="Source/Node/ui/ColorNodeViewUI.h"/>
           <FILE id="Rks54Q" name="NodeBlockEditor.cpp" compile="1" resource="0"
                 file="Source/Node/ui/NodeBlockEditor.cpp"/>
           <FILE id="Miy5QU" name="NodeBlockEditor.h" compile="0" resource="0"
                 file="Source/Node/ui/NodeBlockEditor.h"/>
+          <FILE id="rZ0bPE" name="NodeConnectionManagerUI.cpp" compile="1" resource="0"
+                file="Source/Node/ui/NodeConnectionManagerUI.cpp"/>
+          <FILE id="ajqa6D" name="NodeConnectionManagerUI.h" compile="0" resource="0"
+                file="Source/Node/ui/NodeConnectionManagerUI.h"/>
           <FILE id="wY2rKo" name="NodeConnectionUI.cpp" compile="1" resource="0"
                 file="Source/Node/ui/NodeConnectionUI.cpp"/>
           <FILE id="w2TrzQ" name="NodeConnectionUI.h" compile="0" resource="0"
@@ -75,10 +89,16 @@
         </GROUP>
         <FILE id="WU85tK" name="Node.cpp" compile="1" resource="0" file="Source/Node/Node.cpp"/>
         <FILE id="kjw6qV" name="Node.h" compile="0" resource="0" file="Source/Node/Node.h"/>
+        <FILE id="ziUiAL" name="ColorNode.cpp" compile="1" resource="0" file="Source/Node/ColorNode.cpp"/>
+        <FILE id="HRDJ3S" name="ColorNode.h" compile="0" resource="0" file="Source/Node/ColorNode.h"/>
         <FILE id="xi4R0C" name="NodeConnection.cpp" compile="1" resource="0"
               file="Source/Node/NodeConnection.cpp"/>
         <FILE id="dSYzQi" name="NodeConnection.h" compile="0" resource="0"
               file="Source/Node/NodeConnection.h"/>
+        <FILE id="ddEfSB" name="NodeConnectionSlot.cpp" compile="1" resource="0"
+              file="Source/Node/NodeConnectionSlot.cpp"/>
+        <FILE id="uv2drl" name="NodeConnectionSlot.h" compile="0" resource="0"
+              file="Source/Node/NodeConnectionSlot.h"/>
         <FILE id="u5KAnY" name="NodeConnectionManager.cpp" compile="1" resource="0"
               file="Source/Node/NodeConnectionManager.cpp"/>
         <FILE id="NxpspL" name="NodeConnectionManager.h" compile="0" resource="0"

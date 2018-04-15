@@ -1,25 +1,12 @@
 /*
   ==============================================================================
 
-    LightBlockModel.cpp
-    Created: 10 Apr 2018 7:12:39pm
-    Author:  Ben
+	LightBlockModel.cpp
+	Created: 10 Apr 2018 7:12:39pm
+	Author:  Ben
 
   ==============================================================================
 */
-
-#include "LightBlockModel.h"
-
-/*
-==============================================================================
-
-LightBlockModel.cpp
-Created: 15 Jan 2017 4:53:09pm
-Author:  Ben
-
-==============================================================================
-*/
-
 
 #include "LightBlockModel.h"
 #include "../LightBlock.h"
@@ -32,6 +19,7 @@ LightBlockModel::LightBlockModel(const String &name, var params) :
 {
 	itemDataType = "LightBlockModel";
 	paramsContainer = new ControllableContainer("Parameters");
+	paramsContainer->saveAndLoadName = false;
 	addChildControllableContainer(paramsContainer);
 	addChildControllableContainer(&presetManager);
 }
@@ -74,14 +62,18 @@ void LightBlockModel::setCustomThumbnail(String path)
 var LightBlockModel::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	if(paramsContainer != nullptr) data.getDynamicObject()->setProperty("parameters", paramsContainer->getJSONData());
-	data.getDynamicObject()->setProperty("presets", presetManager.getJSONData());
+	if (paramsContainer != nullptr)
+	{
+		var cData = paramsContainer->getJSONData();
+		if (cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("parameters", cData);
+	}
+	if (presetManager.items.size() > 0) data.getDynamicObject()->setProperty("presets", presetManager.getJSONData());
 	return data;
 }
 
 void LightBlockModel::loadJSONDataInternal(var data)
 {
-	if(paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("parameters", var()));
+	if (paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("parameters", var()));
 	presetManager.loadJSONData(data.getProperty("presets", var()));
 }
 void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *)

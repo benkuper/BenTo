@@ -9,3 +9,12 @@
 */
 
 #include "ColorRemapNode.h"
+
+ColorRemapNode::ColorRemapNode(var params) :
+	ColorNode(getTypeString(), params)
+{
+}
+
+ColorRemapNode::~ColorRemapNode()
+{
+}

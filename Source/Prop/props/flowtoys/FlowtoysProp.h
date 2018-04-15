@@ -23,7 +23,7 @@ public:
 	BoolParameter * button;
 	DatagramSocket sender;
 
-	const int remotePort = 8888; //Bento udp streaming is done on this port, period.
+	const int remotePort = 8888; //Bento udp streaming is done on this port
 
 	virtual void sendColorsToPropInternal() override;
 

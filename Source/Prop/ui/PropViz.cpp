@@ -34,7 +34,7 @@ void PropViz::paint(Graphics & g)
 
 	int numLeds = prop->resolution->intValue();
 	float ratio = getWidth()*1.0f / getHeight(); 
-	int ledSize = (ratio > (1.0f/numLeds)?getHeight():getWidth()) / numLeds;
+	int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 1);
 	
 	Rectangle<int> lr(getLocalBounds());
 	lr = lr.withSizeKeepingCentre(ledSize, ledSize*numLeds);

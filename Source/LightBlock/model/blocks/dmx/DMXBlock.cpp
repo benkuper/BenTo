@@ -13,6 +13,8 @@
 DMXBlock::DMXBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {
+	saveAndLoadName = false;
+	saveType = false;
 }
 
 DMXBlock::~DMXBlock()

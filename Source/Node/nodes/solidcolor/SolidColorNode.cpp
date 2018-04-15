@@ -9,3 +9,25 @@
 */
 
 #include "SolidColorNode.h"
+
+SolidColorNode::SolidColorNode(var params) :
+	ColorNode(getTypeString(), params)
+{
+
+	color = addColorParameter("Color", "Color to fill the prop", Colours::azure);
+	addParameterSlot(true, color);
+}
+
+SolidColorNode::~SolidColorNode()
+{
+}
+
+Array<Colour> SolidColorNode::getColorsForProp(Prop * p)
+{
+	Array<Colour> result;
+	for (int i = 0; i < p->resolution->intValue(); i++)
+	{
+		result.add(color->getColor());
+	}
+	return result;
+}

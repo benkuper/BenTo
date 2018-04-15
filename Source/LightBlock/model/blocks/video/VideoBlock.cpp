@@ -14,6 +14,8 @@
 VideoBlock::VideoBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {
+	saveAndLoadName = false;
+	saveType = false;
 }
 
 VideoBlock::~VideoBlock()

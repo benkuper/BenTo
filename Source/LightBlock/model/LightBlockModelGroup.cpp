@@ -15,7 +15,8 @@ var LightBlockModelGroup::getJSONData()
 	var data = ControllableContainer::getJSONData();
 	for (auto &cc : controllableContainers)
 	{
-		data.getDynamicObject()->setProperty(cc->shortName, cc->getJSONData());
+		var ccData = cc->getJSONData();
+		if(ccData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(cc->shortName, ccData);
 	}
 	return data;
 }

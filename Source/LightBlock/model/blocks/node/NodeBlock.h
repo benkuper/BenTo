@@ -23,6 +23,11 @@ public:
 	NodeManager manager;
 
 	String getTypeString() const override { return "Node"; }
+	
+	void updateColorsForBlock(LightBlock * b, var params = var()) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	static NodeBlock * create(var params) { return new NodeBlock(params); }
 };

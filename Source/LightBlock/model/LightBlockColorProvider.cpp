@@ -15,6 +15,7 @@ LightBlockColorProvider::LightBlockColorProvider(const String & name, bool canBe
 	BaseItem(name, canBeDisabled,canHaveScripts)
 {
 	assignToAll = addTrigger("Assign To All", "Assign this Model or Preset to all props");
+	viewUISize->isSavable = false;
 }
 
 LightBlockColorProvider::~LightBlockColorProvider() {

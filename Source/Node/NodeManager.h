@@ -11,6 +11,10 @@
 #pragma once
 
 #include "Node.h"
+#include "NodeConnectionManager.h"
+
+class Prop;
+class PropNode;
 
 class NodeManager :
 	public BaseManager<Node>
@@ -18,4 +22,16 @@ class NodeManager :
 public:
 	NodeManager();
 	~NodeManager();
+
+	Factory<Node> factory;
+	PropNode * propNode;
+	Prop prop;
+
+	NodeConnectionManager connectionManager;
+
+	NodeConnectionSlot * getSlotForName(const String &nodeName, const String &slotName, bool isInput);
+
+	var getJSONData() override;
+	void loadJSONDataManagerInternal(var data) override;
+
 };

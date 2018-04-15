@@ -8,4 +8,28 @@
   ==============================================================================
 */
 
+
 #pragma once
+#include "../../ColorNode.h"
+
+class PositionRemapNode :
+	public ColorNode
+{
+public:
+	PositionRemapNode(var params = var());
+	~PositionRemapNode();
+
+	Parameter * position;
+	Parameter * size;
+
+	ColorSlot * inColors;
+	ParameterSlot * positionSlot;
+	ParameterSlot * sizeSlot;
+
+	Prop fakeProp;
+
+	Array<Colour> getColorsForProp(Prop *p) override;
+
+	String getTypeString() const override { return "Position Remap"; }
+	static PositionRemapNode * create(var params) { return new PositionRemapNode(params); }
+};

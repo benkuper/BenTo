@@ -9,3 +9,25 @@
 */
 
 #pragma once
+#include "../../ColorNode.h"
+
+class ModelNode :
+	public ColorNode
+{
+public:
+	ModelNode(var params = var());
+	~ModelNode();
+
+	ScopedPointer<LightBlock> currentBlock;
+	TargetParameter * activeProvider;
+	Prop fakeProp;
+
+	void setBlockFromProvider(LightBlockColorProvider * provider);
+
+	Array<Colour> getColorsForProp(Prop * p) override;
+
+	void onContainerParameterChanged(Parameter * p) override;
+
+	String getTypeString() const override { return "Model"; }
+	static ModelNode * create(var params) { return new ModelNode(params); }
+};

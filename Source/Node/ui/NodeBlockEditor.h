@@ -13,6 +13,7 @@
 #include "LightBlock/model/blocks/node/NodeBlock.h"
 #include "NodeManagerUI.h"
 
+
 class NodeBlockEditor :
 	public ShapeShifterContentComponent,
 	public InspectableSelectionManager::AsyncListener,
@@ -24,6 +25,7 @@ public:
 
 	NodeBlock * nodeBlock;
 	WeakReference<Inspectable> nodeBlockRef;
+
 
 	ScopedPointer<NodeManagerUI> managerUI;
 

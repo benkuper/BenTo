@@ -9,3 +9,25 @@
 */
 
 #pragma once
+
+#include "NodeConnectionSlot.h"
+class NodeManager;
+
+class NodeConnection :
+	public BaseItem
+{
+public:
+	NodeConnection(NodeManager * manager = nullptr);
+	~NodeConnection();
+
+	WeakReference<NodeConnectionSlot> sourceSlot;
+	WeakReference<NodeConnectionSlot> destSlot;
+
+	NodeManager * nodeManager;
+	ConnectionType type;
+
+	void setSlots(NodeConnectionSlot * source, NodeConnectionSlot * dest);
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+};

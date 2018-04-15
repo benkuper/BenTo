@@ -37,7 +37,8 @@ PropManager::PropManager() :
 
 	StringArray a;
 	a.addTokens(localIp, ".", "\"");
-	String broadcastIp = a[0] + "." + a[1] + "." + a[2] + ".255";
+	String broadcastIp = "192.168.1.255";
+	if(a.size() == 4) broadcastIp = a[0] + "." + a[1] + "." + a[2] + ".255";
 
 	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.",localIp);
 	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs",broadcastIp);

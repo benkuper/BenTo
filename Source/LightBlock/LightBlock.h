@@ -27,6 +27,8 @@ public:
 	
 	ControllableContainer paramsContainer;
 
+	void update();
+
 	void timerCallback();
 
 	void rebuildArgsFromModel();

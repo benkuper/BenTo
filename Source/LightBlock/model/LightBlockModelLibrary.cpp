@@ -60,9 +60,13 @@ void LightBlockModelLibrary::clear()
 var LightBlockModelLibrary::getJSONData()
 {
 	var data = ControllableContainer::getJSONData();
-	data.getDynamicObject()->setProperty("generic", genericBlocks.getJSONData());
-	data.getDynamicObject()->setProperty("liveFeeds", liveFeedBlocks.getJSONData());
-	data.getDynamicObject()->setProperty("userBlocks", userBlocks.getJSONData());
+
+	var gData = genericBlocks.getJSONData();
+	if(gData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("generic", gData);
+	var lData = liveFeedBlocks.getJSONData();
+	if (lData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("liveFeeds", lData);
+	var uData = userBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("userBlocks", uData);
 
 	return data;
 }

@@ -12,13 +12,39 @@
 
 #include "../NodeManager.h"
 #include "NodeViewUI.h"
+#include "NodeConnectionManagerUI.h"
 
 class NodeManagerUI :
-	public BaseManagerViewUI<NodeManager, Node, NodeViewUI>
+	public BaseManagerViewUI<NodeManager, Node, NodeViewUI>,
+	public Timer
 {
 public:
 	NodeManagerUI(NodeManager * manager);
 	~NodeManagerUI();
 
+	NodeViewUI::Connector * startConnector; //for when connecting
+	NodeViewUI::Connector * dropConnector;
+	const int dropDistance = 20;
 	
+	ScopedPointer<NodeConnectionManagerUI> connectionsUI;
+
+	
+	void paintOverChildren(Graphics &g) override;
+	void drawConnectionCreation(Graphics &g);
+	void resized() override;
+
+
+	NodeViewUI::Connector * getDropCandidate();
+
+	NodeViewUI::Connector * getConnectorForSlot(NodeConnectionSlot * s);
+
+	NodeViewUI * createUIForItem(Node * item) override;
+
+	
+	void mouseDown(const MouseEvent &e) override;
+	void mouseDrag(const MouseEvent &e) override;
+	void mouseUp(const MouseEvent &e) override;
+	void mouseEnter(const MouseEvent &e) override;
+
+	void timerCallback() override;
 };
