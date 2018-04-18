@@ -1,0 +1,101 @@
+{
+  "mainLayout": {
+    "type": 1,
+    "width": 1920,
+    "height": 997,
+    "direction": 2,
+    "shifters": [
+      {
+        "type": 1,
+        "width": 1920,
+        "height": 997,
+        "direction": 2,
+        "shifters": [
+          {
+            "type": 1,
+            "width": 1920,
+            "height": 638,
+            "direction": 1,
+            "shifters": [
+              {
+                "type": 0,
+                "width": 280,
+                "height": 638,
+                "currentContent": "Blocks",
+                "tabs": [
+                  {
+                    "name": "Blocks"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 1297,
+                "height": 638,
+                "currentContent": "Node Editor",
+                "tabs": [
+                  {
+                    "name": "Node Editor"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 329,
+                "height": 638,
+                "currentContent": "Inspector",
+                "tabs": [
+                  {
+                    "name": "Inspector"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": 1,
+            "width": 1920,
+            "height": 352,
+            "direction": 1,
+            "shifters": [
+              {
+                "type": 0,
+                "width": 1348,
+                "height": 352,
+                "currentContent": "Props",
+                "tabs": [
+                  {
+                    "name": "Props"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 289,
+                "height": 352,
+                "currentContent": "Block Visualizer",
+                "tabs": [
+                  {
+                    "name": "Block Visualizer"
+                  }
+                ]
+              },
+              {
+                "type": 0,
+                "width": 269,
+                "height": 352,
+                "currentContent": "Logger",
+                "tabs": [
+                  {
+                    "name": "Logger"
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      }
+    ]
+  },
+  "windows": null
+}

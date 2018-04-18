@@ -15,8 +15,7 @@
 
 class LightBlock :
 	public BaseItem,
-	public LightBlockColorProvider::ProviderListener,
-	public Timer
+	public LightBlockColorProvider::ProviderListener
 {
 public:
 	LightBlock(LightBlockColorProvider * provider, Prop * prop, var params = var());
@@ -28,8 +27,6 @@ public:
 	ControllableContainer paramsContainer;
 
 	void update();
-
-	void timerCallback();
 
 	void rebuildArgsFromModel();
 	void providerParametersChanged(LightBlockColorProvider *) override;

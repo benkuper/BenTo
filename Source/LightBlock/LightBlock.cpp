@@ -26,8 +26,8 @@ LightBlock::LightBlock(LightBlockColorProvider * provider, Prop * prop, var para
 	rebuildArgsFromModel();
 	provider->addColorProviderListener(this);
 
-	startTimerHz(50);
 }
+
 
 LightBlock::~LightBlock()
 {
@@ -38,18 +38,6 @@ void LightBlock::update()
 {
 	provider->updateColorsForBlock(this);
 	blockListeners.call(&LightBlockListener::colorsUpdated);
-}
-
-void LightBlock::timerCallback()
-{
-	if (provider.wasObjectDeleted())
-	{
-		DBG("Provider has been deleted !");
-		stopTimer();
-		return;
-	}
-
-	update();
 }
 
 void LightBlock::rebuildArgsFromModel()

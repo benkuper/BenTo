@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PositionRemapNode.cpp
-    Created: 13 Apr 2018 11:30:20pm
-    Author:  Ben
+	PositionRemapNode.cpp
+	Created: 13 Apr 2018 11:30:20pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -29,13 +29,13 @@ PositionRemapNode::~PositionRemapNode()
 Array<Colour> PositionRemapNode::getColorsForProp(Prop * p)
 {
 	int numLeds = size->floatValue()*p->resolution->intValue();
-	int firstLed = position->floatValue()*p->resolution->intValue();
+	int firstLed = (position->floatValue() - size->floatValue() / 2) *p->resolution->intValue();
 	fakeProp.resolution->setValue(numLeds);
 	fakeProp.id->setValue(p->id->value);
 
 	Array<Colour> result = ColorNode::getColorsForProp(p);
 	Array<Colour> c = inColors->getColorsForProp(&fakeProp);
-	
+
 	for (int i = 0; i < numLeds; i++)
 	{
 		int index = firstLed + i;

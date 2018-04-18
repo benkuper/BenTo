@@ -74,6 +74,15 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 	propNotifier.addMessage(new PropEvent(PropEvent::BLOCK_CHANGED, this));
 }
 
+void Prop::update()
+{
+	if (currentBlock != nullptr) currentBlock->update();
+	propListeners.call(&PropListener::colorsUpdated, this);
+	propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
+
+	if (!findPropMode->boolValue()) sendColorsToProp();
+}
+
 void Prop::onContainerParameterChanged(Parameter * p)
 {
 	if (p == activeProvider)
@@ -101,6 +110,7 @@ void Prop::inspectableDestroyed(Inspectable * i)
 	if (currentBlock != nullptr && i == currentBlock->provider) setBlockFromProvider(nullptr);
 }
 
+/*
 void Prop::colorsUpdated()
 {
 	propListeners.call(&PropListener::colorsUpdated, this);
@@ -108,6 +118,7 @@ void Prop::colorsUpdated()
 
 	if(!findPropMode->boolValue()) sendColorsToProp();
 }
+*/
 
 void Prop::sendColorsToProp(bool forceSend)
 {

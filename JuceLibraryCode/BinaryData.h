@@ -35,11 +35,14 @@ namespace BinaryData
     extern const char*   video_png;
     const int            video_pngSize = 6004;
 
+    extern const char*   default_btlayout;
+    const int            default_btlayoutSize = 2467;
+
     extern const char*   icon_png;
     const int            icon_pngSize = 98974;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 10;
+    const int namedResourceListSize = 11;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

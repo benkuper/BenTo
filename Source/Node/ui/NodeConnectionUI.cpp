@@ -61,7 +61,7 @@ void NodeConnectionUI::buildPath()
 
 	path.clear(); 
 	path.startNewSubPath(sp);
-	path.cubicTo(sp.translated(30, 0), dp.translated(-30, 0), dp);
+	path.cubicTo(sp.translated(60, 0), dp.translated(-60, 0), dp);
 
 	buildHitPath();
 }

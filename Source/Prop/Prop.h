@@ -43,10 +43,12 @@ public:
 
 	void setBlockFromProvider(LightBlockColorProvider * model);
 
+	void update();
+
 	void onContainerParameterChanged(Parameter * p) override;
 	void inspectableDestroyed(Inspectable *) override;
 
-	void colorsUpdated() override;
+	//void colorsUpdated() override;
 	void sendColorsToProp(bool forceSend = false);
 	virtual void sendColorsToPropInternal() {}
 

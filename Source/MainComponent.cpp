@@ -12,6 +12,7 @@
 #include "Prop/ui/PropManagerUI.h"
 #include "BlockViz/BlockVizPanel.h"
 #include "Node/ui/NodeBlockEditor.h"
+#include "Timeline/TimelineEditor.h"
 
 //==============================================================================
 MainComponent::MainComponent()
@@ -28,7 +29,8 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Blocks", &LightBlockModelLibraryUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Block Visualizer", &BlockViz::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Node Editor", &NodeBlockEditor::create));
-	
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timeline  Editor", &TimelineEditor::create));
+
 	OrganicMainContentComponent::init();
 }
 

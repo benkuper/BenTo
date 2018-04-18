@@ -51,7 +51,7 @@ void NodeManagerUI::drawConnectionCreation(Graphics &g)
 	Point<float> p2 = startConnector->slot->isInput ? sp : dp;
 	Path p;
 	p.startNewSubPath(p1);
-	p.cubicTo(p1.translated(30, 0), p2.translated(-30, 0), p2);
+	p.cubicTo(p1.translated(60, 0), p2.translated(-60, 0), p2);
 	g.strokePath(p, PathStrokeType(3));
 }
 

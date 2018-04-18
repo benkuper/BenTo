@@ -16,9 +16,55 @@
         <FILE id="Rlqbru" name="timeline.png" compile="0" resource="1" file="Resources/models/timeline.png"/>
         <FILE id="ZghcER" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>
       </GROUP>
+      <FILE id="jaq4JI" name="default.btlayout" compile="0" resource="1"
+            file="Resources/default.btlayout"/>
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Timeline">
+        <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
+          <GROUP id="{A00ED23C-4B48-75CB-7911-E2C659ADA7F6}" name="BlockLayer">
+            <GROUP id="{8B8B8A4A-F021-600B-344E-0D211A44C9D8}" name="ui">
+              <FILE id="YvFGK0" name="LightBlockClipManagerUI.cpp" compile="1" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp"/>
+              <FILE id="K8SGh7" name="LightBlockClipManagerUI.h" compile="0" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.h"/>
+              <FILE id="pdpqJ7" name="LightBlockClipUI.cpp" compile="1" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockClipUI.cpp"/>
+              <FILE id="Bubcp9" name="LightBlockClipUI.h" compile="0" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockClipUI.h"/>
+              <FILE id="tSDDee" name="LightBlockLayerPanel.cpp" compile="1" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp"/>
+              <FILE id="owrELj" name="LightBlockLayerPanel.h" compile="0" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h"/>
+              <FILE id="djPcg4" name="LightBlockLayerTimeline.cpp" compile="1" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.cpp"/>
+              <FILE id="gxLhFE" name="LightBlockLayerTimeline.h" compile="0" resource="0"
+                    file="Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.h"/>
+            </GROUP>
+            <FILE id="wEJXJP" name="LightBlockClip.cpp" compile="1" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockClip.cpp"/>
+            <FILE id="VxyeHG" name="LightBlockClip.h" compile="0" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockClip.h"/>
+            <FILE id="R5TU19" name="LightBlockClipManager.cpp" compile="1" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockClipManager.cpp"/>
+            <FILE id="c5NS7j" name="LightBlockClipManager.h" compile="0" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockClipManager.h"/>
+            <FILE id="t8NxFM" name="LightBlockLayer.cpp" compile="1" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockLayer.cpp"/>
+            <FILE id="lOb1Wl" name="LightBlockLayer.h" compile="0" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockLayer.h"/>
+          </GROUP>
+        </GROUP>
+        <FILE id="GGKa6S" name="TimelineBlockSequence.cpp" compile="1" resource="0"
+              file="Source/Timeline/TimelineBlockSequence.cpp"/>
+        <FILE id="gsgndr" name="TimelineBlockSequence.h" compile="0" resource="0"
+              file="Source/Timeline/TimelineBlockSequence.h"/>
+        <FILE id="TrhEoc" name="TimelineEditor.cpp" compile="1" resource="0"
+              file="Source/Timeline/TimelineEditor.cpp"/>
+        <FILE id="xhjR6g" name="TimelineEditor.h" compile="0" resource="0"
+              file="Source/Timeline/TimelineEditor.h"/>
+      </GROUP>
       <GROUP id="{B442BAE5-1BDF-4D74-47E1-DC8E4A866FEF}" name="Node">
         <GROUP id="{983B72E8-0A02-C1C3-CCCB-B64FE65F2FEA}" name="nodes">
           <GROUP id="{1666FCD0-6E9D-B464-E9FF-C20C2EFBB292}" name="colorRemap">
@@ -279,6 +325,8 @@
         <MODULEPATH id="juce_audio_processors" path="../../Softwares/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../Perso/Projects/JUCE Modules"/>
         <MODULEPATH id="juce_osc" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../../../../Softwares/JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -287,6 +335,7 @@
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
@@ -297,6 +346,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
   </MODULES>
   <JUCEOPTIONS/>

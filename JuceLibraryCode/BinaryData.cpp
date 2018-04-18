@@ -514,8 +514,114 @@ static const unsigned char temp_binary_data_8[] =
 
 const char* video_png = (const char*) temp_binary_data_8;
 
-//================== icon.png ==================
+//================== default.btlayout ==================
 static const unsigned char temp_binary_data_9[] =
+"{\r\n"
+"  \"mainLayout\": {\r\n"
+"    \"type\": 1,\r\n"
+"    \"width\": 1920,\r\n"
+"    \"height\": 997,\r\n"
+"    \"direction\": 2,\r\n"
+"    \"shifters\": [\r\n"
+"      {\r\n"
+"        \"type\": 1,\r\n"
+"        \"width\": 1920,\r\n"
+"        \"height\": 997,\r\n"
+"        \"direction\": 2,\r\n"
+"        \"shifters\": [\r\n"
+"          {\r\n"
+"            \"type\": 1,\r\n"
+"            \"width\": 1920,\r\n"
+"            \"height\": 638,\r\n"
+"            \"direction\": 1,\r\n"
+"            \"shifters\": [\r\n"
+"              {\r\n"
+"                \"type\": 0,\r\n"
+"                \"width\": 280,\r\n"
+"                \"height\": 638,\r\n"
+"                \"currentContent\": \"Blocks\",\r\n"
+"                \"tabs\": [\r\n"
+"                  {\r\n"
+"                    \"name\": \"Blocks\"\r\n"
+"                  }\r\n"
+"                ]\r\n"
+"              },\r\n"
+"              {\r\n"
+"                \"type\": 0,\r\n"
+"                \"width\": 1297,\r\n"
+"                \"height\": 638,\r\n"
+"                \"currentContent\": \"Node Editor\",\r\n"
+"                \"tabs\": [\r\n"
+"                  {\r\n"
+"                    \"name\": \"Node Editor\"\r\n"
+"                  }\r\n"
+"                ]\r\n"
+"              },\r\n"
+"              {\r\n"
+"                \"type\": 0,\r\n"
+"                \"width\": 329,\r\n"
+"                \"height\": 638,\r\n"
+"                \"currentContent\": \"Inspector\",\r\n"
+"                \"tabs\": [\r\n"
+"                  {\r\n"
+"                    \"name\": \"Inspector\"\r\n"
+"                  }\r\n"
+"                ]\r\n"
+"              }\r\n"
+"            ]\r\n"
+"          },\r\n"
+"          {\r\n"
+"            \"type\": 1,\r\n"
+"            \"width\": 1920,\r\n"
+"            \"height\": 352,\r\n"
+"            \"direction\": 1,\r\n"
+"            \"shifters\": [\r\n"
+"              {\r\n"
+"                \"type\": 0,\r\n"
+"                \"width\": 1348,\r\n"
+"                \"height\": 352,\r\n"
+"                \"currentContent\": \"Props\",\r\n"
+"                \"tabs\": [\r\n"
+"                  {\r\n"
+"                    \"name\": \"Props\"\r\n"
+"                  }\r\n"
+"                ]\r\n"
+"              },\r\n"
+"              {\r\n"
+"                \"type\": 0,\r\n"
+"                \"width\": 289,\r\n"
+"                \"height\": 352,\r\n"
+"                \"currentContent\": \"Block Visualizer\",\r\n"
+"                \"tabs\": [\r\n"
+"                  {\r\n"
+"                    \"name\": \"Block Visualizer\"\r\n"
+"                  }\r\n"
+"                ]\r\n"
+"              },\r\n"
+"              {\r\n"
+"                \"type\": 0,\r\n"
+"                \"width\": 269,\r\n"
+"                \"height\": 352,\r\n"
+"                \"currentContent\": \"Logger\",\r\n"
+"                \"tabs\": [\r\n"
+"                  {\r\n"
+"                    \"name\": \"Logger\"\r\n"
+"                  }\r\n"
+"                ]\r\n"
+"              }\r\n"
+"            ]\r\n"
+"          }\r\n"
+"        ]\r\n"
+"      }\r\n"
+"    ]\r\n"
+"  },\r\n"
+"  \"windows\": null\r\n"
+"}";
+
+const char* default_btlayout = (const char*) temp_binary_data_9;
+
+//================== icon.png ==================
+static const unsigned char temp_binary_data_10[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,2,0,0,0,2,0,8,6,0,0,0,244,120,212,250,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,194,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,51,57,
@@ -1910,7 +2016,7 @@ static const unsigned char temp_binary_data_9[] =
 6,131,193,96,48,90,32,76,0,48,24,12,6,131,209,2,97,2,128,193,96,48,24,140,22,8,19,0,12,6,131,193,96,180,64,152,0,96,48,24,12,6,163,5,194,4,0,131,193,96,48,24,45,16,38,0,24,12,6,131,193,104,129,48,1,192,96,48,24,12,70,11,132,9,0,6,131,193,96,48,90,32,
 76,0,48,24,12,6,131,209,2,97,2,128,193,96,48,24,140,22,200,255,7,227,34,62,29,16,62,194,133,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* icon_png = (const char*) temp_binary_data_9;
+const char* icon_png = (const char*) temp_binary_data_10;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) noexcept
@@ -1931,6 +2037,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) noexc
         case 0xcdd754b5:  numBytes = 2116; return script_png;
         case 0x576fad2b:  numBytes = 1253; return timeline_png;
         case 0x4f784065:  numBytes = 6004; return video_png;
+        case 0x7448d63a:  numBytes = 2467; return default_btlayout;
         case 0xd4093963:  numBytes = 98974; return icon_png;
         default: break;
     }
@@ -1950,6 +2057,7 @@ const char* namedResourceList[] =
     "script_png",
     "timeline_png",
     "video_png",
+    "default_btlayout",
     "icon_png"
 };
 
@@ -1964,6 +2072,7 @@ const char* originalFilenames[] =
     "script.png",
     "timeline.png",
     "video.png",
+    "default.btlayout",
     "icon.png"
 };
 

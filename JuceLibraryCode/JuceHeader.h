@@ -18,6 +18,7 @@
 #include <juce_audio_devices/juce_audio_devices.h>
 #include <juce_audio_formats/juce_audio_formats.h>
 #include <juce_audio_processors/juce_audio_processors.h>
+#include <juce_audio_utils/juce_audio_utils.h>
 #include <juce_core/juce_core.h>
 #include <juce_cryptography/juce_cryptography.h>
 #include <juce_data_structures/juce_data_structures.h>
@@ -28,6 +29,7 @@
 #include <juce_opengl/juce_opengl.h>
 #include <juce_organicui/juce_organicui.h>
 #include <juce_osc/juce_osc.h>
+#include <juce_timeline/juce_timeline.h>
 #include <juce_video/juce_video.h>
 
 #include "BinaryData.h"

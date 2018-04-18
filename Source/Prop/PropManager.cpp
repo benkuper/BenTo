@@ -53,6 +53,8 @@ PropManager::PropManager() :
 
 	setupReceiver();
 	sender.connect("0.0.0.0", 9000);
+
+	startTimerHz(40);
 }
 
 PropManager::~PropManager()
@@ -154,4 +156,9 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		LOG("Message received : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
 
 	}
+}
+
+void PropManager::timerCallback()
+{
+	for (auto &p : items) p->update();
 }

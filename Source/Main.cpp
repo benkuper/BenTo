@@ -38,7 +38,7 @@ public:
 		engine = new BentoEngine(appProperties,getAppVersion());
 		mainComponent = new MainComponent();
 
-		//ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_chalayout);
+		ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);
 		ShapeShifterManager::getInstance()->setLayoutInformations("btlayout", "Bento/layouts");
     }
 };
