@@ -15,7 +15,7 @@ PropViz::PropViz(Prop * prop) :
 	prop(prop),
 	propRef(prop)
 {
-	prop->addAsyncPropListener(this);
+	prop->addAsyncCoalescedPropListener(this);
 }
 
 PropViz::~PropViz()

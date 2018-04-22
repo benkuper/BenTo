@@ -14,8 +14,7 @@
 
 class PropManager :
 	public BaseManager<Prop>,
-	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
-	public Timer
+	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
 {
 public:
 	juce_DeclareSingleton(PropManager, true)
@@ -46,6 +45,4 @@ public:
 	// Inherited via Listener
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 
-	// Inherited via Timer
-	virtual void timerCallback() override;
 };

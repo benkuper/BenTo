@@ -21,10 +21,9 @@ NodeBlock::~NodeBlock()
 {
 }
 
-void NodeBlock::updateColorsForBlock(LightBlock * b, var params)
+Array<Colour> NodeBlock::getColors(int id, int resolution, float time, var params)
 {
-	Array<Colour> r = manager.propNode->getColorsForProp(b->prop);
-	b->prop->colors.swapWith(r);
+	return  manager.propNode->getColors(id, resolution, time, params);
 }
 
 var NodeBlock::getJSONData()

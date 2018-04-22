@@ -28,12 +28,12 @@ void ColorNodeViewUI::paint(Graphics & g)
 
 	int numLeds = propToPreview->resolution->intValue();
 	float ratio = getWidth()*1.0f / getHeight();
-	int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 1);
+	int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 2);
 
 	Rectangle<int> lr(getFeedbackBounds());
 	lr = lr.withSizeKeepingCentre(ledSize, ledSize*numLeds);
 
-	Array<Colour> colors = cn->getColorsForProp(propToPreview);
+	Array<Colour> colors = cn->getColors(propToPreview->id->intValue(),numLeds,Time::getMillisecondCounter()/1000.0f,var());
 	for (int i = 0; i < numLeds; i++)
 	{
 		g.setColour(colors[i]);

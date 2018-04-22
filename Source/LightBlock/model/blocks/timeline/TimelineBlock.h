@@ -25,7 +25,7 @@ public:
 
 	TimelineBlockSequence sequence;
 
-	void updateColorsForBlock(LightBlock *b, var params = var());
+	Array<Colour> getColors(int id, int resolution, float time, var params) override;
 
 	void sequenceCurrentTimeChanged(Sequence *, float /*prevTime*/, bool /*evaluateSkippedData*/) override;
 

@@ -18,26 +18,25 @@ class LightBlock :
 	public LightBlockColorProvider::ProviderListener
 {
 public:
-	LightBlock(LightBlockColorProvider * provider, Prop * prop, var params = var());
+	LightBlock(LightBlockColorProvider * provider);
 	virtual ~LightBlock();
 
-	Prop * prop; 
 	WeakReference<LightBlockColorProvider> provider;
-	
 	ControllableContainer paramsContainer;
 
-	void update();
+	Array<Colour> getColors(int id, int resolution, float time, var params);
 
 	void rebuildArgsFromModel();
 	void providerParametersChanged(LightBlockColorProvider *) override;
+	void providerParameterValueUpdated(LightBlockColorProvider *, Parameter * p) override;
 	 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	/*
 	class  LightBlockListener
 	{
 	public:
-		/** Destructor. */
 		virtual ~LightBlockListener() {}
 		virtual void colorsUpdated() {}
 	};
@@ -45,11 +44,10 @@ public:
 	ListenerList<LightBlockListener> blockListeners;
 	void addLightBlockListener(LightBlockListener* newListener) { blockListeners.add(newListener); }
 	void removeLightBlockListener(LightBlockListener* listener) { blockListeners.remove(listener); }
+	*/
 
 
-
-	static LightBlock * create(LightBlockModel * model, Prop * prop, var params) { return new LightBlock(model, prop, params); }
-
+	static LightBlock * create(LightBlockColorProvider * provider) { return new LightBlock(provider); }
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LightBlock)
 };

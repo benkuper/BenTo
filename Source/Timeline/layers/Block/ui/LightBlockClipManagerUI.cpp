@@ -43,8 +43,8 @@ void LightBlockClipManagerUI::updateContent()
 
 void LightBlockClipManagerUI::placeClipUI(LightBlockClipUI * cui)
 {
-	int tx = timeline->getXForTime(cui->item->time->floatValue());
-	int tx2 = timeline->getXForTime(cui->item->time->floatValue() + cui->item->length->floatValue());
+	int tx = timeline->getXForTime(cui->item->startTime->floatValue());
+	int tx2 = timeline->getXForTime(cui->item->startTime->floatValue() + cui->item->length->floatValue());
 	cui->setBounds(tx, 0, tx2 - tx, getHeight());
 }
 
@@ -75,7 +75,7 @@ void LightBlockClipManagerUI::clipUIDragged(LightBlockClipUI * cui, const MouseE
 	if (!e.mods.isShiftDown())
 	{
 		float targetTime = cui->timeAtMouseDown + timeline->getTimeForX(e.getOffsetFromDragStart().x, false);
-		cui->item->time->setValue(targetTime);
+		cui->item->startTime->setValue(targetTime);
 	}
 	repaint();
 }

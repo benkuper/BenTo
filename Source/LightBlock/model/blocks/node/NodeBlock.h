@@ -24,7 +24,7 @@ public:
 
 	String getTypeString() const override { return "Node"; }
 	
-	void updateColorsForBlock(LightBlock * b, var params = var()) override;
+	Array<Colour> getColors(int id, int resolution, float time, var params) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

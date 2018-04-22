@@ -20,11 +20,10 @@ public:
 
 	ScopedPointer<LightBlock> currentBlock;
 	TargetParameter * activeProvider;
-	Prop fakeProp;
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 
-	Array<Colour> getColorsForProp(Prop * p) override;
+	Array<Colour> getColors(int id, int resolution, float time, var params) override;
 
 	void onContainerParameterChanged(Parameter * p) override;
 

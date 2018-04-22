@@ -20,18 +20,17 @@ public:
 	~LightBlockClip();
 
 	ScopedPointer<LightBlock> currentBlock;
-	Prop fakeProp;
-
+	
 	TargetParameter * activeProvider;
 
-	FloatParameter * time;
+	FloatParameter * startTime;
 	FloatParameter * length;
 
 	FloatParameter * clipPosition;
 	FloatParameter * clipSize;
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
-	Array<Colour> getColorsForProp(Prop * p);
+	Array<Colour> getColors(int id, int resolution, float time, var params);
 
 	bool isInRange(float time);
 

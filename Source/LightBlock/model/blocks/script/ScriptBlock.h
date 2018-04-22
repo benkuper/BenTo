@@ -12,6 +12,18 @@
 
 #include "../../LightBlockModel.h"
 
+class ColourScriptData :
+	public ScriptTarget
+{
+public:
+	ColourScriptData(int resolution);
+
+	Array<Colour> colorArray;
+
+	static var updateColorRGBFromScript(const var::NativeFunctionArgs &args);
+	static var updateColorHSVFromScript(const var::NativeFunctionArgs &args);
+};
+
 class ScriptBlock :
 	public LightBlockModel,
 	public Script::AsyncListener
@@ -25,7 +37,7 @@ public:
 
 	virtual Array<WeakReference<Parameter>> getModelParameters();
 
-	void updateColorsForBlock(LightBlock * prop, var params = var()) override;
+	Array<Colour> getColors(int id, int resolution, float time, var params) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *) override;
 	void childStructureChanged(ControllableContainer * cc) override;

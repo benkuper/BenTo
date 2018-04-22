@@ -21,15 +21,12 @@ ColorNode::~ColorNode()
 {
 }
 
-Array<Colour> ColorNode::getColorsForProp(Prop * p)
+Array<Colour> ColorNode::getColors(int id, int resolution, float time, var params)
 {
 	//to override by child classes
-
 	Array<Colour> result;
-	for (int i = 0; i < p->resolution->intValue(); i++)
-	{
-		result.add(Colours::black);
-	}
+	result.resize(resolution);
+	result.fill(Colours::black);
 	return result;
 }
 

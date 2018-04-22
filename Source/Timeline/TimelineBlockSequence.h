@@ -23,8 +23,6 @@ public:
 	~TimelineBlockSequence();
 
 	SequenceLayerFactory layerFactory;
-
-	void updateColorsForBlock(LightBlock *b, var params = var());
-
-	LightBlockLayer * getLayerForPropID(int id);
+	Array<Colour> getColors(int id, int resolution, float time, var params);
+	LightBlockLayer * getLayerForID(int id);
 };

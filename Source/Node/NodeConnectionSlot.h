@@ -44,7 +44,7 @@ class ColorSlot :
 public:
 	ColorSlot(Node * node, bool isInput, const String &name) : NodeConnectionSlot(node, isInput, name, ConnectionType::ColorBlock) {}
 
-	Array<Colour> getColorsForProp(Prop *);
+	Array<Colour> getColors(int id, int resolution, float time, var params);
 };
 
 class ParameterSlot :

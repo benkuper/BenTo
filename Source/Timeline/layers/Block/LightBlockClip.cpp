@@ -20,9 +20,9 @@ LightBlockClip::LightBlockClip(float _time) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 
-	time = addFloatParameter("Time", "Start time", 0, 0, INT_MAX);
-	time->setValue(time);
-	time->defaultUI = FloatParameter::TIME;
+	startTime = addFloatParameter("Start Time", "Start time", 0, 0, INT_MAX);
+	startTime->setValue(time);
+	startTime->defaultUI = FloatParameter::TIME;
 	
 	length = addFloatParameter("Length", "Length of the clip (in seconds)", 10, .1f, INT_MAX);
 	length->defaultUI = FloatParameter::TIME;
@@ -46,7 +46,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 		currentBlock = nullptr;
 	}
 
-	if (provider != nullptr) currentBlock = new LightBlock(provider, &fakeProp);
+	if (provider != nullptr) currentBlock = new LightBlock(provider);
 
 
 	if (currentBlock != nullptr)
@@ -54,29 +54,24 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 		addChildControllableContainer(currentBlock);
 	}
 }
-Array<Colour> LightBlockClip::getColorsForProp(Prop * p)
+Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var params)
 {
-	//int numLeds = clipSize->floatValue()*p->resolution->intValue();
-	//int firstLed = (clipPosition->floatValue() - clipSize->floatValue() / 2) *p->resolution->intValue();
-	fakeProp.resolution->setValue(p->resolution->intValue());
-	fakeProp.id->setValue(p->id->value);
-	if (currentBlock != nullptr) currentBlock->update();
+	if (currentBlock == nullptr)
+	{
+		Array<Colour> result;
+		result.resize(resolution);
+		result.fill(Colours::black);
+		return result;
+	}
+		
+	return currentBlock->getColors(id, resolution, time, params);
 
-	/*
-	Array<Colour> result;
-	for (int i = 0; i < firstLed; i++) result.add(Colours::black);
-	result.addArray(fakeProp.colors);
-	while (result.size() < p->resolution->intValue()) result.add(Colours::black);
-
-	return result;
-	*/
-
-	return fakeProp.colors;
+	
 }
 
 bool LightBlockClip::isInRange(float _time)
 {
-	return (_time >= time->floatValue() && _time <= time->floatValue() + length->floatValue());
+	return (_time >= startTime->floatValue() && _time <= startTime->floatValue() + length->floatValue());
 
 }
 

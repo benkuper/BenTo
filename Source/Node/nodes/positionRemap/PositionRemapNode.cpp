@@ -26,20 +26,18 @@ PositionRemapNode::~PositionRemapNode()
 {
 }
 
-Array<Colour> PositionRemapNode::getColorsForProp(Prop * p)
+Array<Colour> PositionRemapNode::getColors(int id, int resolution, float time, var params)
 {
-	int numLeds = size->floatValue()*p->resolution->intValue();
-	int firstLed = (position->floatValue() - size->floatValue() / 2) *p->resolution->intValue();
-	fakeProp.resolution->setValue(numLeds);
-	fakeProp.id->setValue(p->id->value);
+	
+	int firstLed = (position->floatValue() - size->floatValue() / 2) * resolution;
 
-	Array<Colour> result = ColorNode::getColorsForProp(p);
-	Array<Colour> c = inColors->getColorsForProp(&fakeProp);
+	Array<Colour> result = ColorNode::getColors(id, resolution, time, params);
+	Array<Colour> c = inColors->getColors(id, resolution, time, params);
 
-	for (int i = 0; i < numLeds; i++)
+	for (int i = 0; i < resolution; i++)
 	{
 		int index = firstLed + i;
-		if (index < result.size()) result.set(index, c[i]);
+		if (index >= 0 && index < result.size()) result.set(index, c[i]);
 	}
 	return result;
 }

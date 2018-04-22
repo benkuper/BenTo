@@ -51,17 +51,16 @@ class BatteryManager
       return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
     }
 
-    void checkBattery()
+    void checkBattery(bool force = false)
     {
 
-      if (millis() - lastCheckTime > BATT_CHECK_INTERVAL)
+      if (force || millis() - lastCheckTime > BATT_CHECK_INTERVAL)
       {
         lastCheckTime = millis();
 
         setCharging(analogRead(A0) >= 1020);
 
         float newVoltage = mapFloat(analogRead(A0), 750, 1000, BATT_MIN, BATT_MAX); //Take account of voltage drop
-
 
         if (newVoltage != voltage)
         {

@@ -22,14 +22,22 @@ TimelineBlockSequence::~TimelineBlockSequence()
 {
 }
 
-void TimelineBlockSequence::updateColorsForBlock(LightBlock * b, var params)
+Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, float /*time*/, var params)
 {
-	LightBlockLayer * l = getLayerForPropID(b->prop->id->intValue());
-	if (l == nullptr) return;
-	l->updateColorsForBlock(b, params);
+	LightBlockLayer * l = getLayerForID(id);
+
+	if (l == nullptr)
+	{
+		Array<Colour> result;
+		result.resize(resolution);
+		result.fill(Colours::black);
+		return result;
+	}
+
+	return l->getColors(id, resolution, currentTime->floatValue(), params); //use sequence's time instead of prop time
 }
 
-LightBlockLayer * TimelineBlockSequence::getLayerForPropID(int id)
+LightBlockLayer * TimelineBlockSequence::getLayerForID(int id)
 {
 	for (auto &i : layerManager->items)
 	{

@@ -42,14 +42,12 @@ Array<WeakReference<Parameter>> LightBlockModel::getModelParameters()
 	return paramsContainer->getAllParameters();
 }
 
-void LightBlockModel::updateColorsForBlock(LightBlock * block, var params)
+Array<Colour> LightBlockModel::getColors(int id, int resolution, float time, var params)
 {
-	//To be overriden by child classes
-	int numLeds = block->prop->resolution->intValue();
-	for (int i = 0; i < numLeds; i++)
-	{
-		block->prop->colors.set(i, Colours::black);
-	}
+	Array<Colour> result;
+	result.resize(resolution);
+	result.fill(Colours::black);
+	return result;
 }
 
 void LightBlockModel::setCustomThumbnail(String path)
@@ -76,9 +74,9 @@ void LightBlockModel::loadJSONDataInternal(var data)
 	if (paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("parameters", var()));
 	presetManager.loadJSONData(data.getProperty("presets", var()));
 }
-void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *)
+void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if (cc == paramsContainer) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	if (cc == paramsContainer) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
 }
 
 void LightBlockModel::childStructureChanged(ControllableContainer * cc)

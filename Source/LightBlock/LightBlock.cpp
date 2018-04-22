@@ -13,9 +13,8 @@
 #include "LightBlock.h"
 #include "Prop/Prop.h"
 
-LightBlock::LightBlock(LightBlockColorProvider * provider, Prop * prop, var params) :
+LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	BaseItem(provider->niceName),
-	prop(prop),
 	provider(provider),
 	paramsContainer("Parameters")
 {
@@ -34,10 +33,24 @@ LightBlock::~LightBlock()
 	if (!provider.wasObjectDeleted()) provider->removeColorProviderListener(this);
 }
 
-void LightBlock::update()
+Array<Colour> LightBlock::getColors(int id, int resolution, float time, var params)
 {
-	provider->updateColorsForBlock(this);
-	blockListeners.call(&LightBlockListener::colorsUpdated);
+	if (params.isVoid()) params = new DynamicObject();
+	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
+	for (auto &p : paramList)
+	{
+		if (p.wasObjectDeleted() || p == nullptr) continue;
+		params.getDynamicObject()->setProperty(p->shortName, p->value);
+	}
+	if (provider.wasObjectDeleted())
+	{
+		Array<Colour> result;
+		result.resize(resolution);
+		result.fill(Colours::black);
+		return result;
+	}
+
+	return provider->getColors(id, resolution, time, params);
 }
 
 void LightBlock::rebuildArgsFromModel()
@@ -77,6 +90,16 @@ void LightBlock::rebuildArgsFromModel()
 void LightBlock::providerParametersChanged(LightBlockColorProvider *)
 {
 	rebuildArgsFromModel();
+}
+
+void LightBlock::providerParameterValueUpdated(LightBlockColorProvider *, Parameter * p)
+{
+	if (p == nullptr) return;
+	Parameter * tp = paramsContainer.getParameterByName(p->shortName);
+	if (tp == nullptr) return;
+	if (tp->isOverriden) return;
+	tp->defaultValue = p->value;
+	tp->resetValue();
 }
 
 var LightBlock::getJSONData()

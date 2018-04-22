@@ -15,6 +15,8 @@ LightBlockModelManagerUI::LightBlockModelManagerUI(const String &name, UserLight
 {
 	animateItemOnAdd = false;
 	setSize(100, 100);
+
+	addExistingItems();
 }
 
 LightBlockModelManagerUI::~LightBlockModelManagerUI()

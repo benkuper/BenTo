@@ -22,7 +22,7 @@ public:
 	LightBlockClipManager blockClipManager;
 
 
-	void updateColorsForBlock(LightBlock * b, var params);
+	Array<Colour> getColors(int id, int resolution, float time, var params);
 
 	SequenceLayerPanel * getPanel() override;
 	SequenceLayerTimeline * getTimelineUI() override;

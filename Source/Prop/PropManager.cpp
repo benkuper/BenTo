@@ -19,7 +19,7 @@ PropManager::PropManager() :
 	BaseManager("Props")
 {
 	managerFactory = &factory;
-	
+
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 
@@ -38,12 +38,12 @@ PropManager::PropManager() :
 	StringArray a;
 	a.addTokens(localIp, ".", "\"");
 	String broadcastIp = "192.168.1.255";
-	if(a.size() == 4) broadcastIp = a[0] + "." + a[1] + "." + a[2] + ".255";
+	if (a.size() == 4) broadcastIp = a[0] + "." + a[1] + "." + a[2] + ".255";
 
-	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.",localIp);
-	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs",broadcastIp);
+	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.", localIp);
+	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs", broadcastIp);
 
-	
+
 
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowClub", FlowClubProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowPoi", FlowPoiProp::create));
@@ -54,8 +54,8 @@ PropManager::PropManager() :
 	setupReceiver();
 	sender.connect("0.0.0.0", 9000);
 
-	startTimerHz(40);
 }
+
 
 PropManager::~PropManager()
 {
@@ -156,9 +156,4 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		LOG("Message received : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
 
 	}
-}
-
-void PropManager::timerCallback()
-{
-	for (auto &p : items) p->update();
 }

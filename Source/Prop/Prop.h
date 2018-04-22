@@ -16,7 +16,7 @@
 class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
-	public LightBlock::LightBlockListener
+	public Thread
 {
 public:
 	enum Shape { CLUB, BALL, POI, HOOP };
@@ -48,15 +48,12 @@ public:
 	void onContainerParameterChanged(Parameter * p) override;
 	void inspectableDestroyed(Inspectable *) override;
 
-	//void colorsUpdated() override;
 	void sendColorsToProp(bool forceSend = false);
 	virtual void sendColorsToPropInternal() {}
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	static var updateColorRGBFromScript(const var::NativeFunctionArgs &args);
-	static var updateColorHSVFromScript(const var::NativeFunctionArgs &args);
 
 	//Listener
 	class  PropListener
@@ -92,4 +89,7 @@ public:
 	void addAsyncPropListener(AsyncListener* newListener) { propNotifier.addListener(newListener); }
 	void addAsyncCoalescedPropListener(AsyncListener* newListener) { propNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncPropListener(AsyncListener* listener) { propNotifier.removeListener(listener); }
+
+	// Inherited via Thread
+	virtual void run() override;
 };

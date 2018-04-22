@@ -22,10 +22,8 @@
 #include "DeviceSettings.h"
 DeviceSettings settings;
 
-#if USE_BUTTON
 #include "ButtonManager.h"
 ButtonManager btManager;
-#endif
 
 #if USE_WIFI
 #include "WifiManager.h"
@@ -68,7 +66,6 @@ long lastOrientationSendTime = 0;
 
 
 //Callbacks
-#if USE_BUTTON
 void onButtonEvent(int type)
 {
   Serial.print("Button Event : ");
@@ -138,7 +135,6 @@ void onMultipress(int count)
 #endif
   }
 }
-#endif
 
 #if USE_WIFI
 void wifiConnectingUpdate(int curTry)
@@ -147,9 +143,7 @@ void wifiConnectingUpdate(int curTry)
   setRange(0, curTry % NUM_LEDS, CRGB::Cyan, true);
 #endif
 
-#if USE_BUTTON
   if (btManager.buttonIsPressed()) wifiManager.cancelConnection();
-#endif
 
 }
 
@@ -216,7 +210,7 @@ void messageReceived(OSCMessage &msg)
   } else if (msg.match("/bootloader"))
   {
     resetESP(true);
-  }else if(msg.match("/sleep"))
+  } else if (msg.match("/sleep"))
   {
     sleep();
   } else
@@ -227,9 +221,9 @@ void messageReceived(OSCMessage &msg)
     if (touchManager.handleMessage(msg)) return;
 #endif
 
-Serial.println("here");
+    Serial.println("here");
 #if USE_LEDSTRIP
-Serial.println("before strip");
+    Serial.println("before strip");
     if (stripManager.handleMessage(msg)) return;
 #endif
 
@@ -299,30 +293,50 @@ void resetESP(bool toBootloader)
 void sleep()
 {
 #if USE_LEDSTRIP
+  
+  int h = batteryManager.normalizedVoltage * 96;
+  
   for (int i = 0; i < 5; i++)
   {
-    setFullColor(CRGB::Orange);
-    delay(30);
+    setFullColor(CHSV(h,255,60));
+    delay(20);
     setFullColor(CRGB::Black);
-    delay(30);
+    delay(20);
   }
+
+  
   for (int i = NUM_LEDS; i > 0; i--)
   {
-    setRange(0, i, CRGB::Orange, true);
+    setRange(0, i, CHSV(h,255,60), true);
     delay(10);
   }
   FastLED.clear();
 #endif
 
 
-  ESP.deepSleep(1e6); //1 seconds sleep
+  ESP.deepSleep(5e6); //5 seconds sleep
 }
 
 //Setup & loop
 void setup() {
 
+  
+  
   Serial.begin(115200);
+  Serial.println("");
+  
+  btManager.init();
+  btManager.addButtonCallback(&onButtonEvent);
+  btManager.addMultipressCallback(&onMultipress);
 
+  if(!btManager.buttonIsPressed())
+  {
+    Serial.println("\nButton not pressed at power up, sleep again.");
+    ESP.deepSleep(5e6); //5 seconds sleep
+    return;
+  }
+
+  //Keep the power
   pinMode(POWER_ENABLE_PIN, OUTPUT);
   digitalWrite(POWER_ENABLE_PIN, HIGH);
 
@@ -335,21 +349,28 @@ void setup() {
   Serial.println("Will init all modules");
 #endif
 
-#if USE_LEDSTRIP
-  stripManager.init();
-  for (int i = 0; i < NUM_LEDS; i++)
-  {
-    setRange(0, i,CRGB::Orange, true);
-    delay(10);
-  }
+
+
+#if USE_BATTERY
+  batteryManager.init();
+  batteryManager.addBatteryCriticalLevelCallback(&batteryCriticalLevel);
+  batteryManager.addChargingStateChangedCallback(&batteryChargingStateChanged);
+  batteryManager.addBatteryLevelUpdateCallback(&batteryLevelUpdate);
 #endif
 
-#if USE_BUTTON
-  delay(1000);
-  btManager.init();
-  btManager.addButtonCallback(&onButtonEvent);
-  btManager.addMultipressCallback(&onMultipress);
+#if USE_LEDSTRIP
+  stripManager.init();
+  batteryManager.checkBattery(true);
+  int h = batteryManager.normalizedVoltage * 96;
+  for (int i = 0; i < NUM_LEDS; i++)
+  {
+    setRange(0, i, CHSV(h,255,60) , true);
+    delay(10);
+  }
+  
+  delay(50);
 #endif
+
 
 #if USE_TOUCH
   touchManager.init();
@@ -399,12 +420,6 @@ void setup() {
 
 #endif
 
-#if USE_BATTERY
-  batteryManager.init();
-  batteryManager.addBatteryCriticalLevelCallback(&batteryCriticalLevel);
-  batteryManager.addChargingStateChangedCallback(&batteryChargingStateChanged);
-  batteryManager.addBatteryLevelUpdateCallback(&batteryLevelUpdate);
-#endif
 
 #if USE_LEDSTRIP
   setFullColor(CRGB::Black);
@@ -418,9 +433,7 @@ void setup() {
 
 void loop() {
 
-#if USE_BUTTON
   btManager.update();
-#endif
 
 #if USE_WIFI
   wifiManager.update();

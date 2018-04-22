@@ -35,10 +35,13 @@ void TimelineBlock::loadJSONDataInternal(var data)
 	sequence.loadJSONData(data.getProperty("sequence", var()));
 }
 
-void TimelineBlock::updateColorsForBlock(LightBlock * b, var params)
+Array<Colour> TimelineBlock::getColors(int id, int resolution, float time, var params)
 {
-	sequence.updateColorsForBlock(b, params);
+	return sequence.getColors(id, resolution, time, params);
+
 }
+
+
 
 void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float, bool)
 {

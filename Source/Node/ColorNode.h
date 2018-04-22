@@ -21,6 +21,6 @@ public:
 
 	ColorSlot * mainColorsSlot;
 
-	virtual Array<Colour> getColorsForProp(Prop * p);
+	virtual Array<Colour> getColors(int id, int resolution, float time, var params);
 	virtual NodeViewUI * createUI() override;
 };

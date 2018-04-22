@@ -33,7 +33,7 @@ void LightBlockClipUI::resizedInternalHeader(Rectangle<int>& r)
 void LightBlockClipUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI::mouseDown(e);
-	timeAtMouseDown = item->time->floatValue();
+	timeAtMouseDown = item->startTime->floatValue();
 	posAtMouseDown = getX();
 }
 
@@ -46,7 +46,7 @@ void LightBlockClipUI::mouseDrag(const MouseEvent & e)
 void LightBlockClipUI::mouseUp(const MouseEvent & e)
 {
 	BaseItemUI::mouseUp(e);
-	item->time->setUndoableValue(timeAtMouseDown, item->time->floatValue());
+	item->startTime->setUndoableValue(timeAtMouseDown, item->startTime->floatValue());
 }
 
 void LightBlockClipUI::buttonClicked(Button * b)
@@ -56,7 +56,7 @@ void LightBlockClipUI::buttonClicked(Button * b)
 
 void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->time || c == item->length)
+	if (c == item->startTime || c == item->length)
 	{
 		clipUIListeners.call(&ClipUIListener::clipUITimeChanged, this);
 		repaint();

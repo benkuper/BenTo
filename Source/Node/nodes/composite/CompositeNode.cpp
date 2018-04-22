@@ -25,15 +25,15 @@ CompositeNode::~CompositeNode()
 {
 }
 
-Array<Colour> CompositeNode::getColorsForProp(Prop * p)
+Array<Colour> CompositeNode::getColors(int id, int resolution, float time, var params)
 {
-	Array<Colour> col1 = c1->getColorsForProp(p);
-	Array<Colour> col2 = c2->getColorsForProp(p);
+	Array<Colour> col1 = c1->getColors(id, resolution, time, params);
+	Array<Colour> col2 = c2->getColors(id, resolution, time, params);
 	
 	BlendMode b = blendMode->getValueDataAsEnum<BlendMode>();
 
 	Array<Colour> result;
-	for (int i = 0; i < p->resolution->intValue(); i++)
+	for (int i = 0; i < resolution; i++)
 	{
 		switch (b)
 		{

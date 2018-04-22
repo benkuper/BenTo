@@ -22,7 +22,7 @@ public:
 	Trigger * assignToAll;
 
 	virtual Array<WeakReference<Parameter>> getModelParameters() = 0;
-	virtual void updateColorsForBlock(LightBlock * block, var params = var()) = 0;
+	virtual Array<Colour> getColors(int id, int resolution, float time, var params) = 0;
 
 	void onContainerTriggerTriggered(Trigger *) override;
 
@@ -31,6 +31,7 @@ public:
 	public:
 		virtual ~ProviderListener() {}
 		virtual void providerParametersChanged(LightBlockColorProvider *) {}
+		virtual void providerParameterValueUpdated(LightBlockColorProvider *, Parameter *) {}
 	};
 
 	ListenerList<ProviderListener> providerListeners;

@@ -16,6 +16,7 @@ PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 {
 	noItemText = "Start by adding props by right clicking here, or when the props are powered on and connected, left click here and hit auto detect on the Inspector";
 	setDefaultLayout(HORIZONTAL);
+	addExistingItems();
 }
 
 PropManagerUI::~PropManagerUI()

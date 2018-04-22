@@ -22,12 +22,10 @@ SolidColorNode::~SolidColorNode()
 {
 }
 
-Array<Colour> SolidColorNode::getColorsForProp(Prop * p)
+Array<Colour> SolidColorNode::getColors(int id, int resolution, float time, var params)
 {
 	Array<Colour> result;
-	for (int i = 0; i < p->resolution->intValue(); i++)
-	{
-		result.add(color->getColor());
-	}
+	result.resize(resolution);
+	result.fill(color->getColor());
 	return result;
 }

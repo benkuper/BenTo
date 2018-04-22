@@ -13,6 +13,7 @@
 
 Prop::Prop(const String &name, var) :
 	BaseItem(name),
+	Thread("Prop "+name),
 	propNotifier(50),
 	currentBlock(nullptr)
 {
@@ -31,13 +32,12 @@ Prop::Prop(const String &name, var) :
 	battery->setControllableFeedbackOnly(true);
 
 	findPropMode = addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
-
-	scriptObject.setMethod("setRGB", &Prop::updateColorRGBFromScript);
-	scriptObject.setMethod("setHSV", &Prop::updateColorHSVFromScript);
 }
 
 Prop::~Prop()
 {
+	signalThreadShouldExit();
+	waitForThreadToExit(100);
 	setBlockFromProvider(nullptr);
 }
 
@@ -54,20 +54,27 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 
 	if (currentBlock != nullptr)
 	{
+		signalThreadShouldExit();
+		waitForThreadToExit(100);
+
 		removeChildControllableContainer(currentBlock);
 		if(!currentBlock->provider.wasObjectDeleted()) currentBlock->provider->removeInspectableListener(this);
-		currentBlock->removeLightBlockListener(this);
+		//currentBlock->removeLightBlockListener(this);
 		currentBlock = nullptr;
+
+
 	}
 
-	if(model != nullptr) currentBlock = new LightBlock(model, this);
+	if(model != nullptr) currentBlock = new LightBlock(model);
 	
 
 	if (currentBlock != nullptr)
 	{
 		addChildControllableContainer(currentBlock);
 		currentBlock->provider->addInspectableListener(this);
-		currentBlock->addLightBlockListener(this);
+		//currentBlock->addLightBlockListener(this);
+		startThread();
+
 	}
 
 	propListeners.call(&PropListener::propBlockChanged, this);
@@ -76,10 +83,15 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 
 void Prop::update()
 {
-	if (currentBlock != nullptr) currentBlock->update();
-	propListeners.call(&PropListener::colorsUpdated, this);
-	propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
+	if (currentBlock != nullptr)
+	{
+		colors = currentBlock->getColors(id->intValue(), resolution->intValue(), Time::getMillisecondCounter() / 1000.0f, var());
 
+		propListeners.call(&PropListener::colorsUpdated, this);
+		propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
+
+
+	}
 	if (!findPropMode->boolValue()) sendColorsToProp();
 }
 
@@ -120,6 +132,7 @@ void Prop::colorsUpdated()
 }
 */
 
+
 void Prop::sendColorsToProp(bool forceSend)
 {
 	if (!enabled->boolValue() && !forceSend) return;
@@ -141,32 +154,12 @@ void Prop::loadJSONDataInternal(var data)
 	propId = data.getProperty("propId", "");
 }
 
-var Prop::updateColorRGBFromScript(const var::NativeFunctionArgs & args)
+void Prop::run()
 {
-	Prop * p = getObjectFromJS<Prop>(args);
-	if (p == nullptr) return var();
-	if (args.numArguments < 4)
+	while (!threadShouldExit())
 	{
-		NLOGERROR(p->niceName, "SetColor RGB from script not enough parameters");
-		return var();
+		update();
+		sleep(1000 / 60); //40fps 
 	}
-	int index = args.arguments[0];
-	p->colors.set(index, Colour::fromRGB((float)args.arguments[1] * 255, (float)args.arguments[2] * 255, (float)args.arguments[3] * 255));
-
-	return var();
-}
-
-var Prop::updateColorHSVFromScript(const var::NativeFunctionArgs & args)
-{
-	Prop * p = getObjectFromJS<Prop>(args);
-	if (p == nullptr) return var();
-	if (args.numArguments < 4)
-	{
-		NLOGERROR(p->niceName, "SetColor HSV from script not enough parameters");
-		return var();
-	}
-	int index = args.arguments[0];
-	p->colors.set(index, Colour::fromHSV((float)args.arguments[1], (float)args.arguments[2], (float)args.arguments[3],1));
-
-	return var();
+	
 }

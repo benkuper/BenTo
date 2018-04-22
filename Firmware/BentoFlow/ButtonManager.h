@@ -8,9 +8,8 @@
 #define BT_SHORTPRESS 2
 #define BT_LONGPRESS 3
 
-#define BT_PRESS_DEBOUNCE 10
+#define BT_PRESS_DEBOUNCE 5
 
-int pressCount;
 
 class ButtonManager
 {
@@ -19,34 +18,36 @@ public:
   bool longPress;
   long timeAtPress;
   int multipressCount;
+  int debounceCount;
+
   
   void init()
   {
     pressed = false;
     longPress = false;
     timeAtPress = 0;
+    debounceCount = 0;
     addButtonCallback(&ButtonManager::onButtonEventDefaultCallback);
     addMultipressCallback(&ButtonManager::onMultipressDefaultCallback);
     
     pinMode(BUTTON_PIN, INPUT);
   }
 
-  bool buttonIsPressed()
-  {
-    return digitalRead(BUTTON_PIN);
-  }
-
+  
   void update()
   {
-    bool v = digitalRead(BUTTON_PIN);
-    if(v) pressCount = min(pressCount+1,BT_PRESS_DEBOUNCE);
-    else pressCount = max(pressCount-1, 0);
-
-    bool newPress = pressed?pressCount ==  0:pressCount == BT_PRESS_DEBOUNCE;
+    int v = buttonIsPressed();
     
-    if(newPress != pressed) //button state changed
+    if(v) debounceCount = min(debounceCount+1,BT_PRESS_DEBOUNCE);
+    else debounceCount = max(debounceCount-1, 0);
+    
+    bool newPressed = pressed;
+    if(pressed && debounceCount ==  0) newPressed = false;
+    if(!pressed && debounceCount == BT_PRESS_DEBOUNCE)  newPressed = true; 
+       
+    if(newPressed != pressed) //button state changed
     {
-      pressed = v;
+      pressed = newPressed;
       longPress = false;
       if(pressed) 
       {
@@ -72,6 +73,11 @@ public:
 
       if(millis() > timeAtPress + MULTIPRESS_TIME) multipressCount = 0;
     }
+  }
+  
+  bool buttonIsPressed()
+  {
+    return digitalRead(BUTTON_PIN);
   }
 
   typedef void(*ButtonEvent)(int type);

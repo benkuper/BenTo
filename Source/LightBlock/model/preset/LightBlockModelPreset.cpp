@@ -31,9 +31,9 @@ LightBlockModelPreset::~LightBlockModelPreset()
 	if (!modelRef.wasObjectDeleted()) model->removeControllableContainerListener(this);
 }
 
-void LightBlockModelPreset::updateColorsForBlock(LightBlock * b, var params)
+Array<Colour> LightBlockModelPreset::getColors(int id, int resolution, float time, var params)
 {
-	model->updateColorsForBlock(b, params);
+	return model->getColors(id, resolution, time, params);
 }
 
 void LightBlockModelPreset::rebuildArgsFromModel(bool syncValues)
@@ -77,9 +77,9 @@ void LightBlockModelPreset::childStructureChanged(ControllableContainer * cc)
 	rebuildArgsFromModel();
 }
 
-void LightBlockModelPreset::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *)
+void LightBlockModelPreset::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if(cc == &paramsContainer) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	if(cc == &paramsContainer) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
 }
 
 var LightBlockModelPreset::getJSONData()

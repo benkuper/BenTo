@@ -27,25 +27,24 @@ var ParameterSlot::getValue()
 	return parameter->value;
 }
 
-Array<Colour> ColorSlot::getColorsForProp(Prop * p)
+Array<Colour> ColorSlot::getColors(int id, int resolution, float time, var params)
 {
 	if (isInput)
 	{
 		if (connections.size() > 0)
 		{
 			ColorSlot * s = static_cast<ColorSlot *>(connections[0]->sourceSlot.get());
-			if (s != nullptr) return s->getColorsForProp(p);
+			if (s != nullptr) return s->getColors(id, resolution, time, params);
 		}
 	} else
 	{
-		return static_cast<ColorNode *>(node)->getColorsForProp(p);
+		return static_cast<ColorNode *>(node)->getColors(id, resolution, time, params);
 	}
 	
 	Array<Colour> result;
-	for (int i = 0; i < p->resolution->intValue(); i++)
-	{
-		result.add(Colours::black);
-	}
+	result.resize(resolution);
+	result.fill(Colours::black);
+
 	return result;
 }
 

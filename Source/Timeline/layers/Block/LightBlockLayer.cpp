@@ -21,15 +21,28 @@ LightBlockLayer::~LightBlockLayer()
 {
 }
 
-void LightBlockLayer::updateColorsForBlock(LightBlock * block, var params)
+
+Array<Colour> LightBlockLayer::getColors(int id, int resolution, float time, var params)
 {
 	Array<LightBlockClip *> clips = blockClipManager.getClipsAtTime(sequence->currentTime->floatValue());
 
+	Array<Colour> result;
+	result.resize(resolution);
+
+	if (clips.size() == 0)
+	{
+		result.fill(Colours::black);
+		return result;
+	}
+
+
 	Array<Array<Colour>> clipColors;
-	for (int i = 0; i < clips.size(); i++) clipColors.add(clips[i]->getColorsForProp(block->prop));
+	for (auto &c : clips)
+	{
+		clipColors.add(c->getColors(id, resolution, time-c->startTime->floatValue(),params));
+	}
 
-
-	for (int i = 0; i < block->prop->resolution->intValue(); i++)
+	for (int i = 0; i < resolution; i++)
 	{
 		uint8_t r = 0, g = 0, b = 0;
 
@@ -44,8 +57,10 @@ void LightBlockLayer::updateColorsForBlock(LightBlock * block, var params)
 			b = jmin(b + clipColors[j][i].getBlue(), 255);
 		}
 
-		block->prop->colors.set(i, (Colour(r, g, b)));
+		result.set(i, (Colour(r, g, b)));
 	}
+
+	return result;
 }
 
 SequenceLayerPanel * LightBlockLayer::getPanel()

@@ -38,7 +38,7 @@ void ModelNode::setBlockFromProvider(LightBlockColorProvider * provider)
 		currentBlock = nullptr;
 	}
 
-	if (provider != nullptr) currentBlock = new LightBlock(provider, &fakeProp);
+	if (provider != nullptr) currentBlock = new LightBlock(provider);
 
 
 	if (currentBlock != nullptr)
@@ -47,12 +47,10 @@ void ModelNode::setBlockFromProvider(LightBlockColorProvider * provider)
 	}
 }
 
-Array<Colour> ModelNode::getColorsForProp(Prop * p)
+Array<Colour> ModelNode::getColors(int id, int resolution, float time, var params)
 {
-	fakeProp.resolution->setValue(p->resolution->intValue());
-	fakeProp.id->setValue(p->id->intValue());
-	if (currentBlock != nullptr) currentBlock->update();
-	return fakeProp.colors;
+	if (currentBlock == nullptr) return ColorNode::getColors(id, resolution, time, params);
+	return currentBlock->getColors(id, resolution, time, params);
 }
 
 void ModelNode::onContainerParameterChanged(Parameter * p)
