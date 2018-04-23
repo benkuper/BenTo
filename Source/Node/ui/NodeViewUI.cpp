@@ -140,8 +140,8 @@ void NodeViewUI::newMessage(const Node::NodeEvent & e)
 }
 
 NodeViewUI::Connector::Connector(NodeConnectionSlot * slot) :
-	slot(slot),
-	name(slot->name)
+	name(slot->name),
+	slot(slot)
 {
 	setTooltip(name + " (" + NodeConnectionUI::getStringForConnectionType(slot->type) + ")");
 }

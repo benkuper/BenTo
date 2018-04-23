@@ -66,8 +66,8 @@ void PropManager::setupReceiver()
 	receiver.disconnect();
 	bool result = receiver.connect(localPort);
 
-	if (result) NLOG(niceName, "Now receiving on port : " + localPort);
-	NLOGERROR(niceName, "Error binding port " + localPort);
+	if (result) NLOG(niceName, "Now receiving on port : " << localPort);
+	NLOGERROR(niceName, "Error binding port " << localPort);
 
 
 	Array<IPAddress> ad;

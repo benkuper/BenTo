@@ -14,8 +14,8 @@
 Prop::Prop(const String &name, var) :
 	BaseItem(name),
 	Thread("Prop "+name),
-	propNotifier(50),
-	currentBlock(nullptr)
+	currentBlock(nullptr),
+	propNotifier(50)
 {
 	id = addIntParameter("ID", "Prop ID", 0, 0, 100);
 	resolution = addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1, INT32_MAX);

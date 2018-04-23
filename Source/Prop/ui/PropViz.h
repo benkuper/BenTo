@@ -24,7 +24,7 @@ public:
 	Prop * prop;
 	WeakReference<Inspectable> propRef;
 
-	void paint(Graphics &g);
+	void paint(Graphics &g) override;
 
 	void newMessage(const Prop::PropEvent &e) override;
 

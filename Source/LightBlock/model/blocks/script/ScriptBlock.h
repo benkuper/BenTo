@@ -35,7 +35,7 @@ public:
 	const Identifier updateColorsFunc = "updateColors";
 	Script script;
 
-	virtual Array<WeakReference<Parameter>> getModelParameters();
+	virtual Array<WeakReference<Parameter>> getModelParameters() override;
 
 	Array<Colour> getColors(int id, int resolution, float time, var params) override;
 

@@ -21,7 +21,7 @@ LightBlockClip::LightBlockClip(float _time) :
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 
 	startTime = addFloatParameter("Start Time", "Start time", 0, 0, INT32_MAX);
-	startTime->setValue(time);
+	startTime->setValue(_time);
 	startTime->defaultUI = FloatParameter::TIME;
 	
 	length = addFloatParameter("Length", "Length of the clip (in seconds)", 10, .1f, INT32_MAX);
