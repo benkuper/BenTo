@@ -23,10 +23,10 @@ public:
 	NodeConnectionSlot(Node * node, bool isInput, const String &name, ConnectionType type) : node(node), isInput(isInput), name(name), type(type) {}
 	~NodeConnectionSlot() { masterReference.clear(); }
 
+	Node * node;
 	bool isInput;
 	String name;
 	ConnectionType type;
-	Node * node;
 
 	Array<NodeConnection *> connections;
 	bool isConnected();
@@ -35,7 +35,6 @@ public:
 	void removeConnection(NodeConnection *c);
 
 	WeakReference<NodeConnectionSlot>::Master masterReference;
-	friend class NodeConnectionSlot;
 };
 
 class ColorSlot :

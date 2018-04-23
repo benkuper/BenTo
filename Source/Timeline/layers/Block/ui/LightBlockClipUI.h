@@ -42,7 +42,7 @@ public:
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
-	void run();
+	void run() override;
 
 	class ClipUIListener
 	{

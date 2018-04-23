@@ -75,5 +75,4 @@ public:
 
 private:
 	WeakReference<Node>::Master masterReference;
-	friend class Node;
 };
