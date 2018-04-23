@@ -79,6 +79,7 @@ void ScriptBlock::newMessage(const Script::ScriptEvent & e)
 	{
 	case Script::ScriptEvent::STATE_CHANGE:
 		setCustomThumbnail(script.filePath->getFile().withFileExtension("png").getFullPathName());
+		setNiceName(script.niceName);
 		break;
 	}
 }

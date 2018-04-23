@@ -15,6 +15,8 @@
 LightBlockLayer::LightBlockLayer(Sequence * s, var) :
 	SequenceLayer(s,"Block Layer")
 {
+	defaultLayer = addBoolParameter("Default", "If checked, this layer will be the default layer when no layer has the requested prop id", false);
+	targetId = addIntParameter("Prop ID", "Target Prop ID to assign this layer to", 0, 0, INT32_MAX);
 }
 
 LightBlockLayer::~LightBlockLayer()

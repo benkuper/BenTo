@@ -25,4 +25,6 @@ public:
 	SequenceLayerFactory layerFactory;
 	Array<Colour> getColors(int id, int resolution, float time, var params);
 	LightBlockLayer * getLayerForID(int id);
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 };

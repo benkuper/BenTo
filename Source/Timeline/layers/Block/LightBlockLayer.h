@@ -21,6 +21,8 @@ public:
 
 	LightBlockClipManager blockClipManager;
 
+	BoolParameter * defaultLayer;
+	IntParameter * targetId;
 
 	Array<Colour> getColors(int id, int resolution, float time, var params);
 

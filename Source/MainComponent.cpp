@@ -29,7 +29,7 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Blocks", &LightBlockModelLibraryUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Block Visualizer", &BlockViz::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Node Editor", &NodeBlockEditor::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timeline  Editor", &TimelineEditor::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timeline Editor", &TimelineEditor::create));
 
 	OrganicMainContentComponent::init();
 }

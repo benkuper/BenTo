@@ -204,6 +204,17 @@
                   file="Source/LightBlock/model/ui/LightBlockModelUI.h"/>
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
+            <GROUP id="{D3CD9CB3-0B62-2E9D-C3BF-6362655D3705}" name="picture">
+              <GROUP id="{60FD6633-7E41-1751-E0AB-87F74BF56FAA}" name="ui">
+                <FILE id="GjOSuT" name="PictureBlockUI.cpp" compile="1" resource="0"
+                      file="Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.cpp"/>
+                <FILE id="mjNpcD" name="PictureBlockUI.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.h"/>
+              </GROUP>
+              <FILE id="l3lX7B" name="PictureBlock.cpp" compile="1" resource="0"
+                    file="Source/LightBlock/model/blocks/picture/PictureBlock.cpp"/>
+              <FILE id="TdJhSD" name="PictureBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/picture/PictureBlock.h"/>
+            </GROUP>
             <GROUP id="{92F68118-A594-AF2A-31EE-FF862BF23B1F}" name="dmx">
               <FILE id="FSKMZd" name="DMXBlock.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/dmx/DMXBlock.cpp"/>
               <FILE id="XVCum1" name="DMXBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/dmx/DMXBlock.h"/>
@@ -219,11 +230,21 @@
               <FILE id="qnd4Dp" name="PatternBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PatternBlock.h"/>
             </GROUP>
             <GROUP id="{44802627-FF3C-1EE6-7861-1A5D57732488}" name="timeline">
+              <GROUP id="{243F0BA7-213E-1A5E-0ED9-E6892C4F0A08}" name="ui">
+                <FILE id="ldHNpi" name="TimelineBlockUI.cpp" compile="1" resource="0"
+                      file="Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp"/>
+                <FILE id="TfnA1b" name="TimelineBlockUI.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h"/>
+              </GROUP>
               <FILE id="gDwEqG" name="TimelineBlock.cpp" compile="1" resource="0"
                     file="Source/LightBlock/model/blocks/timeline/TimelineBlock.cpp"/>
               <FILE id="LU8ewB" name="TimelineBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/timeline/TimelineBlock.h"/>
             </GROUP>
             <GROUP id="{65EF9CB3-D01F-96FC-4333-04140ECFDA46}" name="node">
+              <GROUP id="{29B62111-FFD9-CC84-8FD5-B10C2394A2E9}" name="ui">
+                <FILE id="qCtcqX" name="NodeBlockUI.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/node/ui/NodeBlockUI.cpp"/>
+                <FILE id="MYCZeB" name="NodeBlockUI.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/node/ui/NodeBlockUI.h"/>
+              </GROUP>
               <FILE id="N7GTzt" name="NodeBlock.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.cpp"/>
               <FILE id="dbYEkI" name="NodeBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.h"/>
             </GROUP>

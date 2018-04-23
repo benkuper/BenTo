@@ -39,11 +39,33 @@ Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, float /*t
 
 LightBlockLayer * TimelineBlockSequence::getLayerForID(int id)
 {
+	LightBlockLayer * defaultLayer = nullptr;
+
 	for (auto &i : layerManager->items)
 	{
 		LightBlockLayer * l = static_cast<LightBlockLayer *>(i);
-		if (l != nullptr) return l;
+		if (l->targetId->intValue() == id) return l;
+		if (l->defaultLayer->boolValue()) defaultLayer = l;
 	}
 
-	return nullptr;
+	return defaultLayer;
+}
+
+void TimelineBlockSequence::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	Sequence::onControllableFeedbackUpdateInternal(cc, c);
+
+	LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(c->parentContainer);
+	if (l != nullptr)
+	{
+		if (c == l->defaultLayer && l->defaultLayer->boolValue())
+		{
+			for (auto &i : layerManager->items)
+			{
+				if (i == l) continue; 
+				LightBlockLayer * il = dynamic_cast<LightBlockLayer *>(i);
+				if(il != nullptr) il->defaultLayer->setValue(false);
+			}
+		}
+	}
 }

@@ -28,7 +28,12 @@ public:
 
 	void updateThumbnail();
 
+	virtual void editBlock() {} //to be overriden by child classes
+
 	void newMessage(const LightBlockModel::ModelEvent &e) override;
 
 	void mouseDown(const MouseEvent &e) override;
+	void mouseDoubleClick(const MouseEvent &e) override;
+
+	
 };

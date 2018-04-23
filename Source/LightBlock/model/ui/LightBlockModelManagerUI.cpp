@@ -11,7 +11,7 @@
 #include "LightBlockModelManagerUI.h"
 
 LightBlockModelManagerUI::LightBlockModelManagerUI(const String &name, UserLightBlockModelManager * m) :
-	BaseManagerShapeShifterUI(name, m)
+	BaseManagerUI(name, m,false)
 {
 	animateItemOnAdd = false;
 	setSize(100, 100);
@@ -78,7 +78,13 @@ void LightBlockModelManagerUI::resized()
 		index++;
 	}
 
-	viewport.setBounds(getLocalBounds().withTrimmedTop(headerHeight+headerGap));
-	container.setSize(getWidth(), r.getBottom());
+	//viewport.setBounds(getLocalBounds().withTrimmedTop(headerHeight+headerGap));
+	//container.setSize(getWidth(), r.getBottom());
+	setSize(getWidth(), r.getBottom());
+}
+
+LightBlockModelUI * LightBlockModelManagerUI::createUIForItem(LightBlockModel * i)
+{
+	return i->createUI();
 }
 

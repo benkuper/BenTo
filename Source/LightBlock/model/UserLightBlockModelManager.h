@@ -17,8 +17,13 @@ class UserLightBlockModelManager :
 {
 public:
 
-	UserLightBlockModelManager();
+	enum BlockType { PICTURE, NODE, SCRIPT, TIMELINE };
+
+	UserLightBlockModelManager(const String &name, BlockType type);
 	~UserLightBlockModelManager();
 
-	Factory<LightBlockModel> factory;
+	BlockType type;
+	File libFolder;
+
+	LightBlockModel * createItem();
 };

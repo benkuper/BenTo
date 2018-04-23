@@ -19,5 +19,10 @@ public:
 	LightBlockLayerPanel(LightBlockLayer * layer);
 	~LightBlockLayerPanel();
 
+	ScopedPointer<BoolToggleUI> defaultLayerUI;
+	ScopedPointer<IntStepperUI> targetIdUI;
+	
 	LightBlockLayer * blockLayer;
+
+	void resizedInternalContent(Rectangle<int> &r) override;
 };

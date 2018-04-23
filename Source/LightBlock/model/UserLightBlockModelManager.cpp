@@ -12,20 +12,33 @@
 #include "blocks/node/NodeBlock.h"
 #include "blocks/script/ScriptBlock.h"
 #include "blocks/timeline/TimelineBlock.h"
+#include "blocks/picture/PictureBlock.h"
 
-
-UserLightBlockModelManager::UserLightBlockModelManager() :
-	BaseManager("Blocks")
+UserLightBlockModelManager::UserLightBlockModelManager(const String &name, BlockType type) :
+	BaseManager(name),
+	type(type)
 {
-	itemDataType = "LightBlockModel";
-	managerFactory = &factory;
-
-	factory.defs.add(Factory<LightBlockModel>::Definition::createDef("", "Timeline", &TimelineBlock::create));
-	factory.defs.add(Factory<LightBlockModel>::Definition::createDef("", "Node", &NodeBlock::create));
-	factory.defs.add(Factory<LightBlockModel>::Definition::createDef("", "Script", &ScriptBlock::create));
+	libFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("Bento/" + name);
+	libFolder.createDirectory();
 }
 
 UserLightBlockModelManager::~UserLightBlockModelManager()
 {
+	
+}
 
+LightBlockModel * UserLightBlockModelManager::createItem()
+{
+	switch (type)
+	{
+	case PICTURE: return new PictureBlock();
+	case NODE: return new NodeBlock();
+	case SCRIPT: return new ScriptBlock();
+	case TIMELINE: return new TimelineBlock();
+
+	default:
+		break;
+	}
+	jassertfalse;
+	return nullptr;
 }

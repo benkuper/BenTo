@@ -32,10 +32,14 @@ public:
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 	Array<Colour> getColors(int id, int resolution, float time, var params);
 
+	float getTimeForRelativePosition(float t, bool absoluteTime = true);
+
 	bool isInRange(float time);
 
 
 	void onContainerParameterChanged(Parameter * p) override;
+
+	
 
 	String getTypeString() const override { return "LightBlockClip"; }
 };

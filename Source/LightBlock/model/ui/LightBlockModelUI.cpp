@@ -110,6 +110,11 @@ void LightBlockModelUI::mouseDown(const MouseEvent & e)
 	}
 }
 
+void LightBlockModelUI::mouseDoubleClick(const MouseEvent & e)
+{
+	editBlock();
+}
+
 
 void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent & e)
 {

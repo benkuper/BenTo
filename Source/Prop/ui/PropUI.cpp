@@ -25,6 +25,8 @@ PropUI::PropUI(Prop * p) :
 	addAndMakeVisible(idUI);
 	addAndMakeVisible(batteryUI); 
 	addAndMakeVisible(&viz);
+
+	setSize(100, 100);
 	
 }
 

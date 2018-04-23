@@ -15,19 +15,31 @@
 #include "LightBlockModelGroupUI.h"
 
 class LightBlockModelLibraryUI :
-	public ShapeShifterContentComponent
+	public ShapeShifterContentComponent,
+	public ComponentListener
 {
 public:
 	LightBlockModelLibraryUI(const String &contentName, LightBlockModelLibrary * library);
 	~LightBlockModelLibraryUI();
 
+	Viewport viewport;
+	Component container;
+
 	LightBlockModelLibrary * library;
 	LightBlockModelGroupUI genericGroupUI;
 	LightBlockModelGroupUI liveFeedGroupUI;
-	LightBlockModelManagerUI userModelManagerUI;
+
+	LightBlockModelManagerUI pictureBlocksManagerUI;
+	LightBlockModelManagerUI nodeBlocksManagerUI;
+	LightBlockModelManagerUI scriptBlocksManagerUI;
+	LightBlockModelManagerUI timelineBlocksManagerUI;
 
 	void paint(Graphics &g) override;
 	void resized() override;
 
+	void componentMovedOrResized(Component &, bool, bool) override;
+
 	static LightBlockModelLibraryUI * create(const String &contentName) { return new LightBlockModelLibraryUI(contentName, LightBlockModelLibrary::getInstance()); }
+
+	
 };

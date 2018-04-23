@@ -11,6 +11,7 @@
 #include "LightBlockModel.h"
 #include "../LightBlock.h"
 #include "Prop/Prop.h"
+#include "ui/LightBlockModelUI.h"
 
 LightBlockModel::LightBlockModel(const String &name, var params) :
 	LightBlockColorProvider(name, false),
@@ -73,6 +74,10 @@ void LightBlockModel::loadJSONDataInternal(var data)
 {
 	if (paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("parameters", var()));
 	presetManager.loadJSONData(data.getProperty("presets", var()));
+}
+LightBlockModelUI * LightBlockModel::createUI()
+{
+	return new LightBlockModelUI(this);
 }
 void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {

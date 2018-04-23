@@ -15,6 +15,7 @@
 #include "LightBlockColorProvider.h"
 
 class LightBlock;
+class LightBlockModelUI;
 
 class Prop;
 
@@ -47,6 +48,8 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	
+	virtual LightBlockModelUI * createUI();
+
 	//Listener
 	class  ModelListener
 	{

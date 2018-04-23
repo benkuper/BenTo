@@ -69,6 +69,11 @@ Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var 
 	
 }
 
+float LightBlockClip::getTimeForRelativePosition(float t, bool absoluteTime)
+{
+	return (absoluteTime?startTime->floatValue():0) + length->floatValue()*t; //to improve with speed animation handling
+}
+
 bool LightBlockClip::isInRange(float _time)
 {
 	return (_time >= startTime->floatValue() && _time <= startTime->floatValue() + length->floatValue());

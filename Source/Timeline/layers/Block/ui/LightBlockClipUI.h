@@ -13,26 +13,36 @@
 #include "../LightBlockClip.h"
 
 class LightBlockClipUI :
-	public BaseItemUI<LightBlockClip>
+	public BaseItemMinimalUI<LightBlockClip>,
+	public Thread //Threaded preview generation,
 {
 public:
 	LightBlockClipUI(LightBlockClip * clip);
 	~LightBlockClipUI();
+
+	//
+	bool imageIsReady;
+	Image previewImage;
 
 	//interaction
 	float timeAtMouseDown;
 	int posAtMouseDown;
 
 	void paint(Graphics &g) override;
-	void resizedInternalHeader(Rectangle<int> &r) override;
+	void resized() override;
+	//void resizedInternalHeader(Rectangle<int> &r) override;
+
+	void generatePreview();
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 
-	void buttonClicked(Button * b) override;
+	//void buttonClicked(Button * b) override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
+
+	void run();
 
 	class ClipUIListener
 	{

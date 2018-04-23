@@ -10,6 +10,7 @@
 
 #include "TimelineBlock.h"
 #include "Timeline/layers/Block/LightBlockLayer.h"
+#include "ui/TimelineBlockUI.h"
 
 TimelineBlock::TimelineBlock(var params) :
 	LightBlockModel(getTypeString(), params)
@@ -33,6 +34,11 @@ void TimelineBlock::loadJSONDataInternal(var data)
 {
 	LightBlockModel::loadJSONDataInternal(data);
 	sequence.loadJSONData(data.getProperty("sequence", var()));
+}
+
+LightBlockModelUI * TimelineBlock::createUI()
+{
+	return new TimelineBlockUI(this);
 }
 
 Array<Colour> TimelineBlock::getColors(int id, int resolution, float time, var params)

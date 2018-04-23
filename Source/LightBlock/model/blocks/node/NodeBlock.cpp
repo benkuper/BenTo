@@ -10,6 +10,7 @@
 
 #include "NodeBlock.h"
 #include "Node/nodes/prop/PropNode.h"
+#include "ui/NodeBlockUI.h"
 
 NodeBlock::NodeBlock(var params) :
 	LightBlockModel(getTypeString(), params)
@@ -37,4 +38,9 @@ void NodeBlock::loadJSONDataInternal(var data)
 {
 	LightBlockModel::loadJSONDataInternal(data);
 	manager.loadJSONDataInternal(data.getProperty("nodes", ""));
+}
+
+LightBlockModelUI * NodeBlock::createUI()
+{
+	return new NodeBlockUI(this);
 }

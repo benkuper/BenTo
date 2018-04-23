@@ -25,7 +25,11 @@ public:
 
 	LightBlockModelGroup genericBlocks;
 	LightBlockModelGroup liveFeedBlocks;
-	UserLightBlockModelManager userBlocks;	
+	UserLightBlockModelManager pictureBlocks;	
+	UserLightBlockModelManager nodeBlocks;
+	UserLightBlockModelManager scriptBlocks;
+	UserLightBlockModelManager timelineBlocks;
+
 
 	//Generic / Patterns
 	ScopedPointer<LightBlockModel> solidColorBlock;
@@ -47,5 +51,6 @@ public:
 	static LightBlockColorProvider * showProvidersAndGet();
 	static LightBlockColorProvider * showAllModelsAndGet(bool includePresets);
 	static Array<LightBlockColorProvider *> fillProvidersMenu(PopupMenu &menu, bool includePresets, int startIndex = 1);
+	static Array<LightBlockColorProvider *> fillUserLightBlockManagerMenu(UserLightBlockModelManager * manager, PopupMenu &menu, bool includePresets, int startIndex);
 
 };

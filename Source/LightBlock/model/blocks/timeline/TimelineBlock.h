@@ -34,5 +34,7 @@ public:
 
 	String getTypeString() const override { return "Timeline"; }
 
+	LightBlockModelUI * createUI() override;
+
 	static TimelineBlock * create(var params) { return new TimelineBlock(params); }
 };

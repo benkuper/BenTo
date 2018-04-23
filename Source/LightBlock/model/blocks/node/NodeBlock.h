@@ -29,5 +29,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	LightBlockModelUI * createUI() override;
+
 	static NodeBlock * create(var params) { return new NodeBlock(params); }
 };

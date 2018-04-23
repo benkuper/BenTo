@@ -38,12 +38,13 @@ void BlockViz::resized()
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
 	Rectangle<int> hr = r.removeFromTop(16);
+	r.removeFromTop(2);
+	Rectangle<int> hr2 = r.removeFromTop(16);
 
-	idUI->setBounds(hr.removeFromLeft(100));
-	hr.removeFromLeft(2);
-	resolutionUI->setBounds(hr.removeFromLeft(100));
-	hr.removeFromLeft(2);
 	shapeUI->setBounds(hr);
+	idUI->setBounds(hr2.removeFromLeft(100));
+	hr2.removeFromLeft(2);
+	resolutionUI->setBounds(hr2.removeFromLeft(100));
 
 	r.removeFromTop(2);
 	if(propViz != nullptr) propViz->setBounds(r);

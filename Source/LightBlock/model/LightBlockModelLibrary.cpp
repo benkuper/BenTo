@@ -13,6 +13,7 @@
 #include "blocks/pattern/PatternBlock.h"
 #include "blocks/video/VideoBlock.h"
 #include "blocks/dmx/DMXBlock.h"
+#include "blocks/picture/PictureBlock.h"
 
 juce_ImplementSingleton(LightBlockModelLibrary)
 
@@ -20,13 +21,18 @@ juce_ImplementSingleton(LightBlockModelLibrary)
 LightBlockModelLibrary::LightBlockModelLibrary() :
 	ControllableContainer("Block Library"),
 	genericBlocks("Generic"),
-	liveFeedBlocks("Live Feed")
+	liveFeedBlocks("Live Feed"),
+	pictureBlocks("Pictures", UserLightBlockModelManager::PICTURE),
+	nodeBlocks("Nodes", UserLightBlockModelManager::NODE),
+	scriptBlocks("Scripts", UserLightBlockModelManager::SCRIPT),
+	timelineBlocks("Timeline", UserLightBlockModelManager::TIMELINE)
 {
 	//patterns
 	solidColorBlock = new SolidColorPattern();
 	rainbowBlock = new RainbowPattern();
 	strobeBlock = new StrobePattern();
 	noiseBlock = new NoisePattern();
+	
 
 	videoBlock = new VideoBlock();
 	dmxBlock = new DMXBlock();
@@ -35,13 +41,17 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	genericBlocks.addChildControllableContainer(rainbowBlock);
 	genericBlocks.addChildControllableContainer(strobeBlock);
 	genericBlocks.addChildControllableContainer(noiseBlock);
+
 	addChildControllableContainer(&genericBlocks);
 
 	liveFeedBlocks.addChildControllableContainer(videoBlock);
 	liveFeedBlocks.addChildControllableContainer(dmxBlock);
 	addChildControllableContainer(&liveFeedBlocks);
 
-	addChildControllableContainer(&userBlocks);
+	addChildControllableContainer(&pictureBlocks);
+	addChildControllableContainer(&nodeBlocks);
+	addChildControllableContainer(&scriptBlocks);
+	addChildControllableContainer(&timelineBlocks);
 }
 
 LightBlockModelLibrary::~LightBlockModelLibrary()
@@ -54,7 +64,10 @@ void LightBlockModelLibrary::clear()
 {
 	Array<LightBlockModel *> models = getAllModels(false);
 	for (auto &m : models) m->clear();
-	userBlocks.clear();
+	pictureBlocks.clear();
+	nodeBlocks.clear();
+	scriptBlocks.clear();
+	timelineBlocks.clear();
 }
 
 var LightBlockModelLibrary::getJSONData()
@@ -65,8 +78,16 @@ var LightBlockModelLibrary::getJSONData()
 	if(gData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("generic", gData);
 	var lData = liveFeedBlocks.getJSONData();
 	if (lData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("liveFeeds", lData);
-	var uData = userBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("userBlocks", uData);
+	
+	var uData = pictureBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("pictures", uData);
+	uData = nodeBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("nodes", uData);
+	uData = scriptBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("scripts", uData);
+	uData = timelineBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("timelines", uData);
+
 
 	return data;
 }
@@ -75,7 +96,10 @@ void LightBlockModelLibrary::loadJSONDataInternal(var data)
 {
 	genericBlocks.loadJSONData(data.getProperty("generic", var()));
 	liveFeedBlocks.loadJSONData(data.getProperty("liveFeeds", var()));
-	userBlocks.loadJSONData(data.getProperty("userBlocks", var()));
+	pictureBlocks.loadJSONData(data.getProperty("pictures", var()));
+	nodeBlocks.loadJSONData(data.getProperty("nodes", var()));
+	scriptBlocks.loadJSONData(data.getProperty("scripts", var()));
+	timelineBlocks.loadJSONData(data.getProperty("timelines", var()));
 }
 
 Array<LightBlockModel*> LightBlockModelLibrary::getAllModels(bool includeUserModels)
@@ -98,7 +122,10 @@ Array<LightBlockModel*> LightBlockModelLibrary::getAllModels(bool includeUserMod
 
 	if (includeUserModels)
 	{
-		for (auto & m : userBlocks.items) result.add(m);
+		for (auto & m : pictureBlocks.items) result.add(m);
+		for (auto & m : nodeBlocks.items) result.add(m);
+		for (auto & m : scriptBlocks.items) result.add(m);
+		for (auto & m : timelineBlocks.items) result.add(m);
 	}
 
 	return result;
@@ -155,8 +182,6 @@ Array<LightBlockColorProvider *> LightBlockModelLibrary::fillProvidersMenu(Popup
 			mList.add(m);
 			index++;
 		}
-
-
 	}
 
 	for (auto &cc : LightBlockModelLibrary::getInstance()->liveFeedBlocks.controllableContainers)
@@ -188,7 +213,44 @@ Array<LightBlockColorProvider *> LightBlockModelLibrary::fillProvidersMenu(Popup
 		}
 	}
 
-	for (auto & m : LightBlockModelLibrary::getInstance()->userBlocks.items)
+	
+	menu.addSubMenu(LightBlockModelLibrary::getInstance()->genericBlocks.niceName, genericMenu);
+	menu.addSubMenu(LightBlockModelLibrary::getInstance()->liveFeedBlocks.niceName, liveFeedMenu);
+	
+	PopupMenu picturesMenu;
+	Array<LightBlockColorProvider *> pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->pictureBlocks, picturesMenu, includePresets, index);
+	index += pa.size();
+	mList.addArray(pa);
+	menu.addSubMenu(LightBlockModelLibrary::getInstance()->pictureBlocks.niceName, picturesMenu);
+
+
+	PopupMenu nodesMenu;
+	pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->nodeBlocks, nodesMenu, includePresets, index);
+	index += pa.size();
+	mList.addArray(pa);
+	menu.addSubMenu(LightBlockModelLibrary::getInstance()->nodeBlocks.niceName, nodesMenu);
+
+	PopupMenu scriptsMenu;
+	pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->scriptBlocks, scriptsMenu, includePresets, index);
+	index += pa.size();
+	mList.addArray(pa);
+	menu.addSubMenu(LightBlockModelLibrary::getInstance()->scriptBlocks.niceName, scriptsMenu);
+
+	PopupMenu timelinesMenu;
+	pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->timelineBlocks, timelinesMenu, includePresets, index);
+	index += pa.size();
+	mList.addArray(pa);
+	menu.addSubMenu(LightBlockModelLibrary::getInstance()->timelineBlocks.niceName, timelinesMenu);
+
+	return mList;
+}
+
+Array<LightBlockColorProvider*> LightBlockModelLibrary::fillUserLightBlockManagerMenu(UserLightBlockModelManager * manager, PopupMenu & menu, bool includePresets, int startIndex)
+{
+	Array<LightBlockColorProvider*> mList;
+
+	int index = startIndex;
+	for (auto & m : manager->items)
 	{
 		if (includePresets)
 		{
@@ -204,18 +266,14 @@ Array<LightBlockColorProvider *> LightBlockModelLibrary::fillProvidersMenu(Popup
 				index++;
 			}
 
-			userMenu.addSubMenu(m->niceName, modelMenu);
+			menu.addSubMenu(m->niceName, modelMenu);
 		} else
 		{
-			userMenu.addItem(index, m->niceName);
+			menu.addItem(index, m->niceName);
 			mList.add(m);
 			index++;
 		}
 	}
-
-	menu.addSubMenu(LightBlockModelLibrary::getInstance()->genericBlocks.niceName, genericMenu);
-	menu.addSubMenu(LightBlockModelLibrary::getInstance()->liveFeedBlocks.niceName, liveFeedMenu);
-	menu.addSubMenu(LightBlockModelLibrary::getInstance()->userBlocks.niceName, userMenu);
 
 	return mList;
 }

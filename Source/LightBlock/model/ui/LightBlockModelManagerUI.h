@@ -14,7 +14,7 @@
 #include "LightBlockModelUI.h"
 
 class LightBlockModelManagerUI :
-	public BaseManagerShapeShifterUI<UserLightBlockModelManager, LightBlockModel, LightBlockModelUI>
+	public BaseManagerUI<UserLightBlockModelManager, LightBlockModel, LightBlockModelUI>
 {
 public:
 	LightBlockModelManagerUI(const String &name, UserLightBlockModelManager * manager);
@@ -27,5 +27,7 @@ public:
 
 	void paint(Graphics &g) override;
 	void resized() override;
+
+	LightBlockModelUI * createUIForItem(LightBlockModel * i) override;
 
 };
