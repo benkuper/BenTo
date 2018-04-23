@@ -25,4 +25,4 @@ You can find the bleeding edge version, compiled against latest commits here :
 
 ## Screenshots
 
-![LaMoucheFolle](http://benjamin.kuperberg.fr/download/bento.png)
+![Bento](http://benjamin.kuperberg.fr/download/bento.png)
