@@ -19,7 +19,7 @@ You can find the bleeding edge version, compiled against latest commits here :
 
 - MacOS : [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/BenTo/branches/master/1)](https://travis-ci.org/benkuper/BenTo)
 
-- Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/34kjvafxyv9o71nr?svg=true)](https://ci.appveyor.com/project/benkuper/bento)
+- Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/r85kfdu2bv4ljxng?svg=true)](https://ci.appveyor.com/project/benkuper/bento)
 
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
 
