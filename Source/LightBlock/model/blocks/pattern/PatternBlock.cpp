@@ -40,7 +40,7 @@ Array<Colour> RainbowPattern::getColors(int id, int resolution, float time, var 
 	float bDensity = params.getProperty("density", density->floatValue());
 	float bOffset = params.getProperty("offset", offset->floatValue());
 	float bSpeed = params.getProperty("speed", speed->floatValue());
-	float bIdOffset = params.getProperty("ifoffset", density->floatValue());
+	float bIdOffset = params.getProperty("idoffset", idOffset->floatValue());
 
 	float curOffset = time*bSpeed + bOffset + id*bIdOffset;
 
