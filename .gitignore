@@ -65,7 +65,6 @@ profile
 **/Builds/CLion/.idea
 **/doxygen/doc
 **/doxygen/build
-extras/Projucer/JUCECompileEngine.dylib
 
 Builds/VisualStudio2017/
 Binaries/
