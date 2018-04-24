@@ -89,10 +89,10 @@ after_success:
     cd export
     docker cp ubuntu:/benkuper/BenTo/Builds/LinuxMakefile/build/BenTo .
     zip -r BenTo-linux-x64-bleedingedge.zip BenTo
-    curl --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u 67889354-softdown:opensource ftp://ftp.kuperberg.fr/bento/
+    curl --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u u67889354-softdown:opensource ftp://ftp.kuperberg.fr/bento/
   else
     cd /Users/travis/build/benkuper/BenTo/Builds/MacOSX/build/Release
     ls
     zip -r -y BenTo-osx-bleedingedge.zip BenTo.app
-    curl --ftp-create-dirs -T BenTo-osx-bleedingedge.zip -u 67889354-softdown:opensource ftp://ftp.kuperberg.fr/bento/
+    curl --ftp-create-dirs -T BenTo-osx-bleedingedge.zip -u u67889354-softdown:opensource ftp://ftp.kuperberg.fr/bento/
   fi
