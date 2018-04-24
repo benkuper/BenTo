@@ -27,9 +27,9 @@ ScriptBlock::~ScriptBlock()
 {
 }
 
-Array<WeakReference<Parameter>> ScriptBlock::getModelParameters()
+Array<WeakReference<Controllable>> ScriptBlock::getModelParameters()
 {
-	return script.scriptParamsContainer.getAllParameters();
+	return script.scriptParamsContainer.getAllControllables();
 }
 
 Array<Colour> ScriptBlock::getColors(int id, int resolution, float time, var params)

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LightBlock.cpp
-    Created: 10 Apr 2018 6:56:47pm
-    Author:  Ben
+	LightBlock.cpp
+	Created: 10 Apr 2018 6:56:47pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -59,28 +59,20 @@ void LightBlock::rebuildArgsFromModel()
 
 	paramsContainer.clear();
 
-	Array<WeakReference<Parameter>> params = provider->getModelParameters();
+	Array<WeakReference<Controllable>> params = provider->getModelParameters();
 
-	for (auto &sp : params)
+	for (auto &sc : params)
 	{
-		Parameter * p = nullptr;
-		switch (sp->type)
+		if (sc->type == Controllable::TRIGGER)
 		{
-		case Controllable::BOOL: p = new BoolParameter(sp->niceName, sp->description, sp->getValue()); break;
-		case Controllable::INT: p = new IntParameter(sp->niceName, sp->description, sp->getValue(), sp->minimumValue, sp->maximumValue); break;
-		case Controllable::FLOAT: p = new FloatParameter(sp->niceName, sp->description, sp->getValue(), sp->minimumValue, sp->maximumValue); break;
-		case Controllable::STRING: p = new StringParameter(sp->niceName, sp->description, sp->getValue()); break;
-		case Controllable::COLOR: p = new ColorParameter(sp->niceName, sp->description, ((ColorParameter *)sp.get())->getColor()); break;
-		default:
-			break;
-		}
-
-		if (p != nullptr)
+			 paramsContainer.addTrigger(sc->niceName, sc->description);
+		} else
 		{
-			p->setControllableFeedbackOnly(sp->isControllableFeedbackOnly);
+			Parameter * p = ControllableFactory::createParameterFrom(sc, true, true);
+			p->setControllableFeedbackOnly(sc->isControllableFeedbackOnly);
 			paramsContainer.addParameter(p);
 		}
-		
+
 	}
 
 	paramsContainer.hideInEditor = paramsContainer.controllables.size() == 0;

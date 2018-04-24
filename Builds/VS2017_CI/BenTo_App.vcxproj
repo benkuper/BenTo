@@ -2041,6 +2041,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\progress\ProgressNotifier.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\remotecontrol\OSCRemoteControl.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3038,6 +3041,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpBox.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\DebugHelpers.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\OSCHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\QueuedNotifier.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\RegexFunctions.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\StringUtil.h"/>
@@ -3067,6 +3071,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\progress\ui\ProgressWindow.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\progress\ProgressNotifier.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\remotecontrol\OSCRemoteControl.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\resources\OrganicBinaryData.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ui\ScriptEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ExpressionListener.h"/>

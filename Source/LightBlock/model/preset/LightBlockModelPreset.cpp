@@ -39,32 +39,29 @@ Array<Colour> LightBlockModelPreset::getColors(int id, int resolution, float tim
 void LightBlockModelPreset::rebuildArgsFromModel(bool syncValues)
 {
 
-	Array<WeakReference<Parameter>> params = model->getModelParameters();
+	Array<WeakReference<Controllable>> params = model->getModelParameters();
 
+	
 	if (params.size() > 0) previousData = paramsContainer.getJSONData();
 
 	paramsContainer.clear();
 
-	for (auto &sp : params)
+	for (auto &sc : params)
 	{
-		Parameter * p = nullptr;
-		switch (sp->type)
+		if (sc->type == Controllable::TRIGGER)
 		{
-		case Controllable::BOOL: p = new BoolParameter(sp->niceName, sp->description, sp->getValue()); break;
-		case Controllable::INT: p = new IntParameter(sp->niceName, sp->description, sp->getValue(), sp->minimumValue, sp->maximumValue); break;
-		case Controllable::FLOAT: p = new FloatParameter(sp->niceName, sp->description, sp->getValue(), sp->minimumValue, sp->maximumValue); break;
-		case Controllable::STRING: p = new StringParameter(sp->niceName, sp->description, sp->getValue()); break;
-		case Controllable::COLOR: p = new ColorParameter(sp->niceName, sp->description, ((ColorParameter *)sp.get())->getColor()); break;
-		default:
-			break;
+			paramsContainer.addTrigger(sc->niceName, sc->description);
+		} else
+		{
+			Parameter * p = ControllableFactory::createParameterFrom(sc, true, true);
+			if (p != nullptr)
+			{
+				p->forceSaveValue = true;
+				p->setControllableFeedbackOnly(sc->isControllableFeedbackOnly);
+				paramsContainer.addParameter(p);
+			}
 		}
 
-		if (p != nullptr)
-		{
-			p->forceSaveValue = true;
-			p->setControllableFeedbackOnly(sp->isControllableFeedbackOnly);
-			paramsContainer.addParameter(p);
-		}
 	}
 
 	hideInEditor = controllables.size() == 0;
@@ -96,7 +93,7 @@ void LightBlockModelPreset::loadJSONDataInternal(var data)
 	paramsContainer.loadJSONData(previousData);
 }
 
-Array<WeakReference<Parameter>> LightBlockModelPreset::getModelParameters()
+Array<WeakReference<Controllable>> LightBlockModelPreset::getModelParameters()
 {
-	return paramsContainer.getAllParameters();
+	return paramsContainer.getAllControllables();
 }

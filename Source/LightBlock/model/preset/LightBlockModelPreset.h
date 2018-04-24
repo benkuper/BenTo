@@ -37,6 +37,6 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	Array<WeakReference<Parameter>> getModelParameters() override;
+	Array<WeakReference<Controllable>> getModelParameters() override;
 		
 };

@@ -33,14 +33,17 @@ void LightBlockModel::clear()
 {
 	presetManager.clear();
 
-	Array<WeakReference<Parameter>> pList = getModelParameters();
-	for (auto &p : pList) p->resetValue();
+	Array<WeakReference<Controllable>> pList = getModelParameters();
+	for (auto &p : pList)
+	{
+		if (p->type != Controllable::TRIGGER) dynamic_cast<Parameter *>(p.get())->resetValue();
+	}
 }
 
-Array<WeakReference<Parameter>> LightBlockModel::getModelParameters()
+Array<WeakReference<Controllable>> LightBlockModel::getModelParameters()
 {
-	if (paramsContainer == nullptr) return Array<WeakReference<Parameter>>();
-	return paramsContainer->getAllParameters();
+	if (paramsContainer == nullptr) return Array<WeakReference<Controllable>>();
+	return paramsContainer->getAllControllables();
 }
 
 Array<Colour> LightBlockModel::getColors(int id, int resolution, float time, var params)

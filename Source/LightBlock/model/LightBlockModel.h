@@ -34,7 +34,7 @@ public:
 	ScopedPointer<ControllableContainer> paramsContainer;
 	LightBlockModelPresetManager presetManager;
 
-	virtual Array<WeakReference<Parameter>> getModelParameters() override;
+	virtual Array<WeakReference<Controllable>> getModelParameters() override;
 
 	virtual Array<Colour> getColors(int id, int resolution, float time, var params) override;
 
