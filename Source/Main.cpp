@@ -34,7 +34,7 @@ public:
     //==============================================================================
     void initialiseInternal (const String& commandLine) override
     {
-		AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/bento/releases/update.json"), "http://benjamin.kuperberg.fr/bento/user/data/", "Bento");
+		AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/bento/update.json"), "http://benjamin.kuperberg.fr/bento/download/", "Bento");
 		engine = new BentoEngine(appProperties,getAppVersion());
 		mainComponent = new MainComponent();
 
