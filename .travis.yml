@@ -86,7 +86,7 @@ after_success:
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     mkdir export
     cd export
-    docker cp /benkuper/BenTo/Builds/LinuxMakefile/build .
+    docker cp /benkuper/BenTo/Builds/LinuxMakefile/build/BenTo-linux-x64-bleedingedge.zip .
     zip -r BenTo-linux-x64-bleedingedge.zip BenTo
     curl --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/bento/download/
   else
