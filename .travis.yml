@@ -27,6 +27,7 @@ before_install:
     pwd
     docker run -d --name ubuntu -v $(pwd):/benkuper ubuntu:latest tail -f /dev/null
     docker ps
+    ls
   else
     gem install xcpretty
     gem install xcpretty-travis-formatter
@@ -47,48 +48,27 @@ install:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     docker exec -t ubuntu bash -c "export DEBIAN_FRONTEND=noninteractive;
-    uname -a;
-    apt-get install software-properties-common
-    add-apt-repository ppa:webkit-team/ppa -y;
-    add-apt-repository -y ppa:ubuntu-toolchain-r/test;
-    apt-get update --fix-missing;
-    apt-get update -qq;
-    echo 'Installing GCC...';
-    apt-get install -y g++-7 gcc-7;
-    gcc -v;
-    update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 90;
-    update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-7 90;
-    export CC=/usr/bin/gcc;
-    export CXX=/usr/bin/g++;
-    echo ${CC};
-    echo ${CXX};
-    apt-get install -qq git libfreetype6-dev libx11-dev libxinerama-dev libxrandr-dev libxcursor-dev libxcomposite-dev mesa-common-dev libasound2-dev freeglut3-dev libcurl4-gnutls-dev+ libasound2-dev libjack-dev libbluetooth-dev libgtk-3-dev libwebkit2gtk-4.0-dev;
-    cd ~;
-    pwd;
-    git clone --depth=1 --branch=master https://github.com/WeAreROLI/JUCE.git JUCE;
     cd /benkuper;
     mkdir 'JUCE Modules';
-    cd 'JUCE Modules';
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline"
+    cd 'JUCE Modules'"
   fi
 script:
 - |
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    docker exec -t ubuntu bash -c "gcc -v;
-    cd /benkuper/BenTo/Builds/LinuxMakefile;
-    make -j 8 CONFIG=Release"
+
   else
     xcodebuild -project BenTo/Builds/MacOSX/BenTo.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
   fi
 after_success:
 - |-
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-    docker exec -e $FTP_USER -e $FTP_PASSWORD -t ubuntu bash -c "echo 'AFTER SUCESS : ZIP AND UPLOADs';
-    cd /benkuper/BenTo/Builds/LinuxMakefile/build;
-    apt-get install -y wget unzip zip;
-    zip -r BenTo-linux-x64-bleedingedge.zip BenTo;
-    curl --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/bento/download/"
+    ls
+    cd ..
+    ls
+    cd BenTo/Builds/LinuxMakefile/build
+    mkdir BenTo
+    zip -r BenTo-linux-x64-bleedingedge.zip BenTo
+    curl --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD ftp://ftp.kuperberg.fr/bento/download/
   else
     cd /Users/travis/build/benkuper/BenTo/Builds/MacOSX/build/Release
     ls
