@@ -1,0 +1,31 @@
+/*
+  ==============================================================================
+
+    VideoBlockUI.h
+    Created: 23 Apr 2018 9:45:30pm
+    Author:  Ben
+
+  ==============================================================================
+*/
+
+#pragma once
+
+#include "../../../ui/LightBlockModelUI.h"
+#include "../VideoBlock.h"
+
+class VideoBlockUI :
+	public LightBlockModelUI
+{
+public:
+	VideoBlockUI(VideoBlock * block);
+	~VideoBlockUI();
+
+	ScopedPointer<BoolToggleUI> liveUI;
+	VideoBlock * vb;
+
+	void paint(Graphics &g) override;
+	void resized() override;
+
+	void editBlock() override;
+
+};

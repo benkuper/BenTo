@@ -18,14 +18,15 @@ static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(
 String getAppVersion() { return getApp().getApplicationVersion(); }
 ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
 
-OpenGLContext * getOpenGLContext() { return &getApp().mainWindow->openGLContext; }
+OpenGLContext * getOpenGLContext() { return &getApp().mainComponent->openGLContext; }
 
 ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
 OrganicApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
 
 
 //==============================================================================
-class BenToApplication  : public OrganicApplication
+class BenToApplication  :
+	public OrganicApplication
 {
 public:
     //==============================================================================

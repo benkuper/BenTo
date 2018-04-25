@@ -17,7 +17,7 @@ LightBlockModelGroupUI::LightBlockModelGroupUI(ControllableContainer * group) :
 	{
 		LightBlockModel * m = dynamic_cast<LightBlockModel *>(cc.get());
 		if (m == nullptr) continue;
-		LightBlockModelUI * mui = new LightBlockModelUI(m);
+		LightBlockModelUI * mui = m->createUI();
 		modelsUI.add(mui);
 		addAndMakeVisible(mui);
 	}

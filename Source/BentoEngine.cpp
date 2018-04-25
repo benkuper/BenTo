@@ -12,6 +12,7 @@
 
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "Prop/PropManager.h"
+#include "Video/Spatializer.h"
 
 BentoEngine::BentoEngine(ApplicationProperties * appProperties, const String &appVersion) :
 	Engine("BenTo",".bento", appProperties, appVersion)
@@ -26,10 +27,12 @@ BentoEngine::~BentoEngine()
 {
 	PropManager::deleteInstance();
 	LightBlockModelLibrary::deleteInstance();
+	Spatializer::deleteInstance();
 }
 
 void BentoEngine::clearInternal()
 {
+	Spatializer::getInstance()->clear();
 	PropManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
 }
@@ -44,6 +47,10 @@ var BentoEngine::getJSONData()
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
 
+
+	var spatData = Spatializer::getInstance()->getJSONData();
+	if (!spatData.isVoid() && spatData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("spatializer", spatData);
+
 	return data;
 }
 
@@ -52,6 +59,7 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTas
 	//ProgressTask * projectTask = loadingTask->addTask("Project");
 	ProgressTask * modelsTask = loadingTask->addTask("Models");
 	ProgressTask * propTask = loadingTask->addTask("Props");
+	ProgressTask * spatTask = loadingTask->addTask("Spatializer");
 
 
 	//load here
@@ -69,4 +77,9 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTas
 	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));
 	propTask->setProgress(1);
 	propTask->end();
+
+	spatTask->start();
+	Spatializer::getInstance()->loadJSONData(data.getProperty("spatializer", var()));
+	spatTask->setProgress(1);
+	spatTask->end();
 }

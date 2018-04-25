@@ -29,6 +29,7 @@
 #include <juce_opengl/juce_opengl.h>
 #include <juce_organicui/juce_organicui.h>
 #include <juce_osc/juce_osc.h>
+#include <juce_sharedtexture/juce_sharedtexture.h>
 #include <juce_timeline/juce_timeline.h>
 #include <juce_video/juce_video.h>
 

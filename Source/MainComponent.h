@@ -15,7 +15,9 @@
     This component lives inside our window, and this is where you should put all
     your controls and content.
 */
-class MainComponent   : public OrganicMainContentComponent
+class MainComponent :
+	public OrganicMainContentComponent,
+	public OpenGLRenderer
 {
 public:
     //==============================================================================
@@ -23,7 +25,6 @@ public:
     ~MainComponent();
 
 	void init() override;
-	void clear() override;
 
 private:
     //==============================================================================
@@ -31,4 +32,12 @@ private:
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
+
+
+	virtual void newOpenGLContextCreated() override;
+
+	virtual void renderOpenGL() override;
+
+	virtual void openGLContextClosing() override;
+
 };

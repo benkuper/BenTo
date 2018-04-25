@@ -21,6 +21,20 @@
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{238810CF-2BC3-80D9-EDBE-284C90CC6F3B}" name="Video">
+        <GROUP id="{C77E37C3-605D-57B2-AF08-91914A0EE37D}" name="ui">
+          <FILE id="VWrkOi" name="SpatializerPanel.cpp" compile="1" resource="0"
+                file="Source/Video/ui/SpatializerPanel.cpp"/>
+          <FILE id="CqqLe1" name="SpatializerPanel.h" compile="0" resource="0"
+                file="Source/Video/ui/SpatializerPanel.h"/>
+          <FILE id="Z6EqOz" name="SpatItemUI.cpp" compile="1" resource="0" file="Source/Video/ui/SpatItemUI.cpp"/>
+          <FILE id="VBpOKi" name="SpatItemUI.h" compile="0" resource="0" file="Source/Video/ui/SpatItemUI.h"/>
+        </GROUP>
+        <FILE id="TrUUBa" name="Spatializer.cpp" compile="1" resource="0" file="Source/Video/Spatializer.cpp"/>
+        <FILE id="k1xJfM" name="Spatializer.h" compile="0" resource="0" file="Source/Video/Spatializer.h"/>
+        <FILE id="Bhoo0Y" name="SpatItem.cpp" compile="1" resource="0" file="Source/Video/SpatItem.cpp"/>
+        <FILE id="sVLTmw" name="SpatItem.h" compile="0" resource="0" file="Source/Video/SpatItem.h"/>
+      </GROUP>
       <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Timeline">
         <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
           <GROUP id="{A00ED23C-4B48-75CB-7911-E2C659ADA7F6}" name="BlockLayer">
@@ -220,6 +234,11 @@
               <FILE id="XVCum1" name="DMXBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/dmx/DMXBlock.h"/>
             </GROUP>
             <GROUP id="{40CD7123-FB3D-52B3-808A-2429C88F4ADF}" name="video">
+              <GROUP id="{9264E4A8-3C60-EAC1-E633-8E38B9D6AC31}" name="ui">
+                <FILE id="mshIlg" name="VideoBlockUI.cpp" compile="1" resource="0"
+                      file="Source/LightBlock/model/blocks/video/ui/VideoBlockUI.cpp"/>
+                <FILE id="mT29s6" name="VideoBlockUI.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/ui/VideoBlockUI.h"/>
+              </GROUP>
               <FILE id="fNmZwX" name="VideoBlock.cpp" compile="1" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
               <FILE id="FSizg9" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
             </GROUP>
@@ -348,6 +367,7 @@
         <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -374,6 +394,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -399,6 +420,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK">
@@ -423,6 +445,7 @@
         <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -442,6 +465,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>

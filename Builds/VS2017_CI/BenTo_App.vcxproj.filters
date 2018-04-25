@@ -11,6 +11,12 @@
     <Filter Include="BenTo\Resources">
       <UniqueIdentifier>{8E65566C-A6CB-B998-F659-4E3386AD8621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Video\ui">
+      <UniqueIdentifier>{B65A82FC-D3DB-67A3-2C87-012DE4DFF526}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Video">
+      <UniqueIdentifier>{871EB0F9-7C2C-9AC7-2172-59ED2441BD4F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Timeline\layers\BlockLayer\ui">
       <UniqueIdentifier>{0582B79D-D7E8-BFFC-6CC8-D525FCDA1785}</UniqueIdentifier>
     </Filter>
@@ -73,6 +79,9 @@
     </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\dmx">
       <UniqueIdentifier>{C0DDC759-ABFC-FF2A-DB2B-E3001940E6F4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\video\ui">
+      <UniqueIdentifier>{9004A774-F201-7768-DE32-CE83692086C6}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\video">
       <UniqueIdentifier>{1545531F-CD02-7D11-D7A4-2E641DEA5FEF}</UniqueIdentifier>
@@ -569,6 +578,12 @@
     <Filter Include="JUCE Modules\juce_osc">
       <UniqueIdentifier>{B1DE8DB1-C00A-12C0-D690-8B3C9504A60A}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_sharedtexture\spout">
+      <UniqueIdentifier>{91251294-F568-8B56-A4FC-4E9655EB99A0}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_sharedtexture">
+      <UniqueIdentifier>{F95E7C0F-5663-3942-16BD-5DA277CCDFAA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode">
       <UniqueIdentifier>{4A208D7E-781B-FBFA-1443-7728B2940D57}</UniqueIdentifier>
     </Filter>
@@ -634,6 +649,18 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Video\ui\SpatializerPanel.cpp">
+      <Filter>BenTo\Source\Video\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\ui\SpatItemUI.cpp">
+      <Filter>BenTo\Source\Video\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\Spatializer.cpp">
+      <Filter>BenTo\Source\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\SpatItem.cpp">
+      <Filter>BenTo\Source\Video</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
     </ClCompile>
@@ -762,6 +789,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\dmx</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
@@ -2938,6 +2968,42 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_osc\juce_osc.cpp">
       <Filter>JUCE Modules\juce_osc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutCopy.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutDirectX.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLDXinterop.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLextensions.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutMemoryShare.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutReceiver.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSDK.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSender.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSenderNames.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSharedMemory.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\juce_sharedtexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\SharedTexture.cpp">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.cpp">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClCompile>
@@ -3166,6 +3232,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -3174,6 +3243,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Video\ui\SpatializerPanel.h">
+      <Filter>BenTo\Source\Video\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Video\ui\SpatItemUI.h">
+      <Filter>BenTo\Source\Video\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Video\Spatializer.h">
+      <Filter>BenTo\Source\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Video\SpatItem.h">
+      <Filter>BenTo\Source\Video</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
     </ClInclude>
@@ -3302,6 +3383,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\dmx</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
@@ -5598,6 +5682,48 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h">
       <Filter>JUCE Modules\juce_osc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\Spout.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutCommon.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutCopy.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutDirectX.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLDXinterop.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLextensions.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutMemoryShare.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutReceiver.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSDK.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSender.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSenderNames.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSharedMemory.h">
+      <Filter>JUCE Modules\juce_sharedtexture\spout</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\SharedTexture.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\juce_sharedtexture.h">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\AppConfig.h">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>
     </ClInclude>
@@ -5776,6 +5902,9 @@
     </None>
     <None Include="..\..\..\JUCE Modules\juce_organicui\README.md">
       <Filter>JUCE Modules\juce_organicui</Filter>
+    </None>
+    <None Include="..\..\..\JUCE Modules\juce_sharedtexture\README.md">
+      <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </None>
     <None Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\ReadMe.txt">
       <Filter>JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode</Filter>

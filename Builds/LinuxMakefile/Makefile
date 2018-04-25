@@ -68,6 +68,10 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/SpatializerPanel_f5827a0a.o \
+  $(JUCE_OBJDIR)/SpatItemUI_cf9cb39f.o \
+  $(JUCE_OBJDIR)/Spatializer_263d474f.o \
+  $(JUCE_OBJDIR)/SpatItem_684aa1c0.o \
   $(JUCE_OBJDIR)/LightBlockClipManagerUI_8be8afe9.o \
   $(JUCE_OBJDIR)/LightBlockClipUI_a91aa7d6.o \
   $(JUCE_OBJDIR)/LightBlockLayerPanel_2eb25725.o \
@@ -111,6 +115,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/PictureBlockUI_8a35e63.o \
   $(JUCE_OBJDIR)/PictureBlock_4a597ad4.o \
   $(JUCE_OBJDIR)/DMXBlock_ca1094f2.o \
+  $(JUCE_OBJDIR)/VideoBlockUI_ef7208c3.o \
   $(JUCE_OBJDIR)/VideoBlock_5117b69a.o \
   $(JUCE_OBJDIR)/PatternBlock_a30b5830.o \
   $(JUCE_OBJDIR)/TimelineBlockUI_53d3cb49.o \
@@ -152,6 +157,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_opengl_a8a032b.o \
   $(JUCE_OBJDIR)/include_juce_organicui_2c36794d.o \
   $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o \
+  $(JUCE_OBJDIR)/include_juce_sharedtexture_e491fa4.o \
   $(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o \
   $(JUCE_OBJDIR)/include_juce_video_be78589.o \
 
@@ -165,6 +171,26 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : check-pkg-config $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/SpatializerPanel_f5827a0a.o: ../../Source/Video/ui/SpatializerPanel.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SpatializerPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SpatItemUI_cf9cb39f.o: ../../Source/Video/ui/SpatItemUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SpatItemUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/Spatializer_263d474f.o: ../../Source/Video/Spatializer.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling Spatializer.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SpatItem_684aa1c0.o: ../../Source/Video/SpatItem.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SpatItem.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LightBlockClipManagerUI_8be8afe9.o: ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
@@ -381,6 +407,11 @@ $(JUCE_OBJDIR)/DMXBlock_ca1094f2.o: ../../Source/LightBlock/model/blocks/dmx/DMX
 	@echo "Compiling DMXBlock.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/VideoBlockUI_ef7208c3.o: ../../Source/LightBlock/model/blocks/video/ui/VideoBlockUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling VideoBlockUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/VideoBlock_5117b69a.o: ../../Source/LightBlock/model/blocks/video/VideoBlock.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling VideoBlock.cpp"
@@ -584,6 +615,11 @@ $(JUCE_OBJDIR)/include_juce_organicui_2c36794d.o: ../../JuceLibraryCode/include_
 $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o: ../../JuceLibraryCode/include_juce_osc.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling include_juce_osc.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_sharedtexture_e491fa4.o: ../../JuceLibraryCode/include_juce_sharedtexture.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_juce_sharedtexture.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o: ../../JuceLibraryCode/include_juce_timeline.cpp

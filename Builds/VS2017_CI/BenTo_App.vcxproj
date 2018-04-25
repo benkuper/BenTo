@@ -10,7 +10,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{CF3E283E-96E9-FBB1-2927-CA8BB282F938}</ProjectGuid>
+    <ProjectGuid>{92F6D70F-0A09-76C4-DEE3-0BB3CC06C4E0}</ProjectGuid>
     <PlatformToolset>v141</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -89,6 +89,10 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Video\ui\SpatializerPanel.cpp"/>
+    <ClCompile Include="..\..\Source\Video\ui\SpatItemUI.cpp"/>
+    <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
+    <ClCompile Include="..\..\Source\Video\SpatItem.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.cpp"/>
@@ -132,6 +136,7 @@
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\PictureBlock.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\timeline\ui\TimelineBlockUI.cpp"/>
@@ -2140,6 +2145,42 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_osc\juce_osc.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutCopy.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutDirectX.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLDXinterop.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLextensions.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutMemoryShare.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutReceiver.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSDK.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSender.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSenderNames.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSharedMemory.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\juce_sharedtexture.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_sharedtexture\SharedTexture.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2294,10 +2335,15 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Video\ui\SpatializerPanel.h"/>
+    <ClInclude Include="..\..\Source\Video\ui\SpatItemUI.h"/>
+    <ClInclude Include="..\..\Source\Video\Spatializer.h"/>
+    <ClInclude Include="..\..\Source\Video\SpatItem.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.h"/>
@@ -2341,6 +2387,7 @@
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\picture\PictureBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PerlinNoise.hpp"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.h"/>
@@ -3106,6 +3153,20 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCTimeTag.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCTypes.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_osc\juce_osc.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\Spout.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutCommon.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutCopy.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutDirectX.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLDXinterop.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutGLextensions.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutMemoryShare.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutReceiver.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSDK.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSender.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSenderNames.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\spout\SpoutSharedMemory.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\SharedTexture.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\juce_sharedtexture.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\BinaryData.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\JuceHeader.h"/>
@@ -3167,6 +3228,7 @@
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\jpglib\changes to libjpeg for JUCE.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\..\JUCE Modules\juce_organicui\README.md"/>
+    <None Include="..\..\..\JUCE Modules\juce_sharedtexture\README.md"/>
     <None Include="..\..\..\JUCE Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\..\JUCE Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>

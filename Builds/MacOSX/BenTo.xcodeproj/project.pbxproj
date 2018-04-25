@@ -6,613 +6,649 @@
 	objectVersion = 46;
 	objects = {
 
-		D2E8E1B326323067F5E1848A = {isa = PBXBuildFile; fileRef = 3CBCE5891307CCF2CC68B842; };
-		3E1484DBECD35D4FA3F4C434 = {isa = PBXBuildFile; fileRef = A69CB1365F276E382D156362; };
-		5CEBB761C8A24F57BDC88923 = {isa = PBXBuildFile; fileRef = 927838907CA0ECBC59E8B913; };
-		2C45354F5A18ED1AAAC94F85 = {isa = PBXBuildFile; fileRef = CBCAD00FA55EC1B55CAEF380; };
-		7458346624C6F6E73DD3DF59 = {isa = PBXBuildFile; fileRef = 695EF8018408A285FF4E2D9A; };
-		00C994E555563B78219833D0 = {isa = PBXBuildFile; fileRef = E5944E8EE9791564860D8723; };
-		F950E9C3B20B68007E44399E = {isa = PBXBuildFile; fileRef = 3E338DB8056E41CA516C46A8; };
-		08A6CC50BB8D5D80FF01A5C5 = {isa = PBXBuildFile; fileRef = BE4BCF52EA041035AE5BD1F5; };
-		FD7CBDB4D28908D734428FF4 = {isa = PBXBuildFile; fileRef = C7BC76E73308F67A7FEDA2CF; };
-		FF99B76D2C72D6DA48E6A53B = {isa = PBXBuildFile; fileRef = D37AABFBFE5C031E1AF6F433; };
-		B07C78E76A571118AAE569C7 = {isa = PBXBuildFile; fileRef = A1CC4EA8AE33F20112088326; };
-		FE9CEB82D8D32544D23461C0 = {isa = PBXBuildFile; fileRef = C2F96A41FD1AB15B09C987BF; };
-		ADB806BE6342DB0BCF211583 = {isa = PBXBuildFile; fileRef = 2FE88BA62466E05980C03896; };
-		D41C0A95CA36830CF58BEEE7 = {isa = PBXBuildFile; fileRef = D68557AA50E7C690716848FB; };
-		237FF37CC31D4AEEE2102B8B = {isa = PBXBuildFile; fileRef = C8224C5AFCEEEEF1B9FC7B40; };
-		20FFE0D7E5E82AF162B26776 = {isa = PBXBuildFile; fileRef = A734AA0223A3C35312AE481B; };
-		D5CCEEF9AA6AA6C345A51E4A = {isa = PBXBuildFile; fileRef = CDD66ABFDE2D05CADA5680FD; };
-		644458F8B80C4528E0971696 = {isa = PBXBuildFile; fileRef = 8FB0429AEA011E83B1A988BA; };
-		E2BC9CFCB0722A9420C8FA20 = {isa = PBXBuildFile; fileRef = 0268B4A0D695E14A7A666B13; };
-		38F9D0D00384D35B0010835A = {isa = PBXBuildFile; fileRef = 6E29C9036737F42011CF851E; };
-		6A9299EFEE9A7EAEFC85AEA8 = {isa = PBXBuildFile; fileRef = 0B6C37A2C5109D5508A75AA2; };
-		78AC7CC50E722461EF040557 = {isa = PBXBuildFile; fileRef = F2FBEBA9A10C0CBA8F385D16; };
-		D34EA3FDCCB61A86CB25C1A9 = {isa = PBXBuildFile; fileRef = 279B4167C1667B67B9D5815D; };
-		2DA4159DD05B873B8E2D74B2 = {isa = PBXBuildFile; fileRef = 4EA87ECCAC8B43DE7185A2B3; };
-		1980FFA7EE3046A542DBA331 = {isa = PBXBuildFile; fileRef = FD8970FADE2A65B445101165; };
-		A73EF411EE79A6482B6A1BBF = {isa = PBXBuildFile; fileRef = 27FE84C57B055FB987D3D83B; };
-		E4A125982FAA7F9BDBF9B043 = {isa = PBXBuildFile; fileRef = 294F04D230D3DA0C9C83671B; };
-		630FE58F5724E6DC9B818A98 = {isa = PBXBuildFile; fileRef = F9A9748CC798B3E12AC867CE; };
-		D0043F044C53B99EDA65B2E7 = {isa = PBXBuildFile; fileRef = DB5F3A6530A3449C49D8D9FF; };
-		7E15EF2E094D1D5BCAA70C9A = {isa = PBXBuildFile; fileRef = 66A7C063808E5D6F40EE293C; };
-		44F0291B699004AF7F751915 = {isa = PBXBuildFile; fileRef = 5A4EAE8070B6C083D1F11D0D; };
-		46B7826DA66734151298E959 = {isa = PBXBuildFile; fileRef = 80BD236B9C21ADB042A4BCF2; };
-		9FC57C15A138A6ABB80FB519 = {isa = PBXBuildFile; fileRef = 244A87ECE5219300EE110B67; };
-		3B8C56E2F4456214B7708EE8 = {isa = PBXBuildFile; fileRef = 7363178451006A5FD16493D5; };
-		8BAF9634B84E54753790A2A5 = {isa = PBXBuildFile; fileRef = DE30B6576F0EE320AE9A7797; };
-		DB9F7A1A142F8903702F0C12 = {isa = PBXBuildFile; fileRef = 8D857A60E921295361905783; };
-		F726A4AC6F547D840AF734EB = {isa = PBXBuildFile; fileRef = 01C35BBA634B8C8892E1DE83; };
-		DDC3F381269443D7A6D038D0 = {isa = PBXBuildFile; fileRef = 463A71423FAD00DDCA4C2A9D; };
-		5811ADBA004729576CCC8C64 = {isa = PBXBuildFile; fileRef = 41ED50542F21D62B2E883554; };
-		BA504F5BF91E089EB2AF83F7 = {isa = PBXBuildFile; fileRef = 961586608091C051BC6A253B; };
-		D6A86A2BC635979DF4ACF425 = {isa = PBXBuildFile; fileRef = EB306423F2AB241D58C0A4F1; };
-		21A8A1B4710DACB8FE91926E = {isa = PBXBuildFile; fileRef = 1BB04EAF09E6A3F83CDCFA00; };
-		BF3EB24DDE033951B3DEB047 = {isa = PBXBuildFile; fileRef = CCBDF2F1730D119D654EA47B; };
-		46338B9B792D68A740FD3EE6 = {isa = PBXBuildFile; fileRef = 77263AE62918BC1C6A42C9F1; };
-		B05485B45F3E7F8F0152702C = {isa = PBXBuildFile; fileRef = 5599124963C23BC08065EC1E; };
-		F6D6A28252151E8446C4A679 = {isa = PBXBuildFile; fileRef = 96E70FC212B6782CD11F66EB; };
-		E294B6AA69D822D250482200 = {isa = PBXBuildFile; fileRef = 3493D1AE2BFBADBBAF92A1A7; };
-		ED16BF327F86645806D65FE5 = {isa = PBXBuildFile; fileRef = 5FAC696A3783CC6862D7BACB; };
-		D5871C3DA979CF52F7D9127F = {isa = PBXBuildFile; fileRef = CDBF09B2D7DA0926240282B2; };
-		44A84B157D2E808AC8494D96 = {isa = PBXBuildFile; fileRef = F669A644D05BBC25A4441EBC; };
-		F7077BEF23DF56B731225570 = {isa = PBXBuildFile; fileRef = 3D03C2B25C169A785D654744; };
-		4F48DDB8CE3C047D2E83AAAD = {isa = PBXBuildFile; fileRef = B44C7AF9910E177054E4C662; };
-		F189921375ED95A8CA2360E0 = {isa = PBXBuildFile; fileRef = 2863DD90B9AA617821D59A84; };
-		D9036CF938F974B5B1FB5CE6 = {isa = PBXBuildFile; fileRef = 130E9AEED84901C0A9F8002F; };
-		24BCE5400C88DE89A8539628 = {isa = PBXBuildFile; fileRef = D72941118A69EEE90C1D8E48; };
-		74BD1259749D4C8C38217A21 = {isa = PBXBuildFile; fileRef = CE8277C60D1575CFD5E7D0B6; };
-		16E821E8DD5EDFF2BC3B077B = {isa = PBXBuildFile; fileRef = BACFAEA2E183F90984482C9E; };
-		F92B06C3781746AFF2913FAD = {isa = PBXBuildFile; fileRef = F5E234E45DAE91864302B0AD; };
-		F2DE9713FC06D4FFF6EF91C4 = {isa = PBXBuildFile; fileRef = 0D0DEC4C532A3087A85F4697; };
-		351DA382D340426F75BCF8F3 = {isa = PBXBuildFile; fileRef = 378E6FCC996046F6BA810E87; };
-		18CCDBBFE391C6E36B75513F = {isa = PBXBuildFile; fileRef = 6C10E040E5DA6FB0195C4A68; };
-		EB64CEDF144B5A941B336494 = {isa = PBXBuildFile; fileRef = 4C5C15AEA3C2E412D2455737; };
-		C0842FD9F004CD2762D18B08 = {isa = PBXBuildFile; fileRef = 3C92CE0E3436696ABA7DA576; };
-		C6D4A95482C35B4C30890AD5 = {isa = PBXBuildFile; fileRef = 78F3F334D41CD5AD149168A4; };
-		FE6FE0FA77DA12EA3128C2ED = {isa = PBXBuildFile; fileRef = 79FAC0C979273799935E1E99; };
-		B12A3E52928D1647E99A7A1C = {isa = PBXBuildFile; fileRef = 64B1682490D9992DE3D69CE1; };
-		3E2769C7D83B946C1EB11C2D = {isa = PBXBuildFile; fileRef = 514F33F4CAFB5C9A6429039F; };
-		C4CD4DE9978C03F1981875DC = {isa = PBXBuildFile; fileRef = EEB6E4BA06F1F5C95D577595; };
-		A55DB5F72CC3596DCB284803 = {isa = PBXBuildFile; fileRef = 0D2453697E1E59A346B59EF2; };
-		94CE3A406C54C9CF19E77B77 = {isa = PBXBuildFile; fileRef = E32B49415E8A83F64C351BF9; };
-		1C5108756202FD93C6D4E556 = {isa = PBXBuildFile; fileRef = 1FD36BEA0C8C2C37D6D54E72; };
-		D6EBC791E451964252A4341C = {isa = PBXBuildFile; fileRef = 6CA4379159F78E641BE24B49; };
-		8B7BA93F15BCF6DD9FA71AF3 = {isa = PBXBuildFile; fileRef = 73835DC277A7BA5622BAAB79; };
-		FAFDA1BAAF2CEEFDB7905D66 = {isa = PBXBuildFile; fileRef = D7B04AD60CED341F860AEA0A; };
-		D0837530C54CC8752C3516C8 = {isa = PBXBuildFile; fileRef = D4C1035BB3BC86C2666ADFE5; };
-		53705F8FBEAEEC615BFEAA6A = {isa = PBXBuildFile; fileRef = A4A7538484575AD24A3591E5; };
-		5218D472691625DFDCF87378 = {isa = PBXBuildFile; fileRef = 9651059F66CAC32CD51EFF81; };
-		145BCA5E977382FEC724C874 = {isa = PBXBuildFile; fileRef = 560474FB5341D8CA595FD0A5; };
-		6F29B428FF504F76539A3D01 = {isa = PBXBuildFile; fileRef = 723596434A463D62EC5587DD; };
-		EBB363A1931D7DBF032F5DAD = {isa = PBXBuildFile; fileRef = CB67EF95D5BB1CD012A0A4F8; };
-		9206B3DDF7247581171877FD = {isa = PBXBuildFile; fileRef = 3CB2D851F7AEA7A8676B5193; };
-		CD56673B4FD19E7580A98AC7 = {isa = PBXBuildFile; fileRef = ABC88339AB269F0B29778849; };
-		3C9AD91310551FDC5325D638 = {isa = PBXBuildFile; fileRef = 2654F0E498D41A4E10042E22; };
-		90D6CFD44BF8D38E5DF58985 = {isa = PBXBuildFile; fileRef = 9F4B2E72F24A6106C2F8D04C; };
-		9C9A6131BC95E526FC052119 = {isa = PBXBuildFile; fileRef = 4A1990E56CB04A347CC6496B; };
-		F412F60057360F516E26495E = {isa = PBXBuildFile; fileRef = 5E5FF3A248A8408106B4DDFF; };
-		7B53C4E4B662E6C27E928D74 = {isa = PBXBuildFile; fileRef = AAB2521CFAB6DDE8ED8E834E; };
-		F971294D04C9A0CDFB8BA7B3 = {isa = PBXBuildFile; fileRef = 83AD3D84B8E19E3BA97CD878; };
-		C18516AC4998DE44439BB936 = {isa = PBXBuildFile; fileRef = 04ECEA5E5EAA39D696DC65E5; };
-		0557B27E6DF2A12C70EC0E9F = {isa = PBXBuildFile; fileRef = 77DD315CC4B87CC5A3B7B20F; };
-		D07462B12F0EC45702C1A68D = {isa = PBXBuildFile; fileRef = 209DEEB0E757EA8F55EF81E3; };
-		D4A14CFD01FAE5B8E841E865 = {isa = PBXBuildFile; fileRef = 70CB738991F52E6957677B38; };
-		EDF5C165106099CAC86E0931 = {isa = PBXBuildFile; fileRef = F984EF4D79640B3BCB11F146; };
-		0493CEE7A0D606F418FCEFAC = {isa = PBXBuildFile; fileRef = 3077AE632EBAC6476AF7A4CB; };
-		A3823CDAE845E1F4F1BD3407 = {isa = PBXBuildFile; fileRef = D66FDCC4E634EC63F13B98F5; };
-		E0100C2AD2A6F504C542B379 = {isa = PBXBuildFile; fileRef = 1994869581877D7A80536E56; };
-		BD12C3D117F0D496C332F559 = {isa = PBXBuildFile; fileRef = 004D7BD1D1B9DA685A54E594; };
-		354034E83EBA2B7086A060D7 = {isa = PBXBuildFile; fileRef = C6D394B5D423B1F17CA3B7F9; };
-		0EEC8076624EFA723D575C5B = {isa = PBXBuildFile; fileRef = 22DD327C7AC4145B956AD67F; };
-		C096C66469FFF63A2F7C335E = {isa = PBXBuildFile; fileRef = 6CC5196ED8BC1CC5835EDE9F; };
-		8B544AFFDD3CBFEA6B9AFC2E = {isa = PBXBuildFile; fileRef = 08880E58AFF579276074BD1F; };
-		048C03A7361D8CF4A5BADD4A = {isa = PBXBuildFile; fileRef = 3AD1C8C00A233B753B0FD743; };
-		1B7CA7F26922ECA8CA1C1A49 = {isa = PBXBuildFile; fileRef = 0508692D850F6025A8E3268C; };
-		004D7BD1D1B9DA685A54E594 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_basics.mm"; path = "../../JuceLibraryCode/include_juce_gui_basics.mm"; sourceTree = "SOURCE_ROOT"; };
-		012AA0F8FD27CFA3F3A21E1B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlockEditor.h; path = ../../Source/Node/ui/NodeBlockEditor.h; sourceTree = "SOURCE_ROOT"; };
-		01C35BBA634B8C8892E1DE83 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionManagerUI.cpp; path = ../../Source/Node/ui/NodeConnectionManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		0268B4A0D695E14A7A666B13 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipUI.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		04ECEA5E5EAA39D696DC65E5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_formats.mm"; path = "../../JuceLibraryCode/include_juce_audio_formats.mm"; sourceTree = "SOURCE_ROOT"; };
-		0508692D850F6025A8E3268C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_video.mm"; path = "../../JuceLibraryCode/include_juce_video.mm"; sourceTree = "SOURCE_ROOT"; };
-		08880E58AFF579276074BD1F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_osc.cpp"; path = "../../JuceLibraryCode/include_juce_osc.cpp"; sourceTree = "SOURCE_ROOT"; };
-		097E02E2DF4ACBD16380FE06 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoBlock.h; path = ../../Source/LightBlock/model/blocks/video/VideoBlock.h; sourceTree = "SOURCE_ROOT"; };
-		0B6C37A2C5109D5508A75AA2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerTimeline.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.cpp; sourceTree = "SOURCE_ROOT"; };
-		0D0DEC4C532A3087A85F4697 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PictureBlock.cpp; path = ../../Source/LightBlock/model/blocks/picture/PictureBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		0D2453697E1E59A346B59EF2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelLibrary.cpp; path = ../../Source/LightBlock/model/LightBlockModelLibrary.cpp; sourceTree = "SOURCE_ROOT"; };
-		11516F1B04ADBD7641C280F8 = {isa = PBXFileReference; lastKnownFileType = image.png; name = strobe.png; path = ../../Resources/models/patterns/strobe.png; sourceTree = "SOURCE_ROOT"; };
-		11A7169F97E42133F606B222 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_processors"; path = "~/JUCE/modules/juce_audio_processors"; sourceTree = "<absolute>"; };
-		130E9AEED84901C0A9F8002F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelManagerUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		1461C73CEAB84896136ABA4C = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_devices"; path = "~/JUCE/modules/juce_audio_devices"; sourceTree = "<absolute>"; };
-		1877E038718B31E2A5CC515E = {isa = PBXFileReference; lastKnownFileType = image.png; name = timeline.png; path = ../../Resources/models/timeline.png; sourceTree = "SOURCE_ROOT"; };
-		18B5C61141CC04273C1247D2 = {isa = PBXFileReference; lastKnownFileType = file.btlayout; name = default.btlayout; path = ../../Resources/default.btlayout; sourceTree = "SOURCE_ROOT"; };
-		1994869581877D7A80536E56 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_graphics.mm"; path = "../../JuceLibraryCode/include_juce_graphics.mm"; sourceTree = "SOURCE_ROOT"; };
-		1AC1A367A21ABF6D04AED8DE = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainComponent.h; path = ../../Source/MainComponent.h; sourceTree = "SOURCE_ROOT"; };
-		1B4B1748793B5BFF1BF39596 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_cryptography"; path = "~/JUCE/modules/juce_cryptography"; sourceTree = "<absolute>"; };
-		1BB04EAF09E6A3F83CDCFA00 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorNode.cpp; path = ../../Source/Node/ColorNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		1DD09A6E6DEE0FA432333F51 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipManagerUI.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.h; sourceTree = "SOURCE_ROOT"; };
-		1FD36BEA0C8C2C37D6D54E72 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameter.cpp; path = ../../Source/LightBlock/model/LightBlockModelParameter.cpp; sourceTree = "SOURCE_ROOT"; };
-		209DEEB0E757EA8F55EF81E3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_utils.mm"; path = "../../JuceLibraryCode/include_juce_audio_utils.mm"; sourceTree = "SOURCE_ROOT"; };
-		21955AFDD39B55789261CC0A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlockUI.h; path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h; sourceTree = "SOURCE_ROOT"; };
-		22DD327C7AC4145B956AD67F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_opengl.mm"; path = "../../JuceLibraryCode/include_juce_opengl.mm"; sourceTree = "SOURCE_ROOT"; };
-		23F3DD4A3FDCAC70726282A4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelGroupUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.h; sourceTree = "SOURCE_ROOT"; };
-		242B124CECDE493BC2E89C5B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorNodeViewUI.h; path = ../../Source/Node/ui/ColorNodeViewUI.h; sourceTree = "SOURCE_ROOT"; };
-		24314757388D8B9946A8EF18 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelManagerUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelManagerUI.h; sourceTree = "SOURCE_ROOT"; };
-		244A87ECE5219300EE110B67 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropNode.cpp; path = ../../Source/Node/nodes/prop/PropNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		2654F0E498D41A4E10042E22 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoEngine.cpp; path = ../../Source/BentoEngine.cpp; sourceTree = "SOURCE_ROOT"; };
-		279B4167C1667B67B9D5815D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipManager.cpp; path = ../../Source/Timeline/layers/Block/LightBlockClipManager.cpp; sourceTree = "SOURCE_ROOT"; };
-		27FE84C57B055FB987D3D83B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineEditor.cpp; path = ../../Source/Timeline/TimelineEditor.cpp; sourceTree = "SOURCE_ROOT"; };
-		28328D15CE8E8ACC4AC84CED = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXBlock.h; path = ../../Source/LightBlock/model/blocks/dmx/DMXBlock.h; sourceTree = "SOURCE_ROOT"; };
-		2863DD90B9AA617821D59A84 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelLibraryUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelLibraryUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		294F04D230D3DA0C9C83671B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRemapNode.cpp; path = ../../Source/Node/nodes/colorRemap/ColorRemapNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		2C89D77E423F6AF3A5849694 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureBlock.h; path = ../../Source/LightBlock/model/blocks/picture/PictureBlock.h; sourceTree = "SOURCE_ROOT"; };
-		2D231859A74136C37BDED14B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockColorProvider.h; path = ../../Source/LightBlock/model/LightBlockColorProvider.h; sourceTree = "SOURCE_ROOT"; };
-		2FE88BA62466E05980C03896 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
-		3077AE632EBAC6476AF7A4CB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_data_structures.mm"; path = "../../JuceLibraryCode/include_juce_data_structures.mm"; sourceTree = "SOURCE_ROOT"; };
-		318ED8B2304BAA12D252F348 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Node.h; path = ../../Source/Node/Node.h; sourceTree = "SOURCE_ROOT"; };
-		3493D1AE2BFBADBBAF92A1A7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockVizPanel.cpp; path = ../../Source/BlockViz/BlockVizPanel.cpp; sourceTree = "SOURCE_ROOT"; };
-		3529824957431AB2ECB2C81A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameter.h; path = ../../Source/LightBlock/model/LightBlockModelParameter.h; sourceTree = "SOURCE_ROOT"; };
-		36FBB4277A758C485700CFFA = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayerTimeline.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.h; sourceTree = "SOURCE_ROOT"; };
-		378E6FCC996046F6BA810E87 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXBlock.cpp; path = ../../Source/LightBlock/model/blocks/dmx/DMXBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		39B0195404767F4AA66E9E01 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_timeline"; path = "../../../JUCE Modules/juce_timeline"; sourceTree = "SOURCE_ROOT"; };
-		3AD1C8C00A233B753B0FD743 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_timeline.cpp"; path = "../../JuceLibraryCode/include_juce_timeline.cpp"; sourceTree = "SOURCE_ROOT"; };
-		3C92CE0E3436696ABA7DA576 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		3CA7DC19B58EED4BB32292FF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayer.h; path = ../../Source/Timeline/layers/Block/LightBlockLayer.h; sourceTree = "SOURCE_ROOT"; };
-		3CB2D851F7AEA7A8676B5193 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Prop.cpp; path = ../../Source/Prop/Prop.cpp; sourceTree = "SOURCE_ROOT"; };
-		3CBCE5891307CCF2CC68B842 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BenTo.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
-		3D03C2B25C169A785D654744 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelPresetManager.cpp; path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.cpp; sourceTree = "SOURCE_ROOT"; };
-		3D891819C71D032F771032E8 = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../Resources/icon.png; sourceTree = "SOURCE_ROOT"; };
-		3E338DB8056E41CA516C46A8 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
-		41ED50542F21D62B2E883554 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeManagerUI.cpp; path = ../../Source/Node/ui/NodeManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		427973B9DB57EF2BFE8D9E88 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlockSequence.h; path = ../../Source/Timeline/TimelineBlockSequence.h; sourceTree = "SOURCE_ROOT"; };
-		45540591839CD5114603CA47 = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = ../../Resources/models/patterns/rainbow.png; sourceTree = "SOURCE_ROOT"; };
-		463A71423FAD00DDCA4C2A9D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionUI.cpp; path = ../../Source/Node/ui/NodeConnectionUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		46CB5CD8738ACFF138AF3327 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_core"; path = "~/JUCE/modules/juce_core"; sourceTree = "<absolute>"; };
-		4908E9313CEF0C03F1EA59A2 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_video"; path = "~/JUCE/modules/juce_video"; sourceTree = "<absolute>"; };
-		4A1990E56CB04A347CC6496B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = "SOURCE_ROOT"; };
-		4A4BEB4114D4E7138701453E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = "SOURCE_ROOT"; };
-		4B44E1737AABB4756CB6039A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorRemapNode.h; path = ../../Source/Node/nodes/colorRemap/ColorRemapNode.h; sourceTree = "SOURCE_ROOT"; };
-		4BA90D08E183A1AD85461D88 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelPresetManager.h; path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.h; sourceTree = "SOURCE_ROOT"; };
-		4C5C15AEA3C2E412D2455737 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatternBlock.cpp; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		4D02211BA98FB48B617B95D8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionManager.h; path = ../../Source/Node/NodeConnectionManager.h; sourceTree = "SOURCE_ROOT"; };
-		4D21CB9B478483E7527B1BF4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelNode.h; path = ../../Source/Node/nodes/model/ModelNode.h; sourceTree = "SOURCE_ROOT"; };
-		4EA87ECCAC8B43DE7185A2B3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayer.cpp; path = ../../Source/Timeline/layers/Block/LightBlockLayer.cpp; sourceTree = "SOURCE_ROOT"; };
-		4ED96CE9326467B0A0B16328 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModel.h; path = ../../Source/LightBlock/model/LightBlockModel.h; sourceTree = "SOURCE_ROOT"; };
-		506D17ED040822F395CC2F8A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeManagerUI.h; path = ../../Source/Node/ui/NodeManagerUI.h; sourceTree = "SOURCE_ROOT"; };
-		514F33F4CAFB5C9A6429039F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptBlock.cpp; path = ../../Source/LightBlock/model/blocks/script/ScriptBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		53D18785EF30D5C1230E867C = {isa = PBXFileReference; lastKnownFileType = image.png; name = video.png; path = ../../Resources/models/video.png; sourceTree = "SOURCE_ROOT"; };
-		548CB0278C11D7133977366F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PerlinNoise.hpp; path = ../../Source/LightBlock/model/blocks/pattern/PerlinNoise.hpp; sourceTree = "SOURCE_ROOT"; };
-		5599124963C23BC08065EC1E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionManager.cpp; path = ../../Source/Node/NodeConnectionManager.cpp; sourceTree = "SOURCE_ROOT"; };
-		55A9D84C3E97CD22CD1CB4DC = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_utils"; path = "~/JUCE/modules/juce_audio_utils"; sourceTree = "<absolute>"; };
-		560474FB5341D8CA595FD0A5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropManagerUI.cpp; path = ../../Source/Prop/ui/PropManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		563AF9B002930128EB939A3E = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_extra"; path = "~/JUCE/modules/juce_gui_extra"; sourceTree = "<absolute>"; };
-		576C40E3A9EFAD74313E71F5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CompositeNode.h; path = ../../Source/Node/nodes/composite/CompositeNode.h; sourceTree = "SOURCE_ROOT"; };
-		577FB0656089841B6EB45275 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterNode.h; path = ../../Source/Node/nodes/parameter/ParameterNode.h; sourceTree = "SOURCE_ROOT"; };
-		5A4EAE8070B6C083D1F11D0D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterNode.cpp; path = ../../Source/Node/nodes/parameter/ParameterNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		5B4C34F7B699158AAE8F1692 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelLibrary.h; path = ../../Source/LightBlock/model/LightBlockModelLibrary.h; sourceTree = "SOURCE_ROOT"; };
-		5C00419FA5F69F7633653A04 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorNode.h; path = ../../Source/Node/ColorNode.h; sourceTree = "SOURCE_ROOT"; };
-		5C3CA91CC82206B3E8230A7A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowClubProp.h; path = ../../Source/Prop/props/flowtoys/flowclub/FlowClubProp.h; sourceTree = "SOURCE_ROOT"; };
-		5E5FF3A248A8408106B4DDFF = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = "SOURCE_ROOT"; };
-		5FAC696A3783CC6862D7BACB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelGroup.cpp; path = ../../Source/LightBlock/model/LightBlockModelGroup.cpp; sourceTree = "SOURCE_ROOT"; };
-		6268F00C05DE6CAAC042C43E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = "SOURCE_ROOT"; };
-		639B53853436C86D275CDB9E = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_events"; path = "~/JUCE/modules/juce_events"; sourceTree = "<absolute>"; };
-		6450FBB3500DCD2F8E13DC75 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionUI.h; path = ../../Source/Node/ui/NodeConnectionUI.h; sourceTree = "SOURCE_ROOT"; };
-		64B1682490D9992DE3D69CE1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlock.cpp; path = ../../Source/LightBlock/model/blocks/node/NodeBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		66A7C063808E5D6F40EE293C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterNodeViewUI.cpp; path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		695EF8018408A285FF4E2D9A = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
-		6973BD241157AB19AD322C78 = {isa = PBXFileReference; lastKnownFileType = image.png; name = noise.png; path = ../../Resources/models/patterns/noise.png; sourceTree = "SOURCE_ROOT"; };
-		69F2A83372D07B4B2D4A1050 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlockVizPanel.h; path = ../../Source/BlockViz/BlockVizPanel.h; sourceTree = "SOURCE_ROOT"; };
-		6C10E040E5DA6FB0195C4A68 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoBlock.cpp; path = ../../Source/LightBlock/model/blocks/video/VideoBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		6CA4379159F78E641BE24B49 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterManager.cpp; path = ../../Source/LightBlock/model/LightBlockModelParameterManager.cpp; sourceTree = "SOURCE_ROOT"; };
-		6CC5196ED8BC1CC5835EDE9F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_organicui.cpp"; path = "../../JuceLibraryCode/include_juce_organicui.cpp"; sourceTree = "SOURCE_ROOT"; };
-		6DAD111857DEBCD5A01CF7E0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropUI.h; path = ../../Source/Prop/ui/PropUI.h; sourceTree = "SOURCE_ROOT"; };
-		6DC721B822B7648DB654C515 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserLightBlockModelManager.h; path = ../../Source/LightBlock/model/UserLightBlockModelManager.h; sourceTree = "SOURCE_ROOT"; };
-		6E29C9036737F42011CF851E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerPanel.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp; sourceTree = "SOURCE_ROOT"; };
-		6E91D546CC298068FFECDC5B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionManagerUI.h; path = ../../Source/Node/ui/NodeConnectionManagerUI.h; sourceTree = "SOURCE_ROOT"; };
-		6F7E4E059D872D6340A8D507 = {isa = PBXFileReference; lastKnownFileType = image.png; name = node.png; path = ../../Resources/models/node.png; sourceTree = "SOURCE_ROOT"; };
-		70CB738991F52E6957677B38 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_core.mm"; path = "../../JuceLibraryCode/include_juce_core.mm"; sourceTree = "SOURCE_ROOT"; };
-		723596434A463D62EC5587DD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropUI.cpp; path = ../../Source/Prop/ui/PropUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		7363178451006A5FD16493D5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SolidColorNode.cpp; path = ../../Source/Node/nodes/solidcolor/SolidColorNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		73835DC277A7BA5622BAAB79 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlock.cpp; path = ../../Source/LightBlock/LightBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		77263AE62918BC1C6A42C9F1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionSlot.cpp; path = ../../Source/Node/NodeConnectionSlot.cpp; sourceTree = "SOURCE_ROOT"; };
-		77DD315CC4B87CC5A3B7B20F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_processors.mm"; path = "../../JuceLibraryCode/include_juce_audio_processors.mm"; sourceTree = "SOURCE_ROOT"; };
-		78F3F334D41CD5AD149168A4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlock.cpp; path = ../../Source/LightBlock/model/blocks/timeline/TimelineBlock.cpp; sourceTree = "SOURCE_ROOT"; };
-		792702FCCD6986B350EF2ACF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameterManager.h; path = ../../Source/LightBlock/model/LightBlockModelParameterManager.h; sourceTree = "SOURCE_ROOT"; };
-		792DAFF0F9C21E6906D30738 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prop.h; path = ../../Source/Prop/Prop.h; sourceTree = "SOURCE_ROOT"; };
-		79FAC0C979273799935E1E99 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/node/ui/NodeBlockUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		7C512C956352F8D62E40A6CD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelGroup.h; path = ../../Source/LightBlock/model/LightBlockModelGroup.h; sourceTree = "SOURCE_ROOT"; };
-		7E931C8BE654F49C5179D9A4 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_opengl"; path = "~/JUCE/modules/juce_opengl"; sourceTree = "<absolute>"; };
-		7F63FF68C36C719C24F0F6F5 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_organicui"; path = "../../../JUCE Modules/juce_organicui"; sourceTree = "SOURCE_ROOT"; };
-		80BD236B9C21ADB042A4BCF2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PositionRemapNode.cpp; path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		83AD3D84B8E19E3BA97CD878 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_devices.mm"; path = "../../JuceLibraryCode/include_juce_audio_devices.mm"; sourceTree = "SOURCE_ROOT"; };
-		83C6E3CC4311BA306DC8B248 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropManagerUI.h; path = ../../Source/Prop/ui/PropManagerUI.h; sourceTree = "SOURCE_ROOT"; };
-		87356357D49E6070AEF34AD2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropNode.h; path = ../../Source/Node/nodes/prop/PropNode.h; sourceTree = "SOURCE_ROOT"; };
-		8CD96F29F4E5E8A8E05C8076 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelLibraryUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelLibraryUI.h; sourceTree = "SOURCE_ROOT"; };
-		8D857A60E921295361905783 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlockEditor.cpp; path = ../../Source/Node/ui/NodeBlockEditor.cpp; sourceTree = "SOURCE_ROOT"; };
-		8EDED6322250E6649D5390EC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowPoiProp.h; path = ../../Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.h; sourceTree = "SOURCE_ROOT"; };
-		8FB0429AEA011E83B1A988BA = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipManagerUI.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		9071B248C5041B438F6B683B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameterEditor.h; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterEditor.h; sourceTree = "SOURCE_ROOT"; };
-		927838907CA0ECBC59E8B913 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		92A7F736C35A7A1488177C59 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = "SOURCE_ROOT"; };
-		961586608091C051BC6A253B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeViewUI.cpp; path = ../../Source/Node/ui/NodeViewUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		9651059F66CAC32CD51EFF81 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowPoiProp.cpp; path = ../../Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.cpp; sourceTree = "SOURCE_ROOT"; };
-		96E70FC212B6782CD11F66EB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeManager.cpp; path = ../../Source/Node/NodeManager.cpp; sourceTree = "SOURCE_ROOT"; };
-		9878E7AF799328B1736EDE87 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlock.h; path = ../../Source/LightBlock/model/blocks/timeline/TimelineBlock.h; sourceTree = "SOURCE_ROOT"; };
-		98D7B77894D6523D76EF61EF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PatternBlock.h; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.h; sourceTree = "SOURCE_ROOT"; };
-		9F4B2E72F24A6106C2F8D04C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainComponent.cpp; path = ../../Source/MainComponent.cpp; sourceTree = "SOURCE_ROOT"; };
-		9FE0B354EA4A692A8DEDCAAC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipManager.h; path = ../../Source/Timeline/layers/Block/LightBlockClipManager.h; sourceTree = "SOURCE_ROOT"; };
-		A1246C2BA260E18B707DB188 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeViewUI.h; path = ../../Source/Node/ui/NodeViewUI.h; sourceTree = "SOURCE_ROOT"; };
-		A1CC4EA8AE33F20112088326 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = System/Library/Frameworks/DiscRecording.framework; sourceTree = SDKROOT; };
-		A36493B8803F5B4C244871D3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BentoEngine.h; path = ../../Source/BentoEngine.h; sourceTree = "SOURCE_ROOT"; };
-		A4A7538484575AD24A3591E5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowBallProp.cpp; path = ../../Source/Prop/props/flowtoys/flowball/FlowBallProp.cpp; sourceTree = "SOURCE_ROOT"; };
-		A5DB84302DBEFF787483165C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowBallProp.h; path = ../../Source/Prop/props/flowtoys/flowball/FlowBallProp.h; sourceTree = "SOURCE_ROOT"; };
-		A69CB1365F276E382D156362 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
-		A729122734F607953B05F70F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineEditor.h; path = ../../Source/Timeline/TimelineEditor.h; sourceTree = "SOURCE_ROOT"; };
-		A734AA0223A3C35312AE481B = {isa = PBXFileReference; lastKnownFileType = file.nib; name = RecentFilesMenuTemplate.nib; path = RecentFilesMenuTemplate.nib; sourceTree = "SOURCE_ROOT"; };
-		A954462D24683E590D6C1E36 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeManager.h; path = ../../Source/Node/NodeManager.h; sourceTree = "SOURCE_ROOT"; };
-		AAB2521CFAB6DDE8ED8E834E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_basics.mm"; path = "../../JuceLibraryCode/include_juce_audio_basics.mm"; sourceTree = "SOURCE_ROOT"; };
-		AAF12FFE22255B66759B904E = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_basics"; path = "~/JUCE/modules/juce_audio_basics"; sourceTree = "<absolute>"; };
-		ABC88339AB269F0B29778849 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropManager.cpp; path = ../../Source/Prop/PropManager.cpp; sourceTree = "SOURCE_ROOT"; };
-		AD2913896B8C074A0D6B092C = {isa = PBXFileReference; lastKnownFileType = image.png; name = solidColor.png; path = ../../Resources/models/patterns/solidColor.png; sourceTree = "SOURCE_ROOT"; };
-		B44C7AF9910E177054E4C662 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelGroupUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		B61B4459460D05B8B430B871 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_osc"; path = "~/JUCE/modules/juce_osc"; sourceTree = "<absolute>"; };
-		BACFAEA2E183F90984482C9E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		BB043DAB7E81EB5841DE91B9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlock.h; path = ../../Source/LightBlock/LightBlock.h; sourceTree = "SOURCE_ROOT"; };
-		BD40991E634599BBE879135D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameterManagerEditor.h; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterManagerEditor.h; sourceTree = "SOURCE_ROOT"; };
-		BE4BCF52EA041035AE5BD1F5 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
-		C06D252A5E0B4E4BB2EA4F56 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowtoysProp.h; path = ../../Source/Prop/props/flowtoys/FlowtoysProp.h; sourceTree = "SOURCE_ROOT"; };
-		C2F96A41FD1AB15B09C987BF = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
-		C6D394B5D423B1F17CA3B7F9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_extra.mm"; path = "../../JuceLibraryCode/include_juce_gui_extra.mm"; sourceTree = "SOURCE_ROOT"; };
-		C7BC76E73308F67A7FEDA2CF = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
-		C8224C5AFCEEEEF1B9FC7B40 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
-		CAD55576E3A9DCD6C4FCD752 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelPreset.h; path = ../../Source/LightBlock/model/preset/LightBlockModelPreset.h; sourceTree = "SOURCE_ROOT"; };
-		CB272A4DE00BCEFD2540482D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnection.h; path = ../../Source/Node/NodeConnection.h; sourceTree = "SOURCE_ROOT"; };
-		CB67EF95D5BB1CD012A0A4F8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropViz.cpp; path = ../../Source/Prop/ui/PropViz.cpp; sourceTree = "SOURCE_ROOT"; };
-		CBCAD00FA55EC1B55CAEF380 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
-		CC433BB32AC9ED4EB8073C72 = {isa = PBXFileReference; lastKnownFileType = image.png; name = dmx.png; path = ../../Resources/models/dmx.png; sourceTree = "SOURCE_ROOT"; };
-		CCBDF2F1730D119D654EA47B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnection.cpp; path = ../../Source/Node/NodeConnection.cpp; sourceTree = "SOURCE_ROOT"; };
-		CDBF09B2D7DA0926240282B2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockColorProvider.cpp; path = ../../Source/LightBlock/model/LightBlockColorProvider.cpp; sourceTree = "SOURCE_ROOT"; };
-		CDD66ABFDE2D05CADA5680FD = {isa = PBXFileReference; lastKnownFileType = file.icns; name = Icon.icns; path = Icon.icns; sourceTree = "SOURCE_ROOT"; };
-		CE51D9A75E3EC61B664F149A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SolidColorNode.h; path = ../../Source/Node/nodes/solidcolor/SolidColorNode.h; sourceTree = "SOURCE_ROOT"; };
-		CE8277C60D1575CFD5E7D0B6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterManagerEditor.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterManagerEditor.cpp; sourceTree = "SOURCE_ROOT"; };
-		D37AABFBFE5C031E1AF6F433 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
-		D431F29BB9C443A4DB3AE5A1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PositionRemapNode.h; path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.h; sourceTree = "SOURCE_ROOT"; };
-		D4C1035BB3BC86C2666ADFE5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowClubProp.cpp; path = ../../Source/Prop/props/flowtoys/flowclub/FlowClubProp.cpp; sourceTree = "SOURCE_ROOT"; };
-		D66FDCC4E634EC63F13B98F5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_events.mm"; path = "../../JuceLibraryCode/include_juce_events.mm"; sourceTree = "SOURCE_ROOT"; };
-		D68557AA50E7C690716848FB = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
-		D6BB1A8B86805DB03604CC50 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionSlot.h; path = ../../Source/Node/NodeConnectionSlot.h; sourceTree = "SOURCE_ROOT"; };
-		D72941118A69EEE90C1D8E48 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterEditor.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterEditor.cpp; sourceTree = "SOURCE_ROOT"; };
-		D7B04AD60CED341F860AEA0A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowtoysProp.cpp; path = ../../Source/Prop/props/flowtoys/FlowtoysProp.cpp; sourceTree = "SOURCE_ROOT"; };
-		DAD1188143AC5DA50386A68A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropViz.h; path = ../../Source/Prop/ui/PropViz.h; sourceTree = "SOURCE_ROOT"; };
-		DB5F3A6530A3449C49D8D9FF = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModelNode.cpp; path = ../../Source/Node/nodes/model/ModelNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		DB95678F3ABC8975184200DC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterNodeViewUI.h; path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.h; sourceTree = "SOURCE_ROOT"; };
-		DD6FC6CE368D741D546408AD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureBlockUI.h; path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.h; sourceTree = "SOURCE_ROOT"; };
-		DE15323E10AC8A41D7DEF9AA = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_formats"; path = "~/JUCE/modules/juce_audio_formats"; sourceTree = "<absolute>"; };
-		DE30B6576F0EE320AE9A7797 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorNodeViewUI.cpp; path = ../../Source/Node/ui/ColorNodeViewUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		DE7F3EF703D0C7896C9FD296 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScriptBlock.h; path = ../../Source/LightBlock/model/blocks/script/ScriptBlock.h; sourceTree = "SOURCE_ROOT"; };
-		DFE77399BEEA72434E671DDF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlock.h; path = ../../Source/LightBlock/model/blocks/node/NodeBlock.h; sourceTree = "SOURCE_ROOT"; };
-		E04E39E50C626C9F2B18C375 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlockUI.h; path = ../../Source/LightBlock/model/blocks/node/ui/NodeBlockUI.h; sourceTree = "SOURCE_ROOT"; };
-		E1B74763D62A794C97CDFBA6 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_basics"; path = "~/JUCE/modules/juce_gui_basics"; sourceTree = "<absolute>"; };
-		E2C77606FB51C81A1B5CCBC2 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = "SOURCE_ROOT"; };
-		E32B49415E8A83F64C351BF9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = "SOURCE_ROOT"; };
-		E5944E8EE9791564860D8723 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
-		E5DBC2840F3A6FEB26FD708D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropManager.h; path = ../../Source/Prop/PropManager.h; sourceTree = "SOURCE_ROOT"; };
-		EB306423F2AB241D58C0A4F1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = ../../Source/Node/Node.cpp; sourceTree = "SOURCE_ROOT"; };
-		EC3155A00CACB36AA2596063 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayerPanel.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h; sourceTree = "SOURCE_ROOT"; };
-		EEB6E4BA06F1F5C95D577595 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModel.cpp; path = ../../Source/LightBlock/model/LightBlockModel.cpp; sourceTree = "SOURCE_ROOT"; };
-		F1963D42EE19ACB1A9E10910 = {isa = PBXFileReference; lastKnownFileType = image.png; name = script.png; path = ../../Resources/models/script.png; sourceTree = "SOURCE_ROOT"; };
-		F2FBEBA9A10C0CBA8F385D16 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClip.cpp; path = ../../Source/Timeline/layers/Block/LightBlockClip.cpp; sourceTree = "SOURCE_ROOT"; };
-		F4532C268B01CFB62E87ECBC = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_graphics"; path = "~/JUCE/modules/juce_graphics"; sourceTree = "<absolute>"; };
-		F5E234E45DAE91864302B0AD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PictureBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		F630DD0F073D03AA3F39C2C7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipUI.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipUI.h; sourceTree = "SOURCE_ROOT"; };
-		F669A644D05BBC25A4441EBC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelPreset.cpp; path = ../../Source/LightBlock/model/preset/LightBlockModelPreset.cpp; sourceTree = "SOURCE_ROOT"; };
-		F8BEC11604FC499908680AAC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelUI.h; sourceTree = "SOURCE_ROOT"; };
-		F984EF4D79640B3BCB11F146 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_cryptography.mm"; path = "../../JuceLibraryCode/include_juce_cryptography.mm"; sourceTree = "SOURCE_ROOT"; };
-		F9A9748CC798B3E12AC867CE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CompositeNode.cpp; path = ../../Source/Node/nodes/composite/CompositeNode.cpp; sourceTree = "SOURCE_ROOT"; };
-		FB7E6FCC3E21DF8D7718DD2F = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_data_structures"; path = "~/JUCE/modules/juce_data_structures"; sourceTree = "<absolute>"; };
-		FD8970FADE2A65B445101165 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlockSequence.cpp; path = ../../Source/Timeline/TimelineBlockSequence.cpp; sourceTree = "SOURCE_ROOT"; };
-		FE8E9DA3C23B06C3F26835A6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClip.h; path = ../../Source/Timeline/layers/Block/LightBlockClip.h; sourceTree = "SOURCE_ROOT"; };
-		D7DAADF196687AEA7A3AFBBB = {isa = PBXGroup; children = (
-					6973BD241157AB19AD322C78,
-					45540591839CD5114603CA47,
-					AD2913896B8C074A0D6B092C,
-					11516F1B04ADBD7641C280F8, ); name = patterns; sourceTree = "<group>"; };
-		5C9EFDB5DD5BE45F400DD1EB = {isa = PBXGroup; children = (
-					D7DAADF196687AEA7A3AFBBB,
-					CC433BB32AC9ED4EB8073C72,
-					6F7E4E059D872D6340A8D507,
-					F1963D42EE19ACB1A9E10910,
-					1877E038718B31E2A5CC515E,
-					53D18785EF30D5C1230E867C, ); name = models; sourceTree = "<group>"; };
-		1C9613E774AB93CCE6E1EAA4 = {isa = PBXGroup; children = (
-					5C9EFDB5DD5BE45F400DD1EB,
-					18B5C61141CC04273C1247D2,
-					3D891819C71D032F771032E8, ); name = Resources; sourceTree = "<group>"; };
-		8F40BE5A0AE4948EFE88569D = {isa = PBXGroup; children = (
-					8FB0429AEA011E83B1A988BA,
-					1DD09A6E6DEE0FA432333F51,
-					0268B4A0D695E14A7A666B13,
-					F630DD0F073D03AA3F39C2C7,
-					6E29C9036737F42011CF851E,
-					EC3155A00CACB36AA2596063,
-					0B6C37A2C5109D5508A75AA2,
-					36FBB4277A758C485700CFFA, ); name = ui; sourceTree = "<group>"; };
-		74922EB4CC582F197745E3E0 = {isa = PBXGroup; children = (
-					8F40BE5A0AE4948EFE88569D,
-					F2FBEBA9A10C0CBA8F385D16,
-					FE8E9DA3C23B06C3F26835A6,
-					279B4167C1667B67B9D5815D,
-					9FE0B354EA4A692A8DEDCAAC,
-					4EA87ECCAC8B43DE7185A2B3,
-					3CA7DC19B58EED4BB32292FF, ); name = BlockLayer; sourceTree = "<group>"; };
-		B42B5446B61D3AD3E742159B = {isa = PBXGroup; children = (
-					74922EB4CC582F197745E3E0, ); name = layers; sourceTree = "<group>"; };
-		6E6C33D31B6678287318A48F = {isa = PBXGroup; children = (
-					B42B5446B61D3AD3E742159B,
-					FD8970FADE2A65B445101165,
-					427973B9DB57EF2BFE8D9E88,
-					27FE84C57B055FB987D3D83B,
-					A729122734F607953B05F70F, ); name = Timeline; sourceTree = "<group>"; };
-		AC78208199FED753473A6B63 = {isa = PBXGroup; children = (
-					294F04D230D3DA0C9C83671B,
-					4B44E1737AABB4756CB6039A, ); name = colorRemap; sourceTree = "<group>"; };
-		620189DD0EDED1E9AE57E381 = {isa = PBXGroup; children = (
-					F9A9748CC798B3E12AC867CE,
-					576C40E3A9EFAD74313E71F5, ); name = composite; sourceTree = "<group>"; };
-		76E8C7813CB52E65D04C4AFC = {isa = PBXGroup; children = (
-					DB5F3A6530A3449C49D8D9FF,
-					4D21CB9B478483E7527B1BF4, ); name = model; sourceTree = "<group>"; };
-		E9546167FD3548F2950D523E = {isa = PBXGroup; children = (
-					66A7C063808E5D6F40EE293C,
-					DB95678F3ABC8975184200DC, ); name = ui; sourceTree = "<group>"; };
-		C36CA9B76B09E3CA3E21E3A4 = {isa = PBXGroup; children = (
-					E9546167FD3548F2950D523E,
-					5A4EAE8070B6C083D1F11D0D,
-					577FB0656089841B6EB45275, ); name = parameter; sourceTree = "<group>"; };
-		DD87DC98850ED7E65AE08839 = {isa = PBXGroup; children = (
-					80BD236B9C21ADB042A4BCF2,
-					D431F29BB9C443A4DB3AE5A1, ); name = positionRemap; sourceTree = "<group>"; };
-		6FCBC93B0CF3A1240C790A9E = {isa = PBXGroup; children = (
-					244A87ECE5219300EE110B67,
-					87356357D49E6070AEF34AD2, ); name = prop; sourceTree = "<group>"; };
-		2EC284025BF5C014EBA447C4 = {isa = PBXGroup; children = (
-					7363178451006A5FD16493D5,
-					CE51D9A75E3EC61B664F149A, ); name = solidcolor; sourceTree = "<group>"; };
-		E18955CE7D19F19664F5A0ED = {isa = PBXGroup; children = (
-					AC78208199FED753473A6B63,
-					620189DD0EDED1E9AE57E381,
-					76E8C7813CB52E65D04C4AFC,
-					C36CA9B76B09E3CA3E21E3A4,
-					DD87DC98850ED7E65AE08839,
-					6FCBC93B0CF3A1240C790A9E,
-					2EC284025BF5C014EBA447C4, ); name = nodes; sourceTree = "<group>"; };
-		BBA15CAB877C5E21CC389309 = {isa = PBXGroup; children = (
-					DE30B6576F0EE320AE9A7797,
-					242B124CECDE493BC2E89C5B,
-					8D857A60E921295361905783,
-					012AA0F8FD27CFA3F3A21E1B,
-					01C35BBA634B8C8892E1DE83,
-					6E91D546CC298068FFECDC5B,
-					463A71423FAD00DDCA4C2A9D,
-					6450FBB3500DCD2F8E13DC75,
-					41ED50542F21D62B2E883554,
-					506D17ED040822F395CC2F8A,
-					961586608091C051BC6A253B,
-					A1246C2BA260E18B707DB188, ); name = ui; sourceTree = "<group>"; };
-		2616B0487CE6BFD14D7E29F8 = {isa = PBXGroup; children = (
-					E18955CE7D19F19664F5A0ED,
-					BBA15CAB877C5E21CC389309,
-					EB306423F2AB241D58C0A4F1,
-					318ED8B2304BAA12D252F348,
-					1BB04EAF09E6A3F83CDCFA00,
-					5C00419FA5F69F7633653A04,
-					CCBDF2F1730D119D654EA47B,
-					CB272A4DE00BCEFD2540482D,
-					77263AE62918BC1C6A42C9F1,
-					D6BB1A8B86805DB03604CC50,
-					5599124963C23BC08065EC1E,
-					4D02211BA98FB48B617B95D8,
-					96E70FC212B6782CD11F66EB,
-					A954462D24683E590D6C1E36, ); name = Node; sourceTree = "<group>"; };
-		C12E394D835AA9671A0FF509 = {isa = PBXGroup; children = (
-					3493D1AE2BFBADBBAF92A1A7,
-					69F2A83372D07B4B2D4A1050, ); name = BlockViz; sourceTree = "<group>"; };
-		893ABB7C689EB16E0EC7AE03 = {isa = PBXGroup; children = (
-					F669A644D05BBC25A4441EBC,
-					CAD55576E3A9DCD6C4FCD752,
-					3D03C2B25C169A785D654744,
-					4BA90D08E183A1AD85461D88, ); name = preset; sourceTree = "<group>"; };
-		3606B56DC16D9E22DA923BD3 = {isa = PBXGroup; children = (
-					B44C7AF9910E177054E4C662,
-					23F3DD4A3FDCAC70726282A4,
-					2863DD90B9AA617821D59A84,
-					8CD96F29F4E5E8A8E05C8076,
-					130E9AEED84901C0A9F8002F,
-					24314757388D8B9946A8EF18,
-					D72941118A69EEE90C1D8E48,
-					9071B248C5041B438F6B683B,
-					CE8277C60D1575CFD5E7D0B6,
-					BD40991E634599BBE879135D,
-					BACFAEA2E183F90984482C9E,
-					F8BEC11604FC499908680AAC, ); name = ui; sourceTree = "<group>"; };
-		B17FF1075506AC1C55EC1CCC = {isa = PBXGroup; children = (
-					F5E234E45DAE91864302B0AD,
-					DD6FC6CE368D741D546408AD, ); name = ui; sourceTree = "<group>"; };
-		3AEEE588A153DFB0F8A50549 = {isa = PBXGroup; children = (
-					B17FF1075506AC1C55EC1CCC,
-					0D0DEC4C532A3087A85F4697,
-					2C89D77E423F6AF3A5849694, ); name = picture; sourceTree = "<group>"; };
-		FBFDB5E1BD2B51CCFE33C33A = {isa = PBXGroup; children = (
-					378E6FCC996046F6BA810E87,
-					28328D15CE8E8ACC4AC84CED, ); name = dmx; sourceTree = "<group>"; };
-		400390504C1FB8D8CF1500DE = {isa = PBXGroup; children = (
-					6C10E040E5DA6FB0195C4A68,
-					097E02E2DF4ACBD16380FE06, ); name = video; sourceTree = "<group>"; };
-		888138CA97221FDEDE19403D = {isa = PBXGroup; children = (
-					548CB0278C11D7133977366F,
-					4C5C15AEA3C2E412D2455737,
-					98D7B77894D6523D76EF61EF, ); name = pattern; sourceTree = "<group>"; };
-		F6AB46AE63B3CD57CE353813 = {isa = PBXGroup; children = (
-					3C92CE0E3436696ABA7DA576,
-					21955AFDD39B55789261CC0A, ); name = ui; sourceTree = "<group>"; };
-		2E20E6000220FE2C47B5D54D = {isa = PBXGroup; children = (
-					F6AB46AE63B3CD57CE353813,
-					78F3F334D41CD5AD149168A4,
-					9878E7AF799328B1736EDE87, ); name = timeline; sourceTree = "<group>"; };
-		B260D7859BC48AD4934FFF3F = {isa = PBXGroup; children = (
-					79FAC0C979273799935E1E99,
-					E04E39E50C626C9F2B18C375, ); name = ui; sourceTree = "<group>"; };
-		174DFC4C6395FBD0D2ECADAA = {isa = PBXGroup; children = (
-					B260D7859BC48AD4934FFF3F,
-					64B1682490D9992DE3D69CE1,
-					DFE77399BEEA72434E671DDF, ); name = node; sourceTree = "<group>"; };
-		F21B571F9E2F1FB05D339454 = {isa = PBXGroup; children = (
-					514F33F4CAFB5C9A6429039F,
-					DE7F3EF703D0C7896C9FD296, ); name = script; sourceTree = "<group>"; };
-		2B398C4106BAEA0C9ACFE245 = {isa = PBXGroup; children = (
-					3AEEE588A153DFB0F8A50549,
-					FBFDB5E1BD2B51CCFE33C33A,
-					400390504C1FB8D8CF1500DE,
-					888138CA97221FDEDE19403D,
-					2E20E6000220FE2C47B5D54D,
-					174DFC4C6395FBD0D2ECADAA,
-					F21B571F9E2F1FB05D339454, ); name = blocks; sourceTree = "<group>"; };
-		CF63CF134F1C34622E39C718 = {isa = PBXGroup; children = (
-					5FAC696A3783CC6862D7BACB,
-					7C512C956352F8D62E40A6CD,
-					CDBF09B2D7DA0926240282B2,
-					2D231859A74136C37BDED14B,
-					893ABB7C689EB16E0EC7AE03,
-					3606B56DC16D9E22DA923BD3,
-					2B398C4106BAEA0C9ACFE245,
-					EEB6E4BA06F1F5C95D577595,
-					4ED96CE9326467B0A0B16328,
-					0D2453697E1E59A346B59EF2,
-					5B4C34F7B699158AAE8F1692,
-					E32B49415E8A83F64C351BF9,
-					6DC721B822B7648DB654C515,
-					1FD36BEA0C8C2C37D6D54E72,
-					3529824957431AB2ECB2C81A,
-					6CA4379159F78E641BE24B49,
-					792702FCCD6986B350EF2ACF, ); name = model; sourceTree = "<group>"; };
-		1150A9FA6E66A4259F7871C5 = {isa = PBXGroup; children = (
-					CF63CF134F1C34622E39C718,
-					73835DC277A7BA5622BAAB79,
-					BB043DAB7E81EB5841DE91B9, ); name = LightBlock; sourceTree = "<group>"; };
-		8BAD108B4E6E080D5C5D6E6D = {isa = PBXGroup; children = (
-					D4C1035BB3BC86C2666ADFE5,
-					5C3CA91CC82206B3E8230A7A, ); name = flowclub; sourceTree = "<group>"; };
-		D398C92AE5AA852BEA6E23FC = {isa = PBXGroup; children = (
-					A4A7538484575AD24A3591E5,
-					A5DB84302DBEFF787483165C, ); name = flowball; sourceTree = "<group>"; };
-		62CA47D590AA2C029BA951BE = {isa = PBXGroup; children = (
-					9651059F66CAC32CD51EFF81,
-					8EDED6322250E6649D5390EC, ); name = flowpoi; sourceTree = "<group>"; };
-		56AA24024327BDA67448DAC5 = {isa = PBXGroup; children = (
-					D7B04AD60CED341F860AEA0A,
-					C06D252A5E0B4E4BB2EA4F56,
-					8BAD108B4E6E080D5C5D6E6D,
-					D398C92AE5AA852BEA6E23FC,
-					62CA47D590AA2C029BA951BE, ); name = flowtoys; sourceTree = "<group>"; };
-		76120CFEA078F7ECA0FDCF37 = {isa = PBXGroup; children = (
-					56AA24024327BDA67448DAC5, ); name = props; sourceTree = "<group>"; };
-		FDE223579F7CDE852246DAEB = {isa = PBXGroup; children = (
-					560474FB5341D8CA595FD0A5,
-					83C6E3CC4311BA306DC8B248,
-					723596434A463D62EC5587DD,
-					6DAD111857DEBCD5A01CF7E0,
-					CB67EF95D5BB1CD012A0A4F8,
-					DAD1188143AC5DA50386A68A, ); name = ui; sourceTree = "<group>"; };
-		6C72422B1E41C94EB44A09E4 = {isa = PBXGroup; children = (
-					76120CFEA078F7ECA0FDCF37,
-					FDE223579F7CDE852246DAEB,
-					3CB2D851F7AEA7A8676B5193,
-					792DAFF0F9C21E6906D30738,
-					ABC88339AB269F0B29778849,
-					E5DBC2840F3A6FEB26FD708D, ); name = Prop; sourceTree = "<group>"; };
-		6B25CFC4A93C9247E63F04B3 = {isa = PBXGroup; children = (
-					6E6C33D31B6678287318A48F,
-					2616B0487CE6BFD14D7E29F8,
-					C12E394D835AA9671A0FF509,
-					1150A9FA6E66A4259F7871C5,
-					6C72422B1E41C94EB44A09E4,
-					2654F0E498D41A4E10042E22,
-					A36493B8803F5B4C244871D3,
-					1AC1A367A21ABF6D04AED8DE,
-					9F4B2E72F24A6106C2F8D04C,
-					4A1990E56CB04A347CC6496B, ); name = Source; sourceTree = "<group>"; };
-		6A444AA172F353631035455D = {isa = PBXGroup; children = (
-					1C9613E774AB93CCE6E1EAA4,
-					6B25CFC4A93C9247E63F04B3, ); name = BenTo; sourceTree = "<group>"; };
-		CF557F9916B09EF3F7A1B9B5 = {isa = PBXGroup; children = (
-					AAF12FFE22255B66759B904E,
-					1461C73CEAB84896136ABA4C,
-					DE15323E10AC8A41D7DEF9AA,
-					11A7169F97E42133F606B222,
-					55A9D84C3E97CD22CD1CB4DC,
-					46CB5CD8738ACFF138AF3327,
-					1B4B1748793B5BFF1BF39596,
-					FB7E6FCC3E21DF8D7718DD2F,
-					639B53853436C86D275CDB9E,
-					F4532C268B01CFB62E87ECBC,
-					E1B74763D62A794C97CDFBA6,
-					563AF9B002930128EB939A3E,
-					7E931C8BE654F49C5179D9A4,
-					7F63FF68C36C719C24F0F6F5,
-					B61B4459460D05B8B430B871,
-					39B0195404767F4AA66E9E01,
-					4908E9313CEF0C03F1EA59A2, ); name = "JUCE Modules"; sourceTree = "<group>"; };
-		327812E1A9565F60FD1BDB62 = {isa = PBXGroup; children = (
-					6268F00C05DE6CAAC042C43E,
-					5E5FF3A248A8408106B4DDFF,
-					92A7F736C35A7A1488177C59,
-					AAB2521CFAB6DDE8ED8E834E,
-					83AD3D84B8E19E3BA97CD878,
-					04ECEA5E5EAA39D696DC65E5,
-					77DD315CC4B87CC5A3B7B20F,
-					209DEEB0E757EA8F55EF81E3,
-					70CB738991F52E6957677B38,
-					F984EF4D79640B3BCB11F146,
-					3077AE632EBAC6476AF7A4CB,
-					D66FDCC4E634EC63F13B98F5,
-					1994869581877D7A80536E56,
-					004D7BD1D1B9DA685A54E594,
-					C6D394B5D423B1F17CA3B7F9,
-					22DD327C7AC4145B956AD67F,
-					6CC5196ED8BC1CC5835EDE9F,
-					08880E58AFF579276074BD1F,
-					3AD1C8C00A233B753B0FD743,
-					0508692D850F6025A8E3268C,
-					4A4BEB4114D4E7138701453E, ); name = "JUCE Library Code"; sourceTree = "<group>"; };
-		B27140F735B92AA11B4837FD = {isa = PBXGroup; children = (
-					E2C77606FB51C81A1B5CCBC2,
-					A734AA0223A3C35312AE481B,
-					CDD66ABFDE2D05CADA5680FD, ); name = Resources; sourceTree = "<group>"; };
-		D415A89871E85094BD6ED720 = {isa = PBXGroup; children = (
-					A69CB1365F276E382D156362,
-					927838907CA0ECBC59E8B913,
-					CBCAD00FA55EC1B55CAEF380,
-					695EF8018408A285FF4E2D9A,
-					E5944E8EE9791564860D8723,
-					3E338DB8056E41CA516C46A8,
-					BE4BCF52EA041035AE5BD1F5,
-					C7BC76E73308F67A7FEDA2CF,
-					D37AABFBFE5C031E1AF6F433,
-					A1CC4EA8AE33F20112088326,
-					C2F96A41FD1AB15B09C987BF,
-					2FE88BA62466E05980C03896,
-					D68557AA50E7C690716848FB,
-					C8224C5AFCEEEEF1B9FC7B40, ); name = Frameworks; sourceTree = "<group>"; };
-		E0F63BA7179F6BD6AB97C22B = {isa = PBXGroup; children = (
-					3CBCE5891307CCF2CC68B842, ); name = Products; sourceTree = "<group>"; };
-		2F8BA53B8BD261BEF071B3C2 = {isa = PBXGroup; children = (
-					6A444AA172F353631035455D,
-					CF557F9916B09EF3F7A1B9B5,
-					327812E1A9565F60FD1BDB62,
-					B27140F735B92AA11B4837FD,
-					D415A89871E85094BD6ED720,
-					E0F63BA7179F6BD6AB97C22B, ); name = Source; sourceTree = "<group>"; };
-		0272AB82B53EACFF58411DEE = {isa = XCBuildConfiguration; buildSettings = {
+		ECF7AFE3962FABE9DC62ECF8 = {isa = PBXBuildFile; fileRef = 09FE5A03ADD4EA611156C0A2; };
+		664D8506E33823AFD2B13EFD = {isa = PBXBuildFile; fileRef = FE1EBE10979A550D93D381E8; };
+		B4C113868B470283EA13A216 = {isa = PBXBuildFile; fileRef = F0F52E2E878A2D7B841A9E69; };
+		B1BAB156C493277F7973E24A = {isa = PBXBuildFile; fileRef = 84228579B0B1BC1E337E4486; };
+		571118C926D157466B06AA12 = {isa = PBXBuildFile; fileRef = 1788A9F7E8C34425DB6314E8; };
+		869E355AF37D48BD4FE94292 = {isa = PBXBuildFile; fileRef = EAFD4B694E6C6435DCD18B3C; };
+		91EFFA98F5E867ADCF980C08 = {isa = PBXBuildFile; fileRef = A0EFAB28345925956ED24E64; };
+		07440F6A76FB535C6E7CB393 = {isa = PBXBuildFile; fileRef = 54A874723FC64BF1CE361B30; };
+		5F1B9CCEBFA256C7C9CEAE31 = {isa = PBXBuildFile; fileRef = E81EFFEC5F0668465BB79FC1; };
+		247D2E8A651D8DF15598E541 = {isa = PBXBuildFile; fileRef = 00F65A4D85E9C84179B4CC74; };
+		8249967110E5A1983E285CF6 = {isa = PBXBuildFile; fileRef = 84E83D14E2600D7D72F25D91; };
+		926294E182AAAAE53C8F14E9 = {isa = PBXBuildFile; fileRef = BFC05FCD7ED18A4F3BECA82F; };
+		04B78A57EF6599B8B7BEA083 = {isa = PBXBuildFile; fileRef = 92C584EBB36B7828AB66CCF4; };
+		115970A250E85643B9634469 = {isa = PBXBuildFile; fileRef = 6C78F1DE7B9642687AACE388; };
+		5B9C514B54D5D619EF54217B = {isa = PBXBuildFile; fileRef = FDCE753E3807130E9CB5FA10; };
+		6899AF402BB7F6425E25A7B7 = {isa = PBXBuildFile; fileRef = 5BA385AE07BEBE397527C88D; };
+		2B7696F40A8C91874418A477 = {isa = PBXBuildFile; fileRef = 8E435569C5EF3710FE117A9E; };
+		F3CD3EBFC11F7D4CA2C35FD9 = {isa = PBXBuildFile; fileRef = 19DB1AE23F3560801E7245DB; };
+		8B9FEC5913FDFCE28A9EE241 = {isa = PBXBuildFile; fileRef = 806CA4FBD0C396D58EC8BF3C; };
+		7F1A745849CA6C351C61020F = {isa = PBXBuildFile; fileRef = 3C2B36B9FD5CC0B699F9993F; };
+		35E7BC480B4BD427DA884621 = {isa = PBXBuildFile; fileRef = 30831B2084C127E0D8B50DBE; };
+		28D1B7D6F485B6324F900C7C = {isa = PBXBuildFile; fileRef = 6F0380977F5888358DB8E76C; };
+		778018B45602FD31110F97A0 = {isa = PBXBuildFile; fileRef = CA5C1C40AE7578389E5C729E; };
+		84C17922476D47DF09960A2B = {isa = PBXBuildFile; fileRef = 1C3388FF2B612B50DBADF9CE; };
+		E1726DC15A84737EF9215D40 = {isa = PBXBuildFile; fileRef = 33DDF50662F4D543BAE3860F; };
+		65E0B39BD9BB65771E53E215 = {isa = PBXBuildFile; fileRef = 4EC5757CAD70CE161CE82946; };
+		2C288404E6FDDAEE3A4FC872 = {isa = PBXBuildFile; fileRef = B78BD5101CEC1C809C1A5337; };
+		4B52339CF7BE142E1E00748F = {isa = PBXBuildFile; fileRef = FF2719265EF4BA2DADFA868E; };
+		26BFCFC703E3D59AE8E16ABE = {isa = PBXBuildFile; fileRef = B543092983FE34DFDC8F0AFF; };
+		83FFC38636A4896F45A1D25D = {isa = PBXBuildFile; fileRef = 44829C2F0574F5823BF616EC; };
+		E2F33254E7AD0ED61FB26823 = {isa = PBXBuildFile; fileRef = 6B934E4547EED2DC74D68D11; };
+		23B3ABCA79FFB8BA831EC102 = {isa = PBXBuildFile; fileRef = A6D963045806F0BC489AC765; };
+		CA40194A2327AECF24AB6BC1 = {isa = PBXBuildFile; fileRef = 49F4C9E2A871E7FE4E65CDA8; };
+		8959ECB8F2C66B02091D8E66 = {isa = PBXBuildFile; fileRef = FBCF468C856D36109D315D3D; };
+		DE9C26A98C8CCD63FAD1C198 = {isa = PBXBuildFile; fileRef = 71FA862D2A5949E38910BA3E; };
+		47B0D8B3140C14633411FDD9 = {isa = PBXBuildFile; fileRef = DB7D931C4B6545827FC5E3D9; };
+		68240C9E1F9522B228A07AEC = {isa = PBXBuildFile; fileRef = B37546158E1D1C1EB009B1F7; };
+		1849837DBC0C2C2F947A41DF = {isa = PBXBuildFile; fileRef = 25D6A6325A09096B50216F98; };
+		6D169BACD03621D480D15A64 = {isa = PBXBuildFile; fileRef = 69FF8412365CB6B158CA45B5; };
+		74CE823C3976198C501C0E04 = {isa = PBXBuildFile; fileRef = 6563A53051010A5E57A0C311; };
+		C726F20BC073E127CEBC5F29 = {isa = PBXBuildFile; fileRef = 47BF7E5E91938C1A6C7E86E4; };
+		6A903286AD4FCE043F1B5A4F = {isa = PBXBuildFile; fileRef = F4F7E7B2B8E6C373C7D359A3; };
+		82F5C07C504DD3F4F9DBEF57 = {isa = PBXBuildFile; fileRef = 5238EEF266A425AEDEA7E6B1; };
+		21C2D930AECBFA2F9FEA875E = {isa = PBXBuildFile; fileRef = 8BDC701D0D498742B7F1477C; };
+		789533A39318E19D71DA75AD = {isa = PBXBuildFile; fileRef = 8026B5488CE17302D218D107; };
+		58071261D5CBE7385DE50DB2 = {isa = PBXBuildFile; fileRef = BD45E5BA1DC0E568A1E42FE8; };
+		66635D2F103CDAEE8EA917EC = {isa = PBXBuildFile; fileRef = B04F064ACF7D6A92A404D92E; };
+		41F5EF0327853300A8ADDFDF = {isa = PBXBuildFile; fileRef = 678D7742D29F3C76D6F44791; };
+		D37607E2F73B500110CF49CE = {isa = PBXBuildFile; fileRef = 601588C698333E2E72C1CA30; };
+		82D2D31C46B81E34B89CFE80 = {isa = PBXBuildFile; fileRef = D08E911958601A7A5DC5DF51; };
+		B8696803979CD1A7D7A11B06 = {isa = PBXBuildFile; fileRef = A6710716CD3DFDD993998992; };
+		949BE4DBE9A3812E4C70DBB4 = {isa = PBXBuildFile; fileRef = 6B599203509798BA7071E662; };
+		58F73955646FEB7932B86AA8 = {isa = PBXBuildFile; fileRef = B90DA796EBC730739F17DB6E; };
+		A59F79288D64D1EB8D21B2DF = {isa = PBXBuildFile; fileRef = 9243AE6996EB4A6482D4FEBE; };
+		16C14B9FCC23227BF09B6D63 = {isa = PBXBuildFile; fileRef = 1CD162866897D9D8444FD21F; };
+		7D916C9ECE96742A2C51ED99 = {isa = PBXBuildFile; fileRef = 287D3DE9BFCE6476E781CC92; };
+		0CB2EA9CB491CE9557450A73 = {isa = PBXBuildFile; fileRef = 410BC3CD6017A39987E80E09; };
+		1EF4C87ED1D505CBEE5BA409 = {isa = PBXBuildFile; fileRef = 062DF29CCBFC77D07FD365A8; };
+		5D490F425553F4FC7621BCB5 = {isa = PBXBuildFile; fileRef = EC3213F88A85223F0287B185; };
+		99CA816F59DE3B789EA2542D = {isa = PBXBuildFile; fileRef = 1F8B7FBD335B7D3EBD2564E8; };
+		5F8D90B28AEBF9726BE7FFC6 = {isa = PBXBuildFile; fileRef = C9D4F8BA83D6126721BE3E3B; };
+		90F9DD2FF1EFD4AAA7E6A96C = {isa = PBXBuildFile; fileRef = BCA1E32B62DE69F035DC4FC1; };
+		A7A823DCC36539427B920540 = {isa = PBXBuildFile; fileRef = 072BB4AD6AD04ACD781A4D9C; };
+		5B260A5F0DD5D6837ACBBB79 = {isa = PBXBuildFile; fileRef = EC96A557C42185153AF2D4D3; };
+		CE472855A62B5D2B46257E5B = {isa = PBXBuildFile; fileRef = E6CFB9619DB269FEF384D27C; };
+		3CFF22211FDD9958AAAD2C2D = {isa = PBXBuildFile; fileRef = 32917A4064E327A4FDE36A44; };
+		34F1C50063C832D6810E853C = {isa = PBXBuildFile; fileRef = D47FC73A345C339F14D53DD5; };
+		83E2A1FA194AF7D717F214EC = {isa = PBXBuildFile; fileRef = 8B2D8728DB876EF61AE0DE19; };
+		E8E85801B9627329EC0B2079 = {isa = PBXBuildFile; fileRef = E1E6A4C81FA9680F38CDC4B9; };
+		0CE1001D1E2DC3216967AB1F = {isa = PBXBuildFile; fileRef = E212FE9F7CA232461825A9F1; };
+		C41E0AE2742C860B886869FE = {isa = PBXBuildFile; fileRef = 461207B058AF2CEAFE65DA67; };
+		7165DC696F5892FCC68ACA7D = {isa = PBXBuildFile; fileRef = BF72200FE5E51007791F6BD5; };
+		5139F2999287B152CD4CF3A6 = {isa = PBXBuildFile; fileRef = 42D8A15D9675FBD93A66D22B; };
+		D18F182729DD300030944FAD = {isa = PBXBuildFile; fileRef = F80CFACE519D75B48835F11D; };
+		3FE40D6E01F3D9386DDAF5FC = {isa = PBXBuildFile; fileRef = 28D8BF3F21446390CCC17ED1; };
+		80EBD4241B130B29EDB7219D = {isa = PBXBuildFile; fileRef = 702FB8C216938018DFD0C7AD; };
+		803FEC002C6CF17FB55D3B20 = {isa = PBXBuildFile; fileRef = AFE16DE50076B24BA3C59039; };
+		A3F6BF31DC45152D4AB2E6F9 = {isa = PBXBuildFile; fileRef = 0485D78040E7BE276C9E676D; };
+		8067F3D8F286F16A1EE3A3B0 = {isa = PBXBuildFile; fileRef = 361829DD73DBC56410136D01; };
+		3AED785E978C7915495E891C = {isa = PBXBuildFile; fileRef = B10F01A17BA36617B1CA3091; };
+		6DFEC82991CEDEC2AAAD274A = {isa = PBXBuildFile; fileRef = 5515C6A54A277879A8AD4B54; };
+		6B7544E9EE3A10C506BC786C = {isa = PBXBuildFile; fileRef = 074BFACE1F8B1C9AED5072C9; };
+		5EDE640614EAB2905842699D = {isa = PBXBuildFile; fileRef = 41852F49B4C949D4E26C34EF; };
+		ABF33765FEA9F66C9A984023 = {isa = PBXBuildFile; fileRef = 27A8B4E99D279A1A58C2C88F; };
+		90970AF75E726E9667C2778B = {isa = PBXBuildFile; fileRef = A2924A72A565757F9F4641EE; };
+		C321341A6A790B42A5CD9602 = {isa = PBXBuildFile; fileRef = 7BA06B83879A8C29A4BBF89E; };
+		1ECFEC688994FF88C90EDC2F = {isa = PBXBuildFile; fileRef = 72BE84A885CC049B82BC77D0; };
+		5B525507657A3E5F9ABD1849 = {isa = PBXBuildFile; fileRef = BB35E5CF8A1F615234CCEB49; };
+		3F5635310828E5C235580FC7 = {isa = PBXBuildFile; fileRef = 013E8F9F99D82AED44506201; };
+		5D27A3C62EAF5FB1B22725B6 = {isa = PBXBuildFile; fileRef = A0CED6FFFDA8C761014E8450; };
+		E963D1E342C8A760B5D3D11E = {isa = PBXBuildFile; fileRef = 8C51641C8E2E45AEA503D984; };
+		5592C9025D0FCD495787012E = {isa = PBXBuildFile; fileRef = 2F137ED0FEEF5BCCA15AF6B6; };
+		DF63548621AD35599ACAA177 = {isa = PBXBuildFile; fileRef = 297C6C92545CACA0EE217D09; };
+		54B3FEC1237FCBE1EFC4AB82 = {isa = PBXBuildFile; fileRef = 9614919239C8F1D4092F5D14; };
+		310E06F861E0E9FF1A62AA98 = {isa = PBXBuildFile; fileRef = 131AEC2D4D2B87C9C69DF937; };
+		CC16FF9E738C2A5BFACC26D2 = {isa = PBXBuildFile; fileRef = AD745A2DDA8D378BC365442E; };
+		1287884F2D7B91BFF7574A43 = {isa = PBXBuildFile; fileRef = 3357D82DFD83AD7C79669260; };
+		817766182291A937EE86E528 = {isa = PBXBuildFile; fileRef = E7781E08E59080008E7C0468; };
+		A574517E631D86C75570CB2D = {isa = PBXBuildFile; fileRef = 43ACB0A058F97CFAD9AB8F91; };
+		40FF5E6A564EEFCEEF829C28 = {isa = PBXBuildFile; fileRef = 67A21FCA9B047F0AD269A6AE; };
+		771D353FC2B52DB7CE5DDA7D = {isa = PBXBuildFile; fileRef = A25A214CB50D7501AB748ACE; };
+		51EE45487F02CC8DEB8A027B = {isa = PBXBuildFile; fileRef = 9BCD3714E0A876698DE7F6C2; };
+		F2F89568C0276D0CE61AB3B3 = {isa = PBXBuildFile; fileRef = 7E6B951DCC52F1AE3BEA370A; };
+		8F752060BAB440B0F0D70BB5 = {isa = PBXBuildFile; fileRef = C33DBD0FBEC0F326E09D1C9E; };
+		85F761F40CECBAE8060C8143 = {isa = PBXBuildFile; fileRef = 723E86815278BFEAE703411E; };
+		29147F2F237F27746D764136 = {isa = PBXBuildFile; fileRef = 361E3B230047B670DF65937F; };
+		3F6A3E07757B12ECB942CB91 = {isa = PBXBuildFile; fileRef = CC1EE5C7747429556F2E88FE; };
+		1D4DA736AB6CFA75828E1CDA = {isa = PBXBuildFile; fileRef = 7AEC35CBFB0CDC7BF808CCB1; };
+		122C114488BB50A3CED86F79 = {isa = PBXBuildFile; fileRef = 27A54B1FC72D31AAD6DE59B2; };
+		00F65A4D85E9C84179B4CC74 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
+		013E8F9F99D82AED44506201 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = MainComponent.cpp; path = ../../Source/MainComponent.cpp; sourceTree = "SOURCE_ROOT"; };
+		0485D78040E7BE276C9E676D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlock.cpp; path = ../../Source/LightBlock/LightBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		062DF29CCBFC77D07FD365A8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelManagerUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		072BB4AD6AD04ACD781A4D9C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PictureBlock.cpp; path = ../../Source/LightBlock/model/blocks/picture/PictureBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		074BFACE1F8B1C9AED5072C9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowPoiProp.cpp; path = ../../Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.cpp; sourceTree = "SOURCE_ROOT"; };
+		077F2CB0529E73623F5F2D2B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SolidColorNode.h; path = ../../Source/Node/nodes/solidcolor/SolidColorNode.h; sourceTree = "SOURCE_ROOT"; };
+		09FE5A03ADD4EA611156C0A2 = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = BenTo.app; sourceTree = "BUILT_PRODUCTS_DIR"; };
+		11421F197FCBB9C371502032 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModel.h; path = ../../Source/LightBlock/model/LightBlockModel.h; sourceTree = "SOURCE_ROOT"; };
+		12AB8A8A13D01E4D545912E8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelLibrary.h; path = ../../Source/LightBlock/model/LightBlockModelLibrary.h; sourceTree = "SOURCE_ROOT"; };
+		12FF16ADFA286489A6454326 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorNodeViewUI.h; path = ../../Source/Node/ui/ColorNodeViewUI.h; sourceTree = "SOURCE_ROOT"; };
+		131AEC2D4D2B87C9C69DF937 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_processors.mm"; path = "../../JuceLibraryCode/include_juce_audio_processors.mm"; sourceTree = "SOURCE_ROOT"; };
+		156DEE9755558E243119030E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelUI.h; sourceTree = "SOURCE_ROOT"; };
+		1788A9F7E8C34425DB6314E8 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
+		17D256E802A747356624D349 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipManagerUI.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.h; sourceTree = "SOURCE_ROOT"; };
+		19DB1AE23F3560801E7245DB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpatializerPanel.cpp; path = ../../Source/Video/ui/SpatializerPanel.cpp; sourceTree = "SOURCE_ROOT"; };
+		1C3388FF2B612B50DBADF9CE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerPanel.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp; sourceTree = "SOURCE_ROOT"; };
+		1CD162866897D9D8444FD21F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelPresetManager.cpp; path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		1D2CB1D4DA0BBB722A498B50 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_basics"; path = "~/JUCE/modules/juce_audio_basics"; sourceTree = "<absolute>"; };
+		1DBDD2976B43EA704536B1A3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Node.h; path = ../../Source/Node/Node.h; sourceTree = "SOURCE_ROOT"; };
+		1F5644A9B6142CE651E3DBB5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelGroup.h; path = ../../Source/LightBlock/model/LightBlockModelGroup.h; sourceTree = "SOURCE_ROOT"; };
+		1F8B7FBD335B7D3EBD2564E8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterManagerEditor.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterManagerEditor.cpp; sourceTree = "SOURCE_ROOT"; };
+		1FE3912FBB83FCA8B68A7869 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_extra"; path = "~/JUCE/modules/juce_gui_extra"; sourceTree = "<absolute>"; };
+		21FA496C6AFD051C923CF723 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = MainComponent.h; path = ../../Source/MainComponent.h; sourceTree = "SOURCE_ROOT"; };
+		23C0E0BF7FBA56EB299556C8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionSlot.h; path = ../../Source/Node/NodeConnectionSlot.h; sourceTree = "SOURCE_ROOT"; };
+		240E23C190BA41160A526EE3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayerTimeline.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.h; sourceTree = "SOURCE_ROOT"; };
+		246F32BBF2ED04A23FFD53A8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineEditor.h; path = ../../Source/Timeline/TimelineEditor.h; sourceTree = "SOURCE_ROOT"; };
+		24C7A24B7284550EAC862EF6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpatializerPanel.h; path = ../../Source/Video/ui/SpatializerPanel.h; sourceTree = "SOURCE_ROOT"; };
+		25D6A6325A09096B50216F98 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SolidColorNode.cpp; path = ../../Source/Node/nodes/solidcolor/SolidColorNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		275FB7ADFA57487143BF9761 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropViz.h; path = ../../Source/Prop/ui/PropViz.h; sourceTree = "SOURCE_ROOT"; };
+		27A54B1FC72D31AAD6DE59B2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_video.mm"; path = "../../JuceLibraryCode/include_juce_video.mm"; sourceTree = "SOURCE_ROOT"; };
+		27A8B4E99D279A1A58C2C88F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropUI.cpp; path = ../../Source/Prop/ui/PropUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		27E0DC684AA524DEDCF48E89 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlock.h; path = ../../Source/LightBlock/LightBlock.h; sourceTree = "SOURCE_ROOT"; };
+		27E2F7A1064BF51FC259E0CF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlockUI.h; path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h; sourceTree = "SOURCE_ROOT"; };
+		287D3DE9BFCE6476E781CC92 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelGroupUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		28D8BF3F21446390CCC17ED1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		297C6C92545CACA0EE217D09 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_devices.mm"; path = "../../JuceLibraryCode/include_juce_audio_devices.mm"; sourceTree = "SOURCE_ROOT"; };
+		2DB4E537CB60285726E6FDFD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = "SOURCE_ROOT"; };
+		2E6C48E99F858851D7235746 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_events"; path = "~/JUCE/modules/juce_events"; sourceTree = "<absolute>"; };
+		2F137ED0FEEF5BCCA15AF6B6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_basics.mm"; path = "../../JuceLibraryCode/include_juce_audio_basics.mm"; sourceTree = "SOURCE_ROOT"; };
+		30831B2084C127E0D8B50DBE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpatItem.cpp; path = ../../Source/Video/SpatItem.cpp; sourceTree = "SOURCE_ROOT"; };
+		32917A4064E327A4FDE36A44 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoBlock.cpp; path = ../../Source/LightBlock/model/blocks/video/VideoBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		3357D82DFD83AD7C79669260 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_core.mm"; path = "../../JuceLibraryCode/include_juce_core.mm"; sourceTree = "SOURCE_ROOT"; };
+		33DDF50662F4D543BAE3860F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerTimeline.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.cpp; sourceTree = "SOURCE_ROOT"; };
+		340AA08636BF4329F8125809 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlockSequence.h; path = ../../Source/Timeline/TimelineBlockSequence.h; sourceTree = "SOURCE_ROOT"; };
+		361829DD73DBC56410136D01 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowtoysProp.cpp; path = ../../Source/Prop/props/flowtoys/FlowtoysProp.cpp; sourceTree = "SOURCE_ROOT"; };
+		361E3B230047B670DF65937F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_osc.cpp"; path = "../../JuceLibraryCode/include_juce_osc.cpp"; sourceTree = "SOURCE_ROOT"; };
+		374197E996210E24785209AF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropNode.h; path = ../../Source/Node/nodes/prop/PropNode.h; sourceTree = "SOURCE_ROOT"; };
+		383998D4BAB36DE3E4A8F368 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PatternBlock.h; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.h; sourceTree = "SOURCE_ROOT"; };
+		38A85C91C4977CC236F98C05 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoBlockUI.h; path = ../../Source/LightBlock/model/blocks/video/ui/VideoBlockUI.h; sourceTree = "SOURCE_ROOT"; };
+		391A5141E398B57152B5DFD9 = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = ../../Resources/models/patterns/rainbow.png; sourceTree = "SOURCE_ROOT"; };
+		3C2B36B9FD5CC0B699F9993F = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Spatializer.cpp; path = ../../Source/Video/Spatializer.cpp; sourceTree = "SOURCE_ROOT"; };
+		3F817EFE7E06A1CB29C3E0DB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayerPanel.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h; sourceTree = "SOURCE_ROOT"; };
+		410BC3CD6017A39987E80E09 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelLibraryUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelLibraryUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		4167DFF33D3CC01E3F7DD66E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScriptBlock.h; path = ../../Source/LightBlock/model/blocks/script/ScriptBlock.h; sourceTree = "SOURCE_ROOT"; };
+		41852F49B4C949D4E26C34EF = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropManagerUI.cpp; path = ../../Source/Prop/ui/PropManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		42D8A15D9675FBD93A66D22B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModel.cpp; path = ../../Source/LightBlock/model/LightBlockModel.cpp; sourceTree = "SOURCE_ROOT"; };
+		43ACB0A058F97CFAD9AB8F91 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_data_structures.mm"; path = "../../JuceLibraryCode/include_juce_data_structures.mm"; sourceTree = "SOURCE_ROOT"; };
+		44829C2F0574F5823BF616EC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineEditor.cpp; path = ../../Source/Timeline/TimelineEditor.cpp; sourceTree = "SOURCE_ROOT"; };
+		461207B058AF2CEAFE65DA67 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlock.cpp; path = ../../Source/LightBlock/model/blocks/node/NodeBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		47BF7E5E91938C1A6C7E86E4 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionManagerUI.cpp; path = ../../Source/Node/ui/NodeConnectionManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		483DB21C53D8F486962E73FA = {isa = PBXFileReference; lastKnownFileType = image.png; name = solidColor.png; path = ../../Resources/models/patterns/solidColor.png; sourceTree = "SOURCE_ROOT"; };
+		483F5D21E8C9A71AA95D1374 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_data_structures"; path = "~/JUCE/modules/juce_data_structures"; sourceTree = "<absolute>"; };
+		49F4C9E2A871E7FE4E65CDA8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModelNode.cpp; path = ../../Source/Node/nodes/model/ModelNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		4AC2449F6A3A8DC217CB842A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameterManagerEditor.h; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterManagerEditor.h; sourceTree = "SOURCE_ROOT"; };
+		4EC5757CAD70CE161CE82946 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClip.cpp; path = ../../Source/Timeline/layers/Block/LightBlockClip.cpp; sourceTree = "SOURCE_ROOT"; };
+		504691E98338995ADD682DE9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpatItem.h; path = ../../Source/Video/SpatItem.h; sourceTree = "SOURCE_ROOT"; };
+		5238EEF266A425AEDEA7E6B1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeManagerUI.cpp; path = ../../Source/Node/ui/NodeManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		534FE833EECE72E7B0B4FE8A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameterEditor.h; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterEditor.h; sourceTree = "SOURCE_ROOT"; };
+		544B4C7BFE86C35C359A6F07 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameterManager.h; path = ../../Source/LightBlock/model/LightBlockModelParameterManager.h; sourceTree = "SOURCE_ROOT"; };
+		54A874723FC64BF1CE361B30 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = System/Library/Frameworks/CoreAudio.framework; sourceTree = SDKROOT; };
+		54E3F7E006D47C8BBD524238 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpatItemUI.h; path = ../../Source/Video/ui/SpatItemUI.h; sourceTree = "SOURCE_ROOT"; };
+		5515C6A54A277879A8AD4B54 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowBallProp.cpp; path = ../../Source/Prop/props/flowtoys/flowball/FlowBallProp.cpp; sourceTree = "SOURCE_ROOT"; };
+		55BD80363853A034FF009CDF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterNode.h; path = ../../Source/Node/nodes/parameter/ParameterNode.h; sourceTree = "SOURCE_ROOT"; };
+		5ADA5B655B6C218E2EAE9ADE = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../Resources/icon.png; sourceTree = "SOURCE_ROOT"; };
+		5BA385AE07BEBE397527C88D = {isa = PBXFileReference; lastKnownFileType = file.nib; name = RecentFilesMenuTemplate.nib; path = RecentFilesMenuTemplate.nib; sourceTree = "SOURCE_ROOT"; };
+		5CC9006D3481C579A99AEABB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PositionRemapNode.h; path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.h; sourceTree = "SOURCE_ROOT"; };
+		5DEFBB026599423DABED9ADC = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_organicui"; path = "../../../JUCE Modules/juce_organicui"; sourceTree = "SOURCE_ROOT"; };
+		601588C698333E2E72C1CA30 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionManager.cpp; path = ../../Source/Node/NodeConnectionManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		604DD8F271E31953BAF18128 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Prop.h; path = ../../Source/Prop/Prop.h; sourceTree = "SOURCE_ROOT"; };
+		60C4DF85BD86BBCC6C04CC5A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BinaryData.h; path = ../../JuceLibraryCode/BinaryData.h; sourceTree = "SOURCE_ROOT"; };
+		640F3B4408B789AFEEFCD1E5 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_timeline"; path = "../../../JUCE Modules/juce_timeline"; sourceTree = "SOURCE_ROOT"; };
+		646BC8ABD0CF4DD67EE2C457 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeViewUI.h; path = ../../Source/Node/ui/NodeViewUI.h; sourceTree = "SOURCE_ROOT"; };
+		650E91338756C0378BAD22E2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClip.h; path = ../../Source/Timeline/layers/Block/LightBlockClip.h; sourceTree = "SOURCE_ROOT"; };
+		6525F50EEABE8D808632BEB2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BentoEngine.h; path = ../../Source/BentoEngine.h; sourceTree = "SOURCE_ROOT"; };
+		6563A53051010A5E57A0C311 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlockEditor.cpp; path = ../../Source/Node/ui/NodeBlockEditor.cpp; sourceTree = "SOURCE_ROOT"; };
+		6590052295959DABF7A327FF = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_opengl"; path = "~/JUCE/modules/juce_opengl"; sourceTree = "<absolute>"; };
+		678D7742D29F3C76D6F44791 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionSlot.cpp; path = ../../Source/Node/NodeConnectionSlot.cpp; sourceTree = "SOURCE_ROOT"; };
+		67A21FCA9B047F0AD269A6AE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_events.mm"; path = "../../JuceLibraryCode/include_juce_events.mm"; sourceTree = "SOURCE_ROOT"; };
+		69FF8412365CB6B158CA45B5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorNodeViewUI.cpp; path = ../../Source/Node/ui/ColorNodeViewUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		6AFAA91A6353628FDA5CE8F2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropUI.h; path = ../../Source/Prop/ui/PropUI.h; sourceTree = "SOURCE_ROOT"; };
+		6B0A2558920B896F3FBB4EA0 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_processors"; path = "~/JUCE/modules/juce_audio_processors"; sourceTree = "<absolute>"; };
+		6B599203509798BA7071E662 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelGroup.cpp; path = ../../Source/LightBlock/model/LightBlockModelGroup.cpp; sourceTree = "SOURCE_ROOT"; };
+		6B934E4547EED2DC74D68D11 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRemapNode.cpp; path = ../../Source/Node/nodes/colorRemap/ColorRemapNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		6C78F1DE7B9642687AACE388 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		6C9B316D11B2FC427DCFCC49 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelGroupUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.h; sourceTree = "SOURCE_ROOT"; };
+		6EDA0841F21CD46F079CF3BE = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_formats"; path = "~/JUCE/modules/juce_audio_formats"; sourceTree = "<absolute>"; };
+		6F0380977F5888358DB8E76C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipManagerUI.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		702FB8C216938018DFD0C7AD = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameter.cpp; path = ../../Source/LightBlock/model/LightBlockModelParameter.cpp; sourceTree = "SOURCE_ROOT"; };
+		71FA862D2A5949E38910BA3E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterNode.cpp; path = ../../Source/Node/nodes/parameter/ParameterNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		723E86815278BFEAE703411E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_organicui.cpp"; path = "../../JuceLibraryCode/include_juce_organicui.cpp"; sourceTree = "SOURCE_ROOT"; };
+		72BE84A885CC049B82BC77D0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropManager.cpp; path = ../../Source/Prop/PropManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		72F8063A51503BF2B096E6B0 = {isa = PBXFileReference; lastKnownFileType = image.png; name = strobe.png; path = ../../Resources/models/patterns/strobe.png; sourceTree = "SOURCE_ROOT"; };
+		744B7EC2B270F80896A4D603 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionManagerUI.h; path = ../../Source/Node/ui/NodeConnectionManagerUI.h; sourceTree = "SOURCE_ROOT"; };
+		759E63615738AF7015B50D07 = {isa = PBXFileReference; lastKnownFileType = image.png; name = video.png; path = ../../Resources/models/video.png; sourceTree = "SOURCE_ROOT"; };
+		7852767366EE802B77249A8A = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BlockVizPanel.h; path = ../../Source/BlockViz/BlockVizPanel.h; sourceTree = "SOURCE_ROOT"; };
+		790B45872A9176EEA5EE4382 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayer.h; path = ../../Source/Timeline/layers/Block/LightBlockLayer.h; sourceTree = "SOURCE_ROOT"; };
+		7AC723ECF1FB4D7ED1EFC6AB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = Spatializer.h; path = ../../Source/Video/Spatializer.h; sourceTree = "SOURCE_ROOT"; };
+		7AEC35CBFB0CDC7BF808CCB1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_timeline.cpp"; path = "../../JuceLibraryCode/include_juce_timeline.cpp"; sourceTree = "SOURCE_ROOT"; };
+		7BA06B83879A8C29A4BBF89E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Prop.cpp; path = ../../Source/Prop/Prop.cpp; sourceTree = "SOURCE_ROOT"; };
+		7D51AE1A83C1CFD9550F2E31 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowPoiProp.h; path = ../../Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.h; sourceTree = "SOURCE_ROOT"; };
+		7E38125E9E2F0ECDACD8FFFD = {isa = PBXFileReference; lastKnownFileType = file.btlayout; name = default.btlayout; path = ../../Resources/default.btlayout; sourceTree = "SOURCE_ROOT"; };
+		7E6B951DCC52F1AE3BEA370A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_extra.mm"; path = "../../JuceLibraryCode/include_juce_gui_extra.mm"; sourceTree = "SOURCE_ROOT"; };
+		8019C89748DEEE1405390753 = {isa = PBXFileReference; lastKnownFileType = image.png; name = script.png; path = ../../Resources/models/script.png; sourceTree = "SOURCE_ROOT"; };
+		8026B5488CE17302D218D107 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = ../../Source/Node/Node.cpp; sourceTree = "SOURCE_ROOT"; };
+		806CA4FBD0C396D58EC8BF3C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpatItemUI.cpp; path = ../../Source/Video/ui/SpatItemUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		828B643FB77C8393D77C37B8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelManagerUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelManagerUI.h; sourceTree = "SOURCE_ROOT"; };
+		84228579B0B1BC1E337E4486 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
+		84E83D14E2600D7D72F25D91 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = DiscRecording.framework; path = System/Library/Frameworks/DiscRecording.framework; sourceTree = SDKROOT; };
+		8554DE4EC0BF4E865D14FBD5 = {isa = PBXFileReference; lastKnownFileType = image.png; name = dmx.png; path = ../../Resources/models/dmx.png; sourceTree = "SOURCE_ROOT"; };
+		8740AE34B37C514D05711D1F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorNode.h; path = ../../Source/Node/ColorNode.h; sourceTree = "SOURCE_ROOT"; };
+		8914B8645C6222E6A57712D5 = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = "SOURCE_ROOT"; };
+		8AC07FA15BF0963940495689 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CompositeNode.h; path = ../../Source/Node/nodes/composite/CompositeNode.h; sourceTree = "SOURCE_ROOT"; };
+		8B2D8728DB876EF61AE0DE19 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		8B4914D326D2AA47ED2CDAE1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelLibraryUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelLibraryUI.h; sourceTree = "SOURCE_ROOT"; };
+		8BDC701D0D498742B7F1477C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeViewUI.cpp; path = ../../Source/Node/ui/NodeViewUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		8C51641C8E2E45AEA503D984 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BinaryData.cpp; path = ../../JuceLibraryCode/BinaryData.cpp; sourceTree = "SOURCE_ROOT"; };
+		8E435569C5EF3710FE117A9E = {isa = PBXFileReference; lastKnownFileType = file.icns; name = Icon.icns; path = Icon.icns; sourceTree = "SOURCE_ROOT"; };
+		9145D0A1C128AA5C1FC0A959 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_basics"; path = "~/JUCE/modules/juce_gui_basics"; sourceTree = "<absolute>"; };
+		9243AE6996EB4A6482D4FEBE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelPreset.cpp; path = ../../Source/LightBlock/model/preset/LightBlockModelPreset.cpp; sourceTree = "SOURCE_ROOT"; };
+		92C584EBB36B7828AB66CCF4 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
+		9614919239C8F1D4092F5D14 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_formats.mm"; path = "../../JuceLibraryCode/include_juce_audio_formats.mm"; sourceTree = "SOURCE_ROOT"; };
+		970A0BAAA93EEA2BFF9B9C4F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlockUI.h; path = ../../Source/LightBlock/model/blocks/node/ui/NodeBlockUI.h; sourceTree = "SOURCE_ROOT"; };
+		9BCD3714E0A876698DE7F6C2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_gui_basics.mm"; path = "../../JuceLibraryCode/include_juce_gui_basics.mm"; sourceTree = "SOURCE_ROOT"; };
+		9C34350D331672BF16935147 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_video"; path = "~/JUCE/modules/juce_video"; sourceTree = "<absolute>"; };
+		9C404E1B54EED0B9A42BBEE3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterNodeViewUI.h; path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.h; sourceTree = "SOURCE_ROOT"; };
+		9C5D76FF251DD58BD9C59F16 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_core"; path = "~/JUCE/modules/juce_core"; sourceTree = "<absolute>"; };
+		9CFD42C3F765B4E703F11251 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureBlock.h; path = ../../Source/LightBlock/model/blocks/picture/PictureBlock.h; sourceTree = "SOURCE_ROOT"; };
+		9D27A64C697AB3F54EAAAFF0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelPreset.h; path = ../../Source/LightBlock/model/preset/LightBlockModelPreset.h; sourceTree = "SOURCE_ROOT"; };
+		A0CED6FFFDA8C761014E8450 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = "SOURCE_ROOT"; };
+		A0EFAB28345925956ED24E64 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		A16D6F56EBB17C787D42E77F = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_osc"; path = "~/JUCE/modules/juce_osc"; sourceTree = "<absolute>"; };
+		A25A214CB50D7501AB748ACE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_graphics.mm"; path = "../../JuceLibraryCode/include_juce_graphics.mm"; sourceTree = "SOURCE_ROOT"; };
+		A2924A72A565757F9F4641EE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropViz.cpp; path = ../../Source/Prop/ui/PropViz.cpp; sourceTree = "SOURCE_ROOT"; };
+		A313FD0380B34D01F0A87C4F = {isa = PBXFileReference; lastKnownFileType = image.png; name = noise.png; path = ../../Resources/models/patterns/noise.png; sourceTree = "SOURCE_ROOT"; };
+		A460D3B3E0F7FE5EA8E6CF79 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelNode.h; path = ../../Source/Node/nodes/model/ModelNode.h; sourceTree = "SOURCE_ROOT"; };
+		A5511085D04F50B1217809CF = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeManagerUI.h; path = ../../Source/Node/ui/NodeManagerUI.h; sourceTree = "SOURCE_ROOT"; };
+		A6710716CD3DFDD993998992 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BlockVizPanel.cpp; path = ../../Source/BlockViz/BlockVizPanel.cpp; sourceTree = "SOURCE_ROOT"; };
+		A6D963045806F0BC489AC765 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CompositeNode.cpp; path = ../../Source/Node/nodes/composite/CompositeNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		AD745A2DDA8D378BC365442E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_utils.mm"; path = "../../JuceLibraryCode/include_juce_audio_utils.mm"; sourceTree = "SOURCE_ROOT"; };
+		AF352EEFD5FED651D7B6B7B9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = "SOURCE_ROOT"; };
+		AFE16DE50076B24BA3C59039 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterManager.cpp; path = ../../Source/LightBlock/model/LightBlockModelParameterManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		B04F064ACF7D6A92A404D92E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnection.cpp; path = ../../Source/Node/NodeConnection.cpp; sourceTree = "SOURCE_ROOT"; };
+		B10F01A17BA36617B1CA3091 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FlowClubProp.cpp; path = ../../Source/Prop/props/flowtoys/flowclub/FlowClubProp.cpp; sourceTree = "SOURCE_ROOT"; };
+		B325087B2F326A05727EB4D5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PerlinNoise.hpp; path = ../../Source/LightBlock/model/blocks/pattern/PerlinNoise.hpp; sourceTree = "SOURCE_ROOT"; };
+		B37546158E1D1C1EB009B1F7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropNode.cpp; path = ../../Source/Node/nodes/prop/PropNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		B39AA9B01F5D808AEAB61B99 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureBlockUI.h; path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.h; sourceTree = "SOURCE_ROOT"; };
+		B543092983FE34DFDC8F0AFF = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlockSequence.cpp; path = ../../Source/Timeline/TimelineBlockSequence.cpp; sourceTree = "SOURCE_ROOT"; };
+		B62E39C29F4A21EB27437ACB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionManager.h; path = ../../Source/Node/NodeConnectionManager.h; sourceTree = "SOURCE_ROOT"; };
+		B712F44FB753CD873396ED10 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropManager.h; path = ../../Source/Prop/PropManager.h; sourceTree = "SOURCE_ROOT"; };
+		B78BD5101CEC1C809C1A5337 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipManager.cpp; path = ../../Source/Timeline/layers/Block/LightBlockClipManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		B796D2DBB9A17D01C6288BDB = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_cryptography"; path = "~/JUCE/modules/juce_cryptography"; sourceTree = "<absolute>"; };
+		B8967B36DEBA2C759DA3F3CB = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelPresetManager.h; path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.h; sourceTree = "SOURCE_ROOT"; };
+		B90DA796EBC730739F17DB6E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockColorProvider.cpp; path = ../../Source/LightBlock/model/LightBlockColorProvider.cpp; sourceTree = "SOURCE_ROOT"; };
+		BB35E5CF8A1F615234CCEB49 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoEngine.cpp; path = ../../Source/BentoEngine.cpp; sourceTree = "SOURCE_ROOT"; };
+		BB4E1A3F3C9235EC6C6340BD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ColorRemapNode.h; path = ../../Source/Node/nodes/colorRemap/ColorRemapNode.h; sourceTree = "SOURCE_ROOT"; };
+		BCA1E32B62DE69F035DC4FC1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PictureBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		BD45E5BA1DC0E568A1E42FE8 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorNode.cpp; path = ../../Source/Node/ColorNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		BF72200FE5E51007791F6BD5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptBlock.cpp; path = ../../Source/LightBlock/model/blocks/script/ScriptBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		BFC05FCD7ED18A4F3BECA82F = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
+		C25B9F6BEC89E9BAD4580C96 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowClubProp.h; path = ../../Source/Prop/props/flowtoys/flowclub/FlowClubProp.h; sourceTree = "SOURCE_ROOT"; };
+		C33DBD0FBEC0F326E09D1C9E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_opengl.mm"; path = "../../JuceLibraryCode/include_juce_opengl.mm"; sourceTree = "SOURCE_ROOT"; };
+		C386B0CBC93C9A57D7A52E56 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropManagerUI.h; path = ../../Source/Prop/ui/PropManagerUI.h; sourceTree = "SOURCE_ROOT"; };
+		C63C52F85ADD929A2FEF2131 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_sharedtexture"; path = "../../../JUCE Modules/juce_sharedtexture"; sourceTree = "SOURCE_ROOT"; };
+		C820859F78C14FC58ECA9892 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlock.h; path = ../../Source/LightBlock/model/blocks/node/NodeBlock.h; sourceTree = "SOURCE_ROOT"; };
+		C98254CD3B9C9CDF2A8C2B42 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_graphics"; path = "~/JUCE/modules/juce_graphics"; sourceTree = "<absolute>"; };
+		C9D4F8BA83D6126721BE3E3B = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		CA5357DDE18894E1575103BC = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipUI.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipUI.h; sourceTree = "SOURCE_ROOT"; };
+		CA5C1C40AE7578389E5C729E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipUI.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		CBBC8971CC61533DBB48454D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowBallProp.h; path = ../../Source/Prop/props/flowtoys/flowball/FlowBallProp.h; sourceTree = "SOURCE_ROOT"; };
+		CC1EE5C7747429556F2E88FE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_sharedtexture.cpp"; path = "../../JuceLibraryCode/include_juce_sharedtexture.cpp"; sourceTree = "SOURCE_ROOT"; };
+		D063728D3D96166CB5D2E646 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlockEditor.h; path = ../../Source/Node/ui/NodeBlockEditor.h; sourceTree = "SOURCE_ROOT"; };
+		D08E911958601A7A5DC5DF51 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeManager.cpp; path = ../../Source/Node/NodeManager.cpp; sourceTree = "SOURCE_ROOT"; };
+		D20B5040E868A47D5D5F6BE7 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlock.h; path = ../../Source/LightBlock/model/blocks/timeline/TimelineBlock.h; sourceTree = "SOURCE_ROOT"; };
+		D22DAAA185B827994F80B149 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FlowtoysProp.h; path = ../../Source/Prop/props/flowtoys/FlowtoysProp.h; sourceTree = "SOURCE_ROOT"; };
+		D358A471D4FB1B7FE84EB1D1 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_devices"; path = "~/JUCE/modules/juce_audio_devices"; sourceTree = "<absolute>"; };
+		D47FC73A345C339F14D53DD5 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatternBlock.cpp; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		D53BC6FA1277379E1465CB0E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameter.h; path = ../../Source/LightBlock/model/LightBlockModelParameter.h; sourceTree = "SOURCE_ROOT"; };
+		D6C264729B0AA6CBB8E38E4D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeManager.h; path = ../../Source/Node/NodeManager.h; sourceTree = "SOURCE_ROOT"; };
+		D7C720F200F300D672A94209 = {isa = PBXFileReference; lastKnownFileType = image.png; name = node.png; path = ../../Resources/models/node.png; sourceTree = "SOURCE_ROOT"; };
+		D9E7E2E95FB01C590351700E = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = UserLightBlockModelManager.h; path = ../../Source/LightBlock/model/UserLightBlockModelManager.h; sourceTree = "SOURCE_ROOT"; };
+		DB7D931C4B6545827FC5E3D9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PositionRemapNode.cpp; path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.cpp; sourceTree = "SOURCE_ROOT"; };
+		E1E6A4C81FA9680F38CDC4B9 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlock.cpp; path = ../../Source/LightBlock/model/blocks/timeline/TimelineBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		E212FE9F7CA232461825A9F1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/node/ui/NodeBlockUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		E37929CD60F65E2893AC282F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionUI.h; path = ../../Source/Node/ui/NodeConnectionUI.h; sourceTree = "SOURCE_ROOT"; };
+		E5F4D3754491DB7221DC899F = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipManager.h; path = ../../Source/Timeline/layers/Block/LightBlockClipManager.h; sourceTree = "SOURCE_ROOT"; };
+		E6CFB9619DB269FEF384D27C = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/video/ui/VideoBlockUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		E7042E8359548D3F26558613 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockColorProvider.h; path = ../../Source/LightBlock/model/LightBlockColorProvider.h; sourceTree = "SOURCE_ROOT"; };
+		E7781E08E59080008E7C0468 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_cryptography.mm"; path = "../../JuceLibraryCode/include_juce_cryptography.mm"; sourceTree = "SOURCE_ROOT"; };
+		E81EFFEC5F0668465BB79FC1 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
+		EAFD4B694E6C6435DCD18B3C = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
+		EBAA40743CEA72843EFA38C0 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnection.h; path = ../../Source/Node/NodeConnection.h; sourceTree = "SOURCE_ROOT"; };
+		EC3213F88A85223F0287B185 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterEditor.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelParameterEditor.cpp; sourceTree = "SOURCE_ROOT"; };
+		EC96A557C42185153AF2D4D3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = DMXBlock.cpp; path = ../../Source/LightBlock/model/blocks/dmx/DMXBlock.cpp; sourceTree = "SOURCE_ROOT"; };
+		EE81DA3B692ADC3F89606BD6 = {isa = PBXFileReference; lastKnownFileType = image.png; name = timeline.png; path = ../../Resources/models/timeline.png; sourceTree = "SOURCE_ROOT"; };
+		EF149DEB6A6DDEBB4C124073 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoBlock.h; path = ../../Source/LightBlock/model/blocks/video/VideoBlock.h; sourceTree = "SOURCE_ROOT"; };
+		F012B490F41AA25EF1EE6B85 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXBlock.h; path = ../../Source/LightBlock/model/blocks/dmx/DMXBlock.h; sourceTree = "SOURCE_ROOT"; };
+		F0F52E2E878A2D7B841A9E69 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
+		F35E0C458F39B7E492E350ED = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_audio_utils"; path = "~/JUCE/modules/juce_audio_utils"; sourceTree = "<absolute>"; };
+		F4F7E7B2B8E6C373C7D359A3 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionUI.cpp; path = ../../Source/Node/ui/NodeConnectionUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		F80CFACE519D75B48835F11D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelLibrary.cpp; path = ../../Source/LightBlock/model/LightBlockModelLibrary.cpp; sourceTree = "SOURCE_ROOT"; };
+		FBCF468C856D36109D315D3D = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterNodeViewUI.cpp; path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.cpp; sourceTree = "SOURCE_ROOT"; };
+		FDCE753E3807130E9CB5FA10 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WebKit.framework; path = System/Library/Frameworks/WebKit.framework; sourceTree = SDKROOT; };
+		FE1EBE10979A550D93D381E8 = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Accelerate.framework; path = System/Library/Frameworks/Accelerate.framework; sourceTree = SDKROOT; };
+		FF2719265EF4BA2DADFA868E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayer.cpp; path = ../../Source/Timeline/layers/Block/LightBlockLayer.cpp; sourceTree = "SOURCE_ROOT"; };
+		D5A49BA7B515713ACBF0E72F = {isa = PBXGroup; children = (
+					A313FD0380B34D01F0A87C4F,
+					391A5141E398B57152B5DFD9,
+					483DB21C53D8F486962E73FA,
+					72F8063A51503BF2B096E6B0, ); name = patterns; sourceTree = "<group>"; };
+		21A024425C5A7B9DDFFDA18E = {isa = PBXGroup; children = (
+					D5A49BA7B515713ACBF0E72F,
+					8554DE4EC0BF4E865D14FBD5,
+					D7C720F200F300D672A94209,
+					8019C89748DEEE1405390753,
+					EE81DA3B692ADC3F89606BD6,
+					759E63615738AF7015B50D07, ); name = models; sourceTree = "<group>"; };
+		619F6B4A1714C7D3E7F30559 = {isa = PBXGroup; children = (
+					21A024425C5A7B9DDFFDA18E,
+					7E38125E9E2F0ECDACD8FFFD,
+					5ADA5B655B6C218E2EAE9ADE, ); name = Resources; sourceTree = "<group>"; };
+		A354D53529C8515DA523AB9E = {isa = PBXGroup; children = (
+					19DB1AE23F3560801E7245DB,
+					24C7A24B7284550EAC862EF6,
+					806CA4FBD0C396D58EC8BF3C,
+					54E3F7E006D47C8BBD524238, ); name = ui; sourceTree = "<group>"; };
+		F147601EF20DF1722CE4DE06 = {isa = PBXGroup; children = (
+					A354D53529C8515DA523AB9E,
+					3C2B36B9FD5CC0B699F9993F,
+					7AC723ECF1FB4D7ED1EFC6AB,
+					30831B2084C127E0D8B50DBE,
+					504691E98338995ADD682DE9, ); name = Video; sourceTree = "<group>"; };
+		68EBA09CF79847AEC42C0DEE = {isa = PBXGroup; children = (
+					6F0380977F5888358DB8E76C,
+					17D256E802A747356624D349,
+					CA5C1C40AE7578389E5C729E,
+					CA5357DDE18894E1575103BC,
+					1C3388FF2B612B50DBADF9CE,
+					3F817EFE7E06A1CB29C3E0DB,
+					33DDF50662F4D543BAE3860F,
+					240E23C190BA41160A526EE3, ); name = ui; sourceTree = "<group>"; };
+		0D6BF5AA33CEF2A8347C2B5A = {isa = PBXGroup; children = (
+					68EBA09CF79847AEC42C0DEE,
+					4EC5757CAD70CE161CE82946,
+					650E91338756C0378BAD22E2,
+					B78BD5101CEC1C809C1A5337,
+					E5F4D3754491DB7221DC899F,
+					FF2719265EF4BA2DADFA868E,
+					790B45872A9176EEA5EE4382, ); name = BlockLayer; sourceTree = "<group>"; };
+		9731CD4DA8F52456FB85C231 = {isa = PBXGroup; children = (
+					0D6BF5AA33CEF2A8347C2B5A, ); name = layers; sourceTree = "<group>"; };
+		42BBA6B9C8A32A5242C0FCA2 = {isa = PBXGroup; children = (
+					9731CD4DA8F52456FB85C231,
+					B543092983FE34DFDC8F0AFF,
+					340AA08636BF4329F8125809,
+					44829C2F0574F5823BF616EC,
+					246F32BBF2ED04A23FFD53A8, ); name = Timeline; sourceTree = "<group>"; };
+		1504BD03049EDEEC74A79356 = {isa = PBXGroup; children = (
+					6B934E4547EED2DC74D68D11,
+					BB4E1A3F3C9235EC6C6340BD, ); name = colorRemap; sourceTree = "<group>"; };
+		824067A170F04EBBB17138C7 = {isa = PBXGroup; children = (
+					A6D963045806F0BC489AC765,
+					8AC07FA15BF0963940495689, ); name = composite; sourceTree = "<group>"; };
+		2A2950576F7EE78C15C1C8B0 = {isa = PBXGroup; children = (
+					49F4C9E2A871E7FE4E65CDA8,
+					A460D3B3E0F7FE5EA8E6CF79, ); name = model; sourceTree = "<group>"; };
+		CBA2956E50ACCEB723898141 = {isa = PBXGroup; children = (
+					FBCF468C856D36109D315D3D,
+					9C404E1B54EED0B9A42BBEE3, ); name = ui; sourceTree = "<group>"; };
+		97EB5E3CA5750C88EEAD86F2 = {isa = PBXGroup; children = (
+					CBA2956E50ACCEB723898141,
+					71FA862D2A5949E38910BA3E,
+					55BD80363853A034FF009CDF, ); name = parameter; sourceTree = "<group>"; };
+		C6A1AB1F92E6AF303ED838C7 = {isa = PBXGroup; children = (
+					DB7D931C4B6545827FC5E3D9,
+					5CC9006D3481C579A99AEABB, ); name = positionRemap; sourceTree = "<group>"; };
+		FED4AE41B06136BAA1079EBB = {isa = PBXGroup; children = (
+					B37546158E1D1C1EB009B1F7,
+					374197E996210E24785209AF, ); name = prop; sourceTree = "<group>"; };
+		3B6BAB827FAF30AEC2D00086 = {isa = PBXGroup; children = (
+					25D6A6325A09096B50216F98,
+					077F2CB0529E73623F5F2D2B, ); name = solidcolor; sourceTree = "<group>"; };
+		5BBAFE3D5682BED019D6F30F = {isa = PBXGroup; children = (
+					1504BD03049EDEEC74A79356,
+					824067A170F04EBBB17138C7,
+					2A2950576F7EE78C15C1C8B0,
+					97EB5E3CA5750C88EEAD86F2,
+					C6A1AB1F92E6AF303ED838C7,
+					FED4AE41B06136BAA1079EBB,
+					3B6BAB827FAF30AEC2D00086, ); name = nodes; sourceTree = "<group>"; };
+		30AD4BC21CFB8BBA0F6EC566 = {isa = PBXGroup; children = (
+					69FF8412365CB6B158CA45B5,
+					12FF16ADFA286489A6454326,
+					6563A53051010A5E57A0C311,
+					D063728D3D96166CB5D2E646,
+					47BF7E5E91938C1A6C7E86E4,
+					744B7EC2B270F80896A4D603,
+					F4F7E7B2B8E6C373C7D359A3,
+					E37929CD60F65E2893AC282F,
+					5238EEF266A425AEDEA7E6B1,
+					A5511085D04F50B1217809CF,
+					8BDC701D0D498742B7F1477C,
+					646BC8ABD0CF4DD67EE2C457, ); name = ui; sourceTree = "<group>"; };
+		6CA82505D6D821C0B6EE919F = {isa = PBXGroup; children = (
+					5BBAFE3D5682BED019D6F30F,
+					30AD4BC21CFB8BBA0F6EC566,
+					8026B5488CE17302D218D107,
+					1DBDD2976B43EA704536B1A3,
+					BD45E5BA1DC0E568A1E42FE8,
+					8740AE34B37C514D05711D1F,
+					B04F064ACF7D6A92A404D92E,
+					EBAA40743CEA72843EFA38C0,
+					678D7742D29F3C76D6F44791,
+					23C0E0BF7FBA56EB299556C8,
+					601588C698333E2E72C1CA30,
+					B62E39C29F4A21EB27437ACB,
+					D08E911958601A7A5DC5DF51,
+					D6C264729B0AA6CBB8E38E4D, ); name = Node; sourceTree = "<group>"; };
+		D1C2A3330B4070F54323AB51 = {isa = PBXGroup; children = (
+					A6710716CD3DFDD993998992,
+					7852767366EE802B77249A8A, ); name = BlockViz; sourceTree = "<group>"; };
+		50830C2DDAD4EDB461BEF44B = {isa = PBXGroup; children = (
+					9243AE6996EB4A6482D4FEBE,
+					9D27A64C697AB3F54EAAAFF0,
+					1CD162866897D9D8444FD21F,
+					B8967B36DEBA2C759DA3F3CB, ); name = preset; sourceTree = "<group>"; };
+		84DCF8A8637893A494D8B5F8 = {isa = PBXGroup; children = (
+					287D3DE9BFCE6476E781CC92,
+					6C9B316D11B2FC427DCFCC49,
+					410BC3CD6017A39987E80E09,
+					8B4914D326D2AA47ED2CDAE1,
+					062DF29CCBFC77D07FD365A8,
+					828B643FB77C8393D77C37B8,
+					EC3213F88A85223F0287B185,
+					534FE833EECE72E7B0B4FE8A,
+					1F8B7FBD335B7D3EBD2564E8,
+					4AC2449F6A3A8DC217CB842A,
+					C9D4F8BA83D6126721BE3E3B,
+					156DEE9755558E243119030E, ); name = ui; sourceTree = "<group>"; };
+		75F113829DCB8C6F7BA0DB1D = {isa = PBXGroup; children = (
+					BCA1E32B62DE69F035DC4FC1,
+					B39AA9B01F5D808AEAB61B99, ); name = ui; sourceTree = "<group>"; };
+		D85C6AB35360054010282CF2 = {isa = PBXGroup; children = (
+					75F113829DCB8C6F7BA0DB1D,
+					072BB4AD6AD04ACD781A4D9C,
+					9CFD42C3F765B4E703F11251, ); name = picture; sourceTree = "<group>"; };
+		22375D1D70160BB3E5A380AD = {isa = PBXGroup; children = (
+					EC96A557C42185153AF2D4D3,
+					F012B490F41AA25EF1EE6B85, ); name = dmx; sourceTree = "<group>"; };
+		3BA77F75125F156AB7AE9501 = {isa = PBXGroup; children = (
+					E6CFB9619DB269FEF384D27C,
+					38A85C91C4977CC236F98C05, ); name = ui; sourceTree = "<group>"; };
+		7C9FB9CF8E36B73E8552E82A = {isa = PBXGroup; children = (
+					3BA77F75125F156AB7AE9501,
+					32917A4064E327A4FDE36A44,
+					EF149DEB6A6DDEBB4C124073, ); name = video; sourceTree = "<group>"; };
+		D5BB5529B8BB9E66D75C4429 = {isa = PBXGroup; children = (
+					B325087B2F326A05727EB4D5,
+					D47FC73A345C339F14D53DD5,
+					383998D4BAB36DE3E4A8F368, ); name = pattern; sourceTree = "<group>"; };
+		0EE8C1F0F8847FED82143724 = {isa = PBXGroup; children = (
+					8B2D8728DB876EF61AE0DE19,
+					27E2F7A1064BF51FC259E0CF, ); name = ui; sourceTree = "<group>"; };
+		CFBC0C34B60B431EB1B0B63E = {isa = PBXGroup; children = (
+					0EE8C1F0F8847FED82143724,
+					E1E6A4C81FA9680F38CDC4B9,
+					D20B5040E868A47D5D5F6BE7, ); name = timeline; sourceTree = "<group>"; };
+		4DDB3829BE577B613917AF92 = {isa = PBXGroup; children = (
+					E212FE9F7CA232461825A9F1,
+					970A0BAAA93EEA2BFF9B9C4F, ); name = ui; sourceTree = "<group>"; };
+		0F911450B59099161186DB30 = {isa = PBXGroup; children = (
+					4DDB3829BE577B613917AF92,
+					461207B058AF2CEAFE65DA67,
+					C820859F78C14FC58ECA9892, ); name = node; sourceTree = "<group>"; };
+		3F637EBB39F328303D10AFA5 = {isa = PBXGroup; children = (
+					BF72200FE5E51007791F6BD5,
+					4167DFF33D3CC01E3F7DD66E, ); name = script; sourceTree = "<group>"; };
+		269A39BFBFECFC1A83F077E5 = {isa = PBXGroup; children = (
+					D85C6AB35360054010282CF2,
+					22375D1D70160BB3E5A380AD,
+					7C9FB9CF8E36B73E8552E82A,
+					D5BB5529B8BB9E66D75C4429,
+					CFBC0C34B60B431EB1B0B63E,
+					0F911450B59099161186DB30,
+					3F637EBB39F328303D10AFA5, ); name = blocks; sourceTree = "<group>"; };
+		361C28437F587CF6E1994A8A = {isa = PBXGroup; children = (
+					6B599203509798BA7071E662,
+					1F5644A9B6142CE651E3DBB5,
+					B90DA796EBC730739F17DB6E,
+					E7042E8359548D3F26558613,
+					50830C2DDAD4EDB461BEF44B,
+					84DCF8A8637893A494D8B5F8,
+					269A39BFBFECFC1A83F077E5,
+					42D8A15D9675FBD93A66D22B,
+					11421F197FCBB9C371502032,
+					F80CFACE519D75B48835F11D,
+					12AB8A8A13D01E4D545912E8,
+					28D8BF3F21446390CCC17ED1,
+					D9E7E2E95FB01C590351700E,
+					702FB8C216938018DFD0C7AD,
+					D53BC6FA1277379E1465CB0E,
+					AFE16DE50076B24BA3C59039,
+					544B4C7BFE86C35C359A6F07, ); name = model; sourceTree = "<group>"; };
+		101AD41B6A30C4FDC7AF2B8D = {isa = PBXGroup; children = (
+					361C28437F587CF6E1994A8A,
+					0485D78040E7BE276C9E676D,
+					27E0DC684AA524DEDCF48E89, ); name = LightBlock; sourceTree = "<group>"; };
+		1BAD4531EAACC0A94FE1727A = {isa = PBXGroup; children = (
+					B10F01A17BA36617B1CA3091,
+					C25B9F6BEC89E9BAD4580C96, ); name = flowclub; sourceTree = "<group>"; };
+		65FA7513EE8C4CF22058307A = {isa = PBXGroup; children = (
+					5515C6A54A277879A8AD4B54,
+					CBBC8971CC61533DBB48454D, ); name = flowball; sourceTree = "<group>"; };
+		E1EE8C1F07138868D9D31DED = {isa = PBXGroup; children = (
+					074BFACE1F8B1C9AED5072C9,
+					7D51AE1A83C1CFD9550F2E31, ); name = flowpoi; sourceTree = "<group>"; };
+		09F845B2A4487046837EAC3E = {isa = PBXGroup; children = (
+					361829DD73DBC56410136D01,
+					D22DAAA185B827994F80B149,
+					1BAD4531EAACC0A94FE1727A,
+					65FA7513EE8C4CF22058307A,
+					E1EE8C1F07138868D9D31DED, ); name = flowtoys; sourceTree = "<group>"; };
+		187264FC4BDA0050327E0581 = {isa = PBXGroup; children = (
+					09F845B2A4487046837EAC3E, ); name = props; sourceTree = "<group>"; };
+		C08EFFBB7A63A5C9EEE1DE52 = {isa = PBXGroup; children = (
+					41852F49B4C949D4E26C34EF,
+					C386B0CBC93C9A57D7A52E56,
+					27A8B4E99D279A1A58C2C88F,
+					6AFAA91A6353628FDA5CE8F2,
+					A2924A72A565757F9F4641EE,
+					275FB7ADFA57487143BF9761, ); name = ui; sourceTree = "<group>"; };
+		B736D4D72981989AA69E0D51 = {isa = PBXGroup; children = (
+					187264FC4BDA0050327E0581,
+					C08EFFBB7A63A5C9EEE1DE52,
+					7BA06B83879A8C29A4BBF89E,
+					604DD8F271E31953BAF18128,
+					72BE84A885CC049B82BC77D0,
+					B712F44FB753CD873396ED10, ); name = Prop; sourceTree = "<group>"; };
+		81188A2E9C66EABCDCB381CB = {isa = PBXGroup; children = (
+					F147601EF20DF1722CE4DE06,
+					42BBA6B9C8A32A5242C0FCA2,
+					6CA82505D6D821C0B6EE919F,
+					D1C2A3330B4070F54323AB51,
+					101AD41B6A30C4FDC7AF2B8D,
+					B736D4D72981989AA69E0D51,
+					BB35E5CF8A1F615234CCEB49,
+					6525F50EEABE8D808632BEB2,
+					21FA496C6AFD051C923CF723,
+					013E8F9F99D82AED44506201,
+					A0CED6FFFDA8C761014E8450, ); name = Source; sourceTree = "<group>"; };
+		79997491715BB415C1DBC391 = {isa = PBXGroup; children = (
+					619F6B4A1714C7D3E7F30559,
+					81188A2E9C66EABCDCB381CB, ); name = BenTo; sourceTree = "<group>"; };
+		EE6ABEF9E73EE4EF5D7B1420 = {isa = PBXGroup; children = (
+					1D2CB1D4DA0BBB722A498B50,
+					D358A471D4FB1B7FE84EB1D1,
+					6EDA0841F21CD46F079CF3BE,
+					6B0A2558920B896F3FBB4EA0,
+					F35E0C458F39B7E492E350ED,
+					9C5D76FF251DD58BD9C59F16,
+					B796D2DBB9A17D01C6288BDB,
+					483F5D21E8C9A71AA95D1374,
+					2E6C48E99F858851D7235746,
+					C98254CD3B9C9CDF2A8C2B42,
+					9145D0A1C128AA5C1FC0A959,
+					1FE3912FBB83FCA8B68A7869,
+					6590052295959DABF7A327FF,
+					5DEFBB026599423DABED9ADC,
+					A16D6F56EBB17C787D42E77F,
+					C63C52F85ADD929A2FEF2131,
+					640F3B4408B789AFEEFCD1E5,
+					9C34350D331672BF16935147, ); name = "JUCE Modules"; sourceTree = "<group>"; };
+		02DDD3E9DFAD026A8A5E5660 = {isa = PBXGroup; children = (
+					2DB4E537CB60285726E6FDFD,
+					8C51641C8E2E45AEA503D984,
+					60C4DF85BD86BBCC6C04CC5A,
+					2F137ED0FEEF5BCCA15AF6B6,
+					297C6C92545CACA0EE217D09,
+					9614919239C8F1D4092F5D14,
+					131AEC2D4D2B87C9C69DF937,
+					AD745A2DDA8D378BC365442E,
+					3357D82DFD83AD7C79669260,
+					E7781E08E59080008E7C0468,
+					43ACB0A058F97CFAD9AB8F91,
+					67A21FCA9B047F0AD269A6AE,
+					A25A214CB50D7501AB748ACE,
+					9BCD3714E0A876698DE7F6C2,
+					7E6B951DCC52F1AE3BEA370A,
+					C33DBD0FBEC0F326E09D1C9E,
+					723E86815278BFEAE703411E,
+					361E3B230047B670DF65937F,
+					CC1EE5C7747429556F2E88FE,
+					7AEC35CBFB0CDC7BF808CCB1,
+					27A54B1FC72D31AAD6DE59B2,
+					AF352EEFD5FED651D7B6B7B9, ); name = "JUCE Library Code"; sourceTree = "<group>"; };
+		0039C157E5295DA6DC4139B9 = {isa = PBXGroup; children = (
+					8914B8645C6222E6A57712D5,
+					5BA385AE07BEBE397527C88D,
+					8E435569C5EF3710FE117A9E, ); name = Resources; sourceTree = "<group>"; };
+		58BA08355971BA537DCD8142 = {isa = PBXGroup; children = (
+					FE1EBE10979A550D93D381E8,
+					F0F52E2E878A2D7B841A9E69,
+					84228579B0B1BC1E337E4486,
+					1788A9F7E8C34425DB6314E8,
+					EAFD4B694E6C6435DCD18B3C,
+					A0EFAB28345925956ED24E64,
+					54A874723FC64BF1CE361B30,
+					E81EFFEC5F0668465BB79FC1,
+					00F65A4D85E9C84179B4CC74,
+					84E83D14E2600D7D72F25D91,
+					BFC05FCD7ED18A4F3BECA82F,
+					92C584EBB36B7828AB66CCF4,
+					6C78F1DE7B9642687AACE388,
+					FDCE753E3807130E9CB5FA10, ); name = Frameworks; sourceTree = "<group>"; };
+		CEA7EDDCEB76E62F4EFAE478 = {isa = PBXGroup; children = (
+					09FE5A03ADD4EA611156C0A2, ); name = Products; sourceTree = "<group>"; };
+		6661325A837CC3064723DE1F = {isa = PBXGroup; children = (
+					79997491715BB415C1DBC391,
+					EE6ABEF9E73EE4EF5D7B1420,
+					02DDD3E9DFAD026A8A5E5660,
+					0039C157E5295DA6DC4139B9,
+					58BA08355971BA537DCD8142,
+					CEA7EDDCEB76E62F4EFAE478, ); name = Source; sourceTree = "<group>"; };
+		1F0DFB61F09504426F8E97E1 = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -643,7 +679,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				SDKROOT_ppc = macosx10.5;
 				USE_HEADERMAP = NO; }; name = Debug; };
-		7D00ED2A187385EBF023E9B2 = {isa = XCBuildConfiguration; buildSettings = {
+		16C51991F2BF58A965454233 = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
@@ -676,7 +712,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				SDKROOT_ppc = macosx10.5;
 				USE_HEADERMAP = NO; }; name = Release; };
-		8B311BCFF5F29BC8D54002C6 = {isa = XCBuildConfiguration; buildSettings = {
+		C202FC9A94619E126F6067C5 = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -714,7 +750,7 @@
 				PRODUCT_NAME = "BenTo";
 				WARNING_CFLAGS = -Wreorder;
 				ZERO_LINK = NO; }; name = Debug; };
-		3CCCF88C8E52C21703205B22 = {isa = XCBuildConfiguration; buildSettings = {
+		ADAD10C508ED25BF0C0826AC = {isa = XCBuildConfiguration; buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_WARN_BLOCK_CAPTURE_AUTORELEASING = YES;
 				CLANG_WARN_BOOL_CONVERSION = YES;
@@ -750,123 +786,129 @@
 				PRODUCT_NAME = "BenTo";
 				WARNING_CFLAGS = -Wreorder;
 				ZERO_LINK = NO; }; name = Release; };
-		79660F7008189B5A998BBD31 = {isa = PBXTargetDependency; target = 1CB2D56BA440ED1B47B913E8; };
-		FE03BF34F830352F23E3F809 = {isa = XCConfigurationList; buildConfigurations = (
-					8B311BCFF5F29BC8D54002C6,
-					3CCCF88C8E52C21703205B22, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
-		69C712E8EB03506C64D3B111 = {isa = XCConfigurationList; buildConfigurations = (
-					0272AB82B53EACFF58411DEE,
-					7D00ED2A187385EBF023E9B2, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
-		87D25F29E4BADC7C041F0947 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
-					20FFE0D7E5E82AF162B26776,
-					D5CCEEF9AA6AA6C345A51E4A, ); runOnlyForDeploymentPostprocessing = 0; };
-		0A917B50F1C13B421C2F9D46 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
-					644458F8B80C4528E0971696,
-					E2BC9CFCB0722A9420C8FA20,
-					38F9D0D00384D35B0010835A,
-					6A9299EFEE9A7EAEFC85AEA8,
-					78AC7CC50E722461EF040557,
-					D34EA3FDCCB61A86CB25C1A9,
-					2DA4159DD05B873B8E2D74B2,
-					1980FFA7EE3046A542DBA331,
-					A73EF411EE79A6482B6A1BBF,
-					E4A125982FAA7F9BDBF9B043,
-					630FE58F5724E6DC9B818A98,
-					D0043F044C53B99EDA65B2E7,
-					7E15EF2E094D1D5BCAA70C9A,
-					44F0291B699004AF7F751915,
-					46B7826DA66734151298E959,
-					9FC57C15A138A6ABB80FB519,
-					3B8C56E2F4456214B7708EE8,
-					8BAF9634B84E54753790A2A5,
-					DB9F7A1A142F8903702F0C12,
-					F726A4AC6F547D840AF734EB,
-					DDC3F381269443D7A6D038D0,
-					5811ADBA004729576CCC8C64,
-					BA504F5BF91E089EB2AF83F7,
-					D6A86A2BC635979DF4ACF425,
-					21A8A1B4710DACB8FE91926E,
-					BF3EB24DDE033951B3DEB047,
-					46338B9B792D68A740FD3EE6,
-					B05485B45F3E7F8F0152702C,
-					F6D6A28252151E8446C4A679,
-					E294B6AA69D822D250482200,
-					ED16BF327F86645806D65FE5,
-					D5871C3DA979CF52F7D9127F,
-					44A84B157D2E808AC8494D96,
-					F7077BEF23DF56B731225570,
-					4F48DDB8CE3C047D2E83AAAD,
-					F189921375ED95A8CA2360E0,
-					D9036CF938F974B5B1FB5CE6,
-					24BCE5400C88DE89A8539628,
-					74BD1259749D4C8C38217A21,
-					16E821E8DD5EDFF2BC3B077B,
-					F92B06C3781746AFF2913FAD,
-					F2DE9713FC06D4FFF6EF91C4,
-					351DA382D340426F75BCF8F3,
-					18CCDBBFE391C6E36B75513F,
-					EB64CEDF144B5A941B336494,
-					C0842FD9F004CD2762D18B08,
-					C6D4A95482C35B4C30890AD5,
-					FE6FE0FA77DA12EA3128C2ED,
-					B12A3E52928D1647E99A7A1C,
-					3E2769C7D83B946C1EB11C2D,
-					C4CD4DE9978C03F1981875DC,
-					A55DB5F72CC3596DCB284803,
-					94CE3A406C54C9CF19E77B77,
-					1C5108756202FD93C6D4E556,
-					D6EBC791E451964252A4341C,
-					8B7BA93F15BCF6DD9FA71AF3,
-					FAFDA1BAAF2CEEFDB7905D66,
-					D0837530C54CC8752C3516C8,
-					53705F8FBEAEEC615BFEAA6A,
-					5218D472691625DFDCF87378,
-					145BCA5E977382FEC724C874,
-					6F29B428FF504F76539A3D01,
-					EBB363A1931D7DBF032F5DAD,
-					9206B3DDF7247581171877FD,
-					CD56673B4FD19E7580A98AC7,
-					3C9AD91310551FDC5325D638,
-					90D6CFD44BF8D38E5DF58985,
-					9C9A6131BC95E526FC052119,
-					F412F60057360F516E26495E,
-					7B53C4E4B662E6C27E928D74,
-					F971294D04C9A0CDFB8BA7B3,
-					C18516AC4998DE44439BB936,
-					0557B27E6DF2A12C70EC0E9F,
-					D07462B12F0EC45702C1A68D,
-					D4A14CFD01FAE5B8E841E865,
-					EDF5C165106099CAC86E0931,
-					0493CEE7A0D606F418FCEFAC,
-					A3823CDAE845E1F4F1BD3407,
-					E0100C2AD2A6F504C542B379,
-					BD12C3D117F0D496C332F559,
-					354034E83EBA2B7086A060D7,
-					0EEC8076624EFA723D575C5B,
-					C096C66469FFF63A2F7C335E,
-					8B544AFFDD3CBFEA6B9AFC2E,
-					048C03A7361D8CF4A5BADD4A,
-					1B7CA7F26922ECA8CA1C1A49, ); runOnlyForDeploymentPostprocessing = 0; };
-		5FA82BD9A953892721B4A36F = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (
-					3E1484DBECD35D4FA3F4C434,
-					5CEBB761C8A24F57BDC88923,
-					2C45354F5A18ED1AAAC94F85,
-					7458346624C6F6E73DD3DF59,
-					00C994E555563B78219833D0,
-					F950E9C3B20B68007E44399E,
-					08A6CC50BB8D5D80FF01A5C5,
-					FD7CBDB4D28908D734428FF4,
-					FF99B76D2C72D6DA48E6A53B,
-					B07C78E76A571118AAE569C7,
-					FE9CEB82D8D32544D23461C0,
-					ADB806BE6342DB0BCF211583,
-					D41C0A95CA36830CF58BEEE7,
-					237FF37CC31D4AEEE2102B8B, ); runOnlyForDeploymentPostprocessing = 0; };
-		1CB2D56BA440ED1B47B913E8 = {isa = PBXNativeTarget; buildConfigurationList = 69C712E8EB03506C64D3B111; buildPhases = (
-					87D25F29E4BADC7C041F0947,
-					0A917B50F1C13B421C2F9D46,
-					5FA82BD9A953892721B4A36F, ); buildRules = ( ); dependencies = (  ); name = "BenTo - App"; productName = BenTo; productReference = 3CBCE5891307CCF2CC68B842; productType = "com.apple.product-type.application"; };
-		64B3A4AED012EB7F23163A40 = {isa = PBXProject; buildConfigurationList = FE03BF34F830352F23E3F809; attributes = { LastUpgradeCheck = 0830; ORGANIZATIONNAME = ""; TargetAttributes = { 1CB2D56BA440ED1B47B913E8 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = 2F8BA53B8BD261BEF071B3C2; projectDirPath = ""; projectRoot = ""; targets = (1CB2D56BA440ED1B47B913E8); };
+		A65D57A41385730EC3B9D638 = {isa = PBXTargetDependency; target = 2F8121A95A7067B99E345979; };
+		92BF499088703A638942EF17 = {isa = XCConfigurationList; buildConfigurations = (
+					C202FC9A94619E126F6067C5,
+					ADAD10C508ED25BF0C0826AC, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
+		AD895D5CF95D99B30DB9925B = {isa = XCConfigurationList; buildConfigurations = (
+					1F0DFB61F09504426F8E97E1,
+					16C51991F2BF58A965454233, ); defaultConfigurationIsVisible = 0; defaultConfigurationName = Debug; };
+		7E3E45896A9DCE5C8D14ECF4 = {isa = PBXResourcesBuildPhase; buildActionMask = 2147483647; files = (
+					6899AF402BB7F6425E25A7B7,
+					2B7696F40A8C91874418A477, ); runOnlyForDeploymentPostprocessing = 0; };
+		EB772ED4DE9424F4F4B8D093 = {isa = PBXSourcesBuildPhase; buildActionMask = 2147483647; files = (
+					F3CD3EBFC11F7D4CA2C35FD9,
+					8B9FEC5913FDFCE28A9EE241,
+					7F1A745849CA6C351C61020F,
+					35E7BC480B4BD427DA884621,
+					28D1B7D6F485B6324F900C7C,
+					778018B45602FD31110F97A0,
+					84C17922476D47DF09960A2B,
+					E1726DC15A84737EF9215D40,
+					65E0B39BD9BB65771E53E215,
+					2C288404E6FDDAEE3A4FC872,
+					4B52339CF7BE142E1E00748F,
+					26BFCFC703E3D59AE8E16ABE,
+					83FFC38636A4896F45A1D25D,
+					E2F33254E7AD0ED61FB26823,
+					23B3ABCA79FFB8BA831EC102,
+					CA40194A2327AECF24AB6BC1,
+					8959ECB8F2C66B02091D8E66,
+					DE9C26A98C8CCD63FAD1C198,
+					47B0D8B3140C14633411FDD9,
+					68240C9E1F9522B228A07AEC,
+					1849837DBC0C2C2F947A41DF,
+					6D169BACD03621D480D15A64,
+					74CE823C3976198C501C0E04,
+					C726F20BC073E127CEBC5F29,
+					6A903286AD4FCE043F1B5A4F,
+					82F5C07C504DD3F4F9DBEF57,
+					21C2D930AECBFA2F9FEA875E,
+					789533A39318E19D71DA75AD,
+					58071261D5CBE7385DE50DB2,
+					66635D2F103CDAEE8EA917EC,
+					41F5EF0327853300A8ADDFDF,
+					D37607E2F73B500110CF49CE,
+					82D2D31C46B81E34B89CFE80,
+					B8696803979CD1A7D7A11B06,
+					949BE4DBE9A3812E4C70DBB4,
+					58F73955646FEB7932B86AA8,
+					A59F79288D64D1EB8D21B2DF,
+					16C14B9FCC23227BF09B6D63,
+					7D916C9ECE96742A2C51ED99,
+					0CB2EA9CB491CE9557450A73,
+					1EF4C87ED1D505CBEE5BA409,
+					5D490F425553F4FC7621BCB5,
+					99CA816F59DE3B789EA2542D,
+					5F8D90B28AEBF9726BE7FFC6,
+					90F9DD2FF1EFD4AAA7E6A96C,
+					A7A823DCC36539427B920540,
+					5B260A5F0DD5D6837ACBBB79,
+					CE472855A62B5D2B46257E5B,
+					3CFF22211FDD9958AAAD2C2D,
+					34F1C50063C832D6810E853C,
+					83E2A1FA194AF7D717F214EC,
+					E8E85801B9627329EC0B2079,
+					0CE1001D1E2DC3216967AB1F,
+					C41E0AE2742C860B886869FE,
+					7165DC696F5892FCC68ACA7D,
+					5139F2999287B152CD4CF3A6,
+					D18F182729DD300030944FAD,
+					3FE40D6E01F3D9386DDAF5FC,
+					80EBD4241B130B29EDB7219D,
+					803FEC002C6CF17FB55D3B20,
+					A3F6BF31DC45152D4AB2E6F9,
+					8067F3D8F286F16A1EE3A3B0,
+					3AED785E978C7915495E891C,
+					6DFEC82991CEDEC2AAAD274A,
+					6B7544E9EE3A10C506BC786C,
+					5EDE640614EAB2905842699D,
+					ABF33765FEA9F66C9A984023,
+					90970AF75E726E9667C2778B,
+					C321341A6A790B42A5CD9602,
+					1ECFEC688994FF88C90EDC2F,
+					5B525507657A3E5F9ABD1849,
+					3F5635310828E5C235580FC7,
+					5D27A3C62EAF5FB1B22725B6,
+					E963D1E342C8A760B5D3D11E,
+					5592C9025D0FCD495787012E,
+					DF63548621AD35599ACAA177,
+					54B3FEC1237FCBE1EFC4AB82,
+					310E06F861E0E9FF1A62AA98,
+					CC16FF9E738C2A5BFACC26D2,
+					1287884F2D7B91BFF7574A43,
+					817766182291A937EE86E528,
+					A574517E631D86C75570CB2D,
+					40FF5E6A564EEFCEEF829C28,
+					771D353FC2B52DB7CE5DDA7D,
+					51EE45487F02CC8DEB8A027B,
+					F2F89568C0276D0CE61AB3B3,
+					8F752060BAB440B0F0D70BB5,
+					85F761F40CECBAE8060C8143,
+					29147F2F237F27746D764136,
+					3F6A3E07757B12ECB942CB91,
+					1D4DA736AB6CFA75828E1CDA,
+					122C114488BB50A3CED86F79, ); runOnlyForDeploymentPostprocessing = 0; };
+		277877F3D87EB24C171B3B3B = {isa = PBXFrameworksBuildPhase; buildActionMask = 2147483647; files = (
+					664D8506E33823AFD2B13EFD,
+					B4C113868B470283EA13A216,
+					B1BAB156C493277F7973E24A,
+					571118C926D157466B06AA12,
+					869E355AF37D48BD4FE94292,
+					91EFFA98F5E867ADCF980C08,
+					07440F6A76FB535C6E7CB393,
+					5F1B9CCEBFA256C7C9CEAE31,
+					247D2E8A651D8DF15598E541,
+					8249967110E5A1983E285CF6,
+					926294E182AAAAE53C8F14E9,
+					04B78A57EF6599B8B7BEA083,
+					115970A250E85643B9634469,
+					5B9C514B54D5D619EF54217B, ); runOnlyForDeploymentPostprocessing = 0; };
+		2F8121A95A7067B99E345979 = {isa = PBXNativeTarget; buildConfigurationList = AD895D5CF95D99B30DB9925B; buildPhases = (
+					7E3E45896A9DCE5C8D14ECF4,
+					EB772ED4DE9424F4F4B8D093,
+					277877F3D87EB24C171B3B3B, ); buildRules = ( ); dependencies = (  ); name = "BenTo - App"; productName = BenTo; productReference = 09FE5A03ADD4EA611156C0A2; productType = "com.apple.product-type.application"; };
+		F824F06EF0DA0B2545A280ED = {isa = PBXProject; buildConfigurationList = 92BF499088703A638942EF17; attributes = { LastUpgradeCheck = 0830; ORGANIZATIONNAME = ""; TargetAttributes = { 2F8121A95A7067B99E345979 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = 6661325A837CC3064723DE1F; projectDirPath = ""; projectRoot = ""; targets = (2F8121A95A7067B99E345979); };
 	};
-	rootObject = 64B3A4AED012EB7F23163A40;
+	rootObject = F824F06EF0DA0B2545A280ED;
 }
