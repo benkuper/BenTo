@@ -19,6 +19,7 @@
       <FILE id="jaq4JI" name="default.btlayout" compile="0" resource="1"
             file="Resources/default.btlayout"/>
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
+      <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
       <GROUP id="{238810CF-2BC3-80D9-EDBE-284C90CC6F3B}" name="Video">

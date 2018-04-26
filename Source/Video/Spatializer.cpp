@@ -13,16 +13,32 @@
 
 juce_ImplementSingleton(Spatializer)
 
+String frag =
+"uniform int inverse; \
+uniform int sourceSize; \
+uniform sampler2D sourceTex; \
+uniform vec2 pixMap[512]; \
+ \
+void main() \
+{ \
+    vec2 tcoord = pixMap[pixelPos.x + pixelPos.y*64]; \
+    if(inverse == 1) tcoord.y = 1-tcoord.y; \
+    gl_FragColor = pixelAlpha * texture2D(sourceTex,tcoord); \
+}";
+
+
+
 Spatializer::Spatializer() :
 	BaseManager("Spatializer"),
-	videoBlock(nullptr)
+	videoBlock(nullptr),
+	isInit(false),
+	shader(frag)
 {
 	showTexture = addBoolParameter("Show Texture", "", true);
 	showHandles = addBoolParameter("Show Handles", "", true);
 	showPixels = addBoolParameter("Show Pixels", "", true);
 
 	setVideoBlock(static_cast<VideoBlock *>(LightBlockModelLibrary::getInstance()->videoBlock.get()));
-
 }
 
 Spatializer::~Spatializer()
@@ -53,12 +69,30 @@ void Spatializer::setVideoBlock(VideoBlock * vb)
 	}
 }
 
+void Spatializer::init()
+{
+	fbo.initialise(*OpenGLContext::getCurrentContext(), 256, 256);
+
+	context = createOpenGLGraphicsContext(*OpenGLContext::getCurrentContext(), fbo);
+	
+	isInit = true;
+}
+
 void Spatializer::computeSpat()
 {
 	if (videoBlock == nullptr || !videoBlock->inputIsLive->boolValue()) return;
 
+	if (!isInit) init();
+
 	//Later, will only have to check Fbo's output and assign in order
+
+	//OpenGLShaderProgram * program = shader.getProgram(*context);
+	//program->setUniform("sourceTex", pointCoords, pointCoords.size());
+	//program->setUniform("pixMap", pointCoords, pointCoords.size());
+
 	Image tex = videoBlock->receiver->getImage();
+	
+	
 	const Image::BitmapData data(tex, 0,0, tex.getWidth(), tex.getHeight());
 
 	for (auto &si : items)
@@ -69,6 +103,7 @@ void Spatializer::computeSpat()
 			si->colors.set(i, data.getPixelColour(si->points[i].x*(tex.getWidth()-1), si->points[i].y*(tex.getHeight()-1)));
 		}
 	}
+	
 }
 
 SpatItem * Spatializer::getItemWithPropID(int id)
@@ -79,6 +114,7 @@ SpatItem * Spatializer::getItemWithPropID(int id)
 		if (si->id->intValue() == id) return si;
 		if (si->isDefault->boolValue()) defaultSI = si;
 	}
+
 	return defaultSI;
 }
 

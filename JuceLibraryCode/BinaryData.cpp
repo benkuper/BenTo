@@ -2018,6 +2018,48 @@ static const unsigned char temp_binary_data_10[] =
 
 const char* icon_png = (const char*) temp_binary_data_10;
 
+//================== shader.frag ==================
+static const unsigned char temp_binary_data_11[] =
+"#version 150\r\n"
+"\r\n"
+"\r\n"
+"\r\n"
+"out vec4 outputColor;\r\n"
+"\r\n"
+"//perso\r\n"
+"uniform int inverse;\r\n"
+"uniform vec2 fboSize;\r\n"
+"uniform vec2 sourceSize;\r\n"
+"uniform sampler2DRect sourceTex;\r\n"
+"uniform sampler2DRect ledMap;\r\n"
+"//uniform float pixMaps[65536];\r\n"
+"\r\n"
+"void main()\r\n"
+"{\r\n"
+"    // gl_FragCoord contains the window relative coordinate for the fragment.\r\n"
+"    // we use gl_FragCoord.x position to control the red color value.\r\n"
+"    // we use gl_FragCoord.y position to control the green color value.\r\n"
+"    // please note that all r, g, b, a values are between 0 and 1.\r\n"
+"    \r\n"
+"\t//ivec2 lsize = textureSize(ledMap,0);\r\n"
+"    //ivec2 tsize = textureSize(sourceTex,0);\r\n"
+"    \r\n"
+"    vec2 lsize = fboSize; //led map is same size as fbo\r\n"
+"    vec2 tsize = sourceSize;\r\n"
+"    \r\n"
+"\tfloat tx = (gl_FragCoord.x / fboSize.x) * lsize.x;\r\n"
+"\tfloat ty = (gl_FragCoord.y / fboSize.y) * lsize.y;\r\n"
+"\r\n"
+"\tvec4 tcoord = texture(ledMap,vec2(tx,ty));\r\n"
+"\r\n"
+"    if(inverse == 1) tcoord.y = 1-tcoord.y;\r\n"
+"\toutputColor = texture(sourceTex,vec2(tcoord.x*tsize.x,tcoord.y*tsize.y));\r\n"
+"    \r\n"
+"}\r\n"
+"\r\n";
+
+const char* shader_frag = (const char*) temp_binary_data_11;
+
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) noexcept
 {
@@ -2039,6 +2081,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) noexc
         case 0x4f784065:  numBytes = 6004; return video_png;
         case 0x7448d63a:  numBytes = 2467; return default_btlayout;
         case 0xd4093963:  numBytes = 98974; return icon_png;
+        case 0x893e7e0c:  numBytes = 1012; return shader_frag;
         default: break;
     }
 
@@ -2058,7 +2101,8 @@ const char* namedResourceList[] =
     "timeline_png",
     "video_png",
     "default_btlayout",
-    "icon_png"
+    "icon_png",
+    "shader_frag"
 };
 
 const char* originalFilenames[] =
@@ -2073,7 +2117,8 @@ const char* originalFilenames[] =
     "timeline.png",
     "video.png",
     "default.btlayout",
-    "icon.png"
+    "icon.png",
+    "shader.frag"
 };
 
 const char* getNamedResourceOriginalFilename (const char* resourceNameUTF8) noexcept

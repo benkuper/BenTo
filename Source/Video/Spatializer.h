@@ -32,8 +32,17 @@ public:
 	VideoBlock * videoBlock;
 	WeakReference<Inspectable> videoBlockRef;
 
+	bool isInit;
+
+	//gl
+	LowLevelGraphicsContext * context;
+	OpenGLFrameBuffer fbo;
+	OpenGLImageType fboImage;
+	OpenGLGraphicsContextCustomShader shader;
+
 	void setVideoBlock(VideoBlock * vb);
 
+	void init();
 	void computeSpat();
 
 	SpatItem * getItemWithPropID(int id);

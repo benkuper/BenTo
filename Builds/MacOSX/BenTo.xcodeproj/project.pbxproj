@@ -152,6 +152,7 @@
 		287D3DE9BFCE6476E781CC92 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelGroupUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		28D8BF3F21446390CCC17ED1 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		297C6C92545CACA0EE217D09 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_devices.mm"; path = "../../JuceLibraryCode/include_juce_audio_devices.mm"; sourceTree = "SOURCE_ROOT"; };
+		2C00931803E64BF5416A5555 = {isa = PBXFileReference; lastKnownFileType = file.frag; name = shader.frag; path = ../../Resources/shader.frag; sourceTree = "SOURCE_ROOT"; };
 		2DB4E537CB60285726E6FDFD = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = "SOURCE_ROOT"; };
 		2E6C48E99F858851D7235746 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_events"; path = "~/JUCE/modules/juce_events"; sourceTree = "<absolute>"; };
 		2F137ED0FEEF5BCCA15AF6B6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_basics.mm"; path = "../../JuceLibraryCode/include_juce_audio_basics.mm"; sourceTree = "SOURCE_ROOT"; };
@@ -345,7 +346,8 @@
 		619F6B4A1714C7D3E7F30559 = {isa = PBXGroup; children = (
 					21A024425C5A7B9DDFFDA18E,
 					7E38125E9E2F0ECDACD8FFFD,
-					5ADA5B655B6C218E2EAE9ADE, ); name = Resources; sourceTree = "<group>"; };
+					5ADA5B655B6C218E2EAE9ADE,
+					2C00931803E64BF5416A5555, ); name = Resources; sourceTree = "<group>"; };
 		A354D53529C8515DA523AB9E = {isa = PBXGroup; children = (
 					19DB1AE23F3560801E7245DB,
 					24C7A24B7284550EAC862EF6,
