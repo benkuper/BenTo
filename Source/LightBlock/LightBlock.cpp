@@ -16,7 +16,8 @@
 LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	BaseItem(provider->niceName),
 	provider(provider),
-	paramsContainer("Parameters")
+	paramsContainer("Parameters"),
+	automationsManager(&paramsContainer)
 {
 	addChildControllableContainer(&paramsContainer);
 
@@ -25,8 +26,8 @@ LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	rebuildArgsFromModel();
 	provider->addColorProviderListener(this);
 
+	addChildControllableContainer(&automationsManager);
 }
-
 
 LightBlock::~LightBlock()
 {
@@ -37,11 +38,30 @@ Array<Colour> LightBlock::getColors(int id, int resolution, float time, var para
 {
 	if (params.isVoid()) params = new DynamicObject();
 	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
+	
+
+	if (params.getProperty("updateAutomation", true))
+	{
+		for (auto &a : automationsManager.items) a->automation.position->setValue(fmodf(time, a->automation.positionMax));
+	} else
+	{
+		for (auto &a : automationsManager.items)
+		{
+			if (a->parameter != nullptr && !a->parameter.wasObjectDeleted())
+			{
+				float value = a->automation.getValueForPosition(fmodf(time, a->automation.positionMax));
+				float normValue = jmap<float>(value, a->parameter->minimumValue, a->parameter->maximumValue);
+				params.getDynamicObject()->setProperty(a->parameter->shortName,normValue);
+			}
+		}
+	}
+
 	for (auto &p : paramList)
 	{
 		if (p.wasObjectDeleted() || p == nullptr) continue;
-		params.getDynamicObject()->setProperty(p->shortName, p->value);
+		if(!params.hasProperty(p->shortName)) params.getDynamicObject()->setProperty(p->shortName, p->value);
 	}
+
 	if (provider.wasObjectDeleted())
 	{
 		Array<Colour> result;
@@ -56,8 +76,10 @@ Array<Colour> LightBlock::getColors(int id, int resolution, float time, var para
 void LightBlock::rebuildArgsFromModel()
 {
 	var pData = paramsContainer.getJSONData();
-
+	var aData = automationsManager.getJSONData();
+	
 	paramsContainer.clear();
+	automationsManager.clear();
 
 	Array<WeakReference<Controllable>> params = provider->getModelParameters();
 
@@ -72,12 +94,15 @@ void LightBlock::rebuildArgsFromModel()
 			p->setControllableFeedbackOnly(sc->isControllableFeedbackOnly);
 			paramsContainer.addParameter(p);
 		}
-
 	}
 
 	paramsContainer.hideInEditor = paramsContainer.controllables.size() == 0;
 	paramsContainer.loadJSONData(pData);
+
+	automationsManager.hideInEditor = paramsContainer.hideInEditor;
+	automationsManager.loadJSONData(aData);
 }
+
 
 void LightBlock::providerParametersChanged(LightBlockColorProvider *)
 {
@@ -98,6 +123,7 @@ var LightBlock::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("params", paramsContainer.getJSONData());
+	data.getDynamicObject()->setProperty("automations", automationsManager.getJSONData());
 	return data;
 
 }
@@ -106,4 +132,5 @@ void LightBlock::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	paramsContainer.loadJSONData(data.getProperty("params", var()));
+	automationsManager.loadJSONData(data.getProperty("automations", var()));
 }

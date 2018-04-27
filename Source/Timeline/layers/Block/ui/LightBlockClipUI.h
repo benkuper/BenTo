@@ -20,6 +20,9 @@ public:
 	LightBlockClipUI(LightBlockClip * clip);
 	~LightBlockClipUI();
 
+
+	ScopedPointer<AutomationUI> automationUI;
+
 	//
 	bool imageIsReady;
 	Image previewImage;
@@ -33,6 +36,8 @@ public:
 	//void resizedInternalHeader(Rectangle<int> &r) override;
 
 	void generatePreview();
+
+	void setTargetAutomation(Automation * a);
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;

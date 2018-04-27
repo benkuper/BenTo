@@ -16,7 +16,8 @@ class LightBlock;
 class LightBlockLayer;
 
 class TimelineBlockSequence :
-	public Sequence
+	public Sequence,
+	public SequenceLayerManager::Listener
 {
 public:
 	TimelineBlockSequence();
@@ -25,6 +26,8 @@ public:
 	SequenceLayerFactory layerFactory;
 	Array<Colour> getColors(int id, int resolution, float time, var params);
 	LightBlockLayer * getLayerForID(int id);
+
+	void itemAdded(SequenceLayer * s) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 };

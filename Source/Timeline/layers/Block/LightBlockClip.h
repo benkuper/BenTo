@@ -13,7 +13,8 @@
 #include "Prop/Prop.h"
 
 class LightBlockClip :
-	public BaseItem
+	public BaseItem,
+	public ParameterAutomationManager::Listener
 {
 public:
 	LightBlockClip(float time = 0);
@@ -29,17 +30,22 @@ public:
 	FloatParameter * clipPosition;
 	FloatParameter * clipSize;
 
+
+
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 	Array<Colour> getColors(int id, int resolution, float time, var params);
 
+	
 	float getTimeForRelativePosition(float t, bool absoluteTime = true);
 
 	bool isInRange(float time);
 
-
 	void onContainerParameterChanged(Parameter * p) override;
 
-	
+	void itemAdded(ParameterAutomation * p) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	String getTypeString() const override { return "LightBlockClip"; }
 };

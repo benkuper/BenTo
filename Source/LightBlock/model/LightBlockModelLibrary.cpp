@@ -63,11 +63,11 @@ LightBlockModelLibrary::~LightBlockModelLibrary()
 void LightBlockModelLibrary::clear()
 {
 	Array<LightBlockModel *> models = getAllModels(false);
+	timelineBlocks.clear();
+	scriptBlocks.clear();
 	for (auto &m : models) m->clear();
 	pictureBlocks.clear();
 	nodeBlocks.clear();
-	scriptBlocks.clear();
-	timelineBlocks.clear();
 }
 
 var LightBlockModelLibrary::getJSONData()

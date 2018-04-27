@@ -10,7 +10,7 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{92F6D70F-0A09-76C4-DEE3-0BB3CC06C4E0}</ProjectGuid>
+    <ProjectGuid>{0B37A67D-EC0F-8E03-7CD3-108C5BE216C6}</ProjectGuid>
     <PlatformToolset>v141</PlatformToolset>
     <WindowsTargetPlatformVersion>10.0.16299.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
@@ -89,6 +89,8 @@
     <Lib/>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Audio\AudioManager.cpp"/>
     <ClCompile Include="..\..\Source\Video\ui\SpatializerPanel.cpp"/>
     <ClCompile Include="..\..\Source\Video\ui\SpatItemUI.cpp"/>
     <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
@@ -592,6 +594,42 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_utils\juce_audio_utils.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\easing\ui\EasingUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\easing\Easing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomationManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\recorder\AutomationRecorder.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationKeyUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationMultiKeyTransformer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\Automation.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\AutomationKey.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\juce_automation.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
@@ -2073,6 +2111,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\ProjectSettings.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\GapGrabber.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2325,6 +2366,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_formats.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_processors.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_utils.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_automation.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_core.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_cryptography.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_data_structures.cpp"/>
@@ -2340,6 +2382,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.h"/>
+    <ClInclude Include="..\..\Source\Audio\AudioManager.h"/>
     <ClInclude Include="..\..\Source\Video\ui\SpatializerPanel.h"/>
     <ClInclude Include="..\..\Source\Video\ui\SpatItemUI.h"/>
     <ClInclude Include="..\..\Source\Video\Spatializer.h"/>
@@ -2604,6 +2648,18 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_utils\players\juce_SoundPlayer.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\juce_audio_utils.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\easing\ui\EasingUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\easing\Easing.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomation.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomationManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\recorder\AutomationRecorder.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationEditor.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationKeyUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationMultiKeyTransformer.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\Automation.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\AutomationKey.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\juce_automation.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\containers\juce_AbstractFifo.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\containers\juce_Array.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\containers\juce_ArrayAllocationBase.h"/>
@@ -3128,6 +3184,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptTarget.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\script\ScriptUtil.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\ProjectSettings.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\GapGrabber.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\ShapeShifter.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\ShapeShifterContainer.h"/>
@@ -3226,6 +3283,7 @@
     <None Include="..\..\Resources\shader.frag"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>
+    <None Include="..\..\..\JUCE Modules\juce_automation\README.md"/>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\jpglib\changes to libjpeg for JUCE.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
     <None Include="..\..\..\JUCE Modules\juce_organicui\README.md"/>

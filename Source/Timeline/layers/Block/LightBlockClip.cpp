@@ -43,6 +43,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 	if (currentBlock != nullptr)
 	{
 		removeChildControllableContainer(currentBlock);
+		currentBlock->automationsManager.removeBaseManagerListener(this);
 		currentBlock = nullptr;
 	}
 
@@ -52,6 +53,9 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 	if (currentBlock != nullptr)
 	{
 		addChildControllableContainer(currentBlock);
+		currentBlock->automationsManager.addBaseManagerListener(this);
+		for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+
 	}
 }
 Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var params)
@@ -65,10 +69,7 @@ Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var 
 	}
 		
 	return currentBlock->getColors(id, resolution, time, params);
-
-	
 }
-
 float LightBlockClip::getTimeForRelativePosition(float t, bool absoluteTime)
 {
 	return (absoluteTime?startTime->floatValue():0) + length->floatValue()*t; //to improve with speed animation handling
@@ -85,5 +86,29 @@ void LightBlockClip::onContainerParameterChanged(Parameter * p)
 	if (p == activeProvider)
 	{
 		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
+	} else if (p == length)
+	{
+		for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+	}
+}
+
+void LightBlockClip::itemAdded(ParameterAutomation * p)
+{
+	for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+}
+
+var LightBlockClip::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("blockData", currentBlock->getJSONData());
+	return data;
+}
+
+void LightBlockClip::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	if (currentBlock != nullptr)
+	{
+		currentBlock->loadJSONData(data.getProperty("blockData", var()));
 	}
 }

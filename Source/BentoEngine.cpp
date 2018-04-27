@@ -13,6 +13,7 @@
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "Prop/PropManager.h"
 #include "Video/Spatializer.h"
+#include "Audio/AudioManager.h"
 
 BentoEngine::BentoEngine(ApplicationProperties * appProperties, const String &appVersion) :
 	Engine("BenTo",".bento", appProperties, appVersion)
@@ -21,6 +22,8 @@ BentoEngine::BentoEngine(ApplicationProperties * appProperties, const String &ap
 
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
+
+	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 }
 
 BentoEngine::~BentoEngine()
@@ -28,6 +31,7 @@ BentoEngine::~BentoEngine()
 	PropManager::deleteInstance();
 	LightBlockModelLibrary::deleteInstance();
 	Spatializer::deleteInstance();
+	AudioManager::deleteInstance();
 }
 
 void BentoEngine::clearInternal()

@@ -24,14 +24,19 @@ public:
 	WeakReference<LightBlockColorProvider> provider;
 	ControllableContainer paramsContainer;
 
+	ParameterAutomationManager automationsManager;
+
 	Array<Colour> getColors(int id, int resolution, float time, var params);
 
 	void rebuildArgsFromModel();
+
 	void providerParametersChanged(LightBlockColorProvider *) override;
 	void providerParameterValueUpdated(LightBlockColorProvider *, Parameter * p) override;
 	 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+
 
 	/*
 	class  LightBlockListener

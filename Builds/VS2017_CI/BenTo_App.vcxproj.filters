@@ -11,6 +11,12 @@
     <Filter Include="BenTo\Resources">
       <UniqueIdentifier>{8E65566C-A6CB-B998-F659-4E3386AD8621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Audio\ui">
+      <UniqueIdentifier>{4AD872E8-6802-68F1-87E8-812D61A5D46C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Audio">
+      <UniqueIdentifier>{7161E67C-75F5-C91A-6199-D7FE7B43B023}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Video\ui">
       <UniqueIdentifier>{B65A82FC-D3DB-67A3-2C87-012DE4DFF526}</UniqueIdentifier>
     </Filter>
@@ -265,6 +271,24 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_audio_utils">
       <UniqueIdentifier>{3197198B-A978-E330-C7FB-07E5CE8236C7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_automation\easing\ui">
+      <UniqueIdentifier>{2D56FBC6-D819-49DF-2B7C-97BDF5150088}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_automation\easing">
+      <UniqueIdentifier>{98EE772F-63A9-0AD0-FF24-0F2293706D27}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_automation\parameter">
+      <UniqueIdentifier>{79592DBF-A16B-FFFF-DD1F-5D50222EA483}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_automation\recorder">
+      <UniqueIdentifier>{5AD13F37-5BA2-251B-94D5-40B4B11339ED}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_automation\ui">
+      <UniqueIdentifier>{49FBE976-E26E-7D64-85F7-592A38217509}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_automation">
+      <UniqueIdentifier>{AED8BC2D-B4EE-1F1E-1E03-AA62F7FC41F7}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_core\containers">
       <UniqueIdentifier>{42F7BE9D-3C8A-AE26-289B-8F355C068036}</UniqueIdentifier>
@@ -649,6 +673,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.cpp">
+      <Filter>BenTo\Source\Audio\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Audio\AudioManager.cpp">
+      <Filter>BenTo\Source\Audio</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Video\ui\SpatializerPanel.cpp">
       <Filter>BenTo\Source\Video\ui</Filter>
     </ClCompile>
@@ -1329,6 +1359,42 @@
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_utils\juce_audio_utils.mm">
       <Filter>JUCE Modules\juce_audio_utils</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\easing\ui\EasingUI.cpp">
+      <Filter>JUCE Modules\juce_automation\easing\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\easing\Easing.cpp">
+      <Filter>JUCE Modules\juce_automation\easing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomation.cpp">
+      <Filter>JUCE Modules\juce_automation\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomationManager.cpp">
+      <Filter>JUCE Modules\juce_automation\parameter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\recorder\AutomationRecorder.cpp">
+      <Filter>JUCE Modules\juce_automation\recorder</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationEditor.cpp">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationKeyUI.cpp">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationMultiKeyTransformer.cpp">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationUI.cpp">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\Automation.cpp">
+      <Filter>JUCE Modules\juce_automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\AutomationKey.cpp">
+      <Filter>JUCE Modules\juce_automation</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_automation\juce_automation.cpp">
+      <Filter>JUCE Modules\juce_automation</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\containers\juce_AbstractFifo.cpp">
       <Filter>JUCE Modules\juce_core\containers</Filter>
@@ -2896,6 +2962,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.cpp">
       <Filter>JUCE Modules\juce_organicui\settings</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\settings\ProjectSettings.cpp">
+      <Filter>JUCE Modules\juce_organicui\settings</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\GapGrabber.cpp">
       <Filter>JUCE Modules\juce_organicui\ui\shapeshifter</Filter>
     </ClCompile>
@@ -3202,6 +3271,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_utils.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_automation.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -3243,6 +3315,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.h">
+      <Filter>BenTo\Source\Audio\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Audio\AudioManager.h">
+      <Filter>BenTo\Source\Audio</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Video\ui\SpatializerPanel.h">
       <Filter>BenTo\Source\Video\ui</Filter>
     </ClInclude>
@@ -4034,6 +4112,42 @@
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_utils\juce_audio_utils.h">
       <Filter>JUCE Modules\juce_audio_utils</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\easing\ui\EasingUI.h">
+      <Filter>JUCE Modules\juce_automation\easing\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\easing\Easing.h">
+      <Filter>JUCE Modules\juce_automation\easing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomation.h">
+      <Filter>JUCE Modules\juce_automation\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\parameter\ParameterAutomationManager.h">
+      <Filter>JUCE Modules\juce_automation\parameter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\recorder\AutomationRecorder.h">
+      <Filter>JUCE Modules\juce_automation\recorder</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationEditor.h">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationKeyUI.h">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationMultiKeyTransformer.h">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\ui\AutomationUI.h">
+      <Filter>JUCE Modules\juce_automation\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\Automation.h">
+      <Filter>JUCE Modules\juce_automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\AutomationKey.h">
+      <Filter>JUCE Modules\juce_automation</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_automation\juce_automation.h">
+      <Filter>JUCE Modules\juce_automation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\containers\juce_AbstractFifo.h">
       <Filter>JUCE Modules\juce_core\containers</Filter>
@@ -5607,6 +5721,9 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\GlobalSettings.h">
       <Filter>JUCE Modules\juce_organicui\settings</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\settings\ProjectSettings.h">
+      <Filter>JUCE Modules\juce_organicui\settings</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\shapeshifter\GapGrabber.h">
       <Filter>JUCE Modules\juce_organicui\ui\shapeshifter</Filter>
     </ClInclude>
@@ -5896,6 +6013,9 @@
     </None>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt">
       <Filter>JUCE Modules\juce_audio_formats\codecs\oggvorbis</Filter>
+    </None>
+    <None Include="..\..\..\JUCE Modules\juce_automation\README.md">
+      <Filter>JUCE Modules\juce_automation</Filter>
     </None>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\jpglib\changes to libjpeg for JUCE.txt">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>

@@ -72,7 +72,6 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 	{
 		addChildControllableContainer(currentBlock);
 		currentBlock->provider->addInspectableListener(this);
-		//currentBlock->addLightBlockListener(this);
 		startThread();
 
 	}
@@ -121,16 +120,6 @@ void Prop::inspectableDestroyed(Inspectable * i)
 {
 	if (currentBlock != nullptr && i == currentBlock->provider) setBlockFromProvider(nullptr);
 }
-
-/*
-void Prop::colorsUpdated()
-{
-	propListeners.call(&PropListener::colorsUpdated, this);
-	propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
-
-	if(!findPropMode->boolValue()) sendColorsToProp();
-}
-*/
 
 
 void Prop::sendColorsToProp(bool forceSend)

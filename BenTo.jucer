@@ -22,6 +22,17 @@
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{DD3F6708-4882-5DBB-AA47-902382837C77}" name="Audio">
+        <GROUP id="{C26FBE46-2C24-03EF-A8C4-1682E596F5DF}" name="ui">
+          <FILE id="ItufxZ" name="AudioManagerHardwareEditor.cpp" compile="1"
+                resource="0" file="Source/Audio/ui/AudioManagerHardwareEditor.cpp"/>
+          <FILE id="LV2Z1v" name="AudioManagerHardwareEditor.h" compile="0" resource="0"
+                file="Source/Audio/ui/AudioManagerHardwareEditor.h"/>
+        </GROUP>
+        <FILE id="kZmt5r" name="AudioManager.cpp" compile="1" resource="0"
+              file="Source/Audio/AudioManager.cpp"/>
+        <FILE id="jueM4T" name="AudioManager.h" compile="0" resource="0" file="Source/Audio/AudioManager.h"/>
+      </GROUP>
       <GROUP id="{238810CF-2BC3-80D9-EDBE-284C90CC6F3B}" name="Video">
         <GROUP id="{C77E37C3-605D-57B2-AF08-91914A0EE37D}" name="ui">
           <FILE id="VWrkOi" name="SpatializerPanel.cpp" compile="1" resource="0"
@@ -369,6 +380,7 @@
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_automation" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -396,6 +408,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_automation" path="../JUCE Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile">
@@ -422,6 +435,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_automation" path="../JUCE Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK">
@@ -447,6 +461,7 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_automation" path="../JUCE Modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -456,6 +471,7 @@
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_automation" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

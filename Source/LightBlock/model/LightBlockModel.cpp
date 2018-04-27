@@ -84,6 +84,7 @@ LightBlockModelUI * LightBlockModel::createUI()
 }
 void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
+	if (Engine::mainEngine->isClearing) return;
 	if (cc == paramsContainer) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
 }
 
