@@ -12,6 +12,18 @@
 
 #include "../LightBlockClip.h"
 
+class LightBlockFadeHandle :
+	public Component
+{
+public:
+	LightBlockFadeHandle(const Image &image);
+	~LightBlockFadeHandle() {}
+
+	Image img;
+
+	void paint(Graphics &g) override;
+};
+
 class LightBlockClipUI :
 	public BaseItemMinimalUI<LightBlockClip>,
 	public Thread //Threaded preview generation,
@@ -22,6 +34,9 @@ public:
 
 
 	ScopedPointer<AutomationUI> automationUI;
+
+	LightBlockFadeHandle fadeInHandle;
+	LightBlockFadeHandle fadeOutHandle;
 
 	//
 	bool imageIsReady;

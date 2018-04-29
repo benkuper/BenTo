@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LightBlockLayer.cpp
-    Created: 17 Apr 2018 5:10:36pm
-    Author:  Ben
+	LightBlockLayer.cpp
+	Created: 17 Apr 2018 5:10:36pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -13,7 +13,7 @@
 #include "ui/LightBlockLayerTimeline.h"
 
 LightBlockLayer::LightBlockLayer(Sequence * s, var) :
-	SequenceLayer(s,"Block Layer")
+	SequenceLayer(s, "Block Layer")
 {
 	defaultLayer = addBoolParameter("Default", "If checked, this layer will be the default layer when no layer has the requested prop id", false);
 	targetId = addIntParameter("Prop ID", "Target Prop ID to assign this layer to", 0, 0, INT32_MAX);
@@ -37,29 +37,27 @@ Array<Colour> LightBlockLayer::getColors(int id, int resolution, float time, var
 		return result;
 	}
 
-
 	Array<Array<Colour>> clipColors;
+
 	for (auto &c : clips)
 	{
-		clipColors.add(c->getColors(id, resolution, time-c->startTime->floatValue(),params));
+		clipColors.add(c->getColors(id, resolution, time - c->startTime->floatValue(), params));
 	}
 
 	for (int i = 0; i < resolution; i++)
 	{
-		uint8_t r = 0, g = 0, b = 0;
+		float r = 0, g = 0, b = 0;
 
 		for (int j = 0; j < clipColors.size(); j++)
 		{
 			if (i >= clipColors[j].size()) continue;
 
-			r = jmin(r + clipColors[j][i].getRed(), 255);
-			
-			g = jmin(g + clipColors[j][i].getGreen(), 255);
-
-			b = jmin(b + clipColors[j][i].getBlue(), 255);
+			r += clipColors[j][i].getFloatRed();
+			g += clipColors[j][i].getFloatGreen();
+			b += clipColors[j][i].getFloatBlue();
 		}
 
-		result.set(i, (Colour(r, g, b)));
+		result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), 1)));
 	}
 
 	return result;

@@ -37,7 +37,8 @@ public:
 
 	void setupReceiver();
 
-	Prop * getPropWithId(const String &id);
+	Prop * getPropWithHardwareId(const String &hardwareId);
+	Array<Prop *> getPropsWithId(int id);
 
 	void onContainerParameterChanged(Parameter * p) override;
 	void onContainerTriggerTriggered(Trigger * t) override;

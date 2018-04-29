@@ -620,8 +620,39 @@ static const unsigned char temp_binary_data_9[] =
 
 const char* default_btlayout = (const char*) temp_binary_data_9;
 
-//================== icon.png ==================
+//================== fadeIn.png ==================
 static const unsigned char temp_binary_data_10[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0\x10\0\0\0\x10\x08\x06\0\0\0\x1f\xf3\xff""a\0\0\0\tpHYs\0\0\0v\0\0\0v\x01N{&\x08\0\0\x05\xebiTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe:ns:meta/\" x:xm"
+"ptk=\"Adobe XMP Core 5.6-c142 79.160924, 2017/07/13-01:06:39        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://purl.org/dc/eleme"
+"nts/1.1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop CC (Windows)\" xmp:CreateDate=\"2018-"
+"04-28T14:20:15-07:00\" xmp:ModifyDate=\"2018-04-28T14:21:16-07:00\" xmp:MetadataDate=\"2018-04-28T14:21:16-07:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.iid:ace4ea6d-81c0-d"
+"f4c-ba1e-77dffe99411a\" xmpMM:DocumentID=\"adobe:docid:photoshop:f20411f4-7ec1-c341-9d00-4f72a46cbc5d\" xmpMM:OriginalDocumentID=\"xmp.did:d6a1bdaa-ae64-0047-8d44-55b81594acc9\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:instan"
+"ceID=\"xmp.iid:d6a1bdaa-ae64-0047-8d44-55b81594acc9\" stEvt:when=\"2018-04-28T14:20:15-07:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\"/> <rdf:li stEvt:action=\"saved\" stEvt:instanceID=\"xmp.iid:ace4ea6d-81c0-df4c-ba1e-77dffe99411a\" stE"
+"vt:when=\"2018-04-28T14:21:16-07:00\" stEvt:softwareAgent=\"Adobe Photoshop CC (Windows)\" stEvt:changed=\"/\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>\xd6\x04\xde\xbd\0\0\x01\x07IDAT8\x8d\xb5\x93"
+"\xc1J\xc3@\x14""E\xcf""d\x12j\x93\x96(\x05""E\xb1\xb8\xe9VP\x8c.\xfd\x06\xf1\xb3\xfc \x17.\\\x08n\xd4\x82{\x17\"\x88\x8a\x9b""DB\xa6""103.\x8c\x98\xb4\tZ\xacw\xf7.\xf7\x9dy\x0f\xde\x08k-\x7f\x91;w\xc7\xe5\xf6""1\xb0\n"
+"\x80\xe5Q\xb4N\xf0p\xb8\x8e\x95!\0""B\xbf\xb1u\xf1\xcc""8\n"
+"\xc9\x8b\xa4\x1ak\x06\x8c#\x8f\x95 \x01\xfc\xd2Q\xc4\xd9""2\xa9\x0e\xf0t\\_A\x1d]\x03\xc3\xb2~\xc5/\xf6\x19\xf4\x05\xc6\xf8\x95\x9c\xcf\xa0/Ik\x8f\x97\0\x88*\xf5\x1aI\xa7\x0b\x93\xbcy\xafY9\xbf\r\xfe\x1b\xc0\xe5%\xae;\xdd^H\x92@\xa6\xeb~ \x97P\xef!\x93"
+"t\xb1\x13,\0\xe0\xc9\x0cG\x18\x1c""apeN\xc7\xc6?\xb7}\xcb""ex\xde\x9bq\xef#\x1f""a\xe0\xeb\xc8\x84\0-\x8b""f@\x93\xf6n\x14\xb7\x07\xbb`7J\xc2\x13;W\x8a\xb3\x91\x99\x8e\xb6\xff\x85""6\x9d\x8eN\xc0n~vs7?`J\x1fq\xa6T\n"
+"\x08\n"
+"k\xdf\0\0\0\0IEND\xae""B`\x82";
+
+const char* fadeIn_png = (const char*) temp_binary_data_10;
+
+//================== fadeOut.png ==================
+static const unsigned char temp_binary_data_11[] =
+{ 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,16,0,0,0,16,8,6,0,0,0,31,243,255,97,0,0,0,4,115,66,73,84,8,8,8,8,124,8,100,136,0,0,0,9,112,72,89,115,0,0,0,111,0,0,0,111,1,241,162,220,67,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
+119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,1,5,73,68,65,84,56,141,173,147,205,74,195,64,20,70,207,100,66,210,164,132,244,7,20,69,16,4,151,1,37,224,70,232,3,20,159,199,189,47,228,178,15,32,93,105,23,130,224,202,141,40,42,46,
+76,10,38,74,67,102,92,52,66,131,163,24,210,111,119,15,195,153,251,45,174,208,90,211,38,54,211,232,4,193,78,53,191,114,124,115,222,68,32,244,52,170,175,208,113,122,196,179,57,247,163,45,180,12,151,175,202,57,187,23,207,255,19,20,178,79,32,51,250,221,20,
+240,43,154,147,100,61,226,89,241,179,130,41,195,64,162,148,191,66,124,134,129,132,177,69,238,92,1,27,21,127,48,11,126,75,234,122,56,58,90,33,155,86,35,129,33,173,5,54,47,73,157,120,65,72,154,66,86,214,121,87,118,112,253,144,183,247,245,110,176,134,10,
+77,226,234,132,66,126,162,148,3,128,180,62,204,130,82,46,16,10,190,239,68,136,37,27,76,114,6,120,127,111,96,47,20,241,109,206,245,209,33,232,237,202,240,196,193,101,110,250,75,232,201,222,25,154,253,106,124,100,124,119,218,164,149,104,123,206,95,220,
+89,78,131,148,48,64,181,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
+
+const char* fadeOut_png = (const char*) temp_binary_data_11;
+
+//================== icon.png ==================
+static const unsigned char temp_binary_data_12[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,2,0,0,0,2,0,8,6,0,0,0,244,120,212,250,0,0,0,9,112,72,89,115,0,0,11,19,0,0,11,19,1,0,154,156,24,0,0,5,194,105,84,88,116,88,77,76,58,99,111,109,46,97,100,111,98,101,46,120,109,112,0,0,0,0,0,60,63,120,112,
 97,99,107,101,116,32,98,101,103,105,110,61,34,239,187,191,34,32,105,100,61,34,87,53,77,48,77,112,67,101,104,105,72,122,114,101,83,122,78,84,99,122,107,99,57,100,34,63,62,32,60,120,58,120,109,112,109,101,116,97,32,120,109,108,110,115,58,120,61,34,97,100,
 111,98,101,58,110,115,58,109,101,116,97,47,34,32,120,58,120,109,112,116,107,61,34,65,100,111,98,101,32,88,77,80,32,67,111,114,101,32,53,46,54,45,99,49,52,50,32,55,57,46,49,54,48,57,50,52,44,32,50,48,49,55,47,48,55,47,49,51,45,48,49,58,48,54,58,51,57,
@@ -2016,10 +2047,10 @@ static const unsigned char temp_binary_data_10[] =
 6,131,193,96,48,90,32,76,0,48,24,12,6,131,209,2,97,2,128,193,96,48,24,140,22,8,19,0,12,6,131,193,96,180,64,152,0,96,48,24,12,6,163,5,194,4,0,131,193,96,48,24,45,16,38,0,24,12,6,131,193,104,129,48,1,192,96,48,24,12,70,11,132,9,0,6,131,193,96,48,90,32,
 76,0,48,24,12,6,131,209,2,97,2,128,193,96,48,24,140,22,200,255,7,227,34,62,29,16,62,194,133,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* icon_png = (const char*) temp_binary_data_10;
+const char* icon_png = (const char*) temp_binary_data_12;
 
 //================== shader.frag ==================
-static const unsigned char temp_binary_data_11[] =
+static const unsigned char temp_binary_data_13[] =
 "#version 150\r\n"
 "\r\n"
 "\r\n"
@@ -2058,7 +2089,7 @@ static const unsigned char temp_binary_data_11[] =
 "}\r\n"
 "\r\n";
 
-const char* shader_frag = (const char*) temp_binary_data_11;
+const char* shader_frag = (const char*) temp_binary_data_13;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) noexcept
@@ -2080,6 +2111,8 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes) noexc
         case 0x576fad2b:  numBytes = 1253; return timeline_png;
         case 0x4f784065:  numBytes = 6004; return video_png;
         case 0x7448d63a:  numBytes = 2467; return default_btlayout;
+        case 0x78c8c9ab:  numBytes = 1868; return fadeIn_png;
+        case 0xeac7f79c:  numBytes = 392; return fadeOut_png;
         case 0xd4093963:  numBytes = 98974; return icon_png;
         case 0x893e7e0c:  numBytes = 1012; return shader_frag;
         default: break;
@@ -2101,6 +2134,8 @@ const char* namedResourceList[] =
     "timeline_png",
     "video_png",
     "default_btlayout",
+    "fadeIn_png",
+    "fadeOut_png",
     "icon_png",
     "shader_frag"
 };
@@ -2117,6 +2152,8 @@ const char* originalFilenames[] =
     "timeline.png",
     "video.png",
     "default.btlayout",
+    "fadeIn.png",
+    "fadeOut.png",
     "icon.png",
     "shader.frag"
 };

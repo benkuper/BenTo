@@ -30,6 +30,8 @@ public:
 	FloatParameter * clipPosition;
 	FloatParameter * clipSize;
 
+	FloatParameter * fadeIn;
+	FloatParameter * fadeOut;
 
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);

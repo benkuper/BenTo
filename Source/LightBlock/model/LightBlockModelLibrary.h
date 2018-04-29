@@ -47,6 +47,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	Array<LightBlockModel *> getAllModels(bool includeUserModels = true);
+	LightBlockModel * getModelWithName(const String &modelName);
 
 	static LightBlockColorProvider * showProvidersAndGet();
 	static LightBlockColorProvider * showAllModelsAndGet(bool includePresets);

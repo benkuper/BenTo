@@ -50,12 +50,12 @@ Array<Colour> ScriptBlock::getColors(int id, int resolution, float time, var par
 
 void ScriptBlock::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if (cc == &script) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
+	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
 }
 
 void ScriptBlock::childStructureChanged(ControllableContainer * cc)
 {
-	if (cc == &script) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }
 
 var ScriptBlock::getJSONData()
@@ -80,6 +80,8 @@ void ScriptBlock::newMessage(const Script::ScriptEvent & e)
 	case Script::ScriptEvent::STATE_CHANGE:
 		setCustomThumbnail(script.filePath->getFile().withFileExtension("png").getFullPathName());
 		setNiceName(script.niceName);
+
+		if(script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 		break;
 	}
 }

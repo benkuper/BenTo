@@ -29,6 +29,10 @@ LightBlockClip::LightBlockClip(float _time) :
 
 	clipPosition = addFloatParameter("Position", "Clip position", .5f, 0, 1);
 	clipSize = addFloatParameter("Size", "Clip size", .5f, 0, 1);
+
+
+	fadeIn = addFloatParameter("Fade In", "Fade in time", 0, 0, length->floatValue());
+	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, length->floatValue());
 }
 
 LightBlockClip::~LightBlockClip()
@@ -68,7 +72,17 @@ Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var 
 		return result;
 	}
 		
-	return currentBlock->getColors(id, resolution, time, params);
+	
+	float factor = 1;
+	if (fadeIn->floatValue() > 0) factor *= jmin(time / fadeIn->floatValue(),1.f);
+	if (fadeOut->floatValue() > 0) factor *= jmin((length->floatValue() - time) / fadeOut->floatValue(), 1.f);
+
+	Array<Colour> colors = currentBlock->getColors(id, resolution, time, params);
+	for (int i = 0; i < resolution; i++)
+	{
+		colors.set(i,colors[i].withMultipliedBrightness(factor));
+	}
+	return colors;
 }
 float LightBlockClip::getTimeForRelativePosition(float t, bool absoluteTime)
 {
@@ -88,7 +102,13 @@ void LightBlockClip::onContainerParameterChanged(Parameter * p)
 		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
 	} else if (p == length)
 	{
-		for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+		fadeIn->setRange(0, length->floatValue());
+		fadeOut->setRange(0, length->floatValue());
+
+;		if (currentBlock != nullptr)
+		{
+			for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+		}
 	}
 }
 
@@ -111,4 +131,5 @@ void LightBlockClip::loadJSONDataInternal(var data)
 	{
 		currentBlock->loadJSONData(data.getProperty("blockData", var()));
 	}
+
 }

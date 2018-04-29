@@ -6002,6 +6002,12 @@
     <None Include="..\..\Resources\default.btlayout">
       <Filter>BenTo\Resources</Filter>
     </None>
+    <None Include="..\..\Resources\fadeIn.png">
+      <Filter>BenTo\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\fadeOut.png">
+      <Filter>BenTo\Resources</Filter>
+    </None>
     <None Include="..\..\Resources\icon.png">
       <Filter>BenTo\Resources</Filter>
     </None>

@@ -13,6 +13,7 @@
 LightBlockClipManager::LightBlockClipManager() :
 	BaseManager("Blocks")
 {
+	itemDataType = "LightBlockClip";
 }
 
 LightBlockClipManager::~LightBlockClipManager()

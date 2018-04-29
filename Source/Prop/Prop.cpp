@@ -45,6 +45,7 @@ void Prop::clearItem()
 {
 	colors.fill(Colours::black);
 	sendColorsToProp();
+	setBlockFromProvider(nullptr);
 }
 
 void Prop::setBlockFromProvider(LightBlockColorProvider * model)

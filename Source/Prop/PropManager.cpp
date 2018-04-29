@@ -82,10 +82,19 @@ void PropManager::setupReceiver()
 	NLOG(niceName, s);
 }
 
-Prop * PropManager::getPropWithId(const String &pid)
+Prop * PropManager::getPropWithHardwareId(const String &hardwareId)
 {
-	for (auto & p : items) if (p->propId == pid) return p;
+	for (auto & p : items) if (p->propId == hardwareId) return p;
 	return nullptr;
+}
+
+Array<Prop *> PropManager::getPropsWithId(int id)
+{
+	if (id == -1) return Array<Prop *>(items.getRawDataPointer(), items.size());
+
+	Array<Prop *> result;
+	for (auto & p : items) if (p->id->intValue() == id) return p;
+	return result;
 }
 
 void PropManager::onContainerParameterChanged(Parameter * p)
@@ -122,7 +131,7 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		String pHost = String(m[0].getString());
 		String pid = String(m[1].getInt32());
 
-		Prop * p = getPropWithId(pid);
+		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr)
 		{
 			FlowClubProp * fp = static_cast<FlowClubProp *>(managerFactory->create("FlowClub"));
@@ -142,13 +151,13 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 	} else if(address == "/battery/level")
 	{
 		String pid = String(m[0].getInt32());
-		Prop * p = getPropWithId(pid);
+		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr) return;
 		p->battery->setValue(m[1].getFloat32());
 	} else if (address == "/touch/pressed")
 	{
 		String pid = String(m[0].getInt32());
-		FlowClubProp * fp = static_cast<FlowClubProp *>(getPropWithId(pid));
+		FlowClubProp * fp = static_cast<FlowClubProp *>(getPropWithHardwareId(pid));
 		if (fp == nullptr) return;
 		fp->button->setValue(m[1].getInt32() == 1);
 	} else

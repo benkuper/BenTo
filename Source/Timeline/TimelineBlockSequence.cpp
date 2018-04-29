@@ -30,34 +30,58 @@ TimelineBlockSequence::~TimelineBlockSequence()
 
 Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, float /*time*/, var params)
 {
-	LightBlockLayer * l = getLayerForID(id);
+	Array<LightBlockLayer *> layers = getLayersForID(id);
 
-	if (l == nullptr)
+	int numLayers = layers.size();
+
+	if(numLayers == 1) return layers[0]->getColors(id, resolution, currentTime->floatValue(), params); //use sequence's time instead of prop time
+
+	Array<Colour> result;
+	result.resize(resolution);
+	result.fill(Colours::black);
+
+	if (numLayers == 0) return result;
+
+	Array<Array<Colour>> colors;
+	for (auto &l : layers)
 	{
-		Array<Colour> result;
-		result.resize(resolution);
-		result.fill(Colours::black);
-		return result;
+		String s = l->niceName;
+		colors.add(l->getColors(id, resolution, currentTime->floatValue(), params)); //use sequence's time instead of prop time
 	}
 
-	return l->getColors(id, resolution, currentTime->floatValue(), params); //use sequence's time instead of prop time
+	for (int i = 0; i < resolution; i++)
+	{
+		float r = 0, g = 0, b = 0;
+		for (int j = 0; j < numLayers; j++)
+		{
+			r += colors[j][i].getFloatRed();
+			g += colors[j][i].getFloatGreen();
+			b += colors[j][i].getFloatBlue();
+		}
+
+		result.set(i, Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f),1));
+	}
+
+	return result;
+
 }
 
-LightBlockLayer * TimelineBlockSequence::getLayerForID(int id)
+Array<LightBlockLayer *> TimelineBlockSequence::getLayersForID(int id)
 {
 	if (layerManager == nullptr) return nullptr; 
 	
-	LightBlockLayer * defaultLayer = nullptr;
+	Array<LightBlockLayer *> defaultLayers;
+	Array<LightBlockLayer *> result;
 	
 	for (auto &i : layerManager->items)
 	{
 		LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(i);
 		if (l == nullptr) continue;
-		if (l->targetId->intValue() == id) return l;
-		if (l->defaultLayer->boolValue()) defaultLayer = l;
+		if (l->targetId->intValue() == id) result.add(l);
+		if (l->defaultLayer->boolValue()) defaultLayers.add(l);
 	}
 
-	return defaultLayer;
+	return result.size() > 0 ? result : defaultLayers;
 }
 
 void TimelineBlockSequence::itemAdded(SequenceLayer * s)
@@ -82,17 +106,4 @@ void TimelineBlockSequence::onControllableFeedbackUpdateInternal(ControllableCon
 {
 	Sequence::onControllableFeedbackUpdateInternal(cc, c);
 
-	LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(c->parentContainer);
-	if (l != nullptr)
-	{
-		if (c == l->defaultLayer && l->defaultLayer->boolValue())
-		{
-			for (auto &i : layerManager->items)
-			{
-				if (i == l) continue; 
-				LightBlockLayer * il = dynamic_cast<LightBlockLayer *>(i);
-				if(il != nullptr) il->defaultLayer->setValue(false);
-			}
-		}
-	}
 }

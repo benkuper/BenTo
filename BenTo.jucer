@@ -18,6 +18,8 @@
       </GROUP>
       <FILE id="jaq4JI" name="default.btlayout" compile="0" resource="1"
             file="Resources/default.btlayout"/>
+      <FILE id="HceyjT" name="fadeIn.png" compile="0" resource="1" file="Resources/fadeIn.png"/>
+      <FILE id="vNhvMo" name="fadeOut.png" compile="0" resource="1" file="Resources/fadeOut.png"/>
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
@@ -358,8 +360,8 @@
   <EXPORTFORMATS>
     <VS2017 targetFolder="Builds/VisualStudio2017" smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/Release"/>
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/Debug" headerPath="../../External/asio"/>
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/Release" headerPath="../../External/asio"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
@@ -440,7 +442,7 @@
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI"/>
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="../JUCE/modules"/>
@@ -486,5 +488,5 @@
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
-  <JUCEOPTIONS/>
+  <JUCEOPTIONS JUCE_ASIO="1"/>
 </JUCERPROJECT>

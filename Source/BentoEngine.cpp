@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    BentoEngine.cpp
-    Created: 10 Apr 2018 5:14:40pm
-    Author:  Ben
+	BentoEngine.cpp
+	Created: 10 Apr 2018 5:14:40pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -16,7 +16,7 @@
 #include "Audio/AudioManager.h"
 
 BentoEngine::BentoEngine(ApplicationProperties * appProperties, const String &appVersion) :
-	Engine("BenTo",".bento", appProperties, appVersion)
+	Engine("BenTo", ".bento", appProperties, appVersion)
 {
 	Engine::mainEngine = this;
 
@@ -24,6 +24,9 @@ BentoEngine::BentoEngine(ApplicationProperties * appProperties, const String &ap
 	addChildControllableContainer(PropManager::getInstance());
 
 	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
+
+
+	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
 }
 
 BentoEngine::~BentoEngine()
@@ -40,6 +43,57 @@ void BentoEngine::clearInternal()
 	PropManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
 }
+
+
+void BentoEngine::processMessage(const OSCMessage & m)
+{
+	StringArray aList;
+	aList.addTokens(m.getAddressPattern().toString(), "/", "\"");
+
+	if (aList.size() < 2) return;
+
+	if (aList[1] == "model")
+	{
+		String modelName = OSCHelpers::getStringArg(m[0]);
+		LightBlockModel * lm = LightBlockModelLibrary::getInstance()->getModelWithName(modelName);
+
+		if (lm != nullptr)
+		{
+			if (aList[2] == "assign")
+			{
+				if (m.size() >= 2)
+				{
+					int id = OSCHelpers::getIntArg(m[1]);
+
+					LightBlockModelPreset * mp = nullptr;
+					if (m.size() >= 3)
+					{
+						String presetName = OSCHelpers::getStringArg(m[2]);
+						mp = lm->presetManager.getItemWithName(presetName);
+					}
+
+					LightBlockColorProvider * providerToAssign = mp != nullptr ? mp : (LightBlockColorProvider *)lm;
+					Array<Prop *> propsToAssign = PropManager::getInstance()->getPropsWithId(id);
+					for (auto &p : propsToAssign) p->activeProvider->setValueFromTarget(providerToAssign);
+				}
+
+
+			}
+		}
+
+	} else if (aList[1] == "prop")
+	{
+		int id = OSCHelpers::getIntArg(m[0]);
+		Array<Prop *> props = PropManager::getInstance()->getPropsWithId(id);
+
+		if (aList[2] == "enable")
+		{
+			bool active = OSCHelpers::getIntArg(m[1]) > 0;
+			for (auto & p : props) p->enabled->setValue(active);
+		}
+	}
+}
+
 
 var BentoEngine::getJSONData()
 {

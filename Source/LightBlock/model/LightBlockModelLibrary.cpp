@@ -19,7 +19,7 @@ juce_ImplementSingleton(LightBlockModelLibrary)
 
 
 LightBlockModelLibrary::LightBlockModelLibrary() :
-	ControllableContainer("Block Library"),
+	ControllableContainer("Library"),
 	genericBlocks("Generic"),
 	liveFeedBlocks("Live Feed"),
 	pictureBlocks("Pictures", UserLightBlockModelManager::PICTURE),
@@ -129,6 +129,13 @@ Array<LightBlockModel*> LightBlockModelLibrary::getAllModels(bool includeUserMod
 	}
 
 	return result;
+}
+
+LightBlockModel * LightBlockModelLibrary::getModelWithName(const String & modelName)
+{
+	Array<LightBlockModel *> models = getAllModels();
+	for (auto &m : models) if (m->shortName == modelName) return m;
+	return nullptr;
 }
 
 LightBlockColorProvider * LightBlockModelLibrary::showProvidersAndGet()

@@ -20,7 +20,7 @@ PropViz::PropViz(Prop * prop) :
 
 PropViz::~PropViz()
 {
-	prop->removeAsyncPropListener(this);
+	if(!propRef.wasObjectDeleted()) prop->removeAsyncPropListener(this);
 }
 
 void PropViz::paint(Graphics & g)

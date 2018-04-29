@@ -24,6 +24,8 @@ public:
 	WeakReference<LightBlockColorProvider> provider;
 	ControllableContainer paramsContainer;
 
+	var paramsLoadData;
+
 	ParameterAutomationManager automationsManager;
 
 	Array<Colour> getColors(int id, int resolution, float time, var params);

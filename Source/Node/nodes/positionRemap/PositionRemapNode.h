@@ -19,6 +19,9 @@ public:
 	PositionRemapNode(var params = var());
 	~PositionRemapNode();
 
+	enum RemapMode { RESIZE, CROP };
+
+	EnumParameter * mode;
 	Parameter * position;
 	Parameter * size;
 

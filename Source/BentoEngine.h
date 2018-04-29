@@ -13,7 +13,8 @@
 #include "JuceHeader.h"
 
 class BentoEngine : 
-	public Engine
+	public Engine,
+	public OSCRemoteControl::RemoteControlListener
 {
 public:
 	BentoEngine(ApplicationProperties * appProperties, const String &appVersion);
@@ -21,8 +22,9 @@ public:
 
 	void clearInternal() override;
 
+	void processMessage(const OSCMessage &m) override;
+
 	var getJSONData() override;
 	void loadJSONDataInternalEngine(var data, ProgressTask * loadingTask) override;
-
 
 };
