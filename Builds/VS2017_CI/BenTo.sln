@@ -1,15 +1,15 @@
 Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2017
 
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BenTo - App", "BenTo_App.vcxproj", "{47DA7246-226F-04F5-3E57-AD0C274C79B4}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "BenTo - App", "BenTo_App.vcxproj", "{479457AA-5E59-6804-9044-CF4978FEDFBA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Release|x64 = Release|x64
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{47DA7246-226F-04F5-3E57-AD0C274C79B4}.Release|x64.ActiveCfg = Release|x64
-		{47DA7246-226F-04F5-3E57-AD0C274C79B4}.Release|x64.Build.0 = Release|x64
+		{479457AA-5E59-6804-9044-CF4978FEDFBA}.Release|x64.ActiveCfg = Release|x64
+		{479457AA-5E59-6804-9044-CF4978FEDFBA}.Release|x64.Build.0 = Release|x64
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
