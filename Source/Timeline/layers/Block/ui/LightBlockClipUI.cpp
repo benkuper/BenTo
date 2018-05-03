@@ -9,6 +9,7 @@
 */
 
 #include "LightBlockClipUI.h"
+#include "../LightBlockLayer.h"
 
 LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	BaseItemMinimalUI(_clip),
@@ -201,14 +202,16 @@ void LightBlockClipUI::run()
 
 	var params = new DynamicObject();
 	params.getDynamicObject()->setProperty("updateAutomation", false);
-
+	
+	int id = item->layer->targetId->intValue();
 	for (int i = 0; i < resX; i++)
 	{
 		if (threadShouldExit()) return;
 
 		float relT = i * 1.0f / resX;
 		float t = item->getTimeForRelativePosition(relT, false);
-		Array<Colour> c = item->getColors(0, resY, t, params);
+		
+		Array<Colour> c = item->getColors(id, resY, t, params);
 		for (int ty = 0; ty < resY; ty++) previewImage.setPixelAt(i,ty, c[ty]);
 	}
 

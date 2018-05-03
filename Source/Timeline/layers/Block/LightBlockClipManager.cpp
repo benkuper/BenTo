@@ -10,19 +10,26 @@
 
 #include "LightBlockClipManager.h"
 
-LightBlockClipManager::LightBlockClipManager() :
-	BaseManager("Blocks")
+LightBlockClipManager::LightBlockClipManager(LightBlockLayer * layer) :
+	BaseManager("Blocks"),
+	layer(layer)
 {
 	itemDataType = "LightBlockClip";
 }
+
 
 LightBlockClipManager::~LightBlockClipManager()
 {
 }
 
+LightBlockClip * LightBlockClipManager::createItem()
+{
+	return new LightBlockClip(layer);
+}
+
 LightBlockClip * LightBlockClipManager::addClipAt(float time)
 {
-	LightBlockClip * t = new LightBlockClip(time);
+	LightBlockClip * t = new LightBlockClip(layer, time);
 	BaseManager::addItem(t);
 	return t;
 }

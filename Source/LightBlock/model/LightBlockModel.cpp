@@ -63,11 +63,11 @@ void LightBlockModel::setCustomThumbnail(String path)
 
 var LightBlockModel::getJSONData()
 {
-	var data = BaseItem::getJSONData();
+	var data = LightBlockColorProvider::getJSONData();
 	if (paramsContainer != nullptr)
 	{
 		var cData = paramsContainer->getJSONData();
-		if (cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("parameters", cData);
+		if (cData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("modelParams", cData);
 	}
 	if (presetManager.items.size() > 0) data.getDynamicObject()->setProperty("presets", presetManager.getJSONData());
 	return data;
@@ -75,7 +75,8 @@ var LightBlockModel::getJSONData()
 
 void LightBlockModel::loadJSONDataInternal(var data)
 {
-	if (paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("parameters", var()));
+	LightBlockColorProvider::loadJSONDataInternal(data);
+	if (paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("modelParams", var()));
 	presetManager.loadJSONData(data.getProperty("presets", var()));
 }
 LightBlockModelUI * LightBlockModel::createUI()

@@ -29,6 +29,8 @@ public:
 
 	LightBlockModelUI * createUI() override;
 
+	var getJSONData() override;
+
 	String getTypeString() const override { return "Picture"; }
 
 	static PictureBlock * create(var params) { return new PictureBlock(params); }

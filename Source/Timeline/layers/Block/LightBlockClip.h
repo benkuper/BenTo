@@ -12,14 +12,17 @@
 
 #include "Prop/Prop.h"
 
+class LightBlockLayer;
+
 class LightBlockClip :
 	public BaseItem,
 	public ParameterAutomationManager::Listener
 {
 public:
-	LightBlockClip(float time = 0);
+	LightBlockClip(LightBlockLayer * layer = nullptr, float time = 0);
 	~LightBlockClip();
 
+	LightBlockLayer * layer;
 	ScopedPointer<LightBlock> currentBlock;
 	
 	TargetParameter * activeProvider;

@@ -10,9 +10,11 @@
 
 #include "LightBlockClip.h"
 #include "LightBlock/model/LightBlockModelLibrary.h"
+#include "LightBlock/model/blocks/timeline/TimelineBlock.h"
 
-LightBlockClip::LightBlockClip(float _time) :
-	BaseItem("LightBlockClip")
+LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
+	BaseItem("LightBlockClip"),
+	layer(layer)
 {
 	itemDataType = "LightBlockClip";
 
@@ -76,6 +78,12 @@ Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var 
 	float factor = 1;
 	if (fadeIn->floatValue() > 0) factor *= jmin(time / fadeIn->floatValue(),1.f);
 	if (fadeOut->floatValue() > 0) factor *= jmin((length->floatValue() - time) / fadeOut->floatValue(), 1.f);
+
+
+	if (dynamic_cast<TimelineBlock *>(currentBlock->provider.get()) != nullptr)
+	{
+		params.getDynamicObject()->setProperty("sequenceTime", false);
+	}
 
 	Array<Colour> colors = currentBlock->getColors(id, resolution, time, params);
 	for (int i = 0; i < resolution; i++)

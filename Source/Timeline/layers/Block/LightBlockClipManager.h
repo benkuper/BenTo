@@ -12,13 +12,18 @@
 
 #include "LightBlockClip.h"
 
+class LightBlockLayer;
+
 class LightBlockClipManager :
 	public BaseManager<LightBlockClip>
 {
 public:
-	LightBlockClipManager();
+	LightBlockClipManager(LightBlockLayer * layer);
 	~LightBlockClipManager();
 
+	LightBlockLayer * layer;
+
+	LightBlockClip * createItem() override;
 
 	LightBlockClip * addClipAt(float time);
 	Array<LightBlockClip *> getClipsAtTime(float time);

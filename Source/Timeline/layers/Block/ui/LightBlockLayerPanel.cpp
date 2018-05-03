@@ -15,12 +15,16 @@ LightBlockLayerPanel::LightBlockLayerPanel(LightBlockLayer * layer) :
 	blockLayer(layer)
 {
 	defaultLayerUI = blockLayer->defaultLayer->createToggle();
+	globalLayerUI = blockLayer->globalLayer->createToggle();
+
 	targetIdUI = blockLayer->targetId->createStepper();
 	defaultLayerUI->showLabel = true;
 	targetIdUI->showLabel = true;
 
 	addAndMakeVisible(defaultLayerUI);
 	addAndMakeVisible(targetIdUI);
+	addAndMakeVisible(globalLayerUI);
+	minContentHeight = 80;
 }
 
 LightBlockLayerPanel::~LightBlockLayerPanel()
@@ -29,6 +33,10 @@ LightBlockLayerPanel::~LightBlockLayerPanel()
 
 void LightBlockLayerPanel::resizedInternalContent(Rectangle<int>& r)
 {
-	defaultLayerUI->setBounds(r.removeFromTop(20));
+	Rectangle<int> br = r.removeFromTop(16);
+	defaultLayerUI->setBounds(br.removeFromRight(60));
+	globalLayerUI->setBounds(br.removeFromLeft(60));
+	r.removeFromTop(2);
+
 	targetIdUI->setBounds(r.removeFromTop(20));
 }

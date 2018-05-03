@@ -13,9 +13,11 @@
 #include "ui/LightBlockLayerTimeline.h"
 
 LightBlockLayer::LightBlockLayer(Sequence * s, var) :
-	SequenceLayer(s, "Block Layer")
+	SequenceLayer(s, "Block Layer"),
+	blockClipManager(this)
 {
 	defaultLayer = addBoolParameter("Default", "If checked, this layer will be the default layer when no layer has the requested prop id", false);
+	globalLayer = addBoolParameter("Global", "If checked, this layer will always be used in addition to other potential layers", false);
 	targetId = addIntParameter("Prop ID", "Target Prop ID to assign this layer to", 0, 0, INT32_MAX);
 }
 
@@ -26,7 +28,7 @@ LightBlockLayer::~LightBlockLayer()
 
 Array<Colour> LightBlockLayer::getColors(int id, int resolution, float time, var params)
 {
-	Array<LightBlockClip *> clips = blockClipManager.getClipsAtTime(sequence->currentTime->floatValue());
+	Array<LightBlockClip *> clips = blockClipManager.getClipsAtTime(time);
 
 	Array<Colour> result;
 	result.resize(resolution);

@@ -20,6 +20,7 @@ public:
 	~LightBlockLayerPanel();
 
 	ScopedPointer<BoolToggleUI> defaultLayerUI;
+	ScopedPointer<BoolToggleUI> globalLayerUI;
 	ScopedPointer<IntStepperUI> targetIdUI;
 	
 	LightBlockLayer * blockLayer;

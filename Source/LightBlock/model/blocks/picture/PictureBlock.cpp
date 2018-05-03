@@ -59,3 +59,8 @@ LightBlockModelUI * PictureBlock::createUI()
 {
 	return new PictureBlockUI(this);
 }
+
+var PictureBlock::getJSONData()
+{
+	return LightBlockModel::getJSONData();
+}

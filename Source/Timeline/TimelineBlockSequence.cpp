@@ -28,13 +28,14 @@ TimelineBlockSequence::~TimelineBlockSequence()
 {
 }
 
-Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, float /*time*/, var params)
+Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, float time, var params)
 {
 	Array<LightBlockLayer *> layers = getLayersForID(id);
 
 	int numLayers = layers.size();
 
-	if(numLayers == 1) return layers[0]->getColors(id, resolution, currentTime->floatValue(), params); //use sequence's time instead of prop time
+	float t = params.getProperty("sequenceTime", true) ? currentTime->floatValue() : time;
+	if(numLayers == 1) return layers[0]->getColors(id, resolution, t, params); //use sequence's time instead of prop time
 
 	Array<Colour> result;
 	result.resize(resolution);
@@ -46,7 +47,7 @@ Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, float /*t
 	for (auto &l : layers)
 	{
 		String s = l->niceName;
-		colors.add(l->getColors(id, resolution, currentTime->floatValue(), params)); //use sequence's time instead of prop time
+		colors.add(l->getColors(id, resolution, t, params)); //use sequence's time instead of prop time
 	}
 
 	for (int i = 0; i < resolution; i++)
@@ -70,6 +71,7 @@ Array<LightBlockLayer *> TimelineBlockSequence::getLayersForID(int id)
 {
 	if (layerManager == nullptr) return nullptr; 
 	
+
 	Array<LightBlockLayer *> defaultLayers;
 	Array<LightBlockLayer *> result;
 	
@@ -77,7 +79,7 @@ Array<LightBlockLayer *> TimelineBlockSequence::getLayersForID(int id)
 	{
 		LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(i);
 		if (l == nullptr) continue;
-		if (l->targetId->intValue() == id) result.add(l);
+		if (l->targetId->intValue() == id || l->globalLayer->boolValue()) result.add(l);
 		if (l->defaultLayer->boolValue()) defaultLayers.add(l);
 	}
 
