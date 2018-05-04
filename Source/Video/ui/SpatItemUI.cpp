@@ -14,9 +14,9 @@
 SpatItemUI::SpatItemUI(SpatItem * i, SpatializerPanel * panel) :
 	BaseItemMinimalUI(i),
 	panel(panel),
+    lockBounds(false),
 	startHandle(true),
-	endHandle(false),
-	lockBounds(false)
+	endHandle(false)
 {
 	addAndMakeVisible(&startHandle);
 	addAndMakeVisible(&endHandle);

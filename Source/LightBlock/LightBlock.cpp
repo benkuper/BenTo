@@ -17,8 +17,8 @@ LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	BaseItem(provider->niceName),
 	provider(provider),
 	paramsContainer("Parameters"),
-	automationsManager(&paramsContainer),
-	paramsLoadData(var())
+	paramsLoadData(var()),
+    automationsManager(&paramsContainer)
 {
 	addChildControllableContainer(&paramsContainer);
 
