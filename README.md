@@ -7,11 +7,11 @@ Releases are on the release page.
 
 You can find the bleeding edge version, compiled against latest commits here :
 
-- Linux (x64):  http://benjamin.kuperberg.fr/bento/download/BenTo-linux-x64-bleedingedge.zip
+- Linux (x64):  http://benjamin.kuperberg.fr/download/bento/BenTo-linux-x64-bleedingedge.zip
 
-- MacOS :  http://benjamin.kuperberg.fr/bento/download/BenTo-osx-bleedingedge.zip
+- MacOS :  http://benjamin.kuperberg.fr/download/bento/BenTo-osx-bleedingedge.zip
  
-- Windows (x64):  http://benjamin.kuperberg.fr/bento/download/BenTo-win-x64-bleedingedge.zip
+- Windows (x64):  http://benjamin.kuperberg.fr/download/bento/BenTo-win-x64-bleedingedge.zip
 
 ## The Badge Zone
 
