@@ -14,9 +14,9 @@
 LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	BaseItemMinimalUI(_clip),
 	Thread(_clip->niceName + "_preview"),
-	imageIsReady(false),
 	fadeInHandle(ImageCache::getFromMemory(BinaryData::fadeIn_png, BinaryData::fadeIn_pngSize)),
-	fadeOutHandle(ImageCache::getFromMemory(BinaryData::fadeOut_png, BinaryData::fadeOut_pngSize))
+	fadeOutHandle(ImageCache::getFromMemory(BinaryData::fadeOut_png, BinaryData::fadeOut_pngSize)),
+    imageIsReady(false)
 {
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
 	generatePreview();

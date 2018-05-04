@@ -36,7 +36,7 @@ namespace BinaryData
     const int            video_pngSize = 6004;
 
     extern const char*   default_btlayout;
-    const int            default_btlayoutSize = 2467;
+    const int            default_btlayoutSize = 2367;
 
     extern const char*   fadeIn_png;
     const int            fadeIn_pngSize = 1868;
@@ -48,7 +48,7 @@ namespace BinaryData
     const int            icon_pngSize = 98974;
 
     extern const char*   shader_frag;
-    const int            shader_fragSize = 1012;
+    const int            shader_fragSize = 975;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 14;
@@ -61,9 +61,9 @@ namespace BinaryData
 
     // If you provide the name of one of the binary resource variables above, this function will
     // return the corresponding data and its size (or a null pointer if the name isn't found).
-    const char* getNamedResource (const char* resourceNameUTF8, int& dataSizeInBytes) noexcept;
+    const char* getNamedResource (const char* resourceNameUTF8, int& dataSizeInBytes);
 
     // If you provide the name of one of the binary resource variables above, this function will
     // return the corresponding original, non-mangled filename (or a null pointer if the name isn't found).
-    const char* getNamedResourceOriginalFilename (const char* resourceNameUTF8) noexcept;
+    const char* getNamedResourceOriginalFilename (const char* resourceNameUTF8);
 }
