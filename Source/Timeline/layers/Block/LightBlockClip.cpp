@@ -60,7 +60,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 	{
 		addChildControllableContainer(currentBlock);
 		currentBlock->automationsManager.addBaseManagerListener(this);
-		for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+		for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
 
 	}
 }
@@ -115,14 +115,14 @@ void LightBlockClip::onContainerParameterChanged(Parameter * p)
 
 ;		if (currentBlock != nullptr)
 		{
-			for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+			for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
 		}
 	}
 }
 
 void LightBlockClip::itemAdded(ParameterAutomation * p)
 {
-	for (auto & a : currentBlock->automationsManager.items) a->automation.setPositionMax(length->floatValue());
+	for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
 }
 
 var LightBlockClip::getJSONData()

@@ -43,14 +43,14 @@ Array<Colour> LightBlock::getColors(int id, int resolution, float time, var para
 
 	if (localParams.getProperty("updateAutomation", true))
 	{
-		for (auto &a : automationsManager.items) a->automation.position->setValue(fmodf(time, a->automation.positionMax));
+		for (auto &a : automationsManager.items) a->automation.position->setValue(fmodf(time, a->automation.length->floatValue()));
 	} else
 	{
 		for (auto &a : automationsManager.items)
 		{
 			if (a->parameter != nullptr && !a->parameter.wasObjectDeleted())
 			{
-				float value = a->automation.getValueForPosition(fmodf(time, a->automation.positionMax));
+				float value = a->automation.getValueForPosition(fmodf(time, a->automation.length->floatValue()));
 				float normValue = jmap<float>(value, a->parameter->minimumValue, a->parameter->maximumValue);
 				localParams.getDynamicObject()->setProperty(a->parameter->shortName,normValue);
 			}

@@ -104,7 +104,6 @@
 		8FB41920036A869538807BB0 = {isa = PBXBuildFile; fileRef = BFB48EC24C48066BB0905BC2; };
 		F57FA00F5C7C2ECAC574766D = {isa = PBXBuildFile; fileRef = A0581BEF4C53A1EAE08C8473; };
 		07D0C950B345B1981E2BC91B = {isa = PBXBuildFile; fileRef = FE1830C650A587C48B922820; };
-		81CD3D14A9599C4DA5777BDA = {isa = PBXBuildFile; fileRef = 39B10DD24A767A176E2A75CC; };
 		6942FA9E2449FCE382D8443E = {isa = PBXBuildFile; fileRef = B10CB38310C17F95146B503D; };
 		A81C739C51DD974904D97093 = {isa = PBXBuildFile; fileRef = AC6DA19FDA0FEE0FD5884F54; };
 		740A3202EB5DBDE7176FE433 = {isa = PBXBuildFile; fileRef = FC8419BA2850E3E9B353A698; };
@@ -166,7 +165,6 @@
 		354537732913E1FE7C19CD65 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionManager.cpp; path = ../../Source/Node/NodeConnectionManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		364CB31C87000456A9F0353F = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		36884BA6DA44D7CC20AF6EA2 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeManagerUI.cpp; path = ../../Source/Node/ui/NodeManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
-		39B10DD24A767A176E2A75CC = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = "include_juce_automation.cpp"; path = "../../JuceLibraryCode/include_juce_automation.cpp"; sourceTree = "SOURCE_ROOT"; };
 		3C1C74A4E168E2E3DAF9F651 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelUI.h; sourceTree = "SOURCE_ROOT"; };
 		3EA271EE23512DABADB0DB9A = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = "SOURCE_ROOT"; };
 		4297491F00482662E47F3924 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatternBlock.cpp; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -291,7 +289,6 @@
 		C20D8FCD90A6A45455B39A92 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropManagerUI.cpp; path = ../../Source/Prop/ui/PropManagerUI.cpp; sourceTree = "SOURCE_ROOT"; };
 		C234266775E1DCF799735A03 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlock.cpp; path = ../../Source/LightBlock/LightBlock.cpp; sourceTree = "SOURCE_ROOT"; };
 		C2E9C68D6DF75AEA95AE0012 = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AppConfig.h; path = ../../JuceLibraryCode/AppConfig.h; sourceTree = "SOURCE_ROOT"; };
-		C829AFD7E9E2778E23D99674 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_automation"; path = "../../../JUCE Modules/juce_automation"; sourceTree = "SOURCE_ROOT"; };
 		CA388DF22F9535539B26931B = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayerPanel.h; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h; sourceTree = "SOURCE_ROOT"; };
 		CDF46B099D8A37106496ED1F = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_gui_basics"; path = "~/JUCE/modules/juce_gui_basics"; sourceTree = "<absolute>"; };
 		CEB1B439924B457073ECFF09 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = "include_juce_audio_basics.mm"; path = "../../JuceLibraryCode/include_juce_audio_basics.mm"; sourceTree = "SOURCE_ROOT"; };
@@ -607,7 +604,6 @@
 					924D010AD8CF0957616DA5CE,
 					D1F2D02962D67BDCC3794AC9,
 					1D4AA69AF5D85664B16FDD2E,
-					C829AFD7E9E2778E23D99674,
 					B6FD2BD38DEF96A388D2A4B4,
 					5AF8B0ECD51F4F2BD8AE0123,
 					49B00E97E22F53E7FC525B3F,
@@ -630,7 +626,6 @@
 					BFB48EC24C48066BB0905BC2,
 					A0581BEF4C53A1EAE08C8473,
 					FE1830C650A587C48B922820,
-					39B10DD24A767A176E2A75CC,
 					B10CB38310C17F95146B503D,
 					AC6DA19FDA0FEE0FD5884F54,
 					FC8419BA2850E3E9B353A698,
@@ -675,6 +670,7 @@
 					43056BCA41EA79F5B22FAF4D, ); name = Source; sourceTree = "<group>"; };
 		15721827C7A786D9277C7DB1 = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -706,6 +702,7 @@
 				USE_HEADERMAP = NO; }; name = Debug; };
 		A7AE63CE79504FB7184CB95A = {isa = XCBuildConfiguration; buildSettings = {
 				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
@@ -903,7 +900,6 @@
 					8FB41920036A869538807BB0,
 					F57FA00F5C7C2ECAC574766D,
 					07D0C950B345B1981E2BC91B,
-					81CD3D14A9599C4DA5777BDA,
 					6942FA9E2449FCE382D8443E,
 					A81C739C51DD974904D97093,
 					740A3202EB5DBDE7176FE433,
@@ -936,7 +932,7 @@
 					A9ED4CD6A9E07D9876A8E8D2,
 					921EAE96AC7E23D66A2FA1D3,
 					B69D85D4A2EDBFCAFC7FB9A2, ); buildRules = ( ); dependencies = (  ); name = "BenTo - App"; productName = BenTo; productReference = 0D9D4CDF842BA88EB46BE4EF; productType = "com.apple.product-type.application"; };
-		6A50FB53C4AC2437E07541F9 = {isa = PBXProject; buildConfigurationList = 4ABBAA74D0C6E8AEFE38E070; attributes = { LastUpgradeCheck = 0830; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = FD3BED1C20E9C5CB1E29BC58; projectDirPath = ""; projectRoot = ""; targets = (5FD64B0FD59767DFD945EE30); };
+		6A50FB53C4AC2437E07541F9 = {isa = PBXProject; buildConfigurationList = 4ABBAA74D0C6E8AEFE38E070; attributes = { LastUpgradeCheck = 0930; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; }; compatibilityVersion = "Xcode 3.2"; hasScannedForEncodings = 0; mainGroup = FD3BED1C20E9C5CB1E29BC58; projectDirPath = ""; projectRoot = ""; targets = (5FD64B0FD59767DFD945EE30); };
 	};
 	rootObject = 6A50FB53C4AC2437E07541F9;
 }

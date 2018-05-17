@@ -13,6 +13,24 @@ You can find the bleeding edge version, compiled against latest commits here :
  
 - Windows (x64):  http://benjamin.kuperberg.fr/download/bento/BenTo-win-x64-bleedingedge.zip
 
+## Building the software
+
+BenTo is built on top of the JUCE frameworks. You can find more infos about it there : http://www.juce.com
+So basically, you just need to :
+  - Download JUCE
+  - Download the dependencies (see below)
+  - Launch the Projucer and open BenTo.jucer
+  - Link the dependencies
+  - Save the jucer
+  - Open the solution for you platform in the Builds folder
+  - Build the solution from your IDE or make in linux without Code::Blocks
+
+### Dependencies
+
+  Chataigne relies on the OrganicUI JUCE module and juce_timeline that you can find here : https://github.com/benkuper/juce_organicui and https://github.com/benkuper/juce_timeline
+
+  You will need to download, extract and link the Projucer juce_organicui and juce_timeline modules to its parent folder
+
 ## The Badge Zone
 
 - Linux (x64):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/BenTo/branches/master/2)](https://travis-ci.org/benkuper/BenTo)
