@@ -13,17 +13,6 @@
 #include "MainComponent.h"
 #include "BlockViz/BlockVizPanel.h"
 
-
-static OrganicApplication& getApp() { return *dynamic_cast<OrganicApplication*>(JUCEApplication::getInstance()); }
-String getAppVersion() { return getApp().getApplicationVersion(); }
-ApplicationProperties& getAppProperties() { return *getApp().appProperties; }
-
-OpenGLContext * getOpenGLContext() { return &getApp().mainComponent->openGLContext; }
-
-ApplicationCommandManager& getCommandManager() { return getApp().commandManager; }
-OrganicApplication::MainWindow * getMainWindow() { return getApp().mainWindow; }
-
-
 //==============================================================================
 class BenToApplication  :
 	public OrganicApplication
@@ -36,11 +25,8 @@ public:
     void initialiseInternal (const String& commandLine) override
     {
 		AppUpdater::getInstance()->setURLs(URL("http://benjamin.kuperberg.fr/bento/update.json"), "http://benjamin.kuperberg.fr/bento/download/", "Bento");
-		engine = new BentoEngine(appProperties,getAppVersion());
+		engine = new BentoEngine();
 		mainComponent = new MainComponent();
-
-		ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);
-		ShapeShifterManager::getInstance()->setLayoutInformations("btlayout", "Bento/layouts");
     }
 };
 

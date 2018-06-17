@@ -17,7 +17,7 @@ class BentoEngine :
 	public OSCRemoteControl::RemoteControlListener
 {
 public:
-	BentoEngine(ApplicationProperties * appProperties, const String &appVersion);
+	BentoEngine();
 	~BentoEngine();
 
 	void clearInternal() override;

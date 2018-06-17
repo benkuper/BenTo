@@ -15,8 +15,8 @@
 #include "Video/Spatializer.h"
 #include "Audio/AudioManager.h"
 
-BentoEngine::BentoEngine(ApplicationProperties * appProperties, const String &appVersion) :
-	Engine("BenTo", ".bento", appProperties, appVersion)
+BentoEngine::BentoEngine() :
+	Engine("BenTo", ".bento")
 {
 	Engine::mainEngine = this;
 

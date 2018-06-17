@@ -36,6 +36,9 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timeline Editor", &TimelineEditor::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Spatializer Editor", &SpatializerPanel::create));
 
+	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);
+	ShapeShifterManager::getInstance()->setLayoutInformations("btlayout", "Bento/layouts");
+
 	OrganicMainContentComponent::init();
 }
 

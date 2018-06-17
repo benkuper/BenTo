@@ -25,9 +25,9 @@ AudioManagerHardwareEditor::~AudioManagerHardwareEditor()
 {
 }
 
-void AudioManagerHardwareEditor::setCollapsed(bool value, bool force, bool animate)
+void AudioManagerHardwareEditor::setCollapsed(bool value, bool force, bool animate, bool doNotRebuild)
 {
-	GenericControllableContainerEditor::setCollapsed(value, force, animate);
+	GenericControllableContainerEditor::setCollapsed(value, force, animate, doNotRebuild);
 	selector.setVisible(!container->editorIsCollapsed);
 }
 
