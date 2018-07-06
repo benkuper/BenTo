@@ -1,6 +1,8 @@
 # BenTo
 Official BenTo Light Props Show Authoring Tool
 
+**This software is under heavy development and will hopefully be back and running in September 2018, stronger than ever !**
+
 ## The Download Zone
 
 Releases are on the release page.
