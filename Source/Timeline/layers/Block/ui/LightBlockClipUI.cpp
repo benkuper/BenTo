@@ -51,7 +51,7 @@ void LightBlockClipUI::paint(Graphics & g)
 	{
 		g.setFont(g.getCurrentFont().withHeight(jmin(getHeight() - 20, 20)).boldened());
 		g.setColour(Colours::white.withAlpha(.5f));
-		g.drawText("Editing " + automationUI->manager->parentContainer->niceName, getLocalBounds().reduced(10).toFloat(), Justification::centred);
+		//g.drawText("Editing " + automationUI->manager->parentContainer->niceName, getLocalBounds().reduced(10).toFloat(), Justification::centred);
 	}
 
 	if (item->fadeIn->floatValue() > 0)
@@ -89,7 +89,7 @@ void LightBlockClipUI::generatePreview()
 	startThread();
 }
 
-void LightBlockClipUI::setTargetAutomation(Automation * a)
+void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
 {
 	if (automationUI != nullptr)
 	{
@@ -99,7 +99,7 @@ void LightBlockClipUI::setTargetAutomation(Automation * a)
 
 	if (a == nullptr) return;
 
-	automationUI = new AutomationUI(a);
+	automationUI = new AutomationUI(&a->automation);
 	addAndMakeVisible(automationUI);
 	resized();
 	repaint();
@@ -125,12 +125,14 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 
 		PopupMenu ap;
 
+		Array<WeakReference<Parameter>> params = item->currentBlock->paramsContainer.getAllParameters();
+
 		if (item->currentBlock != nullptr)
 		{
 			int index = 2;
-			for (auto &i : item->currentBlock->automationsManager.items)
+			for (auto &pa : params)
 			{
-				ap.addItem(index, i->niceName);
+				ap.addItem(index, pa->niceName, true, pa->controlMode == Parameter::ControlMode::AUTOMATION);
 				index++;
 			}
 		}
@@ -141,7 +143,17 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 		if (result > 0)
 		{
 			if (result == 1) setTargetAutomation(nullptr);
-			else setTargetAutomation(&item->currentBlock->automationsManager.items[result - 2]->automation);
+			else
+			{
+				WeakReference<Parameter> pa = params[result - 2];
+				if (pa->controlMode != Parameter::ControlMode::AUTOMATION)
+				{
+					pa->setControlMode(Parameter::ControlMode::AUTOMATION);
+					pa->automation->mode->setValueWithData(PlayableParameterAutomation::MANUAL);
+				}
+
+				if(!pa.wasObjectDeleted()) setTargetAutomation(pa->automation);
+			}
 		}
 	}
 }

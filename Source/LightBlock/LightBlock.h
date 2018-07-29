@@ -26,7 +26,7 @@ public:
 
 	var paramsLoadData;
 
-	ParameterAutomationManager automationsManager;
+	//ParameterAutomationManager automationsManager;
 
 	Array<Colour> getColors(int id, int resolution, float time, var params);
 
@@ -34,24 +34,24 @@ public:
 
 	void providerParametersChanged(LightBlockColorProvider *) override;
 	void providerParameterValueUpdated(LightBlockColorProvider *, Parameter * p) override;
-	 
+	virtual void parameterControlModeChanged(Parameter * p) override;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-
-
-	/*
+	
 	class  LightBlockListener
 	{
 	public:
 		virtual ~LightBlockListener() {}
-		virtual void colorsUpdated() {}
+		virtual void blockParamControlModeChanged(Parameter * p) {}
+		//virtual void colorsUpdated() {}
 	};
 
 	ListenerList<LightBlockListener> blockListeners;
 	void addLightBlockListener(LightBlockListener* newListener) { blockListeners.add(newListener); }
 	void removeLightBlockListener(LightBlockListener* listener) { blockListeners.remove(listener); }
-	*/
+	
 
 
 	static LightBlock * create(LightBlockColorProvider * provider) { return new LightBlock(provider); }

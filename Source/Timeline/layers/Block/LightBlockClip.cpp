@@ -39,17 +39,20 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 
 LightBlockClip::~LightBlockClip()
 {
+	setBlockFromProvider(nullptr);
 }
 
 void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 {
 	if (currentBlock == nullptr && provider == nullptr) return;
+
 	if (provider != nullptr && currentBlock != nullptr && currentBlock->provider == provider) return;
 
 	if (currentBlock != nullptr)
 	{
 		removeChildControllableContainer(currentBlock);
-		currentBlock->automationsManager.removeBaseManagerListener(this);
+		currentBlock->removeLightBlockListener(this);
+		//currentBlock->automationsManager.removeBaseManagerListener(this);
 		currentBlock = nullptr;
 	}
 
@@ -59,8 +62,9 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 	if (currentBlock != nullptr)
 	{
 		addChildControllableContainer(currentBlock);
-		currentBlock->automationsManager.addBaseManagerListener(this);
-		for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
+		currentBlock->addLightBlockListener(this);
+		//currentBlock->automationsManager.addBaseManagerListener(this);
+		//for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
 
 	}
 }
@@ -115,15 +119,26 @@ void LightBlockClip::onContainerParameterChanged(Parameter * p)
 
 ;		if (currentBlock != nullptr)
 		{
-			for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
+			Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
+			for (auto & pa : params)
+			{
+				if (p->controlMode == Parameter::AUTOMATION) pa->automation->automation.length->setValue(length->floatValue());
+			}
 		}
 	}
 }
 
+void LightBlockClip::blockParamControlModeChanged(Parameter * p) 
+{
+	if (p->controlMode == Parameter::AUTOMATION) p->automation->automation.length->setValue(length->floatValue());
+}
+
+/*
 void LightBlockClip::itemAdded(ParameterAutomation * p)
 {
 	for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
 }
+*/
 
 var LightBlockClip::getJSONData()
 {

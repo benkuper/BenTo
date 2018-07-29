@@ -52,7 +52,7 @@ public:
 
 	void generatePreview();
 
-	void setTargetAutomation(Automation * a);
+	void setTargetAutomation(ParameterAutomation * a);
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
