@@ -1,11 +1,11 @@
 language: cpp
+
 git:
   depth: 1
+
 notifications:
   email: false
-branches:
-  only:
-  - master
+
 matrix:
   matrix: 
   include:
@@ -88,7 +88,7 @@ after_success:
     cd export
     docker cp ubuntu:/benkuper/BenTo/Builds/LinuxMakefile/build/BenTo .
     zip -r BenTo-linux-x64-bleedingedge.zip BenTo
-    curl --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://home403871847.1and1-data.host/bento/
+    curl --verbose --progress-bar --ipv4 --connect-timeout 8 --max-time 120 --retry 128 --ftp-ssl --disable-epsv --ftp-pasv --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://home403871847.1and1-data.host/bento/
   else
     cd /Users/travis/build/benkuper/BenTo/Builds/MacOSX/build/Release
     ls
