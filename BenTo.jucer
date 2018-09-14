@@ -372,8 +372,6 @@
         <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_cryptography" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_video" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
@@ -393,7 +391,6 @@
         <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.9 SDK"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
@@ -403,7 +400,6 @@
         <MODULEPATH id="juce_graphics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_events" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
@@ -419,7 +415,6 @@
         <CONFIGURATION isDebug="0" name="Release" linuxArchitecture="-m64"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
@@ -429,7 +424,6 @@
         <MODULEPATH id="juce_graphics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_events" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
@@ -444,7 +438,6 @@
         <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="../JUCE/modules"/>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_osc" path="../JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
@@ -454,7 +447,6 @@
         <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_events" path="../JUCE/modules"/>
         <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_cryptography" path="../JUCE/modules"/>
         <MODULEPATH id="juce_core" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
@@ -472,7 +464,6 @@
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -483,7 +474,6 @@
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1"/>
 </JUCERPROJECT>
