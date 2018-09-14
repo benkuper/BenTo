@@ -122,11 +122,11 @@ void LightBlock::providerParameterValueUpdated(LightBlockColorProvider *, Parame
 	if (p == nullptr) return;
 	Parameter * tp = paramsContainer.getParameterByName(p->shortName);
 	if (tp == nullptr) return;
-
+    
+    //set the default value even if overriden, so when doing a manual "reset value", it's back to the actual current one.
+    tp->defaultValue = p->value;
+    
 	if (tp->isOverriden) return;
-
-	tp->defaultValue = p->value;
-	
 	if (tp->controlMode != Parameter::MANUAL) return;
 	
 	tp->resetValue();
