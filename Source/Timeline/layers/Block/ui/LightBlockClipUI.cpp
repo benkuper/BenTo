@@ -120,39 +120,42 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 
 	if (e.mods.isRightButtonDown() && (e.eventComponent == this || e.eventComponent == automationUI))
 	{
-		PopupMenu p;
-		p.addItem(1, "Clear automation editor");
-
-		PopupMenu ap;
-
-		Array<WeakReference<Parameter>> params = item->currentBlock->paramsContainer.getAllParameters();
-
 		if (item->currentBlock != nullptr)
 		{
+
+			PopupMenu p;
+			p.addItem(1, "Clear automation editor");
+
+			PopupMenu ap;
+
+			Array<WeakReference<Parameter>> params = item->currentBlock->paramsContainer.getAllParameters();
+
+
+
 			int index = 2;
 			for (auto &pa : params)
 			{
 				ap.addItem(index, pa->niceName, true, pa->controlMode == Parameter::ControlMode::AUTOMATION);
 				index++;
 			}
-		}
 
-		p.addSubMenu("Edit...", ap);
+			p.addSubMenu("Edit...", ap);
 
-		int result = p.show();
-		if (result > 0)
-		{
-			if (result == 1) setTargetAutomation(nullptr);
-			else
+			int result = p.show();
+			if (result > 0)
 			{
-				WeakReference<Parameter> pa = params[result - 2];
-				if (pa->controlMode != Parameter::ControlMode::AUTOMATION)
+				if (result == 1) setTargetAutomation(nullptr);
+				else
 				{
-					pa->setControlMode(Parameter::ControlMode::AUTOMATION);
-					pa->automation->mode->setValueWithData(PlayableParameterAutomation::MANUAL);
-				}
+					WeakReference<Parameter> pa = params[result - 2];
+					if (pa->controlMode != Parameter::ControlMode::AUTOMATION)
+					{
+						pa->setControlMode(Parameter::ControlMode::AUTOMATION);
+						pa->automation->mode->setValueWithData(PlayableParameterAutomation::MANUAL);
+					}
 
-				if(!pa.wasObjectDeleted()) setTargetAutomation(pa->automation);
+					if (!pa.wasObjectDeleted()) setTargetAutomation(pa->automation);
+				}
 			}
 		}
 	}

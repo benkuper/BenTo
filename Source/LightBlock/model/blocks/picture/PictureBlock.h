@@ -23,7 +23,7 @@ public:
 	FileParameter * pictureFile;
 	Image picture;
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	void onContainerParameterChangedInternal(Parameter *) override;
 

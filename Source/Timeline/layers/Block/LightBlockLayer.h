@@ -25,7 +25,7 @@ public:
 	BoolParameter * globalLayer;
 	IntParameter * targetId;
 
-	Array<Colour> getColors(int id, int resolution, float time, var params);
+	Array<Colour> getColors(int id, int resolution, double time, var params);
 
 	SequenceLayerPanel * getPanel() override;
 	SequenceLayerTimeline * getTimelineUI() override;

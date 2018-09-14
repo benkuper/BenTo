@@ -37,7 +37,7 @@ public:
 
 	virtual Array<WeakReference<Controllable>> getModelParameters() override;
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *) override;
 	void childStructureChanged(ControllableContainer * cc) override;

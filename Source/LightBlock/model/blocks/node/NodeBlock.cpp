@@ -22,7 +22,7 @@ NodeBlock::~NodeBlock()
 {
 }
 
-Array<Colour> NodeBlock::getColors(int id, int resolution, float time, var params)
+Array<Colour> NodeBlock::getColors(int id, int resolution, double time, var params)
 {
 	return  manager.propNode->getColors(id, resolution, time, params);
 }

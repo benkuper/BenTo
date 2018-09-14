@@ -38,7 +38,7 @@ public:
 	FloatParameter * speed;
 	FloatParameter * idOffset;
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	String getTypeString() const override { return "Rainbow"; }
 };
@@ -59,7 +59,7 @@ public:
 	ColorParameter * color;
 	FloatParameter * idOffset;
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	String getTypeString() const override { return "Noise"; }
 };
@@ -75,7 +75,7 @@ public:
 	FloatParameter * hueSpeed;
 	FloatParameter * idOffset;
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	String getTypeString() const override { return "Solid Color"; }
 };
@@ -92,7 +92,7 @@ public:
 	FloatParameter * onOffBalance;
 	FloatParameter * idOffset;
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	String getTypeString() const override { return "Strobe"; }
 };

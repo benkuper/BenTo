@@ -21,7 +21,7 @@ ColorNode::~ColorNode()
 {
 }
 
-Array<Colour> ColorNode::getColors(int id, int resolution, float time, var params)
+Array<Colour> ColorNode::getColors(int id, int resolution, double time, var params)
 {
 	//to override by child classes
 	Array<Colour> result;

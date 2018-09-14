@@ -85,7 +85,9 @@ void Prop::update()
 {
 	if (currentBlock != nullptr)
 	{
-		colors = currentBlock->getColors(id->intValue(), resolution->intValue(), Time::getMillisecondCounter() / 1000.0f, var());
+		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
+		DBG("Time Prop " << time);
+		colors = currentBlock->getColors(id->intValue(), resolution->intValue(), time, var());
 
 		propListeners.call(&PropListener::colorsUpdated, this);
 		propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
@@ -149,7 +151,7 @@ void Prop::run()
 	while (!threadShouldExit())
 	{
 		update();
-		sleep(1000 / 60); //40fps 
+		sleep(1000.0f / 60); //60fps
 	}
 	
 }

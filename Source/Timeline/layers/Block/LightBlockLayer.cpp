@@ -26,7 +26,7 @@ LightBlockLayer::~LightBlockLayer()
 }
 
 
-Array<Colour> LightBlockLayer::getColors(int id, int resolution, float time, var params)
+Array<Colour> LightBlockLayer::getColors(int id, int resolution, double time, var params)
 {
 	Array<LightBlockClip *> clips = blockClipManager.getClipsAtTime(time);
 

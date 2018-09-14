@@ -24,7 +24,7 @@ public:
 	~TimelineBlockSequence();
 
 	SequenceLayerFactory layerFactory;
-	Array<Colour> getColors(int id, int resolution, float time, var params);
+	Array<Colour> getColors(int id, int resolution, double time, var params);
 	Array<LightBlockLayer *> getLayersForID(int id);
 
 	void itemAdded(SequenceLayer * s) override;

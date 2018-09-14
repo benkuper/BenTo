@@ -23,7 +23,7 @@ public:
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	void onContainerParameterChanged(Parameter * p) override;
 

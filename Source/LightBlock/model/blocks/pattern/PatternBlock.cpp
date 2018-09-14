@@ -32,8 +32,9 @@ RainbowPattern::RainbowPattern(var params) :
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the hue depending on id of the prop", 0, 0, 10);
 }
 
-Array<Colour> RainbowPattern::getColors(int id, int resolution, float time, var params)
+Array<Colour> RainbowPattern::getColors(int id, int resolution, double time, var params)
 {
+	DBG("Rainbow : " << time);
 	Array<Colour> result;
 	result.resize(resolution);
 
@@ -66,7 +67,7 @@ NoisePattern::NoisePattern(var params) :
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the animation depending on id of the prop", 0, 0, 10);
 }
 
-Array<Colour> NoisePattern::getColors(int id, int resolution, float time, var params)
+Array<Colour> NoisePattern::getColors(int id, int resolution, double time, var params)
 {
 	Array<Colour> result;
 	result.resize(resolution);
@@ -100,7 +101,7 @@ SolidColorPattern::SolidColorPattern(var params) :
 
 }
 
-Array<Colour> SolidColorPattern::getColors(int id, int resolution, float time, var params)
+Array<Colour> SolidColorPattern::getColors(int id, int resolution, double time, var params)
 {
 	Array<Colour> result;
 	result.resize(resolution);
@@ -126,7 +127,7 @@ StrobePattern::StrobePattern(var params) :
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the timing depending on id of the prop", 0, 0, 10);
 }
 
-Array<Colour> StrobePattern::getColors(int id, int resolution, float time, var params)
+Array<Colour> StrobePattern::getColors(int id, int resolution, double time, var params)
 {
 	Array<Colour> result;
 	result.resize(resolution);

@@ -68,7 +68,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 
 	}
 }
-Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var params)
+Array<Colour> LightBlockClip::getColors(int id, int resolution, double time, var params)
 {
 	if (currentBlock == nullptr)
 	{
@@ -80,8 +80,8 @@ Array<Colour> LightBlockClip::getColors(int id, int resolution, float time, var 
 		
 	
 	float factor = 1;
-	if (fadeIn->floatValue() > 0) factor *= jmin(time / fadeIn->floatValue(),1.f);
-	if (fadeOut->floatValue() > 0) factor *= jmin((length->floatValue() - time) / fadeOut->floatValue(), 1.f);
+	if (fadeIn->floatValue() > 0) factor *= jmin<double>(time / fadeIn->floatValue(),1.f);
+	if (fadeOut->floatValue() > 0) factor *= jmin<double>((length->floatValue() - time) / fadeOut->floatValue(), 1.f);
 
 
 	if (dynamic_cast<TimelineBlock *>(currentBlock->provider.get()) != nullptr)

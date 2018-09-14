@@ -28,7 +28,7 @@ TimelineBlockSequence::~TimelineBlockSequence()
 {
 }
 
-Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, float time, var params)
+Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, double time, var params)
 {
 	Array<LightBlockLayer *> layers = getLayersForID(id);
 

@@ -46,7 +46,7 @@ Array<WeakReference<Controllable>> LightBlockModel::getModelParameters()
 	return paramsContainer->getAllControllables();
 }
 
-Array<Colour> LightBlockModel::getColors(int id, int resolution, float time, var params)
+Array<Colour> LightBlockModel::getColors(int id, int resolution, double time, var params)
 {
 	Array<Colour> result;
 	result.resize(resolution);

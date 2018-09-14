@@ -28,7 +28,7 @@ PositionRemapNode::~PositionRemapNode()
 {
 }
 
-Array<Colour> PositionRemapNode::getColors(int id, int resolution, float time, var params)
+Array<Colour> PositionRemapNode::getColors(int id, int resolution, double time, var params)
 {
 	
 	int startLed = (position->floatValue() - size->floatValue() / 2) * resolution;

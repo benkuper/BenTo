@@ -30,7 +30,7 @@ public:
 
 	Image getImage();
 
-	Array<Colour> getColors(int id, int resolution, float time, var params) override;
+	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
 	// Inherited via Listener
 	virtual void textureUpdated(SharedTextureReceiver *) override;

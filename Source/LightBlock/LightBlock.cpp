@@ -35,7 +35,7 @@ LightBlock::~LightBlock()
 	if (!provider.wasObjectDeleted()) provider->removeColorProviderListener(this);
 }
 
-Array<Colour> LightBlock::getColors(int id, int resolution, float time, var params)
+Array<Colour> LightBlock::getColors(int id, int resolution, double time, var params)
 {
 	var localParams = params.isVoid()?new DynamicObject():new DynamicObject(*params.getDynamicObject());
 	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();

@@ -58,7 +58,7 @@ Image VideoBlock::getImage()
 	else  return receiver->getImage();
 }
 
-Array<Colour> VideoBlock::getColors(int id, int resolution, float time, var params)
+Array<Colour> VideoBlock::getColors(int id, int resolution, double time, var params)
 {
 	if (Spatializer::getInstanceWithoutCreating() == nullptr || !inputIsLive->boolValue()) return LightBlockModel::getColors(id, resolution, time, params);
 	SpatItem * spatItem = Spatializer::getInstance()->getItemWithPropID(id);

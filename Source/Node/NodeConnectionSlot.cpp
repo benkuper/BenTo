@@ -27,7 +27,7 @@ var ParameterSlot::getValue()
 	return parameter->value;
 }
 
-Array<Colour> ColorSlot::getColors(int id, int resolution, float time, var params)
+Array<Colour> ColorSlot::getColors(int id, int resolution, double time, var params)
 {
 	if (isInput)
 	{

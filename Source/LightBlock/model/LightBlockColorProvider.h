@@ -22,7 +22,7 @@ public:
 	Trigger * assignToAll;
 
 	virtual Array<WeakReference<Controllable>> getModelParameters() = 0;
-	virtual Array<Colour> getColors(int id, int resolution, float time, var params) = 0;
+	virtual Array<Colour> getColors(int id, int resolution, double time, var params) = 0;
 
 	void onContainerTriggerTriggered(Trigger *) override;
 

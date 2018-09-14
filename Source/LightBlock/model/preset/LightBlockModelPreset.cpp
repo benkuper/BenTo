@@ -31,7 +31,7 @@ LightBlockModelPreset::~LightBlockModelPreset()
 	if (!modelRef.wasObjectDeleted()) model->removeControllableContainerListener(this);
 }
 
-Array<Colour> LightBlockModelPreset::getColors(int id, int resolution, float time, var params)
+Array<Colour> LightBlockModelPreset::getColors(int id, int resolution, double time, var params)
 {
 	return model->getColors(id, resolution, time, params);
 }
