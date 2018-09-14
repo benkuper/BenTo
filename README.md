@@ -18,8 +18,9 @@ You can find the bleeding edge version, compiled against latest commits here :
 ## Building the software
 
 BenTo is built on top of the JUCE frameworks. You can find more infos about it there : http://www.juce.com
-So basically, you just need to :
-  - Download JUCE
+Some code needs to be on the develop branch of juce, so you can't use the official release of JUCE until the next one.
+To build the software, you need to :
+  - Clone the develop-local branch of my JUCE fork here : git clone --branch=develop-local http://github.com/benkuper/JUCE
   - Download the dependencies (see below)
   - Launch the Projucer and open BenTo.jucer
   - Link the dependencies
