@@ -131,6 +131,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameter_4dedce96.o \
   $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o \
   $(JUCE_OBJDIR)/LightBlock_43a72d10.o \
+  $(JUCE_OBJDIR)/SmarballProp_a6b1712f.o \
   $(JUCE_OBJDIR)/FlowtoysProp_9ad67b0.o \
   $(JUCE_OBJDIR)/FlowClubProp_abf4da72.o \
   $(JUCE_OBJDIR)/FlowBallProp_e4af1c92.o \
@@ -485,6 +486,11 @@ $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o: ../../Source/LightBlo
 $(JUCE_OBJDIR)/LightBlock_43a72d10.o: ../../Source/LightBlock/LightBlock.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LightBlock.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/SmarballProp_a6b1712f.o: ../../Source/Prop/props/garnav/SmarballProp.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling SmarballProp.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/FlowtoysProp_9ad67b0.o: ../../Source/Prop/props/flowtoys/FlowtoysProp.cpp

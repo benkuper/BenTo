@@ -313,6 +313,11 @@
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
+          <GROUP id="{2ABCE6F1-98C0-E49C-51B2-9A06C1A77026}" name="garnav">
+            <FILE id="rROiLA" name="SmarballProp.cpp" compile="1" resource="0"
+                  file="Source/Prop/props/garnav/SmarballProp.cpp"/>
+            <FILE id="P9nYgO" name="SmarballProp.h" compile="0" resource="0" file="Source/Prop/props/garnav/SmarballProp.h"/>
+          </GROUP>
           <GROUP id="{F8143F18-668C-9A7E-6413-ADBA39BD6BC6}" name="flowtoys">
             <FILE id="JqhwMB" name="FlowtoysProp.cpp" compile="1" resource="0"
                   file="Source/Prop/props/flowtoys/FlowtoysProp.cpp"/>

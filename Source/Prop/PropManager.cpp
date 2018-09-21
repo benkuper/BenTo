@@ -14,6 +14,7 @@ juce_ImplementSingleton(PropManager)
 #include "props/flowtoys/flowball/FlowBallProp.h"
 #include "props/flowtoys/flowclub/FlowClubProp.h"
 #include "props/flowtoys/flowpoi/FlowPoiProp.h"
+#include "props/garnav/SmarballProp.h"
 
 PropManager::PropManager() :
 	BaseManager("Props")
@@ -48,7 +49,7 @@ PropManager::PropManager() :
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowClub", FlowClubProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowPoi", FlowPoiProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowBall", FlowBallProp::create));
-
+	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "Smartball", SmartballProp::create));
 	receiver.addListener(this);
 
 	setupReceiver();

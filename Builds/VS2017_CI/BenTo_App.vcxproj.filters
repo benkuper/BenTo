@@ -119,6 +119,9 @@
     <Filter Include="BenTo\Source\LightBlock">
       <UniqueIdentifier>{07B6EB5A-7A48-BF26-A252-CEAA6633C65E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Prop\props\garnav">
+      <UniqueIdentifier>{7A6D1F25-927C-F908-3882-976D74D13D94}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Prop\props\flowtoys\flowclub">
       <UniqueIdentifier>{B2AA267F-3E2E-9BF9-9354-02B80DBCB43D}</UniqueIdentifier>
     </Filter>
@@ -901,6 +904,9 @@
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\garnav\SmarballProp.cpp">
+      <Filter>BenTo\Source\Prop\props\garnav</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.cpp">
       <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
     </ClCompile>
@@ -941,6 +947,9 @@
       <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.cpp">
+      <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioProcessLoadMeasurer.cpp">
       <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_FloatVectorOperations.cpp">
@@ -1373,6 +1382,9 @@
       <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessorGraph.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessorParameterGroup.cpp">
       <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_processors\processors\juce_GenericAudioProcessorEditor.cpp">
@@ -3663,6 +3675,9 @@
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\garnav\SmarballProp.h">
+      <Filter>BenTo\Source\Prop\props\garnav</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.h">
       <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
     </ClInclude>
@@ -3703,6 +3718,9 @@
       <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h">
+      <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioProcessLoadMeasurer.h">
       <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioSampleBuffer.h">
@@ -4374,6 +4392,9 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessorParameter.h">
       <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\processors\juce_AudioProcessorParameterGroup.h">
+      <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\processors\juce_GenericAudioProcessorEditor.h">
       <Filter>JUCE Modules\juce_audio_processors\processors</Filter>
     </ClInclude>
@@ -4572,6 +4593,9 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\memory\juce_HeapBlock.h">
       <Filter>JUCE Modules\juce_core\memory</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\memory\juce_HeavyweightLeakedObjectDetector.h">
+      <Filter>JUCE Modules\juce_core\memory</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\memory\juce_LeakedObjectDetector.h">
       <Filter>JUCE Modules\juce_core\memory</Filter>
     </ClInclude>
@@ -4624,6 +4648,9 @@
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_mac_ClangBugWorkaround.h">
+      <Filter>JUCE Modules\juce_core\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_mac_linux_IPAddress.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_osx_ObjCHelpers.h">

@@ -83,6 +83,7 @@
 		1FF430B764F5C52D6E8F58B3 = {isa = PBXBuildFile; fileRef = 54818CE1B836345997452F34; };
 		C7CCFEB3BC0D5709CE33EE86 = {isa = PBXBuildFile; fileRef = 5745CC92BC3ABCE7867B60B8; };
 		5EA0388E20427326CD2D0595 = {isa = PBXBuildFile; fileRef = C234266775E1DCF799735A03; };
+		2EB88E2224AB16EA6B5C097D = {isa = PBXBuildFile; fileRef = 4AF5E224836AFE7ED044B8D6; };
 		69547B2CFB15A45E366C8A9B = {isa = PBXBuildFile; fileRef = 23A73BDBB998BFCFDFE613EE; };
 		58A4157A61B008C7529E751E = {isa = PBXBuildFile; fileRef = FF48EA13A1BFF2F75586E759; };
 		17880D8524A2366521C9A77F = {isa = PBXBuildFile; fileRef = 5DCBB5C84A58F90FACD11EAB; };
@@ -112,6 +113,7 @@
 		B08670E180B436DAF208B572 = {isa = PBXBuildFile; fileRef = 878A4313101E6FF0D57EE3CD; };
 		F1F282CEE91073ADD267F058 = {isa = PBXBuildFile; fileRef = F8CC2AA9A461022D52BD9030; };
 		A198394E001844380ACD129F = {isa = PBXBuildFile; fileRef = B3F00A16D10651397C0D1BAE; };
+		014A84A6934D87C73CBD3B5C = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SmarballProp.h; path = ../../Source/Prop/props/garnav/SmarballProp.h; sourceTree = "SOURCE_ROOT"; };
 		031FBAA943FD37732EE42EEA = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerPanel.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp; sourceTree = "SOURCE_ROOT"; };
 		03D68912B90442DF90A21C42 = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_organicui"; path = "../../../JUCE Modules/juce_organicui"; sourceTree = "SOURCE_ROOT"; };
 		042EE867E2552AD03EB3FC9D = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlockSequence.h; path = ../../Source/Timeline/TimelineBlockSequence.h; sourceTree = "SOURCE_ROOT"; };
@@ -171,6 +173,7 @@
 		49B00E97E22F53E7FC525B3F = {isa = PBXFileReference; lastKnownFileType = file; name = "juce_data_structures"; path = "~/JUCE/modules/juce_data_structures"; sourceTree = "<absolute>"; };
 		49B39A0E9BE7F58350DD1C1E = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoBlock.cpp; path = ../../Source/LightBlock/model/blocks/video/VideoBlock.cpp; sourceTree = "SOURCE_ROOT"; };
 		4A82E1B5894FE86A561A46B4 = {isa = PBXFileReference; lastKnownFileType = file.btlayout; name = default.btlayout; path = ../../Resources/default.btlayout; sourceTree = "SOURCE_ROOT"; };
+		4AF5E224836AFE7ED044B8D6 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SmarballProp.cpp; path = ../../Source/Prop/props/garnav/SmarballProp.cpp; sourceTree = "SOURCE_ROOT"; };
 		4C0FFBAFE2436814115FE752 = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = ../../Source/Node/Node.cpp; sourceTree = "SOURCE_ROOT"; };
 		4D756E470B2CED02703B26FE = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropNode.cpp; path = ../../Source/Node/nodes/prop/PropNode.cpp; sourceTree = "SOURCE_ROOT"; };
 		4EAE7FA2B5C4DE0B0EE98DBB = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Prop.cpp; path = ../../Source/Prop/Prop.cpp; sourceTree = "SOURCE_ROOT"; };
@@ -539,6 +542,9 @@
 					6DD608CEA09B63597849B6D4,
 					C234266775E1DCF799735A03,
 					AEF39637DB6CA28A00644DE6, ); name = LightBlock; sourceTree = "<group>"; };
+		3A5E763F2E460933433D6949 = {isa = PBXGroup; children = (
+					4AF5E224836AFE7ED044B8D6,
+					014A84A6934D87C73CBD3B5C, ); name = garnav; sourceTree = "<group>"; };
 		E38C68BE18B0D08A5D268ACB = {isa = PBXGroup; children = (
 					FF48EA13A1BFF2F75586E759,
 					BD395465FDE5676BE34BF79F, ); name = flowclub; sourceTree = "<group>"; };
@@ -555,6 +561,7 @@
 					549DF73871235F92115CFB9C,
 					92816B176188A4ED310EFD6D, ); name = flowtoys; sourceTree = "<group>"; };
 		5A92B1617AD663BB84A2778D = {isa = PBXGroup; children = (
+					3A5E763F2E460933433D6949,
 					71A50B3C4354D1BC88832612, ); name = props; sourceTree = "<group>"; };
 		180AA966D65D1626716B3C83 = {isa = PBXGroup; children = (
 					C20D8FCD90A6A45455B39A92,
@@ -863,6 +870,7 @@
 					1FF430B764F5C52D6E8F58B3,
 					C7CCFEB3BC0D5709CE33EE86,
 					5EA0388E20427326CD2D0595,
+					2EB88E2224AB16EA6B5C097D,
 					69547B2CFB15A45E366C8A9B,
 					58A4157A61B008C7529E751E,
 					17880D8524A2366521C9A77F,
