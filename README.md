@@ -15,6 +15,8 @@ You can find the bleeding edge version, compiled against latest commits here :
  
 - Windows (x64):  http://benjamin.kuperberg.fr/download/bento/BenTo-win-x64-bleedingedge.zip
 
+Additionally, you can download a set of example scripts that you can then use as Script Blocks in the software : http://benjamin.kuperberg.fr/download/bento/BenTo-Example-Scripts.zip
+
 ## Building the software
 
 BenTo is built on top of the JUCE frameworks. You can find more infos about it there : http://www.juce.com
