@@ -14,6 +14,8 @@
 #include "Prop/PropManager.h"
 #include "Video/Spatializer.h"
 #include "Audio/AudioManager.h"
+#include "Timeline/layers/Block/LightBlockLayer.h"
+
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento")
@@ -25,6 +27,8 @@ BentoEngine::BentoEngine() :
 
 	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 
+	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Blocks", &LightBlockLayer::create));
+	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
 
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
 }
@@ -35,6 +39,7 @@ BentoEngine::~BentoEngine()
 	LightBlockModelLibrary::deleteInstance();
 	Spatializer::deleteInstance();
 	AudioManager::deleteInstance();
+	SequenceLayerFactory::deleteInstance();
 }
 
 void BentoEngine::clearInternal()
