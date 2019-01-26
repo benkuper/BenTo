@@ -15,9 +15,6 @@
 TimelineBlockSequence::TimelineBlockSequence() :
 	Sequence()
 {
-	layerManager->factory.layerDefs.add(SequenceLayerDefinition::createDef("Blocks", &LightBlockLayer::create));
-	layerManager->factory.layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
-	layerManager->factory.buildPopupMenu();
 
 	layerManager->addBaseManagerListener(this);
 
