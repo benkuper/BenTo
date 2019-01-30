@@ -2959,6 +2959,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"\"../../../JUCE Modules\"",
+					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
 				);
@@ -3004,6 +3005,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"\"../../../JUCE Modules\"",
+					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
 				);
