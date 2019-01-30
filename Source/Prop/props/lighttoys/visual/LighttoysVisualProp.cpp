@@ -9,7 +9,7 @@
 */
 
 #include "LighttoysVisualProp.h"
-
+#
 LighttoysVisualProp::LighttoysVisualProp(var params) :
 	Prop(getTypeString(), params)
 {
@@ -20,5 +20,9 @@ LighttoysVisualProp::~LighttoysVisualProp()
   }
 
 void LighttoysVisualProp::sendColorsToPropInternal()
+{
+}
+
+void LighttoysVisualProp::autoDetectRemotes()
 {
 }

@@ -21,6 +21,10 @@ public:
 	PropManagerUI(const String &name, PropManager * manager);
 	~PropManagerUI();
 
+	ScopedPointer<TriggerButtonUI> autoDetectUI;
+	ScopedPointer<TriggerButtonUI> autoAssignUI;
+
+	void resizedInternalHeader(Rectangle<int> &r) override;
 	void showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos) override;
 
 	static PropManagerUI * create(const String &contentName) { return new PropManagerUI(contentName, PropManager::getInstance()); }

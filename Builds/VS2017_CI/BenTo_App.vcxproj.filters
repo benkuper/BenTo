@@ -143,6 +143,9 @@
     <Filter Include="BenTo\Source\Prop\props\lighttoys\visual">
       <UniqueIdentifier>{3C0B925B-6CCD-0B75-C387-5C8894603A3C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Prop\props\lighttoys\ft\ui">
+      <UniqueIdentifier>{5C052753-DAE7-C293-05FA-C7E9AC33F9A7}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Prop\props\lighttoys\ft">
       <UniqueIdentifier>{2230364B-EF6B-2E40-ADD9-E5C8979ABC99}</UniqueIdentifier>
     </Filter>
@@ -969,6 +972,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.cpp">
       <Filter>BenTo\Source\Prop\props\lighttoys\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.cpp">
+      <Filter>BenTo\Source\Prop\props\lighttoys\ft\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.cpp">
+      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
@@ -3779,6 +3788,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.h">
       <Filter>BenTo\Source\Prop\props\lighttoys\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.h">
+      <Filter>BenTo\Source\Prop\props\lighttoys\ft\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.h">
+      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>

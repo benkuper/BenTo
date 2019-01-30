@@ -23,5 +23,7 @@ public:
 
 	virtual void sendColorsToPropInternal() override;
 
+	static void autoDetectRemotes();
+
 	static LighttoysVisualProp * create(var params) { return new LighttoysVisualProp(params); }
 };

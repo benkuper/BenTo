@@ -14,6 +14,7 @@
 #include "Common/Serial/SerialManager.h"
 #include "Common/Serial/SerialDeviceParameter.h"
 
+#include "FTPropStatus.h"
 
 class LighttoysFTProp :
 	public Prop,
@@ -31,14 +32,23 @@ public:
 	IntParameter * numConnected;
 	BoolParameter * autoResolution;
 
+	Trigger * addNewPairing;
+	Trigger * addToGroup;
+	Trigger * finishPairing;
+
 	String deviceID;
 	String lastOpenedDeviceID; //for ghosting
 	SerialDevice * device;
+
+	OwnedArray<FTPropStatus> statusList;
+	ControllableContainer propsStatus;
 
 	bool slaveCheckList[32];
 
 	virtual void sendColorsToPropInternal() override;
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
+	virtual void onContainerTriggerTriggered(Trigger *) override;
+	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 
 	virtual void setCurrentDevice(SerialDevice *port);
 	
@@ -52,12 +62,14 @@ public:
 	virtual void portAdded(SerialDeviceInfo * info) override;
 	virtual void portRemoved(SerialDeviceInfo * info) override;
 
-	virtual void sendMessageToProps(StringRef command, const int propMask = -1, int numArgs = 0, ...);
+	virtual void sendMessage(StringRef command, const int propMask = -1, int numArgs = 0, ...);
 
 	int getPropMaskForId(int propID) const { return 1 << propID; }
 	int getPropMaskForRange(int startID, int endID) const { int result = 0; for (int i = startID; i <= endID; i++) result += 1 << i; return result; }
 
 	void timerCallback() override;
+
+	static void autoDetectRemotes();
 
 	String getTypeString() const override { return "Lighttoys FT"; }
 	static LighttoysFTProp * create(var params) { return new LighttoysFTProp(params); }

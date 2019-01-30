@@ -356,6 +356,15 @@
                     file="Source/Prop/props/lighttoys/visual/LighttoysVisualProp.h"/>
             </GROUP>
             <GROUP id="{408647FB-37B9-7763-D9B7-284E1CBC7A97}" name="ft">
+              <GROUP id="{8B0658F2-8132-54E5-791D-2F9F1D89E4AE}" name="ui">
+                <FILE id="FAYOX1" name="FTPropStatusEditor.cpp" compile="1" resource="0"
+                      file="Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.cpp"/>
+                <FILE id="oa4Tv8" name="FTPropStatusEditor.h" compile="0" resource="0"
+                      file="Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.h"/>
+              </GROUP>
+              <FILE id="VxUStB" name="FTPropStatus.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/lighttoys/ft/FTPropStatus.cpp"/>
+              <FILE id="l2JXQ5" name="FTPropStatus.h" compile="0" resource="0" file="Source/Prop/props/lighttoys/ft/FTPropStatus.h"/>
               <FILE id="bbMd80" name="LighttoysFTProp.cpp" compile="1" resource="0"
                     file="Source/Prop/props/lighttoys/ft/LighttoysFTProp.cpp"/>
               <FILE id="zTJcPB" name="LighttoysFTProp.h" compile="0" resource="0"

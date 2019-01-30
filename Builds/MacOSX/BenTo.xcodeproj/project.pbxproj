@@ -357,6 +357,14 @@
 			isa = PBXBuildFile;
 			fileRef = 5E67C2141BB339744B2777E9;
 		};
+		0BDEC6BC559575CD08C1754A = {
+			isa = PBXBuildFile;
+			fileRef = BE53E9433223D79F93A379A2;
+		};
+		04011DE235B5AB5F82B096C5 = {
+			isa = PBXBuildFile;
+			fileRef = 7C2139B9C4E26FAA35609C0D;
+		};
 		7F25BE7F8A4997F5682CC689 = {
 			isa = PBXBuildFile;
 			fileRef = C6581380592CE0C18AAB4D52;
@@ -1265,6 +1273,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7C2139B9C4E26FAA35609C0D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = FTPropStatus.cpp;
+			path = ../../Source/Prop/props/lighttoys/ft/FTPropStatus.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7DF3DFB9A3990703455A075C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1433,6 +1448,13 @@
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		9A883ED3FB90416C4AA0380C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = FTPropStatus.h;
+			path = ../../Source/Prop/props/lighttoys/ft/FTPropStatus.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		9B5EE640C3A975CCE738B19D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1550,6 +1572,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = PositionRemapNode.h;
 			path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A86F6D70736209426F30BE26 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = FTPropStatusEditor.h;
+			path = ../../Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AA5294A14826CB5BBF76F43E = {
@@ -1690,6 +1719,13 @@
 			lastKnownFileType = image.png;
 			name = fadeOut.png;
 			path = ../../Resources/fadeOut.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BE53E9433223D79F93A379A2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = FTPropStatusEditor.cpp;
+			path = ../../Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		BE8152E81195DCC2AFC2C39D = {
@@ -2650,9 +2686,21 @@
 			name = visual;
 			sourceTree = "<group>";
 		};
+		ED842F363F05E92796CBA3D6 = {
+			isa = PBXGroup;
+			children = (
+				BE53E9433223D79F93A379A2,
+				A86F6D70736209426F30BE26,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		DAC1C4E93116CD0C54B3C0E2 = {
 			isa = PBXGroup;
 			children = (
+				ED842F363F05E92796CBA3D6,
+				7C2139B9C4E26FAA35609C0D,
+				9A883ED3FB90416C4AA0380C,
 				C6581380592CE0C18AAB4D52,
 				4A7FFBD7510E344DB730800C,
 			);
@@ -3169,6 +3217,8 @@
 				C7CCFEB3BC0D5709CE33EE86,
 				5EA0388E20427326CD2D0595,
 				C505E45629B737E29B607859,
+				0BDEC6BC559575CD08C1754A,
+				04011DE235B5AB5F82B096C5,
 				7F25BE7F8A4997F5682CC689,
 				2EB88E2224AB16EA6B5C097D,
 				69547B2CFB15A45E366C8A9B,

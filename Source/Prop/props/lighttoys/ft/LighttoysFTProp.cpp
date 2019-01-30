@@ -11,10 +11,12 @@
 #include "LighttoysFTProp.h"
 #include <iostream>
 #include <cstdarg>
+#include "Prop/PropManager.h"
 
 LighttoysFTProp::LighttoysFTProp(var params) :
 	Prop(getTypeString(), params),
-	device(nullptr)
+	device(nullptr),
+	propsStatus("Connected Devices")
 {
 	sendRate = 30;
 
@@ -29,6 +31,19 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 	numConnected = addIntParameter("Num Connected", "Number of connected props", 0, 0, 31);
 	autoResolution = addBoolParameter("Auto resolution", "If checked, the resolution will be automatically set depending on number of paired devices", true);
 
+	addNewPairing = addTrigger("Add New Pairing Group", "Start pairing");
+	addToGroup = addTrigger("Add To Group", "Add to the existing paired group");
+	finishPairing = addTrigger("Finish Pairing", "Finish the pairing");
+
+	for (int i = 0; i < 32; i++)
+	{
+		FTPropStatus * ftp = new FTPropStatus(i);
+		statusList.add(ftp);
+		propsStatus.addChildControllableContainer(ftp);
+	}
+
+	addChildControllableContainer(&propsStatus);
+		
 	SerialManager::getInstance()->addSerialManagerListener(this);
 
 	startTimer(2000);
@@ -51,17 +66,39 @@ void LighttoysFTProp::sendColorsToPropInternal()
 
 	for (int i = 0; i < numLeds; i++)
 	{
-		sendMessageToProps("leach", getPropMaskForId(i), 6, colors[i].getBlue(), colors[i].getGreen(), colors[i].getRed(), colors[i].getBlue(), colors[i].getGreen(), colors[i].getRed());
+		sendMessage("leach", getPropMaskForId(i), 6, colors[i].getBlue(), colors[i].getGreen(), colors[i].getRed(), colors[i].getBlue(), colors[i].getGreen(), colors[i].getRed());
 	}
 }
 
 void LighttoysFTProp::onContainerParameterChangedInternal(Parameter * p)
 {
 	Prop::onContainerParameterChangedInternal(p);
+	if (p == isConnected) battery->setValue(isConnected->boolValue() ? 1 : 0);
 	if (p == deviceParam) setCurrentDevice(deviceParam->getDevice());
 	else if (p == numPaired)
 	{
 		if (autoResolution->boolValue()) resolution->setValue(numPaired->intValue());
+	}
+}
+
+void LighttoysFTProp::onContainerTriggerTriggered(Trigger * t)
+{
+	Prop::onContainerTriggerTriggered(t);
+	if (t == addNewPairing) sendMessage("gadd 1");
+	else if (t == addToGroup) sendMessage("gadd 0");
+	else if (t == finishPairing) sendMessage("gstop");
+}
+
+void LighttoysFTProp::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	FTPropStatus * ftp = dynamic_cast<FTPropStatus *>(c->parentContainer);
+	if (ftp != nullptr)
+	{
+		if (c == ftp->flash)
+		{
+			sendMessage("lstop", getPropMaskForId(ftp->propID));
+			sendMessage("gping",getPropMaskForId(ftp->propID));
+		}
 	}
 }
 
@@ -137,13 +174,13 @@ void LighttoysFTProp::serialDataReceived(const var & data)
 		{
 			int propID = dataSplit[1].substring(3).getIntValue();
 			bool isOn = dataSplit[7].substring(8, 9) == "+";
-			//float voltage = (double)(dataSplit[5].substring(4).getIntValue()) / 0x10000;
+			float voltage = (double)(dataSplit[5].substring(4).getIntValue()) / 0x10000;
 			//DBG("Voltage : " << voltage);
-			//battery->setValue(voltage / 15);
+			
 			slaveCheckList[propID] = isOn;
 			
-			//propStatus[i]->connected->setValue(isOn);
-			//propStatus[i]->voltage->setValue(voltage);
+			statusList[propID]->isConnected->setValue(isOn);
+			statusList[propID]->voltage->setValue(voltage);
 
 			if (propID == numPaired->intValue()-1)
 			{
@@ -174,7 +211,7 @@ void LighttoysFTProp::portRemoved(SerialDeviceInfo * p)
 	if (device != nullptr && device->info == p) setCurrentDevice(nullptr);
 }
 
-void LighttoysFTProp::sendMessageToProps(StringRef command, const int propMask, int numArgs, ...)
+void LighttoysFTProp::sendMessage(StringRef command, const int propMask, int numArgs, ...)
 {
 	if (device == nullptr) return;
 	if (!device->isOpen()) return;
@@ -195,12 +232,45 @@ void LighttoysFTProp::sendMessageToProps(StringRef command, const int propMask, 
 	}
 
 	device->writeString(msg);
-	DBG("Send message : " << msg);
+	//DBG("Send message : " << msg);
 }
 
 void LighttoysFTProp::timerCallback()
 {
 	//check connected devices
 	memset(slaveCheckList, 0, 32);
-	sendMessageToProps("glist");
+	sendMessage("glist");
+}
+
+void LighttoysFTProp::autoDetectRemotes()
+{
+	for (auto &pi : SerialManager::getInstance()->portInfos)
+	{
+		if (pi->vid == 0x04D8 && pi->pid == 0x00DF)
+		{
+			DBG("Found device " << pi->uniqueDescription);
+			bool alreadyExisting = false;
+			for (auto &p : PropManager::getInstance()->items)
+			{
+
+				LighttoysFTProp * ftP = dynamic_cast<LighttoysFTProp *>(p);
+				if (ftP != nullptr)
+				{
+					if (ftP->device != nullptr && ftP->device->info == pi)
+					{
+						alreadyExisting = true;
+						break;
+					}
+				}
+			}
+
+			if (!alreadyExisting)
+			{
+				LOG("Found remote ! " << pi->uniqueDescription);
+				LighttoysFTProp * ftP = new LighttoysFTProp(var());
+				ftP->deviceParam->setValueWithKey(pi->uniqueDescription);
+				PropManager::getInstance()->addItem(ftP);
+			}
+		}
+	}
 }

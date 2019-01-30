@@ -142,6 +142,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o \
   $(JUCE_OBJDIR)/LightBlock_43a72d10.o \
   $(JUCE_OBJDIR)/LighttoysVisualProp_8678450f.o \
+  $(JUCE_OBJDIR)/FTPropStatusEditor_d765ea7a.o \
+  $(JUCE_OBJDIR)/FTPropStatus_e92f269e.o \
   $(JUCE_OBJDIR)/LighttoysFTProp_30de680b.o \
   $(JUCE_OBJDIR)/SmarballProp_a6b1712f.o \
   $(JUCE_OBJDIR)/FlowtoysProp_9ad67b0.o \
@@ -555,6 +557,16 @@ $(JUCE_OBJDIR)/LightBlock_43a72d10.o: ../../Source/LightBlock/LightBlock.cpp
 $(JUCE_OBJDIR)/LighttoysVisualProp_8678450f.o: ../../Source/Prop/props/lighttoys/visual/LighttoysVisualProp.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LighttoysVisualProp.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FTPropStatusEditor_d765ea7a.o: ../../Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FTPropStatusEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FTPropStatus_e92f269e.o: ../../Source/Prop/props/lighttoys/ft/FTPropStatus.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FTPropStatus.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LighttoysFTProp_30de680b.o: ../../Source/Prop/props/lighttoys/ft/LighttoysFTProp.cpp

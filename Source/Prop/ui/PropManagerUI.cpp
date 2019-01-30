@@ -17,10 +17,24 @@ PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 	noItemText = "Start by adding props by right clicking here, or when the props are powered on and connected, left click here and hit auto detect on the Inspector";
 	setDefaultLayout(HORIZONTAL);
 	addExistingItems();
+
+	autoDetectUI = manager->detectProps->createButtonUI();
+	autoAssignUI = manager->autoAssignIdTrigger->createButtonUI();
+
+	addAndMakeVisible(autoDetectUI);
+	addAndMakeVisible(autoAssignUI);
 }
 
 PropManagerUI::~PropManagerUI()
 {
+}
+
+void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
+{
+	Rectangle<int> hr = r.removeFromRight(100).reduced(2);
+	autoAssignUI->setBounds(hr.removeFromTop(20));
+	hr.removeFromTop(2);
+	autoDetectUI->setBounds(hr.removeFromTop(20));
 }
 
 void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos)
@@ -33,6 +47,7 @@ void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownP
 
 	PopupMenu menu;
 	menu.addSubMenu("Create", manager->managerFactory->getMenu());
+	menu.addItem(-2, "Auto Detect Props");
 	menu.addItem(-1, "Auto assign IDs");
 
 	PopupMenu assignToAllMenu;
@@ -42,10 +57,9 @@ void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownP
 	int result = menu.show();
 
 	if (result == 0) return;
-	else if (result == -1)
-	{
-		manager->autoAssignIdTrigger->trigger();
-	}if (result >= 10000)
+	else if (result == -1) 	manager->autoAssignIdTrigger->trigger();
+	else if (result == -2) manager->detectProps->trigger();
+	else if (result >= 10000)
 	{
 		LightBlockColorProvider * mp = mList[result - 10000];
 		for (auto & p : manager->items) p->activeProvider->setValueFromTarget(mp);

@@ -34,7 +34,6 @@ RainbowPattern::RainbowPattern(var params) :
 
 Array<Colour> RainbowPattern::getColors(int id, int resolution, double time, var params)
 {
-	DBG("Rainbow : " << time);
 	Array<Colour> result;
 	result.resize(resolution);
 

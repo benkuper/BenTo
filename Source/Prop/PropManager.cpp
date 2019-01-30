@@ -57,7 +57,6 @@ PropManager::PropManager() :
 
 	setupReceiver();
 	sender.connect("0.0.0.0", 9000);
-
 }
 
 
@@ -122,6 +121,8 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 		m.addArgument(localHost->stringValue());
 		sender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 		LOG("Auto detecting props on " << remoteHost->stringValue() << "...");
+
+		LighttoysFTProp::autoDetectRemotes();
 	}
 }
 

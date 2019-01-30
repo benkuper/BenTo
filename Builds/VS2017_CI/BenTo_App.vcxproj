@@ -154,6 +154,8 @@
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\garnav\SmarballProp.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.cpp"/>
@@ -2572,6 +2574,8 @@
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.h"/>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.h"/>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.h"/>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h"/>
     <ClInclude Include="..\..\Source\Prop\props\garnav\SmarballProp.h"/>
     <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.h"/>
