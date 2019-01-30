@@ -11,6 +11,27 @@
     <Filter Include="BenTo\Resources">
       <UniqueIdentifier>{8E65566C-A6CB-B998-F659-4E3386AD8621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Common\Serial\lib\serial\impl\list_ports">
+      <UniqueIdentifier>{7012EFAC-74D5-90E1-A943-D1395DE39E9A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Common\Serial\lib\serial\impl">
+      <UniqueIdentifier>{A4AA96FF-89D0-1F52-AD68-7FB57C7EDB49}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Common\Serial\lib\serial">
+      <UniqueIdentifier>{5AE224D3-F908-D362-434E-41DCD83E92D2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Common\Serial\lib\cobs">
+      <UniqueIdentifier>{8A5A0CCB-2CED-0D32-3959-4DF7242A826C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Common\Serial\lib">
+      <UniqueIdentifier>{45F43655-9505-8758-29D0-8E2933055EA3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Common\Serial">
+      <UniqueIdentifier>{8B705211-F502-BFB3-A0DE-C74EBA6F32B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Common">
+      <UniqueIdentifier>{8F33A61D-72B9-4BF3-B536-A8AEE0A70444}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Audio\ui">
       <UniqueIdentifier>{4AD872E8-6802-68F1-87E8-812D61A5D46C}</UniqueIdentifier>
     </Filter>
@@ -118,6 +139,15 @@
     </Filter>
     <Filter Include="BenTo\Source\LightBlock">
       <UniqueIdentifier>{07B6EB5A-7A48-BF26-A252-CEAA6633C65E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\props\lighttoys\visual">
+      <UniqueIdentifier>{3C0B925B-6CCD-0B75-C387-5C8894603A3C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\props\lighttoys\ft">
+      <UniqueIdentifier>{2230364B-EF6B-2E40-ADD9-E5C8979ABC99}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\props\lighttoys">
+      <UniqueIdentifier>{9F30B32A-59CF-6038-D38A-EA6C62949032}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\props\garnav">
       <UniqueIdentifier>{7A6D1F25-927C-F908-3882-976D74D13D94}</UniqueIdentifier>
@@ -718,6 +748,36 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\serial.cc">
+      <Filter>BenTo\Source\Common\Serial\lib\serial\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_linux.cc">
+      <Filter>BenTo\Source\Common\Serial\lib\serial\impl\list_ports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_osx.cc">
+      <Filter>BenTo\Source\Common\Serial\lib\serial\impl\list_ports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_win.cc">
+      <Filter>BenTo\Source\Common\Serial\lib\serial\impl\list_ports</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\unix.cc">
+      <Filter>BenTo\Source\Common\Serial\lib\serial\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\win.cc">
+      <Filter>BenTo\Source\Common\Serial\lib\serial\impl</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\lib\cobs\cobs.cpp">
+      <Filter>BenTo\Source\Common\Serial\lib\cobs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\SerialDevice.cpp">
+      <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\SerialDeviceParameter.cpp">
+      <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
+      <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.cpp">
       <Filter>BenTo\Source\Audio\ui</Filter>
     </ClCompile>
@@ -906,6 +966,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp">
       <Filter>BenTo\Source\LightBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.cpp">
+      <Filter>BenTo\Source\Prop\props\lighttoys\visual</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp">
+      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\garnav\SmarballProp.cpp">
       <Filter>BenTo\Source\Prop\props\garnav</Filter>
@@ -3507,6 +3573,18 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h">
+      <Filter>BenTo\Source\Common\Serial\lib\cobs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h">
+      <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Serial\SerialDeviceParameter.h">
+      <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h">
+      <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.h">
       <Filter>BenTo\Source\Audio\ui</Filter>
     </ClInclude>
@@ -3698,6 +3776,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h">
       <Filter>BenTo\Source\LightBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.h">
+      <Filter>BenTo\Source\Prop\props\lighttoys\visual</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h">
+      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\garnav\SmarballProp.h">
       <Filter>BenTo\Source\Prop\props\garnav</Filter>

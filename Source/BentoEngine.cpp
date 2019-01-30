@@ -15,7 +15,7 @@
 #include "Video/Spatializer.h"
 #include "Audio/AudioManager.h"
 #include "Timeline/layers/Block/LightBlockLayer.h"
-
+#include "Common/Serial/SerialManager.h"
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento")
@@ -31,6 +31,8 @@ BentoEngine::BentoEngine() :
 	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
 
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
+
+	SerialManager::getInstance();
 }
 
 BentoEngine::~BentoEngine()
@@ -40,6 +42,8 @@ BentoEngine::~BentoEngine()
 	Spatializer::deleteInstance();
 	AudioManager::deleteInstance();
 	SequenceLayerFactory::deleteInstance();
+
+	SerialManager::deleteInstance();
 }
 
 void BentoEngine::clearInternal()

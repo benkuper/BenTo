@@ -61,6 +61,46 @@
 			isa = PBXBuildFile;
 			fileRef = 51317BFC040AE415C6D3E7CC;
 		};
+		CD62751F9653806034013404 = {
+			isa = PBXBuildFile;
+			fileRef = 2E89682C93FB1D0A46886BD1;
+		};
+		195DB0DE77CED5C661CE4EE7 = {
+			isa = PBXBuildFile;
+			fileRef = D721774C83C3D5512A0D8746;
+		};
+		108A694C27E9D28E1F5FC699 = {
+			isa = PBXBuildFile;
+			fileRef = 87CFC58F1D51FFE44508FB15;
+		};
+		31012C82F371A777AC7AFF24 = {
+			isa = PBXBuildFile;
+			fileRef = BA973948500C0C4F787D10F4;
+		};
+		9659DB1CAAB80BF9706141F0 = {
+			isa = PBXBuildFile;
+			fileRef = FF8212362C0F64DBEC238CE2;
+		};
+		1BA176C3BCA2BB935B7B348C = {
+			isa = PBXBuildFile;
+			fileRef = 02981ECE5EE4EDB834E85FB3;
+		};
+		81DF8C5FCEE32E5E09A237B7 = {
+			isa = PBXBuildFile;
+			fileRef = 87859A531C6BE994FC1F48E9;
+		};
+		47B629008D8514111CB11D29 = {
+			isa = PBXBuildFile;
+			fileRef = 4FE1871211462BBB87D34AFB;
+		};
+		F13CA73C6582D698D6C1E86A = {
+			isa = PBXBuildFile;
+			fileRef = 0CDDE2CF576B339D7586EFEA;
+		};
+		111BE2C116F9D4D96982805A = {
+			isa = PBXBuildFile;
+			fileRef = A250B1035CA849FC5B073CCE;
+		};
 		6160C279B3285CE01D431A39 = {
 			isa = PBXBuildFile;
 			fileRef = F36ABE11C3B014EB8870CE8A;
@@ -313,6 +353,14 @@
 			isa = PBXBuildFile;
 			fileRef = C234266775E1DCF799735A03;
 		};
+		C505E45629B737E29B607859 = {
+			isa = PBXBuildFile;
+			fileRef = 5E67C2141BB339744B2777E9;
+		};
+		7F25BE7F8A4997F5682CC689 = {
+			isa = PBXBuildFile;
+			fileRef = C6581380592CE0C18AAB4D52;
+		};
 		2EB88E2224AB16EA6B5C097D = {
 			isa = PBXBuildFile;
 			fileRef = 4AF5E224836AFE7ED044B8D6;
@@ -440,6 +488,13 @@
 			path = ../../Source/Prop/props/garnav/SmarballProp.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		02981ECE5EE4EDB834E85FB3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = win.cc;
+			path = ../../Source/Common/Serial/lib/serial/impl/win.cc;
+			sourceTree = "SOURCE_ROOT";
+		};
 		031FBAA943FD37732EE42EEA = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -508,6 +563,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = TimelineBlockUI.h;
 			path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		0CDDE2CF576B339D7586EFEA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SerialDeviceParameter.cpp;
+			path = ../../Source/Common/Serial/SerialDeviceParameter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		0D1CD85E4EACAA2E710B67D7 = {
@@ -713,6 +775,13 @@
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		2E89682C93FB1D0A46886BD1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = serial.cc;
+			path = ../../Source/Common/Serial/lib/serial/serial.cc;
+			sourceTree = "SOURCE_ROOT";
+		};
 		32677D5BEA776F767ABBB991 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -846,6 +915,13 @@
 			path = ../../Source/LightBlock/model/blocks/video/VideoBlock.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4A7FFBD7510E344DB730800C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = LighttoysFTProp.h;
+			path = ../../Source/Prop/props/lighttoys/ft/LighttoysFTProp.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4A82E1B5894FE86A561A46B4 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.btlayout;
@@ -879,6 +955,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Prop.cpp;
 			path = ../../Source/Prop/Prop.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4FE1871211462BBB87D34AFB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SerialDevice.cpp;
+			path = ../../Source/Common/Serial/SerialDevice.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		500D85928B2B8F7C8E885687 = {
@@ -921,6 +1004,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightBlockModelParameter.cpp;
 			path = ../../Source/LightBlock/model/LightBlockModelParameter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		54D54C0578451C508102001E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SerialManager.h;
+			path = ../../Source/Common/Serial/SerialManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5617809C4A723B606C5B0812 = {
@@ -1021,6 +1111,13 @@
 			path = ../../Resources/models/patterns/noise.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		5E67C2141BB339744B2777E9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = LighttoysVisualProp.cpp;
+			path = ../../Source/Prop/props/lighttoys/visual/LighttoysVisualProp.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		60B292FF72E698B93A9AB7C2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1103,6 +1200,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = LightBlockModelLibraryUI.h;
 			path = ../../Source/LightBlock/model/ui/LightBlockModelLibraryUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		6EB88211168E9412DB011854 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = cobs.h;
+			path = ../../Source/Common/Serial/lib/cobs/cobs.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		7371371180AED5DB32A8C91D = {
@@ -1196,11 +1300,25 @@
 			path = ../../Source/LightBlock/model/blocks/picture/PictureBlock.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		87859A531C6BE994FC1F48E9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = cobs.cpp;
+			path = ../../Source/Common/Serial/lib/cobs/cobs.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		878A4313101E6FF0D57EE3CD = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_osc.cpp";
 			path = "../../JuceLibraryCode/include_juce_osc.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		87CFC58F1D51FFE44508FB15 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "list_ports_osx.cc";
+			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc";
 			sourceTree = "SOURCE_ROOT";
 		};
 		892550DDAEA7C386E6C3F006 = {
@@ -1399,6 +1517,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModelLibrary.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		A250B1035CA849FC5B073CCE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SerialManager.cpp;
+			path = ../../Source/Common/Serial/SerialManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A2EA8ABFF472FAEC83673DF2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1432,6 +1557,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightBlockLayer.cpp;
 			path = ../../Source/Timeline/layers/Block/LightBlockLayer.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		ABD0110E75C21C25D84140A9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = LighttoysVisualProp.h;
+			path = ../../Source/Prop/props/lighttoys/visual/LighttoysVisualProp.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		AD55A210C5F1845A82921903 = {
@@ -1509,6 +1641,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = BinaryData.cpp;
 			path = ../../JuceLibraryCode/BinaryData.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		BA973948500C0C4F787D10F4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "list_ports_win.cc";
+			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc";
 			sourceTree = "SOURCE_ROOT";
 		};
 		BB49CE530EF2DF020DBCAA60 = {
@@ -1609,11 +1748,25 @@
 			path = ../../JuceLibraryCode/AppConfig.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		C6581380592CE0C18AAB4D52 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = LighttoysFTProp.cpp;
+			path = ../../Source/Prop/props/lighttoys/ft/LighttoysFTProp.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		CA388DF22F9535539B26931B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = LightBlockLayerPanel.h;
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		CD67962FD72F93DC288712DE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SerialDevice.h;
+			path = ../../Source/Common/Serial/SerialDevice.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		CDF46B099D8A37106496ED1F = {
@@ -1622,6 +1775,13 @@
 			name = "juce_gui_basics";
 			path = "~/JUCE/modules/juce_gui_basics";
 			sourceTree = "<absolute>";
+		};
+		CE89FAA8D3CC0620F5D5FF86 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SerialDeviceParameter.h;
+			path = ../../Source/Common/Serial/SerialDeviceParameter.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		CEB1B439924B457073ECFF09 = {
 			isa = PBXFileReference;
@@ -1698,6 +1858,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_organicui.cpp";
 			path = "../../JuceLibraryCode/include_juce_organicui.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		D721774C83C3D5512A0D8746 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "list_ports_linux.cc";
+			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D7E6B27DC9E84D0C58F7EDF2 = {
@@ -1952,6 +2119,13 @@
 			path = ../../Source/Prop/props/flowtoys/flowclub/FlowClubProp.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		FF8212362C0F64DBEC238CE2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = unix.cc;
+			path = ../../Source/Common/Serial/lib/serial/impl/unix.cc;
+			sourceTree = "SOURCE_ROOT";
+		};
 		208154AD871CA4748CAF4FD4 = {
 			isa = PBXGroup;
 			children = (
@@ -1987,6 +2161,75 @@
 				335EEC97C15780DD0F2E5389,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		02E4B60C2E899AC131204E8B = {
+			isa = PBXGroup;
+			children = (
+				D721774C83C3D5512A0D8746,
+				87CFC58F1D51FFE44508FB15,
+				BA973948500C0C4F787D10F4,
+			);
+			name = "list_ports";
+			sourceTree = "<group>";
+		};
+		727072B92DBBDDCFD2C903F0 = {
+			isa = PBXGroup;
+			children = (
+				2E89682C93FB1D0A46886BD1,
+				02E4B60C2E899AC131204E8B,
+				FF8212362C0F64DBEC238CE2,
+				02981ECE5EE4EDB834E85FB3,
+			);
+			name = impl;
+			sourceTree = "<group>";
+		};
+		D0B1A0F34AFBC641BB7F5415 = {
+			isa = PBXGroup;
+			children = (
+				727072B92DBBDDCFD2C903F0,
+			);
+			name = serial;
+			sourceTree = "<group>";
+		};
+		875D19A2788E809A4FEB8782 = {
+			isa = PBXGroup;
+			children = (
+				87859A531C6BE994FC1F48E9,
+				6EB88211168E9412DB011854,
+			);
+			name = cobs;
+			sourceTree = "<group>";
+		};
+		507C8926220D631FDDBA059C = {
+			isa = PBXGroup;
+			children = (
+				D0B1A0F34AFBC641BB7F5415,
+				875D19A2788E809A4FEB8782,
+			);
+			name = lib;
+			sourceTree = "<group>";
+		};
+		F854FEFAB9608733941E8617 = {
+			isa = PBXGroup;
+			children = (
+				507C8926220D631FDDBA059C,
+				4FE1871211462BBB87D34AFB,
+				CD67962FD72F93DC288712DE,
+				0CDDE2CF576B339D7586EFEA,
+				CE89FAA8D3CC0620F5D5FF86,
+				A250B1035CA849FC5B073CCE,
+				54D54C0578451C508102001E,
+			);
+			name = Serial;
+			sourceTree = "<group>";
+		};
+		31E67B25124A445D58BC2A57 = {
+			isa = PBXGroup;
+			children = (
+				F854FEFAB9608733941E8617,
+			);
+			name = Common;
 			sourceTree = "<group>";
 		};
 		4350280D9696A0A6371264ED = {
@@ -2398,6 +2641,33 @@
 			name = LightBlock;
 			sourceTree = "<group>";
 		};
+		30611A893A94A758A81331D4 = {
+			isa = PBXGroup;
+			children = (
+				5E67C2141BB339744B2777E9,
+				ABD0110E75C21C25D84140A9,
+			);
+			name = visual;
+			sourceTree = "<group>";
+		};
+		DAC1C4E93116CD0C54B3C0E2 = {
+			isa = PBXGroup;
+			children = (
+				C6581380592CE0C18AAB4D52,
+				4A7FFBD7510E344DB730800C,
+			);
+			name = ft;
+			sourceTree = "<group>";
+		};
+		3BA638F4EB9D3AB6736394F7 = {
+			isa = PBXGroup;
+			children = (
+				30611A893A94A758A81331D4,
+				DAC1C4E93116CD0C54B3C0E2,
+			);
+			name = lighttoys;
+			sourceTree = "<group>";
+		};
 		3A5E763F2E460933433D6949 = {
 			isa = PBXGroup;
 			children = (
@@ -2449,6 +2719,7 @@
 		5A92B1617AD663BB84A2778D = {
 			isa = PBXGroup;
 			children = (
+				3BA638F4EB9D3AB6736394F7,
 				3A5E763F2E460933433D6949,
 				71A50B3C4354D1BC88832612,
 			);
@@ -2484,6 +2755,7 @@
 		DA08DC73F2CE78AB063AFD17 = {
 			isa = PBXGroup;
 			children = (
+				31E67B25124A445D58BC2A57,
 				75668C3074610EB07798E80A,
 				74F2EABA732AF2E7CFED9F54,
 				F911BF0C0B30DF37E2CE0979,
@@ -2823,6 +3095,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD62751F9653806034013404,
+				195DB0DE77CED5C661CE4EE7,
+				108A694C27E9D28E1F5FC699,
+				31012C82F371A777AC7AFF24,
+				9659DB1CAAB80BF9706141F0,
+				1BA176C3BCA2BB935B7B348C,
+				81DF8C5FCEE32E5E09A237B7,
+				47B629008D8514111CB11D29,
+				F13CA73C6582D698D6C1E86A,
+				111BE2C116F9D4D96982805A,
 				6160C279B3285CE01D431A39,
 				7D3C7886D439BAE2D3231BA2,
 				C0A859578655DEE96BCA7F40,
@@ -2886,6 +3168,8 @@
 				1FF430B764F5C52D6E8F58B3,
 				C7CCFEB3BC0D5709CE33EE86,
 				5EA0388E20427326CD2D0595,
+				C505E45629B737E29B607859,
+				7F25BE7F8A4997F5682CC689,
 				2EB88E2224AB16EA6B5C097D,
 				69547B2CFB15A45E366C8A9B,
 				58A4157A61B008C7529E751E,

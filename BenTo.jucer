@@ -25,6 +25,41 @@
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{EE130150-B1B1-4FF0-6360-8BEF17AAE2D5}" name="Common">
+        <GROUP id="{E5AB7332-E8D5-6861-6B71-6BBA6E1DA217}" name="Serial">
+          <GROUP id="{A05100E8-DD1D-77F5-EF15-6F01585C9AAA}" name="lib">
+            <GROUP id="{1CC34E65-739F-DD21-CAFB-79E07823FDD3}" name="serial">
+              <GROUP id="{16478FD5-D606-2BCF-19D0-566EC616EAEE}" name="impl">
+                <FILE id="QjvUq3" name="serial.cc" compile="1" resource="0" file="Source/Common/Serial/lib/serial/serial.cc"/>
+                <GROUP id="{9B4379E8-1576-4CF0-EC54-39D366977CA1}" name="list_ports">
+                  <FILE id="AAadfK" name="list_ports_linux.cc" compile="1" resource="0"
+                        file="Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc"/>
+                  <FILE id="zCxIC1" name="list_ports_osx.cc" compile="1" resource="0"
+                        file="Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc"/>
+                  <FILE id="WMWDuc" name="list_ports_win.cc" compile="1" resource="0"
+                        file="Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc"/>
+                </GROUP>
+                <FILE id="JUzv31" name="unix.cc" compile="1" resource="0" file="Source/Common/Serial/lib/serial/impl/unix.cc"/>
+                <FILE id="T0Qmsm" name="win.cc" compile="1" resource="0" file="Source/Common/Serial/lib/serial/impl/win.cc"/>
+              </GROUP>
+            </GROUP>
+            <GROUP id="{9F8AA1B2-DC00-C7A6-A326-7EF26E7E46BC}" name="cobs">
+              <FILE id="urfea5" name="cobs.cpp" compile="1" resource="0" file="Source/Common/Serial/lib/cobs/cobs.cpp"/>
+              <FILE id="ZTtE1U" name="cobs.h" compile="0" resource="0" file="Source/Common/Serial/lib/cobs/cobs.h"/>
+            </GROUP>
+          </GROUP>
+          <FILE id="bHQsIa" name="SerialDevice.cpp" compile="1" resource="0"
+                file="Source/Common/Serial/SerialDevice.cpp"/>
+          <FILE id="zybZvG" name="SerialDevice.h" compile="0" resource="0" file="Source/Common/Serial/SerialDevice.h"/>
+          <FILE id="JiPgL4" name="SerialDeviceParameter.cpp" compile="1" resource="0"
+                file="Source/Common/Serial/SerialDeviceParameter.cpp"/>
+          <FILE id="ntxa3F" name="SerialDeviceParameter.h" compile="0" resource="0"
+                file="Source/Common/Serial/SerialDeviceParameter.h"/>
+          <FILE id="UBXk2b" name="SerialManager.cpp" compile="1" resource="0"
+                file="Source/Common/Serial/SerialManager.cpp"/>
+          <FILE id="qdT1yK" name="SerialManager.h" compile="0" resource="0" file="Source/Common/Serial/SerialManager.h"/>
+        </GROUP>
+      </GROUP>
       <GROUP id="{DD3F6708-4882-5DBB-AA47-902382837C77}" name="Audio">
         <GROUP id="{C26FBE46-2C24-03EF-A8C4-1682E596F5DF}" name="ui">
           <FILE id="ItufxZ" name="AudioManagerHardwareEditor.cpp" compile="1"
@@ -313,6 +348,20 @@
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
+          <GROUP id="{C522011C-89AC-576D-FB1C-E685E5E8AE23}" name="lighttoys">
+            <GROUP id="{5CACE4CA-1A73-F3AB-8248-A5CA9C2EBA55}" name="visual">
+              <FILE id="MAsP2T" name="LighttoysVisualProp.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/lighttoys/visual/LighttoysVisualProp.cpp"/>
+              <FILE id="pWkYEY" name="LighttoysVisualProp.h" compile="0" resource="0"
+                    file="Source/Prop/props/lighttoys/visual/LighttoysVisualProp.h"/>
+            </GROUP>
+            <GROUP id="{408647FB-37B9-7763-D9B7-284E1CBC7A97}" name="ft">
+              <FILE id="bbMd80" name="LighttoysFTProp.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/lighttoys/ft/LighttoysFTProp.cpp"/>
+              <FILE id="zTJcPB" name="LighttoysFTProp.h" compile="0" resource="0"
+                    file="Source/Prop/props/lighttoys/ft/LighttoysFTProp.h"/>
+            </GROUP>
+          </GROUP>
           <GROUP id="{2ABCE6F1-98C0-E49C-51B2-9A06C1A77026}" name="garnav">
             <FILE id="rROiLA" name="SmarballProp.cpp" compile="1" resource="0"
                   file="Source/Prop/props/garnav/SmarballProp.cpp"/>
@@ -365,10 +414,11 @@
     <OSX/>
   </LIVE_SETTINGS>
   <EXPORTFORMATS>
-    <VS2017 targetFolder="Builds/VisualStudio2017" smallIcon="YlXmhK" bigIcon="YlXmhK">
+    <VS2017 targetFolder="Builds/VisualStudio2017" smallIcon="YlXmhK" bigIcon="YlXmhK"
+            externalLibraries="Setupapi.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/Debug" headerPath="../../External/asio"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/Release" headerPath="../../External/asio"/>
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/Debug" headerPath="../../External/asio&#10;../../External/serial/include"/>
+        <CONFIGURATION name="Release" binaryPath="Binaries/Release" headerPath="../../External/asio&#10;../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
@@ -440,7 +490,7 @@
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio"/>
+        <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>

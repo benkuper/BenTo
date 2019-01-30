@@ -15,6 +15,8 @@ juce_ImplementSingleton(PropManager)
 #include "props/flowtoys/flowclub/FlowClubProp.h"
 #include "props/flowtoys/flowpoi/FlowPoiProp.h"
 #include "props/garnav/SmarballProp.h"
+#include "props/lighttoys/ft/LighttoysFTProp.h"
+#include "props/lighttoys/visual/LighttoysVisualProp.h"
 
 PropManager::PropManager() :
 	BaseManager("Props")
@@ -45,11 +47,12 @@ PropManager::PropManager() :
 	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs", broadcastIp);
 
 
-
-	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowClub", FlowClubProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowPoi", FlowPoiProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "FlowBall", FlowBallProp::create));
+	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "Flowtoys Creator Club", FlowClubProp::create));
+	
 	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "Smartball", SmartballProp::create));
+
+	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys FT", LighttoysFTProp::create));
+	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys Visual", LighttoysVisualProp::create));
 	receiver.addListener(this);
 
 	setupReceiver();

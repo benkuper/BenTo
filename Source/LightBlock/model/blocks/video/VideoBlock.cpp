@@ -29,7 +29,11 @@ VideoBlock::VideoBlock(var params) :
 
 VideoBlock::~VideoBlock()
 {
-	if(receiver != nullptr) receiver->removeListener(this);
+	if (receiver != nullptr)
+	{
+		receiver->removeListener(this);
+		if(SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->removeReceiver(receiver);
+	}
 }
 
 void VideoBlock::setupReceiver()

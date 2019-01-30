@@ -19,7 +19,7 @@ public:
 	FlowClubProp(var params);
 	~FlowClubProp();
 
-	String getTypeString() const override { return "FlowClub"; }
+	String getTypeString() const override { return "Flowtoys Creator Club"; }
 
 	static FlowClubProp * create(var params) { return new FlowClubProp(params); } 
 };

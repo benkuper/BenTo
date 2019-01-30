@@ -14,7 +14,9 @@
 Prop::Prop(const String &name, var) :
 	BaseItem(name),
 	Thread("Prop "+name),
+	sendRate(50),
 	currentBlock(nullptr),
+	hasRealtimeControl(true),
 	propNotifier(50)
 {
 	id = addIntParameter("ID", "Prop ID", 0, 0, 100);
@@ -86,7 +88,6 @@ void Prop::update()
 	if (currentBlock != nullptr)
 	{
 		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
-		DBG("Time Prop " << time);
 		colors = currentBlock->getColors(id->intValue(), resolution->intValue(), time, var());
 
 		propListeners.call(&PropListener::colorsUpdated, this);
@@ -97,7 +98,7 @@ void Prop::update()
 	if (!findPropMode->boolValue()) sendColorsToProp();
 }
 
-void Prop::onContainerParameterChanged(Parameter * p)
+void Prop::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == activeProvider)
 	{
@@ -151,7 +152,7 @@ void Prop::run()
 	while (!threadShouldExit())
 	{
 		update();
-		sleep(1000.0f / 60); //60fps
+		sleep(1000.0f / sendRate); //60fps
 	}
 	
 }

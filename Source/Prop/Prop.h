@@ -24,6 +24,8 @@ public:
 	Prop(const String &name = "Prop", var params = var());
 	virtual ~Prop();
 
+	int sendRate;
+
 	IntParameter * id;
 	IntParameter * resolution;
 	EnumParameter * shape;
@@ -36,8 +38,9 @@ public:
 	String propId;
 
 	ScopedPointer<LightBlock> currentBlock;
-
 	TargetParameter * activeProvider; 
+
+	bool hasRealtimeControl;
 
 	virtual void clearItem() override;
 
@@ -45,7 +48,7 @@ public:
 
 	void update();
 
-	void onContainerParameterChanged(Parameter * p) override;
+	void onContainerParameterChangedInternal(Parameter * p) override;
 	void inspectableDestroyed(Inspectable *) override;
 
 	void sendColorsToProp(bool forceSend = false);
