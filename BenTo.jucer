@@ -475,8 +475,8 @@
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64"/>
-        <CONFIGURATION isDebug="0" name="Release" linuxArchitecture="-m64"/>
+        <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64" headerPath="../../External/serial/include"/>
+        <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
