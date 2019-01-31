@@ -34,6 +34,17 @@ PropUI::~PropUI()
 {
 }
 
+void PropUI::paintOverChildren(Graphics & g)
+{
+	BaseItemUI::paintOverChildren(g);
+	if (item->isBaking->boolValue())
+	{
+		g.fillAll(Colours::black.withAlpha(.5f));
+		g.setColour(Colours::orange);
+		g.drawFittedText("Baking ...", getLocalBounds(), Justification::centred, 1);
+	}
+}
+
 void PropUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemUI::mouseDown(e);
@@ -69,4 +80,9 @@ void PropUI::resizedInternalContent(Rectangle<int> &r)
 	batteryUI->setBounds(r.removeFromTop(10));
 	r.removeFromTop(2);
 	viz.setBounds(r.reduced(2));
+}
+
+void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
+{
+	if (c == item->isBaking) repaint();
 }

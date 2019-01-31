@@ -35,6 +35,8 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 	addToGroup = addTrigger("Add To Group", "Add to the existing paired group");
 	finishPairing = addTrigger("Finish Pairing", "Finish the pairing");
 
+	bakingShowID = addIntParameter("Baking Show ID", "The ID of the show to upload to", 1, 1, 4);
+
 	for (int i = 0; i < 32; i++)
 	{
 		FTPropStatus * ftp = new FTPropStatus(i);
@@ -68,6 +70,66 @@ void LighttoysFTProp::sendColorsToPropInternal()
 	{
 		sendMessage("leach", getPropMaskForId(i), 6, colors[i].getBlue(), colors[i].getGreen(), colors[i].getRed(), colors[i].getBlue(), colors[i].getGreen(), colors[i].getRed());
 	}
+}
+
+void LighttoysFTProp::uploadCurrentBlock(Array<TimedColors> bakedColors)
+{
+	if (bakedColors.size() == 0) return;
+
+	int showID = bakingShowID->intValue() - 1;// 1-4 > 0-3
+	//int numFrames = bakedColors.size();
+	int numProps = resolution->intValue();
+	for (int i = 0; i < numProps; i++)
+	{
+		//send
+		//int propMask = getPropMaskForId(i);
+		//sendMessage("ldson", propMask);
+		//sendMessage("ldsclear", propMask, showID);
+		//sleep(500); //todo, replace this by command "loprc", and check that it returns state of each process (example : 2:-1;4:0 means 2 is not complete, 4 is complete);
+
+		//Array<int>
+
+		String data = "SHOW_FOR_PROP_" + String(i) + "\n\n";
+
+		for (auto &tc : bakedColors)
+		{
+			int r = tc.colors[i].getRed();
+			int g = tc.colors[i].getGreen();
+			int b = tc.colors[i].getBlue();
+			int ms = int(tc.time * 1000);
+
+			data += String(ms) + "ms: setrgb AB 0 > " + String(r) + "," + String(g) + "," + String(b) + "\n";
+
+			//sendMessage("ldswrite",propMask, showID, 
+			
+		}
+
+		data += String(int(bakedColors[bakedColors.size() - 1].time + 1)) + "s: end";
+
+		DBG("Upload to prop " + data);
+
+		File f = File::getSpecialLocation(File::userDesktopDirectory).getChildFile("Show" + String(showID) + "_Prop" + String(i)+".lsf");
+		if (f.existsAsFile()) f.deleteFile();
+
+		{
+			FileOutputStream fs(f);
+			if (fs.openedOk())
+			{
+				fs.writeText(data,false,false,"\n");
+				fs.flush();
+				LOG("Show saved to file " << f.getFullPathName());
+			}
+			else
+			{
+				LOGWARNING("Error writing to file " << f.getFullPathName());
+			}
+		}
+
+		
+
+		//sendMessage("ldsoff", propMask);
+	}
+	
 }
 
 void LighttoysFTProp::onContainerParameterChangedInternal(Parameter * p)

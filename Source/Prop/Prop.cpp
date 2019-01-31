@@ -34,6 +34,17 @@ Prop::Prop(const String &name, var) :
 	battery->setControllableFeedbackOnly(true);
 
 	findPropMode = addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
+
+	bakeStartTime = addFloatParameter("Bake Start Time", "Set the start time of baking", 0,0);
+	bakeStartTime->defaultUI = FloatParameter::TIME;
+	bakeEndTime = addFloatParameter("Bake End Time", "Set the end time of baking", 1,1);
+	bakeEndTime->defaultUI = FloatParameter::TIME;
+	bakeFrequency = addIntParameter("Bake Frequency", "The frequency at which to bake", 50, 1, 500);
+	bakeAndUploadTrigger = addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
+	
+	isBaking = addBoolParameter("Is Baking", "Is this prop currently baking ?", false);
+	isBaking->setControllableFeedbackOnly(true);
+
 }
 
 Prop::~Prop()
@@ -64,8 +75,6 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		if(!currentBlock->provider.wasObjectDeleted()) currentBlock->provider->removeInspectableListener(this);
 		//currentBlock->removeLightBlockListener(this);
 		currentBlock = nullptr;
-
-
 	}
 
 	if(model != nullptr) currentBlock = new LightBlock(model);
@@ -76,7 +85,6 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		addChildControllableContainer(currentBlock);
 		currentBlock->provider->addInspectableListener(this);
 		startThread();
-
 	}
 
 	propListeners.call(&PropListener::propBlockChanged, this);
@@ -120,6 +128,19 @@ void Prop::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
+void Prop::onContainerTriggerTriggered(Trigger * t)
+{
+	BaseItem::onContainerTriggerTriggered(t);
+	if (t == bakeAndUploadTrigger)
+	{
+		if (currentBlock != nullptr)
+		{
+			isBaking->setValue(true);
+		}else NLOGWARNING(niceName, "Current block not assigned, cannot bake");
+
+	}
+}
+
 void Prop::inspectableDestroyed(Inspectable * i)
 {
 	if (currentBlock != nullptr && i == currentBlock->provider) setBlockFromProvider(nullptr);
@@ -130,6 +151,39 @@ void Prop::sendColorsToProp(bool forceSend)
 {
 	if (!enabled->boolValue() && !forceSend) return;
 	sendColorsToPropInternal();
+}
+
+
+Array<Prop::TimedColors> Prop::bakeCurrentBlock()
+{
+	
+	Array<TimedColors> result;
+	if (currentBlock == nullptr) return result;
+	
+	NLOG(niceName, "Baking block " << currentBlock->niceName);
+
+	double stepTime = 1.0 / bakeFrequency->intValue();
+	float startTime = bakeStartTime->floatValue();
+	float endTime = bakeEndTime->floatValue();
+	int pId = id->intValue();
+
+	int pResolution = resolution->intValue();
+	var params = new DynamicObject();
+
+	params.getDynamicObject()->setProperty("updateAutomation", false); //Avoid actually updating the block parameter automations if there are some (in timeline for instance)
+
+	for (double curTime = startTime; curTime <= endTime; curTime += stepTime)
+	{
+		result.add({ curTime - startTime, currentBlock->getColors(pId, pResolution, curTime, params) });
+	}
+
+	return result;
+}
+
+
+void Prop::uploadCurrentBlock(Array<TimedColors> bakedColors)
+{
+	NLOG(niceName, "Uploading here... " << bakedColors.size() << " frames");
 }
 
 var Prop::getJSONData()
@@ -151,8 +205,16 @@ void Prop::run()
 {
 	while (!threadShouldExit())
 	{
-		update();
-		sleep(1000.0f / sendRate); //60fps
+		if (isBaking->boolValue())
+		{
+			Array<TimedColors> bakedColors = bakeCurrentBlock();
+			if (bakedColors.size() > 0) uploadCurrentBlock(bakedColors);
+			isBaking->setValue(false);
+		}
+		else
+		{
+			update();
+			sleep(1000.0f / sendRate); //60fps
+		}
 	}
-	
 }

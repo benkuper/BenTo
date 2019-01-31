@@ -36,6 +36,8 @@ public:
 	Trigger * addToGroup;
 	Trigger * finishPairing;
 
+	IntParameter * bakingShowID;
+
 	String deviceID;
 	String lastOpenedDeviceID; //for ghosting
 	SerialDevice * device;
@@ -43,9 +45,13 @@ public:
 	OwnedArray<FTPropStatus> statusList;
 	ControllableContainer propsStatus;
 
+	
+
 	bool slaveCheckList[32];
 
 	virtual void sendColorsToPropInternal() override;
+	virtual void uploadCurrentBlock(Array<TimedColors> bakedColors) override;
+
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void onContainerTriggerTriggered(Trigger *) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;

@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 #include "LightBlock/LightBlock.h"
 
+
 class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
@@ -33,6 +34,12 @@ public:
 	FloatParameter * battery;
 	BoolParameter * findPropMode;
 
+	FloatParameter * bakeStartTime;
+	FloatParameter * bakeEndTime;
+	IntParameter * bakeFrequency;
+	Trigger * bakeAndUploadTrigger;
+	BoolParameter * isBaking;
+
 	Array<Colour> colors;
 
 	String propId;
@@ -49,10 +56,20 @@ public:
 	void update();
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onContainerTriggerTriggered(Trigger * t) override;
 	void inspectableDestroyed(Inspectable *) override;
 
 	void sendColorsToProp(bool forceSend = false);
 	virtual void sendColorsToPropInternal() {}
+
+	struct TimedColors
+	{
+		double time;
+		Array<Colour> colors;
+	};
+	
+	virtual Array<TimedColors> bakeCurrentBlock();
+	virtual void uploadCurrentBlock(Array<TimedColors> bakedColors);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

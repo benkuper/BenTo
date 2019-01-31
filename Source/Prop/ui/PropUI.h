@@ -25,9 +25,12 @@ public:
 	ScopedPointer<TargetParameterUI> targetUI;
 	ScopedPointer<FloatSliderUI> batteryUI;
 
+	void paintOverChildren(Graphics &g) override;
 	void mouseDown(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;
+
+	void controllableFeedbackUpdateInternal(Controllable * c) override;
 };
