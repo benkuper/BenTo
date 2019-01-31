@@ -100,7 +100,7 @@ void Spatializer::computeSpat()
 		int numPoints = si->resolution->intValue();
 		for (int i = 0; i < numPoints; i++)
 		{
-			si->colors.set(i, data.getPixelColour(si->points[i].x*(tex.getWidth()-1), si->points[i].y*(tex.getHeight()-1)));
+			si->colors.set(i, data.getPixelColour(jlimit<int>(0,tex.getWidth()-1,si->points[i].x*(tex.getWidth()-1)), jlimit<int>(0,tex.getHeight()-1,si->points[i].y*(tex.getHeight()-1))));
 		}
 	}
 	
