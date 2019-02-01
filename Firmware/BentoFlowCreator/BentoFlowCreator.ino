@@ -6,8 +6,10 @@
 #define USE_BUTTON 1
 #define USE_WIFI 1
 
+#define USE_IR 1
+
 #if USE_WIFI
-#define USE_OSC 0
+#define USE_OSC 1
 #endif
 
 #define USE_TOUCH 0
@@ -59,6 +61,11 @@ TouchManager touchManager;
 #if USE_BATTERY
 #include "BatteryManager.h"
 BatteryManager batteryManager;
+#endif
+
+#if USE_IR
+#include "IRManager.h"
+IRManager irManager;
 #endif
 
 long orientationSendRateMS = 20;
@@ -213,7 +220,10 @@ void messageReceived(OSCMessage &msg)
   } else if (msg.match("/sleep"))
   {
     sleep();
-  } else
+  } else if(msg.match("/battery"))
+  {
+      batteryLevelUpdate();
+  }else
   {
     if (wifiManager.handleMessage(msg)) return;
 
@@ -221,10 +231,12 @@ void messageReceived(OSCMessage &msg)
     if (touchManager.handleMessage(msg)) return;
 #endif
 
-    Serial.println("here");
 #if USE_LEDSTRIP
-    Serial.println("before strip");
     if (stripManager.handleMessage(msg)) return;
+#endif
+
+#if USE_IR
+    if (irManager.handleMessage(msg)) return;
 #endif
 
 #if SERIAL_DEBUG
@@ -273,6 +285,8 @@ void batteryLevelUpdate()
   OSCMessage msg("/battery/level");
   msg.add(DeviceSettings::deviceID);
   msg.add(batteryManager.normalizedVoltage);
+  msg.add(batteryManager.voltage);
+  msg.add(batteryManager.rawData);
   oscManager.sendMessage(msg);
 #endif
 }
@@ -294,39 +308,36 @@ void resetESP(bool toBootloader)
 void sleep()
 {
 #if USE_LEDSTRIP
-  
+
   int h = batteryManager.normalizedVoltage * 96;
-  
+
   for (int i = 0; i < 5; i++)
   {
-    setFullColor(CHSV(h,255,60));
+    setFullColor(CHSV(h, 255, 60));
     delay(20);
     setFullColor(CRGB::Black);
     delay(20);
   }
 
-  
+
   for (int i = NUM_LEDS; i > 0; i--)
   {
-    setRange(0, i, CHSV(h,255,60), true);
+    setRange(0, i, CHSV(h, 255, 60), true);
     delay(10);
   }
   FastLED.clear();
 #endif
 
   delay(1000);
-  esp_sleep_enable_ext0_wakeup(GPIO_NUM_13,HIGH);
+  esp_sleep_enable_ext0_wakeup(GPIO_NUM_13, HIGH);
   esp_deep_sleep_start();
 }
 
 //Setup & loop
 void setup() {
-
-  
-  
   Serial.begin(115200);
   Serial.println("");
-  
+
   btManager.init();
   btManager.addButtonCallback(&onButtonEvent);
   btManager.addMultipressCallback(&onMultipress);
@@ -355,17 +366,26 @@ void setup() {
 
 #if USE_LEDSTRIP
   stripManager.init();
+
+#if USE_BATTERY
   batteryManager.checkBattery(true);
   int h = batteryManager.normalizedVoltage * 96;
+#else
+  int h = 150;
+#endif
+
   for (int i = 0; i < NUM_LEDS; i++)
   {
-    setRange(0, i, CHSV(h,255,60) , true);
+    setRange(0, i, CHSV(h, 255, 60) , true);
     delay(10);
   }
-  
+
   delay(50);
 #endif
 
+#if USE_IR
+  irManager.init();
+#endif
 
 #if USE_TOUCH
   touchManager.init();
@@ -386,6 +406,9 @@ void setup() {
 #if USE_LEDSTRIP
   if (wifiManager.isConnected)
   {
+#if USE_OSC
+    oscManager.isReadyToSend = true;
+#endif
     setFullColor(CRGB::Green);
     delay(300);
   } else

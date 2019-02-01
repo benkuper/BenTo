@@ -53,12 +53,8 @@ public:
 
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
     FastLED.setBrightness(60);  
-    setFullColor(CRGB::Cyan);
-    delay(500);
-    setFullColor(CRGB::Black);
-    
 
-    //initSnapshot();
+    initSnapshot();
   }
 
   void update()

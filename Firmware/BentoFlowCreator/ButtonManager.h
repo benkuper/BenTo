@@ -1,7 +1,7 @@
 #define BUTTON_PIN 13
 #define LONGPRESS_TIME 700 //more than 500ms is long press
 #define SHORTPRESS_TIME 500 //less than 500ms is short press
-#define MULTIPRESS_TIME 250 //each new press shorter than 500ms after the previous one will increase the multiclick
+#define MULTIPRESS_TIME 300 //each new press shorter than 500ms after the previous one will increase the multiclick
 
 #define BT_PRESSED 0
 #define BT_RELEASED 1
@@ -95,4 +95,3 @@ public:
   }
   static void onMultipressDefaultCallback(int count) {}
 };
-

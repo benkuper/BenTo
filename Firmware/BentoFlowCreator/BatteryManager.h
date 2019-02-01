@@ -3,6 +3,12 @@
 
 #define BATT_CHECK_INTERVAL 500
 
+#define BATTERY_PIN 32
+
+#define VOLTAGE_MIN 2300
+#define VOLTAGE_MAX 2800
+#define VOLTAGE_CHARGING 4090
+
 #define BATT_MIN 3.1
 #define BATT_MAX 4.2
 #define BATT_LOW 3.5
@@ -15,6 +21,7 @@ class BatteryManager
   public:
     static BatteryManager * instance;
 
+    int rawData;
     float voltage;
     float normalizedVoltage;
 
@@ -38,7 +45,7 @@ class BatteryManager
 
     void init()
     {
-
+      pinMode(BATTERY_PIN, INPUT);
     }
 
     void update()
@@ -58,9 +65,10 @@ class BatteryManager
       {
         lastCheckTime = millis();
 
-        setCharging(analogRead(A0) >= 1020);
+        rawData = analogRead(BATTERY_PIN);
+        setCharging(rawData >= VOLTAGE_CHARGING);
 
-        float newVoltage = mapFloat(analogRead(A0), 750, 1000, BATT_MIN, BATT_MAX); //Take account of voltage drop
+        float newVoltage = mapFloat(rawData, VOLTAGE_MIN, VOLTAGE_MAX, BATT_MIN, BATT_MAX); //Take account of voltage drop
 
         if (newVoltage != voltage)
         {
