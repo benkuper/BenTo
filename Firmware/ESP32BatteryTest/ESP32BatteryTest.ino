@@ -64,6 +64,7 @@ void loop() {
   if (btChanged && pressed)
   {
     Serial.println("SLEEP !");
+    delay(100);
     sleep();
   }
 
