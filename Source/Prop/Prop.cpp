@@ -13,15 +13,17 @@
 
 Prop::Prop(const String &name, var) :
 	BaseItem(name),
-	Thread("Prop "+name),
-	sendRate(50),
+	Thread("Prop " + name),
 	currentBlock(nullptr),
 	hasRealtimeControl(true),
 	propNotifier(50)
 {
 	id = addIntParameter("ID", "Prop ID", 0, 0, 100);
 	resolution = addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1, INT32_MAX);
+	sendRate = addIntParameter("Send Rate", "Frequency at which update the colors of this prop and actually send it to the prop", 30, 1, 200);
+
 	colors.resize(resolution->intValue());
+
 
 	shape = addEnumParameter("Shape", "The shape of the prop");
 	shape->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP);
@@ -214,7 +216,7 @@ void Prop::run()
 		else
 		{
 			update();
-			sleep(1000.0f / sendRate); //60fps
+			sleep(1000.0f / sendRate->intValue()); //60fps
 		}
 	}
 }

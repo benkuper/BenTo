@@ -18,7 +18,7 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 	device(nullptr),
 	propsStatus("Connected Devices")
 {
-	sendRate = 30;
+	sendRate->setValue(30);
 
 	deviceParam = new SerialDeviceParameter("device", "Serial device to connect", true);
 	addParameter(deviceParam);

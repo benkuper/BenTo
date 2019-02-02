@@ -25,11 +25,10 @@ public:
 	Prop(const String &name = "Prop", var params = var());
 	virtual ~Prop();
 
-	int sendRate;
-
 	IntParameter * id;
 	IntParameter * resolution;
 	EnumParameter * shape;
+	IntParameter * sendRate;
 
 	FloatParameter * battery;
 	BoolParameter * findPropMode;

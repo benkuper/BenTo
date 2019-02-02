@@ -31,9 +31,9 @@ PropManager::PropManager() :
 	IPAddress::findAllAddresses(ad);
 	for (auto &ip : ad)
 	{
-		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1.") || ip.toString().startsWith("10.1.10."))
+		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1.") || ip.toString().startsWith("192.168.43.") || ip.toString().startsWith("10.1.10.") || ip.toString().startsWith("10.0.0."))
 		{
-			localIp = ip.toString();
+			localIp = ip.toString(); 
 			break;
 		}
 	}
@@ -136,14 +136,14 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		String pHost = String(m[0].getString());
 		String pid = String(m[1].getInt32());
 
-		Prop * p = getPropWithHardwareId(pid);
+		DBG("Got wassup : " << pHost);
+		Prop * p = getPropWithHardwareId(pHost);
 		if (p == nullptr)
 		{
-			FlowClubProp * fp = static_cast<FlowClubProp *>(managerFactory->create("FlowClub"));
+			FlowClubProp * fp = static_cast<FlowClubProp *>(managerFactory->create(FlowClubProp::getTypeStringStatic()));
 			if (fp != nullptr)
 			{
-				DBG(" > m1 : " << m[1].getInt32());
-				fp->propId = pid;
+				fp->propId = pHost;
 				fp->remoteHost->setValue(pHost);
 				LOG("Found ! " << fp->propId << " : " << fp->remoteHost->stringValue());
 				addItem(fp);
@@ -159,7 +159,14 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr) return;
 		p->battery->setValue(m[1].getFloat32());
-	} else if (address == "/touch/pressed")
+	} else if (address == "/battery/charging")
+	{
+		String pid = String(m[0].getInt32());
+		Prop * p = getPropWithHardwareId(pid);
+		if (p == nullptr) return;
+		p->battery->setValue(m[1].getFloat32());
+	}
+	else if (address == "/touch/pressed")
 	{
 		String pid = String(m[0].getInt32());
 		FlowClubProp * fp = static_cast<FlowClubProp *>(getPropWithHardwareId(pid));
@@ -167,7 +174,7 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		fp->button->setValue(m[1].getInt32() == 1);
 	} else
 	{
-		LOG("Message received : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
+		LOG("Message not handled : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
 
 	}
 }
