@@ -24,11 +24,10 @@
 int debounceCount = 0;
 bool pressed = false;
 
-struct Mode
-{
-  int ledPower;
-  int irPower;
-};
+int rawData;
+long lastCheckTime;
+#define BATT_CHECK_INTERVAL 100
+bool enableCheckBattery = false;
 
 #define NUM_LEDS 32 //need that global
 CRGBArray<NUM_LEDS> leds; //need that global
@@ -36,7 +35,7 @@ CRGBArray<NUM_LEDS> leds; //need that global
 void setup() {
   Serial.begin(115200);
   Serial.println("");
-  
+
   // put your setup code here, to run once:
   pinMode(BATTERY_PIN, INPUT);
   pinMode(BUTTON_PIN, INPUT);
@@ -49,64 +48,72 @@ void setup() {
   digitalWrite(LED_ENABLE_PIN, HIGH);
 
   ledcSetup(IR_CHANNEL, IR_FREQ, IR_PWM_RESOLUTION);
-  ledcAttachPin(IR_PIN,IR_CHANNEL);
-  pinMode(IR_RX,INPUT);
+  ledcAttachPin(IR_PIN, IR_CHANNEL);
+  pinMode(IR_RX, INPUT);
   ledcWrite(IR_CHANNEL, 0);
-    
-  FastLED.addLeds<LED_TYPE, DATA_PIN, CLK_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-  setFullColor(CRGB(10,10,0));
 
+  FastLED.addLeds<LED_TYPE, DATA_PIN, CLK_PIN, COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+  setFullColor(CRGB(10, 10, 0));
+
+  delay(1000);
 }
 
 void loop() {
   bool btChanged = checkButton();
 
-  if(btChanged && pressed)
+  if (btChanged && pressed)
   {
     Serial.println("SLEEP !");
-    esp_sleep_enable_ext0_wakeup(GPIO_NUM_13, HIGH);
-    esp_deep_sleep_start();
+    sleep();
   }
 
   processSerial();
+
+  if (enableCheckBattery) checkBattery();
 }
 
 String buffer = "";
 
 void processSerial()
 {
-  if(Serial.available() > 0)
+  if (Serial.available() > 0)
   {
     char c = Serial.read();
-    if(c == '\r') {}
-    else if(c == '\n')
+    if (c == '\r') {}
+    else if (c == '\n')
     {
       processMessage();
       buffer = "";
-    }else buffer += c;
+    } else buffer += c;
   }
 }
 
 void processMessage()
 {
-  Serial.println("Process : "+buffer);
-  String cmd = buffer.substring(0, buffer.indexOf(' ')); 
-  int val = buffer.substring(buffer.indexOf(' ')+1).toInt();
-  val = std::min(std::max(val,0),255);
-  
-  if(cmd == "led")
+  Serial.println("Process : " + buffer);
+  String cmd = buffer.substring(0, buffer.indexOf(' '));
+  int val = buffer.substring(buffer.indexOf(' ') + 1).toInt();
+  val = std::min(std::max(val, 0), 255);
+
+  if (cmd == "led")
   {
-    Serial.println("Set RGB Leds to "+String(val));
+    Serial.println("Set RGB Leds to " + String(val));
     setFullColor(CRGB(val, val, val));
-  }else if(cmd == "ir")
+  } else if (cmd == "ir")
   {
-    Serial.println("Set IR to "+String(val));    
-    ledcWrite(IR_CHANNEL,val);
-  }else
+    Serial.println("Set IR to " + String(val));
+    ledcWrite(IR_CHANNEL, val);
+  } else if (cmd == "battery")
   {
-    Serial.println(cmd+" > "+val);
+    enableCheckBattery = val > 0;
+  } else if(cmd == "sleep")
+  {
+   sleep(); 
   }
-  
+  {
+    Serial.println(cmd + " > " + val);
+  }
+
 }
 
 bool checkButton()
@@ -129,6 +136,19 @@ bool checkButton()
 }
 
 
+void checkBattery()
+{
+
+  if (millis() - lastCheckTime > BATT_CHECK_INTERVAL)
+  {
+    lastCheckTime = millis();
+    rawData = analogRead(BATTERY_PIN);
+    Serial.println("Battery check " + String(rawData));
+  }
+}
+
+
+
 void setFullColor(CRGB color)
 {
   for (int i = 0; i < NUM_LEDS; i++)
@@ -137,4 +157,12 @@ void setFullColor(CRGB color)
   }
 
   FastLED.show();
+}
+
+void sleep()
+{
+  setFullColor(CRGB::Black);
+    delay(1000);
+    esp_sleep_enable_ext0_wakeup(GPIO_NUM_13, HIGH);
+    esp_deep_sleep_start();
 }
