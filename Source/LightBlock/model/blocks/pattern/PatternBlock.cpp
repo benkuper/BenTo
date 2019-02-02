@@ -26,7 +26,7 @@ PatternBlock::~PatternBlock()
 RainbowPattern::RainbowPattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
-	density = paramsContainer->addFloatParameter("Density", "The cycle density of the rainbow", 1, 0.1f, 10);
+	density = paramsContainer->addFloatParameter("Density", "The cycle density of the rainbow", 1, 0.1f, 100);
 	offset = paramsContainer->addFloatParameter("Offset", "The offset of the rainbow, in cycles", 0, 0, 20);
 	speed = paramsContainer->addFloatParameter("Speed", "The animation speed in cycles/second over the full range of the prop.", 0, 0, 20);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the hue depending on id of the prop", 0, 0, 10);
@@ -58,7 +58,7 @@ Array<Colour> RainbowPattern::getColors(int id, int resolution, double time, var
 NoisePattern::NoisePattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
-	scale = paramsContainer->addFloatParameter("Scale", "", 3, 0.1f, 20);
+	scale = paramsContainer->addFloatParameter("Scale", "", 3, 0.1f, 200);
 	speed = paramsContainer->addFloatParameter("Speed", "", 1, 0.1f, 20);
 	contrast = paramsContainer->addFloatParameter("Contrast", "", 3, 0, 10);
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 0, -1, 1);
