@@ -24,7 +24,10 @@ public:
   Mode currentMode;
 
   PatternManager pm;
-
+  
+  int propIDBufferIndex;
+  int propBufferIndex;
+  
   int ledBufferIndex;
   uint8_t colorBuffer[3];
   int colorBufferIndex;
@@ -37,7 +40,9 @@ public:
   #endif
   {
     currentMode = Mode::Streaming;
-    
+
+    propIDBufferIndex = 0;
+    propBufferIndex = 0;
     ledBufferIndex = 0;
     colorBufferIndex = 0;
     for(int i=0;i<3;i++) colorBuffer[i] = 0;
@@ -85,20 +90,32 @@ public:
         byte b = udp.read();
   
         if (b == 255) processBuffer();
-        else if (ledBufferIndex < NUM_LEDS)
+        else
         {
-          colorBuffer[colorBufferIndex] = (uint8_t)b;
-          colorBufferIndex++;
-          if (colorBufferIndex == 3)
+          
+          if(propIDBufferIndex == DeviceSettings::propID)
           {
-            leds[ledBufferIndex] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
+            colorBuffer[colorBufferIndex] = (uint8_t)b;
+            colorBufferIndex++;
+            if (colorBufferIndex == 3)
+            {
+              leds[ledBufferIndex] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
+  
+              //Serial.print(leds[ledBufferIndex],DEC);
+              //Serial.print(" ");
+              colorBufferIndex = 0;
+              ledBufferIndex ++;
+            }
+          }
 
-            //Serial.print(leds[ledBufferIndex],DEC);
-            //Serial.print(" ");
-            colorBufferIndex = 0;
-            ledBufferIndex ++;
+          propBufferIndex++;
+          if(propBufferIndex == NUM_LEDS*3)
+          {
+            propIDBufferIndex++;
+            propBufferIndex =0;
           }
         }
+          
       }
       udp.flush();
     }
@@ -109,13 +126,18 @@ public:
   
   void processBuffer()
   {
-    //Serial.println("");
-    //Serial.print("process Buffer : ");
-    //Serial.print(ledBufferIndex);
-    //Serial.println(" received.");
+    /*
+    Serial.println("");
+    Serial.print("process Buffer : ");
+    Serial.print(ledBufferIndex);
+    Serial.println(" received.");
+    */
     //FastLED.clear();
     FastLED.show();
+    propIDBufferIndex = 0;
+    propBufferIndex = 0;
     ledBufferIndex = 0;
+  
   }
   #endif
 

@@ -225,8 +225,9 @@ void messageReceived(OSCMessage &msg)
       batteryLevelUpdate();
   }else
   {
+    if(settings.handleMessage(msg)) return;
+    
     if (wifiManager.handleMessage(msg)) return;
-
 #if USE_TOUCH
     if (touchManager.handleMessage(msg)) return;
 #endif

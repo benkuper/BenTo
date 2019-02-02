@@ -69,12 +69,10 @@ class OSCManager
             Serial.println(remoteHost);
 #endif
 
-            Serial.println("Send wassup");
            OSCMessage msg("/wassup");
            msg.add(ipToString().c_str());
             msg.add(DeviceSettings::deviceID);
            sendMessage(msg);
-           Serial.println("Sent : "+ipToString()+", "+String(DeviceSettings::deviceID));
 
           } else
           {
@@ -94,12 +92,13 @@ class OSCManager
     {
      
       if (!isReadyToSend) return;
+      /*
 #if SERIAL_DEBUG
       char addr[32];
       msg.getAddress(addr);
       Serial.println("Send OSC message " + String(addr)+", isReadyToSend ? "+String(isReadyToSend));
 #endif
-
+*/
       udp.beginPacket(host, port);
       msg.send(udp);
       udp.endPacket();
