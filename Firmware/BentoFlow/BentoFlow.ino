@@ -17,7 +17,6 @@
 
 #define POWER_ENABLE_PIN 15
 
-#include "ConfigManager.h"
 
 #include "DeviceSettings.h"
 DeviceSettings settings;
@@ -485,6 +484,3 @@ void processSerial()
     }
   }
 }
-
-
-

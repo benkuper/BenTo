@@ -4,8 +4,6 @@
 #include "DeviceSettings.h"
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
-#include <ArduinoJson.h>
-#include "FS.h"
 
 #define USE_BONJOUR 0
 #define USE_SERVER 0
@@ -29,8 +27,8 @@ class WifiManager
 {
   public:
 
-    String ssid = "flowspace";
-    String password = "flowarts";
+    String ssid = "spacenet";
+    String password = "jhfdb97531$$";
 
     const int maxTries = 50;
 
@@ -253,5 +251,3 @@ class WifiManager
 };
 
 #endif
-
-

@@ -36,7 +36,7 @@ public:
   
   void update()
   {
-    int v = buttonIsPressed();
+    bool v = buttonIsPressed();
     
     if(v) debounceCount = min(debounceCount+1,BT_PRESS_DEBOUNCE);
     else debounceCount = max(debounceCount-1, 0);

@@ -52,12 +52,15 @@ class WiFiManager
 #endif
 
       // Connect to WiFi network
-      #if SERIAL_DEBUG
-      Serial.println(String("WiFiManager connecting to "+ssid+" : "+password));
-      #endif
+
 
       WiFi.mode(WIFI_STA);
-      WiFi.begin(ssid.c_str(),password.c_str());
+#if SERIAL_DEBUG
+      WiFi.printDiag(Serial);
+      Serial.println(String("WiFiManager connecting to " + ssid + " : " + password));
+#endif;
+
+      WiFi.begin(ssid.c_str(), password.c_str());
 
       int tryIndex = 0;
       bool success = true;
@@ -90,21 +93,21 @@ class WiFiManager
 
       if (!success || turnOffWiFi)
       {
-        if(turnOffWiFi)
+        if (turnOffWiFi)
         {
           WiFi.mode(WIFI_OFF);
-          #if SERIAL_DEBUG
+#if SERIAL_DEBUG
           Serial.println("Turn OFF WiFi");
-          #endif
+#endif
           return;
-        }else
+        } else
         {
           isConnected = false;
           setupLocalWiFi();
           apMode = true;
         }
       }
-      
+
 
 
 #if SERIAL_DEBUG
@@ -139,7 +142,7 @@ class WiFiManager
 
 #if USE_BONJOUR
 #endif
-      
+
       isConnected = true;
       delay(500);
     }
@@ -172,14 +175,14 @@ class WiFiManager
     void update()
     {
 #if USE_SERVER
-      if (apMode) 
+      if (apMode)
       {
         wServer.update();
-        if(wServer.ssid.length() > 0)
+        if (wServer.ssid.length() > 0)
         {
           Serial.println("WiFi Manager saving config...");
-          saveWiFiConfig(wServer.ssid.c_str(),wServer.pass.c_str());
-          
+          saveWiFiConfig(wServer.ssid.c_str(), wServer.pass.c_str());
+
         }
       }
 #endif
@@ -218,7 +221,7 @@ class WiFiManager
       onConnectingUpdate = func;
     }
 
-    
+
 
     static void connectingUpdateDefaultCallback(int curTry)
     {
