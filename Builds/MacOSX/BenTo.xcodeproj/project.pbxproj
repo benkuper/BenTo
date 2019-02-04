@@ -61,6 +61,10 @@
 			isa = PBXBuildFile;
 			fileRef = 51317BFC040AE415C6D3E7CC;
 		};
+		79ECBC66AC9F374FF3338A66 = {
+			isa = PBXBuildFile;
+			fileRef = 2EF8A9CCF6FFB9FD7734DF7E;
+		};
 		CD62751F9653806034013404 = {
 			isa = PBXBuildFile;
 			fileRef = 2E89682C93FB1D0A46886BD1;
@@ -469,6 +473,10 @@
 			isa = PBXBuildFile;
 			fileRef = 091DCFB72171D73649C6465B;
 		};
+		9947F34FC703CB375B0D610B = {
+			isa = PBXBuildFile;
+			fileRef = 89CD393548617AC78C007379;
+		};
 		43EEF4DFA57501DE6D455005 = {
 			isa = PBXBuildFile;
 			fileRef = D239AAEE967D9E958B6ACAB3;
@@ -788,6 +796,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = serial.cc;
 			path = ../../Source/Common/Serial/lib/serial/serial.cc;
+			sourceTree = "SOURCE_ROOT";
+		};
+		2EF8A9CCF6FFB9FD7734DF7E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BentoWebServer.cpp;
+			path = ../../Source/WebServer/BentoWebServer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		32677D5BEA776F767ABBB991 = {
@@ -1252,6 +1267,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModelGroup.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		77D3D3B1A9C133AC87FC698F = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_mongoose";
+			path = "../../External/juce_mongoose";
+			sourceTree = "SOURCE_ROOT";
+		};
 		78B73D9D5B0E32AC35532E05 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -1348,6 +1370,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = Spatializer.cpp;
 			path = ../../Source/Video/Spatializer.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		89CD393548617AC78C007379 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_mongoose.cpp";
+			path = "../../JuceLibraryCode/include_juce_mongoose.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		8A84BEFE27ADF6507544EADE = {
@@ -1959,6 +1988,13 @@
 			path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E049DF72CCB0A400F4CB7C56 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BentoWebServer.h;
+			path = ../../Source/WebServer/BentoWebServer.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E1DCEBF74D7267366D54037F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2197,6 +2233,15 @@
 				335EEC97C15780DD0F2E5389,
 			);
 			name = Resources;
+			sourceTree = "<group>";
+		};
+		FBF5D98E9FCD41F7B1575E2B = {
+			isa = PBXGroup;
+			children = (
+				2EF8A9CCF6FFB9FD7734DF7E,
+				E049DF72CCB0A400F4CB7C56,
+			);
+			name = WebServer;
 			sourceTree = "<group>";
 		};
 		02E4B60C2E899AC131204E8B = {
@@ -2803,6 +2848,7 @@
 		DA08DC73F2CE78AB063AFD17 = {
 			isa = PBXGroup;
 			children = (
+				FBF5D98E9FCD41F7B1575E2B,
 				31E67B25124A445D58BC2A57,
 				75668C3074610EB07798E80A,
 				74F2EABA732AF2E7CFED9F54,
@@ -2843,6 +2889,7 @@
 				FB6494C1B097AA9160992156,
 				CDF46B099D8A37106496ED1F,
 				D5BA4C7B914E43D3B54609C9,
+				77D3D3B1A9C133AC87FC698F,
 				9FC7CA34A6BC93158284E96E,
 				A8396479E3A2F6C2C26A74C9,
 				5DBFCFF756AD9AF779C27EC0,
@@ -2869,6 +2916,7 @@
 				94E7764783E99087B327A706,
 				F80D5AF0C69B7197391A4E1C,
 				091DCFB72171D73649C6465B,
+				89CD393548617AC78C007379,
 				D239AAEE967D9E958B6ACAB3,
 				D6B4CB4780E26B5B19D4768A,
 				878A4313101E6FF0D57EE3CD,
@@ -2958,6 +3006,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
+					"../../External",
 					"$(HOME)/modules",
 					"../../External/serial/include",
 					"../../Source",
@@ -3004,6 +3053,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
+					"../../External",
 					"$(HOME)/modules",
 					"../../External/serial/include",
 					"../../Source",
@@ -3145,6 +3195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				79ECBC66AC9F374FF3338A66,
 				CD62751F9653806034013404,
 				195DB0DE77CED5C661CE4EE7,
 				108A694C27E9D28E1F5FC699,
@@ -3247,6 +3298,7 @@
 				B3674CFCE9FD26F15126504E,
 				648EDD6472892B1E5BA11753,
 				A3AFC86C67024DF84AB349FB,
+				9947F34FC703CB375B0D610B,
 				43EEF4DFA57501DE6D455005,
 				C81B7CA2C8D2947850A2243A,
 				B08670E180B436DAF208B572,

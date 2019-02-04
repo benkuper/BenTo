@@ -25,6 +25,12 @@
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{57294501-5658-E81F-20A1-197149325B67}" name="WebServer">
+        <FILE id="Ra1p1M" name="BentoWebServer.cpp" compile="1" resource="0"
+              file="Source/WebServer/BentoWebServer.cpp"/>
+        <FILE id="z3o8hC" name="BentoWebServer.h" compile="0" resource="0"
+              file="Source/WebServer/BentoWebServer.h"/>
+      </GROUP>
       <GROUP id="{EE130150-B1B1-4FF0-6360-8BEF17AAE2D5}" name="Common">
         <GROUP id="{E5AB7332-E8D5-6861-6B71-6BBA6E1DA217}" name="Serial">
           <GROUP id="{A05100E8-DD1D-77F5-EF15-6F01585C9AAA}" name="lib">
@@ -446,6 +452,7 @@
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -471,6 +478,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl">
@@ -495,6 +503,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -519,6 +528,7 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
@@ -534,6 +544,7 @@
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_mongoose" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>

@@ -16,6 +16,7 @@
 #include "Audio/AudioManager.h"
 #include "Timeline/layers/Block/LightBlockLayer.h"
 #include "Common/Serial/SerialManager.h"
+#include "WebServer/BentoWebServer.h"
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento")
@@ -32,7 +33,9 @@ BentoEngine::BentoEngine() :
 
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
 
-	SerialManager::getInstance();
+	SerialManager::getInstance(); // init
+
+	BentoWebServer::getInstance(); //init
 }
 
 BentoEngine::~BentoEngine()
@@ -44,6 +47,8 @@ BentoEngine::~BentoEngine()
 	SequenceLayerFactory::deleteInstance();
 
 	SerialManager::deleteInstance();
+
+	BentoWebServer::deleteInstance();
 }
 
 void BentoEngine::clearInternal()

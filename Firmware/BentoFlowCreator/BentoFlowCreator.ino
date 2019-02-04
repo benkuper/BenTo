@@ -147,7 +147,7 @@ void onMultipress(int count)
 void wifiConnectingUpdate(int curTry)
 {
 #if USE_LEDSTRIP
-  setRange(0, curTry % NUM_LEDS, CRGB::Cyan, true);
+  setRange(0, curTry % NUM_LEDS, CRGB(0,20,20), true);
 #endif
 
   if (btManager.buttonIsPressed()) wifiManager.cancelConnection();
@@ -356,7 +356,9 @@ void setup() {
   Serial.println("Will init all modules");
 #endif
 
-
+#if USE_IR
+  irManager.init();
+#endif
 
 #if USE_BATTERY
   batteryManager.init();
@@ -374,7 +376,7 @@ void setup() {
 #else
   int h = 150;
 #endif
-
+  
   for (int i = 0; i < NUM_LEDS; i++)
   {
     setRange(0, i, CHSV(h, 255, 60) , true);
@@ -384,9 +386,6 @@ void setup() {
   delay(50);
 #endif
 
-#if USE_IR
-  irManager.init();
-#endif
 
 #if USE_TOUCH
   touchManager.init();
@@ -410,7 +409,7 @@ void setup() {
 #if USE_OSC
     oscManager.isReadyToSend = true;
 #endif
-    setFullColor(CRGB::Green);
+    setFullColor(CRGB(5,20,0));
     delay(300);
   } else
   {
@@ -418,12 +417,12 @@ void setup() {
     {
       for (int i = 0; i < 3; i++)
       {
-        setFullColor(CRGB::Purple);
+        setFullColor(CRGB(20,0,20));
         delay(100);
       }
     } else
     {
-      setFullColor(CRGB::Red);
+      setFullColor(CRGB(20,0,0));
       delay(300);
     }
   }
