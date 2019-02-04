@@ -20,10 +20,14 @@ public:
 	~FlowtoysProp();
 
 	StringParameter * remoteHost;
-	BoolParameter * button;
+	IntParameter * remotePort;
+	BoolParameter * button; 
 	DatagramSocket sender;
+	OSCSender oscSender;
 
-	const int remotePort = 8888; //Bento udp streaming is done on this port
+	//const int remotePort = 8888; //Bento udp streaming is done on this port
+
+	void onContainerParameterChangedInternal(Parameter * p);
 
 	virtual void sendColorsToPropInternal() override;
 

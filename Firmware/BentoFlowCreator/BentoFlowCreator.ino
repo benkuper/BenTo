@@ -71,7 +71,6 @@ IRManager irManager;
 long orientationSendRateMS = 20;
 long lastOrientationSendTime = 0;
 
-
 //Callbacks
 void onButtonEvent(int type)
 {
@@ -409,7 +408,9 @@ void setup() {
 #if USE_OSC
     oscManager.isReadyToSend = true;
 #endif
-    setFullColor(CRGB(5,20,0));
+    if(!wifiManager.apMode) setFullColor(CRGB(5,20,0));
+    else setFullColor(CRGB(15,15,0));
+    
     delay(300);
   } else
   {
@@ -479,7 +480,7 @@ void loop() {
   batteryManager.update();
 #endif
 
-
+   
   //processSerial();
 }
 

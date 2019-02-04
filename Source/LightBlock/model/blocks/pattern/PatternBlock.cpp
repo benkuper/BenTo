@@ -30,6 +30,7 @@ RainbowPattern::RainbowPattern(var params) :
 	offset = paramsContainer->addFloatParameter("Offset", "The offset of the rainbow, in cycles", 0, 0, 20);
 	speed = paramsContainer->addFloatParameter("Speed", "The animation speed in cycles/second over the full range of the prop.", 0, 0, 20);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the hue depending on id of the prop", 0, 0, 10);
+	brightness = paramsContainer->addFloatParameter("Brightness", "Brightness of the rainbow", .5f, 0, 1);
 }
 
 Array<Colour> RainbowPattern::getColors(int id, int resolution, double time, var params)
@@ -41,13 +42,14 @@ Array<Colour> RainbowPattern::getColors(int id, int resolution, double time, var
 	float bOffset = params.getProperty("offset", offset->floatValue());
 	float bSpeed = params.getProperty("speed", speed->floatValue());
 	float bIdOffset = params.getProperty("idoffset", idOffset->floatValue());
+	float bBrightness = params.getProperty("brightness", brightness->floatValue());
 
 	float curOffset = time*bSpeed + bOffset + id*bIdOffset;
 
 	for (int i = 0; i < resolution; i++)
 	{
 		float rel = fmodf((i * bDensity / resolution) + curOffset, 1);
-		result.set(i, Colour::fromHSV(rel, 1, 1, 1));
+		result.set(i, Colour::fromHSV(rel, 1, bBrightness, 1));
 	}
 
 	return result;
@@ -84,7 +86,7 @@ Array<Colour> NoisePattern::getColors(int id, int resolution, double time, var p
 	for (int i = 0; i < resolution; i++)
 	{
 		float v = (perlin.noise0_1((i*bScale) / resolution, curTime, id*bIdOffset) - .5f)*bContrast + .5f + bBrightness;
-		result.set(i, bColor.withBrightness(v));
+		result.set(i, bColor.withMultipliedBrightness(v));
 	}
 
 	return result;

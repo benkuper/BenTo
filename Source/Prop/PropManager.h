@@ -32,6 +32,9 @@ public:
 	StringParameter * localHost;
 	StringParameter * remoteHost;
 
+	IntParameter * sendRate;
+	IntParameter * targetPropFPS;
+
 	Trigger * detectProps;
 	Trigger * autoAssignIdTrigger;
 

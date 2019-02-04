@@ -26,6 +26,9 @@ PropManager::PropManager() :
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 
+	sendRate = addIntParameter("Send Rate", "", 1, 1, 200);
+	targetPropFPS = addIntParameter("Prop FPS", "", 1, 1, 1000);
+
 	String localIp = "";
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
@@ -102,7 +105,27 @@ Array<Prop *> PropManager::getPropsWithId(int id)
 
 void PropManager::onContainerParameterChanged(Parameter * p)
 {
-	
+	if (p == sendRate)
+	{
+		for (auto &p : items)
+		{
+			FlowtoysProp * fp = dynamic_cast<FlowtoysProp *>(p);
+			if (fp != nullptr) fp->sendRate->setValue(sendRate->intValue());
+		}
+	}
+	else if (p == targetPropFPS)
+	{
+		for (auto &p : items)
+		{
+			FlowtoysProp * fp = dynamic_cast<FlowtoysProp *>(p); 
+			if (fp != nullptr)
+			{
+				OSCMessage m("/strip/fps");
+				m.addInt32(targetPropFPS->intValue());
+				fp->oscSender.sendToIPAddress(fp->remoteHost->stringValue(), 9000 , m);
+			}
+		}
+	}
 }
 
 void PropManager::onContainerTriggerTriggered(Trigger * t)

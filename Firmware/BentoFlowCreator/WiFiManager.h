@@ -25,7 +25,7 @@ class WiFiManager
     String ssid = "spacenet";
     String password = "jhfdb97531$$";
 
-    const int maxTries = 50;
+    const int maxTries = 32;
 
     WiFiUDP oscUDP;
     WiFiUDP streamingUDP;

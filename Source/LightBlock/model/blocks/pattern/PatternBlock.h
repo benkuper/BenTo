@@ -37,6 +37,7 @@ public:
 	FloatParameter * offset;
 	FloatParameter * speed;
 	FloatParameter * idOffset;
+	FloatParameter * brightness; 
 
 	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
@@ -61,7 +62,7 @@ public:
 
 	Array<Colour> getColors(int id, int resolution, double time, var params) override;
 
-	String getTypeString() const override { return "Noise"; }
+	String getTypeString() const override { return "Noise"; } 
 };
 
 class SolidColorPattern :
