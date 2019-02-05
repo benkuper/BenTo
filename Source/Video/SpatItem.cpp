@@ -27,12 +27,14 @@ SpatItem::SpatItem() :
 
 	startPos->setPoint(.4f, .5f);
 	endPos->setPoint(.6f, .5f);
+	
 }
 
 SpatItem::~SpatItem()
 {
 
 }
+
 
 void SpatItem::updatePoints()
 {

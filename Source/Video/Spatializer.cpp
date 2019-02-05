@@ -10,8 +10,8 @@
 
 #include "Spatializer.h"
 #include "LightBlock/model/LightBlockModelLibrary.h"
+#include "LightBlock/model/blocks/video/VideoBlock.h"
 
-juce_ImplementSingleton(Spatializer)
 
 String frag =
 "uniform int inverse; \
@@ -30,44 +30,30 @@ void main() \
 
 Spatializer::Spatializer() :
 	BaseManager("Spatializer"),
-	videoBlock(nullptr),
+	currentLayout(nullptr),
 	isInit(false),
-	shader(frag)
+	shader(frag),
+	spatNotifier(10)
 {
-	showTexture = addBoolParameter("Show Texture", "", true);
+	saveAndLoadRecursiveData = true;
+
+	textureOpacity = addFloatParameter("Texture Opacity", "Opacity of the background texture",1,0,1);
 	showHandles = addBoolParameter("Show Handles", "", true);
 	showPixels = addBoolParameter("Show Pixels", "", true);
-
-	setVideoBlock(static_cast<VideoBlock *>(LightBlockModelLibrary::getInstance()->videoBlock.get()));
+	selectItemWhenCreated = false;
 }
 
 Spatializer::~Spatializer()
 {
-	setVideoBlock(nullptr);
 }
 
-
-void Spatializer::setVideoBlock(VideoBlock * vb)
+void Spatializer::setCurrentLayout(SpatLayout * newLayout)
 {
-	if (videoBlock == vb) return;
-
-	if (videoBlock != nullptr)
-	{
-		videoBlock->removeInspectableListener(this);
-		videoBlock->removeVideoListener(this);
-		videoBlockRef = nullptr;
-
-	}
-
-	videoBlock = vb;
-
-	if (videoBlock != nullptr)
-	{
-		videoBlock->addInspectableListener(this);
-		videoBlock->addVideoListener(this);
-		videoBlockRef = videoBlock;
-	}
+	if (currentLayout == newLayout) return;
+	currentLayout = newLayout;
+	spatNotifier.addMessage(new SpatializerEvent(SpatializerEvent::LAYOUT_CHANGED));
 }
+
 
 void Spatializer::init()
 {
@@ -78,9 +64,10 @@ void Spatializer::init()
 	isInit = true;
 }
 
-void Spatializer::computeSpat()
+void Spatializer::computeSpat(Image &tex, SpatLayout * forceLayout)
 {
-	if (videoBlock == nullptr || !videoBlock->inputIsLive->boolValue()) return;
+	SpatLayout * targetLayout = forceLayout != nullptr ? forceLayout : currentLayout;
+	if (targetLayout == nullptr) return;
 
 	if (!isInit) init();
 
@@ -90,12 +77,9 @@ void Spatializer::computeSpat()
 	//program->setUniform("sourceTex", pointCoords, pointCoords.size());
 	//program->setUniform("pixMap", pointCoords, pointCoords.size());
 
-	Image tex = videoBlock->receiver->getImage();
-	
-	
 	const Image::BitmapData data(tex, 0,0, tex.getWidth(), tex.getHeight());
 
-	for (auto &si : items)
+	for (auto &si : targetLayout->spatItemManager.items)
 	{
 		int numPoints = si->resolution->intValue();
 		for (int i = 0; i < numPoints; i++)
@@ -103,13 +87,15 @@ void Spatializer::computeSpat()
 			si->colors.set(i, data.getPixelColour(jlimit<int>(0,tex.getWidth()-1,si->points[i].x*(tex.getWidth()-1)), jlimit<int>(0,tex.getHeight()-1,si->points[i].y*(tex.getHeight()-1))));
 		}
 	}
-	
 }
 
-SpatItem * Spatializer::getItemForProp(Prop * p)
+SpatItem * Spatializer::getItemForProp(Prop * p, SpatLayout * forceLayout)
 {
+	SpatLayout * targetLayout = forceLayout != nullptr ? forceLayout : currentLayout;
+	if (targetLayout == nullptr) return nullptr; 
+
 	SpatItem * defaultSI = nullptr;
-	for (auto &si : items)
+	for (auto &si : targetLayout->spatItemManager.items)
 	{
 		int id = si->filterManager.getTargetIDForProp(p);
 		if(id >= 0) return si;
@@ -118,14 +104,4 @@ SpatItem * Spatializer::getItemForProp(Prop * p)
 	}
 
 	return defaultSI;
-}
-
-void Spatializer::inspectableDestroyed(Inspectable * i)
-{
-	if (i == videoBlock) setVideoBlock(nullptr);
-}
-
-void Spatializer::textureUpdated(VideoBlock *)
-{
-	computeSpat();
 }

@@ -11,18 +11,18 @@
 #pragma once
 
 #include "../SpatItem.h"
-
-
-class SpatializerPanel;
+class Spatializer;
+class SpatLayoutView;
 
 class SpatItemUI :
 	public BaseItemMinimalUI<SpatItem>
 {
 public:
-	SpatItemUI(SpatItem * i, SpatializerPanel * panel = nullptr);
+	SpatItemUI(SpatItem * i, Spatializer * spat = nullptr, SpatLayoutView * panel = nullptr);
 	~SpatItemUI();
 
-	SpatializerPanel * panel; //for handle positionning in reference
+	Spatializer * spat;
+	SpatLayoutView * panel; //for handle positionning in reference
 
 	bool lockBounds;
 
@@ -30,7 +30,7 @@ public:
 	void resized() override;
 
 	void updateBounds();
-
+	
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;

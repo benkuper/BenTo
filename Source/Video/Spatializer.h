@@ -10,27 +10,23 @@
 
 #pragma once
 
-#include "LightBlock/model/blocks/video/VideoBlock.h"
-#include "SpatItem.h"
+#include "SpatLayout.h"
+#include "SpatializerEvent.h"
 
 class Spatializer :
-	public BaseManager<SpatItem>,
-	public Inspectable::InspectableListener,
-	public VideoBlock::VideoListener
+	public BaseManager<SpatLayout>
 {
 public:
-	juce_DeclareSingleton(Spatializer, true);
-
 	Spatializer();
 	~Spatializer();
 
 	//ui
-	BoolParameter * showTexture;
+	FloatParameter * textureOpacity;
 	BoolParameter * showHandles;
 	BoolParameter * showPixels;
 
-	VideoBlock * videoBlock;
-	WeakReference<Inspectable> videoBlockRef;
+	SpatLayout * currentLayout;
+	void setCurrentLayout(SpatLayout * newLayout);
 
 	bool isInit;
 
@@ -39,14 +35,15 @@ public:
 	OpenGLFrameBuffer fbo;
 	OpenGLImageType fboImage;
 	OpenGLGraphicsContextCustomShader shader;
-
-	void setVideoBlock(VideoBlock * vb);
-
+	
 	void init();
-	void computeSpat();
+	void computeSpat(Image &tex, SpatLayout * forceLayout = nullptr);
 
-	SpatItem * getItemForProp(Prop * p);
+	SpatItem * getItemForProp(Prop * p, SpatLayout * forceLayout = nullptr);
 
-	void inspectableDestroyed(Inspectable *) override;
-	void textureUpdated(VideoBlock *) override;
+	// ASYNC
+	QueuedNotifier<SpatializerEvent> spatNotifier;
+	void addAsyncSpatListener(SpatializerAsyncListener* newListener) { spatNotifier.addListener(newListener); }
+	void addAsyncCoalescedSpatListener(SpatializerAsyncListener* newListener) { spatNotifier.addAsyncCoalescedListener(newListener); }
+	void removeAsyncSpatListener(SpatializerAsyncListener* listener) { spatNotifier.removeListener(listener); }
 };

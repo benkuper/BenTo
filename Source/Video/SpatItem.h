@@ -34,6 +34,8 @@ public:
 	Point2DParameter * startPos;
 	Point2DParameter * endPos;
 
+
+
 	void updatePoints();
 
 	void onContainerParameterChangedInternal(Parameter *) override;

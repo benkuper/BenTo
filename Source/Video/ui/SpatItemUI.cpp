@@ -10,9 +10,11 @@
 
 #include "SpatItemUI.h"
 #include "SpatializerPanel.h"
+#include "Video/Spatializer.h"
 
-SpatItemUI::SpatItemUI(SpatItem * i, SpatializerPanel * panel) :
+SpatItemUI::SpatItemUI(SpatItem * i, Spatializer * spat, SpatLayoutView * panel) :
 	BaseItemMinimalUI(i),
+	spat(spat),
 	panel(panel),
     lockBounds(false),
 	startHandle(true),
@@ -24,24 +26,21 @@ SpatItemUI::SpatItemUI(SpatItem * i, SpatializerPanel * panel) :
 	autoDrawHighlightWhenSelected = false;
 	setRepaintsOnMouseActivity(true);
 
-	Spatializer::getInstance()->addAsyncContainerListener(this);
+	spat->addAsyncContainerListener(this);
 }
 
 
 SpatItemUI::~SpatItemUI()
 {
-	if (Spatializer::getInstanceWithoutCreating() != nullptr) Spatializer::getInstance()->removeAsyncContainerListener(this);
+	if (spat != nullptr) spat->removeAsyncContainerListener(this);
 }
 
 void SpatItemUI::paint(Graphics & g)
 {
-
-
-	
 	Point<float> startHandlePos = startHandle.getBounds().getCentre().toFloat();
 	Point<float> endHandlePos = endHandle.getBounds().getCentre().toFloat();
 
-	if (Spatializer::getInstance()->showHandles->boolValue())
+	if (spat->showHandles->boolValue())
 	{
 		Prop::Shape s = item->shape->getValueDataAsEnum<Prop::Shape>();
 		switch (s)
@@ -60,7 +59,7 @@ void SpatItemUI::paint(Graphics & g)
 		}
 	}
 
-	if (Spatializer::getInstance()->showPixels->boolValue())
+	if (spat->showPixels->boolValue())
 	{
 		int numPoints = item->points.size();
 		Rectangle<float> pr(0, 0, 4, 4);
@@ -127,16 +126,15 @@ void SpatItemUI::controllableFeedbackUpdateInternal(Controllable * c)
 	} else if (c == item->startPos || c == item->endPos)
 	{
 		updateBounds();
-	} else if (c == Spatializer::getInstance()->showHandles)
+	}
+	else if (c == spat->showHandles)
 	{
-		startHandle.setVisible(Spatializer::getInstance()->showHandles->boolValue());
-		endHandle.setVisible(Spatializer::getInstance()->showHandles->boolValue());
-		repaint();
-	} else if (c == Spatializer::getInstance()->showPixels)
-	{
+		startHandle.setVisible(spat->showHandles->boolValue());
+		endHandle.setVisible(spat->showHandles->boolValue());
 		repaint();
 	}
 }
+
 
 
 // SPAT

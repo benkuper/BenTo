@@ -11,28 +11,51 @@
 #pragma once
 
 #include "../Spatializer.h"
+#include "../SpatLayout.h"
 #include "SpatItemUI.h"
 
+class VideoBlock;
+
+class SpatLayoutView :
+	public BaseManagerShapeShifterUI<BaseManager<SpatItem>, SpatItem, SpatItemUI>
+{
+public:
+	SpatLayoutView(Spatializer * spat, SpatLayout * layout);
+	~SpatLayoutView();
+
+	SpatItemUI * createUIForItem(SpatItem * i) override;
+
+	Spatializer * spat;
+	SpatLayout * layout;
+	void resized() override;
+
+	Point<float> getPositionForRelative(Point<float> relPos);
+	Point<float> getRelativeForPosition(Point<float> absolutePos);
+};
+
+
 class SpatializerPanel :
-	public BaseManagerShapeShifterUI<Spatializer, SpatItem, SpatItemUI>,
+	public ShapeShifterContentComponent,
 	public ContainerAsyncListener,
+	public SpatializerAsyncListener,
 	public Timer
 { 
 public:
 	SpatializerPanel(const String &name);
 	~SpatializerPanel();
 
+	VideoBlock * videoBlock;
 	Image bgImage;
+	bool needsRepaint;
+
+	ScopedPointer<SpatLayoutView> currentLayoutView;
+	void setCurrentLayoutView(SpatLayout * newView);
 
 	void paint(Graphics &g) override;
 	void resized() override;
-
-	SpatItemUI * createUIForItem(SpatItem * i) override;
-
-	Point<float> getPositionForRelative(Point<float> relPos);
-	Point<float> getRelativeForPosition(Point<float> absolutePos);
-
+	
 	void newMessage(const ContainerAsyncEvent &e) override;
+	void newMessage(const SpatializerEvent &e) override;
 
 	void timerCallback() override;
 

@@ -9,19 +9,44 @@
 */
 
 #include "SpatializerPanel.h"
+#include "LightBlock/model/LightBlockModelLibrary.h"
+#include "LightBlock/model/blocks/video/VideoBlock.h"
 
 SpatializerPanel::SpatializerPanel(const String & name) :
-	BaseManagerShapeShifterUI(name, Spatializer::getInstance(),false)
+	ShapeShifterContentComponent(name),
+	needsRepaint(true)
 {
-	addExistingItems();
+	videoBlock = dynamic_cast<VideoBlock *>(LightBlockModelLibrary::getInstance()->videoBlock.get());
+
+	setCurrentLayoutView(videoBlock->spat.currentLayout);
 	startTimerHz(30); //repaint at 30hz
+
+	videoBlock->spat.addAsyncSpatListener(this);
 }
 
 
 SpatializerPanel::~SpatializerPanel()
 {
+	if (videoBlock != nullptr) videoBlock->spat.removeAsyncSpatListener(this);
 }
 
+
+void SpatializerPanel::setCurrentLayoutView(SpatLayout * layout)
+{
+	if(currentLayoutView != nullptr && layout == currentLayoutView->layout) return;
+	if (currentLayoutView != nullptr)
+	{
+		removeChildComponent(currentLayoutView);
+		currentLayoutView = nullptr;
+	}
+	
+	if(layout != nullptr)
+	{
+		currentLayoutView = new SpatLayoutView(&videoBlock->spat, layout);
+		addAndMakeVisible(currentLayoutView);
+		resized();
+	}
+}
 
 void SpatializerPanel::paint(Graphics & g)
 {
@@ -32,18 +57,19 @@ void SpatializerPanel::paint(Graphics & g)
 		g.drawFittedText("This panel must be attached to the main window in order work properly", getLocalBounds().reduced(10), Justification::centred, 4);
 		return;
 	}
-	if (Spatializer::getInstance()->showTexture->boolValue() && manager->videoBlock != nullptr && manager->videoBlock->inputIsLive->boolValue())
+
+	if (videoBlock != nullptr && videoBlock->inputIsLive->boolValue())
 	{
-		g.setColour(Colours::white);
-		g.drawImage(manager->videoBlock->receiver->getImage(), getLocalBounds().toFloat());
+		g.setColour(Colours::white.withAlpha(videoBlock->spat.textureOpacity->floatValue()));
+		g.drawImage(videoBlock->receiver->getImage(), getLocalBounds().toFloat());
 	}
 }
 
 void SpatializerPanel::resized()
 {
-	for (auto &i : itemsUI)
+	if (currentLayoutView != nullptr)
 	{
-		i->updateBounds();
+		currentLayoutView->setBounds(getLocalBounds());
 	}
 }
 
@@ -51,27 +77,64 @@ void SpatializerPanel::newMessage(const ContainerAsyncEvent & e)
 {
 	if (e.type == ContainerAsyncEvent::ControllableFeedbackUpdate)
 	{
-		if (e.targetControllable == manager->showTexture) repaint();
+		if (e.targetControllable == videoBlock->spat.textureOpacity) needsRepaint = true;
+	}
+}
+
+void SpatializerPanel::newMessage(const SpatializerEvent & e)
+{
+	if (e.type == SpatializerEvent::LAYOUT_CHANGED)
+	{
+		setCurrentLayoutView(videoBlock->spat.currentLayout);
 	}
 }
 
 void SpatializerPanel::timerCallback()
 {
-	if (manager->videoBlock == nullptr || !manager->videoBlock->inputIsLive->boolValue()) return;
-	repaint();
+	if (videoBlock == nullptr || !videoBlock->inputIsLive->boolValue()) return;
+	if (needsRepaint) repaint();
 }
 
-SpatItemUI * SpatializerPanel::createUIForItem(SpatItem * i)
+
+
+// SPAT LAYOUT VIEW
+
+
+SpatLayoutView::SpatLayoutView(Spatializer * spat, SpatLayout * layout) :
+	BaseManagerShapeShifterUI(layout->niceName, &layout->spatItemManager, false),
+	spat(spat),
+	layout(layout)
 {
-	return new SpatItemUI(i, this);
+	transparentBG = true;
+	addExistingItems();
 }
 
-Point<float> SpatializerPanel::getPositionForRelative(Point<float> relPos)
+SpatLayoutView::~SpatLayoutView()
+{
+}
+
+
+SpatItemUI * SpatLayoutView::createUIForItem(SpatItem * i)
+{
+	return new SpatItemUI(i, spat, this);
+}
+
+
+void SpatLayoutView::resized()
+{
+	for (auto &i : itemsUI)
+	{
+		i->updateBounds();
+	}
+}
+
+
+Point<float> SpatLayoutView::getPositionForRelative(Point<float> relPos)
 {
 	return Point<float>(relPos.x * getWidth(), relPos.y * getHeight());
 }
 
-Point<float> SpatializerPanel::getRelativeForPosition(Point<float> absolutePos)
+Point<float> SpatLayoutView::getRelativeForPosition(Point<float> absolutePos)
 {
 	return Point<float>(absolutePos.x / getWidth(), absolutePos.y / getHeight());
 }

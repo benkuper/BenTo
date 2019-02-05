@@ -12,10 +12,12 @@
 
 
 #include "../../LightBlockModel.h"
+#include "Video/Spatializer.h"
 
 class VideoBlock :
 	public LightBlockModel,
-	public SharedTextureReceiver::Listener
+	public SharedTextureReceiver::Listener,
+	public BaseManager<SpatLayout>::Listener
 {
 public:
 	VideoBlock(var params = var());
@@ -24,17 +26,31 @@ public:
 	StringParameter * textureName;
 	SharedTextureReceiver * receiver;
 
+	Spatializer spat;
+
+	EnumParameter * currentLayout;
 	BoolParameter * inputIsLive;
 
 	void setupReceiver();
-
 	Image getImage();
 
+	void updateLayoutOptions();
+
 	Array<Colour> getColors(Prop * p, double time, var params) override;
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer *cc, Controllable *c);
 
 	// Inherited via Listener
 	virtual void textureUpdated(SharedTextureReceiver *) override;
 	virtual void connectionChanged(SharedTextureReceiver *) override;
+
+	void itemAdded(SpatLayout *) override;
+	void itemRemoved(SpatLayout *) override;
+
+	void clear() override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 
 	//Listener
 	class  VideoListener
