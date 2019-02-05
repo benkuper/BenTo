@@ -26,8 +26,9 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	propNotifier(50)
 {
 	registerFamily(familyName);
-
 	
+	saveAndLoadRecursiveData = true;
+
 	addChildControllableContainer(&generalCC);
 	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
 	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1, INT32_MAX);
@@ -117,23 +118,32 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		startThread();
 	}
 
-	propListeners.call(&PropListener::propBlockChanged, this);
-	propNotifier.addMessage(new PropEvent(PropEvent::BLOCK_CHANGED, this));
+	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
+	{
+		propListeners.call(&PropListener::propBlockChanged, this);
+		propNotifier.addMessage(new PropEvent(PropEvent::BLOCK_CHANGED, this));
+	}
+	
 }
 
 void Prop::update()
 {
-	if (currentBlock != nullptr)
+	if (findPropMode->boolValue())
+	{
+		colors.fill(Colours::white.withBrightness(.3f));
+	}else if (currentBlock != nullptr)
 	{
 		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
 		colors = currentBlock->getColors(this, time, var());
 
-		propListeners.call(&PropListener::colorsUpdated, this);
-		propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
-
-
+		if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
+		{
+			propListeners.call(&PropListener::colorsUpdated, this);
+			propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
+		}
 	}
-	if (!findPropMode->boolValue()) sendColorsToProp();
+
+	sendColorsToProp();
 }
 
 void Prop::onContainerParameterChangedInternal(Parameter * p)
@@ -141,14 +151,7 @@ void Prop::onContainerParameterChangedInternal(Parameter * p)
 	if (p == activeProvider)
 	{
 		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
-	} else if (p == resolution)
-	{
-		colors.resize(resolution->intValue());
-	} else if (p == findPropMode)
-	{
-		colors.fill(findPropMode->boolValue() ? Colours::white.withBrightness(.2f) : Colours::black);
-		sendColorsToProp();
-	} else if (p == enabled)
+	}else if (p == enabled)
 	{
 		if (!enabled->boolValue())
 		{
@@ -156,16 +159,23 @@ void Prop::onContainerParameterChangedInternal(Parameter * p)
 			sendColorsToProp(true);
 		}
 	}
-	else if (p == globalID)
-	{
-		propListeners.call(&PropListener::propIDChanged, this, previousID);
-		previousID = globalID->intValue();
-	}
 }
 
 void Prop::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-
+	if (c == resolution)
+	{
+		colors.resize(resolution->intValue());
+	}
+	else if (c == globalID)
+	{
+		propListeners.call(&PropListener::propIDChanged, this, previousID);
+		previousID = globalID->intValue();
+	}
+	else if (c == findPropMode)
+	{
+		if(!findPropMode->boolValue()) colors.fill(Colours::black);
+	}
 }
 
 void Prop::onContainerTriggerTriggered(Trigger * t)

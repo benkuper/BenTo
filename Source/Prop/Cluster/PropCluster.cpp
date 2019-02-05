@@ -12,10 +12,10 @@
 #include "../PropManager.h"
 
 PropCluster::PropCluster() :
-	BaseItem("Cluster",false,false),
-	propIDManager("Prop IDs",false,false,false)
+	BaseItem("Cluster", false, false)
 {
-	propIDManager.userAddControllablesFilters.add(IntParameter::getTypeStringStatic());
+	userCanAddControllables = true;
+	userAddControllablesFilters.add(IntParameter::getTypeStringStatic());
 }
 
 PropCluster::~PropCluster()
@@ -26,28 +26,35 @@ void PropCluster::updateIDs()
 {
 	propIDs.getLock().enter();
 	propIDs.clear();
-	for (auto &p : propIDManager.items)
+	Array<WeakReference<Parameter>> params = getAllParameters();
+	int index = 0;
+	for (auto &p : params)
 	{
-		if (p->controllable->type != Controllable::INT) continue;
-		propIDs.add(((IntParameter *)p)->intValue());
+		p->setNiceName("Prop ID " + String(index));
+		if (p->type != Controllable::INT) continue;
+		propIDs.add(p->intValue());
+		index++;
 	}
 	propIDs.getLock().exit();
 }
 
-void PropCluster::controllableFeedbackUpdate(ControllableContainer * cc, Controllable *)
-{
-	if (cc == &propIDManager) updateIDs();
-}
-
-void PropCluster::itemAdded(GenericControllableItem *)
+void PropCluster::onContainerParameterChanged(Parameter *)
 {
 	updateIDs();
 }
 
-void PropCluster::itemRemoved(GenericControllableItem *)
+void PropCluster::onControllableAdded(Controllable * c)
+{
+	c->isRemovableByUser = true;
+	c->saveValueOnly = false;
+	updateIDs();
+}
+
+void PropCluster::onControllableRemoved(Controllable *)
 {
 	updateIDs();
 }
+
 
 Array<Prop*> PropCluster::getProps()
 {
@@ -56,7 +63,7 @@ Array<Prop*> PropCluster::getProps()
 	propIDs.getLock().enter();
 	for (auto &p : PropManager::getInstance()->items)
 	{
-		if (isPropIsInCluster(p)); result.add(p);
+		if (isPropIsInCluster(p)) result.add(p);
 	}
 	propIDs.getLock().exit();
 
@@ -74,4 +81,9 @@ int PropCluster::getLocalPropID(Prop * p) const
 	int result = propIDs.indexOf(p->globalID->intValue());
 	propIDs.getLock().exit();
 	return result;
+}
+
+void PropCluster::loadJSONData(var data, bool createIfNotThere)
+{
+	ControllableContainer::loadJSONData(data, true); //force creating
 }

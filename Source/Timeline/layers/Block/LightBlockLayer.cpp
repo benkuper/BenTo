@@ -83,6 +83,7 @@ var LightBlockLayer::getJSONData()
 {
 	var data = SequenceLayer::getJSONData();
 	data.getDynamicObject()->setProperty("blocks", blockClipManager.getJSONData());
+	data.getDynamicObject()->setProperty("filters", filterManager.getJSONData());
 	return data;
 }
 
@@ -90,4 +91,5 @@ void LightBlockLayer::loadJSONDataInternal(var data)
 {
 	SequenceLayer::loadJSONDataInternal(data);
 	blockClipManager.loadJSONData(data.getProperty("blocks", var()));
+	filterManager.loadJSONData(data.getProperty("filters", var()));
 }

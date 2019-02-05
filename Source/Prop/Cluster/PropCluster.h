@@ -13,24 +13,25 @@
 #include "../Prop.h"
 
 class PropCluster :
-	public BaseItem,
-	public GenericControllableManager::Listener
+	public BaseItem
 {
 public:
 	PropCluster();
 	~PropCluster();
 
-	GenericControllableManager propIDManager;
+	//ControllableContainer propIDsCC;
 	Array<int,CriticalSection> propIDs;
 
 	void updateIDs();
 
-	void controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
-	void itemAdded(GenericControllableItem *) override;
-	void itemRemoved(GenericControllableItem *) override;
+	void onContainerParameterChanged(Parameter *p) override;
+	void onControllableAdded(Controllable *) override;
+	void onControllableRemoved(Controllable *) override;
 
 	Array<Prop *> getProps();
 	bool isPropIsInCluster(Prop *) const;
 	int getLocalPropID(Prop *p) const;
+
+	void loadJSONData(var data, bool createIfNotThere = false) override;
 
 };

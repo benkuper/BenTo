@@ -15,9 +15,9 @@ FlowtoysProp::FlowtoysProp(const String & name, var params) :
 	Prop(name, "Flowtoys", params)
 {
 	updateRate = 50;
-	remoteHost = addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
+	remoteHost = ioCC.addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
 
-	button = addBoolParameter("Button", "Is the button on the prop pressed ?", false);
+	button = sensorsCC.addBoolParameter("Button", "Is the button on the prop pressed ?", false);
 	button->setControllableFeedbackOnly(true);
 
 	oscSender.connect("127.0.0.1",1024);

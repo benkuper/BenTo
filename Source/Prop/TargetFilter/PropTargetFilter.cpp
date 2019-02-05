@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PropTargetFilter.cpp
-    Created: 5 Feb 2019 11:13:17am
-    Author:  jonglissimo
+	PropTargetFilter.cpp
+	Created: 5 Feb 2019 11:13:17am
+	Author:  jonglissimo
 
   ==============================================================================
 */
@@ -36,7 +36,7 @@ int PropTargetFilter::getTargetIDForProp(Prop * p)
 
 
 PropFilterGlobalID::PropFilterGlobalID() :
-	PropTargetFilter("Global ID Filter")
+	PropTargetFilter(getTypeString())
 {
 	id = addIntParameter("ID", "Global ID to filter", 0);
 }
@@ -52,7 +52,7 @@ int PropFilterGlobalID::getTargetIDForProp(Prop * p)
 
 
 PropFilterPropFamily::PropFilterPropFamily() :
-	PropTargetFilter("Family Filter")
+	PropTargetFilter(getTypeString())
 {
 	family = addTargetParameter("Family", "Family to filter", &PropManager::getInstance()->familiesCC);
 	family->targetType = TargetParameter::CONTAINER;
@@ -68,7 +68,7 @@ int PropFilterPropFamily::getTargetIDForProp(Prop * p)
 }
 
 PropFilterPropType::PropFilterPropType() :
-	PropTargetFilter("Type Filter")
+	PropTargetFilter(getTypeString())
 {
 	type = addEnumParameter("Type", "The type of prop to filter");
 	Prop::fillTypeOptions(type);
@@ -84,21 +84,24 @@ int PropFilterPropType::getTargetIDForProp(Prop * p)
 }
 
 PropFilterCluster::PropFilterCluster() :
-	PropTargetFilter("Cluster Filter")
+	PropTargetFilter(getTypeString())
 {
-	specificClusterGroup = addBoolParameter("Specific Cluster", "Search in specific cluster Group", false);
+	specificClusterGroup = addBoolParameter("Specific Group", "Search in specific cluster Group", false);
 	clusterGroup = addTargetParameter("Family", "Family to filter", PropClusterGroupManager::getInstance());
 	clusterGroup->targetType = TargetParameter::CONTAINER;
-	clusterGroup->maxDefaultSearchLevel = 1;
+	clusterGroup->maxDefaultSearchLevel = 0;
+	clusterGroup->setEnabled(false);
 
-	specificCluster = addBoolParameter("Specific Cluster", "Search in specific cluster", PropClusterGroupManager::getInstance());
-	cluster = addTargetParameter("Cluster", "Cluster to filter");
+	specificCluster = addBoolParameter("Specific Cluster", "Search in specific cluster", false);
+	cluster = addTargetParameter("Cluster", "Cluster to filter", PropClusterGroupManager::getInstance());
 	cluster->targetType = TargetParameter::CONTAINER;
 	cluster->maxDefaultSearchLevel = 2;
 	cluster->setEnabled(false);
 
 	specificID = addBoolParameter("Specific Local ID", "Search for specific Local Cluster ID", false);
-	id = addIntParameter("Local Prop ID", "The local cluster prop ID",0);
+	id = addIntParameter("Local Prop ID", "The local cluster prop ID", 0);
+	id->setEnabled(false);
+
 }
 
 PropFilterCluster::~PropFilterCluster()
@@ -125,8 +128,12 @@ int PropFilterCluster::getTargetIDForProp(Prop * p)
 	{
 		for (auto &cg : PropClusterGroupManager::getInstance()->items)
 		{
-			targetID = cg->getLocalPropID(p);
-			if (targetID >= 0) break;
+			int localID = cg->getLocalPropID(p);
+			if (localID >= 0 && (!specificID->boolValue() || localID == id->intValue()))
+			{
+				targetID = localID;
+				break;
+			}
 		}
 	}
 
@@ -134,12 +141,30 @@ int PropFilterCluster::getTargetIDForProp(Prop * p)
 	return targetID;
 }
 
+void PropFilterCluster::onContainerParameterChangedInternal(Parameter * p)
+{
+	if (p == specificClusterGroup)
+	{
+		clusterGroup->setEnabled(specificClusterGroup->boolValue());
+		if (specificClusterGroup->boolValue()) specificCluster->setValue(false);
+	}
+	else if (p == specificCluster)
+	{
+		cluster->setEnabled(specificCluster->boolValue());
+		if (specificCluster->boolValue()) specificClusterGroup->setValue(false);
+	}
+	else if (p == specificID)
+	{
+		id->setEnabled(specificID->boolValue());
+	}
+}
+
 
 
 
 
 PropFilterScript::PropFilterScript() :
-	PropTargetFilter("Script Filter")
+	PropTargetFilter("Script")
 {
 	addChildControllableContainer(&script);
 }

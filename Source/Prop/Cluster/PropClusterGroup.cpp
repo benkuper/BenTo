@@ -15,6 +15,8 @@ PropClusterGroup::PropClusterGroup() :
 	clusterManager("Clusters")
 {
 	addChildControllableContainer(&clusterManager);
+	clusterManager.selectItemWhenCreated = false;
+	clusterManager.editorCanBeCollapsed = false;
 }
 
 PropClusterGroup::~PropClusterGroup()
@@ -30,4 +32,17 @@ int PropClusterGroup::getLocalPropID(Prop * p)
 	}
 
 	return -1;
+}
+
+var PropClusterGroup::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("clusterManager", clusterManager.getJSONData());
+	return data;
+}
+
+void PropClusterGroup::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	clusterManager.loadJSONData(data.getProperty("clusterManager", var()));
 }

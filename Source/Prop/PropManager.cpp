@@ -30,7 +30,6 @@ PropManager::PropManager() :
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 
-	
 	String localIp = "";
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
@@ -146,12 +145,20 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 void PropManager::addItemInternal(Prop * p, var)
 {
 	p->addPropListener(this);
+
+	if (Engine::mainEngine->isLoadingFile) return;
 	if(items.size() > 1) p->globalID->setValue(getFirstAvailableID());
 }
 
 void PropManager::removeItemInternal(Prop * p)
 {
 	p->removePropListener(this);
+}
+
+void PropManager::clear()
+{
+	BaseManager::clear();
+	for (auto &f : families) f->props.clear();
 }
 
 int PropManager::getFirstAvailableID()

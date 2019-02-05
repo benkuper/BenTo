@@ -381,6 +381,10 @@
 			isa = PBXBuildFile;
 			fileRef = 4E9D333D665303870C9A2117;
 		};
+		1366223AA772E6BA182938D2 = {
+			isa = PBXBuildFile;
+			fileRef = B14C41F0455D34A357258A99;
+		};
 		ACC6A484908650A5CA89F211 = {
 			isa = PBXBuildFile;
 			fileRef = 9D3DF8EC0D55CB4AD3C8682F;
@@ -575,13 +579,6 @@
 			path = ../../Source/Prop/PropFamily.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		0651B52966A72415A71A0D56 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_sharedtexture";
-			path = "~/modules/juce_sharedtexture";
-			sourceTree = "<absolute>";
-		};
 		0659862BF0ADBF95B8203E2C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -644,6 +641,13 @@
 			includeInIndex = 0;
 			path = BenTo.app;
 			sourceTree = "BUILT_PRODUCTS_DIR";
+		};
+		0DD98820E3B4CE06D8CB8924 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_organicui";
+			path = "~/JUCE/modules/juce_organicui";
+			sourceTree = "<absolute>";
 		};
 		0DE395589F8E1E8CF5962768 = {
 			isa = PBXFileReference;
@@ -876,6 +880,13 @@
 			path = ../../Source/Video/ui/SpatializerPanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		328B723F01ACA33E0E0379DF = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "~/JUCE/modules/juce_timeline";
+			sourceTree = "<absolute>";
+		};
 		335EEC97C15780DD0F2E5389 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file.frag;
@@ -994,6 +1005,13 @@
 			name = MainComponent.cpp;
 			path = ../../Source/MainComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
+		};
+		4968EAFEF0A97E78F8FCCD95 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_mongoose";
+			path = "~/JUCE/modules/juce_mongoose";
+			sourceTree = "<absolute>";
 		};
 		49B00E97E22F53E7FC525B3F = {
 			isa = PBXFileReference;
@@ -1212,13 +1230,6 @@
 			path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		620A8B4E79738CC97F68ACD1 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_timeline";
-			path = "~/modules/juce_timeline";
-			sourceTree = "<absolute>";
-		};
 		6347D4B0B79AD1F8E0BFAED3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1331,13 +1342,6 @@
 			path = ../../Source/LightBlock/model/LightBlockModelGroup.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		77D3D3B1A9C133AC87FC698F = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_mongoose";
-			path = "../../External/juce_mongoose";
-			sourceTree = "SOURCE_ROOT";
-		};
 		78B73D9D5B0E32AC35532E05 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -1385,6 +1389,13 @@
 			lastKnownFileType = image.png;
 			name = strobe.png;
 			path = ../../Resources/models/patterns/strobe.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		81977C7AADE189929D88FAAE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropClusterGroupManagerUI.h;
+			path = ../../Source/Prop/Cluster/ui/PropClusterGroupManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		832926A951BB3C8E60899D6C = {
@@ -1716,13 +1727,6 @@
 			path = ../../Source/Prop/props/garnav/GarnavFamily.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A8396479E3A2F6C2C26A74C9 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_organicui";
-			path = "~/modules/juce_organicui";
-			sourceTree = "<absolute>";
-		};
 		A86F6D70736209426F30BE26 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1756,6 +1760,13 @@
 			lastKnownFileType = sourcecode.cpp.objcpp;
 			name = "include_juce_core.mm";
 			path = "../../JuceLibraryCode/include_juce_core.mm";
+			sourceTree = "SOURCE_ROOT";
+		};
+		B14C41F0455D34A357258A99 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropClusterGroupManagerUI.cpp;
+			path = ../../Source/Prop/Cluster/ui/PropClusterGroupManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B26356D5EAEADB5819F192B8 = {
@@ -2078,6 +2089,13 @@
 			lastKnownFileType = file;
 			name = "juce_audio_basics";
 			path = "~/JUCE/modules/juce_audio_basics";
+			sourceTree = "<absolute>";
+		};
+		D97D19436B80CE2542B9B5FE = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_sharedtexture";
+			path = "~/JUCE/modules/juce_sharedtexture";
 			sourceTree = "<absolute>";
 		};
 		D9825732C3218C86F328A56B = {
@@ -2915,9 +2933,19 @@
 			name = TargetFilter;
 			sourceTree = "<group>";
 		};
+		46B9B729B61381B7D694AA6E = {
+			isa = PBXGroup;
+			children = (
+				B14C41F0455D34A357258A99,
+				81977C7AADE189929D88FAAE,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		D3DFCE6033571E44E3404896 = {
 			isa = PBXGroup;
 			children = (
+				46B9B729B61381B7D694AA6E,
 				9D3DF8EC0D55CB4AD3C8682F,
 				9ACCA4ED4FB2CD06C460811E,
 				1BEC6263B7071E6B42B16BE6,
@@ -3077,12 +3105,12 @@
 				FB6494C1B097AA9160992156,
 				CDF46B099D8A37106496ED1F,
 				D5BA4C7B914E43D3B54609C9,
-				77D3D3B1A9C133AC87FC698F,
+				4968EAFEF0A97E78F8FCCD95,
 				9FC7CA34A6BC93158284E96E,
-				A8396479E3A2F6C2C26A74C9,
+				0DD98820E3B4CE06D8CB8924,
 				5DBFCFF756AD9AF779C27EC0,
-				0651B52966A72415A71A0D56,
-				620A8B4E79738CC97F68ACD1,
+				D97D19436B80CE2542B9B5FE,
+				328B723F01ACA33E0E0379DF,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -3194,8 +3222,6 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"../../External",
-					"$(HOME)/modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3241,8 +3267,6 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"../../External",
-					"$(HOME)/modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3463,6 +3487,7 @@
 				5BE509C28A93EC369F4375A7,
 				90F45255DBDDE79909BC5AE3,
 				73A7928FA75A5316A6FDA46C,
+				1366223AA772E6BA182938D2,
 				ACC6A484908650A5CA89F211,
 				47B128F62A48088C7DA09EAC,
 				05803BC9FCF4075036F57AEF,

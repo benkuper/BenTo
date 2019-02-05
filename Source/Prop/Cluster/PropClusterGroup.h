@@ -22,4 +22,7 @@ public:
 	BaseManager<PropCluster> clusterManager;
 
 	int getLocalPropID(Prop * p);
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 };

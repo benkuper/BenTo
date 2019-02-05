@@ -51,6 +51,8 @@ public:
 	void addItemInternal(Prop * p, var) override;
 	void removeItemInternal(Prop * p) override;
 
+	void clear() override;
+
 	int getFirstAvailableID();
 	void propIDChanged(Prop * p, int previousID) override;
 

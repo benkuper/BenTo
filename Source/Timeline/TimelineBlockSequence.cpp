@@ -34,7 +34,12 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	int numLayers = layers.size();
 
 	float t = params.getProperty("sequenceTime", true) ? currentTime->floatValue() : time;
-	if(numLayers == 1) return layers[0]->getColors(p, t, params); //use sequence's time instead of prop time
+	
+	if (numLayers == 1)
+	{
+		params.getDynamicObject()->setProperty("forceID", layers[0]->filterManager.getTargetIDForProp(p));
+		return layers[0]->getColors(p, t, params); //use sequence's time instead of prop time
+	}
 
 	int resolution = p->resolution->intValue();
 	

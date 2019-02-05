@@ -28,6 +28,7 @@ void PropFamily::registerProp(Prop * p)
 
 void PropFamily::unregisterProp(Prop * p)
 {
+	if (Engine::mainEngine->isClearing) return;
 	props.removeAllInstancesOf(p);
 }
 

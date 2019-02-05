@@ -33,6 +33,9 @@ public:
 	IntParameter * id;
 
 	int getTargetIDForProp(Prop * p) override;
+
+	String getTypeString() const override { return "Global ID"; }
+	static PropTargetFilter * create(var) { return new PropFilterGlobalID(); }
 };
 
 class PropFilterPropFamily :
@@ -45,6 +48,9 @@ public:
 	TargetParameter * family;
 
 	int getTargetIDForProp(Prop * p) override;
+
+	String getTypeString() const override { return "Family"; }
+	static PropTargetFilter * create(var) { return new PropFilterPropFamily(); }
 };
 
 class PropFilterPropType :
@@ -57,6 +63,9 @@ public:
 	EnumParameter * type;
 
 	int getTargetIDForProp(Prop * p) override;
+
+	String getTypeString() const override { return "Type"; }
+	static PropTargetFilter * create(var) { return new PropFilterPropType(); }
 };
 
 class PropFilterCluster :
@@ -74,6 +83,11 @@ public:
 	IntParameter * id;
 
 	int getTargetIDForProp(Prop * p) override;
+
+	void onContainerParameterChangedInternal(Parameter * p) override;
+
+	String getTypeString() const override { return "Cluster"; }
+	static PropTargetFilter * create(var) { return new PropFilterCluster(); }
 };
 
 
@@ -87,4 +101,7 @@ public:
 	Script script;
 
 	int getTargetIDForProp(Prop * p) override;
+
+	String getTypeString() const override { return "Script"; }
+	static PropTargetFilter * create(var) { return new PropFilterScript(); }
 };

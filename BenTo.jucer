@@ -372,6 +372,7 @@
                 file="Source/Prop/CustomParameters/CustomParameterManager.h"/>
         </GROUP>
         <GROUP id="{2C9EC421-B4F2-97F6-B5FC-EB3BC810C022}" name="TargetFilter">
+          <GROUP id="{30C8E5B1-F574-BA99-E16B-80CDE5072A7A}" name="filters"/>
           <FILE id="y0NGDg" name="PropTargetFilterManager.cpp" compile="1" resource="0"
                 file="Source/Prop/TargetFilter/PropTargetFilterManager.cpp"/>
           <FILE id="ZilGWj" name="PropTargetFilterManager.h" compile="0" resource="0"
@@ -382,6 +383,12 @@
                 file="Source/Prop/TargetFilter/PropTargetFilter.h"/>
         </GROUP>
         <GROUP id="{040643BC-C9E7-5F04-A78D-BB61F846D9B5}" name="Cluster">
+          <GROUP id="{45871F31-3228-CA05-4A3B-EA16F30EE621}" name="ui">
+            <FILE id="oBlfNB" name="PropClusterGroupManagerUI.cpp" compile="1"
+                  resource="0" file="Source/Prop/Cluster/ui/PropClusterGroupManagerUI.cpp"/>
+            <FILE id="MkmIbL" name="PropClusterGroupManagerUI.h" compile="0" resource="0"
+                  file="Source/Prop/Cluster/ui/PropClusterGroupManagerUI.h"/>
+          </GROUP>
           <FILE id="xdvyo2" name="PropCluster.cpp" compile="1" resource="0" file="Source/Prop/Cluster/PropCluster.cpp"/>
           <FILE id="Cdl4DJ" name="PropCluster.h" compile="0" resource="0" file="Source/Prop/Cluster/PropCluster.h"/>
           <FILE id="Pt55nI" name="PropClusterGroup.cpp" compile="1" resource="0"
@@ -472,22 +479,22 @@
         <CONFIGURATION name="Release" binaryPath="Binaries/Release" headerPath="../../External/asio&#10;../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_core" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_events" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_data_structures" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_basics" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_gui_extra" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_opengl" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_basics" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_devices" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_formats" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_organicui" path="..\JUCE Modules"/>
+        <MODULEPATH id="juce_osc" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_timeline" path="..\JUCE Modules"/>
+        <MODULEPATH id="juce_audio_utils" path="..\JUCE\modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="..\JUCE Modules"/>
         <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
@@ -498,9 +505,9 @@
         <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -513,8 +520,8 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
+        <MODULEPATH id="juce_sharedtexture" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_mongoose" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl">
@@ -523,9 +530,9 @@
         <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -538,8 +545,8 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
+        <MODULEPATH id="juce_sharedtexture" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_mongoose" path="~/JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -548,9 +555,9 @@
         <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
@@ -563,29 +570,29 @@
         <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_mongoose" path="../JUCE/modules"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>
   <MODULES>
-    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_mongoose" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
-    <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="1"/>
+    <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1"/>
 </JUCERPROJECT>

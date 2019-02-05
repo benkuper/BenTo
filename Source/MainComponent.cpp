@@ -14,6 +14,7 @@
 #include "Node/ui/NodeBlockEditor.h"
 #include "Timeline/TimelineEditor.h"
 #include "Video/ui/SpatializerPanel.h"
+#include "Prop/Cluster/ui/PropClusterGroupManagerUI.h"
 
 //==============================================================================
 MainComponent::MainComponent()
@@ -35,6 +36,7 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Node Editor", &NodeBlockEditor::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timeline Editor", &TimelineEditor::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Spatializer Editor", &SpatializerPanel::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Clusters", &PropClusterGroupManagerUI::create));
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("btlayout", "Bento/layouts");

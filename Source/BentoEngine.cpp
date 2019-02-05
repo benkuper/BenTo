@@ -31,8 +31,6 @@ BentoEngine::BentoEngine() :
 
 	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 	
-	
-
 	//Timeline
 	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Blocks", &LightBlockLayer::create));
 	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
@@ -48,6 +46,7 @@ BentoEngine::~BentoEngine()
 {
 	PropManager::deleteInstance();
 	PropClusterGroupManager::deleteInstance();
+
 	LightBlockModelLibrary::deleteInstance();
 	Spatializer::deleteInstance();
 	AudioManager::deleteInstance();
@@ -60,9 +59,10 @@ BentoEngine::~BentoEngine()
 
 void BentoEngine::clearInternal()
 {
-	Spatializer::getInstance()->clear();
 	PropManager::getInstance()->clear();
+	PropClusterGroupManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
+	Spatializer::getInstance()->clear();
 }
 
 
@@ -123,13 +123,17 @@ var BentoEngine::getJSONData()
 	var mData = LightBlockModelLibrary::getInstance()->getJSONData();
 	if (!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("models", mData);
 
+	
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
-
+	
+	var clusterData = PropClusterGroupManager::getInstance()->getJSONData();
+	if (!clusterData.isVoid() && clusterData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("clusters", clusterData);
 
 	var spatData = Spatializer::getInstance()->getJSONData();
 	if (!spatData.isVoid() && spatData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("spatializer", spatData);
 
+	
 	return data;
 }
 
@@ -139,6 +143,7 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTas
 	ProgressTask * modelsTask = loadingTask->addTask("Models");
 	ProgressTask * propTask = loadingTask->addTask("Props");
 	ProgressTask * spatTask = loadingTask->addTask("Spatializer");
+	ProgressTask * clusterTask = loadingTask->addTask("Clusters");
 
 
 	//load here
@@ -152,13 +157,18 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTas
 	modelsTask->setProgress(1);
 	modelsTask->end();
 
-	propTask->start();
-	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));
-	propTask->setProgress(1);
-	propTask->end();
-
-	spatTask->start();
+	clusterTask->start();
+	PropClusterGroupManager::getInstance()->loadJSONData(data.getProperty("clusters", var()));
+	clusterTask->setProgress(1);
+	clusterTask->end(); 
+	
+		spatTask->start();
 	Spatializer::getInstance()->loadJSONData(data.getProperty("spatializer", var()));
 	spatTask->setProgress(1);
 	spatTask->end();
+
+	propTask->start();
+	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));
+	propTask->setProgress(1);
+	propTask->end();	
 }

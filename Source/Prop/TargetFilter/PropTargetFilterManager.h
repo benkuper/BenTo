@@ -19,6 +19,7 @@ public:
 	PropTargetFilterManager();
 	~PropTargetFilterManager();
 
+	Factory<PropTargetFilter> factory;
 
 	int getTargetIDForProp(Prop *);
 };

@@ -19,21 +19,23 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 	propsStatus("Connected Devices")
 {
 	deviceParam = new SerialDeviceParameter("device", "Serial device to connect", true);
-	addParameter(deviceParam);
+	ioCC.addParameter(deviceParam);
 
-	isConnected = addBoolParameter("Is Connected", "This is checked if a serial device is connected.", false);
+	numPaired = generalCC.addIntParameter("Num Paired", "Number of paired props", 0, 0, 31);
+	numConnected = generalCC.addIntParameter("Num Connected", "Number of connected props", 0, 0, 31);
+	autoResolution = generalCC.addBoolParameter("Auto resolution", "If checked, the resolution will be automatically set depending on number of paired devices", true);
+	
+	
+	isConnected = ioCC.addBoolParameter("Is Connected", "This is checked if a serial device is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
 	isConnected->isSavable = false;
 
-	numPaired = addIntParameter("Num Paired", "Number of paired props", 0, 0, 31);
-	numConnected = addIntParameter("Num Connected", "Number of connected props", 0, 0, 31);
-	autoResolution = addBoolParameter("Auto resolution", "If checked, the resolution will be automatically set depending on number of paired devices", true);
+	
+	addNewPairing = ioCC.addTrigger("Add New Pairing Group", "Start pairing");
+	addToGroup = ioCC.addTrigger("Add To Group", "Add to the existing paired group");
+	finishPairing = ioCC.addTrigger("Finish Pairing", "Finish the pairing");
 
-	addNewPairing = addTrigger("Add New Pairing Group", "Start pairing");
-	addToGroup = addTrigger("Add To Group", "Add to the existing paired group");
-	finishPairing = addTrigger("Finish Pairing", "Finish the pairing");
-
-	bakingShowID = addIntParameter("Baking Show ID", "The ID of the show to upload to", 1, 1, 4);
+	bakingShowID = bakingCC.addIntParameter("Baking Show ID", "The ID of the show to upload to", 1, 1, 4);
 
 	for (int i = 0; i < 32; i++)
 	{
@@ -42,6 +44,7 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 		propsStatus.addChildControllableContainer(ftp);
 	}
 
+	//propsStatus.isSavable = false;
 	addChildControllableContainer(&propsStatus);
 		
 	SerialManager::getInstance()->addSerialManagerListener(this);

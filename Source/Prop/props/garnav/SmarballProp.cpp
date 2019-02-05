@@ -13,8 +13,8 @@
 SmartballProp::SmartballProp(const String & name, var params) :
 	Prop(name, "Garnav", params)
 {
-	remoteHost = addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
-	accelerometer = addPoint3DParameter("Accelerometer", "Accelerometer data");
+	remoteHost = ioCC.addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
+	accelerometer = sensorsCC.addPoint3DParameter("Accelerometer", "Accelerometer data");
 	accelerometer->setControllableFeedbackOnly(true);
 	resolution->setValue(6);
 }

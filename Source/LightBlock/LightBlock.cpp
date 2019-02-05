@@ -61,10 +61,10 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 		}
 	}
 
-	for (auto &p : paramList)
+	for (auto &param : paramList)
 	{
-		if (p.wasObjectDeleted() || p == nullptr) continue;
-		if(!localParams.hasProperty(p->shortName)) localParams.getDynamicObject()->setProperty(p->shortName, p->value);
+		if (param.wasObjectDeleted() || param == nullptr) continue;
+		if(!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, param->value);
 	}
 
 	if (provider.wasObjectDeleted())
