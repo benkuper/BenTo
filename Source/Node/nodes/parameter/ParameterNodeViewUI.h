@@ -9,3 +9,19 @@
 */
 
 #pragma once
+
+#include "Node/ui/NodeViewUI.h"
+#include "ParameterNode.h"
+
+class ParameterNodeViewUI :
+	public NodeViewUI
+{
+public:
+	ParameterNodeViewUI(ParameterNode * pn);
+	~ParameterNodeViewUI();
+
+	ParameterNode * pn;
+	ScopedPointer<ControllableUI> pui;
+
+	void resizedInternalContent(Rectangle<int> &r) override;
+};

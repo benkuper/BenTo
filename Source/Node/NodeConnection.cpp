@@ -28,6 +28,14 @@ NodeConnection::~NodeConnection()
 	if (destSlot != nullptr && !destSlot.wasObjectDeleted()) destSlot->removeConnection(this);
 }
 
+void NodeConnection::dispatchParameterUpdate(Parameter * p)
+{
+	if (destSlot != nullptr && !destSlot.wasObjectDeleted() && destSlot->type == ConnectionType::Number)
+	{
+		((ParameterSlot *)destSlot.get())->handleParameterUpdate(p);
+	}
+}
+
 void NodeConnection::setSlots(NodeConnectionSlot * source, NodeConnectionSlot * dest)
 {
 	sourceSlot = source;

@@ -31,8 +31,9 @@ public:
 	Array<NodeConnection *> connections;
 	bool isConnected();
 	
-	void addConnection(NodeConnection * c);
-	void removeConnection(NodeConnection *c);
+	virtual void addConnection(NodeConnection * c);
+	virtual void removeConnection(NodeConnection *c);
+
 
 	WeakReference<NodeConnectionSlot>::Master masterReference;
 };
@@ -47,15 +48,23 @@ public:
 };
 
 class ParameterSlot :
-	public NodeConnectionSlot
+	public NodeConnectionSlot,
+	public Parameter::ParameterListener
 {
 public:
 	ParameterSlot(Node * node, bool isInput, Parameter * p) :
 		NodeConnectionSlot(node, isInput, p->niceName, p->type == Parameter::COLOR ? ConnectionType::Color : ConnectionType::Number),
 		parameter(p)
 	{
+		parameter->setValue(getValue());
+		if(!isInput) parameter->addParameterListener(this);
 	}
-	 
+
+	void handleParameterUpdate(Parameter * p);
+	void addConnection(NodeConnection * c) override;
+	void removeConnection(NodeConnection *c) override;
+	void parameterValueChanged(Parameter * p) override;
+
 	var getValue();
 	Parameter * parameter;
 };

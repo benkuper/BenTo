@@ -29,6 +29,8 @@ public:
 
 	NodeConnectionManager connectionManager;
 
+	Array<WeakReference<Controllable>> getExposedParameters();
+
 	NodeConnectionSlot * getSlotForName(const String &nodeName, const String &slotName, bool isInput);
 
 	var getJSONData() override;

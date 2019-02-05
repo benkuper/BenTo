@@ -9,14 +9,16 @@
 */
 
 #include "ParameterNode.h"
-
+#include "ParameterNodeViewUI.h"
 
 ParameterNode::ParameterNode(var params) :
-	Node(getTypeString(), params)
-{
-	String t = params.getProperty("type", "");
-	parameter = static_cast<Parameter *>(ControllableFactory::createControllable(t));
+	Node(params.getProperty("type", "Parameter"), params),
+	paramType(params.getProperty("type", "Parameter").toString())
+{ 
+	parameter = static_cast<Parameter *>(ControllableFactory::createControllable(paramType));
 	jassert(parameter != nullptr);
+
+	parameter->isCustomizableByUser = true;
 
 	parameter->setNiceName("Out value");
 	addParameter(parameter);
@@ -25,4 +27,9 @@ ParameterNode::ParameterNode(var params) :
 
 ParameterNode::~ParameterNode()
 {
+}
+
+NodeViewUI * ParameterNode::createUI()
+{
+	return new ParameterNodeViewUI(this);
 }

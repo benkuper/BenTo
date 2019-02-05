@@ -14,6 +14,8 @@ PropClusterGroup::PropClusterGroup() :
 	BaseItem("Cluster Group"),
 	clusterManager("Clusters")
 {
+	sendFeedback = addBoolParameter("Send Feedback", "If checked, Prop changes will be sent using their local ID", false);
+
 	addChildControllableContainer(&clusterManager);
 	clusterManager.selectItemWhenCreated = false;
 	clusterManager.editorCanBeCollapsed = false;
@@ -22,6 +24,21 @@ PropClusterGroup::PropClusterGroup() :
 PropClusterGroup::~PropClusterGroup()
   {
   }
+
+PropCluster * PropClusterGroup::getClusterForProp(Prop * p, int &localID)
+{
+	for (auto &c : clusterManager.items)
+	{
+		int id = c->getLocalPropID(p);
+		if (id >= 0)
+		{
+			localID = id;
+			return c;
+		}
+	}
+
+	return nullptr;
+}
 
 int PropClusterGroup::getLocalPropID(Prop * p)
 {

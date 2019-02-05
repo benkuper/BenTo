@@ -26,6 +26,8 @@ public:
 	NodeManager * nodeManager;
 	ConnectionType type;
 
+	void dispatchParameterUpdate(Parameter *p);
+
 	void setSlots(NodeConnectionSlot * source, NodeConnectionSlot * dest);
 
 	var getJSONData() override;

@@ -21,7 +21,8 @@
 
 
 BentoEngine::BentoEngine() :
-	Engine("BenTo", ".bento")
+	Engine("BenTo", ".bento"),
+	ioCC("Input - Output")
 {
 	Engine::mainEngine = this;
 
@@ -29,6 +30,11 @@ BentoEngine::BentoEngine() :
 	addChildControllableContainer(PropManager::getInstance());
 	addChildControllableContainer(PropClusterGroupManager::getInstance());
 
+	remoteHost = ioCC.addStringParameter("Remote Host", "Global remote host to send OSC to", "127.0.0.1");
+	remotePort = ioCC.addIntParameter("Remote port", "Remote port to send OSC to", 43001, 1024, 65535); 
+	globalSender.connect("0.0.0.0", 1024);
+
+	ProjectSettings::getInstance()->addChildControllableContainer(&ioCC);
 	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 	
 	//Timeline

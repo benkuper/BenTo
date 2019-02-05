@@ -20,6 +20,11 @@ public:
 	BentoEngine();
 	~BentoEngine();
 
+	ControllableContainer ioCC;
+	StringParameter * remoteHost;
+	IntParameter * remotePort;
+	OSCSender globalSender;
+
 	void clearInternal() override;
 
 	void processMessage(const OSCMessage &m) override;

@@ -17,8 +17,9 @@ AudioManager::AudioManager() :
 	ControllableContainer("Audio Manager"),
 	hs(&am)
 {
+	editorIsCollapsed = true; 
+	
 	am.initialiseWithDefaultDevices(2, 2);
-
 	am.addAudioCallback(&player);
 
 	graph.reset();
@@ -49,6 +50,8 @@ AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager * am
 	ControllableContainer("Hardware Settings"),
 	am(am)
 {
+	hideEditorHeader = true;
+	
 }
 
 InspectableEditor * AudioModuleHardwareSettings::getEditor(bool isRoot)

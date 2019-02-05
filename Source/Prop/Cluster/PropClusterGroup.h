@@ -19,8 +19,11 @@ public:
 	PropClusterGroup();
 	~PropClusterGroup();
 
+	BoolParameter * sendFeedback;
+
 	BaseManager<PropCluster> clusterManager;
 
+	PropCluster * getClusterForProp(Prop * p, int &localID);
 	int getLocalPropID(Prop * p);
 
 	var getJSONData() override;

@@ -17,7 +17,7 @@ AudioManagerHardwareEditor::AudioManagerHardwareEditor(AudioModuleHardwareSettin
 	selector(*hs->am, 0, 16, 0, 16, false, false, false, false)
 {
 	addAndMakeVisible(selector);
-	selector.setSize(100, 300);
+	selector.setSize(100, 500);
 	selector.setVisible(!container->editorIsCollapsed);
 }
 

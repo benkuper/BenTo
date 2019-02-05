@@ -13,6 +13,7 @@
 #include "nodes/parameter/ParameterNode.h"
 #include "ColorNode.h"
 
+
 var ParameterSlot::getValue()
 {
 	if (isInput)
@@ -61,4 +62,30 @@ void NodeConnectionSlot::addConnection(NodeConnection * c)
 void NodeConnectionSlot::removeConnection(NodeConnection * c)
 {
 	connections.removeAllInstancesOf(c);
+}
+
+
+void ParameterSlot::handleParameterUpdate(Parameter * p)
+{
+	parameter->setValue(p->value);
+}
+
+void ParameterSlot::addConnection(NodeConnection * nc)
+{
+	NodeConnectionSlot::addConnection(nc);
+	if(isInput) parameter->setControllableFeedbackOnly(true);
+}
+
+void ParameterSlot::removeConnection(NodeConnection * nc)
+{
+	NodeConnectionSlot::removeConnection(nc);
+	if (isInput && connections.size() == 0) parameter->setControllableFeedbackOnly(false);
+}
+
+void ParameterSlot::parameterValueChanged(Parameter * p)
+{
+	if (!isInput)
+	{
+		for (auto & c : connections) c->dispatchParameterUpdate(parameter);
+	}
 }

@@ -46,6 +46,18 @@ NodeManager::~NodeManager()
 }
 
 
+Array<WeakReference<Controllable>> NodeManager::getExposedParameters()
+{
+	Array<WeakReference<Controllable>> result;
+	for (auto &n : items)
+	{
+		ParameterNode * pn = dynamic_cast<ParameterNode *>(n);
+		if (pn != nullptr) result.add(pn->parameter);
+	}
+
+	return result;
+}
+
 NodeConnectionSlot * NodeManager::getSlotForName(const String & nodeName, const String & slotName, bool isInput)
 {
 	Node * n = getItemWithName(nodeName);

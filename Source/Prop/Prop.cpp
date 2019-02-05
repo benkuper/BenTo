@@ -27,6 +27,8 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 {
 	registerFamily(familyName);
 	
+	editorIsCollapsed = true;
+
 	saveAndLoadRecursiveData = true;
 
 	addChildControllableContainer(&generalCC);

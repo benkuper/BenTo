@@ -14,7 +14,8 @@
 #include "Node/NodeManager.h"
 
 class NodeBlock :
-	public LightBlockModel
+	public LightBlockModel,
+	public NodeManager::Listener
 {
 public:
 	NodeBlock(var params = var());
@@ -22,14 +23,23 @@ public:
 
 	NodeManager manager;
 
-	String getTypeString() const override { return "Node"; }
-	
+	HashMap<Parameter *, Parameter *> paramToNodeMap;
+
+	virtual Array<WeakReference<Controllable>> getModelParameters() override;
 	Array<Colour> getColors(Prop * p, double time, var params) override;
+
+	void itemAdded(Node *) override;
+	void itemRemoved(Node *) override;
+	void childAddressChanged(ControllableContainer * cc) override;
+	void childStructureChanged(ControllableContainer * cc) override;
+
+	void updateParametersFromNode();
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	LightBlockModelUI * createUI() override;
-
+	String getTypeString() const override { return "Node"; }
 	static NodeBlock * create(var params) { return new NodeBlock(params); }
+
+	LightBlockModelUI * createUI() override;
 };
