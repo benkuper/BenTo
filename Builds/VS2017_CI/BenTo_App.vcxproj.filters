@@ -823,9 +823,6 @@
     <ClCompile Include="..\..\Source\Video\SpatItem.cpp">
       <Filter>BenTo\Source\Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Video\SpatItemManager.cpp">
-      <Filter>BenTo\Source\Video</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp">
       <Filter>BenTo\Source\Video</Filter>
     </ClCompile>
@@ -3600,10 +3597,10 @@
     <ClInclude Include="..\..\Source\Video\Spatializer.h">
       <Filter>BenTo\Source\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Video\SpatItem.h">
+    <ClInclude Include="..\..\Source\Video\SpatializerEvent.h">
       <Filter>BenTo\Source\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Video\SpatItemManager.h">
+    <ClInclude Include="..\..\Source\Video\SpatItem.h">
       <Filter>BenTo\Source\Video</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h">

@@ -102,7 +102,6 @@
     <ClCompile Include="..\..\Source\Video\ui\SpatItemUI.cpp"/>
     <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatItem.cpp"/>
-    <ClCompile Include="..\..\Source\Video\SpatItemManager.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp"/>
@@ -2522,8 +2521,8 @@
     <ClInclude Include="..\..\Source\Video\ui\SpatializerPanel.h"/>
     <ClInclude Include="..\..\Source\Video\ui\SpatItemUI.h"/>
     <ClInclude Include="..\..\Source\Video\Spatializer.h"/>
+    <ClInclude Include="..\..\Source\Video\SpatializerEvent.h"/>
     <ClInclude Include="..\..\Source\Video\SpatItem.h"/>
-    <ClInclude Include="..\..\Source\Video\SpatItemManager.h"/>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.h"/>

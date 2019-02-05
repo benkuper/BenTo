@@ -137,10 +137,6 @@
 			isa = PBXBuildFile;
 			fileRef = 202B0B035DA4F9CD397EC3B7;
 		};
-		169CFA398A0E1004AF1AE623 = {
-			isa = PBXBuildFile;
-			fileRef = BAD6C910E23A18A08A7A0EC3;
-		};
 		94D82A1F7A884FB53B21CECD = {
 			isa = PBXBuildFile;
 			fileRef = B894D9041081220C3E2DBF4F;
@@ -650,13 +646,6 @@
 			path = BenTo.app;
 			sourceTree = "BUILT_PRODUCTS_DIR";
 		};
-		0DD98820E3B4CE06D8CB8924 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_organicui";
-			path = "~/JUCE/modules/juce_organicui";
-			sourceTree = "<absolute>";
-		};
 		0DE395589F8E1E8CF5962768 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -887,13 +876,6 @@
 			name = SpatializerPanel.h;
 			path = ../../Source/Video/ui/SpatializerPanel.h;
 			sourceTree = "SOURCE_ROOT";
-		};
-		328B723F01ACA33E0E0379DF = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_timeline";
-			path = "~/JUCE/modules/juce_timeline";
-			sourceTree = "<absolute>";
 		};
 		335EEC97C15780DD0F2E5389 = {
 			isa = PBXFileReference;
@@ -1329,6 +1311,20 @@
 			path = ../../Source/Common/Serial/lib/cobs/cobs.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6FD324810D4F9DC2B420FA91 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SpatializerEvent.h;
+			path = ../../Source/Video/SpatializerEvent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		7091480BEA3A455BFC50120A = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "../../../JUCE/modules/juce_timeline";
+			sourceTree = "SOURCE_ROOT";
+		};
 		746266F5EEE79F13E1F107C5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1488,6 +1484,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = NodeBlockEditor.h;
 			path = ../../Source/Node/ui/NodeBlockEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8C548ACFB161D855EEDEE664 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_organicui";
+			path = "../../../JUCE/modules/juce_organicui";
 			sourceTree = "SOURCE_ROOT";
 		};
 		8E2D9DF2881733CADA59D8E0 = {
@@ -1763,6 +1766,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AEC5D3E1B1FA2EC5837DF029 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_sharedtexture";
+			path = "../../../JUCE/modules/juce_sharedtexture";
+			sourceTree = "SOURCE_ROOT";
+		};
 		AEF39637DB6CA28A00644DE6 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1852,13 +1862,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "list_ports_win.cc";
 			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc";
-			sourceTree = "SOURCE_ROOT";
-		};
-		BAD6C910E23A18A08A7A0EC3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SpatItemManager.cpp;
-			path = ../../Source/Video/SpatItemManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		BB49CE530EF2DF020DBCAA60 = {
@@ -2043,13 +2046,6 @@
 			path = "~/JUCE/modules/juce_audio_processors";
 			sourceTree = "<absolute>";
 		};
-		D1FFBEC3F2A5FABC3B24370F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SpatItemManager.h;
-			path = ../../Source/Video/SpatItemManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		D239AAEE967D9E958B6ACAB3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -2125,13 +2121,6 @@
 			lastKnownFileType = file;
 			name = "juce_audio_basics";
 			path = "~/JUCE/modules/juce_audio_basics";
-			sourceTree = "<absolute>";
-		};
-		D97D19436B80CE2542B9B5FE = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_sharedtexture";
-			path = "~/JUCE/modules/juce_sharedtexture";
 			sourceTree = "<absolute>";
 		};
 		D9825732C3218C86F328A56B = {
@@ -2576,10 +2565,9 @@
 				FF92CAD964BD8C166BF7E460,
 				892550DDAEA7C386E6C3F006,
 				B3DB1814903F3B5398D60F9C,
+				6FD324810D4F9DC2B420FA91,
 				202B0B035DA4F9CD397EC3B7,
 				D7E6B27DC9E84D0C58F7EDF2,
-				BAD6C910E23A18A08A7A0EC3,
-				D1FFBEC3F2A5FABC3B24370F,
 				B894D9041081220C3E2DBF4F,
 				4AA49400F632E13E4625FF39,
 			);
@@ -3147,10 +3135,10 @@
 				D5BA4C7B914E43D3B54609C9,
 				77D3D3B1A9C133AC87FC698F,
 				9FC7CA34A6BC93158284E96E,
-				0DD98820E3B4CE06D8CB8924,
+				8C548ACFB161D855EEDEE664,
 				5DBFCFF756AD9AF779C27EC0,
-				D97D19436B80CE2542B9B5FE,
-				328B723F01ACA33E0E0379DF,
+				AEC5D3E1B1FA2EC5837DF029,
+				7091480BEA3A455BFC50120A,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -3263,6 +3251,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"../../External",
+					"../../../JUCE/modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3309,6 +3298,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"../../External",
+					"../../../JUCE/modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3468,7 +3458,6 @@
 				C30DF125F1DF16D3E1967305,
 				29B7CA04117974E9913C7B88,
 				4B4B3D6FF4934760887A7A66,
-				169CFA398A0E1004AF1AE623,
 				94D82A1F7A884FB53B21CECD,
 				20206B9F3E8B524E4B46CB27,
 				E38EFAD1984338B5F6875E1F,

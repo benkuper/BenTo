@@ -98,12 +98,10 @@
         </GROUP>
         <FILE id="TrUUBa" name="Spatializer.cpp" compile="1" resource="0" file="Source/Video/Spatializer.cpp"/>
         <FILE id="k1xJfM" name="Spatializer.h" compile="0" resource="0" file="Source/Video/Spatializer.h"/>
+        <FILE id="qnru1X" name="SpatializerEvent.h" compile="0" resource="0"
+              file="Source/Video/SpatializerEvent.h"/>
         <FILE id="Bhoo0Y" name="SpatItem.cpp" compile="1" resource="0" file="Source/Video/SpatItem.cpp"/>
         <FILE id="sVLTmw" name="SpatItem.h" compile="0" resource="0" file="Source/Video/SpatItem.h"/>
-        <FILE id="HmYuQi" name="SpatItemManager.cpp" compile="1" resource="0"
-              file="Source/Video/SpatItemManager.cpp"/>
-        <FILE id="WLg9Mi" name="SpatItemManager.h" compile="0" resource="0"
-              file="Source/Video/SpatItemManager.h"/>
         <FILE id="A4Jhs9" name="SpatLayout.cpp" compile="1" resource="0" file="Source/Video/SpatLayout.cpp"/>
         <FILE id="kIBlwS" name="SpatLayout.h" compile="0" resource="0" file="Source/Video/SpatLayout.h"/>
       </GROUP>
@@ -511,9 +509,9 @@
         <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -526,7 +524,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE/modules"/>
         <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </XCODE_MAC>
@@ -536,9 +534,9 @@
         <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE/modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE/modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -551,7 +549,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE/modules"/>
         <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </LINUX_MAKE>
