@@ -562,6 +562,13 @@
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		03D68912B90442DF90A21C42 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_organicui";
+			path = "../../../JUCE Modules/juce_organicui";
+			sourceTree = "SOURCE_ROOT";
+		};
 		042EE867E2552AD03EB3FC9D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1318,13 +1325,6 @@
 			path = ../../Source/Video/SpatializerEvent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		7091480BEA3A455BFC50120A = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_timeline";
-			path = "../../../JUCE/modules/juce_timeline";
-			sourceTree = "SOURCE_ROOT";
-		};
 		746266F5EEE79F13E1F107C5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1484,13 +1484,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = NodeBlockEditor.h;
 			path = ../../Source/Node/ui/NodeBlockEditor.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		8C548ACFB161D855EEDEE664 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_organicui";
-			path = "../../../JUCE/modules/juce_organicui";
 			sourceTree = "SOURCE_ROOT";
 		};
 		8E2D9DF2881733CADA59D8E0 = {
@@ -1689,6 +1682,13 @@
 			path = ../../Source/LightBlock/model/blocks/node/NodeBlock.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		A1A6ABCA29E3787D9B68262F = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "../../../JUCE Modules/juce_timeline";
+			sourceTree = "SOURCE_ROOT";
+		};
 		A1C0F782FE9CBAEDE19E835F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1764,13 +1764,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightBlockModel.cpp;
 			path = ../../Source/LightBlock/model/LightBlockModel.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		AEC5D3E1B1FA2EC5837DF029 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_sharedtexture";
-			path = "../../../JUCE/modules/juce_sharedtexture";
 			sourceTree = "SOURCE_ROOT";
 		};
 		AEF39637DB6CA28A00644DE6 = {
@@ -2030,6 +2023,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PropClusterGroupManager.cpp;
 			path = ../../Source/Prop/Cluster/PropClusterGroupManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		CFE4080B44BE37C07EB06068 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_sharedtexture";
+			path = "../../../JUCE Modules/juce_sharedtexture";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D027E1CD25E7821AE21678A1 = {
@@ -3135,10 +3135,10 @@
 				D5BA4C7B914E43D3B54609C9,
 				77D3D3B1A9C133AC87FC698F,
 				9FC7CA34A6BC93158284E96E,
-				8C548ACFB161D855EEDEE664,
+				03D68912B90442DF90A21C42,
 				5DBFCFF756AD9AF779C27EC0,
-				AEC5D3E1B1FA2EC5837DF029,
-				7091480BEA3A455BFC50120A,
+				CFE4080B44BE37C07EB06068,
+				A1A6ABCA29E3787D9B68262F,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -3251,7 +3251,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"../../External",
-					"../../../JUCE/modules",
+					"\"../../../JUCE Modules\"",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3298,7 +3298,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"../../External",
-					"../../../JUCE/modules",
+					"\"../../../JUCE Modules\"",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
