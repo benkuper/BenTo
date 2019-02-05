@@ -100,6 +100,12 @@
         <FILE id="k1xJfM" name="Spatializer.h" compile="0" resource="0" file="Source/Video/Spatializer.h"/>
         <FILE id="Bhoo0Y" name="SpatItem.cpp" compile="1" resource="0" file="Source/Video/SpatItem.cpp"/>
         <FILE id="sVLTmw" name="SpatItem.h" compile="0" resource="0" file="Source/Video/SpatItem.h"/>
+        <FILE id="HmYuQi" name="SpatItemManager.cpp" compile="1" resource="0"
+              file="Source/Video/SpatItemManager.cpp"/>
+        <FILE id="WLg9Mi" name="SpatItemManager.h" compile="0" resource="0"
+              file="Source/Video/SpatItemManager.h"/>
+        <FILE id="A4Jhs9" name="SpatLayout.cpp" compile="1" resource="0" file="Source/Video/SpatLayout.cpp"/>
+        <FILE id="kIBlwS" name="SpatLayout.h" compile="0" resource="0" file="Source/Video/SpatLayout.h"/>
       </GROUP>
       <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Timeline">
         <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
@@ -521,7 +527,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_mongoose" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl">
@@ -546,7 +552,7 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_mongoose" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -571,7 +577,7 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_mongoose" path="../JUCE/modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
   </EXPORTFORMATS>

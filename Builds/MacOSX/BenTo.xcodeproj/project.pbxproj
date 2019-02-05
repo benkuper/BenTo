@@ -137,6 +137,14 @@
 			isa = PBXBuildFile;
 			fileRef = 202B0B035DA4F9CD397EC3B7;
 		};
+		169CFA398A0E1004AF1AE623 = {
+			isa = PBXBuildFile;
+			fileRef = BAD6C910E23A18A08A7A0EC3;
+		};
+		94D82A1F7A884FB53B21CECD = {
+			isa = PBXBuildFile;
+			fileRef = B894D9041081220C3E2DBF4F;
+		};
 		20206B9F3E8B524E4B46CB27 = {
 			isa = PBXBuildFile;
 			fileRef = 99ED218AAF56CF315A0D41F2;
@@ -1006,13 +1014,6 @@
 			path = ../../Source/MainComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		4968EAFEF0A97E78F8FCCD95 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_mongoose";
-			path = "~/JUCE/modules/juce_mongoose";
-			sourceTree = "<absolute>";
-		};
 		49B00E97E22F53E7FC525B3F = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -1039,6 +1040,13 @@
 			lastKnownFileType = file.btlayout;
 			name = default.btlayout;
 			path = ../../Resources/default.btlayout;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4AA49400F632E13E4625FF39 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SpatLayout.h;
+			path = ../../Source/Video/SpatLayout.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4AF5E224836AFE7ED044B8D6 = {
@@ -1340,6 +1348,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = LightBlockModelGroup.h;
 			path = ../../Source/LightBlock/model/LightBlockModelGroup.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		77D3D3B1A9C133AC87FC698F = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_mongoose";
+			path = "../../External/juce_mongoose";
 			sourceTree = "SOURCE_ROOT";
 		};
 		78B73D9D5B0E32AC35532E05 = {
@@ -1818,6 +1833,13 @@
 			path = "~/JUCE/modules/juce_core";
 			sourceTree = "<absolute>";
 		};
+		B894D9041081220C3E2DBF4F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SpatLayout.cpp;
+			path = ../../Source/Video/SpatLayout.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B90E6FAC86CD2D932F3FB50E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1830,6 +1852,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "list_ports_win.cc";
 			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc";
+			sourceTree = "SOURCE_ROOT";
+		};
+		BAD6C910E23A18A08A7A0EC3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = SpatItemManager.cpp;
+			path = ../../Source/Video/SpatItemManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		BB49CE530EF2DF020DBCAA60 = {
@@ -2013,6 +2042,13 @@
 			name = "juce_audio_processors";
 			path = "~/JUCE/modules/juce_audio_processors";
 			sourceTree = "<absolute>";
+		};
+		D1FFBEC3F2A5FABC3B24370F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = SpatItemManager.h;
+			path = ../../Source/Video/SpatItemManager.h;
+			sourceTree = "SOURCE_ROOT";
 		};
 		D239AAEE967D9E958B6ACAB3 = {
 			isa = PBXFileReference;
@@ -2542,6 +2578,10 @@
 				B3DB1814903F3B5398D60F9C,
 				202B0B035DA4F9CD397EC3B7,
 				D7E6B27DC9E84D0C58F7EDF2,
+				BAD6C910E23A18A08A7A0EC3,
+				D1FFBEC3F2A5FABC3B24370F,
+				B894D9041081220C3E2DBF4F,
+				4AA49400F632E13E4625FF39,
 			);
 			name = Video;
 			sourceTree = "<group>";
@@ -3105,7 +3145,7 @@
 				FB6494C1B097AA9160992156,
 				CDF46B099D8A37106496ED1F,
 				D5BA4C7B914E43D3B54609C9,
-				4968EAFEF0A97E78F8FCCD95,
+				77D3D3B1A9C133AC87FC698F,
 				9FC7CA34A6BC93158284E96E,
 				0DD98820E3B4CE06D8CB8924,
 				5DBFCFF756AD9AF779C27EC0,
@@ -3222,6 +3262,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
+					"../../External",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3267,6 +3308,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
+					"../../External",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3426,6 +3468,8 @@
 				C30DF125F1DF16D3E1967305,
 				29B7CA04117974E9913C7B88,
 				4B4B3D6FF4934760887A7A66,
+				169CFA398A0E1004AF1AE623,
+				94D82A1F7A884FB53B21CECD,
 				20206B9F3E8B524E4B46CB27,
 				E38EFAD1984338B5F6875E1F,
 				B7B88925EC68F64566BA283B,

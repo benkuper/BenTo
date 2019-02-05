@@ -46,7 +46,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;../../External/asio;../../External/serial/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\External;../../External/asio;../../External/serial/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.0.1;JUCE_APP_VERSION_HEX=0x10001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -102,6 +102,8 @@
     <ClCompile Include="..\..\Source\Video\ui\SpatItemUI.cpp"/>
     <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatItem.cpp"/>
+    <ClCompile Include="..\..\Source\Video\SpatItemManager.cpp"/>
+    <ClCompile Include="..\..\Source\Video\SpatLayout.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.cpp"/>
@@ -1870,76 +1872,76 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\include_juce_core.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_core.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\include_juce_data_structures.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_data_structures.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\include_juce_events.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_events.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\include_juce_graphics.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_graphics.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\include_juce_gui_basics.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_gui_basics.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\include_juce_mongoose.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_mongoose.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\demo\Source\Main.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\demo\Source\Main.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Controller.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Controller.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonController.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonController.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonResponse.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonResponse.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Mutex.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Mutex.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Request.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Request.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Response.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Response.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Server.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Server.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Session.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Session.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Sessions.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Sessions.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_StreamResponse.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_StreamResponse.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_UploadFile.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_UploadFile.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Utils.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Utils.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebController.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebController.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSocket.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSocket.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSockets.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSockets.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\mongoose_api.c">
+    <ClCompile Include="..\..\External\juce_mongoose\mongoose\mongoose_api.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE\modules\juce_mongoose\juce_mongoose.cpp">
+    <ClCompile Include="..\..\External\juce_mongoose\juce_mongoose.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_opengl\opengl\juce_OpenGLContext.cpp">
@@ -2521,6 +2523,8 @@
     <ClInclude Include="..\..\Source\Video\ui\SpatItemUI.h"/>
     <ClInclude Include="..\..\Source\Video\Spatializer.h"/>
     <ClInclude Include="..\..\Source\Video\SpatItem.h"/>
+    <ClInclude Include="..\..\Source\Video\SpatItemManager.h"/>
+    <ClInclude Include="..\..\Source\Video\SpatLayout.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.h"/>
@@ -3257,26 +3261,26 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\native\juce_mac_CarbonViewWrapperComponent.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\AppConfig.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\JuceHeader.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\demo\Source\MainComponent.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Controller.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonController.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonResponse.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Mutex.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Request.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_RequestHandler.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Response.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Server.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Session.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Sessions.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_StreamResponse.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_UploadFile.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_Utils.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebController.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSocket.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSockets.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_mongoose\mongoose\mongoose_api.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\AppConfig.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\JuceHeader.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\demo\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Controller.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonController.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonResponse.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Mutex.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Request.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_RequestHandler.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Response.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Server.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Session.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Sessions.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_StreamResponse.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_UploadFile.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Utils.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebController.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSocket.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSockets.h"/>
+    <ClInclude Include="..\..\External\juce_mongoose\mongoose\mongoose_api.h"/>
     <ClInclude Include="..\..\External\juce_mongoose\juce_mongoose.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_opengl\geometry\juce_Draggable3DOrientation.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_opengl\geometry\juce_Matrix3D.h"/>
@@ -3520,8 +3524,8 @@
     <None Include="..\..\..\JUCE\modules\juce_core\native\java\README.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\jpglib\changes to libjpeg for JUCE.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\libpng_readme.txt"/>
-    <None Include="..\..\..\JUCE\modules\juce_mongoose\demo\JuceLibraryCode\ReadMe.txt"/>
-    <None Include="..\..\..\JUCE\modules\juce_mongoose\README.md"/>
+    <None Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\ReadMe.txt"/>
+    <None Include="..\..\External\juce_mongoose\README.md"/>
     <None Include="..\..\..\JUCE\modules\juce_organicui\README.md"/>
     <None Include="..\..\..\JUCE\modules\juce_sharedtexture\README.md"/>
     <None Include="..\..\..\JUCE\modules\juce_timeline\README.md"/>
