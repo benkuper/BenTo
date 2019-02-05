@@ -37,7 +37,7 @@ public:
 	OpenGLGraphicsContextCustomShader shader;
 	
 	void init();
-	void computeSpat(Image &tex, SpatLayout * forceLayout = nullptr);
+	void computeSpat(Image tex, SpatLayout * forceLayout = nullptr);
 
 	SpatItem * getItemForProp(Prop * p, SpatLayout * forceLayout = nullptr);
 

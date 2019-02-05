@@ -64,7 +64,7 @@ void Spatializer::init()
 	isInit = true;
 }
 
-void Spatializer::computeSpat(Image &tex, SpatLayout * forceLayout)
+void Spatializer::computeSpat(Image tex, SpatLayout * forceLayout)
 {
 	SpatLayout * targetLayout = forceLayout != nullptr ? forceLayout : currentLayout;
 	if (targetLayout == nullptr) return;
