@@ -13,11 +13,11 @@
 #include "LightBlockModelParameterManager.h"
 #include "preset/LightBlockModelPresetManager.h"
 #include "LightBlockColorProvider.h"
+#include "Prop/Prop.h"
 
 class LightBlock;
 class LightBlockModelUI;
 
-class Prop;
 
 class LightBlockModel :
 	public LightBlockColorProvider
@@ -36,7 +36,7 @@ public:
 
 	virtual Array<WeakReference<Controllable>> getModelParameters() override;
 
-	virtual Array<Colour> getColors(int id, int resolution, double time, var params) override;
+	virtual Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void childStructureChanged(ControllableContainer * cc) override;

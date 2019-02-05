@@ -106,13 +106,15 @@ void Spatializer::computeSpat()
 	
 }
 
-SpatItem * Spatializer::getItemWithPropID(int id)
+SpatItem * Spatializer::getItemForProp(Prop * p)
 {
 	SpatItem * defaultSI = nullptr;
 	for (auto &si : items)
 	{
-		if (si->id->intValue() == id) return si;
-		if (si->isDefault->boolValue()) defaultSI = si;
+		int id = si->filterManager.getTargetIDForProp(p);
+		if(id >= 0) return si;
+
+		if (si->isDefault->boolValue() && defaultSI != nullptr) defaultSI = si;
 	}
 
 	return defaultSI;

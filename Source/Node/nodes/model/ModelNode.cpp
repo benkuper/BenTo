@@ -47,10 +47,10 @@ void ModelNode::setBlockFromProvider(LightBlockColorProvider * provider)
 	}
 }
 
-Array<Colour> ModelNode::getColors(int id, int resolution, double time, var params)
+Array<Colour> ModelNode::getColors(Prop * p, double time, var params)
 {
-	if (currentBlock == nullptr) return ColorNode::getColors(id, resolution, time, params);
-	return currentBlock->getColors(id, resolution, time, params);
+	if (currentBlock == nullptr) return ColorNode::getColors(p, time, params);
+	return currentBlock->getColors(p, time, params);
 }
 
 void ModelNode::onContainerParameterChanged(Parameter * p)

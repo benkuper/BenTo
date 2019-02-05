@@ -83,6 +83,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Identification\IdentificationRule.cpp"/>
+    <ClCompile Include="..\..\Source\Identification\IdentificationRuleManager.cpp"/>
     <ClCompile Include="..\..\Source\WebServer\BentoWebServer.cpp"/>
     <ClCompile Include="..\..\Source\Common\Serial\lib\serial\serial.cc"/>
     <ClCompile Include="..\..\Source\Common\Serial\lib\serial\impl\list_ports\list_ports_linux.cc"/>
@@ -157,15 +159,22 @@
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameter.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\props\garnav\GarnavFamily.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\garnav\SmarballProp.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowball\FlowBallProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowpoi\FlowPoiProp.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropUI.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropViz.cpp"/>
@@ -2498,6 +2507,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Identification\IdentificationRule.h"/>
+    <ClInclude Include="..\..\Source\Identification\IdentificationRuleManager.h"/>
     <ClInclude Include="..\..\Source\WebServer\BentoWebServer.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h"/>
@@ -2567,15 +2578,22 @@
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.h"/>
+    <ClInclude Include="..\..\Source\Prop\PropFamily.h"/>
+    <ClInclude Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.h"/>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h"/>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h"/>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropCluster.h"/>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h"/>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h"/>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.h"/>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.h"/>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.h"/>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h"/>
+    <ClInclude Include="..\..\Source\Prop\props\garnav\GarnavFamily.h"/>
     <ClInclude Include="..\..\Source\Prop\props\garnav\SmarballProp.h"/>
+    <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.h"/>
     <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.h"/>
     <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowball\FlowBallProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowpoi\FlowPoiProp.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropViz.h"/>

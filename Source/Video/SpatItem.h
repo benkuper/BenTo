@@ -12,6 +12,7 @@
 
 #include "JuceHeader.h"
 #include "Prop/Prop.h"
+#include "Prop/TargetFilter/PropTargetFilterManager.h"
 
 class SpatItem :
 	public BaseItem
@@ -23,8 +24,9 @@ public:
 	Array<Point<float>> points;
 	Array<Colour> colors;
 
-	IntParameter * id;
 	BoolParameter * isDefault;
+	PropTargetFilterManager filterManager;
+
 
 	EnumParameter * shape;
 	IntParameter * resolution;

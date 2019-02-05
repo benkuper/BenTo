@@ -12,6 +12,8 @@
 #include "JuceHeader.h"
 
 class LightBlock;
+class Prop;
+
 class LightBlockColorProvider : 
 	public BaseItem
 {
@@ -22,7 +24,7 @@ public:
 	Trigger * assignToAll;
 
 	virtual Array<WeakReference<Controllable>> getModelParameters() = 0;
-	virtual Array<Colour> getColors(int id, int resolution, double time, var params) = 0;
+	virtual Array<Colour> getColors(Prop * p, double time, var params) = 0;
 
 	void onContainerTriggerTriggered(Trigger *) override;
 

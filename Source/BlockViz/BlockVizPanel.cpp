@@ -15,11 +15,11 @@ BlockViz::BlockViz(const String & contentName) :
 	ShapeShifterContentComponent(contentName)
 {
 	vizProp.resolution->setValue(32);
-	vizProp.shape->setValueWithData(Prop::CLUB);
+	vizProp.type->setValueWithData(Prop::CLUB);
 
-	idUI = vizProp.id->createStepper();
+	idUI = vizProp.globalID->createStepper();
 	resolutionUI = vizProp.resolution->createStepper();
-	shapeUI = vizProp.shape->createUI();
+	shapeUI = vizProp.type->createUI();
 
 	addAndMakeVisible(idUI);
 	addAndMakeVisible(resolutionUI);

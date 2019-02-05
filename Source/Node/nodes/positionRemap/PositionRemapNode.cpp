@@ -28,14 +28,15 @@ PositionRemapNode::~PositionRemapNode()
 {
 }
 
-Array<Colour> PositionRemapNode::getColors(int id, int resolution, double time, var params)
+Array<Colour> PositionRemapNode::getColors(Prop * p, double time, var params)
 {
-	
+	int resolution = p->resolution->intValue();
+
 	int startLed = (position->floatValue() - size->floatValue() / 2) * resolution;
 	int endLed = (position->floatValue() + size->floatValue() / 2) * resolution;
 
-	Array<Colour> result = ColorNode::getColors(id, resolution, time, params);
-	Array<Colour> c = inColors->getColors(id, resolution, time, params);
+	Array<Colour> result = ColorNode::getColors(p, time, params);
+	Array<Colour> c = inColors->getColors(p, time, params);
 
 	RemapMode m = (RemapMode)(int)params.getProperty("mode", RESIZE);
 

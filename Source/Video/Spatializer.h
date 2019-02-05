@@ -45,7 +45,7 @@ public:
 	void init();
 	void computeSpat();
 
-	SpatItem * getItemWithPropID(int id);
+	SpatItem * getItemForProp(Prop * p);
 
 	void inspectableDestroyed(Inspectable *) override;
 	void textureUpdated(VideoBlock *) override;

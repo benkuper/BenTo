@@ -15,7 +15,7 @@ PropUI::PropUI(Prop * p) :
 	BaseItemUI(p),
 	viz(p)
 {
-	idUI = p->id->createStepper();
+	idUI = p->globalID->createStepper();
 	idUI->showLabel = true;
 	targetUI = p->activeProvider->createTargetUI();
 	batteryUI = p->battery->createSlider();

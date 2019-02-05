@@ -13,6 +13,7 @@
 #include "JuceHeader.h"
 #include "LightBlock/LightBlock.h"
 
+class PropFamily;
 
 class Prop :
 	public BaseItem,
@@ -20,19 +21,28 @@ class Prop :
 	public Thread
 {
 public:
-	enum Shape { CLUB, BALL, POI, HOOP };
+	enum Shape { CLUB, BALL, POI, HOOP, RING, BUGGENG, BOX };
 
-	Prop(const String &name = "Prop", var params = var());
+	Prop(StringRef name = "", StringRef familyName = "", var params = var());
 	virtual ~Prop();
 
-	IntParameter * id;
-	IntParameter * resolution;
-	EnumParameter * shape;
-	IntParameter * sendRate;
+	String deviceID;
+	PropFamily * family;
 
-	FloatParameter * battery;
+	ControllableContainer generalCC;
+	IntParameter * globalID;
+	IntParameter * resolution;
+	EnumParameter * type;
+	
+	ControllableContainer ioCC;
 	BoolParameter * findPropMode;
 
+	ControllableContainer sensorsCC;
+	FloatParameter * battery;
+
+	//GenericControllableManager customParamsCC;
+
+	ControllableContainer bakingCC;
 	FloatParameter * bakeStartTime;
 	FloatParameter * bakeEndTime;
 	IntParameter * bakeFrequency;
@@ -41,25 +51,29 @@ public:
 
 	Array<Colour> colors;
 
-	String propId;
-
 	ScopedPointer<LightBlock> currentBlock;
 	TargetParameter * activeProvider; 
 
-	bool hasRealtimeControl;
+	int previousID; //for swapping
+	int updateRate;
 
 	virtual void clearItem() override;
+
+	void registerFamily(StringRef familyName);
 
 	void setBlockFromProvider(LightBlockColorProvider * model);
 
 	void update();
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 	void onContainerTriggerTriggered(Trigger * t) override;
 	void inspectableDestroyed(Inspectable *) override;
 
 	void sendColorsToProp(bool forceSend = false);
 	virtual void sendColorsToPropInternal() {}
+
+	static void fillTypeOptions(EnumParameter * p);
 
 	struct TimedColors
 	{
@@ -81,6 +95,7 @@ public:
 		/** Destructor. */
 		virtual ~PropListener() {}
 		virtual void propBlockChanged(Prop * /*prop*/) {}
+		virtual void propIDChanged(Prop *, int) {}
 		virtual void colorsUpdated(Prop *) {}
 	};
 

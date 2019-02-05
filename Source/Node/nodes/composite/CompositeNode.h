@@ -25,7 +25,7 @@ public:
 
 	EnumParameter * blendMode;
 
-	Array<Colour> getColors(int id, int resolution, double time, var params) override;
+	Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	String getTypeString() const override { return "Composite"; }
 	static CompositeNode * create(var params) { return new CompositeNode(params); }

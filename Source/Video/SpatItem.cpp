@@ -14,8 +14,10 @@ SpatItem::SpatItem() :
 	BaseItem("Spat Item")
 {
 
-	id = addIntParameter("Target ID", "The id of the props to assign this", 0, 0, INT32_MAX);
 	isDefault = addBoolParameter("Default", "If checked and no item with the requested id is found, will fall back to this one", false);
+	
+	addChildControllableContainer(&filterManager);
+
 	shape = addEnumParameter("Shape", "The shape of the prop");
 	shape->addOption("Club", Prop::Shape::CLUB)->addOption("Ball", Prop::Shape::BALL)->addOption("Poi", Prop::Shape::POI)->addOption("Hoop", Prop::Shape::HOOP);
 

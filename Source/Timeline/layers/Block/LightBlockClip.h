@@ -37,7 +37,7 @@ public:
 	FloatParameter * fadeOut;
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
-	Array<Colour> getColors(int id, int resolution, double time, var params);
+	Array<Colour> getColors(Prop * p, double time, var params);
 	
 	float getTimeForRelativePosition(float t, bool absoluteTime = true);
 

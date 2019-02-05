@@ -28,7 +28,7 @@ public:
 
 	//ParameterAutomationManager automationsManager;
 
-	Array<Colour> getColors(int id, int resolution, double time, var params);
+	Array<Colour> getColors(Prop * p, double time, var params);
 
 	void rebuildArgsFromModel();
 

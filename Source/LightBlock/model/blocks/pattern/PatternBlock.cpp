@@ -33,8 +33,11 @@ RainbowPattern::RainbowPattern(var params) :
 	brightness = paramsContainer->addFloatParameter("Brightness", "Brightness of the rainbow", .5f, 0, 1);
 }
 
-Array<Colour> RainbowPattern::getColors(int id, int resolution, double time, var params)
+Array<Colour> RainbowPattern::getColors(Prop * p, double time, var params)
 {
+	int resolution = p->resolution->intValue();
+	int id = params.getProperty("forceID", p->globalID->intValue());
+	
 	Array<Colour> result;
 	result.resize(resolution);
 
@@ -68,8 +71,11 @@ NoisePattern::NoisePattern(var params) :
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the animation depending on id of the prop", 0, 0, 10);
 }
 
-Array<Colour> NoisePattern::getColors(int id, int resolution, double time, var params)
+Array<Colour> NoisePattern::getColors(Prop * p, double time, var params)
 {
+	int resolution = p->resolution->intValue();
+	int id = params.getProperty("forceID", p->globalID->intValue());
+	
 	Array<Colour> result;
 	result.resize(resolution);
 
@@ -102,8 +108,11 @@ SolidColorPattern::SolidColorPattern(var params) :
 
 }
 
-Array<Colour> SolidColorPattern::getColors(int id, int resolution, double time, var params)
+Array<Colour> SolidColorPattern::getColors(Prop * p, double time, var params)
 {
+	int resolution = p->resolution->intValue();
+	int id = params.getProperty("forceID", p->globalID->intValue());
+	
 	Array<Colour> result;
 	result.resize(resolution);
 
@@ -128,8 +137,11 @@ StrobePattern::StrobePattern(var params) :
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the timing depending on id of the prop", 0, 0, 10);
 }
 
-Array<Colour> StrobePattern::getColors(int id, int resolution, double time, var params)
+Array<Colour> StrobePattern::getColors(Prop * p, double time, var params)
 {
+	int resolution = p->resolution->intValue();
+	int id = params.getProperty("forceID", p->globalID->intValue());
+	
 	Array<Colour> result;
 	result.resize(resolution);
 

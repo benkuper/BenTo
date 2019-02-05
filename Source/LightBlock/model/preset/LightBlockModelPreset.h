@@ -28,7 +28,7 @@ public:
 
 	var previousData; //for keeping overriden value and saved dynamic values
 
-	Array<Colour> getColors(int id, int resolution, double time, var params) override;
+	Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	void rebuildArgsFromModel(bool syncValues = true);
 	void childStructureChanged(ControllableContainer * cc) override;

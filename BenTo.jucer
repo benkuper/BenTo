@@ -25,6 +25,16 @@
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{6904D42F-2293-0320-A5A4-5AE3259D75F7}" name="Identification">
+        <FILE id="s6Jv8B" name="IdentificationRule.cpp" compile="1" resource="0"
+              file="Source/Identification/IdentificationRule.cpp"/>
+        <FILE id="On77vb" name="IdentificationRule.h" compile="0" resource="0"
+              file="Source/Identification/IdentificationRule.h"/>
+        <FILE id="mLUpyS" name="IdentificationRuleManager.cpp" compile="1"
+              resource="0" file="Source/Identification/IdentificationRuleManager.cpp"/>
+        <FILE id="b0hRAv" name="IdentificationRuleManager.h" compile="0" resource="0"
+              file="Source/Identification/IdentificationRuleManager.h"/>
+      </GROUP>
       <GROUP id="{57294501-5658-E81F-20A1-197149325B67}" name="WebServer">
         <FILE id="Ra1p1M" name="BentoWebServer.cpp" compile="1" resource="0"
               file="Source/WebServer/BentoWebServer.cpp"/>
@@ -353,14 +363,42 @@
         <FILE id="tXTVXG" name="LightBlock.h" compile="0" resource="0" file="Source/LightBlock/LightBlock.h"/>
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
+        <FILE id="WR3mnT" name="PropFamily.cpp" compile="1" resource="0" file="Source/Prop/PropFamily.cpp"/>
+        <FILE id="p2GnSz" name="PropFamily.h" compile="0" resource="0" file="Source/Prop/PropFamily.h"/>
+        <GROUP id="{5466C7B8-1C99-28D1-C3DB-1BB048E99A84}" name="CustomParameters">
+          <FILE id="iidRVL" name="CustomParameterManager.cpp" compile="1" resource="0"
+                file="Source/Prop/CustomParameters/CustomParameterManager.cpp"/>
+          <FILE id="Kur52u" name="CustomParameterManager.h" compile="0" resource="0"
+                file="Source/Prop/CustomParameters/CustomParameterManager.h"/>
+        </GROUP>
+        <GROUP id="{2C9EC421-B4F2-97F6-B5FC-EB3BC810C022}" name="TargetFilter">
+          <FILE id="y0NGDg" name="PropTargetFilterManager.cpp" compile="1" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilterManager.cpp"/>
+          <FILE id="ZilGWj" name="PropTargetFilterManager.h" compile="0" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilterManager.h"/>
+          <FILE id="pidyXr" name="PropTargetFilter.cpp" compile="1" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilter.cpp"/>
+          <FILE id="fUKBib" name="PropTargetFilter.h" compile="0" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilter.h"/>
+        </GROUP>
+        <GROUP id="{040643BC-C9E7-5F04-A78D-BB61F846D9B5}" name="Cluster">
+          <FILE id="xdvyo2" name="PropCluster.cpp" compile="1" resource="0" file="Source/Prop/Cluster/PropCluster.cpp"/>
+          <FILE id="Cdl4DJ" name="PropCluster.h" compile="0" resource="0" file="Source/Prop/Cluster/PropCluster.h"/>
+          <FILE id="Pt55nI" name="PropClusterGroup.cpp" compile="1" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroup.cpp"/>
+          <FILE id="jzSeUi" name="PropClusterGroup.h" compile="0" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroup.h"/>
+          <FILE id="NvJmi1" name="PropClusterGroupManager.cpp" compile="1" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroupManager.cpp"/>
+          <FILE id="eC7Fz0" name="PropClusterGroupManager.h" compile="0" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroupManager.h"/>
+        </GROUP>
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
           <GROUP id="{C522011C-89AC-576D-FB1C-E685E5E8AE23}" name="lighttoys">
-            <GROUP id="{5CACE4CA-1A73-F3AB-8248-A5CA9C2EBA55}" name="visual">
-              <FILE id="MAsP2T" name="LighttoysVisualProp.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/lighttoys/visual/LighttoysVisualProp.cpp"/>
-              <FILE id="pWkYEY" name="LighttoysVisualProp.h" compile="0" resource="0"
-                    file="Source/Prop/props/lighttoys/visual/LighttoysVisualProp.h"/>
-            </GROUP>
+            <FILE id="aI6kbb" name="LighttoysFamily.cpp" compile="1" resource="0"
+                  file="Source/Prop/props/lighttoys/LighttoysFamily.cpp"/>
+            <FILE id="wvDFg6" name="LighttoysFamily.h" compile="0" resource="0"
+                  file="Source/Prop/props/lighttoys/LighttoysFamily.h"/>
             <GROUP id="{408647FB-37B9-7763-D9B7-284E1CBC7A97}" name="ft">
               <GROUP id="{8B0658F2-8132-54E5-791D-2F9F1D89E4AE}" name="ui">
                 <FILE id="FAYOX1" name="FTPropStatusEditor.cpp" compile="1" resource="0"
@@ -378,11 +416,18 @@
             </GROUP>
           </GROUP>
           <GROUP id="{2ABCE6F1-98C0-E49C-51B2-9A06C1A77026}" name="garnav">
+            <FILE id="d8Vegd" name="GarnavFamily.cpp" compile="1" resource="0"
+                  file="Source/Prop/props/garnav/GarnavFamily.cpp"/>
+            <FILE id="sgzH5g" name="GarnavFamily.h" compile="0" resource="0" file="Source/Prop/props/garnav/GarnavFamily.h"/>
             <FILE id="rROiLA" name="SmarballProp.cpp" compile="1" resource="0"
                   file="Source/Prop/props/garnav/SmarballProp.cpp"/>
             <FILE id="P9nYgO" name="SmarballProp.h" compile="0" resource="0" file="Source/Prop/props/garnav/SmarballProp.h"/>
           </GROUP>
           <GROUP id="{F8143F18-668C-9A7E-6413-ADBA39BD6BC6}" name="flowtoys">
+            <FILE id="PAGR4W" name="FlowtoysFamily.cpp" compile="1" resource="0"
+                  file="Source/Prop/props/flowtoys/FlowtoysFamily.cpp"/>
+            <FILE id="RArHlf" name="FlowtoysFamily.h" compile="0" resource="0"
+                  file="Source/Prop/props/flowtoys/FlowtoysFamily.h"/>
             <FILE id="JqhwMB" name="FlowtoysProp.cpp" compile="1" resource="0"
                   file="Source/Prop/props/flowtoys/FlowtoysProp.cpp"/>
             <FILE id="e7gr10" name="FlowtoysProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/FlowtoysProp.h"/>
@@ -390,15 +435,6 @@
               <FILE id="L3ttpc" name="FlowClubProp.cpp" compile="1" resource="0"
                     file="Source/Prop/props/flowtoys/flowclub/FlowClubProp.cpp"/>
               <FILE id="qBroMp" name="FlowClubProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/flowclub/FlowClubProp.h"/>
-            </GROUP>
-            <GROUP id="{87622B0C-AA97-4D64-0748-39C57CE96B1F}" name="flowball">
-              <FILE id="mobQxn" name="FlowBallProp.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/flowtoys/flowball/FlowBallProp.cpp"/>
-              <FILE id="yXwxx3" name="FlowBallProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/flowball/FlowBallProp.h"/>
-            </GROUP>
-            <GROUP id="{7218EFF0-B1E8-198A-5504-2ACE573BFECC}" name="flowpoi">
-              <FILE id="XrA2Jx" name="FlowPoiProp.cpp" compile="1" resource="0" file="Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.cpp"/>
-              <FILE id="zsULQY" name="FlowPoiProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.h"/>
             </GROUP>
           </GROUP>
         </GROUP>

@@ -11,6 +11,7 @@
 #pragma once
 
 #include "../LightBlockClip.h"
+#include "Prop/Prop.h"
 
 class LightBlockFadeHandle :
 	public Component
@@ -32,13 +33,13 @@ public:
 	LightBlockClipUI(LightBlockClip * clip);
 	~LightBlockClipUI();
 
-
 	ScopedPointer<AutomationUI> automationUI;
 
 	LightBlockFadeHandle fadeInHandle;
 	LightBlockFadeHandle fadeOutHandle;
 
 	//
+	Prop previewProp;
 	bool imageIsReady;
 	Image previewImage;
 

@@ -11,6 +11,7 @@
 #include "TimelineBlockSequence.h"
 #include "layers/Block/LightBlockLayer.h"
 #include "Audio/AudioManager.h"
+#include "Prop/Prop.h"
 
 TimelineBlockSequence::TimelineBlockSequence() :
 	Sequence()
@@ -25,15 +26,18 @@ TimelineBlockSequence::~TimelineBlockSequence()
 {
 }
 
-Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, double time, var params)
+Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params)
 {
-	Array<LightBlockLayer *> layers = getLayersForID(id);
+	
+	Array<LightBlockLayer *> layers = getLayersForProp(p);
 
 	int numLayers = layers.size();
 
 	float t = params.getProperty("sequenceTime", true) ? currentTime->floatValue() : time;
-	if(numLayers == 1) return layers[0]->getColors(id, resolution, t, params); //use sequence's time instead of prop time
+	if(numLayers == 1) return layers[0]->getColors(p, t, params); //use sequence's time instead of prop time
 
+	int resolution = p->resolution->intValue();
+	
 	Array<Colour> result;
 	result.resize(resolution);
 	result.fill(Colours::black);
@@ -44,7 +48,8 @@ Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, double ti
 	for (auto &l : layers)
 	{
 		String s = l->niceName;
-		colors.add(l->getColors(id, resolution, t, params)); //use sequence's time instead of prop time
+		params.getDynamicObject()->setProperty("forceID", l->filterManager.getTargetIDForProp(p));
+		colors.add(l->getColors(p, t, params)); //use sequence's time instead of prop time
 	}
 
 	for (int i = 0; i < resolution; i++)
@@ -64,10 +69,9 @@ Array<Colour> TimelineBlockSequence::getColors(int id, int resolution, double ti
 
 }
 
-Array<LightBlockLayer *> TimelineBlockSequence::getLayersForID(int id)
+Array<LightBlockLayer *> TimelineBlockSequence::getLayersForProp(Prop * p)
 {
 	if (layerManager == nullptr) return nullptr; 
-	
 
 	Array<LightBlockLayer *> defaultLayers;
 	Array<LightBlockLayer *> result;
@@ -76,7 +80,7 @@ Array<LightBlockLayer *> TimelineBlockSequence::getLayersForID(int id)
 	{
 		LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(i);
 		if (l == nullptr) continue;
-		if (l->targetId->intValue() == id || l->globalLayer->boolValue()) result.add(l);
+		if (l->filterManager.getTargetIDForProp(p) >= 0) result.add(l);
 		if (l->defaultLayer->boolValue()) defaultLayers.add(l);
 	}
 

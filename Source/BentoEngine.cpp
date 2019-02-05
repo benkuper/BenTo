@@ -17,6 +17,8 @@
 #include "Timeline/layers/Block/LightBlockLayer.h"
 #include "Common/Serial/SerialManager.h"
 #include "WebServer/BentoWebServer.h"
+#include "Prop/Cluster/PropClusterGroupManager.h"
+
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento")
@@ -25,22 +27,27 @@ BentoEngine::BentoEngine() :
 
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
+	addChildControllableContainer(PropClusterGroupManager::getInstance());
 
 	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
+	
+	
 
+	//Timeline
 	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Blocks", &LightBlockLayer::create));
 	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
-
+	
+	//Communication
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
-
 	SerialManager::getInstance(); // init
-
 	BentoWebServer::getInstance(); //init
+
 }
 
 BentoEngine::~BentoEngine()
 {
 	PropManager::deleteInstance();
+	PropClusterGroupManager::deleteInstance();
 	LightBlockModelLibrary::deleteInstance();
 	Spatializer::deleteInstance();
 	AudioManager::deleteInstance();
@@ -87,8 +94,8 @@ void BentoEngine::processMessage(const OSCMessage & m)
 					}
 
 					LightBlockColorProvider * providerToAssign = mp != nullptr ? mp : (LightBlockColorProvider *)lm;
-					Array<Prop *> propsToAssign = PropManager::getInstance()->getPropsWithId(id);
-					for (auto &p : propsToAssign) p->activeProvider->setValueFromTarget(providerToAssign);
+					Prop * p = PropManager::getInstance()->getPropWithId(id);
+					if(p != nullptr) p->activeProvider->setValueFromTarget(providerToAssign);
 				}
 
 
@@ -98,12 +105,12 @@ void BentoEngine::processMessage(const OSCMessage & m)
 	} else if (aList[1] == "prop")
 	{
 		int id = OSCHelpers::getIntArg(m[0]);
-		Array<Prop *> props = PropManager::getInstance()->getPropsWithId(id);
+		Prop * p = PropManager::getInstance()->getPropWithId(id);
 
 		if (aList[2] == "enable")
 		{
 			bool active = OSCHelpers::getIntArg(m[1]) > 0;
-			for (auto & p : props) p->enabled->setValue(active);
+			if(p != nullptr) p->enabled->setValue(active);
 		}
 	}
 }

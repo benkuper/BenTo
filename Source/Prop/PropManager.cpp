@@ -11,24 +11,26 @@
 #include "PropManager.h"
 juce_ImplementSingleton(PropManager)
 
-#include "props/flowtoys/flowball/FlowBallProp.h"
+#include "props/flowtoys/FlowtoysFamily.h"
 #include "props/flowtoys/flowclub/FlowClubProp.h"
-#include "props/flowtoys/flowpoi/FlowPoiProp.h"
+
+#include "props/garnav/GarnavFamily.h"
 #include "props/garnav/SmarballProp.h"
+
+#include "props/lighttoys/LighttoysFamily.h"
 #include "props/lighttoys/ft/LighttoysFTProp.h"
-#include "props/lighttoys/visual/LighttoysVisualProp.h"
+
 
 PropManager::PropManager() :
-	BaseManager("Props")
+	BaseManager("Props"),
+	familiesCC("Families")
 {
 	managerFactory = &factory;
 
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 
-	sendRate = addIntParameter("Send Rate", "", 1, 1, 200);
-	targetPropFPS = addIntParameter("Prop FPS", "", 1, 1, 1000);
-
+	
 	String localIp = "";
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
@@ -49,13 +51,16 @@ PropManager::PropManager() :
 	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.", localIp);
 	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs", broadcastIp);
 
+	addChildControllableContainer(&familiesCC);
+	families.add(new FlowtoysFamily());
+	families.add(new GarnavFamily());
+	families.add(new LighttoysFamily());
+	for (auto & f : families) familiesCC.addChildControllableContainer(f);
 
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "Flowtoys Creator Club", FlowClubProp::create));
-	
 	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "Smartball", SmartballProp::create));
-
 	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys FT", LighttoysFTProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys Visual", LighttoysVisualProp::create));
+
 	receiver.addListener(this);
 
 	setupReceiver();
@@ -90,43 +95,30 @@ void PropManager::setupReceiver()
 
 Prop * PropManager::getPropWithHardwareId(const String &hardwareId)
 {
-	for (auto & p : items) if (p->propId == hardwareId) return p;
+	for (auto & p : items) if (p->deviceID == hardwareId) return p;
 	return nullptr;
 }
 
-Array<Prop *> PropManager::getPropsWithId(int id)
+Prop * PropManager::getPropWithId(int id, Prop * excludeProp)
 {
-	if (id == -1) return Array<Prop *>(items.getRawDataPointer(), items.size());
-
-	Array<Prop *> result;
-	for (auto & p : items) if (p->id->intValue() == id) return p;
-	return result;
+	for (auto & p : items)
+	{
+		if (p == excludeProp) continue;
+		if (p->globalID->intValue() == id) return p;
+	}
+	return nullptr;
 }
 
-void PropManager::onContainerParameterChanged(Parameter * p)
+PropFamily * PropManager::getFamilyWithName(StringRef familyName)
 {
-	if (p == sendRate)
+	for (auto &p : families)
 	{
-		for (auto &p : items)
-		{
-			FlowtoysProp * fp = dynamic_cast<FlowtoysProp *>(p);
-			if (fp != nullptr) fp->sendRate->setValue(sendRate->intValue());
-		}
+		if (p->niceName == familyName) return p;
 	}
-	else if (p == targetPropFPS)
-	{
-		for (auto &p : items)
-		{
-			FlowtoysProp * fp = dynamic_cast<FlowtoysProp *>(p); 
-			if (fp != nullptr)
-			{
-				OSCMessage m("/strip/fps");
-				m.addInt32(targetPropFPS->intValue());
-				fp->oscSender.sendToIPAddress(fp->remoteHost->stringValue(), 9000 , m);
-			}
-		}
-	}
+
+	return nullptr;
 }
+
 
 void PropManager::onContainerTriggerTriggered(Trigger * t)
 {
@@ -135,7 +127,7 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 		int id = 0;
 		for (auto &p : items)
 		{ 
-			p->id->setValue(id);
+			p->globalID->setValue(id);
 			id++;
 		}
 	} else if (t == detectProps)
@@ -149,6 +141,35 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	}
 }
 
+
+
+void PropManager::addItemInternal(Prop * p, var)
+{
+	p->addPropListener(this);
+	if(items.size() > 1) p->globalID->setValue(getFirstAvailableID());
+}
+
+void PropManager::removeItemInternal(Prop * p)
+{
+	p->removePropListener(this);
+}
+
+int PropManager::getFirstAvailableID()
+{
+	int numItems = items.size();
+	for (int i = 0; i < numItems; i++)
+	{
+		if (getPropWithId(i) == nullptr) return i;
+	}
+	return numItems;
+}
+
+void PropManager::propIDChanged(Prop * p, int previousID)
+{
+	Prop * otherPropWithSameID = getPropWithId(p->globalID->intValue(), p);
+	if (otherPropWithSameID != nullptr) otherPropWithSameID->globalID->setValue(previousID);
+}
+
 void PropManager::oscMessageReceived(const OSCMessage & m)
 {
 
@@ -159,6 +180,7 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		String pHost = String(m[0].getString());
 		String pid = String(m[1].getInt32());
 
+		//ToDo : fix propID on ESP32 chips ot have proper hardwareID
 		DBG("Got wassup : " << pHost);
 		Prop * p = getPropWithHardwareId(pHost);
 		if (p == nullptr)
@@ -166,9 +188,9 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 			FlowClubProp * fp = static_cast<FlowClubProp *>(managerFactory->create(FlowClubProp::getTypeStringStatic()));
 			if (fp != nullptr)
 			{
-				fp->propId = pHost;
+				fp->deviceID = pHost;
 				fp->remoteHost->setValue(pHost);
-				LOG("Found ! " << fp->propId << " : " << fp->remoteHost->stringValue());
+				LOG("Found ! " << fp->deviceID << " : " << fp->remoteHost->stringValue());
 				addItem(fp);
 				autoAssignIdTrigger->trigger();
 			} else

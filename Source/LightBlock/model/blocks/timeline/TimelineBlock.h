@@ -25,7 +25,7 @@ public:
 
 	TimelineBlockSequence sequence;
 
-	Array<Colour> getColors(int id, int resolution, double time, var params) override;
+	Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	void sequenceCurrentTimeChanged(Sequence *, float /*prevTime*/, bool /*evaluateSkippedData*/) override;
 

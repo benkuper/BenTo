@@ -20,8 +20,9 @@ public:
 	~FlowtoysProp();
 
 	StringParameter * remoteHost;
-	IntParameter * remotePort;
 	BoolParameter * button; 
+
+	const int remotePort = 8888;
 	DatagramSocket sender;
 	OSCSender oscSender;
 

@@ -11,10 +11,12 @@
 #pragma once
 
 #include "Prop.h"
+#include "PropFamily.h"
 
 class PropManager :
 	public BaseManager<Prop>,
-	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>
+	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
+	public Prop::PropListener
 {
 public:
 	juce_DeclareSingleton(PropManager, true)
@@ -25,6 +27,8 @@ public:
 	OSCSender sender;
 	OSCReceiver receiver;
 
+	ControllableContainer familiesCC;
+	OwnedArray<PropFamily> families;
 	Factory<Prop> factory;
 	
 	const int localPort = 10000;
@@ -32,19 +36,23 @@ public:
 	StringParameter * localHost;
 	StringParameter * remoteHost;
 
-	IntParameter * sendRate;
-	IntParameter * targetPropFPS;
-
 	Trigger * detectProps;
 	Trigger * autoAssignIdTrigger;
 
 	void setupReceiver();
 
 	Prop * getPropWithHardwareId(const String &hardwareId);
-	Array<Prop *> getPropsWithId(int id);
+	Prop * getPropWithId(int id, Prop * excludeProp = nullptr);
 
-	void onContainerParameterChanged(Parameter * p) override;
+	PropFamily * getFamilyWithName(StringRef familyName);
+
 	void onContainerTriggerTriggered(Trigger * t) override;
+
+	void addItemInternal(Prop * p, var) override;
+	void removeItemInternal(Prop * p) override;
+
+	int getFirstAvailableID();
+	void propIDChanged(Prop * p, int previousID) override;
 
 	// Inherited via Listener
 	virtual void oscMessageReceived(const OSCMessage & message) override;

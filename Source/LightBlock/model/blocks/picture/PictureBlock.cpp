@@ -20,10 +20,11 @@ PictureBlock::PictureBlock(var params) :
 	speed = paramsContainer->addFloatParameter("Speed", "The speed", 1, 0, 50);
 }
 
-Array<Colour> PictureBlock::getColors(int id, int resolution, double time, var params)
+Array<Colour> PictureBlock::getColors(Prop * p, double time, var params)
 {
-	if (picture.getWidth() == 0) return LightBlockModel::getColors(id, resolution, time, params);
+	if (picture.getWidth() == 0) return LightBlockModel::getColors(p, time, params);
 
+	int resolution = p->resolution->intValue();
 	Array<Colour> result;
 	result.resize(resolution);
 

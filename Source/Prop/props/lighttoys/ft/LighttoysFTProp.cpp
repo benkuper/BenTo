@@ -14,12 +14,10 @@
 #include "Prop/PropManager.h"
 
 LighttoysFTProp::LighttoysFTProp(var params) :
-	Prop(getTypeString(), params),
+	Prop(getTypeString(), "Lighttoys", params),
 	device(nullptr),
 	propsStatus("Connected Devices")
 {
-	sendRate->setValue(30);
-
 	deviceParam = new SerialDeviceParameter("device", "Serial device to connect", true);
 	addParameter(deviceParam);
 

@@ -9,13 +9,14 @@
 */
 
 #include "FlowtoysProp.h"
+#include "FlowtoysFamily.h"
 
 FlowtoysProp::FlowtoysProp(const String & name, var params) :
-	Prop(name, params)
+	Prop(name, "Flowtoys", params)
 {
-	sendRate->setValue(50);
+	updateRate = 50;
 	remoteHost = addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
-	remotePort = addIntParameter("Remote Host", "IP of the prop on the network", 8888,1024,65535);
+
 	button = addBoolParameter("Button", "Is the button on the prop pressed ?", false);
 	button->setControllableFeedbackOnly(true);
 
@@ -30,22 +31,18 @@ void FlowtoysProp::onContainerParameterChangedInternal(Parameter * p)
 {
 	Prop::onContainerParameterChangedInternal(p);
 
-	if (p == id)
+	if (p == globalID)
 	{
 		OSCMessage m("/settings/propID");
-		m.addInt32(id->intValue());
+		m.addInt32(globalID->intValue());
 		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
-	}
-	else if (p == remoteHost || p == remotePort)
-	{
-		//oscSender.connect(remoteHost->stringValue(), remotePort->intValue());
 	}
 }
 
 void FlowtoysProp::sendColorsToPropInternal()
 {
 	const int numLeds = resolution->intValue();
-	const int maxLedsPerPacket = 400;
+	const int maxLedsPerPacket = 320;
 
 	Array<uint8> data;
 
@@ -62,17 +59,12 @@ void FlowtoysProp::sendColorsToPropInternal()
 	data.add(255);
 
 	int dataSize = numLeds * 3 + 1;
-	
-	//DBG("Send " << numPackets << " packets");
 
 	for (int i = 0; i < numPackets; i++)
 	{
 		int offset =  i * maxLedsPerPacket * 3;
-		int length = i < numPackets - 1 ? maxLedsPerPacket * 3 : dataSize - offset; //if last packet; put everything
-		//DBG("Packet #" << i << ", offset = " << offset << ", length =" << length);
-		sender.write(remoteHost->stringValue(), remotePort->intValue(), data.getRawDataPointer() + offset, length);
+		int length = i < numPackets - 1 ? maxLedsPerPacket * 3 : dataSize - offset;
+		sender.write(remoteHost->stringValue(), remotePort, data.getRawDataPointer() + offset, length);
 		sleep(1);
 	}
-	
-	
 }

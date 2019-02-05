@@ -10,42 +10,59 @@
 
 #include "Prop.h"
 #include "LightBlock/model//LightBlockModelLibrary.h"
+#include "PropManager.h"
 
-Prop::Prop(const String &name, var) :
+Prop::Prop(StringRef name, StringRef familyName, var) :
 	BaseItem(name),
 	Thread("Prop " + name),
+	family(nullptr),
+	generalCC("General"),
+	ioCC("Communication"),
+	sensorsCC("SensorsCC"),
+	bakingCC("Bake and Upload"),
 	currentBlock(nullptr),
-	hasRealtimeControl(true),
+	previousID(-1),
+	updateRate(30),
 	propNotifier(50)
 {
-	id = addIntParameter("ID", "Prop ID", 0, 0, 100);
-	resolution = addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1, INT32_MAX);
-	sendRate = addIntParameter("Send Rate", "Frequency at which update the colors of this prop and actually send it to the prop", 30, 1, 200);
+	registerFamily(familyName);
+
+	
+	addChildControllableContainer(&generalCC);
+	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
+	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1, INT32_MAX);
+	type = generalCC.addEnumParameter("Type", "The type of the prop");
+	fillTypeOptions(type);
 
 	colors.resize(resolution->intValue());
 
-
-	shape = addEnumParameter("Shape", "The shape of the prop");
-	shape->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP);
-
-	activeProvider= addTargetParameter("Active Block", "The current active block for this prop");
-	activeProvider->targetType = TargetParameter::CONTAINER;
-	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
-
-	battery = addFloatParameter("Battery", "The battery level, between 0 and 1", 0);
+	addChildControllableContainer(&ioCC);
+	ioCC.editorIsCollapsed = true;
+	findPropMode = addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
+	findPropMode->setControllableFeedbackOnly(true);
+	findPropMode->isSavable = false;
+	
+	addChildControllableContainer(&sensorsCC);
+	battery = sensorsCC.addFloatParameter("Battery", "The battery level, between 0 and 1", 0);
 	battery->setControllableFeedbackOnly(true);
 
-	findPropMode = addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
-
-	bakeStartTime = addFloatParameter("Bake Start Time", "Set the start time of baking", 0,0);
+	addChildControllableContainer(&bakingCC);
+	bakingCC.editorIsCollapsed = true;
+	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0,0);
 	bakeStartTime->defaultUI = FloatParameter::TIME;
-	bakeEndTime = addFloatParameter("Bake End Time", "Set the end time of baking", 1,1);
+	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1,1);
 	bakeEndTime->defaultUI = FloatParameter::TIME;
-	bakeFrequency = addIntParameter("Bake Frequency", "The frequency at which to bake", 50, 1, 500);
-	bakeAndUploadTrigger = addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
+	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 50, 1, 500);
+	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
 	
-	isBaking = addBoolParameter("Is Baking", "Is this prop currently baking ?", false);
+	isBaking = bakingCC.addBoolParameter("Is Baking", "Is this prop currently baking ?", false);
+	isBaking->hideInEditor = true;
 	isBaking->setControllableFeedbackOnly(true);
+
+	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
+	activeProvider->targetType = TargetParameter::CONTAINER;
+	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
+	activeProvider->hideInEditor = true;
 
 }
 
@@ -61,6 +78,17 @@ void Prop::clearItem()
 	colors.fill(Colours::black);
 	sendColorsToProp();
 	setBlockFromProvider(nullptr);
+	if (family != nullptr) family->unregisterProp(this);
+}
+
+void Prop::registerFamily(StringRef familyName)
+{
+	PropFamily * f = PropManager::getInstance()->getFamilyWithName(familyName);
+	if (f != nullptr)
+	{
+		family = f;
+		family->registerProp(this);
+	}
 }
 
 void Prop::setBlockFromProvider(LightBlockColorProvider * model)
@@ -98,7 +126,7 @@ void Prop::update()
 	if (currentBlock != nullptr)
 	{
 		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
-		colors = currentBlock->getColors(id->intValue(), resolution->intValue(), time, var());
+		colors = currentBlock->getColors(this, time, var());
 
 		propListeners.call(&PropListener::colorsUpdated, this);
 		propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
@@ -128,6 +156,16 @@ void Prop::onContainerParameterChangedInternal(Parameter * p)
 			sendColorsToProp(true);
 		}
 	}
+	else if (p == globalID)
+	{
+		propListeners.call(&PropListener::propIDChanged, this, previousID);
+		previousID = globalID->intValue();
+	}
+}
+
+void Prop::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+
 }
 
 void Prop::onContainerTriggerTriggered(Trigger * t)
@@ -155,10 +193,13 @@ void Prop::sendColorsToProp(bool forceSend)
 	sendColorsToPropInternal();
 }
 
+void Prop::fillTypeOptions(EnumParameter * p)
+{
+	p->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP)->addOption("Ring", RING)->addOption("Buggeng", BUGGENG)->addOption("Box",BOX);
+}
 
 Array<Prop::TimedColors> Prop::bakeCurrentBlock()
 {
-	
 	Array<TimedColors> result;
 	if (currentBlock == nullptr) return result;
 	
@@ -167,16 +208,14 @@ Array<Prop::TimedColors> Prop::bakeCurrentBlock()
 	double stepTime = 1.0 / bakeFrequency->intValue();
 	float startTime = bakeStartTime->floatValue();
 	float endTime = bakeEndTime->floatValue();
-	int pId = id->intValue();
 
-	int pResolution = resolution->intValue();
 	var params = new DynamicObject();
 
 	params.getDynamicObject()->setProperty("updateAutomation", false); //Avoid actually updating the block parameter automations if there are some (in timeline for instance)
 
 	for (double curTime = startTime; curTime <= endTime; curTime += stepTime)
 	{
-		result.add({ curTime - startTime, currentBlock->getColors(pId, pResolution, curTime, params) });
+		result.add({ curTime - startTime, currentBlock->getColors(this, curTime, params) });
 	}
 
 	return result;
@@ -192,7 +231,7 @@ var Prop::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("block", currentBlock->getJSONData());
-	if (propId.isNotEmpty()) data.getDynamicObject()->setProperty("propId", propId);
+	if (deviceID.isNotEmpty()) data.getDynamicObject()->setProperty("deviceID", deviceID);
 	return data;
 }
 
@@ -200,7 +239,7 @@ void Prop::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	if (currentBlock != nullptr) currentBlock->loadJSONData(data.getProperty("block", var()));
-	propId = data.getProperty("propId", "");
+	deviceID = data.getProperty("deviceID", "");
 }
 
 void Prop::run()
@@ -216,7 +255,7 @@ void Prop::run()
 		else
 		{
 			update();
-			sleep(1000.0f / sendRate->intValue()); //60fps
+			sleep(1000.0f / updateRate); //60fps
 		}
 	}
 }

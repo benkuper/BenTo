@@ -11,6 +11,7 @@
 #pragma once
 
 #include "LightBlockClipManager.h"
+#include "Prop/TargetFilter/PropTargetFilterManager.h"
 
 class LightBlockLayer :
 	public SequenceLayer
@@ -22,10 +23,10 @@ public:
 	LightBlockClipManager blockClipManager;
 
 	BoolParameter * defaultLayer;
-	BoolParameter * globalLayer;
-	IntParameter * targetId;
+	PropTargetFilterManager filterManager;
+	IntParameter * previewID;
 
-	Array<Colour> getColors(int id, int resolution, double time, var params);
+	Array<Colour> getColors(Prop * p, double time, var params);
 
 	SequenceLayerPanel * getPanel() override;
 	SequenceLayerTimeline * getTimelineUI() override;

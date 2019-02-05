@@ -214,11 +214,15 @@ void LightBlockClipUI::run()
 	if (item->currentBlock == nullptr) return;
 
 	imageIsReady = false;
+	
+	int id = item->layer->previewID->intValue();
+
+	previewProp.globalID->setValue(id, true);
+	previewProp.resolution->setValue(resY, true);
 
 	var params = new DynamicObject();
 	params.getDynamicObject()->setProperty("updateAutomation", false);
-	
-	int id = item->layer->targetId->intValue();
+
 	for (int i = 0; i < resX; i++)
 	{
 		if (threadShouldExit()) return;
@@ -226,7 +230,7 @@ void LightBlockClipUI::run()
 		float relT = i * 1.0f / resX;
 		float t = item->getTimeForRelativePosition(relT, false);
 		
-		Array<Colour> c = item->getColors(id, resY, t, params);
+		Array<Colour> c = item->getColors(&previewProp, t, params);
 		for (int ty = 0; ty < resY; ty++) previewImage.setPixelAt(i,ty, c[ty]);
 	}
 

@@ -33,7 +33,7 @@ void ColorNodeViewUI::paint(Graphics & g)
 	Rectangle<int> lr(getFeedbackBounds());
 	lr = lr.withSizeKeepingCentre(ledSize, ledSize*numLeds);
 
-	Array<Colour> colors = cn->getColors(propToPreview->id->intValue(),numLeds,Time::getMillisecondCounter()/1000.0f,var());
+	Array<Colour> colors = cn->getColors(propToPreview,Time::getMillisecondCounter()/1000.0f,var());
 	for (int i = 0; i < numLeds; i++)
 	{
 		g.setColour(colors[i]);

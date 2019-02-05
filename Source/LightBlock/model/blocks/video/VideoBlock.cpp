@@ -62,14 +62,16 @@ Image VideoBlock::getImage()
 	else  return receiver->getImage();
 }
 
-Array<Colour> VideoBlock::getColors(int id, int resolution, double time, var params)
+Array<Colour> VideoBlock::getColors(Prop * p, double time, var params)
 {
-	if (Spatializer::getInstanceWithoutCreating() == nullptr || !inputIsLive->boolValue()) return LightBlockModel::getColors(id, resolution, time, params);
-	SpatItem * spatItem = Spatializer::getInstance()->getItemWithPropID(id);
+	if (Spatializer::getInstanceWithoutCreating() == nullptr || !inputIsLive->boolValue()) return LightBlockModel::getColors(p, time, params);
+	SpatItem * spatItem = Spatializer::getInstance()->getItemForProp(p);
 
-	if(spatItem == nullptr)  return LightBlockModel::getColors(id, resolution, time, params);
+	if(spatItem == nullptr)  return LightBlockModel::getColors(p, time, params);
 
 	int numSpatColors = spatItem->resolution->intValue();
+	int resolution = p->resolution->intValue();
+
 	Array<Colour> result(spatItem->colors);
 	result.resize(resolution);
 	for (int i = resolution; i < numSpatColors; i++) result.set(i, Colours::black);

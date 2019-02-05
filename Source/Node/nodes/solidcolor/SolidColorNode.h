@@ -20,7 +20,7 @@ public:
 
 	ColorParameter * color;
 
-	Array<Colour> getColors(int id, int resolution, double time, var params) override;
+	Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	String getTypeString() const override { return "Solid Color"; }
 	static SolidColorNode * create(var params) { return new SolidColorNode(params); }

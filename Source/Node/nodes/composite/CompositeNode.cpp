@@ -25,14 +25,15 @@ CompositeNode::~CompositeNode()
 {
 }
 
-Array<Colour> CompositeNode::getColors(int id, int resolution, double time, var params)
+Array<Colour> CompositeNode::getColors(Prop * p, double time, var params)
 {
-	Array<Colour> col1 = c1->getColors(id, resolution, time, params);
-	Array<Colour> col2 = c2->getColors(id, resolution, time, params);
+	Array<Colour> col1 = c1->getColors(p, time, params);
+	Array<Colour> col2 = c2->getColors(p, time, params);
 	
 	BlendMode b = blendMode->getValueDataAsEnum<BlendMode>();
 
 	Array<Colour> result;
+	int resolution = p->resolution->intValue();
 	for (int i = 0; i < resolution; i++)
 	{
 		switch (b)

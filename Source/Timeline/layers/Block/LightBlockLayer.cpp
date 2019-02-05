@@ -17,18 +17,22 @@ LightBlockLayer::LightBlockLayer(Sequence * s, var) :
 	blockClipManager(this)
 {
 	defaultLayer = addBoolParameter("Default", "If checked, this layer will be the default layer when no layer has the requested prop id", false);
-	globalLayer = addBoolParameter("Global", "If checked, this layer will always be used in addition to other potential layers", false);
-	targetId = addIntParameter("Prop ID", "Target Prop ID to assign this layer to", 0, 0, INT32_MAX);
+	previewID = addIntParameter("Preview ID", "ID to preview the content", 0, 0, 500);
+	previewID->hideInEditor = true;
+
+	addChildControllableContainer(&filterManager);
 }
 
 LightBlockLayer::~LightBlockLayer()
 {
+
 }
 
-
-Array<Colour> LightBlockLayer::getColors(int id, int resolution, double time, var params)
+Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 {
 	Array<LightBlockClip *> clips = blockClipManager.getClipsAtTime(time);
+
+	int resolution = p->resolution->intValue();
 
 	Array<Colour> result;
 	result.resize(resolution);
@@ -43,7 +47,7 @@ Array<Colour> LightBlockLayer::getColors(int id, int resolution, double time, va
 
 	for (auto &c : clips)
 	{
-		clipColors.add(c->getColors(id, resolution, time - c->startTime->floatValue(), params));
+		clipColors.add(c->getColors(p, time - c->startTime->floatValue(), params));
 	}
 
 	for (int i = 0; i < resolution; i++)

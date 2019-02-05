@@ -22,9 +22,9 @@ NodeBlock::~NodeBlock()
 {
 }
 
-Array<Colour> NodeBlock::getColors(int id, int resolution, double time, var params)
+Array<Colour> NodeBlock::getColors(Prop * p, double time, var params)
 {
-	return  manager.propNode->getColors(id, resolution, time, params);
+	return  manager.propNode->getColors(p, time, params);
 }
 
 var NodeBlock::getJSONData()

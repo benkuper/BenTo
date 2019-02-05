@@ -68,6 +68,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o \
+  $(JUCE_OBJDIR)/IdentificationRuleManager_8bd0c2cb.o \
   $(JUCE_OBJDIR)/BentoWebServer_b4c72992.o \
   $(JUCE_OBJDIR)/serial_82f97e54.o \
   $(JUCE_OBJDIR)/list_ports_linux_203b2613.o \
@@ -142,15 +144,22 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameter_4dedce96.o \
   $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o \
   $(JUCE_OBJDIR)/LightBlock_43a72d10.o \
-  $(JUCE_OBJDIR)/LighttoysVisualProp_8678450f.o \
+  $(JUCE_OBJDIR)/PropFamily_1b08e5d4.o \
+  $(JUCE_OBJDIR)/CustomParameterManager_bfdc1d06.o \
+  $(JUCE_OBJDIR)/PropTargetFilterManager_c46f408.o \
+  $(JUCE_OBJDIR)/PropTargetFilter_a9a21d2f.o \
+  $(JUCE_OBJDIR)/PropCluster_70507f1f.o \
+  $(JUCE_OBJDIR)/PropClusterGroup_98d0476a.o \
+  $(JUCE_OBJDIR)/PropClusterGroupManager_2f9ae16d.o \
+  $(JUCE_OBJDIR)/LighttoysFamily_8dab28e9.o \
   $(JUCE_OBJDIR)/FTPropStatusEditor_d765ea7a.o \
   $(JUCE_OBJDIR)/FTPropStatus_e92f269e.o \
   $(JUCE_OBJDIR)/LighttoysFTProp_30de680b.o \
+  $(JUCE_OBJDIR)/GarnavFamily_944417b1.o \
   $(JUCE_OBJDIR)/SmarballProp_a6b1712f.o \
+  $(JUCE_OBJDIR)/FlowtoysFamily_195ed131.o \
   $(JUCE_OBJDIR)/FlowtoysProp_9ad67b0.o \
   $(JUCE_OBJDIR)/FlowClubProp_abf4da72.o \
-  $(JUCE_OBJDIR)/FlowBallProp_e4af1c92.o \
-  $(JUCE_OBJDIR)/FlowPoiProp_31d072ac.o \
   $(JUCE_OBJDIR)/PropManagerUI_843f2390.o \
   $(JUCE_OBJDIR)/PropUI_e53ff20f.o \
   $(JUCE_OBJDIR)/PropViz_32565136.o \
@@ -190,6 +199,16 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o: ../../Source/Identification/IdentificationRule.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IdentificationRule.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/IdentificationRuleManager_8bd0c2cb.o: ../../Source/Identification/IdentificationRuleManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IdentificationRuleManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/BentoWebServer_b4c72992.o: ../../Source/WebServer/BentoWebServer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
@@ -561,9 +580,44 @@ $(JUCE_OBJDIR)/LightBlock_43a72d10.o: ../../Source/LightBlock/LightBlock.cpp
 	@echo "Compiling LightBlock.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/LighttoysVisualProp_8678450f.o: ../../Source/Prop/props/lighttoys/visual/LighttoysVisualProp.cpp
+$(JUCE_OBJDIR)/PropFamily_1b08e5d4.o: ../../Source/Prop/PropFamily.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling LighttoysVisualProp.cpp"
+	@echo "Compiling PropFamily.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/CustomParameterManager_bfdc1d06.o: ../../Source/Prop/CustomParameters/CustomParameterManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling CustomParameterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropTargetFilterManager_c46f408.o: ../../Source/Prop/TargetFilter/PropTargetFilterManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropTargetFilterManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropTargetFilter_a9a21d2f.o: ../../Source/Prop/TargetFilter/PropTargetFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropTargetFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropCluster_70507f1f.o: ../../Source/Prop/Cluster/PropCluster.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropCluster.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropClusterGroup_98d0476a.o: ../../Source/Prop/Cluster/PropClusterGroup.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropClusterGroup.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropClusterGroupManager_2f9ae16d.o: ../../Source/Prop/Cluster/PropClusterGroupManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropClusterGroupManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LighttoysFamily_8dab28e9.o: ../../Source/Prop/props/lighttoys/LighttoysFamily.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LighttoysFamily.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/FTPropStatusEditor_d765ea7a.o: ../../Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.cpp
@@ -581,9 +635,19 @@ $(JUCE_OBJDIR)/LighttoysFTProp_30de680b.o: ../../Source/Prop/props/lighttoys/ft/
 	@echo "Compiling LighttoysFTProp.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/GarnavFamily_944417b1.o: ../../Source/Prop/props/garnav/GarnavFamily.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling GarnavFamily.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/SmarballProp_a6b1712f.o: ../../Source/Prop/props/garnav/SmarballProp.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SmarballProp.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FlowtoysFamily_195ed131.o: ../../Source/Prop/props/flowtoys/FlowtoysFamily.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FlowtoysFamily.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/FlowtoysProp_9ad67b0.o: ../../Source/Prop/props/flowtoys/FlowtoysProp.cpp
@@ -594,16 +658,6 @@ $(JUCE_OBJDIR)/FlowtoysProp_9ad67b0.o: ../../Source/Prop/props/flowtoys/Flowtoys
 $(JUCE_OBJDIR)/FlowClubProp_abf4da72.o: ../../Source/Prop/props/flowtoys/flowclub/FlowClubProp.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling FlowClubProp.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FlowBallProp_e4af1c92.o: ../../Source/Prop/props/flowtoys/flowball/FlowBallProp.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FlowBallProp.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/FlowPoiProp_31d072ac.o: ../../Source/Prop/props/flowtoys/flowpoi/FlowPoiProp.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling FlowPoiProp.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PropManagerUI_843f2390.o: ../../Source/Prop/ui/PropManagerUI.cpp

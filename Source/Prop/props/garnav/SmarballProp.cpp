@@ -11,7 +11,7 @@
 #include "SmarballProp.h"
 
 SmartballProp::SmartballProp(const String & name, var params) :
-	Prop(name, params)
+	Prop(name, "Garnav", params)
 {
 	remoteHost = addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
 	accelerometer = addPoint3DParameter("Accelerometer", "Accelerometer data");

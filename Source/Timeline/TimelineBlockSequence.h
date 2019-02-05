@@ -14,6 +14,7 @@
 
 class LightBlock;
 class LightBlockLayer;
+class Prop;
 
 class TimelineBlockSequence :
 	public Sequence,
@@ -24,8 +25,8 @@ public:
 	~TimelineBlockSequence();
 
 	SequenceLayerFactory layerFactory;
-	Array<Colour> getColors(int id, int resolution, double time, var params);
-	Array<LightBlockLayer *> getLayersForID(int id);
+	Array<Colour> getColors(Prop * p, double time, var params);
+	Array<LightBlockLayer *> getLayersForProp(Prop * p);
 
 	void itemAdded(SequenceLayer * s) override;
 

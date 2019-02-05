@@ -35,7 +35,7 @@ LightBlock::~LightBlock()
 	if (!provider.wasObjectDeleted()) provider->removeColorProviderListener(this);
 }
 
-Array<Colour> LightBlock::getColors(int id, int resolution, double time, var params)
+Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 {
 	var localParams = params.isVoid()?new DynamicObject():new DynamicObject(*params.getDynamicObject());
 	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
@@ -43,21 +43,21 @@ Array<Colour> LightBlock::getColors(int id, int resolution, double time, var par
 
 	if (localParams.getProperty("updateAutomation", true))
 	{
-		for (auto &p : paramList)
+		for (auto &param : paramList)
 		{
-			if (p->controlMode != Parameter::AUTOMATION) continue;
-			p->automation->currentTime->setValue(fmodf(time, p->automation->automation.length->floatValue()));
+			if (param->controlMode != Parameter::AUTOMATION) continue;
+			param->automation->currentTime->setValue(fmodf(time, param->automation->automation.length->floatValue()));
 		}
 	} else
 	{
-		for (auto &p : paramList)
+		for (auto &param : paramList)
 		{
-			if (p->controlMode != Parameter::AUTOMATION) continue;
-			Automation * a = &p->automation->automation;
+			if (param->controlMode != Parameter::AUTOMATION) continue;
+			Automation * a = &param->automation->automation;
 
 			float value = a->getValueForPosition(fmodf(time, a->length->floatValue()));
-			float normValue = jmap<float>(value, p->minimumValue, p->maximumValue);
-			localParams.getDynamicObject()->setProperty(p->shortName,normValue);
+			float normValue = jmap<float>(value, param->minimumValue, param->maximumValue);
+			localParams.getDynamicObject()->setProperty(param->shortName,normValue);
 		}
 	}
 
@@ -70,12 +70,12 @@ Array<Colour> LightBlock::getColors(int id, int resolution, double time, var par
 	if (provider.wasObjectDeleted())
 	{
 		Array<Colour> result;
-		result.resize(resolution);
+		result.resize(p->resolution->intValue());
 		result.fill(Colours::black);
 		return result;
 	}
 
-	return provider->getColors(id, resolution, time, localParams);
+	return provider->getColors(p, time, localParams);
 }
 
 void LightBlock::rebuildArgsFromModel()

@@ -41,9 +41,9 @@ LightBlockModelUI * TimelineBlock::createUI()
 	return new TimelineBlockUI(this);
 }
 
-Array<Colour> TimelineBlock::getColors(int id, int resolution, double time, var params)
+Array<Colour> TimelineBlock::getColors(Prop * p, double time, var params)
 {
-	return sequence.getColors(id, resolution, time, params);
+	return sequence.getColors(p, time, params);
 
 }
 

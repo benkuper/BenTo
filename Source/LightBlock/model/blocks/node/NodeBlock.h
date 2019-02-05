@@ -24,7 +24,7 @@ public:
 
 	String getTypeString() const override { return "Node"; }
 	
-	Array<Colour> getColors(int id, int resolution, double time, var params) override;
+	Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

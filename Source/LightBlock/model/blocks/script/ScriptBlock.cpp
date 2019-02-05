@@ -32,8 +32,10 @@ Array<WeakReference<Controllable>> ScriptBlock::getModelParameters()
 	return script.scriptParamsContainer.getAllControllables();
 }
 
-Array<Colour> ScriptBlock::getColors(int id, int resolution, double time, var params)
+Array<Colour> ScriptBlock::getColors(Prop * p, double time, var params)
 {
+	int resolution = p->resolution->intValue();
+	int id = params.getProperty("forceID", p->globalID->intValue());
 	ColourScriptData colors(resolution);
 
 	Array<var> args;

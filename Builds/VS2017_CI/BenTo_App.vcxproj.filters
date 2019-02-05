@@ -11,6 +11,9 @@
     <Filter Include="BenTo\Resources">
       <UniqueIdentifier>{8E65566C-A6CB-B998-F659-4E3386AD8621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Identification">
+      <UniqueIdentifier>{3C151171-CE25-CDDD-9297-CCA3FA02EB0E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\WebServer">
       <UniqueIdentifier>{45FDB2B9-4C2E-C6B6-D0B6-63CA6D0FDFA9}</UniqueIdentifier>
     </Filter>
@@ -143,8 +146,14 @@
     <Filter Include="BenTo\Source\LightBlock">
       <UniqueIdentifier>{07B6EB5A-7A48-BF26-A252-CEAA6633C65E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Prop\props\lighttoys\visual">
-      <UniqueIdentifier>{3C0B925B-6CCD-0B75-C387-5C8894603A3C}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\Prop\CustomParameters">
+      <UniqueIdentifier>{EE010C4E-E2FE-656C-2733-66E4F47D42B7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\TargetFilter">
+      <UniqueIdentifier>{A70E970E-2CC8-081F-AE46-444773171B53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Cluster">
+      <UniqueIdentifier>{F32AE84B-651D-BFC6-096C-2A59DD39A244}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\props\lighttoys\ft\ui">
       <UniqueIdentifier>{5C052753-DAE7-C293-05FA-C7E9AC33F9A7}</UniqueIdentifier>
@@ -160,12 +169,6 @@
     </Filter>
     <Filter Include="BenTo\Source\Prop\props\flowtoys\flowclub">
       <UniqueIdentifier>{B2AA267F-3E2E-9BF9-9354-02B80DBCB43D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\flowtoys\flowball">
-      <UniqueIdentifier>{D5F9B564-451C-82DF-2B03-0EE65BC2300A}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\flowtoys\flowpoi">
-      <UniqueIdentifier>{BEF7B8F9-5885-B563-6C99-E8B872B3AF24}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\props\flowtoys">
       <UniqueIdentifier>{435E10A5-430D-9EC6-702C-CCDFF2FEE7FE}</UniqueIdentifier>
@@ -760,6 +763,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\Identification\IdentificationRule.cpp">
+      <Filter>BenTo\Source\Identification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Identification\IdentificationRuleManager.cpp">
+      <Filter>BenTo\Source\Identification</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\WebServer\BentoWebServer.cpp">
       <Filter>BenTo\Source\WebServer</Filter>
     </ClCompile>
@@ -982,8 +991,29 @@
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.cpp">
-      <Filter>BenTo\Source\Prop\props\lighttoys\visual</Filter>
+    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.cpp">
+      <Filter>BenTo\Source\Prop\CustomParameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.cpp">
+      <Filter>BenTo\Source\Prop\props\lighttoys</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.cpp">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft\ui</Filter>
@@ -994,20 +1024,20 @@
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\garnav\GarnavFamily.cpp">
+      <Filter>BenTo\Source\Prop\props\garnav</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\garnav\SmarballProp.cpp">
       <Filter>BenTo\Source\Prop\props\garnav</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.cpp">
+      <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.cpp">
       <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.cpp">
       <Filter>BenTo\Source\Prop\props\flowtoys\flowclub</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowball\FlowBallProp.cpp">
-      <Filter>BenTo\Source\Prop\props\flowtoys\flowball</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowpoi\FlowPoiProp.cpp">
-      <Filter>BenTo\Source\Prop\props\flowtoys\flowpoi</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp">
       <Filter>BenTo\Source\Prop\ui</Filter>
@@ -3522,6 +3552,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\Identification\IdentificationRule.h">
+      <Filter>BenTo\Source\Identification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Identification\IdentificationRuleManager.h">
+      <Filter>BenTo\Source\Identification</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\WebServer\BentoWebServer.h">
       <Filter>BenTo\Source\WebServer</Filter>
     </ClInclude>
@@ -3729,8 +3765,29 @@
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\visual\LighttoysVisualProp.h">
-      <Filter>BenTo\Source\Prop\props\lighttoys\visual</Filter>
+    <ClInclude Include="..\..\Source\Prop\PropFamily.h">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.h">
+      <Filter>BenTo\Source\Prop\CustomParameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropCluster.h">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.h">
+      <Filter>BenTo\Source\Prop\props\lighttoys</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.h">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft\ui</Filter>
@@ -3741,20 +3798,20 @@
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\garnav\GarnavFamily.h">
+      <Filter>BenTo\Source\Prop\props\garnav</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\garnav\SmarballProp.h">
       <Filter>BenTo\Source\Prop\props\garnav</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.h">
+      <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.h">
       <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.h">
       <Filter>BenTo\Source\Prop\props\flowtoys\flowclub</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowball\FlowBallProp.h">
-      <Filter>BenTo\Source\Prop\props\flowtoys\flowball</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowpoi\FlowPoiProp.h">
-      <Filter>BenTo\Source\Prop\props\flowtoys\flowpoi</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h">
       <Filter>BenTo\Source\Prop\ui</Filter>

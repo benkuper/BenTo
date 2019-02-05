@@ -68,8 +68,10 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 
 	}
 }
-Array<Colour> LightBlockClip::getColors(int id, int resolution, double time, var params)
+Array<Colour> LightBlockClip::getColors(Prop * p, double time, var params)
 {
+	int resolution = p->resolution->intValue();
+
 	if (currentBlock == nullptr)
 	{
 		Array<Colour> result;
@@ -89,7 +91,7 @@ Array<Colour> LightBlockClip::getColors(int id, int resolution, double time, var
 		params.getDynamicObject()->setProperty("sequenceTime", false);
 	}
 
-	Array<Colour> colors = currentBlock->getColors(id, resolution, time, params);
+	Array<Colour> colors = currentBlock->getColors(p, time, params);
 	for (int i = 0; i < resolution; i++)
 	{
 		colors.set(i,colors[i].withMultipliedBrightness(factor));
