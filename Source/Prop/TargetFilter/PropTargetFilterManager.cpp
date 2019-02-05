@@ -30,12 +30,15 @@ PropTargetFilterManager::~PropTargetFilterManager()
 
 int PropTargetFilterManager::getTargetIDForProp(Prop * p)
 {
-	if (items.size() == 0) return p->globalID->intValue();
+	int numProcessed = 0;
 	for (auto &f : items)
 	{
+		if (!f->enabled->boolValue()) continue;
 		int result = f->getTargetIDForProp(p);
 		if (result >= 0) return result;
+		numProcessed++;
 	}
 
+	if (numProcessed == 0) return p->globalID->intValue();
 	return -1;
 }
