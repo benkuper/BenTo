@@ -25,9 +25,22 @@ public:
 
   PatternManager pm;
 
+  int propIDBufferIndex;
+  int propBufferIndex;
+  
   int ledBufferIndex;
   uint8_t colorBuffer[3];
   int colorBufferIndex;
+  
+    //tempo
+  int receiveRate;
+  long lastReceiveTime;
+  
+  //stats
+  long lastStatTime;
+  int numPacketsSinceLastTime;
+  long timeSinceLastPacket;
+  long numLoops;
   
   #if USE_WIFI
   WiFiUDP &udp;
@@ -38,6 +51,14 @@ public:
   {
     currentMode = Mode::Streaming;
     
+    receiveRate = 60;
+    lastReceiveTime = 0;
+    
+    lastStatTime = 0;
+    numPacketsSinceLastTime = 0;
+  
+    propIDBufferIndex = 0;
+    propBufferIndex = 0;
     ledBufferIndex = 0;
     colorBufferIndex = 0;
     for(int i=0;i<3;i++) colorBuffer[i] = 0;
@@ -76,7 +97,17 @@ public:
   
   
   #if USE_WIFI
-  void processWifi()
+void processWifi()
+  {
+    long curTime = millis();
+    if(curTime > lastReceiveTime + (1000/receiveRate))
+    {
+      receiveUDP();
+      lastReceiveTime = curTime;
+    }
+  }
+
+  void receiveUDP()
   {
     if (udp.parsePacket())
     {
@@ -85,37 +116,67 @@ public:
         byte b = udp.read();
   
         if (b == 255) processBuffer();
-        else if (ledBufferIndex < NUM_LEDS)
+        else
         {
-          colorBuffer[colorBufferIndex] = (uint8_t)b;
-          colorBufferIndex++;
-          if (colorBufferIndex == 3)
+          
+          if(propIDBufferIndex == DeviceSettings::propID)
           {
-            leds[ledBufferIndex] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
+            colorBuffer[colorBufferIndex] = (uint8_t)b;
+            colorBufferIndex++;
+            if (colorBufferIndex == 3)
+            {
+              leds[ledBufferIndex] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
 
-            //Serial.print(leds[ledBufferIndex],DEC);
-            //Serial.print(" ");
-            colorBufferIndex = 0;
-            ledBufferIndex ++;
+              //Serial.print(leds[ledBufferIndex],DEC);
+              //Serial.print(" ");
+              colorBufferIndex = 0;
+              ledBufferIndex ++;
+            }
+          }
+        
+          propBufferIndex++;
+          if(propBufferIndex == NUM_LEDS*3)
+          {
+            propIDBufferIndex++;
+            propBufferIndex =0;
           }
         }
-      }
-      udp.flush();
+
+             }
+      //udp.flush();
     }
   
-    delay(2);
-    //udp.send("o 1.2543487 1.214657 0.312354589");
-  }
+    numLoops++;
+    if(millis() > lastStatTime + 1000)
+    {
+     lastStatTime = millis();
+     Serial.println(String(numPacketsSinceLastTime)+ " updates/s,\t\t"+String(numLoops)+" loops/s");
+     numLoops = 0;
+     numPacketsSinceLastTime = 0;
+    }
+
+   }
   
-  void processBuffer()
+    void processBuffer()
   {
-    //Serial.println("");
-    //Serial.print("process Buffer : ");
-    //Serial.print(ledBufferIndex);
-    //Serial.println(" received.");
+    /*
+    Serial.println("");
+    Serial.print("process Buffer : ");
+    Serial.print(ledBufferIndex);
+    Serial.println(" received.");
+    */
     //FastLED.clear();
     FastLED.show();
+    
+    propIDBufferIndex = 0;
+    propBufferIndex = 0;
     ledBufferIndex = 0;
+
+    long t = millis();
+    Serial.println("Process "+String(t-timeSinceLastPacket));
+    timeSinceLastPacket = t;
+    numPacketsSinceLastTime++;
+   
   }
   #endif
 
@@ -157,7 +218,18 @@ public:
     
     if(offset == 0) return false;
     
-    if(msg.match("/color",offset)) setFullColor(CRGB(msg.getFloat(0)*255,msg.getFloat(1)*255,msg.getFloat(2)*255));
+    char addr[32];
+    int len = 0;
+    msg.getAddress(addr,len);
+    Serial.println("Got message for strip "+String(addr));
+    if(msg.match("/fps", offset))
+    {
+      if(msg.size() > 0 && msg.isInt(0))
+      {
+        receiveRate = min(max(msg.getInt(0),1),1000);
+        Serial.println("Receive rate : "+String(receiveRate));
+      }
+    }else if(msg.match("/color",offset)) setFullColor(CRGB(msg.getFloat(0)*255,msg.getFloat(1)*255,msg.getFloat(2)*255));
     else if(msg.match("/brightness",offset)) 
     {
       FastLED.setBrightness(msg.getFloat(0)*255);
