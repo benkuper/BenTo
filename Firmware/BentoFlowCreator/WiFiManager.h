@@ -157,7 +157,7 @@ class WiFiManager
       //uint8 mac[6];
       //WiFi.softAPmacAddress(mac);
       //String macString((const char *)mac);
-      String wifiString(String("BenTo v4.2 ") +  String((int)ESP.getEfuseMac()));
+      String wifiString(String("BenTo v4.2 ") +  settings.deviceID);
 
 #if SERIAL_DEBUG
       Serial.print("Setting up AP WiFi : ");

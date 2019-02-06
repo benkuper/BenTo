@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PropManager.cpp
-    Created: 10 Apr 2018 6:59:29pm
-    Author:  Ben
+	PropManager.cpp
+	Created: 10 Apr 2018 6:59:29pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -20,6 +20,7 @@ juce_ImplementSingleton(PropManager)
 #include "props/lighttoys/LighttoysFamily.h"
 #include "props/lighttoys/ft/LighttoysFTProp.h"
 
+#include "BentoEngine.h"
 
 PropManager::PropManager() :
 	BaseManager("Props"),
@@ -29,6 +30,7 @@ PropManager::PropManager() :
 
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
+	sendFeedback = addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
 
 	String localIp = "";
 	Array<IPAddress> ad;
@@ -37,7 +39,7 @@ PropManager::PropManager() :
 	{
 		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1.") || ip.toString().startsWith("192.168.43.") || ip.toString().startsWith("10.1.10.") || ip.toString().startsWith("10.0.0."))
 		{
-			localIp = ip.toString(); 
+			localIp = ip.toString();
 			break;
 		}
 	}
@@ -125,11 +127,12 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	{
 		int id = 0;
 		for (auto &p : items)
-		{ 
+		{
 			p->globalID->setValue(id);
 			id++;
 		}
-	} else if (t == detectProps)
+	}
+	else if (t == detectProps)
 	{
 		OSCMessage m("/yo");
 		m.addArgument(localHost->stringValue());
@@ -140,14 +143,30 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	}
 }
 
+void PropManager::onControllableFeedbackUpdate(ControllableContainer *, Controllable * c)
+{
+	Prop * p = ControllableUtil::findParentAs<Prop>(c);
+	if (p != nullptr)
+	{
+		bool shouldSend = sendFeedback->boolValue() && c->parentContainer == &p->sensorsCC && c->type != Controllable::TRIGGER;
 
+		if (shouldSend)
+		{
+			OSCMessage msg("/prop/" + String(p->globalID->intValue()) + "/" + c->shortName);
+			msg.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->value));
+
+			BentoEngine * be = (BentoEngine *)Engine::mainEngine;
+			be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
+		}
+	}
+}
 
 void PropManager::addItemInternal(Prop * p, var)
 {
 	p->addPropListener(this);
 
 	if (Engine::mainEngine->isLoadingFile) return;
-	if(items.size() > 1) p->globalID->setValue(getFirstAvailableID());
+	if (items.size() > 1) p->globalID->setValue(getFirstAvailableID());
 }
 
 void PropManager::removeItemInternal(Prop * p)
@@ -184,47 +203,53 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 
 	if (address == "/wassup")
 	{
-		String pHost = String(m[0].getString());
-		String pid = String(m[1].getInt32());
+		if (m.size() < 3) return;
+		String pHost = OSCHelpers::getStringArg(m[0]);
+		String pid = OSCHelpers::getStringArg(m[1]);
+		String pType = OSCHelpers::getStringArg(m[2]);
 
 		//ToDo : fix propID on ESP32 chips ot have proper hardwareID
-		DBG("Got wassup : " << pHost);
-		Prop * p = getPropWithHardwareId(pHost);
+		DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
+		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr)
 		{
-			FlowClubProp * fp = static_cast<FlowClubProp *>(managerFactory->create(FlowClubProp::getTypeStringStatic()));
+			FlowClubProp * fp = static_cast<FlowClubProp *>(managerFactory->create(pType));
 			if (fp != nullptr)
 			{
-				fp->deviceID = pHost;
+				fp->deviceID = pid;
 				fp->remoteHost->setValue(pHost);
 				LOG("Found ! " << fp->deviceID << " : " << fp->remoteHost->stringValue());
 				addItem(fp);
 				autoAssignIdTrigger->trigger();
-			} else
+			}
+			else
 			{
-				DBG("Type does not exist");
+				DBG("Type does not exist " << pType);
 			}
 		}
-	} else if(address == "/battery/level")
+	}
+	else if (address == "/battery/level")
 	{
-		String pid = String(m[0].getInt32());
+		String pid = OSCHelpers::getStringArg(m[0]);
 		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr) return;
 		p->battery->setValue(m[1].getFloat32());
-	} else if (address == "/battery/charging")
+	}
+	else if (address == "/battery/charging")
 	{
-		String pid = String(m[0].getInt32());
+		String pid = OSCHelpers::getStringArg(m[0]);
 		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr) return;
 		p->battery->setValue(m[1].getFloat32());
 	}
 	else if (address == "/touch/pressed")
 	{
-		String pid = String(m[0].getInt32());
+		String pid = OSCHelpers::getStringArg(m[0]);
 		FlowClubProp * fp = static_cast<FlowClubProp *>(getPropWithHardwareId(pid));
 		if (fp == nullptr) return;
 		fp->button->setValue(m[1].getInt32() == 1);
-	} else
+	}
+	else
 	{
 		LOG("Message not handled : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
 

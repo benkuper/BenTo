@@ -87,7 +87,7 @@ void onButtonEvent(int type)
 
 #if USE_OSC
         OSCMessage msg("/touch/pressed");
-        msg.add(DeviceSettings::deviceID);
+        msg.add(DeviceSettings::deviceID.c_str());
         msg.add(1);
         oscManager.sendMessage(msg);
 #endif
@@ -98,7 +98,7 @@ void onButtonEvent(int type)
       {
 #if USE_OSC
         OSCMessage msg("/touch/pressed");
-        msg.add(DeviceSettings::deviceID);
+        msg.add(DeviceSettings::deviceID.c_str());
         msg.add(0);
         oscManager.sendMessage(msg);
 
@@ -110,7 +110,7 @@ void onButtonEvent(int type)
       {
 #if USE_OSC
         OSCMessage msg("/touch/shortPress");
-        msg.add(DeviceSettings::deviceID);
+        msg.add(DeviceSettings::deviceID.c_str());
         oscManager.sendMessage(msg);
 #endif
       }
@@ -186,12 +186,14 @@ void orientationUpdate(float yaw, float pitch, float roll)
   if (millis() - lastOrientationSendTime > orientationSendRateMS)
   {
 #if USE_OSC
+/*
     OSCMessage msg("/orientation");
-    msg.add(DeviceSettings::deviceID);
+    msg.add(DeviceSettings::deviceID.c_str());
     msg.add(yaw);
     msg.add(pitch);
     msg.add(roll);
     oscManager.sendMessage(msg);
+    */
 #endif
 
     lastOrientationSendTime = millis();
@@ -272,22 +274,26 @@ void batteryCriticalLevel()
 void batteryChargingStateChanged()
 {
 #if USE_OSC
+/*
   OSCMessage msg("/battery/charging");
-  msg.add(DeviceSettings::deviceID);
+  msg.add(DeviceSettings::deviceID.c_str());
   msg.add(batteryManager.isCharging ? 1 : 0);
   oscManager.sendMessage(msg);
+  */
 #endif
 }
 
 void batteryLevelUpdate()
 {
 #if USE_OSC
+/*
   OSCMessage msg("/battery/level");
-  msg.add(DeviceSettings::deviceID);
+  msg.add(DeviceSettings::deviceID.c_str());
   msg.add(batteryManager.normalizedVoltage);
   msg.add(batteryManager.voltage);
   msg.add(batteryManager.rawData);
   oscManager.sendMessage(msg);
+  */
 #endif
 }
 #endif
@@ -350,7 +356,7 @@ void setup() {
   settings.init();
 
 #if SERIAL_DEBUG
-  Serial.println("BentoV4 Initialization.");
+  Serial.println("BentoV4 Initialization. (DeviceID : "+String(settings.deviceID)+")");
   //Serial.println(ESP.getResetReason());
   Serial.println("Will init all modules");
 #endif

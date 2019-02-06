@@ -42,10 +42,10 @@ void PropClusterGroupManager::controllableFeedbackUpdate(ControllableContainer *
 
 				int localID = -1;
 				PropCluster * pc = i->getClusterForProp(p, localID);
-				if (pc == nullptr) return;
+				if (pc == nullptr) continue;
 				
-				OSCMessage msg("/cluster/" + shortName + "/" + pc->shortName + "/" + String(localID) + "/" + c->shortName);
-				msg.addArgument(OSCHelpers::varToArgument(((Parameter *)p)->value));
+				OSCMessage msg("/cluster/" + i->shortName + "/" + pc->shortName + "/" + String(localID) + "/" + c->shortName);
+				msg.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->value));
 
 				BentoEngine * be = (BentoEngine *)Engine::mainEngine;
 				be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);

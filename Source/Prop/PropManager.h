@@ -36,6 +36,8 @@ public:
 	StringParameter * localHost;
 	StringParameter * remoteHost;
 
+	BoolParameter * sendFeedback;
+
 	Trigger * detectProps;
 	Trigger * autoAssignIdTrigger;
 
@@ -47,6 +49,8 @@ public:
 	PropFamily * getFamilyWithName(StringRef familyName);
 
 	void onContainerTriggerTriggered(Trigger * t) override;
+
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 
 	void addItemInternal(Prop * p, var) override;
 	void removeItemInternal(Prop * p) override;
