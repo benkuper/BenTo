@@ -494,11 +494,11 @@
         <MODULEPATH id="juce_audio_devices" path="..\JUCE\modules"/>
         <MODULEPATH id="juce_audio_formats" path="..\JUCE\modules"/>
         <MODULEPATH id="juce_audio_processors" path="..\JUCE\modules"/>
-        <MODULEPATH id="juce_organicui" path="..\JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
         <MODULEPATH id="juce_osc" path="..\JUCE\modules"/>
-        <MODULEPATH id="juce_timeline" path="..\JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_audio_utils" path="..\JUCE\modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="..\JUCE Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
         <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
@@ -509,9 +509,9 @@
         <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="../BenTo-dependencies"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="../BenTo-dependencies"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -524,7 +524,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../BenTo-dependencies"/>
         <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </XCODE_MAC>
@@ -578,6 +578,33 @@
         <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
+    <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
+               customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/serial/include"
+                       osxCompatibility="10.9 SDK"/>
+        <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_mongoose" path="External"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

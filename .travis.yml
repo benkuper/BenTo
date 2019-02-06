@@ -79,7 +79,7 @@ script:
     cd /benkuper/BenTo/Builds/LinuxMakefile;
     make -j 8 CONFIG=Release"
   else
-    xcodebuild -project BenTo/Builds/MacOSX/BenTo.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
+    xcodebuild -project BenTo/Builds/MacOSX_CI/BenTo.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
   fi
 after_success:
 - |-
@@ -90,7 +90,7 @@ after_success:
     zip -r BenTo-linux-x64-bleedingedge.zip BenTo
     curl --verbose --progress-bar --ipv4 --connect-timeout 8 --max-time 120 --retry 128 --ftp-ssl --disable-epsv --ftp-pasv --ftp-create-dirs -T BenTo-linux-x64-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://home403871847.1and1-data.host/bento/
   else
-    cd /Users/travis/build/benkuper/BenTo/Builds/MacOSX/build/Release
+    cd /Users/travis/build/benkuper/BenTo/Builds/MacOSX_CI/build/Release
     ls
     zip -r -y BenTo-osx-bleedingedge.zip BenTo.app
     curl --ftp-create-dirs -T BenTo-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://home403871847.1and1-data.host/bento/

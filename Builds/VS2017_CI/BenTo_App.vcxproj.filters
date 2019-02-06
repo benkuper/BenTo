@@ -6354,7 +6354,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\updater\AppUpdater.h">
       <Filter>JUCE Modules\juce_organicui\updater</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.h">
+    <ClInclude Include="..\..\..\BenTo-dependencies\juce_organicui\juce_organicui.h">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCAddress.h">
@@ -6423,7 +6423,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\SharedTexture.h">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_sharedtexture\juce_sharedtexture.h">
+    <ClInclude Include="..\..\..\BenTo-dependencies\juce_sharedtexture\juce_sharedtexture.h">
       <Filter>JUCE Modules\juce_sharedtexture</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.h">
@@ -6513,7 +6513,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\SequenceManager.h">
       <Filter>JUCE Modules\juce_timeline\timeline</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\juce_timeline.h">
+    <ClInclude Include="..\..\..\BenTo-dependencies\juce_timeline\juce_timeline.h">
       <Filter>JUCE Modules\juce_timeline</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
