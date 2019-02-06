@@ -28,7 +28,7 @@ public:
 
 	//const int remotePort = 8888; //Bento udp streaming is done on this port
 
-	void onContainerParameterChangedInternal(Parameter * p);
+	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	virtual void sendColorsToPropInternal() override;
 

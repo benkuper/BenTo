@@ -61,6 +61,9 @@ void SpatItem::updatePoints()
 
 	case Prop::Shape::HOOP:
 		break;
+            
+        default:
+            break;
 
 	
 	}

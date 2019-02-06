@@ -56,6 +56,9 @@ void SpatItemUI::paint(Graphics & g)
 			break;
 		case Prop::Shape::HOOP:
 			break;
+                
+            default:
+                break;
 		}
 	}
 

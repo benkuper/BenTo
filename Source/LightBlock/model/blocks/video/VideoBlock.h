@@ -38,7 +38,7 @@ public:
 
 	Array<Colour> getColors(Prop * p, double time, var params) override;
 
-	void onControllableFeedbackUpdateInternal(ControllableContainer *cc, Controllable *c);
+	void onControllableFeedbackUpdateInternal(ControllableContainer *cc, Controllable *c) override;
 
 	// Inherited via Listener
 	virtual void textureUpdated(SharedTextureReceiver *) override;

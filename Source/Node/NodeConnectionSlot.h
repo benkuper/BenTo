@@ -21,7 +21,7 @@ class NodeConnectionSlot
 {
 public:
 	NodeConnectionSlot(Node * node, bool isInput, const String &name, ConnectionType type) : node(node), isInput(isInput), name(name), type(type) {}
-	~NodeConnectionSlot() { masterReference.clear(); }
+	virtual ~NodeConnectionSlot() { masterReference.clear(); }
 
 	Node * node;
 	bool isInput;
