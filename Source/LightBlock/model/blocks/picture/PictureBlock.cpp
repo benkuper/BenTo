@@ -16,8 +16,9 @@ PictureBlock::PictureBlock(var params) :
 {
 	pictureFile = new FileParameter("Picture File", "The file, the picture, the thing", "");
 	addParameter(pictureFile);
-
-	speed = paramsContainer->addFloatParameter("Speed", "The speed", 1, 0, 50);
+    
+    speed = paramsContainer->addFloatParameter("Speed", "The speed", 1, 0, 50);
+    offsetByID = paramsContainer->addFloatParameter("Offset by ID", "The offset", 0, 0, 1);
 }
 
 Array<Colour> PictureBlock::getColors(Prop * p, double time, var params)
@@ -25,15 +26,17 @@ Array<Colour> PictureBlock::getColors(Prop * p, double time, var params)
 	if (picture.getWidth() == 0) return LightBlockModel::getColors(p, time, params);
 
 	int resolution = p->resolution->intValue();
+    int id = params.getProperty("forceID", p->globalID->intValue());
 	Array<Colour> result;
 	result.resize(resolution);
 
 	float bSpeed = params.getProperty("speed", speed->floatValue());
+    float bOffsetByID = params.getProperty(offsetByID->shortName, offsetByID->floatValue());
 
 	int numPixelsH = picture.getHeight();
-	float txRel = fmodf(time*bSpeed, 1);
+	float txRel = fmodf(time*bSpeed + bOffsetByID*id, 1);
 	int  tx = jmin<int>(txRel * picture.getWidth(), picture.getWidth() - 1);
-
+    
 	for (int i = 0; i < resolution; i++)
 	{
 		float ty = jmin(i*numPixelsH / resolution, numPixelsH - 1);
