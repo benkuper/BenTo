@@ -139,27 +139,22 @@ var BentoEngine::getJSONData()
 
 void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTask)
 {
-	//ProgressTask * projectTask = loadingTask->addTask("Project");
+	//ProgressTask * projectTask = loadingTask->addTask("Project"
 	ProgressTask * modelsTask = loadingTask->addTask("Models");
 	ProgressTask * propTask = loadingTask->addTask("Props");
 	ProgressTask * clusterTask = loadingTask->addTask("Clusters");
 
-
-	//load here
-	//projectTask->start();
-	//ProjectSettings::getInstance()->loadJSONData(data.getProperty("projectSettings", var()));
-	//projectTask->setProgress(1);
-	//projectTask->end();
+	
+	clusterTask->start();
+	PropClusterGroupManager::getInstance()->loadJSONData(data.getProperty("clusters", var()));
+	clusterTask->setProgress(1);
+	clusterTask->end(); 
 
 	modelsTask->start();
 	LightBlockModelLibrary::getInstance()->loadJSONData(data.getProperty("models", var()));
 	modelsTask->setProgress(1);
 	modelsTask->end();
 
-	clusterTask->start();
-	PropClusterGroupManager::getInstance()->loadJSONData(data.getProperty("clusters", var()));
-	clusterTask->setProgress(1);
-	clusterTask->end(); 
 	
 	propTask->start();
 	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));

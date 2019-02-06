@@ -16,9 +16,14 @@ PropClusterGroup::PropClusterGroup() :
 {
 	sendFeedback = addBoolParameter("Send Feedback", "If checked, Prop changes will be sent using their local ID", false);
 
-	addChildControllableContainer(&clusterManager);
+	//clusterManager.hideEditorHeader = true;
+	clusterManager.skipControllableNameInAddress = true;
 	clusterManager.selectItemWhenCreated = false;
 	clusterManager.editorCanBeCollapsed = false;
+
+	clusterManager.addItem(); //add one item here
+
+	addChildControllableContainer(&clusterManager);
 }
 
 PropClusterGroup::~PropClusterGroup()

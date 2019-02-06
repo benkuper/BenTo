@@ -86,6 +86,8 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
+	static bool targetIsCluster(ControllableContainer * cc);
+
 	String getTypeString() const override { return "Cluster"; }
 	static PropTargetFilter * create(var) { return new PropFilterCluster(); }
 };

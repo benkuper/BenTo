@@ -90,12 +90,14 @@ PropFilterCluster::PropFilterCluster() :
 	clusterGroup = addTargetParameter("Family", "Family to filter", PropClusterGroupManager::getInstance());
 	clusterGroup->targetType = TargetParameter::CONTAINER;
 	clusterGroup->maxDefaultSearchLevel = 0;
+	clusterGroup->showParentNameInEditor = false;
 	clusterGroup->setEnabled(false);
 
 	specificCluster = addBoolParameter("Specific Cluster", "Search in specific cluster", false);
 	cluster = addTargetParameter("Cluster", "Cluster to filter", PropClusterGroupManager::getInstance());
 	cluster->targetType = TargetParameter::CONTAINER;
 	cluster->maxDefaultSearchLevel = 2;
+	cluster->defaultContainerTypeCheckFunc = &PropFilterCluster::targetIsCluster;
 	cluster->setEnabled(false);
 
 	specificID = addBoolParameter("Specific Local ID", "Search for specific Local Cluster ID", false);
@@ -157,6 +159,11 @@ void PropFilterCluster::onContainerParameterChangedInternal(Parameter * p)
 	{
 		id->setEnabled(specificID->boolValue());
 	}
+}
+
+bool PropFilterCluster::targetIsCluster(ControllableContainer * cc)
+{
+	return dynamic_cast<PropCluster *>(cc) != nullptr;
 }
 
 

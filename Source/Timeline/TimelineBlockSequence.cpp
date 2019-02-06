@@ -17,8 +17,8 @@ TimelineBlockSequence::TimelineBlockSequence() :
 	Sequence()
 {
 
+	layerManager->addItem(new LightBlockLayer(this));
 	layerManager->addBaseManagerListener(this);
-
 	setAudioDeviceManager(&AudioManager::getInstance()->am);
 }
 
