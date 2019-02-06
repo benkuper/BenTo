@@ -37,10 +37,14 @@ PropManager::PropManager() :
 	IPAddress::findAllAddresses(ad);
 	for (auto &ip : ad)
 	{
-		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1.") || ip.toString().startsWith("192.168.43.") || ip.toString().startsWith("10.1.10.") || ip.toString().startsWith("10.0.0."))
+		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1.") || ip.toString().startsWith("192.168.43."))
 		{
 			localIp = ip.toString();
 			break;
+		}
+		else if (ip.toString().startsWith("10.1.10.") || ip.toString().startsWith("10.0.0."))
+		{
+			if (localIp.isEmpty()) localIp = ip.toString();
 		}
 	}
 

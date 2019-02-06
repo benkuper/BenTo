@@ -75,3 +75,16 @@ void SpatItem::onContainerParameterChangedInternal(Parameter * p)
 {
 	if (p == startPos || p == endPos || p == shape) updatePoints();
 }
+
+var SpatItem::getJSONData()
+{
+	var data = BaseItem::getJSONData();
+	data.getDynamicObject()->setProperty("filters", filterManager.getJSONData());
+	return data;
+}
+
+void SpatItem::loadJSONDataInternal(var data)
+{
+	BaseItem::loadJSONDataInternal(data);
+	filterManager.loadJSONData(data.getProperty("filters", var()));
+}

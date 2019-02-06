@@ -35,8 +35,9 @@ public:
 	Point2DParameter * endPos;
 
 
-
 	void updatePoints();
-
 	void onContainerParameterChangedInternal(Parameter *) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 };
