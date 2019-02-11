@@ -73,6 +73,7 @@ public:
 	~SolidColorPattern() {}
 
 	ColorParameter * color;
+    FloatParameter * brightness;
 	FloatParameter * hueSpeed;
 	FloatParameter * idOffset;
 

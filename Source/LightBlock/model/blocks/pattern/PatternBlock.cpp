@@ -103,6 +103,7 @@ SolidColorPattern::SolidColorPattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
+    brightness = paramsContainer->addFloatParameter("Brightness", "", 0.5, 0, 1);
 	hueSpeed = paramsContainer->addFloatParameter("Hue Speed", "The animation speed of the hue, in full spectrum cycle / second", 0, 0, 20);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the hue depending on id of the prop", 0, 0, 10);
 
@@ -118,13 +119,14 @@ Array<Colour> SolidColorPattern::getColors(Prop * p, double time, var params)
 
 	var colorVar = params.getProperty("color", color->value);
 	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
+    float bBrightness = params.getProperty("brightness", brightness->floatValue());
 	float bHueSpeed = params.getProperty("hueSpeed", hueSpeed->floatValue());
 	float bIdOffset = params.getProperty("idoffset", idOffset->floatValue());
 
 	float curTime = time * bHueSpeed + id * bIdOffset;
 
 	Colour c = bColor.withHue(bColor.getHue() + fmodf(curTime, 1));
-	result.fill(c);
+	result.fill(c.withMultipliedBrightness(bBrightness));
 	return result;
 }
 
