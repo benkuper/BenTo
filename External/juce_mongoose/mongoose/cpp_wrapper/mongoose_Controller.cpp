@@ -1,3 +1,4 @@
+#pragma warning(disable:4100 4244 4996)
 
 namespace Mongoose
 {

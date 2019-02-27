@@ -13,7 +13,7 @@
 #include "LightBlock/model/blocks/timeline/TimelineBlock.h"
 
 LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
-	BaseItem("LightBlockClip"),
+	LayerBlock("LightBlockClip", _time),
 	layer(layer)
 {
 	itemDataType = "LightBlockClip";
@@ -22,19 +22,8 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 
-	startTime = addFloatParameter("Start Time", "Start time", 0, 0, INT32_MAX);
-	startTime->setValue(_time);
-	startTime->defaultUI = FloatParameter::TIME;
-	
-	length = addFloatParameter("Length", "Length of the clip (in seconds)", 10, .1f, INT32_MAX);
-	length->defaultUI = FloatParameter::TIME;
-
-	clipPosition = addFloatParameter("Position", "Clip position", .5f, 0, 1);
-	clipSize = addFloatParameter("Size", "Clip size", .5f, 0, 1);
-
-
-	fadeIn = addFloatParameter("Fade In", "Fade in time", 0, 0, length->floatValue());
-	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, length->floatValue());
+	fadeIn = addFloatParameter("Fade In", "Fade in time", 0, 0, getTotalLength());
+	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength());
 }
 
 LightBlockClip::~LightBlockClip()
@@ -68,8 +57,10 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 
 	}
 }
-Array<Colour> LightBlockClip::getColors(Prop * p, double time, var params)
+Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var params)
 {
+	double relTime = getRelativeTime(absoluteTime, true);
+
 	int resolution = p->resolution->intValue();
 
 	if (currentBlock == nullptr)
@@ -82,8 +73,8 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double time, var params)
 		
 	
 	float factor = 1;
-	if (fadeIn->floatValue() > 0) factor *= jmin<double>(time / fadeIn->floatValue(),1.f);
-	if (fadeOut->floatValue() > 0) factor *= jmin<double>((length->floatValue() - time) / fadeOut->floatValue(), 1.f);
+	if (fadeIn->floatValue() > 0) factor *= jmin<double>(relTime / fadeIn->floatValue(),1.f);
+	if (fadeOut->floatValue() > 0) factor *= jmin<double>((getTotalLength() - relTime) / fadeOut->floatValue(), 1.f);
 
 
 	if (dynamic_cast<TimelineBlock *>(currentBlock->provider.get()) != nullptr)
@@ -91,40 +82,29 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double time, var params)
 		params.getDynamicObject()->setProperty("sequenceTime", false);
 	}
 
-	Array<Colour> colors = currentBlock->getColors(p, time, params);
+	Array<Colour> colors = currentBlock->getColors(p, relTime, params);
 	for (int i = 0; i < resolution; i++)
 	{
 		colors.set(i,colors[i].withMultipliedBrightness(factor));
 	}
 	return colors;
 }
-float LightBlockClip::getTimeForRelativePosition(float t, bool absoluteTime)
-{
-	return (absoluteTime?startTime->floatValue():0) + length->floatValue()*t; //to improve with speed animation handling
-}
-
-bool LightBlockClip::isInRange(float _time)
-{
-	return (_time >= startTime->floatValue() && _time <= startTime->floatValue() + length->floatValue());
-
-}
-
 void LightBlockClip::onContainerParameterChanged(Parameter * p)
 {
 	if (p == activeProvider)
 	{
 		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
-	} else if (p == length)
+	} else if (p == coreLength || p == loopLength)
 	{
-		fadeIn->setRange(0, length->floatValue());
-		fadeOut->setRange(0, length->floatValue());
+		fadeIn->setRange(0, getTotalLength());
+		fadeOut->setRange(0, getTotalLength());
 
 ;		if (currentBlock != nullptr)
 		{
 			Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
 			for (auto & pa : params)
 			{
-				if (p->controlMode == Parameter::AUTOMATION) pa->automation->automation.length->setValue(length->floatValue());
+				if (p->controlMode == Parameter::AUTOMATION) pa->automation->automation.length->setValue(coreLength->floatValue());
 			}
 		}
 	}
@@ -132,7 +112,7 @@ void LightBlockClip::onContainerParameterChanged(Parameter * p)
 
 void LightBlockClip::blockParamControlModeChanged(Parameter * p) 
 {
-	if (p->controlMode == Parameter::AUTOMATION) p->automation->automation.length->setValue(length->floatValue());
+	if (p->controlMode == Parameter::AUTOMATION) p->automation->automation.length->setValue(coreLength->floatValue());
 }
 
 /*
@@ -144,14 +124,14 @@ void LightBlockClip::itemAdded(ParameterAutomation * p)
 
 var LightBlockClip::getJSONData()
 {
-	var data = BaseItem::getJSONData();
+	var data = LayerBlock::getJSONData();
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("blockData", currentBlock->getJSONData());
 	return data;
 }
 
 void LightBlockClip::loadJSONDataInternal(var data)
 {
-	BaseItem::loadJSONDataInternal(data);
+	LayerBlock::loadJSONDataInternal(data);
 	if (currentBlock != nullptr)
 	{
 		currentBlock->loadJSONData(data.getProperty("blockData", var()));

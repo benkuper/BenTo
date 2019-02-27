@@ -27,8 +27,8 @@ class WifiManager
 {
   public:
 
-    String ssid = "spacenet";
-    String password = "jhfdb97531$$";
+    String ssid = "flowspace";
+    String password = "flowarts";
 
     const int maxTries = 50;
 

@@ -562,13 +562,6 @@
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		03D68912B90442DF90A21C42 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_organicui";
-			path = "../../../JUCE Modules/juce_organicui";
-			sourceTree = "SOURCE_ROOT";
-		};
 		042EE867E2552AD03EB3FC9D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -589,6 +582,13 @@
 			name = PropFamily.cpp;
 			path = ../../Source/Prop/PropFamily.cpp;
 			sourceTree = "SOURCE_ROOT";
+		};
+		0651B52966A72415A71A0D56 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_sharedtexture";
+			path = "~/modules/juce_sharedtexture";
+			sourceTree = "<absolute>";
 		};
 		0659862BF0ADBF95B8203E2C = {
 			isa = PBXFileReference;
@@ -1227,6 +1227,13 @@
 			path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		620A8B4E79738CC97F68ACD1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "~/modules/juce_timeline";
+			sourceTree = "<absolute>";
+		};
 		6347D4B0B79AD1F8E0BFAED3 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1682,13 +1689,6 @@
 			path = ../../Source/LightBlock/model/blocks/node/NodeBlock.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A1A6ABCA29E3787D9B68262F = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_timeline";
-			path = "../../../JUCE Modules/juce_timeline";
-			sourceTree = "SOURCE_ROOT";
-		};
 		A1C0F782FE9CBAEDE19E835F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1744,6 +1744,13 @@
 			name = GarnavFamily.cpp;
 			path = ../../Source/Prop/props/garnav/GarnavFamily.cpp;
 			sourceTree = "SOURCE_ROOT";
+		};
+		A8396479E3A2F6C2C26A74C9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_organicui";
+			path = "~/modules/juce_organicui";
+			sourceTree = "<absolute>";
 		};
 		A86F6D70736209426F30BE26 = {
 			isa = PBXFileReference;
@@ -2023,13 +2030,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PropClusterGroupManager.cpp;
 			path = ../../Source/Prop/Cluster/PropClusterGroupManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		CFE4080B44BE37C07EB06068 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_sharedtexture";
-			path = "../../../JUCE Modules/juce_sharedtexture";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D027E1CD25E7821AE21678A1 = {
@@ -3135,10 +3135,10 @@
 				D5BA4C7B914E43D3B54609C9,
 				77D3D3B1A9C133AC87FC698F,
 				9FC7CA34A6BC93158284E96E,
-				03D68912B90442DF90A21C42,
+				A8396479E3A2F6C2C26A74C9,
 				5DBFCFF756AD9AF779C27EC0,
-				CFE4080B44BE37C07EB06068,
-				A1A6ABCA29E3787D9B68262F,
+				0651B52966A72415A71A0D56,
+				620A8B4E79738CC97F68ACD1,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -3251,7 +3251,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"../../External",
-					"\"../../../JUCE Modules\"",
+					"$(HOME)/modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3298,7 +3298,7 @@
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
 					"../../External",
-					"\"../../../JUCE Modules\"",
+					"$(HOME)/modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3336,7 +3336,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
@@ -3355,7 +3355,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "BenTo";
-				WARNING_CFLAGS = -Wreorder;
+				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
 			name = Debug;
@@ -3382,7 +3382,7 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				DEBUG_INFORMATION_FORMAT = "dwarf";
+				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				GCC_C_LANGUAGE_STANDARD = c11;
 				GCC_INLINES_ARE_PRIVATE_EXTERN = YES;
@@ -3399,7 +3399,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "BenTo";
-				WARNING_CFLAGS = -Wreorder;
+				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
 			name = Release;
@@ -3598,13 +3598,14 @@
 		6A50FB53C4AC2437E07541F9 = {
 			isa = PBXProject;
 			buildConfigurationList = 4ABBAA74D0C6E8AEFE38E070;
-			attributes = { LastUpgradeCheck = 0930; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; }; }; }; };
+			attributes = { LastUpgradeCheck = 0930; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
 			mainGroup = FD3BED1C20E9C5CB1E29BC58;
 			projectDirPath = "";
 			projectRoot = "";
 			targets = (5FD64B0FD59767DFD945EE30);
+			knownRegions = (en, Base);
 		};
 	};
 	rootObject = 6A50FB53C4AC2437E07541F9;

@@ -12,15 +12,10 @@
 #include "LightBlockLayerTimeline.h"
 
 LightBlockClipManagerUI::LightBlockClipManagerUI(LightBlockLayerTimeline * _timeline, LightBlockClipManager * manager) :
-	BaseManagerUI("Clip Manager", manager, false),
+	LayerBlockManagerUI(_timeline, manager),
+	clipManager(manager),
 	timeline(_timeline)
 {
-	noItemText = "To add blocks to this layer, double-click here";
-	addItemText = "Add Block";
-	animateItemOnAdd = false;
-	transparentBG = true;
-
-	addItemBT->setVisible(false);
 	addExistingItems();
 }
 
@@ -28,54 +23,7 @@ LightBlockClipManagerUI::~LightBlockClipManagerUI()
 {
 }
 
-void LightBlockClipManagerUI::resized()
+LayerBlockUI * LightBlockClipManagerUI::createUIForItem(LayerBlock * item)
 {
-	updateContent();
-}
-
-void LightBlockClipManagerUI::updateContent()
-{
-	for (auto &cui : itemsUI)
-	{
-		placeClipUI(cui);
-	}
-}
-
-void LightBlockClipManagerUI::placeClipUI(LightBlockClipUI * cui)
-{
-	int tx = timeline->getXForTime(cui->item->startTime->floatValue());
-	int tx2 = timeline->getXForTime(cui->item->startTime->floatValue() + cui->item->length->floatValue());
-	cui->setBounds(tx, 0, tx2 - tx, getHeight());
-}
-
-
-void LightBlockClipManagerUI::addItemUIInternal(LightBlockClipUI * cui)
-{
-	cui->addClipUIListener(this);
-	placeClipUI(cui);
-}
-
-void LightBlockClipManagerUI::removeItemUIInternal(LightBlockClipUI * cui)
-{
-	cui->removeClipUIListener(this);
-}
-
-void LightBlockClipManagerUI::mouseDoubleClick(const MouseEvent & e)
-{
-	manager->addClipAt(timeline->getTimeForX(e.getMouseDownX()));
-}
-
-void LightBlockClipManagerUI::clipUITimeChanged(LightBlockClipUI * cui)
-{
-	placeClipUI(cui);
-}
-
-void LightBlockClipManagerUI::clipUIDragged(LightBlockClipUI * cui, const MouseEvent & e)
-{
-	if (!e.mods.isShiftDown())
-	{
-		float targetTime = cui->timeAtMouseDown + timeline->getTimeForX(e.getOffsetFromDragStart().x, false);
-		cui->item->startTime->setValue(targetTime);
-	}
-	repaint();
+	return new LightBlockClipUI((LightBlockClip *)item);
 }

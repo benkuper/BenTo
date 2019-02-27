@@ -15,6 +15,7 @@
 // Alternatively, you can license this library under a commercial
 // license, as set out in <http://cesanta.com/products.html>.
 
+
 #undef UNICODE                  // Use ANSI WinAPI functions
 #undef _UNICODE                 // Use multibyte encoding on Windows
 #define _MBCS                   // Use multibyte encoding on Windows
@@ -30,6 +31,7 @@
 #ifdef _MSC_VER
 #pragma warning (disable : 4127)  // FD_SET() emits warning, disable it
 #pragma warning (disable : 4204)  // missing c99 support
+#pragma warning (disable: 4100 4244 4996 4245 4005 4267 4312)
 #endif
 
 #include <sys/types.h>
@@ -191,7 +193,9 @@ struct ll { struct ll *prev, *next; };
 #define DBG(x) do { printf("%-20s ", __func__); printf x; putchar('\n'); \
   fflush(stdout); } while(0)
 #else
+#ifndef DBG
 #define DBG(x)
+#endif
 #endif
 
 #ifdef NO_FILESYSTEM
@@ -933,7 +937,7 @@ static pid_t start_process(char *interp, const char *cmd, const char *env,
     CloseHandle(b[0]);
     closesocket(sock);
   }
-  DBG(("CGI command: [%ls] -> %p", wcmd, pi.hProcess));
+  //DBG(("CGI command: [%ls] -> %p", wcmd, pi.hProcess));
 
   CloseHandle(si.hStdOutput);
   CloseHandle(si.hStdInput);
@@ -1325,14 +1329,14 @@ static struct connection *accept_new_connection(struct mg_server *server) {
     conn->mg_conn.remote_port = ntohs(sa.sin.sin_port);
     conn->mg_conn.server_param = server->server_data;
     LINKED_LIST_ADD_TO_FRONT(&server->active_connections, &conn->link);
-    DBG(("added conn %p", conn));
+   // DBG(("added conn %p", conn));
   }
 
   return conn;
 }
 
 static void close_conn(struct connection *conn) {
-  DBG(("%p %d %d", conn, conn->flags, conn->endpoint_type));
+  //DBG(("%p %d %d", conn, conn->flags, conn->endpoint_type));
   LINKED_LIST_REMOVE(&conn->link);
   closesocket(conn->client_sock);
   free(conn->request);            // It's OK to free(NULL), ditto below

@@ -15,7 +15,7 @@
 class LightBlockLayer;
 
 class LightBlockClip :
-	public BaseItem,
+	public LayerBlock,
 	public LightBlock::LightBlockListener
 {
 public:
@@ -27,22 +27,12 @@ public:
 	
 	TargetParameter * activeProvider;
 
-	FloatParameter * startTime;
-	FloatParameter * length;
-
-	FloatParameter * clipPosition;
-	FloatParameter * clipSize;
-
 	FloatParameter * fadeIn;
 	FloatParameter * fadeOut;
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
-	Array<Colour> getColors(Prop * p, double time, var params);
+	Array<Colour> getColors(Prop * p, double absoluteTime, var params);
 	
-	float getTimeForRelativePosition(float t, bool absoluteTime = true);
-
-	bool isInRange(float time);
-
 	void onContainerParameterChanged(Parameter * p) override;
 	virtual void blockParamControlModeChanged(Parameter *p) override;
 

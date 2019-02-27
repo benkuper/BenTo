@@ -98,8 +98,16 @@ void BentoEngine::processMessage(const OSCMessage & m)
 					}
 
 					LightBlockColorProvider * providerToAssign = mp != nullptr ? mp : (LightBlockColorProvider *)lm;
-					Prop * p = PropManager::getInstance()->getPropWithId(id);
-					if(p != nullptr) p->activeProvider->setValueFromTarget(providerToAssign);
+					if (id == -1)
+					{
+						for(auto & p:PropManager::getInstance()->items)  p->activeProvider->setValueFromTarget(providerToAssign);
+					}
+					else
+					{
+						Prop * p = PropManager::getInstance()->getPropWithId(id);
+						if (p != nullptr) p->activeProvider->setValueFromTarget(providerToAssign);
+					}
+					
 				}
 
 
@@ -109,12 +117,22 @@ void BentoEngine::processMessage(const OSCMessage & m)
 	} else if (aList[1] == "prop")
 	{
 		int id = OSCHelpers::getIntArg(m[0]);
-		Prop * p = PropManager::getInstance()->getPropWithId(id);
+		//Prop * p = PropManager::getInstance()->getPropWithId(id);
 
 		if (aList[2] == "enable")
 		{
 			bool active = OSCHelpers::getIntArg(m[1]) > 0;
-			if(p != nullptr) p->enabled->setValue(active);
+
+			if (id == -1)
+			{
+				for (auto & p : PropManager::getInstance()->items)  p->enabled->setValue(active);
+			}
+			else
+			{
+				Prop * p = PropManager::getInstance()->getPropWithId(id);
+				if (p != nullptr) p->enabled->setValue(active);
+			}
+			
 		}
 	}
 }

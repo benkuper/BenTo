@@ -77,6 +77,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 Array<LightBlockLayer *> TimelineBlockSequence::getLayersForProp(Prop * p)
 {
 	if (layerManager == nullptr) return nullptr; 
+	if (Engine::mainEngine->isClearing) return nullptr;
 
 	Array<LightBlockLayer *> defaultLayers;
 	Array<LightBlockLayer *> result;

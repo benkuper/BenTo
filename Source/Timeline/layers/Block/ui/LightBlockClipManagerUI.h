@@ -16,25 +16,14 @@
 class LightBlockLayerTimeline;
 
 class LightBlockClipManagerUI :
-	public BaseManagerUI<LightBlockClipManager, LightBlockClip, LightBlockClipUI>,
-	public LightBlockClipUI::ClipUIListener
+	public LayerBlockManagerUI
 {
 public:
 	LightBlockClipManagerUI(LightBlockLayerTimeline * timeline, LightBlockClipManager * manager);
 	~LightBlockClipManagerUI();
 
+	LightBlockClipManager * clipManager;
 	LightBlockLayerTimeline * timeline;
 
-	void resized() override;
-	void updateContent();
-
-	void placeClipUI(LightBlockClipUI * cui);
-
-	void addItemUIInternal(LightBlockClipUI * cui) override;
-	void removeItemUIInternal(LightBlockClipUI * cui) override;
-
-	void mouseDoubleClick(const MouseEvent &e) override;
-
-	void clipUITimeChanged(LightBlockClipUI * cui) override;
-	void clipUIDragged(LightBlockClipUI * cui, const MouseEvent &) override;
+	LayerBlockUI * createUIForItem(LayerBlock * item) override;
 };

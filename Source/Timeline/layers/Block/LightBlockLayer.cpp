@@ -30,14 +30,14 @@ LightBlockLayer::~LightBlockLayer()
 
 Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 {
-	Array<LightBlockClip *> clips = blockClipManager.getClipsAtTime(time);
+	Array<LayerBlock *> blocks = blockClipManager.getBlocksAtTime(time);
 
 	int resolution = p->resolution->intValue();
 
 	Array<Colour> result;
 	result.resize(resolution);
 
-	if (clips.size() == 0)
+	if (blocks.size() == 0)
 	{
 		result.fill(Colours::black);
 		return result;
@@ -45,9 +45,10 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 
 	Array<Array<Colour>> clipColors;
 
-	for (auto &c : clips)
+	for (auto &b : blocks)
 	{
-		clipColors.add(c->getColors(p, time - c->startTime->floatValue(), params));
+		LightBlockClip * clip = (LightBlockClip *)b;
+		clipColors.add(clip->getColors(p, time, params));
 	}
 
 	for (int i = 0; i < resolution; i++)

@@ -207,10 +207,9 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 
 	if (address == "/wassup")
 	{
-		if (m.size() < 3) return;
 		String pHost = OSCHelpers::getStringArg(m[0]);
 		String pid = OSCHelpers::getStringArg(m[1]);
-		String pType = OSCHelpers::getStringArg(m[2]);
+		String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Flowtoys Creator Club";
 
 		//ToDo : fix propID on ESP32 chips ot have proper hardwareID
 		DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
@@ -231,7 +230,7 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 				DBG("Type does not exist " << pType);
 			}
 		}
-	}
+	}/*
 	else if (address == "/battery/level")
 	{
 		String pid = OSCHelpers::getStringArg(m[0]);
@@ -258,4 +257,5 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		LOG("Message not handled : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
 
 	}
+	*/
 }
