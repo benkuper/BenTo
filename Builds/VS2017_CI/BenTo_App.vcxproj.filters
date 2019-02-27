@@ -3274,9 +3274,6 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericControllableItemEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\Grabber.cpp">
-      <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
@@ -3443,6 +3440,9 @@
       <Filter>JUCE Modules\juce_organicui\ui\shapeshifter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\AssetManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\Grabber.cpp">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\ui\LookAndFeelOO.cpp">
@@ -6447,9 +6447,6 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericManagerEditor.h">
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\Grabber.h">
-      <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.h">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClInclude>
@@ -6550,6 +6547,9 @@
       <Filter>JUCE Modules\juce_organicui\ui\shapeshifter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\AssetManager.h">
+      <Filter>JUCE Modules\juce_organicui\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\Grabber.h">
       <Filter>JUCE Modules\juce_organicui\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\LookAndFeelOO.h">
