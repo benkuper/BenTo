@@ -48,7 +48,7 @@ public:
 	Image previewImage;
 
 	void paint(Graphics &g) override;
-	void resizedInternalContent(Rectangle<int> &r) override;
+	void resizedBlockInternal() override;
 
 	void generatePreview();
 
@@ -57,6 +57,8 @@ public:
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
+
+	Rectangle<int> getDragBounds() override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 

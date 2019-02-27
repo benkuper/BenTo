@@ -33,10 +33,11 @@ public:
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 	Array<Colour> getColors(Prop * p, double absoluteTime, var params);
 	
-	void onContainerParameterChanged(Parameter * p) override;
 	virtual void blockParamControlModeChanged(Parameter *p) override;
 
 	//void itemAdded(ParameterAutomation * p) override;
+
+	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

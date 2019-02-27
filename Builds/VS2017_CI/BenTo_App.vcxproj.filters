@@ -3274,6 +3274,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericControllableItemEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\Grabber.cpp">
+      <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
@@ -6442,6 +6445,9 @@
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericManagerEditor.h">
+      <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\Grabber.h">
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.h">

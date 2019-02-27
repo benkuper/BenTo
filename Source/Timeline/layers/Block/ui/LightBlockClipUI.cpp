@@ -22,7 +22,8 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
 	generatePreview();
-	removeMouseListener(this);
+	
+	//removeMouseListener(this);
 
 	addAndMakeVisible(&fadeInHandle, 0);
 	addAndMakeVisible(&fadeOutHandle, 0);
@@ -48,10 +49,10 @@ void LightBlockClipUI::paint(Graphics & g)
 	else
 	{
 		g.setColour(Colours::white.withAlpha(automationUI != nullptr ? .3f : .6f));
-		g.drawImage(previewImage, getCoreBounds().withTop(headerHeight).toFloat());
+		g.drawImage(previewImage, getCoreBounds().toFloat());
 
 		g.setTiledImageFill(previewImage, 0, 0, .3f);
-		g.fillRect(getLocalBounds().withLeft(getCoreWidth()).withTop(headerHeight));
+		g.fillRect(getLocalBounds().withLeft(getCoreWidth()));
 	}
 
 	if (automationUI != nullptr)
@@ -63,25 +64,24 @@ void LightBlockClipUI::paint(Graphics & g)
 	if (clip->fadeIn->floatValue() > 0)
 	{
 		g.setColour(Colours::yellow.withAlpha(.5f));
-		g.drawLine(0, getHeight(), getWidth()*(clip->fadeIn->floatValue() / clip->getTotalLength()), 0);
+		g.drawLine(0, getHeight(), getWidth()*(clip->fadeIn->floatValue() / clip->getTotalLength()), fadeInHandle.getY()+fadeInHandle.getHeight()/2);
 	}
 
 	if (clip->fadeOut->floatValue() > 0)
 	{
 		g.setColour(Colours::yellow.withAlpha(.5f));
-		g.drawLine(getWidth()*(1 - (clip->fadeOut->floatValue() / clip->getTotalLength())), 0, getWidth(), getHeight());
+		g.drawLine(getWidth()*(1 - (clip->fadeOut->floatValue() / clip->getTotalLength())), fadeOutHandle.getY() + fadeOutHandle.getHeight() / 2, getWidth(), getHeight());
 	}
 }
 
-void LightBlockClipUI::resizedInternalContent(Rectangle<int> &r)
+void LightBlockClipUI::resizedBlockInternal()
 {
-	LayerBlockUI::resizedInternalContent(r);
-
 	if (!imageIsReady) generatePreview();
-	if (automationUI != nullptr) automationUI->setBounds(r.withWidth(getCoreWidth()));
+	if (automationUI != nullptr) automationUI->setBounds(getCoreBounds());
 
-	fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength())*getWidth(), headerHeight+fadeInHandle.getHeight() / 2);
-	fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength())*getWidth(), headerHeight+fadeOutHandle.getHeight() / 2);
+	Rectangle<int> r = getLocalBounds();
+	fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength())*getWidth(), fadeInHandle.getHeight() / 2);
+	fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength())*getWidth(), fadeOutHandle.getHeight() / 2);
 }
 
 void LightBlockClipUI::generatePreview()
@@ -201,8 +201,15 @@ void LightBlockClipUI::mouseUp(const MouseEvent & e)
 	}
 }
 
+Rectangle<int> LightBlockClipUI::getDragBounds()
+{
+	return LayerBlockUI::getLocalBounds();
+}
+
 void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
+	LayerBlockUI::controllableFeedbackUpdateInternal(c);
+
 	if (c == clip->coreLength ||c == clip->loopLength || c == clip->activeProvider || c == clip->fadeIn || c == clip->fadeOut) generatePreview();
 	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer  && c->isControllableFeedbackOnly == false) generatePreview();
 	else if (dynamic_cast<AutomationKey *>(c->parentContainer) != nullptr)
@@ -231,14 +238,16 @@ void LightBlockClipUI::run()
 	var params = new DynamicObject();
 	params.getDynamicObject()->setProperty("updateAutomation", false);
 
+	float start = clip->time->floatValue();
+	float length = clip->coreLength->floatValue();
+
 	for (int i = 0; i < resX; i++)
 	{
 		if (threadShouldExit()) return;
 
-		float relT = i * 1.0f / resX;
-		float t = clip->getRelativeTime(relT, false);
-
-		Array<Colour> c = clip->getColors(&previewProp, t, params);
+		float absT =  start+ i * length / resX;
+		
+		Array<Colour> c = clip->getColors(&previewProp, absT, params);
 		for (int ty = 0; ty < resY; ty++) previewImage.setPixelAt(i, ty, c[ty]);
 	}
 

@@ -20,7 +20,7 @@
 #undef _UNICODE                 // Use multibyte encoding on Windows
 #define _MBCS                   // Use multibyte encoding on Windows
 #define _INTEGRAL_MAX_BITS 64   // Enable _stati64() on Windows
-#define _CRT_SECURE_NO_WARNINGS // Disable deprecation warning in VS2005+
+//#define _CRT_SECURE_NO_WARNINGS // Disable deprecation warning in VS2005+
 #undef WIN32_LEAN_AND_MEAN      // Let windows.h always include winsock2.h
 #define _XOPEN_SOURCE 600       // For flockfile() on Linux
 #define __STDC_FORMAT_MACROS    // <inttypes.h> wants this for C++
@@ -849,7 +849,7 @@ static void *push_to_stdin(void *arg) {
 
 static void *pull_from_stdout(void *arg) {
   struct threadparam *tp = (threadparam *)arg;
-  int k, stop = 0;
+  int k = 0, stop = 0;
   DWORD n, sent;
   char buf[IOBUF_SIZE];
 
