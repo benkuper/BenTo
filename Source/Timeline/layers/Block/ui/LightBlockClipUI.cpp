@@ -17,18 +17,19 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	clip(_clip),
 	fadeInHandle(ImageCache::getFromMemory(BinaryData::fadeIn_png, BinaryData::fadeIn_pngSize)),
 	fadeOutHandle(ImageCache::getFromMemory(BinaryData::fadeOut_png, BinaryData::fadeOut_pngSize)),
-	imageIsReady(false)
+	imageIsReady(false),
+	shouldUpdateImage(true)
 {
 
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
 	generatePreview();
-	
-	//removeMouseListener(this);
 
 	addAndMakeVisible(&fadeInHandle, 0);
 	addAndMakeVisible(&fadeOutHandle, 0);
 	fadeInHandle.addMouseListener(this, false);
 	fadeOutHandle.addMouseListener(this, false);
+
+	startThread();
 }
 
 LightBlockClipUI::~LightBlockClipUI()
@@ -41,19 +42,19 @@ void LightBlockClipUI::paint(Graphics & g)
 {
 	LayerBlockUI::paint(g);
 
-	if (previewImage.getWidth() > 0)
-	{
-		g.setColour(Colours::white.withAlpha(automationUI != nullptr ? .3f : .6f));
-		g.drawImage(previewImage, getLocalBounds().toFloat(), RectanglePlacement::stretchToFit);
-	}
-	
+
+	imgLock.enter();
+	g.setColour(Colours::white.withAlpha(automationUI != nullptr ? .3f : .6f));
+	g.drawImage(previewImage, getLocalBounds().toFloat(), RectanglePlacement::stretchToFit);
+	imgLock.exit();
+
 	if (!imageIsReady)
 	{
 		g.setColour(bgColor.brighter());
 		g.drawText(clip->currentBlock != nullptr ? "Generating preview... " : "No Light block selected", getCoreBounds().reduced(8).toFloat(), Justification::centred);
 	}
-	
-	
+
+
 
 	if (automationUI != nullptr)
 	{
@@ -64,7 +65,7 @@ void LightBlockClipUI::paint(Graphics & g)
 	if (clip->fadeIn->floatValue() > 0)
 	{
 		g.setColour(Colours::yellow.withAlpha(.5f));
-		g.drawLine(0, getHeight(), getWidth()*(clip->fadeIn->floatValue() / clip->getTotalLength()), fadeInHandle.getY()+fadeInHandle.getHeight()/2);
+		g.drawLine(0, getHeight(), getWidth()*(clip->fadeIn->floatValue() / clip->getTotalLength()), fadeInHandle.getY() + fadeInHandle.getHeight() / 2);
 	}
 
 	if (clip->fadeOut->floatValue() > 0)
@@ -87,12 +88,8 @@ void LightBlockClipUI::resizedBlockInternal()
 void LightBlockClipUI::generatePreview()
 {
 	if (isMouseButtonDown()) return;
-
-	imageIsReady = false;
-
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
-	startThread();
+	DBG("Generate preview");
+	shouldUpdateImage = true;
 }
 
 void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
@@ -214,7 +211,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	LayerBlockUI::controllableFeedbackUpdateInternal(c);
 
-	if (c == clip->coreLength ||c == clip->loopLength || c == clip->activeProvider || c == clip->fadeIn || c == clip->fadeOut) generatePreview();
+	if (c == clip->coreLength || c == clip->loopLength || c == clip->activeProvider || c == clip->fadeIn || c == clip->fadeOut) generatePreview();
 	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer) generatePreview();
 	else if (dynamic_cast<AutomationKey *>(c->parentContainer) != nullptr)
 	{
@@ -224,49 +221,70 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 
 void LightBlockClipUI::run()
 {
-	const int resX = jmin(getWidth(), 600);
-	const int resY = 32; //to make dynamic
-
-	if (resX == 0) return;
-	Image tmpImg = Image(Image::RGB, resX, resY, true);
-
-	if (clip->currentBlock == nullptr) return;
-
-	imageIsReady = false;
-
-	int id = clip->layer->previewID->intValue();
-
-	previewProp.globalID->setValue(id, true);
-	previewProp.resolution->setValue(resY, true);
-
-	var params = new DynamicObject();
-	params.getDynamicObject()->setProperty("updateAutomation", false);
-
-	float start = clip->time->floatValue();
-	float length = clip->getTotalLength();
-	float coreLength = clip->coreLength->floatValue();
-
-	for (int i = 0; i < resX; i++)
+	while (!threadShouldExit())
 	{
-		if (threadShouldExit()) return;
+		sleep(20);
 
-
-		float relTotal = i * length / resX;
-		float absT = start + relTotal;
-		Array<Colour> c = clip->getColors(&previewProp, absT, params);
-		for (int ty = 0; ty < resY; ty++)
+		if (!shouldUpdateImage || clip->currentBlock == nullptr)
 		{
-			if (relTotal > coreLength) c.set(ty, c[ty].darker());// c[ty].darker();
-			tmpImg.setPixelAt(i, ty, c[ty]);
+			sleep(20);
+			continue;
+
 		}
+
+		shouldUpdateImage = false;
+		imageIsReady = false;
+
+		const int resX = jmin(getWidth(), 600);
+		const int resY = 32; //to make dynamic
+
+		if (resX == 0)
+		{
+			sleep(20);
+			continue;
+		}
+
+		Image tmpImg = Image(Image::RGB, resX, resY, true);
+
+		int id = clip->layer->previewID->intValue();
+
+		previewProp.globalID->setValue(id, true);
+		previewProp.resolution->setValue(resY, true);
+
+		var params = new DynamicObject();
+		params.getDynamicObject()->setProperty("updateAutomation", false);
+
+		float start = clip->time->floatValue();
+		float length = clip->getTotalLength();
+		float coreLength = clip->coreLength->floatValue();
+
+		for (int i = 0; i < resX; i++)
+		{
+			if (threadShouldExit()) return;
+
+			float relTotal = i * length / resX;
+			float absT = start + relTotal;
+			Array<Colour> c = clip->getColors(&previewProp, absT, params);
+			for (int ty = 0; ty < resY; ty++)
+			{
+				if (relTotal > coreLength) c.set(ty, c[ty].darker());// c[ty].darker();
+				tmpImg.setPixelAt(i, ty, c[ty]);
+			}
+		}
+
+		imgLock.enter();
+		previewImage = tmpImg.createCopy();
+		imgLock.exit();
+		imageIsReady = true;
+
+		{
+			MessageManagerLock mmLock;
+			repaint();
+		}
+
 	}
 
-	previewImage = tmpImg.createCopy();
-
-	imageIsReady = true;
-
-	MessageManagerLock mmLock;
-	repaint();
+	DBG("Exit thread");
 }
 
 LightBlockFadeHandle::LightBlockFadeHandle(const Image & image) :

@@ -16,12 +16,14 @@ class ColourScriptData :
 	public ScriptTarget
 {
 public:
-	ColourScriptData(int resolution);
+	ColourScriptData();
 
 	Array<Colour> colorArray;
 
 	static var updateColorRGBFromScript(const var::NativeFunctionArgs &args);
 	static var updateColorHSVFromScript(const var::NativeFunctionArgs &args);
+	static var updateColorsRGBFromScript(const var::NativeFunctionArgs &args);
+	static var updateColorsHSVFromScript(const var::NativeFunctionArgs &args);
 };
 
 class ScriptBlock :

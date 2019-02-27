@@ -21,6 +21,8 @@ ScriptBlock::ScriptBlock(var params) :
 	addChildControllableContainer(&presetManager);
 
 	script.addAsyncScriptListener(this);
+
+	//colorDataObject = colorData.getScriptObject();
 }
 
 ScriptBlock::~ScriptBlock()
@@ -36,18 +38,38 @@ Array<Colour> ScriptBlock::getColors(Prop * p, double time, var params)
 {
 	int resolution = p->resolution->intValue();
 	int id = params.getProperty("forceID", p->globalID->intValue());
-	ColourScriptData colors(resolution);
+
+	ColourScriptData cData;
+	cData.colorArray.resize(resolution);
 
 	Array<var> args;
-	args.add(colors.getScriptObject());
+	args.add(cData.getScriptObject());
 	args.add(id);
 	args.add(resolution);
 	args.add(time);
 	args.add(params);
 
-	script.callFunction(updateColorsFunc, args);
+	var result = script.callFunction(updateColorsFunc, args); 
+	
+	Array<Colour> colors;
 
-	return Array<Colour>(colors.colorArray);
+	if (result.isArray())
+	{
+
+		colors.resize(resolution);
+		int numColors = jmin<int>(resolution, result.size());
+		for (int i = 0; i < numColors; i++)
+		{
+			colors.set(i, Colour::fromRGB((float)result[i][0] * 255, (float)result[i][1] * 255, (float)result[i][2] * 255));
+		}
+	}
+	else
+	{
+		colors = Array<Colour>(cData.colorArray);
+	}
+	
+	
+	return colors;
 }
 
 void ScriptBlock::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
@@ -88,13 +110,13 @@ void ScriptBlock::newMessage(const Script::ScriptEvent & e)
 	}
 }
 
-ColourScriptData::ColourScriptData(int resolution) :
+ColourScriptData::ColourScriptData() :
 	ScriptTarget("colours",this)
 {
-	Array<Colour> colors;
-	colors.resize(resolution);
 	scriptObject.setMethod("setRGB", &ColourScriptData::updateColorRGBFromScript);
 	scriptObject.setMethod("setHSV", &ColourScriptData::updateColorHSVFromScript);
+	scriptObject.setMethod("setColorsRGB", &ColourScriptData::updateColorsRGBFromScript);
+	scriptObject.setMethod("setColorsHSV", &ColourScriptData::updateColorsHSVFromScript);
 }
 
 
@@ -106,7 +128,7 @@ var ColourScriptData::updateColorRGBFromScript(const var::NativeFunctionArgs & a
 	if (p == nullptr) return var();
 	if (args.numArguments < 4)
 	{
-		LOGERROR("SetColor RGB from script not enough parameters");
+		LOGWARNING("SetColor RGB from script not enough parameters");
 		return var();
 	}
 	int index = args.arguments[0];
@@ -122,7 +144,7 @@ var ColourScriptData::updateColorHSVFromScript(const var::NativeFunctionArgs & a
 	if (p == nullptr) return var();
 	if (args.numArguments < 4)
 	{
-		LOGERROR("SetColor HSV from script not enough parameters");
+		LOGWARNING("SetColor HSV from script not enough parameters");
 		return var();
 	}
 	int index = args.arguments[0];
@@ -130,4 +152,41 @@ var ColourScriptData::updateColorHSVFromScript(const var::NativeFunctionArgs & a
 
 	
 	return var();
+}
+
+var ColourScriptData::updateColorsRGBFromScript(const var::NativeFunctionArgs & args)
+{
+	ColourScriptData * p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments == 0 || !args.arguments[0].isArray())
+	{
+		LOGWARNING("set colors RGB needs one array argument.");
+		return var();
+	}
+
+	var colors = args.arguments[0];
+	int numColors = jmin<int>(p->colorArray.size(), colors.size());
+	for (int i = 0; i < numColors; i++)
+	{
+		p->colorArray.set(i, Colour::fromRGB((float)colors[i][0] * 255, (float)colors[i][1] * 255, (float)colors[i][2] * 255));
+	}
+
+}
+
+var ColourScriptData::updateColorsHSVFromScript(const var::NativeFunctionArgs & args)
+{
+	ColourScriptData * p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments == 0 || !args.arguments[0].isArray())
+	{
+		LOGWARNING("set colors HSV needs one array argument.");
+		return var();
+	}
+
+	var colors = args.arguments[0];
+	int numColors = jmin<int>(p->colorArray.size(), colors.size());
+	for (int i = 0; i < numColors; i++)
+	{
+		p->colorArray.set(i, Colour::fromHSV((float)colors[i][0] * 255, (float)colors[i][1] * 255, (float)colors[i][2] * 255, 1));
+	}
 }

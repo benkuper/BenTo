@@ -44,7 +44,10 @@ public:
 	float fadeValueAtMouseDown;
 
 	Prop previewProp;
+	bool shouldUpdateImage;
 	bool imageIsReady;
+
+	SpinLock imgLock;
 	Image previewImage;
 
 	void paint(Graphics &g) override;
