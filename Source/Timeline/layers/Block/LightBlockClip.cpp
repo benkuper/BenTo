@@ -41,7 +41,6 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 	{
 		removeChildControllableContainer(currentBlock);
 		currentBlock->removeLightBlockListener(this);
-		//currentBlock->automationsManager.removeBaseManagerListener(this);
 		currentBlock = nullptr;
 	}
 
@@ -52,8 +51,6 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 	{
 		addChildControllableContainer(currentBlock);
 		currentBlock->addLightBlockListener(this);
-		//currentBlock->automationsManager.addBaseManagerListener(this);
-		//for (auto & a : currentBlock->automationsManager.items) a->automation.length->setValue(length->floatValue());
 
 	}
 }
@@ -93,7 +90,25 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 
 void LightBlockClip::blockParamControlModeChanged(Parameter * p) 
 {
-	if (p->controlMode == Parameter::AUTOMATION) p->automation->automation.length->setValue(coreLength->floatValue());
+	if (p->controlMode == Parameter::AUTOMATION)
+	{
+		p->automation->automation.setLength(coreLength->floatValue());
+		p->automation->automation.allowKeysOutside = true;
+	}
+}
+
+void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEnd)
+{
+	LayerBlock::setCoreLength(value, stretch, stickToCoreEnd);
+
+	if (currentBlock != nullptr)
+	{
+		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
+		for (auto & pa : params)
+		{
+			if (pa->controlMode == Parameter::AUTOMATION) pa->automation->automation.setLength(coreLength->floatValue(), stretch, stickToCoreEnd);
+		}
+	}
 }
 
 void LightBlockClip::onContainerParameterChangedInternal(Parameter * p)
@@ -108,15 +123,6 @@ void LightBlockClip::onContainerParameterChangedInternal(Parameter * p)
 	{
 		fadeIn->setRange(0, getTotalLength());
 		fadeOut->setRange(0, getTotalLength());
-
-		;		if (currentBlock != nullptr)
-		{
-			Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
-			for (auto & pa : params)
-			{
-				if (p->controlMode == Parameter::AUTOMATION) pa->automation->automation.length->setValue(coreLength->floatValue());
-			}
-		}
 	}
 }
 
@@ -133,6 +139,16 @@ void LightBlockClip::loadJSONDataInternal(var data)
 	if (currentBlock != nullptr)
 	{
 		currentBlock->loadJSONData(data.getProperty("blockData", var()));
+
+		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
+
+		for (auto & pa : params)
+		{
+			if (pa->controlMode == Parameter::AUTOMATION)
+			{
+				pa->automation->automation.allowKeysOutside = true;
+			}
+		}
 	}
 
 }

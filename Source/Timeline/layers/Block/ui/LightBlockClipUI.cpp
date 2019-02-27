@@ -41,19 +41,19 @@ void LightBlockClipUI::paint(Graphics & g)
 {
 	LayerBlockUI::paint(g);
 
+	if (previewImage.getWidth() > 0)
+	{
+		g.setColour(Colours::white.withAlpha(automationUI != nullptr ? .3f : .6f));
+		g.drawImage(previewImage, getLocalBounds().toFloat(), RectanglePlacement::stretchToFit);
+	}
+	
 	if (!imageIsReady)
 	{
 		g.setColour(bgColor.brighter());
 		g.drawText(clip->currentBlock != nullptr ? "Generating preview... " : "No Light block selected", getCoreBounds().reduced(8).toFloat(), Justification::centred);
 	}
-	else
-	{
-		g.setColour(Colours::white.withAlpha(automationUI != nullptr ? .3f : .6f));
-		g.drawImage(previewImage, getCoreBounds().toFloat());
-
-		g.setTiledImageFill(previewImage, 0, 0, .3f);
-		g.fillRect(getLocalBounds().withLeft(getCoreWidth()));
-	}
+	
+	
 
 	if (automationUI != nullptr)
 	{
@@ -183,6 +183,10 @@ void LightBlockClipUI::mouseDrag(const MouseEvent & e)
 		clip->fadeOut->setValue((1 - (getMouseXYRelative().x *1.0f / getWidth()))*clip->getTotalLength());
 		resized();
 	}
+	else if (automationUI != nullptr)
+	{
+		generatePreview();
+	}
 }
 
 void LightBlockClipUI::mouseUp(const MouseEvent & e)
@@ -211,7 +215,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	LayerBlockUI::controllableFeedbackUpdateInternal(c);
 
 	if (c == clip->coreLength ||c == clip->loopLength || c == clip->activeProvider || c == clip->fadeIn || c == clip->fadeOut) generatePreview();
-	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer  && c->isControllableFeedbackOnly == false) generatePreview();
+	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer) generatePreview();
 	else if (dynamic_cast<AutomationKey *>(c->parentContainer) != nullptr)
 	{
 		generatePreview();
@@ -220,11 +224,11 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 
 void LightBlockClipUI::run()
 {
-	const int resX = jmin(getCoreWidth(), 600);
+	const int resX = jmin(getWidth(), 600);
 	const int resY = 32; //to make dynamic
 
 	if (resX == 0) return;
-	previewImage = Image(Image::RGB, resX, resY, true);
+	Image tmpImg = Image(Image::RGB, resX, resY, true);
 
 	if (clip->currentBlock == nullptr) return;
 
@@ -239,17 +243,25 @@ void LightBlockClipUI::run()
 	params.getDynamicObject()->setProperty("updateAutomation", false);
 
 	float start = clip->time->floatValue();
-	float length = clip->coreLength->floatValue();
+	float length = clip->getTotalLength();
+	float coreLength = clip->coreLength->floatValue();
 
 	for (int i = 0; i < resX; i++)
 	{
 		if (threadShouldExit()) return;
 
-		float absT =  start+ i * length / resX;
-		
+
+		float relTotal = i * length / resX;
+		float absT = start + relTotal;
 		Array<Colour> c = clip->getColors(&previewProp, absT, params);
-		for (int ty = 0; ty < resY; ty++) previewImage.setPixelAt(i, ty, c[ty]);
+		for (int ty = 0; ty < resY; ty++)
+		{
+			if (relTotal > coreLength) c.set(ty, c[ty].darker());// c[ty].darker();
+			tmpImg.setPixelAt(i, ty, c[ty]);
+		}
 	}
+
+	previewImage = tmpImg.createCopy();
 
 	imageIsReady = true;
 

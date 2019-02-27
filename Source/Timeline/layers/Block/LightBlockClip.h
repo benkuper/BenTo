@@ -37,6 +37,8 @@ public:
 
 	//void itemAdded(ParameterAutomation * p) override;
 
+	void setCoreLength(float value, bool stretch = false, bool stickToCoreEnd = false) override;
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
 
 	var getJSONData() override;
