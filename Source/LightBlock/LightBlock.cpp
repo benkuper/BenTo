@@ -45,7 +45,7 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 	{
 		for (auto &param : paramList)
 		{
-			if (param->controlMode != Parameter::AUTOMATION) continue;
+			if (param->controlMode != Parameter::AUTOMATION  || param->automation == nullptr) continue;
 			param->automation->currentTime->setValue(fmodf(time, param->automation->automation.length->floatValue()));
 		}
 	} else
