@@ -6381,6 +6381,9 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\DebugHelpers.h">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\NetworkHelpers.h">
+      <Filter>JUCE Modules\juce_organicui\helpers</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\helpers\OSCHelpers.h">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClInclude>

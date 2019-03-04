@@ -10,10 +10,13 @@
 
 #include "PropUI.h"
 #include "LightBlock/model/LightBlockModelLibrary.h"
+#include "LightBlock/model/ui/LightBlockModelUI.h"
 
 PropUI::PropUI(Prop * p) :
 	BaseItemUI(p),
-	viz(p)
+	viz(p),
+	acceptModelDrop(true),
+	isDraggingItemOver(false)
 {
 	idUI = p->globalID->createStepper();
 	idUI->showLabel = true;
@@ -42,6 +45,11 @@ void PropUI::paintOverChildren(Graphics & g)
 		g.fillAll(Colours::black.withAlpha(.5f));
 		g.setColour(Colours::orange);
 		g.drawFittedText("Baking ...", getLocalBounds(), Justification::centred, 1);
+	}
+
+	if (isDraggingItemOver)
+	{
+		g.fillAll(BLUE_COLOR.withAlpha(.3f));
 	}
 }
 
@@ -85,4 +93,27 @@ void PropUI::resizedInternalContent(Rectangle<int> &r)
 void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	if (c == item->isBaking) repaint();
+}
+
+bool PropUI::isInterestedInDragSource(const SourceDetails & source)
+{
+	return source.description == "LightBlockModel";
+}
+
+void PropUI::itemDragEnter(const SourceDetails & source)
+{
+	isDraggingItemOver = false;
+	repaint();
+}
+
+void PropUI::itemDragExit(const SourceDetails & source)
+{
+	isDraggingItemOver = false;
+	repaint();
+}
+
+void PropUI::itemDropped(const SourceDetails & source)
+{
+	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
+	if (modelUI != nullptr) item->activeProvider->setValueFromTarget(modelUI->item);
 }

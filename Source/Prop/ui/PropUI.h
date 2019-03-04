@@ -14,7 +14,8 @@
 #include "PropViz.h"
 
 class PropUI :
-	public BaseItemUI<Prop>
+	public BaseItemUI<Prop>,
+	public DragAndDropTarget
 {
 public:
 	PropUI(Prop * p);
@@ -25,6 +26,9 @@ public:
 	ScopedPointer<TargetParameterUI> targetUI;
 	ScopedPointer<FloatSliderUI> batteryUI;
 
+	bool acceptModelDrop;
+	bool isDraggingItemOver;
+
 	void paintOverChildren(Graphics &g) override;
 	void mouseDown(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
@@ -33,4 +37,9 @@ public:
 	void resizedInternalContent(Rectangle<int> &r) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
+
+	bool isInterestedInDragSource(const SourceDetails &source) override;
+	void itemDragEnter(const SourceDetails &source) override;
+	void itemDragExit(const SourceDetails &source) override;
+	void itemDropped(const SourceDetails &source) override;
 };

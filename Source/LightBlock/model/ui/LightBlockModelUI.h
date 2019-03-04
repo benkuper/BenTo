@@ -14,7 +14,8 @@
 
 class LightBlockModelUI :
 	public BaseItemMinimalUI<LightBlockModel>,
-	public LightBlockModel::AsyncListener
+	public LightBlockModel::AsyncListener,
+	public DragAndDropContainer
 {
 public:
 	LightBlockModelUI(LightBlockModel * model);
@@ -34,6 +35,5 @@ public:
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
-
-	
+	void mouseDrag(const MouseEvent &e) override;
 };

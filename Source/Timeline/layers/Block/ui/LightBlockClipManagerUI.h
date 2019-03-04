@@ -16,7 +16,8 @@
 class LightBlockLayerTimeline;
 
 class LightBlockClipManagerUI :
-	public LayerBlockManagerUI
+	public LayerBlockManagerUI,
+	public DragAndDropTarget
 {
 public:
 	LightBlockClipManagerUI(LightBlockLayerTimeline * timeline, LightBlockClipManager * manager);
@@ -26,4 +27,10 @@ public:
 	LightBlockLayerTimeline * timeline;
 
 	LayerBlockUI * createUIForItem(LayerBlock * item) override;
+
+	bool isInterestedInDragSource(const SourceDetails &source) override;
+	void itemDragEnter(const SourceDetails &source) override;
+	void itemDragExit(const SourceDetails &source) override;
+	void itemDragMove(const SourceDetails &source) override;
+	void itemDropped(const SourceDetails &source) override;
 };

@@ -70,6 +70,7 @@ void LightBlockModelUI::mouseDown(const MouseEvent & e)
 {
 	BaseItemMinimalUI::mouseDown(e);
 
+
 	if (e.mods.isLeftButtonDown())
 	{
 		if (e.mods.isAltDown())
@@ -113,6 +114,14 @@ void LightBlockModelUI::mouseDown(const MouseEvent & e)
 void LightBlockModelUI::mouseDoubleClick(const MouseEvent & e)
 {
 	editBlock();
+}
+
+void LightBlockModelUI::mouseDrag(const MouseEvent & e)
+{
+	BaseItemMinimalUI::mouseDrag(e);
+
+	if (isDragAndDropActive()) return;
+	if (e.getDistanceFromDragStart() > 20) startDragging("LightBlockModel", this, modelImage, true);
 }
 
 
