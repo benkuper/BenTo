@@ -20,7 +20,8 @@ ParameterNode::ParameterNode(var params) :
 
 	parameter->isCustomizableByUser = true;
 
-	parameter->setNiceName("Out value");
+	parameter->setNiceName("Value");
+	parameter->saveValueOnly = false;
 	addParameter(parameter);
 	addParameterSlot(false, parameter);
 }
@@ -28,6 +29,7 @@ ParameterNode::ParameterNode(var params) :
 ParameterNode::~ParameterNode()
 {
 }
+
 
 NodeViewUI * ParameterNode::createUI()
 {

@@ -30,6 +30,7 @@ Array<Colour> ColorNode::getColors(Prop * p, double time, var params)
 	return result;
 }
 
+
 NodeViewUI * ColorNode::createUI()
 {
 	return new ColorNodeViewUI(this);

@@ -120,7 +120,6 @@
     <ClCompile Include="..\..\Source\Node\nodes\parameter\ParameterNode.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\positionRemap\PositionRemapNode.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\prop\PropNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\solidcolor\SolidColorNode.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\ColorNodeViewUI.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditor.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.cpp"/>
@@ -2646,7 +2645,6 @@
     <ClInclude Include="..\..\Source\Node\nodes\parameter\ParameterNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\positionRemap\PositionRemapNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\prop\PropNode.h"/>
-    <ClInclude Include="..\..\Source\Node\nodes\solidcolor\SolidColorNode.h"/>
     <ClInclude Include="..\..\Source\Node\ui\ColorNodeViewUI.h"/>
     <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditor.h"/>
     <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.h"/>

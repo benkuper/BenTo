@@ -37,6 +37,11 @@ public:
 	virtual Array<WeakReference<Controllable>> getModelParameters() override;
 
 	virtual Array<Colour> getColors(Prop * p, double time, var params) override;
+	virtual void getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params) {}
+
+
+	template<class T>
+	T getParamValue(Parameter * p, var params);
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void childStructureChanged(ControllableContainer * cc) override;
@@ -86,3 +91,9 @@ public:
 
 	JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(LightBlockModel)
 };
+
+template<class T>
+T LightBlockModel::getParamValue(Parameter * p, var params)
+{
+	return (T)params.getProperty(p->shortName, p->getValue());
+}

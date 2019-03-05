@@ -33,29 +33,21 @@ RainbowPattern::RainbowPattern(var params) :
 	brightness = paramsContainer->addFloatParameter("Brightness", "Brightness of the rainbow", .5f, 0, 1);
 }
 
-Array<Colour> RainbowPattern::getColors(Prop * p, double time, var params)
+void RainbowPattern::getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params)
 {
-	int resolution = p->resolution->intValue();
-	int id = params.getProperty("forceID", p->globalID->intValue());
-	
-	Array<Colour> result;
-	result.resize(resolution);
-
-	float bDensity = params.getProperty("density", density->floatValue());
-	float bOffset = params.getProperty("offset", offset->floatValue());
-	float bSpeed = params.getProperty("speed", speed->floatValue());
-	float bIdOffset = params.getProperty("idoffset", idOffset->floatValue());
-	float bBrightness = params.getProperty("brightness", brightness->floatValue());
+	float bDensity = getParamValue<float>(density, params);
+	float bOffset = getParamValue<float>(offset, params);
+	float bSpeed = getParamValue<float>(speed, params);
+	float bIdOffset = getParamValue<float>(idOffset, params);
+	float bBrightness = getParamValue<float>(brightness, params);
 
 	float curOffset = time*bSpeed + bOffset + id*bIdOffset;
 
 	for (int i = 0; i < resolution; i++)
 	{
 		float rel = fmodf((i * bDensity / resolution) + curOffset, 1);
-		result.set(i, Colour::fromHSV(rel, 1, bBrightness, 1));
+		result->set(i, Colour::fromHSV(rel, 1, bBrightness, 1));
 	}
-
-	return result;
 }
 
 
@@ -71,20 +63,16 @@ NoisePattern::NoisePattern(var params) :
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the animation depending on id of the prop", 0, 0, 10);
 }
 
-Array<Colour> NoisePattern::getColors(Prop * p, double time, var params)
+void NoisePattern::getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params)
 {
-	int resolution = p->resolution->intValue();
-	int id = params.getProperty("forceID", p->globalID->intValue());
-	
-	Array<Colour> result;
-	result.resize(resolution);
 
-	float bScale = params.getProperty("scale", scale->floatValue());
-	float bSpeed = params.getProperty("speed",speed->floatValue());
-	float bContrast = params.getProperty("contrast", contrast->floatValue());
-	float bBrightness = params.getProperty("brightness", brightness->floatValue());
-	float bIdOffset = params.getProperty("idoffset", idOffset->floatValue());
-	var colorVar = params.getProperty("color", color->value);
+	float bScale = getParamValue<float>(scale, params);
+	float bSpeed = getParamValue<float>(speed, params);
+	float bContrast = getParamValue<float>(contrast, params);
+	float bBrightness = getParamValue<float>(brightness, params);
+	float bIdOffset = getParamValue<float>(idOffset, params);
+
+	var colorVar = getParamValue<var>(color, params);
 	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
 
 	float curTime = time * bSpeed;
@@ -92,10 +80,8 @@ Array<Colour> NoisePattern::getColors(Prop * p, double time, var params)
 	for (int i = 0; i < resolution; i++)
 	{
 		float v = (perlin.noise0_1((i*bScale) / resolution, curTime, id*bIdOffset) - .5f)*bContrast + .5f + bBrightness;
-		result.set(i, bColor.withMultipliedBrightness(v));
+		result->set(i, bColor.withMultipliedBrightness(v));
 	}
-
-	return result;
 }
 
 
@@ -103,31 +89,24 @@ SolidColorPattern::SolidColorPattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
-    brightness = paramsContainer->addFloatParameter("Brightness", "", 0.5, 0, 1);
+	brightness = paramsContainer->addFloatParameter("Brightness", "", 0.5, 0, 1);
 	hueSpeed = paramsContainer->addFloatParameter("Hue Speed", "The animation speed of the hue, in full spectrum cycle / second", 0, 0, 20);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the hue depending on id of the prop", 0, 0, 10);
 
 }
 
-Array<Colour> SolidColorPattern::getColors(Prop * p, double time, var params)
+void SolidColorPattern::getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params)
 {
-	int resolution = p->resolution->intValue();
-	int id = params.getProperty("forceID", p->globalID->intValue());
-	
-	Array<Colour> result;
-	result.resize(resolution);
-
-	var colorVar = params.getProperty("color", color->value);
+	var colorVar = getParamValue<var>(color, params);
 	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
-    float bBrightness = params.getProperty("brightness", brightness->floatValue());
-	float bHueSpeed = params.getProperty("hueSpeed", hueSpeed->floatValue());
-	float bIdOffset = params.getProperty("idoffset", idOffset->floatValue());
+	float bBrightness = getParamValue<float>(brightness, params);
+	float bHueSpeed = getParamValue<float>(hueSpeed, params);
+	float bIdOffset = getParamValue<float>(idOffset, params);
 
 	float curTime = time * bHueSpeed + id * bIdOffset;
 
 	Colour c = bColor.withHue(bColor.getHue() + fmodf(curTime, 1));
-	result.fill(c.withMultipliedBrightness(bBrightness));
-	return result;
+	result->fill(c.withMultipliedBrightness(bBrightness));
 }
 
 StrobePattern::StrobePattern(var params) :
@@ -139,25 +118,19 @@ StrobePattern::StrobePattern(var params) :
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the timing depending on id of the prop", 0, 0, 10);
 }
 
-Array<Colour> StrobePattern::getColors(Prop * p, double time, var params)
+void StrobePattern::getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params)
 {
-	int resolution = p->resolution->intValue();
-	int id = params.getProperty("forceID", p->globalID->intValue());
-	
-	Array<Colour> result;
-	result.resize(resolution);
-
-	var colorVar = params.getProperty("color", color->value);
+	var colorVar = getParamValue<var>(color, params);
 	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
-	float bFrequency = params.getProperty("frequency", frequency->floatValue());
-	float bOnOffBalance = params.getProperty("on-OffBalance", onOffBalance->floatValue());
-	float bIdOffset = params.getProperty("idoffset", idOffset->floatValue());
+	
+	float bFrequency = getParamValue<float>(frequency, params);
+	float bOnOffBalance = getParamValue<float>(onOffBalance, params);
+	float bIdOffset = getParamValue<float>(idOffset, params);
 
-	float curTime = time*bFrequency + id * bIdOffset;
+	float curTime = time * bFrequency + id * bIdOffset;
 
 	Colour c = fmodf(curTime, 1) < bOnOffBalance ? bColor : Colours::black;
-	result.fill(c);
-	return result;
-
+	result->fill(c);
 }
+
 

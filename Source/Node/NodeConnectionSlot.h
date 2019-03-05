@@ -20,12 +20,13 @@ enum ConnectionType { Color, ColorBlock, Number };
 class NodeConnectionSlot
 {
 public:
-	NodeConnectionSlot(Node * node, bool isInput, const String &name, ConnectionType type) : node(node), isInput(isInput), name(name), type(type) {}
+	NodeConnectionSlot(Node * node, bool isInput, StringRef name, StringRef id, ConnectionType type) : node(node), isInput(isInput), name(name), id(id), type(type) {}
 	virtual ~NodeConnectionSlot() { masterReference.clear(); }
 
 	Node * node;
 	bool isInput;
 	String name;
+	String id;
 	ConnectionType type;
 
 	Array<NodeConnection *> connections;
@@ -42,7 +43,7 @@ class ColorSlot :
 	public NodeConnectionSlot
 {
 public:
-	ColorSlot(Node * node, bool isInput, const String &name) : NodeConnectionSlot(node, isInput, name, ConnectionType::ColorBlock) {}
+	ColorSlot(Node * node, bool isInput, const String &name) : NodeConnectionSlot(node, isInput, name, name, ConnectionType::ColorBlock) {}
 
 	Array<Colour> getColors(Prop * p, double time, var params);
 };
@@ -53,7 +54,7 @@ class ParameterSlot :
 {
 public:
 	ParameterSlot(Node * node, bool isInput, Parameter * p) :
-		NodeConnectionSlot(node, isInput, p->niceName, p->type == Parameter::COLOR ? ConnectionType::Color : ConnectionType::Number),
+		NodeConnectionSlot(node, isInput, p->niceName, p->shortName, p->type == Parameter::COLOR ? ConnectionType::Color : ConnectionType::Number),
 		parameter(p)
 	{
 		parameter->setValue(getValue());

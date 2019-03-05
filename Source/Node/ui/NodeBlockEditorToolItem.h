@@ -22,7 +22,8 @@ public:
 
 	String type;
 
-
 	void paint(Graphics &g) override;
 	void mouseDrag(const MouseEvent &e) override;
+	
+	int getWidthForHeight(int h);
 };

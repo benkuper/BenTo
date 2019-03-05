@@ -36,6 +36,7 @@ void NodeBlockEditorToolbox::resized()
 	Rectangle<int> r = getLocalBounds();
 	for (auto &i : items)
 	{
-		i->setBounds(r.removeFromLeft(60).reduced(2));
+		i->setBounds(r.removeFromLeft(i->getWidthForHeight(r.getHeight()-4)).reduced(0,2));
+		r.removeFromLeft(2);
 	}
 }

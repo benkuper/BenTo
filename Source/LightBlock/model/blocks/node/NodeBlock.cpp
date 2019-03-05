@@ -23,6 +23,7 @@ NodeBlock::NodeBlock(var params) :
 
 NodeBlock::~NodeBlock()
 {
+	manager.removeBaseManagerListener(this); 
 }
 
 Array<Colour> NodeBlock::getColors(Prop * p, double time, var params)
@@ -30,18 +31,22 @@ Array<Colour> NodeBlock::getColors(Prop * p, double time, var params)
 	return  manager.propNode->getColors(p, time, params);
 }
 
-Array<WeakReference<Controllable>> NodeBlock::getModelParameters()
-{
-	return manager.getExposedParameters();
-}
 
 void NodeBlock::itemAdded(Node * n)
 {
 	ParameterNode * pn = dynamic_cast<ParameterNode *>(n);
 	if (pn == nullptr) return;
 	if (paramsContainer->getParameterByName(pn->shortName) != nullptr) return;
+	
 	Parameter * p = ControllableFactory::createParameterFrom(pn->parameter, false, true);
 	p->setNiceName(pn->niceName);
+	paramToNodeMap.set(p, pn);
+	nodeToParamMap.set(pn, p);
+
+	pn->addControllableContainerListener(this);
+
+	pn->parameter->addParameterListener(this);
+	p->addParameterListener(this);
 	paramsContainer->addParameter(p);
 	providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }
@@ -50,27 +55,62 @@ void NodeBlock::itemRemoved(Node * n)
 {
 	ParameterNode * pn = dynamic_cast<ParameterNode *>(n);
 	if (pn == nullptr) return;
-	Parameter * p = paramsContainer->getParameterByName(pn->shortName);
-	if (p == nullptr) return;
-	paramsContainer->removeControllable(p);
+	WeakReference<Parameter> p = paramsContainer->getParameterByName(pn->shortName);
+	
+	if (p == nullptr || p.wasObjectDeleted()) return;
+
+	if(paramToNodeMap.contains(p)) nodeToParamMap.remove(paramToNodeMap[p]);
+	paramToNodeMap.remove(p);
+
+	pn->parameter->removeParameterListener(this);
+	p->removeParameterListener(this);
+	paramsContainer->removeControllable(p.get());
+	pn->removeControllableContainerListener(this);
+
+
 	providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }
 
 void NodeBlock::childAddressChanged(ControllableContainer * cc)
 {
-	LightBlockModel::childAddressChanged(cc);
-	DBG("Child address changed : " << cc->niceName);
+	ParameterNode * pn = dynamic_cast<ParameterNode *>(cc);
+	if (pn != nullptr)
+	{
+		//DBG("Child address changed : " << cc->niceName);
+		Parameter * p = nodeToParamMap[pn];
+		if (p != nullptr) p->setNiceName(cc->niceName);
+	}
+	else
+	{
+		LightBlockModel::childAddressChanged(cc);
+	}
 }
 
-void NodeBlock::childStructureChanged(ControllableContainer * cc)
+
+void NodeBlock::onExternalParameterValueChanged(Parameter * p)
 {
-	LightBlockModel::childStructureChanged(cc);
-	DBG("Child structure changed : " << cc->niceName);
+	if (p->parentContainer == paramsContainer)
+	{
+		paramToNodeMap[p]->parameter->setValue(p->getValue());
+	}
+	else
+	{
+		ParameterNode * pn = dynamic_cast<ParameterNode *>(p->parentContainer);
+		if (pn != nullptr) nodeToParamMap[pn]->setValue(pn->parameter->getValue());
+	}
 }
 
-void NodeBlock::updateParametersFromNode()
+void NodeBlock::onExternalParameterRangeChanged(Parameter * p)
 {
-
+	if (p->parentContainer == paramsContainer)
+	{
+		paramToNodeMap[p]->parameter->setRange(p->minimumValue, p->maximumValue);
+	}
+	else
+	{
+		ParameterNode * pn = dynamic_cast<ParameterNode *>(p->parentContainer);
+		if (pn != nullptr) nodeToParamMap[pn]->setRange(pn->parameter->minimumValue, pn->parameter->maximumValue);
+	}
 }
 
 var NodeBlock::getJSONData()

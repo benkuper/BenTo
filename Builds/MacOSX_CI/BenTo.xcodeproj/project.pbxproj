@@ -209,10 +209,6 @@
 			isa = PBXBuildFile;
 			fileRef = 4D756E470B2CED02703B26FE;
 		};
-		83B1873A1EDC4183FA9199E9 = {
-			isa = PBXBuildFile;
-			fileRef = 1148C3329AA557655853C41C;
-		};
 		38F9EE052B75EA782804F1C8 = {
 			isa = PBXBuildFile;
 			fileRef = DC91909CC54EE8593C544C98;
@@ -698,13 +694,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = ParameterNodeViewUI.h;
 			path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		1148C3329AA557655853C41C = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = SolidColorNode.cpp;
-			path = ../../Source/Node/nodes/solidcolor/SolidColorNode.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		12F71DCA702CF35EA57E31B7 = {
@@ -1223,13 +1212,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TimelineEditor.cpp;
 			path = ../../Source/Timeline/TimelineEditor.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		5CC2B365BABFBA902D7973AE = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = SolidColorNode.h;
-			path = ../../Source/Node/nodes/solidcolor/SolidColorNode.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5DA027BC77001CC7A0276694 = {
@@ -2759,15 +2741,6 @@
 			name = prop;
 			sourceTree = "<group>";
 		};
-		471221E2253B59E45101F8BC = {
-			isa = PBXGroup;
-			children = (
-				1148C3329AA557655853C41C,
-				5CC2B365BABFBA902D7973AE,
-			);
-			name = solidcolor;
-			sourceTree = "<group>";
-		};
 		A1949C5D402CC793438D96F6 = {
 			isa = PBXGroup;
 			children = (
@@ -2777,7 +2750,6 @@
 				1B8CB6E1C3506C516FD9B7AC,
 				C3D36E11DEAFDA7C57832024,
 				AB15B2FF0CD5CE3527115FCE,
-				471221E2253B59E45101F8BC,
 			);
 			name = nodes;
 			sourceTree = "<group>";
@@ -3552,7 +3524,6 @@
 				FBE9E4099E59B1924FD3515D,
 				A0DC90BB5A539F2494264473,
 				EB62AE03580A5AB01250BB59,
-				83B1873A1EDC4183FA9199E9,
 				38F9EE052B75EA782804F1C8,
 				ACC6A65867130D6CC75C16C3,
 				120945D2B12142BA451A075E,

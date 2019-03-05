@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PictureBlock.cpp
-    Created: 22 Apr 2018 8:30:42pm
-    Author:  Ben
+	PictureBlock.cpp
+	Created: 22 Apr 2018 8:30:42pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,39 +12,31 @@
 #include "ui/PictureBlockUI.h"
 
 PictureBlock::PictureBlock(var params) :
-	LightBlockModel(getTypeString(),params)
+	LightBlockModel(getTypeString(), params)
 {
 	pictureFile = new FileParameter("Picture File", "The file, the picture, the thing", "");
 	addParameter(pictureFile);
-    
-    speed = paramsContainer->addFloatParameter("Speed", "The speed", 1, 0, 50);
-    offsetByID = paramsContainer->addFloatParameter("Offset by ID", "The offset", 0, 0, 1);
+
+	speed = paramsContainer->addFloatParameter("Speed", "The speed", 1, 0, 50);
+	offsetByID = paramsContainer->addFloatParameter("Offset by ID", "The offset", 0, 0, 1);
 }
 
-Array<Colour> PictureBlock::getColors(Prop * p, double time, var params)
+void PictureBlock::getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params)
 {
-	if (picture.getWidth() == 0) return LightBlockModel::getColors(p, time, params);
+	if (picture.getWidth() == 0) return;
 
-	int resolution = p->resolution->intValue();
-    int id = params.getProperty("forceID", p->globalID->intValue());
-	Array<Colour> result;
-	result.resize(resolution);
-
-	float bSpeed = params.getProperty("speed", speed->floatValue());
-    float bOffsetByID = params.getProperty(offsetByID->shortName, offsetByID->floatValue());
+	float bSpeed = getParamValue<float>(speed, params);
+	float bOffsetByID = getParamValue<float>(offsetByID, params);
 
 	int numPixelsH = picture.getHeight();
-	float txRel = fmodf(time*bSpeed + bOffsetByID*id, 1);
+	float txRel = fmodf(time * bSpeed + bOffsetByID * id, 1);
 	int  tx = jmin<int>(txRel * picture.getWidth(), picture.getWidth() - 1);
-    
+
 	for (int i = 0; i < resolution; i++)
 	{
 		float ty = jmin(i*numPixelsH / resolution, numPixelsH - 1);
-		
-		result.set(i, picture.getPixelAt(tx, ty));
+		result->set(i, picture.getPixelAt(tx, ty));
 	}
-
-	return result;
 }
 
 void PictureBlock::onContainerParameterChangedInternal(Parameter * p)

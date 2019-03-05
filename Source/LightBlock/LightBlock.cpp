@@ -64,7 +64,7 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 	for (auto &param : paramList)
 	{
 		if (param.wasObjectDeleted() || param == nullptr) continue;
-		if(!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, param->value);
+		if(!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, param->getValue());
 	}
 
 	if (provider.wasObjectDeleted())
@@ -124,7 +124,7 @@ void LightBlock::providerParameterValueUpdated(LightBlockColorProvider *, Parame
 	if (tp == nullptr) return;
     
     //set the default value even if overriden, so when doing a manual "reset value", it's back to the actual current one.
-    tp->defaultValue = p->value;
+    tp->defaultValue = p->getValue();
     
 	if (tp->isOverriden) return;
 	if (tp->controlMode != Parameter::MANUAL) return;

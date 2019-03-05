@@ -42,8 +42,18 @@ void NodeConnection::setSlots(NodeConnectionSlot * source, NodeConnectionSlot * 
 	destSlot = dest;
 	if (sourceSlot != nullptr) sourceSlot->addConnection(this);
 	if (destSlot != nullptr) destSlot->addConnection(this);
+	
+	if (sourceSlot != nullptr && destSlot != nullptr)
+	{
+		ParameterSlot * ps = dynamic_cast<ParameterSlot *>(sourceSlot.get());
+		if (ps != nullptr)
+		{
+			dispatchParameterUpdate(ps->parameter);
+		}
+	}
 
 	setNiceName(sourceSlot->node->niceName + ":" + sourceSlot->name + " > " + destSlot->node->niceName + ":" + destSlot->name);
+
 }
 
 void NodeConnection::insertNode(StringRef nodeType)

@@ -34,7 +34,10 @@ public:
 
 	NodeConnectionSlot * getSlotWithName(bool isInput, const String &name);
 	Array<NodeConnectionSlot *> getSlotsWithType(bool isInput, ConnectionType  type);
+	ParameterSlot * getParameterSlot(Parameter * p, bool isInput);
 
+	var getParameterValue(Parameter * p, var params);
+	
 	virtual NodeViewUI * createUI();
 
 

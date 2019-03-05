@@ -192,12 +192,6 @@
             <FILE id="TMgKEq" name="PropNode.cpp" compile="1" resource="0" file="Source/Node/nodes/prop/PropNode.cpp"/>
             <FILE id="LzEvbu" name="PropNode.h" compile="0" resource="0" file="Source/Node/nodes/prop/PropNode.h"/>
           </GROUP>
-          <GROUP id="{24AC6255-53FB-1A8A-D9A4-A045697D9F9B}" name="solidcolor">
-            <FILE id="H9OYkb" name="SolidColorNode.cpp" compile="1" resource="0"
-                  file="Source/Node/nodes/solidcolor/SolidColorNode.cpp"/>
-            <FILE id="fbMBaW" name="SolidColorNode.h" compile="0" resource="0"
-                  file="Source/Node/nodes/solidcolor/SolidColorNode.h"/>
-          </GROUP>
         </GROUP>
         <GROUP id="{8AFF8E07-3FDB-1A8C-B05B-8047DBECAC01}" name="ui">
           <FILE id="fOM5Vo" name="ColorNodeViewUI.cpp" compile="1" resource="0"

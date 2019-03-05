@@ -85,7 +85,7 @@ void VideoBlock::updateLayoutOptions()
 Array<Colour> VideoBlock::getColors(Prop * p, double time, var params)
 {
 	if (!inputIsLive->boolValue()) return LightBlockModel::getColors(p, time, params);
-	SpatLayout * layout = spat.getItemWithName(params.getProperty("layout", ""));
+	SpatLayout * layout = spat.getItemWithName(getParamValue<var>(currentLayout, params).toString());
 	SpatItem * spatItem = spat.getItemForProp(p, layout);
 
 	if(spatItem == nullptr)  return LightBlockModel::getColors(p, time, params);

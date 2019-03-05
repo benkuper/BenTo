@@ -105,7 +105,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/ParameterNode_ade2ed23.o \
   $(JUCE_OBJDIR)/PositionRemapNode_d665d2d1.o \
   $(JUCE_OBJDIR)/PropNode_928ace6f.o \
-  $(JUCE_OBJDIR)/SolidColorNode_4b409caf.o \
   $(JUCE_OBJDIR)/ColorNodeViewUI_b2913851.o \
   $(JUCE_OBJDIR)/NodeBlockEditor_59a127eb.o \
   $(JUCE_OBJDIR)/NodeBlockEditorToolbox_c6a1e852.o \
@@ -388,11 +387,6 @@ $(JUCE_OBJDIR)/PositionRemapNode_d665d2d1.o: ../../Source/Node/nodes/positionRem
 $(JUCE_OBJDIR)/PropNode_928ace6f.o: ../../Source/Node/nodes/prop/PropNode.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PropNode.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SolidColorNode_4b409caf.o: ../../Source/Node/nodes/solidcolor/SolidColorNode.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling SolidColorNode.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/ColorNodeViewUI_b2913851.o: ../../Source/Node/ui/ColorNodeViewUI.cpp

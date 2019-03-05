@@ -34,10 +34,8 @@ Array<WeakReference<Controllable>> ScriptBlock::getModelParameters()
 	return script.scriptParamsContainer.getAllControllables();
 }
 
-Array<Colour> ScriptBlock::getColors(Prop * p, double time, var params)
+void ScriptBlock::getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params)
 {
-	int resolution = p->resolution->intValue();
-	int id = params.getProperty("forceID", p->globalID->intValue());
 
 	ColourScriptData cData;
 	cData.colorArray.resize(resolution);
@@ -49,27 +47,24 @@ Array<Colour> ScriptBlock::getColors(Prop * p, double time, var params)
 	args.add(time);
 	args.add(params);
 
-	var result = script.callFunction(updateColorsFunc, args); 
+	var scriptResult = script.callFunction(updateColorsFunc, args); 
 	
 	Array<Colour> colors;
 
-	if (result.isArray())
+	if (scriptResult.isArray())
 	{
 
 		colors.resize(resolution);
-		int numColors = jmin<int>(resolution, result.size());
+		int numColors = jmin<int>(resolution, scriptResult.size());
 		for (int i = 0; i < numColors; i++)
 		{
-			colors.set(i, Colour::fromRGB((float)result[i][0] * 255, (float)result[i][1] * 255, (float)result[i][2] * 255));
+			colors.set(i, Colour::fromRGB((float)scriptResult[i][0] * 255, (float)scriptResult[i][1] * 255, (float)scriptResult[i][2] * 255));
 		}
 	}
 	else
 	{
-		colors = Array<Colour>(cData.colorArray);
+		result->swapWith(cData.colorArray);
 	}
-	
-	
-	return colors;
 }
 
 void ScriptBlock::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

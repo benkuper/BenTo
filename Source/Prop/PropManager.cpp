@@ -157,7 +157,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer *, Controll
 		if (shouldSend)
 		{
 			OSCMessage msg("/prop/" + String(p->globalID->intValue()) + "/" + c->shortName);
-			msg.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->value));
+			msg.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->getValue()));
 
 			BentoEngine * be = (BentoEngine *)Engine::mainEngine;
 			be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);

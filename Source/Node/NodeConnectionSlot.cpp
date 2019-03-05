@@ -21,11 +21,11 @@ var ParameterSlot::getValue()
 		if (connections.size() > 0)
 		{
 			ParameterSlot * s = static_cast<ParameterSlot *>(connections[0]->sourceSlot.get());
-			if (s != nullptr) return s->parameter->value;
+			if (s != nullptr) return s->parameter->getValue();
 		}
 	}	
 
-	return parameter->value;
+	return parameter->getValue();
 }
 
 Array<Colour> ColorSlot::getColors(Prop * p, double time, var params)
@@ -67,14 +67,13 @@ void NodeConnectionSlot::removeConnection(NodeConnection * c)
 
 void ParameterSlot::handleParameterUpdate(Parameter * p)
 {
-	parameter->setValue(p->value);
+	parameter->setValue(p->getValue());
 }
 
 void ParameterSlot::addConnection(NodeConnection * nc)
 {
 	NodeConnectionSlot::addConnection(nc);
-	if(isInput) parameter->setControllableFeedbackOnly(true);
-}
+	if(isInput) parameter->setControllableFeedbackOnly(true);}
 
 void ParameterSlot::removeConnection(NodeConnection * nc)
 {

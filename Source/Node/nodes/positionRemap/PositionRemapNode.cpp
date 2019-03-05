@@ -38,7 +38,7 @@ Array<Colour> PositionRemapNode::getColors(Prop * p, double time, var params)
 	Array<Colour> result = ColorNode::getColors(p, time, params);
 	Array<Colour> c = inColors->getColors(p, time, params);
 
-	RemapMode m = (RemapMode)(int)params.getProperty("mode", RESIZE);
+	RemapMode m = mode->getValueDataAsEnum<RemapMode>();
 
 	for (int i = 0; i < resolution; i++)
 	{

@@ -11,11 +11,13 @@
 #include "ParameterNodeViewUI.h"
 
 ParameterNodeViewUI::ParameterNodeViewUI(ParameterNode * pn) :
-	NodeViewUI(pn),
+	NodeViewUI(pn, ResizeMode::NONE),
 	pn(pn)
 {
 	pui = pn->parameter->createDefaultUI();
-	addAndMakeVisible(pui); 
+	addAndMakeVisible(pui);
+
+	bgColor = BLUE_COLOR.withSaturation(.3f).withBrightness(.3f);
 }
 
 ParameterNodeViewUI::~ParameterNodeViewUI()
@@ -24,5 +26,6 @@ ParameterNodeViewUI::~ParameterNodeViewUI()
 
 void ParameterNodeViewUI::resizedInternalContent(Rectangle<int>& r)
 {
-	pui->setBounds(r.reduced(4));
+	r.setSize(200, 20);
+	pui->setBounds(r);
 }

@@ -23,10 +23,15 @@ public:
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 
+	void buildSlots();
+
 	Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	void onContainerParameterChanged(Parameter * p) override;
 
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+	
 	NodeViewUI * createUI() override;
 
 	String getTypeString() const override { return "Model"; }

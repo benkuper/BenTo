@@ -15,7 +15,6 @@
 #include "nodes/parameter/ParameterNode.h"
 #include "nodes/positionRemap/PositionRemapNode.h"
 #include "nodes/prop/PropNode.h"
-#include "nodes/solidcolor/SolidColorNode.h"
 
 juce_ImplementSingleton(NodeFactory)
 

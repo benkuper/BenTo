@@ -47,8 +47,6 @@ Array<Colour> TimelineBlock::getColors(Prop * p, double time, var params)
 
 }
 
-
-
 void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float, bool)
 {
 	//updateColorsForBlock(block);

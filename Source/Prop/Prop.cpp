@@ -267,6 +267,8 @@ void Prop::loadJSONDataInternal(var data)
 
 void Prop::run()
 {
+	sleep(100);
+
 	while (!threadShouldExit())
 	{
 		if (isBaking->boolValue())

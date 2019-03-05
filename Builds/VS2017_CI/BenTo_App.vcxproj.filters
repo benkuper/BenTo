@@ -86,9 +86,6 @@
     <Filter Include="BenTo\Source\Node\nodes\prop">
       <UniqueIdentifier>{70ED6924-EE8B-AA3E-55CE-D9387AEEA91C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Node\nodes\solidcolor">
-      <UniqueIdentifier>{7C3D2F2B-DBA7-E3BD-4F97-139549B1650E}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Node\nodes">
       <UniqueIdentifier>{C311421A-3E83-69A2-E49C-8BC5A1690B34}</UniqueIdentifier>
     </Filter>
@@ -897,9 +894,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\nodes\prop\PropNode.cpp">
       <Filter>BenTo\Source\Node\nodes\prop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Node\nodes\solidcolor\SolidColorNode.cpp">
-      <Filter>BenTo\Source\Node\nodes\solidcolor</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\ui\ColorNodeViewUI.cpp">
       <Filter>BenTo\Source\Node\ui</Filter>
@@ -3866,9 +3860,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\nodes\prop\PropNode.h">
       <Filter>BenTo\Source\Node\nodes\prop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Node\nodes\solidcolor\SolidColorNode.h">
-      <Filter>BenTo\Source\Node\nodes\solidcolor</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\ui\ColorNodeViewUI.h">
       <Filter>BenTo\Source\Node\ui</Filter>

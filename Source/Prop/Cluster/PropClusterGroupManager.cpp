@@ -45,7 +45,7 @@ void PropClusterGroupManager::onControllableFeedbackUpdate(ControllableContainer
 				if (pc == nullptr) continue;
 				
 				OSCMessage msg("/cluster/" + i->shortName + "/" + pc->shortName + "/" + String(localID) + "/" + c->shortName);
-				msg.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->value));
+				msg.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->getValue()));
 
 				BentoEngine * be = (BentoEngine *)Engine::mainEngine;
 				be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);

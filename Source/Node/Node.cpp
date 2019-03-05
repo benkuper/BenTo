@@ -105,6 +105,43 @@ Array<NodeConnectionSlot*> Node::getSlotsWithType(bool isInput, ConnectionType t
 	return result;
 }
 
+ParameterSlot * Node::getParameterSlot(Parameter * p, bool isInput)
+{
+	if (isInput)
+	{
+		for (auto & s : inSlots)
+		{
+			if (s->type == ConnectionType::ColorBlock) continue;
+			ParameterSlot * ps = dynamic_cast<ParameterSlot *>(s);
+			if (ps == nullptr) continue;
+			if (ps->parameter == p) return ps;
+		}
+	}
+	else
+	{
+		for (auto & s : outSlots)
+		{
+			if (s->type == ConnectionType::ColorBlock) continue;
+			ParameterSlot * ps = dynamic_cast<ParameterSlot *>(s);
+			if (ps == nullptr) continue;
+			if (ps->parameter == p) return ps;
+		}
+	}
+
+	return nullptr;
+}
+
+var Node::getParameterValue(Parameter * p, var params)
+{
+	NodeConnectionSlot * slot = getParameterSlot(p, true);
+	if (slot == nullptr || !slot->isConnected()) return p->getValue();
+
+	Node * n = slot->connections[0]->sourceSlot->node;
+	if (n == nullptr) return p->getValue();
+
+	return params.getProperty(n->shortName, p->getValue());
+}
+
 NodeViewUI * Node::createUI()
 {
 	return new NodeViewUI(this);
