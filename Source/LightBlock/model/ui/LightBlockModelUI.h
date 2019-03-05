@@ -22,7 +22,8 @@ public:
 	~LightBlockModelUI();
 
 	Image modelImage;
-	const int imageSize = 40;
+	
+	static const Identifier dragAndDropID;
 
 	void paint(Graphics &g) override;
 	void resized() override;

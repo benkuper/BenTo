@@ -185,6 +185,10 @@
 			isa = PBXBuildFile;
 			fileRef = 5DA027BC77001CC7A0276694;
 		};
+		11F2D15618DB0306675C0F76 = {
+			isa = PBXBuildFile;
+			fileRef = 1DACA3C6B88F39699C445581;
+		};
 		1623EFBED873EC539F814DF3 = {
 			isa = PBXBuildFile;
 			fileRef = 9B5EE640C3A975CCE738B19D;
@@ -217,6 +221,10 @@
 			isa = PBXBuildFile;
 			fileRef = DEB16B7DD07BB3E7A14131F0;
 		};
+		120945D2B12142BA451A075E = {
+			isa = PBXBuildFile;
+			fileRef = B1B23D9D6C83715DA6E3C433;
+		};
 		0576D7827CA8F4C6CEB1FC58 = {
 			isa = PBXBuildFile;
 			fileRef = 9533A71B33D17A959A5841B3;
@@ -224,6 +232,10 @@
 		964B368A8F89370946E479F8 = {
 			isa = PBXBuildFile;
 			fileRef = 75E55D038F692B1012611F23;
+		};
+		918B80652F1A3B8F9CFCC25D = {
+			isa = PBXBuildFile;
+			fileRef = 4DD4FEECCD340FE348B2B96F;
 		};
 		FA4AC6373954C039A9737B3F = {
 			isa = PBXBuildFile;
@@ -625,6 +637,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModelParameterManager.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		0B5DA9EBE09A71951976A8E6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = NodeBlockEditorToolbox.h;
+			path = ../../Source/Node/ui/NodeBlockEditorToolbox.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		0B96E2EDC9B7E9CE7E1733CD = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -764,6 +783,13 @@
 			name = "juce_audio_utils";
 			path = "~/JUCE/modules/juce_audio_utils";
 			sourceTree = "<absolute>";
+		};
+		1DACA3C6B88F39699C445581 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ModelNodeUI.cpp;
+			path = ../../Source/Node/nodes/model/ui/ModelNodeUI.cpp;
+			sourceTree = "SOURCE_ROOT";
 		};
 		202B0B035DA4F9CD397EC3B7 = {
 			isa = PBXFileReference;
@@ -1059,6 +1085,13 @@
 			path = ../../Source/Node/nodes/prop/PropNode.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		4DD4FEECCD340FE348B2B96F = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = NodeBlockEditorToolItem.cpp;
+			path = ../../Source/Node/ui/NodeBlockEditorToolItem.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		4E9D333D665303870C9A2117 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1162,6 +1195,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightBlockModelParameterManager.cpp;
 			path = ../../Source/LightBlock/model/LightBlockModelParameterManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		578BA26258BA1C1EBF555777 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = new.png;
+			path = ../../Resources/new.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		5ACEE368856DF4CFDF949786 = {
@@ -1591,6 +1631,13 @@
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		9A1C190C37DF4F6FB1EC82A4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ModelNodeUI.h;
+			path = ../../Source/Node/nodes/model/ui/ModelNodeUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		9A883ED3FB90416C4AA0380C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1787,6 +1834,13 @@
 			path = ../../Source/Prop/Cluster/ui/PropClusterGroupManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		B1B23D9D6C83715DA6E3C433 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = NodeBlockEditorToolbox.cpp;
+			path = ../../Source/Node/ui/NodeBlockEditorToolbox.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		B26356D5EAEADB5819F192B8 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1967,6 +2021,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PropTargetFilterManager.cpp;
 			path = ../../Source/Prop/TargetFilter/PropTargetFilterManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		C4B901C7678B046C8F5B51D0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = NodeBlockEditorToolItem.h;
+			path = ../../Source/Node/ui/NodeBlockEditorToolItem.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C4EC554278A9200BE3EFEE50 = {
@@ -2435,6 +2496,7 @@
 				220E2A77499D10F5F6DA62AE,
 				BDFA3A8DCA3E6124656086EC,
 				1A1F430A23A8B7054CD4E15C,
+				578BA26258BA1C1EBF555777,
 				335EEC97C15780DD0F2E5389,
 			);
 			name = Resources;
@@ -2641,9 +2703,19 @@
 			name = composite;
 			sourceTree = "<group>";
 		};
+		171465C273925BE94B857492 = {
+			isa = PBXGroup;
+			children = (
+				1DACA3C6B88F39699C445581,
+				9A1C190C37DF4F6FB1EC82A4,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
 		C5EFA94FD996A811414D67D6 = {
 			isa = PBXGroup;
 			children = (
+				171465C273925BE94B857492,
 				9B5EE640C3A975CCE738B19D,
 				9F1AE08CBAA68C061662833C,
 			);
@@ -2717,10 +2789,14 @@
 				669EF8CF1B0A19BD48CEA625,
 				DEB16B7DD07BB3E7A14131F0,
 				8B4758C79215D4F73F137686,
+				B1B23D9D6C83715DA6E3C433,
+				0B5DA9EBE09A71951976A8E6,
 				9533A71B33D17A959A5841B3,
 				FD17A99C7CCEEE38883D71BC,
 				75E55D038F692B1012611F23,
 				688EE4D266E2825160A44C0E,
+				4DD4FEECCD340FE348B2B96F,
+				C4B901C7678B046C8F5B51D0,
 				36884BA6DA44D7CC20AF6EA2,
 				E8CEE47ACD4FA5DC5692534A,
 				6A07E6D0B359F19248283840,
@@ -3470,6 +3546,7 @@
 				0086A64E7B42EF6D21508383,
 				5292B20D33B139BCC4437930,
 				299678C42D1D380430BFE1F1,
+				11F2D15618DB0306675C0F76,
 				1623EFBED873EC539F814DF3,
 				775D394AA395E31179F63D77,
 				FBE9E4099E59B1924FD3515D,
@@ -3478,8 +3555,10 @@
 				83B1873A1EDC4183FA9199E9,
 				38F9EE052B75EA782804F1C8,
 				ACC6A65867130D6CC75C16C3,
+				120945D2B12142BA451A075E,
 				0576D7827CA8F4C6CEB1FC58,
 				964B368A8F89370946E479F8,
+				918B80652F1A3B8F9CFCC25D,
 				FA4AC6373954C039A9737B3F,
 				48E6DA9F27C1FF47972040BF,
 				EE7762590FCFA6BAB149B1DE,

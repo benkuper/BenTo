@@ -31,7 +31,9 @@ public:
 	ColorSlot * addColorSlot(bool isInput, const String &name);
 	void removeSlot(bool isInput, const String &name);
 	void removeSlot(bool isInput, NodeConnectionSlot * s);
+
 	NodeConnectionSlot * getSlotWithName(bool isInput, const String &name);
+	Array<NodeConnectionSlot *> getSlotsWithType(bool isInput, ConnectionType  type);
 
 	virtual NodeViewUI * createUI();
 

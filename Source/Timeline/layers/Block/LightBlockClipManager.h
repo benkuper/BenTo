@@ -23,4 +23,8 @@ public:
 
 	LightBlockLayer * layer;
 	LayerBlock * createItem() override;
+
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
+
+	void computeFadesForClip(LightBlockClip * clip, bool propagate);
 };

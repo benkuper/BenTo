@@ -23,11 +23,13 @@ public:
 	ControllableContainer * group;
 	OwnedArray<LightBlockModelUI> modelsUI;
 
-	int thumbSize = 64;
 	const int gap = 2;
 	const int headerHeight = 16;
 	const int headerGap = 4;
+	int thumbSize = 48;
 
 	void paint(Graphics &g) override;
 	void resized() override;
+
+	void setThumbSize(int value);
 };

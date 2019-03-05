@@ -11,6 +11,8 @@
 #include "LightBlockModelUI.h"
 #include "Prop/PropManager.h"
 
+const Identifier LightBlockModelUI::dragAndDropID = "LightBlockModel";
+
 LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	 BaseItemMinimalUI(model)
 {
@@ -34,7 +36,7 @@ void LightBlockModelUI::paint(Graphics & g)
 	g.setColour(Colours::white.withAlpha(.1f));
 	g.fillRoundedRectangle(getLocalBounds().toFloat(), 8);
 	g.setColour(Colours::white.withAlpha(isMouseOver() ? .2f : 1.f));
-	if (modelImage.getWidth() > 0) g.drawImage(modelImage, getLocalBounds().withSizeKeepingCentre(imageSize, imageSize).toFloat());
+	if (modelImage.getWidth() > 0) g.drawImage(modelImage, getLocalBounds().reduced(4).toFloat());
 
 	if (modelImage.getWidth() == 0 || isMouseOver())
 	{
@@ -121,7 +123,15 @@ void LightBlockModelUI::mouseDrag(const MouseEvent & e)
 	BaseItemMinimalUI::mouseDrag(e);
 
 	if (isDragAndDropActive()) return;
-	if (e.getDistanceFromDragStart() > 20) startDragging("LightBlockModel", this, modelImage, true);
+	Image dndImage = modelImage.rescaled(60, 60);
+	dndImage.multiplyAllAlphas(.5f);
+	if (e.getDistanceFromDragStart() > 40)
+	{
+		var desc = new DynamicObject();
+		desc.getDynamicObject()->setProperty("type", dragAndDropID.toString());
+		desc.getDynamicObject()->setProperty("model", item->getTypeString());
+		startDragging(desc, this, dndImage, true);
+	}
 }
 
 

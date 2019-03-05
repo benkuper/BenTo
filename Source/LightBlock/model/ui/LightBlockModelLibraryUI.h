@@ -16,7 +16,8 @@
 
 class LightBlockModelLibraryUI :
 	public ShapeShifterContentComponent,
-	public ComponentListener
+	public ComponentListener,
+	public ContainerAsyncListener
 {
 public:
 	LightBlockModelLibraryUI(const String &contentName, LightBlockModelLibrary * library);
@@ -24,6 +25,8 @@ public:
 
 	Viewport viewport;
 	Component container;
+
+	ScopedPointer<IntSliderUI> iconSizeUI;
 
 	LightBlockModelLibrary * library;
 	LightBlockModelGroupUI genericGroupUI;
@@ -34,8 +37,12 @@ public:
 	LightBlockModelManagerUI scriptBlocksManagerUI;
 	LightBlockModelManagerUI timelineBlocksManagerUI;
 
+
+
 	void paint(Graphics &g) override;
 	void resized() override;
+
+	void newMessage(const ContainerAsyncEvent &e) override;
 
 	void componentMovedOrResized(Component &, bool, bool) override;
 

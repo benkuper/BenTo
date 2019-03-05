@@ -63,7 +63,7 @@ PropManager::PropManager() :
 	for (auto & f : families) familiesCC.addChildControllableContainer(f);
 
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "Flowtoys Creator Club", FlowClubProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "Smartball", SmartballProp::create));
+	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "SmartBall", SmartballProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys FT", LighttoysFTProp::create));
 
 	receiver.addListener(this);

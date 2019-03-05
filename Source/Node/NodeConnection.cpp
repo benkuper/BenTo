@@ -46,6 +46,11 @@ void NodeConnection::setSlots(NodeConnectionSlot * source, NodeConnectionSlot * 
 	setNiceName(sourceSlot->node->niceName + ":" + sourceSlot->name + " > " + destSlot->node->niceName + ":" + destSlot->name);
 }
 
+void NodeConnection::insertNode(StringRef nodeType)
+{
+	connectionListeners.call(&ConnectionListener::askToInsertNode, this, nodeType);
+}
+
 var NodeConnection::getJSONData()
 {
 	var data = BaseItem::getJSONData();

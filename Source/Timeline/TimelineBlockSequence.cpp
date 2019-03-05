@@ -35,7 +35,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 
 	float t = params.getProperty("sequenceTime", true) ? currentTime->floatValue() : time;
 	
-	if (numLayers == 1)
+	if (numLayers == 1 && layers[0] != nullptr)
 	{
 		params.getDynamicObject()->setProperty("forceID", layers[0]->filterManager.getTargetIDForProp(p));
 		return layers[0]->getColors(p, t, params); //use sequence's time instead of prop time
@@ -52,6 +52,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	Array<Array<Colour>> colors;
 	for (auto &l : layers)
 	{
+		if (l == nullptr) continue;
 		String s = l->niceName;
 		params.getDynamicObject()->setProperty("forceID", l->filterManager.getTargetIDForProp(p));
 		colors.add(l->getColors(p, t, params)); //use sequence's time instead of prop time

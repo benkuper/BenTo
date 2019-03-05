@@ -16,6 +16,7 @@ NodeBlockEditor::NodeBlockEditor(const String & contentName) :
 	nodeBlockRef(nullptr)
 {
 	InspectableSelectionManager::mainSelectionManager->addAsyncSelectionManagerListener(this);
+	addAndMakeVisible(&toolbox);
 }
 
 NodeBlockEditor::~NodeBlockEditor()
@@ -35,9 +36,12 @@ void NodeBlockEditor::paint(Graphics & g)
 
 void NodeBlockEditor::resized()
 {
+	Rectangle<int> r = getLocalBounds();
+	toolbox.setBounds(r.removeFromTop(20));
+
 	if (managerUI != nullptr)
 	{
-		managerUI->setBounds(getLocalBounds());
+		managerUI->setBounds(r);
 	}
 }
 

@@ -26,6 +26,10 @@ public:
 	LightBlockClipManager * clipManager;
 	LightBlockLayerTimeline * timeline;
 
+	int dropClipX;
+
+	void paint(Graphics &g) override;
+
 	LayerBlockUI * createUIForItem(LayerBlock * item) override;
 
 	bool isInterestedInDragSource(const SourceDetails &source) override;

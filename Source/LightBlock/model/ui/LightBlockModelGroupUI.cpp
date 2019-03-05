@@ -76,3 +76,10 @@ void LightBlockModelGroupUI::resized()
 
 	setSize(getWidth(),r.getBottom());
 }
+
+void LightBlockModelGroupUI::setThumbSize(int value)
+{
+	if (value == thumbSize) return;
+	thumbSize = value;
+	resized();
+}

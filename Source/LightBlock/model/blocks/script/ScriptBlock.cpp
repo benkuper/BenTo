@@ -171,6 +171,7 @@ var ColourScriptData::updateColorsRGBFromScript(const var::NativeFunctionArgs & 
 		p->colorArray.set(i, Colour::fromRGB((float)colors[i][0] * 255, (float)colors[i][1] * 255, (float)colors[i][2] * 255));
 	}
 
+	return colors;
 }
 
 var ColourScriptData::updateColorsHSVFromScript(const var::NativeFunctionArgs & args)
@@ -189,4 +190,6 @@ var ColourScriptData::updateColorsHSVFromScript(const var::NativeFunctionArgs & 
 	{
 		p->colorArray.set(i, Colour::fromHSV((float)colors[i][0] * 255, (float)colors[i][1] * 255, (float)colors[i][2] * 255, 1));
 	}
+
+	return colors;
 }

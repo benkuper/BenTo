@@ -27,6 +27,8 @@ public:
 
 	void onContainerParameterChanged(Parameter * p) override;
 
+	NodeViewUI * createUI() override;
+
 	String getTypeString() const override { return "Model"; }
 	static ModelNode * create(var params) { return new ModelNode(params); }
 };

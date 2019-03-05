@@ -36,7 +36,10 @@ void LightBlockModelManagerUI::paint(Graphics & g)
 void LightBlockModelManagerUI::resized()
 {
 	Rectangle<int> r = getLocalBounds().reduced(2);
-	if (r.getWidth() == 0) return;
+	if (r.getWidth() == 0)
+	{
+		return;
+	}
 	addItemBT->setBounds(r.withSize(headerHeight, headerHeight).withX(r.getWidth() - headerHeight));
 
 	r.translate(0, headerHeight + headerGap);
@@ -49,7 +52,7 @@ void LightBlockModelManagerUI::resized()
 
 	int numThumbs = itemsUI.size();
 	int numThumbPerLine = jmin(r.getWidth() / (thumbSize + gap), numThumbs);
-	int numLines = ceil(numThumbs*1.f / numThumbPerLine);
+	int numLines = numThumbs == 0 ? 0 : ceil(numThumbs*1.f / numThumbPerLine);
 
 	r.setHeight(numLines * (thumbSize + gap) - gap);
 
@@ -81,6 +84,13 @@ void LightBlockModelManagerUI::resized()
 	//viewport.setBounds(getLocalBounds().withTrimmedTop(headerHeight+headerGap));
 	//container.setSize(getWidth(), r.getBottom());
 	setSize(getWidth(), r.getBottom());
+}
+
+void LightBlockModelManagerUI::setThumbSize(int value)
+{
+	if (thumbSize == value) return;
+	thumbSize = value;
+	resized();
 }
 
 LightBlockModelUI * LightBlockModelManagerUI::createUIForItem(LightBlockModel * i)

@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Node.cpp
-    Created: 14 Apr 2018 2:11:31am
-    Author:  Ben
+	Node.cpp
+	Created: 14 Apr 2018 2:11:31am
+	Author:  Ben
 
   ==============================================================================
 */
@@ -79,14 +79,30 @@ void Node::removeSlot(bool isInput, NodeConnectionSlot * s)
 
 NodeConnectionSlot * Node::getSlotWithName(bool isInput, const String & name)
 {
-	if (isInput)
-	{
+	if (isInput) {
 		for (auto & s : inSlots) if (s->name == name) return s;
-	} else {
+	}
+	else
+	{
 		for (auto & s : outSlots) if (s->name == name) return s;
 	}
 
 	return nullptr;
+}
+
+Array<NodeConnectionSlot*> Node::getSlotsWithType(bool isInput, ConnectionType type)
+{
+	Array<NodeConnectionSlot*> result;
+	if (isInput)
+	{
+		for (auto & s : inSlots) if (s->type == type) result.add(s);
+	}
+	else
+	{
+		for (auto & s : outSlots) if (s->type == type) result.add(s);
+	}
+
+	return result;
 }
 
 NodeViewUI * Node::createUI()

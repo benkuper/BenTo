@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LightBlockClipManagerUI.cpp
-    Created: 17 Apr 2018 7:20:49pm
-    Author:  Ben
+	LightBlockClipManagerUI.cpp
+	Created: 17 Apr 2018 7:20:49pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -16,13 +16,25 @@
 LightBlockClipManagerUI::LightBlockClipManagerUI(LightBlockLayerTimeline * _timeline, LightBlockClipManager * manager) :
 	LayerBlockManagerUI(_timeline, manager),
 	clipManager(manager),
-	timeline(_timeline)
+	timeline(_timeline),
+	dropClipX(-1)
 {
 	addExistingItems();
 }
 
 LightBlockClipManagerUI::~LightBlockClipManagerUI()
 {
+}
+
+void LightBlockClipManagerUI::paint(Graphics & g)
+{
+	LayerBlockManagerUI::paint(g);
+	if (dropClipX >= 0)
+	{
+		g.fillAll(BLUE_COLOR.withAlpha(.3f));
+		g.setColour(HIGHLIGHT_COLOR);
+		g.drawLine(dropClipX, 0, dropClipX, getHeight(), 4);
+	}
 }
 
 LayerBlockUI * LightBlockClipManagerUI::createUIForItem(LayerBlock * item)
@@ -32,26 +44,48 @@ LayerBlockUI * LightBlockClipManagerUI::createUIForItem(LayerBlock * item)
 
 bool LightBlockClipManagerUI::isInterestedInDragSource(const SourceDetails & source)
 {
-	return source.description == "LightBlockModel";
+	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString();
 }
 
 void LightBlockClipManagerUI::itemDragEnter(const SourceDetails & source)
 {
+	dropClipX = source.localPosition.x;
+	repaint();
 }
 
 void LightBlockClipManagerUI::itemDragExit(const SourceDetails & source)
 {
+	dropClipX = -1;
+	repaint();
 }
 
 void LightBlockClipManagerUI::itemDragMove(const SourceDetails & source)
 {
+	dropClipX = source.localPosition.x;
+	repaint();
 }
 
 void LightBlockClipManagerUI::itemDropped(const SourceDetails & source)
 {
+	dropClipX = -1;
+
 	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
 	LightBlockClip * clip = (LightBlockClip *)manager->addBlockAt(timeline->getTimeForX(source.localPosition.x));
 	if (modelUI == nullptr || clip == nullptr) return;
 
-	clip->activeProvider->setValueFromTarget(modelUI->item);
+	LightBlockColorProvider * provider = modelUI->item;
+
+	bool shift = KeyPress::isKeyCurrentlyDown(16);
+	if (shift)
+	{
+		PopupMenu m;
+		m.addItem(-1, "Default");
+		m.addSeparator();
+		int index = 1;
+		for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+		int result = m.show();
+		if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+	}
+
+	clip->activeProvider->setValueFromTarget(provider);
 }

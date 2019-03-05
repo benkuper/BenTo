@@ -12,7 +12,7 @@
 
 #include "LightBlock/model/blocks/node/NodeBlock.h"
 #include "NodeManagerUI.h"
-
+#include "NodeBlockEditorToolbox.h"
 
 class NodeBlockEditor :
 	public ShapeShifterContentComponent,
@@ -26,8 +26,9 @@ public:
 	NodeBlock * nodeBlock;
 	WeakReference<Inspectable> nodeBlockRef;
 
-
 	ScopedPointer<NodeManagerUI> managerUI;
+	
+	NodeBlockEditorToolbox toolbox;
 
 	void paint(Graphics &g) override;
 	void resized() override;

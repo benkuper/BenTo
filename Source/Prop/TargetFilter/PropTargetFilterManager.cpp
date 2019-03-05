@@ -42,3 +42,18 @@ int PropTargetFilterManager::getTargetIDForProp(Prop * p)
 	if (numProcessed == 0) return p->globalID->intValue();
 	return -1;
 }
+
+void PropTargetFilterManager::addItemInternal(PropTargetFilter *, var)
+{
+	filerManagerListeners.call(&FilterManagerListener::filtersChanged);
+}
+
+void PropTargetFilterManager::removeItemInternal(PropTargetFilter *)
+{
+	filerManagerListeners.call(&FilterManagerListener::filtersChanged);
+}
+
+void PropTargetFilterManager::onControllableFeedbackUpdate(ControllableContainer *, Controllable * c)
+{
+	filerManagerListeners.call(&FilterManagerListener::filtersChanged);
+}

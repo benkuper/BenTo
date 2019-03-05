@@ -18,11 +18,10 @@ class ColorNodeViewUI :
 {
 public:
 	ColorNodeViewUI(ColorNode * cn);
-	~ColorNodeViewUI();
+	virtual ~ColorNodeViewUI();
 
 	ColorNode * cn;
 
-	void paint(Graphics &g) override;
-
+	virtual void paint(Graphics &g) override;
 
 };

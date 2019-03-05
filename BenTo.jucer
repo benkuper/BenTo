@@ -22,6 +22,7 @@
       <FILE id="HceyjT" name="fadeIn.png" compile="0" resource="1" file="Resources/fadeIn.png"/>
       <FILE id="vNhvMo" name="fadeOut.png" compile="0" resource="1" file="Resources/fadeOut.png"/>
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
+      <FILE id="l8evl8" name="new.png" compile="0" resource="1" file="Resources/new.png"/>
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
@@ -163,6 +164,10 @@
             <FILE id="uCipSU" name="CompositeNode.h" compile="0" resource="0" file="Source/Node/nodes/composite/CompositeNode.h"/>
           </GROUP>
           <GROUP id="{13E079EF-A9DB-467E-15FA-8D37DE16D246}" name="model">
+            <GROUP id="{56218EC1-329D-65D8-B8C1-947BFF9C6476}" name="ui">
+              <FILE id="cIdmkd" name="ModelNodeUI.cpp" compile="1" resource="0" file="Source/Node/nodes/model/ui/ModelNodeUI.cpp"/>
+              <FILE id="CP2Mqe" name="ModelNodeUI.h" compile="0" resource="0" file="Source/Node/nodes/model/ui/ModelNodeUI.h"/>
+            </GROUP>
             <FILE id="ilRrfU" name="ModelNode.cpp" compile="1" resource="0" file="Source/Node/nodes/model/ModelNode.cpp"/>
             <FILE id="Xx2lGU" name="ModelNode.h" compile="0" resource="0" file="Source/Node/nodes/model/ModelNode.h"/>
           </GROUP>
@@ -203,6 +208,10 @@
                 file="Source/Node/ui/NodeBlockEditor.cpp"/>
           <FILE id="Miy5QU" name="NodeBlockEditor.h" compile="0" resource="0"
                 file="Source/Node/ui/NodeBlockEditor.h"/>
+          <FILE id="vk6l2T" name="NodeBlockEditorToolbox.cpp" compile="1" resource="0"
+                file="Source/Node/ui/NodeBlockEditorToolbox.cpp"/>
+          <FILE id="YxzvbG" name="NodeBlockEditorToolbox.h" compile="0" resource="0"
+                file="Source/Node/ui/NodeBlockEditorToolbox.h"/>
           <FILE id="rZ0bPE" name="NodeConnectionManagerUI.cpp" compile="1" resource="0"
                 file="Source/Node/ui/NodeConnectionManagerUI.cpp"/>
           <FILE id="ajqa6D" name="NodeConnectionManagerUI.h" compile="0" resource="0"
@@ -211,6 +220,10 @@
                 file="Source/Node/ui/NodeConnectionUI.cpp"/>
           <FILE id="w2TrzQ" name="NodeConnectionUI.h" compile="0" resource="0"
                 file="Source/Node/ui/NodeConnectionUI.h"/>
+          <FILE id="JcVE0k" name="NodeBlockEditorToolItem.cpp" compile="1" resource="0"
+                file="Source/Node/ui/NodeBlockEditorToolItem.cpp"/>
+          <FILE id="eCrldw" name="NodeBlockEditorToolItem.h" compile="0" resource="0"
+                file="Source/Node/ui/NodeBlockEditorToolItem.h"/>
           <FILE id="GRiz1t" name="NodeManagerUI.cpp" compile="1" resource="0"
                 file="Source/Node/ui/NodeManagerUI.cpp"/>
           <FILE id="vwlqIL" name="NodeManagerUI.h" compile="0" resource="0" file="Source/Node/ui/NodeManagerUI.h"/>

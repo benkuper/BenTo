@@ -10,6 +10,7 @@
 
 #include "LightBlockClipUI.h"
 #include "../LightBlockLayer.h"
+#include "LightBlock/model/ui/LightBlockModelUI.h"
 
 LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	LayerBlockUI(_clip),
@@ -18,14 +19,19 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	fadeInHandle(ImageCache::getFromMemory(BinaryData::fadeIn_png, BinaryData::fadeIn_pngSize)),
 	fadeOutHandle(ImageCache::getFromMemory(BinaryData::fadeOut_png, BinaryData::fadeOut_pngSize)),
 	imageIsReady(false),
-	shouldUpdateImage(true)
+	shouldUpdateImage(true),
+	isDraggingModel(false)
 {
 
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
 	generatePreview();
 
-	addAndMakeVisible(&fadeInHandle, 0);
-	addAndMakeVisible(&fadeOutHandle, 0);
+	addChildComponent(&fadeInHandle, 0);
+	addChildComponent(&fadeOutHandle, 0);
+	
+	fadeInHandle.setVisible(!clip->autoFade->boolValue());
+	fadeOutHandle.setVisible(!clip->autoFade->boolValue());
+
 	fadeInHandle.addMouseListener(this, false);
 	fadeOutHandle.addMouseListener(this, false);
 
@@ -62,17 +68,26 @@ void LightBlockClipUI::paint(Graphics & g)
 		g.setColour(Colours::white.withAlpha(.5f));
 	}
 
+	Colour fColor = (clip->autoFade->boolValue() ? BLUE_COLOR : Colours::yellow).withAlpha(.5f);
+
 	if (clip->fadeIn->floatValue() > 0)
 	{
-		g.setColour(Colours::yellow.withAlpha(.5f));
+		g.setColour(fColor);
 		g.drawLine(0, getHeight(), getWidth()*(clip->fadeIn->floatValue() / clip->getTotalLength()), fadeInHandle.getY() + fadeInHandle.getHeight() / 2);
 	}
 
 	if (clip->fadeOut->floatValue() > 0)
 	{
-		g.setColour(Colours::yellow.withAlpha(.5f));
+		g.setColour(fColor);
 		g.drawLine(getWidth()*(1 - (clip->fadeOut->floatValue() / clip->getTotalLength())), fadeOutHandle.getY() + fadeOutHandle.getHeight() / 2, getWidth(), getHeight());
 	}
+}
+
+void LightBlockClipUI::paintOverChildren(Graphics & g)
+{
+	LayerBlockUI::paintOverChildren(g);
+	
+	if (isDraggingModel) g.fillAll(BLUE_COLOR.withAlpha(.3f));
 }
 
 void LightBlockClipUI::resizedBlockInternal()
@@ -88,7 +103,6 @@ void LightBlockClipUI::resizedBlockInternal()
 void LightBlockClipUI::generatePreview()
 {
 	if (isMouseButtonDown()) return;
-	DBG("Generate preview");
 	shouldUpdateImage = true;
 }
 
@@ -217,6 +231,62 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		generatePreview();
 	}
+	
+	if (c == clip->autoFade)
+	{
+		fadeInHandle.setVisible(!clip->autoFade->boolValue());
+		fadeOutHandle.setVisible(!clip->autoFade->boolValue());
+		repaint();
+	}
+}
+
+bool LightBlockClipUI::isInterestedInDragSource(const SourceDetails & source)
+{
+	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString();
+}
+
+void LightBlockClipUI::itemDragEnter(const SourceDetails & source)
+{
+	isDraggingModel = true;
+	repaint();
+}
+
+void LightBlockClipUI::itemDragExit(const SourceDetails & source)
+{
+	isDraggingModel = false;
+	repaint();
+}
+
+void LightBlockClipUI::itemDragMove(const SourceDetails & source)
+{
+	
+}
+
+void LightBlockClipUI::itemDropped(const SourceDetails & source)
+{
+	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
+
+	if (modelUI != nullptr)
+	{
+		LightBlockColorProvider * provider = modelUI->item;
+
+		bool shift = KeyPress::isKeyCurrentlyDown(16);
+		if (shift)
+		{
+			PopupMenu m;
+			m.addItem(-1, "Default");
+			m.addSeparator();
+			int index = 1;
+			for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+			int result = m.show();
+			if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+		}
+
+		clip->activeProvider->setValueFromTarget(provider, true); 
+	}
+
+	isDraggingModel = false;
+	repaint();
 }
 
 void LightBlockClipUI::run()
@@ -283,8 +353,6 @@ void LightBlockClipUI::run()
 		}
 
 	}
-
-	DBG("Exit thread");
 }
 
 LightBlockFadeHandle::LightBlockFadeHandle(const Image & image) :

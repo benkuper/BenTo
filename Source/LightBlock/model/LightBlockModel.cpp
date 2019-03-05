@@ -13,6 +13,7 @@
 #include "Prop/Prop.h"
 #include "ui/LightBlockModelUI.h"
 
+
 LightBlockModel::LightBlockModel(const String &name, var params) :
 	LightBlockColorProvider(name, false),
 	presetManager(this),

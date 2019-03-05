@@ -41,6 +41,9 @@ public:
 	ScopedPointer<LightBlockModel> videoBlock;
 	ScopedPointer<LightBlockModel> dmxBlock;
 
+	//Interface
+	IntParameter * iconSize;
+
 	void clear() override;
 
 	var getJSONData() override;

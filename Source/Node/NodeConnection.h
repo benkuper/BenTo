@@ -30,6 +30,23 @@ public:
 
 	void setSlots(NodeConnectionSlot * source, NodeConnectionSlot * dest);
 
+	void insertNode(StringRef nodeType);
+
+	//Listener
+	class  ConnectionListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~ConnectionListener() {}
+		virtual void askToInsertNode(NodeConnection *, StringRef nodeType) {}
+	};
+
+
+	ListenerList<ConnectionListener> connectionListeners;
+	void addConnectionListener(ConnectionListener* newListener) { connectionListeners.add(newListener); }
+	void removeConnectionListener(ConnectionListener* listener) { connectionListeners.remove(listener); }
+
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 };

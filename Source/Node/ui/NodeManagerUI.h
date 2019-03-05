@@ -16,7 +16,8 @@
 
 class NodeManagerUI :
 	public BaseManagerViewUI<NodeManager, Node, NodeViewUI>,
-	public Timer
+	public Timer,
+	public DragAndDropTarget
 {
 public:
 	NodeManagerUI(NodeManager * manager);
@@ -25,6 +26,9 @@ public:
 	NodeViewUI::Connector * startConnector; //for when connecting
 	NodeViewUI::Connector * dropConnector;
 	const int dropDistance = 20;
+
+	String dragType; 
+	Point<float> dragPosition;
 	
 	ScopedPointer<NodeConnectionManagerUI> connectionsUI;
 
@@ -46,5 +50,10 @@ public:
 	void mouseUp(const MouseEvent &e) override;
 	void mouseEnter(const MouseEvent &e) override;
 
+	bool isInterestedInDragSource(const SourceDetails &source) override;
+	void itemDragEnter(const SourceDetails &source) override;
+	void itemDragExit(const SourceDetails &source) override;
+	void itemDragMove(const SourceDetails &source) override;
+	void itemDropped(const SourceDetails &source) override;
 	void timerCallback() override;
 };

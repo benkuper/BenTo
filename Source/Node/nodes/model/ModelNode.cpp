@@ -9,7 +9,7 @@
 */
 
 #include "ModelNode.h"
-
+#include "ui/ModelNodeUI.h"
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "Prop/Prop.h"
 
@@ -59,4 +59,9 @@ void ModelNode::onContainerParameterChanged(Parameter * p)
 	{
 		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
 	}
+}
+
+NodeViewUI * ModelNode::createUI()
+{
+	return new ModelNodeUI(this);
 }

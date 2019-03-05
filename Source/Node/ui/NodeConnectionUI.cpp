@@ -9,13 +9,16 @@
 */
 
 #include "NodeConnectionUI.h"
+#include "LightBlock/model/ui/LightBlockModelUI.h"
+#include "Node/nodes/model/ModelNode.h"
 
 NodeConnectionUI::NodeConnectionUI(NodeConnection * nc) :
 	BaseItemMinimalUI(nc),
 	sourceConnector(nullptr),
-	destConnector(nullptr)
+	destConnector(nullptr),
+	isDraggingModel(false)
 {
-	autoDrawHighlightWhenSelected = false;
+	autoDrawContourWhenSelected = false;
 	setRepaintsOnMouseActivity(true);
 }
 
@@ -39,9 +42,10 @@ void NodeConnectionUI::paint(Graphics & g)
 	if (sourceConnector == nullptr || destConnector == nullptr) return;
 
 	Colour c = item->isSelected?HIGHLIGHT_COLOR:NodeConnectionUI::getColorForType(sourceConnector->slot->type);
+	if (isDraggingModel) c = BLUE_COLOR;
 	if (isMouseOver()) c = c.brighter();
 	g.setColour(c);
-	g.strokePath(path, PathStrokeType(3));
+	g.strokePath(path, PathStrokeType(isDraggingModel?6:3));
 }
 
 void NodeConnectionUI::resized()
@@ -156,4 +160,69 @@ void NodeConnectionUI::componentBeingDeleted(Component & c)
 {
 	if (&c == sourceConnector) sourceConnector = nullptr;
 	else if (&c == destConnector) destConnector = nullptr;
+}
+
+
+
+bool NodeConnectionUI::isInterestedInDragSource(const SourceDetails & source)
+{
+	return source.description.getProperty("type", "") == "NodeTool";
+}
+
+void NodeConnectionUI::itemDragEnter(const SourceDetails & source)
+{
+	isDraggingModel = true;
+	repaint();
+}
+
+void NodeConnectionUI::itemDragExit(const SourceDetails & source)
+{
+	isDraggingModel = false;
+	repaint();
+}
+
+
+void NodeConnectionUI::itemDropped(const SourceDetails & source)
+{
+	String nodeType = source.description.getProperty("nodeType", "");
+	if (nodeType.isEmpty())
+	{
+		DBG("No nodeType");
+		return;
+	}
+
+	item->insertNode(nodeType);
+	isDraggingModel = false;
+	repaint();
+}
+
+
+
+Colour NodeConnectionUI::getColorForType(ConnectionType t) {
+	switch (t)
+	{
+	case ConnectionType::ColorBlock:
+		return Colours::cornflowerblue;
+
+	case ConnectionType::Number:
+		return Colours::limegreen;
+
+	case ConnectionType::Color:
+		return Colours::hotpink;
+	}
+
+	return Colours::black;
+}
+
+String NodeConnectionUI::getStringForConnectionType(ConnectionType t) {
+	switch (t)
+	{
+	case ConnectionType::ColorBlock: return "Colors";
+
+	case ConnectionType::Number: return "Number";
+
+	case ConnectionType::Color: return "Single Color";
+	}
+
+	return "Unknown";
 }

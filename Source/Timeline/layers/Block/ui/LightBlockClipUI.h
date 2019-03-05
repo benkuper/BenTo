@@ -27,7 +27,8 @@ public:
 
 class LightBlockClipUI :
 	public LayerBlockUI,
-	public Thread //Threaded preview generation,
+	public DragAndDropTarget,
+	public Thread //Threaded preview generation
 {
 public:
 	LightBlockClipUI(LightBlockClip * clip);
@@ -50,7 +51,11 @@ public:
 	SpinLock imgLock;
 	Image previewImage;
 
+	bool isDraggingModel;
+
 	void paint(Graphics &g) override;
+	void paintOverChildren(Graphics &g) override;
+
 	void resizedBlockInternal() override;
 
 	void generatePreview();
@@ -65,5 +70,13 @@ public:
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
+	bool isInterestedInDragSource(const SourceDetails &source) override;
+	void itemDragEnter(const SourceDetails &source) override;
+	void itemDragExit(const SourceDetails &source) override;
+	void itemDragMove(const SourceDetails &source) override;
+	void itemDropped(const SourceDetails &source) override;
+
+
 	void run() override;
+
 };

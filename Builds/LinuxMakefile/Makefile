@@ -99,6 +99,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/TimelineEditor_4cddf71d.o \
   $(JUCE_OBJDIR)/ColorRemapNode_4a14980f.o \
   $(JUCE_OBJDIR)/CompositeNode_f78ff15f.o \
+  $(JUCE_OBJDIR)/ModelNodeUI_f4feefd6.o \
   $(JUCE_OBJDIR)/ModelNode_c9682223.o \
   $(JUCE_OBJDIR)/ParameterNodeViewUI_d2914a3c.o \
   $(JUCE_OBJDIR)/ParameterNode_ade2ed23.o \
@@ -107,8 +108,10 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SolidColorNode_4b409caf.o \
   $(JUCE_OBJDIR)/ColorNodeViewUI_b2913851.o \
   $(JUCE_OBJDIR)/NodeBlockEditor_59a127eb.o \
+  $(JUCE_OBJDIR)/NodeBlockEditorToolbox_c6a1e852.o \
   $(JUCE_OBJDIR)/NodeConnectionManagerUI_222198d4.o \
   $(JUCE_OBJDIR)/NodeConnectionUI_4441214b.o \
+  $(JUCE_OBJDIR)/NodeBlockEditorToolItem_d4105556.o \
   $(JUCE_OBJDIR)/NodeManagerUI_b8fab212.o \
   $(JUCE_OBJDIR)/NodeViewUI_fa05b6d2.o \
   $(JUCE_OBJDIR)/Node_65f22bf0.o \
@@ -357,6 +360,11 @@ $(JUCE_OBJDIR)/CompositeNode_f78ff15f.o: ../../Source/Node/nodes/composite/Compo
 	@echo "Compiling CompositeNode.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/ModelNodeUI_f4feefd6.o: ../../Source/Node/nodes/model/ui/ModelNodeUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ModelNodeUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/ModelNode_c9682223.o: ../../Source/Node/nodes/model/ModelNode.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling ModelNode.cpp"
@@ -397,6 +405,11 @@ $(JUCE_OBJDIR)/NodeBlockEditor_59a127eb.o: ../../Source/Node/ui/NodeBlockEditor.
 	@echo "Compiling NodeBlockEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/NodeBlockEditorToolbox_c6a1e852.o: ../../Source/Node/ui/NodeBlockEditorToolbox.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling NodeBlockEditorToolbox.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/NodeConnectionManagerUI_222198d4.o: ../../Source/Node/ui/NodeConnectionManagerUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling NodeConnectionManagerUI.cpp"
@@ -405,6 +418,11 @@ $(JUCE_OBJDIR)/NodeConnectionManagerUI_222198d4.o: ../../Source/Node/ui/NodeConn
 $(JUCE_OBJDIR)/NodeConnectionUI_4441214b.o: ../../Source/Node/ui/NodeConnectionUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling NodeConnectionUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/NodeBlockEditorToolItem_d4105556.o: ../../Source/Node/ui/NodeBlockEditorToolItem.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling NodeBlockEditorToolItem.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/NodeManagerUI_b8fab212.o: ../../Source/Node/ui/NodeManagerUI.cpp

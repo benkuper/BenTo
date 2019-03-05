@@ -13,7 +13,8 @@
 class NodeManager;
 
 class NodeConnectionManager :
-	public BaseManager<NodeConnection>
+	public BaseManager<NodeConnection>,
+	public NodeConnection::ConnectionListener
 {
 public:
 	NodeConnectionManager(NodeManager * manager);
@@ -25,4 +26,9 @@ public:
 
 	void addConnection(NodeConnectionSlot * source, NodeConnectionSlot * dest);
 	NodeConnection * getConnectionForSlots(NodeConnectionSlot * source, NodeConnectionSlot * dest);
+
+	void addItemInternal(NodeConnection * nc, var) override;
+	void removeItemInternal(NodeConnection * nc) override;
+
+	void askToInsertNode(NodeConnection * nc, StringRef nodeType) override;
 };

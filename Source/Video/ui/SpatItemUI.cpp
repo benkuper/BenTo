@@ -23,7 +23,7 @@ SpatItemUI::SpatItemUI(SpatItem * i, Spatializer * spat, SpatLayoutView * panel)
 	addAndMakeVisible(&startHandle);
 	addAndMakeVisible(&endHandle);
 
-	autoDrawHighlightWhenSelected = false;
+	autoDrawContourWhenSelected = false;
 	setRepaintsOnMouseActivity(true);
 
 	spat->addAsyncContainerListener(this);

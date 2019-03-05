@@ -11,6 +11,7 @@
 #include "LightBlockLayer.h"
 #include "ui/LightBlockLayerPanel.h"
 #include "ui/LightBlockLayerTimeline.h"
+#include "Prop/PropManager.h"
 
 LightBlockLayer::LightBlockLayer(Sequence * s, var) :
 	SequenceLayer(s, "Block Layer"),
@@ -21,6 +22,11 @@ LightBlockLayer::LightBlockLayer(Sequence * s, var) :
 	previewID->hideInEditor = true;
 
 	addChildControllableContainer(&filterManager);
+	filterManager.addFilterManagerListener(this);
+
+	updateLinkedProps();
+
+	Engine::mainEngine->addEngineListener(this);
 }
 
 LightBlockLayer::~LightBlockLayer()
@@ -68,6 +74,37 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 	}
 
 	return result;
+}
+
+void LightBlockLayer::updateLinkedProps()
+{
+	if (PropManager::getInstanceWithoutCreating() != nullptr)
+	{
+		for (auto &p : PropManager::getInstance()->items)
+		{
+			if (filterManager.getTargetIDForProp(p) >= 0)
+			{
+				linkedInspectables.addIfNotAlreadyThere(p);
+				p->linkedInspectables.addIfNotAlreadyThere(this);
+			}
+			else
+			{
+				linkedInspectables.removeAllInstancesOf(p);
+				p->linkedInspectables.removeAllInstancesOf(this);
+			}
+		}
+	}
+}
+
+void LightBlockLayer::filtersChanged()
+{
+	updateLinkedProps();
+}
+
+void LightBlockLayer::endLoadFile()
+{
+	updateLinkedProps();
+	Engine::mainEngine->removeEngineListener(this);
 }
 
 SequenceLayerPanel * LightBlockLayer::getPanel()

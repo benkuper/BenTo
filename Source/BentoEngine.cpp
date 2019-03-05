@@ -18,7 +18,7 @@
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
 #include "Prop/Cluster/PropClusterGroupManager.h"
-
+#include "Node/NodeManager.h"
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento"),
@@ -58,6 +58,8 @@ BentoEngine::~BentoEngine()
 	SequenceLayerFactory::deleteInstance();
 
 	SerialManager::deleteInstance();
+
+	NodeFactory::deleteInstance();
 
 	//BentoWebServer::deleteInstance();
 }

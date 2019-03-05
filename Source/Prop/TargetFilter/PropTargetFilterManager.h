@@ -22,4 +22,22 @@ public:
 	Factory<PropTargetFilter> factory;
 
 	int getTargetIDForProp(Prop *);
+
+	void addItemInternal(PropTargetFilter *, var data) override;
+	void removeItemInternal(PropTargetFilter *) override;
+
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
+
+	class  FilterManagerListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~FilterManagerListener() {}
+		virtual void filtersChanged() {}
+	};
+
+	ListenerList<FilterManagerListener> filerManagerListeners;
+	void addFilterManagerListener(FilterManagerListener * newListener) { filerManagerListeners.add(newListener); }
+	void removeFilterManagerListener(FilterManagerListener* listener) { filerManagerListeners.remove(listener); }
+
 };

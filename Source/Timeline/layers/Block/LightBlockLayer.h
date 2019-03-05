@@ -14,7 +14,9 @@
 #include "Prop/TargetFilter/PropTargetFilterManager.h"
 
 class LightBlockLayer :
-	public SequenceLayer
+	public SequenceLayer,
+	public PropTargetFilterManager::FilterManagerListener,
+	public EngineListener
 {
 public:
 	LightBlockLayer(Sequence * s, var params = var());
@@ -27,6 +29,12 @@ public:
 	IntParameter * previewID;
 
 	Array<Colour> getColors(Prop * p, double time, var params);
+
+	void updateLinkedProps();
+
+	void filtersChanged() override;
+	void endLoadFile() override;
+	
 
 	SequenceLayerPanel * getPanel() override;
 	SequenceLayerTimeline * getTimelineUI() override;

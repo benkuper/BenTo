@@ -27,6 +27,7 @@ public:
 	
 	TargetParameter * activeProvider;
 
+	BoolParameter * autoFade;
 	FloatParameter * fadeIn;
 	FloatParameter * fadeOut;
 

@@ -68,6 +68,9 @@
     <Filter Include="BenTo\Source\Node\nodes\composite">
       <UniqueIdentifier>{BA4A8784-5238-F7A2-AFE0-CEA814247A1F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Node\nodes\model\ui">
+      <UniqueIdentifier>{0901FC65-0F6C-593C-F6DF-E8B715C064F3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Node\nodes\model">
       <UniqueIdentifier>{C86BA61C-B478-36D1-457D-F429CB1EE3F7}</UniqueIdentifier>
     </Filter>
@@ -877,6 +880,9 @@
     <ClCompile Include="..\..\Source\Node\nodes\composite\CompositeNode.cpp">
       <Filter>BenTo\Source\Node\nodes\composite</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.cpp">
+      <Filter>BenTo\Source\Node\nodes\model\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Node\nodes\model\ModelNode.cpp">
       <Filter>BenTo\Source\Node\nodes\model</Filter>
     </ClCompile>
@@ -901,10 +907,16 @@
     <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditor.cpp">
       <Filter>BenTo\Source\Node\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.cpp">
+      <Filter>BenTo\Source\Node\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Node\ui\NodeConnectionManagerUI.cpp">
       <Filter>BenTo\Source\Node\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\ui\NodeConnectionUI.cpp">
+      <Filter>BenTo\Source\Node\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolItem.cpp">
       <Filter>BenTo\Source\Node\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\ui\NodeManagerUI.cpp">
@@ -3837,6 +3849,9 @@
     <ClInclude Include="..\..\Source\Node\nodes\composite\CompositeNode.h">
       <Filter>BenTo\Source\Node\nodes\composite</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.h">
+      <Filter>BenTo\Source\Node\nodes\model\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Node\nodes\model\ModelNode.h">
       <Filter>BenTo\Source\Node\nodes\model</Filter>
     </ClInclude>
@@ -3861,10 +3876,16 @@
     <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditor.h">
       <Filter>BenTo\Source\Node\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.h">
+      <Filter>BenTo\Source\Node\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Node\ui\NodeConnectionManagerUI.h">
       <Filter>BenTo\Source\Node\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\ui\NodeConnectionUI.h">
+      <Filter>BenTo\Source\Node\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditorToolItem.h">
       <Filter>BenTo\Source\Node\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\ui\NodeManagerUI.h">
@@ -6798,6 +6819,9 @@
       <Filter>BenTo\Resources</Filter>
     </None>
     <None Include="..\..\Resources\icon.png">
+      <Filter>BenTo\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\new.png">
       <Filter>BenTo\Resources</Filter>
     </None>
     <None Include="..\..\Resources\shader.frag">

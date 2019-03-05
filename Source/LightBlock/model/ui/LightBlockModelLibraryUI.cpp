@@ -21,11 +21,21 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	scriptBlocksManagerUI("Scripts", &library->scriptBlocks),
 	timelineBlocksManagerUI("Timelines",&library->timelineBlocks)
 {
+	iconSizeUI = library->iconSize->createSlider();
+	addAndMakeVisible(iconSizeUI);
+
 	viewport.setViewedComponent(&container, false);
 	viewport.setScrollBarsShown(true, false);
 	viewport.setScrollOnDragEnabled(false);
 	viewport.setScrollBarThickness(10);
 	addAndMakeVisible(viewport);
+
+	genericGroupUI.setThumbSize(library->iconSize->intValue());
+	liveFeedGroupUI.setThumbSize(library->iconSize->intValue());
+	pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 
 
 	container.addAndMakeVisible(&genericGroupUI);
@@ -40,10 +50,14 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	nodeBlocksManagerUI.addComponentListener(this);
 	scriptBlocksManagerUI.addComponentListener(this);
 	timelineBlocksManagerUI.addComponentListener(this);
+
+
+	library->addAsyncCoalescedContainerListener(this);
 }
 
 LightBlockModelLibraryUI::~LightBlockModelLibraryUI()
 {
+	if (LightBlockModelLibrary::getInstanceWithoutCreating() != nullptr) library->removeAsyncContainerListener(this);
 }
 
 void LightBlockModelLibraryUI::paint(Graphics & g)
@@ -52,7 +66,16 @@ void LightBlockModelLibraryUI::paint(Graphics & g)
 
 void LightBlockModelLibraryUI::resized()
 {
-	Rectangle<int> r = getLocalBounds().withTrimmedRight(10);
+	Rectangle<int> r = getLocalBounds();
+	Rectangle<int> hr = r.removeFromTop(16);
+
+	iconSizeUI->setBounds(hr.removeFromRight(100).reduced(2));
+
+	r.removeFromTop(2);
+	int cy = r.getY();
+
+	r.setY(0);
+	r = r.withTrimmedRight(10);
 
 	if (genericGroupUI.getWidth() == 0) genericGroupUI.setBounds(r);
 	genericGroupUI.setBounds(r.withHeight(genericGroupUI.getHeight()));
@@ -75,7 +98,32 @@ void LightBlockModelLibraryUI::resized()
 	timelineBlocksManagerUI.setBounds(r);
 
 	container.setSize(getWidth(), r.getBottom());
-	viewport.setSize(getWidth(),getHeight());
+	viewport.setBounds(getLocalBounds().withTrimmedTop(cy));
+}
+
+void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent & e)
+{
+	switch (e.type)
+	{
+	case ContainerAsyncEvent::ControllableFeedbackUpdate:
+	{
+		if (e.targetControllable == library->iconSize)
+		{
+			genericGroupUI.setThumbSize(library->iconSize->intValue());
+			liveFeedGroupUI.setThumbSize(library->iconSize->intValue());
+			pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+			nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+			scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+			timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+
+			resized();
+		}
+	}
+	break;
+
+	default:
+		break;
+	}
 }
 
 void LightBlockModelLibraryUI::componentMovedOrResized(Component &, bool, bool)

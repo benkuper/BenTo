@@ -114,6 +114,7 @@
     <ClCompile Include="..\..\Source\Timeline\TimelineEditor.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\composite\CompositeNode.cpp"/>
+    <ClCompile Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\model\ModelNode.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\parameter\ParameterNodeViewUI.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\parameter\ParameterNode.cpp"/>
@@ -122,8 +123,10 @@
     <ClCompile Include="..\..\Source\Node\nodes\solidcolor\SolidColorNode.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\ColorNodeViewUI.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditor.cpp"/>
+    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\NodeConnectionManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\NodeConnectionUI.cpp"/>
+    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolItem.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\NodeManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Node\ui\NodeViewUI.cpp"/>
     <ClCompile Include="..\..\Source\Node\Node.cpp"/>
@@ -2637,6 +2640,7 @@
     <ClInclude Include="..\..\Source\Timeline\TimelineEditor.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\composite\CompositeNode.h"/>
+    <ClInclude Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\model\ModelNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\parameter\ParameterNodeViewUI.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\parameter\ParameterNode.h"/>
@@ -2645,8 +2649,10 @@
     <ClInclude Include="..\..\Source\Node\nodes\solidcolor\SolidColorNode.h"/>
     <ClInclude Include="..\..\Source\Node\ui\ColorNodeViewUI.h"/>
     <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditor.h"/>
+    <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.h"/>
     <ClInclude Include="..\..\Source\Node\ui\NodeConnectionManagerUI.h"/>
     <ClInclude Include="..\..\Source\Node\ui\NodeConnectionUI.h"/>
+    <ClInclude Include="..\..\Source\Node\ui\NodeBlockEditorToolItem.h"/>
     <ClInclude Include="..\..\Source\Node\ui\NodeManagerUI.h"/>
     <ClInclude Include="..\..\Source\Node\ui\NodeViewUI.h"/>
     <ClInclude Include="..\..\Source\Node\Node.h"/>
@@ -3626,6 +3632,7 @@
     <None Include="..\..\Resources\fadeIn.png"/>
     <None Include="..\..\Resources\fadeOut.png"/>
     <None Include="..\..\Resources\icon.png"/>
+    <None Include="..\..\Resources\new.png"/>
     <None Include="..\..\Resources\shader.frag"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\flac\Flac Licence.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_formats\codecs\oggvorbis\Ogg Vorbis Licence.txt"/>

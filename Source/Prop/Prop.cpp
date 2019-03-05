@@ -66,7 +66,6 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 	activeProvider->hideInEditor = true;
-
 }
 
 Prop::~Prop()
@@ -105,7 +104,16 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		waitForThreadToExit(100);
 
 		removeChildControllableContainer(currentBlock);
-		if(!currentBlock->provider.wasObjectDeleted()) currentBlock->provider->removeInspectableListener(this);
+		if (!currentBlock->provider.wasObjectDeleted())
+		{
+			currentBlock->provider->setHighlighted(false);
+			
+			linkedInspectables.removeAllInstancesOf(currentBlock->provider.get());
+			currentBlock->provider->linkedInspectables.removeAllInstancesOf(this);
+
+			currentBlock->provider->removeInspectableListener(this);
+		}
+
 		//currentBlock->removeLightBlockListener(this);
 		currentBlock = nullptr;
 	}
@@ -117,6 +125,10 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 	{
 		addChildControllableContainer(currentBlock);
 		currentBlock->provider->addInspectableListener(this);
+
+		linkedInspectables.addIfNotAlreadyThere(currentBlock->provider.get());
+		currentBlock->provider->linkedInspectables.addIfNotAlreadyThere(this);
+
 		startThread();
 	}
 
@@ -125,7 +137,6 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		propListeners.call(&PropListener::propBlockChanged, this);
 		propNotifier.addMessage(new PropEvent(PropEvent::BLOCK_CHANGED, this));
 	}
-	
 }
 
 void Prop::update()

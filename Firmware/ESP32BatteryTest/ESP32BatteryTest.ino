@@ -3,7 +3,6 @@
 
 #define POWER_ENABLE_PIN 19
 
-#define BATTERY_PIN 32
 #define BUTTON_PIN 13
 
 #define DATA_PIN 5
@@ -29,6 +28,9 @@ long lastCheckTime;
 #define BATT_CHECK_INTERVAL 100
 bool enableCheckBattery = false;
 
+int batteryPin = 32;
+
+
 #define NUM_LEDS 32 //need that global
 CRGBArray<NUM_LEDS> leds; //need that global
 
@@ -37,7 +39,7 @@ void setup() {
   Serial.println("");
 
   // put your setup code here, to run once:
-  pinMode(BATTERY_PIN, INPUT);
+  pinMode(batteryPin, INPUT);
   pinMode(BUTTON_PIN, INPUT);
 
   //Keep the power
@@ -94,8 +96,9 @@ void processMessage()
   Serial.println("Process : " + buffer);
   String cmd = buffer.substring(0, buffer.indexOf(' '));
   int val = buffer.substring(buffer.indexOf(' ') + 1).toInt();
-  val = std::min(std::max(val, 0), 255);
-
+   if(val <= 0) val = 0;
+   if(val >= 255) val = 255;
+   
   if (cmd == "led")
   {
     Serial.println("Set RGB Leds to " + String(val));
@@ -107,10 +110,15 @@ void processMessage()
   } else if (cmd == "battery")
   {
     enableCheckBattery = val > 0;
+  } else if(cmd == "pin")
+  {
+     batteryPin = val;
+     pinMode(batteryPin, INPUT);
+     Serial.println("Battery pin set to "+String(val));
   } else if(cmd == "sleep")
   {
    sleep(); 
-  }
+  } else
   {
     Serial.println(cmd + " > " + val);
   }
@@ -143,7 +151,7 @@ void checkBattery()
   if (millis() - lastCheckTime > BATT_CHECK_INTERVAL)
   {
     lastCheckTime = millis();
-    rawData = analogRead(BATTERY_PIN);
+    rawData = analogRead(batteryPin);
     Serial.println("Battery check " + String(rawData));
   }
 }

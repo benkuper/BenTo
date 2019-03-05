@@ -17,22 +17,14 @@
 #include "nodes/prop/PropNode.h"
 #include "nodes/solidcolor/SolidColorNode.h"
 
+juce_ImplementSingleton(NodeFactory)
+
 NodeManager::NodeManager() :
 	BaseManager("Nodes"),
 	connectionManager(this)
 {
-	managerFactory = &factory;
-	factory.defs.add(Factory<Node>::Definition::createDef("Color", "Solid Color", &SolidColorNode::create));
-	factory.defs.add(Factory<Node>::Definition::createDef("Color", "Position Remap", &PositionRemapNode::create));
-	factory.defs.add(Factory<Node>::Definition::createDef("Color", "Composite", &CompositeNode::create));
-	factory.defs.add(Factory<Node>::Definition::createDef("Color", "Model", &ModelNode::create));
-	factory.defs.add(Factory<Node>::Definition::createDef("Color", "Color Remap", &ColorRemapNode::create));
+	managerFactory = NodeFactory::getInstance();
 	
-	factory.defs.add(Factory<Node>::Definition::createDef("Parameter", "Integer", &ParameterNode::create)->addParam("type",IntParameter::getTypeStringStatic()));
-	factory.defs.add(Factory<Node>::Definition::createDef("Parameter", "Float", &ParameterNode::create)->addParam("type", FloatParameter::getTypeStringStatic()));
-	factory.defs.add(Factory<Node>::Definition::createDef("Parameter", "Color", &ParameterNode::create)->addParam("type", ColorParameter::getTypeStringStatic()));
-	factory.defs.add(Factory<Node>::Definition::createDef("Parameter", "Boolean", &ParameterNode::create)->addParam("type", BoolParameter::getTypeStringStatic()));
-
 	propNode = new PropNode();
 	addItem(propNode);
 
@@ -85,4 +77,18 @@ void NodeManager::loadJSONDataManagerInternal(var data)
 	BaseManager::loadJSONDataManagerInternal(data);
 
 	connectionManager.loadJSONData(data.getProperty("connections", var()));
+}
+
+NodeFactory::NodeFactory()
+{
+	defs.add(Factory<Node>::Definition::createDef("Color", "Position Remap", &PositionRemapNode::create));
+	defs.add(Factory<Node>::Definition::createDef("Color", "Composite", &CompositeNode::create));
+	defs.add(Factory<Node>::Definition::createDef("Color", "Model", &ModelNode::create));
+	defs.add(Factory<Node>::Definition::createDef("Color", "Color Remap", &ColorRemapNode::create));
+
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Integer", &ParameterNode::create)->addParam("type", IntParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Float", &ParameterNode::create)->addParam("type", FloatParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Color", &ParameterNode::create)->addParam("type", ColorParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Boolean", &ParameterNode::create)->addParam("type", BoolParameter::getTypeStringStatic()));
+
 }

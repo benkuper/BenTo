@@ -32,7 +32,6 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	rainbowBlock = new RainbowPattern();
 	strobeBlock = new StrobePattern();
 	noiseBlock = new NoisePattern();
-	
 
 	videoBlock = new VideoBlock();
 	dmxBlock = new DMXBlock();
@@ -52,6 +51,8 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	addChildControllableContainer(&nodeBlocks);
 	addChildControllableContainer(&scriptBlocks);
 	addChildControllableContainer(&timelineBlocks);
+
+	iconSize = addIntParameter("Icon size", "Size of library icons", 70, 16, 120);
 }
 
 LightBlockModelLibrary::~LightBlockModelLibrary()

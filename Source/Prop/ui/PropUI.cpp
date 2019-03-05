@@ -97,12 +97,12 @@ void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 
 bool PropUI::isInterestedInDragSource(const SourceDetails & source)
 {
-	return source.description == "LightBlockModel";
+	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString();
 }
 
 void PropUI::itemDragEnter(const SourceDetails & source)
 {
-	isDraggingItemOver = false;
+	isDraggingItemOver = true;
 	repaint();
 }
 
@@ -115,5 +115,27 @@ void PropUI::itemDragExit(const SourceDetails & source)
 void PropUI::itemDropped(const SourceDetails & source)
 {
 	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
-	if (modelUI != nullptr) item->activeProvider->setValueFromTarget(modelUI->item);
+
+	if (modelUI != nullptr)
+	{
+		LightBlockColorProvider * provider = modelUI->item;
+
+		bool shift = KeyPress::isKeyCurrentlyDown(16);
+		if (shift)
+		{
+			PopupMenu m;
+			m.addItem(-1, "Default");
+			m.addSeparator();
+			int index = 1;
+			for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+			int result = m.show();
+			if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+		}
+
+		item->activeProvider->setValueFromTarget(provider);
+	}
+	
+
+	isDraggingItemOver = false;
+	repaint();
 }

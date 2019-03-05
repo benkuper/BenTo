@@ -16,6 +16,17 @@
 class Prop;
 class PropNode;
 
+class NodeFactory :
+	public Factory<Node>
+{
+public:
+	juce_DeclareSingleton(NodeFactory, true)
+		
+	NodeFactory();
+	~NodeFactory() {}
+};
+
+
 class NodeManager :
 	public BaseManager<Node>
 {
@@ -23,12 +34,11 @@ public:
 	NodeManager();
 	~NodeManager();
 
-	Factory<Node> factory;
+	
 	PropNode * propNode;
 	Prop prop;
 
 	NodeConnectionManager connectionManager;
-
 	Array<WeakReference<Controllable>> getExposedParameters();
 
 	NodeConnectionSlot * getSlotForName(const String &nodeName, const String &slotName, bool isInput);

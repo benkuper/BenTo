@@ -25,9 +25,9 @@ PropClusterGroupManager::~PropClusterGroupManager()
 	if(PropManager::getInstanceWithoutCreating() != nullptr) PropManager::getInstance()->removeControllableContainerListener(this);
 }
 
-void PropClusterGroupManager::controllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void PropClusterGroupManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
-	BaseManager::controllableFeedbackUpdate(cc, c);
+	BaseManager::onControllableFeedbackUpdate(cc, c);
 
 	Prop * p = ControllableUtil::findParentAs<Prop>(c);
 	if (p != nullptr)
