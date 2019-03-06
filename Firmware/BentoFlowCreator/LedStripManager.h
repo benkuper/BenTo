@@ -65,9 +65,7 @@ public:
   }
   
   void init(){
-    #if SERIAL_DEBUG
-    Serial.println("LedStripManager Init.");
-    #endif
+    DBG("LedStripManager Init.");
 
     pinMode(LED_ENABLE_PIN, OUTPUT); //LED's enable
     digitalWrite(LED_ENABLE_PIN, HIGH);
@@ -193,10 +191,7 @@ public:
     
     currentMode = newMode;
     
-    #if SERIAL_DEBUG
-    Serial.print("LedStripManager set Mode : ");
-    Serial.println(currentMode);
-    #endif
+    DBG("LedStripManager set Mode : "+String(currentMode));
 
     FastLED.clear();
     FastLED.show();

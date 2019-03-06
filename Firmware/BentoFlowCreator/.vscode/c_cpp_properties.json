@@ -1,0 +1,27 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "D:\\Documents\\Arduino\\libraries\\FastLED",
+                "D:\\Documents\\Arduino\\libraries\\OSC",
+                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
+                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.1\\**",
+                "${workspaceFolder}/**",
+                "${workspaceFolder}"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "_UNICODE"
+            ],
+            "windowsSdkVersion": "10.0.17763.0",
+            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe",
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "intelliSenseMode": "msvc-x64",
+            "forcedInclude": []
+        }
+    ],
+    "version": 4
+}

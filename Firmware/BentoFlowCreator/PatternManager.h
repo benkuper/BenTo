@@ -17,9 +17,7 @@ public:
 
     if(currentPattern == nullptr)
     {
-      #if SERIAL_DEBUG
-      Serial.println("Current pattern null");
-      #endif
+      DBG("Current pattern null");
       delay(100);
       return;
     }
@@ -32,12 +30,7 @@ public:
     if(currentPattern == nullptr) setPattern(Snapshot);
     else  setPattern((PatternType)(int)((currentPatternType +1)%NUM_PATTERNS));
 
-    #if SERIAL_DEBUG
-    Serial.print("Next Pattern : ");
-    Serial.print(currentPatternType);
-    Serial.print(" not null = ");
-    Serial.println(currentPattern != nullptr);
-    #endif
+    DBG("Next Pattern : "+String((int)currentPatternType)+", not null ? "+String((int)(currentPattern != nullptr)));
   }
 
   void setPattern(PatternType type)
@@ -50,22 +43,12 @@ public:
 
     currentPatternType = (PatternType)min(max((int)type,0),NUM_PATTERNS-1);
 
-     #if SERIAL_DEBUG
-     Serial.print("Set pattern type : ");
-     Serial.println(currentPatternType);
-     #endif
+     DBG("Set pattern type : "+String((int)currentPatternType));
      
      switch(currentPatternType)
      {
       case Snapshot:
-      {
-        #if SERIAL_DEBUG
-        Serial.println("New Snapshot pattern !");
-        #endif
-        
-        currentPattern = new SnapshotPattern();
-        
-      }
+      { currentPattern = new SnapshotPattern(); }
       break;
 
       case BatteryLevel:
@@ -122,20 +105,14 @@ public:
       
       default:
       {
-      #if SERIAL_DEBUG
-      Serial.print("Pattern not handled : ");
-      Serial.print(currentPatternType);
-      #endif
+      DBG("Pattern not handled : "+String((int)currentPatternType));
       }
       break;
      }
 
      if(currentPattern != nullptr)
      {        
-        #if SERIAL_DEBUG
-        Serial.print("Init pattern : ");
-        Serial.println(currentPatternType);
-        #endif
+        DBG("Init pattern : "+String(currentPatternType));
      }
   }
 

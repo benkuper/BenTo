@@ -1,7 +1,7 @@
 #ifndef PATTERNS_H
 #define PATTERNS_H
 
-#include "BatteryManager.h";
+#include "BatteryManager.h"
 #include "FastLEDDefs.h"
 
 #define MAX_PARAMS 8
@@ -32,15 +32,10 @@ class Pattern
         int index = min(max(msg.getInt(0), 0), MAX_PARAMS);
         params[index] = value;
 
-#if SERIAL_DEBUG
-        Serial.print("Set pattern param : ");
-        Serial.print(index);
-        Serial.print(" = ");
-        Serial.println(value);
-#endif
+        DBG("Set pattern param : "+String(index)+" = "+String(value));
       }
     }
-#endif
+#endif //USE_OSC
 };
 
 class SnapshotPattern : public Pattern
@@ -66,7 +61,7 @@ class BatteryLevelPattern : public Pattern
         int v = bm->normalizedVoltage * NUM_LEDS;
         setRange(NUM_LEDS - v, NUM_LEDS, CHSV(h, 255, 100), true);
       }
-#endif
+#endif //USE_BATTERY
     }
 };
 

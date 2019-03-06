@@ -1,16 +1,25 @@
 #include <Arduino.h>
 
 #define SERIAL_DEBUG 1
+
+#if SERIAL_DEBUG
+#define DBG(textToWrite) Serial.println(textToWrite)
+#else
+#define DBG(textToWrite)
+#endif
+
 #include <Wire.h>
 
 #define USE_BUTTON 1
 #define USE_WIFI 1
-
 #define USE_IR 1
 
 #if USE_WIFI
 #define USE_OSC 1
 #endif
+
+#define USE_SERVER 1
+#define USE_FILES 1
 
 #define USE_TOUCH 0
 #define USE_IMU 0
@@ -18,6 +27,7 @@
 #define USE_BATTERY 1
 
 #define POWER_ENABLE_PIN 19
+
 
 using namespace std;
 
@@ -27,10 +37,22 @@ DeviceSettings settings;
 #include "ButtonManager.h"
 ButtonManager btManager;
 
+#if USE_FILES
+#include "FileManager.h"
+FileManager fileManager;
+#endif
+
 #if USE_WIFI
 #include "WiFiManager.h"
 WiFiManager wifiManager;
 #endif
+
+
+#if USE_SERVER
+#include "BWebServer.h"
+BentoWebServer webServer;
+#endif
+
 
 #if USE_OSC
 #include "OSCManager.h"
@@ -44,13 +66,14 @@ IMUManager imuManager;
 
 #if USE_LEDSTRIP
 #include "FastLED.h"
-
 #include "LedStripManager.h"
+
 #if USE_WIFI
 LedStripManager stripManager(wifiManager.streamingUDP);
 #else
 LedStripManager stripManager;
 #endif
+
 #endif
 
 #if USE_TOUCH
@@ -79,62 +102,61 @@ void onButtonEvent(int type)
 
   switch (type)
   {
-    case BT_PRESSED:
-      {
+  case BT_PRESSED:
+  {
 #if USE_LEDSTRIP
-        if (stripManager.currentMode == LedStripManager::Mode::Pattern) stripManager.pm.nextPattern();
+    if (stripManager.currentMode == LedStripManager::Mode::Pattern)
+      stripManager.pm.nextPattern();
 #endif
 
 #if USE_OSC
-        OSCMessage msg("/touch/pressed");
-        msg.add(DeviceSettings::deviceID.c_str());
-        msg.add(1);
-        oscManager.sendMessage(msg);
+    OSCMessage msg("/touch/pressed");
+    msg.add(DeviceSettings::deviceID.c_str());
+    msg.add(1);
+    oscManager.sendMessage(msg);
 #endif
-      }
-      break;
+  }
+  break;
 
-    case BT_RELEASED:
-      {
+  case BT_RELEASED:
+  {
 #if USE_OSC
-        OSCMessage msg("/touch/pressed");
-        msg.add(DeviceSettings::deviceID.c_str());
-        msg.add(0);
-        oscManager.sendMessage(msg);
+    OSCMessage msg("/touch/pressed");
+    msg.add(DeviceSettings::deviceID.c_str());
+    msg.add(0);
+    oscManager.sendMessage(msg);
 
 #endif
-      }
-      break;
+  }
+  break;
 
-    case BT_SHORTPRESS:
-      {
+  case BT_SHORTPRESS:
+  {
 #if USE_OSC
-        OSCMessage msg("/touch/shortPress");
-        msg.add(DeviceSettings::deviceID.c_str());
-        oscManager.sendMessage(msg);
+    OSCMessage msg("/touch/shortPress");
+    msg.add(DeviceSettings::deviceID.c_str());
+    oscManager.sendMessage(msg);
 #endif
-      }
-      break;
+  }
+  break;
 
-    case BT_LONGPRESS:
-      sleep();
-      break;
+  case BT_LONGPRESS:
+    sleep();
+    break;
   }
 }
 
 void onMultipress(int count)
 {
-#if SERIAL_DEBUG
-  Serial.print("Multipress : ");
-  Serial.println(count);
-#endif
+  DBG("Multipress : "+String(count));
 
   if (count == 2)
   {
 #if USE_LEDSTRIP
     stripManager.nextMode();
 #endif
-  } else if (count == 3)
+  }
+  else if (count == 3)
   {
 #if USE_LEDSTRIP
     stripManager.pm.setPattern(stripManager.pm.Fish);
@@ -146,11 +168,11 @@ void onMultipress(int count)
 void wifiConnectingUpdate(int curTry)
 {
 #if USE_LEDSTRIP
-  setRange(0, curTry % NUM_LEDS, CRGB(0,20,20), true);
+  setRange(0, curTry % NUM_LEDS, CRGB(0, 20, 20), true);
 #endif
 
-  if (btManager.buttonIsPressed()) wifiManager.cancelConnection();
-
+  if (btManager.buttonIsPressed())
+    wifiManager.cancelConnection();
 }
 
 void wifiConfigSaved()
@@ -163,12 +185,7 @@ void wifiConfigSaved()
 void touchUpdate(int touchID, bool touched)
 {
 
-#if SERIAL_DEBUG
-  Serial.print("t\t");
-  Serial.print(touchID);
-  Serial.print("\t");
-  Serial.println(touched);
-#endif
+  DBG("Touch "+String(touchID)+" : "+String((int)touched));
 
 #if USE_OSC
   OSCMessage msg("/touch");
@@ -201,61 +218,60 @@ void orientationUpdate(float yaw, float pitch, float roll)
 }
 #endif
 
-
 #if USE_OSC
 void messageReceived(OSCMessage &msg)
 {
-#if SERIAL_DEBUG
-  Serial.print("OSC Message received : ");
   char address[256];
   msg.getAddress(address);
-  Serial.println(address);
-#endif
+  DBG("OSC Message received : "+String(address));
 
   if (msg.match("/reset"))
   {
     resetESP(false);
-  } else if (msg.match("/bootloader"))
+  }
+  else if (msg.match("/bootloader"))
   {
     resetESP(true);
-  } else if (msg.match("/sleep"))
+  }
+  else if (msg.match("/sleep"))
   {
     sleep();
-  } else if(msg.match("/battery"))
+  }
+  else if (msg.match("/battery"))
   {
-      batteryLevelUpdate();
-  }else
+    batteryLevelUpdate();
+  }
+  else
   {
-    if(settings.handleMessage(msg)) return;
-    
-    if (wifiManager.handleMessage(msg)) return;
+    if (settings.handleMessage(msg))
+      return;
+
+    if (wifiManager.handleMessage(msg))
+      return;
 #if USE_TOUCH
-    if (touchManager.handleMessage(msg)) return;
+    if (touchManager.handleMessage(msg))
+      return;
 #endif
 
 #if USE_LEDSTRIP
-    if (stripManager.handleMessage(msg)) return;
+    if (stripManager.handleMessage(msg))
+      return;
 #endif
 
 #if USE_IR
-    if (irManager.handleMessage(msg)) return;
+    if (irManager.handleMessage(msg))
+      return;
 #endif
 
-#if SERIAL_DEBUG
-    Serial.println("...message not handled");
-#endif
+    DBG("...message not handled");
   }
-
 }
 #endif
-
 
 #if USE_BATTERY
 void batteryCriticalLevel()
 {
-#if DEBUG_SERIAL
-  Serial.println("CRITICAL LEVEL, DEEP SLEEP !");
-#endif
+  DBG("CRITICAL LEVEL, DEEP SLEEP !");
 
 #if USE_LEDSTRIP
   for (int i = 0; i < 5; i++)
@@ -298,7 +314,6 @@ void batteryLevelUpdate()
 }
 #endif
 
-
 void resetESP(bool toBootloader)
 {
   if (toBootloader)
@@ -309,7 +324,6 @@ void resetESP(bool toBootloader)
 
   ESP.restart();
 }
-
 
 void sleep()
 {
@@ -325,7 +339,6 @@ void sleep()
     delay(20);
   }
 
-
   for (int i = NUM_LEDS; i > 0; i--)
   {
     setRange(0, i, CHSV(h, 255, 60), true);
@@ -340,7 +353,8 @@ void sleep()
 }
 
 //Setup & loop
-void setup() {
+void setup()
+{
   Serial.begin(115200);
   Serial.println("");
 
@@ -355,11 +369,9 @@ void setup() {
   Wire.begin(2, 4);
   settings.init();
 
-#if SERIAL_DEBUG
-  Serial.println("BentoV4 Initialization. (DeviceID : "+String(settings.deviceID)+")");
+  DBG("BentoV4 Initialization. (DeviceID : " + String(settings.deviceID) + ")");
   //Serial.println(ESP.getResetReason());
-  Serial.println("Will init all modules");
-#endif
+  DBG("Will init all modules");
 
 #if USE_IR
   irManager.init();
@@ -381,16 +393,15 @@ void setup() {
 #else
   int h = 150;
 #endif
-  
+
   for (int i = 0; i < NUM_LEDS; i++)
   {
-    setRange(0, i, CHSV(h, 255, 60) , true);
+    setRange(0, i, CHSV(h, 255, 60), true);
     delay(10);
   }
 
   delay(50);
 #endif
-
 
 #if USE_TOUCH
   touchManager.init();
@@ -402,6 +413,9 @@ void setup() {
   imuManager.addCallbackOrientationUpdate(&orientationUpdate);
 #endif
 
+#if USE_FILES
+  fileManager.init();
+#endif
 
   //WiFi & OSC
 #if USE_WIFI
@@ -414,49 +428,54 @@ void setup() {
 #if USE_OSC
     oscManager.isReadyToSend = true;
 #endif
-    if(!wifiManager.apMode) setFullColor(CRGB(5,20,0));
-    else setFullColor(CRGB(15,15,0));
-    
+    if (!wifiManager.apMode)
+      setFullColor(CRGB(5, 20, 0));
+    else
+      setFullColor(CRGB(15, 15, 0));
+
     delay(300);
-  } else
+  }
+  else
   {
     if (wifiManager.turnOffWiFi)
     {
       for (int i = 0; i < 3; i++)
       {
-        setFullColor(CRGB(20,0,20));
+        setFullColor(CRGB(20, 0, 20));
         delay(100);
       }
-    } else
+    }
+    else
     {
-      setFullColor(CRGB(20,0,0));
+      setFullColor(CRGB(20, 0, 0));
       delay(300);
     }
   }
 
-
   setFullColor(CRGB::Black);
-#endif
+#endif // WIFI/LEDSTRIP
 
 #if USE_OSC
   oscManager.init();
   oscManager.addCallbackMessageReceived(&messageReceived);
 #endif
 
+#if USE_SERVER
+  webServer.init();
+  
 #endif
 
+#endif // WIFI
 
 #if USE_LEDSTRIP
   setFullColor(CRGB::Black);
 #endif
 
-#if SERIAL_DEBUG
-  Serial.println("Bento is READY :)");
-#endif
+  DBG("Bento is READY :)");
 }
 
-
-void loop() {
+void loop()
+{
 
   btManager.update();
 
@@ -467,8 +486,11 @@ void loop() {
   oscManager.update();
 #endif
 
+#if USE_SERVER
+  webServer.update();
 #endif
 
+#endif //WIFI
 
 #if USE_TOUCH
   touchManager.update();
@@ -486,27 +508,26 @@ void loop() {
   batteryManager.update();
 #endif
 
-   
   //processSerial();
 }
 
 void processSerial()
 {
-  if (Serial.available()  == 0) return;
+  if (Serial.available() == 0)
+    return;
 
   while (Serial.available() > 0)
   {
     char c = Serial.read();
     switch (c)
     {
-      case 'r':
-        resetESP(false);
-        break;
+    case 'r':
+      resetESP(false);
+      break;
 
-      case 'b':
-        resetESP(true);
-        break;
-
+    case 'b':
+      resetESP(true);
+      break;
     }
   }
 }

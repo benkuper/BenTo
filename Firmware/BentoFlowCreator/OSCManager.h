@@ -34,9 +34,7 @@ class OSCManager
 
     void init()
     {
-#if SERIAL_DEBUG
-      Serial.println("OCSManager init.");
-#endif
+        DBG("OCSManager init.");
     }
 
     void update()
@@ -64,11 +62,8 @@ class OSCManager
 
             msgIN.getString(0, remoteHost, 32);
 
-#if SERIAL_DEBUG
-            Serial.print("Got yo request from : ");
-            Serial.println(remoteHost);
-#endif
-
+            DBG("Got yo request from : "+String(remoteHost));
+           
            OSCMessage msg("/wassup");
            msg.add(ipToString().c_str());
             msg.add(DeviceSettings::deviceID.c_str());
@@ -81,9 +76,7 @@ class OSCManager
           }
         } else
         {
-#if SERIAL_DEBUG
-          Serial.println("Msg got error");
-#endif
+            DBG("Msg got error");
         }
       }
     }
@@ -94,11 +87,9 @@ class OSCManager
      
       if (!isReadyToSend) return;
       
-#if SERIAL_DEBUG
       char addr[32];
       msg.getAddress(addr);
-      Serial.println("Send OSC message " + String(addr)+", isReadyToSend ? "+String(isReadyToSend));
-#endif
+      DBG("Send OSC message " + String(addr)+", isReadyToSend ? "+String(isReadyToSend));
 
       udp.beginPacket(host, port);
       msg.send(udp);

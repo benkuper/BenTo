@@ -4,7 +4,6 @@
 #include "DeviceSettings.h"
 #include <WiFi.h>
 
-#define USE_SERVER 0
 #if USE_BONJOUR
 #else
 #include <WiFiUDP.h>
@@ -14,9 +13,6 @@
 #include <OSCMessage.h>
 #endif
 
-#if USE_SERVER
-#include "WiFiSettingsServer.h";
-#endif
 
 class WiFiManager
 {
@@ -34,9 +30,6 @@ class WiFiManager
     bool apMode;
     bool turnOffWiFi;
 
-#if USE_SERVER
-    WiFiSettingsServer wServer;
-#endif
 
     WiFiManager() {
       turnOffWiFi = false;
@@ -47,35 +40,26 @@ class WiFiManager
 
     void init()
     {
-#if SERIAL_DEBUG
-      Serial.println("WiFiManager init.");
-#endif
+       DBG("WiFiManager init.");
 
       // Connect to WiFi network
 
-
       WiFi.mode(WIFI_STA);
-#if SERIAL_DEBUG
       WiFi.printDiag(Serial);
-      Serial.println(String("WiFiManager connecting to " + ssid + " : " + password));
-#endif;
+      DBG(String("WiFiManager connecting to " + ssid + " : " + password));
 
       WiFi.begin(ssid.c_str(), password.c_str());
 
       int tryIndex = 0;
       bool success = true;
 
-#if SERIAL_DEBUG
-      Serial.print("Connecting : ");
-#endif
+      DBG("Connecting : ");
 
       // Wait for connection
       while (WiFi.status() != WL_CONNECTED && !turnOffWiFi) {
         delay(500);
 
-#if SERIAL_DEBUG
-        Serial.print("*");
-#endif
+      DBG("*");
 
         if (tryIndex >= maxTries)
         {
@@ -86,19 +70,20 @@ class WiFiManager
         tryIndex++;
       }
 
-#if SERIAL_DEBUG
-      if (!success) Serial.print("Failed");
-      Serial.println();
-#endif
+
+      if(!success)
+      {
+            DBG("Failed");
+      }
+
+      DBG("");
 
       if (!success || turnOffWiFi)
       {
         if (turnOffWiFi)
         {
           WiFi.mode(WIFI_OFF);
-#if SERIAL_DEBUG
-          Serial.println("Turn OFF WiFi");
-#endif
+         DBG("Turn OFF WiFi");
           return;
         } else
         {
@@ -108,40 +93,21 @@ class WiFiManager
         }
       }
 
-
-
-#if SERIAL_DEBUG
       if (apMode)
       {
-        Serial.println("");
-        Serial.print("WiFi AP created, IP address: ");
-        Serial.println(WiFi.softAPIP());
+        DBG("WiFi AP created, IP address: "+String(WiFi.softAPIP()));
       } else
       {
-        Serial.println("");
-        Serial.print("Connected to ");
-        Serial.println(ssid);
-        Serial.print("IP address: ");
-        Serial.println(WiFi.localIP());
+        DBG("Connected to "+String(ssid)+", IP address: "+String(WiFi.localIP()));
       }
 
-#endif
       delay(500);
 
-#if SERIAL_DEBUG
-      Serial.print("Setting up UDP...");
-#endif
-
+      DBG("Setting up UDP...");
       oscUDP.begin(9000);
       streamingUDP.begin(8888);
+      DBG("UPD is init.");
 
-#if SERIAL_DEBUG
-      Serial.println("OK");
-#endif
-
-
-#if USE_BONJOUR
-#endif
 
       isConnected = true;
       delay(500);
@@ -159,33 +125,12 @@ class WiFiManager
       //String macString((const char *)mac);
       String wifiString(String("BenTo v4.2 ") +  settings.deviceID);
 
-#if SERIAL_DEBUG
-      Serial.print("Setting up AP WiFi : ");
-      Serial.println(wifiString);
-#endif
-
-
+      DBG("Setting up AP WiFi : "+wifiString);
       WiFi.softAP(wifiString.c_str());
-
-#if USE_SERVER
-      wServer.init();
-#endif //end USE_SERVER
     }
 
     void update()
     {
-#if USE_SERVER
-      if (apMode)
-      {
-        wServer.update();
-        if (wServer.ssid.length() > 0)
-        {
-          Serial.println("WiFi Manager saving config...");
-          saveWiFiConfig(wServer.ssid.c_str(), wServer.pass.c_str());
-
-        }
-      }
-#endif
     }
 
 #if USE_OSC

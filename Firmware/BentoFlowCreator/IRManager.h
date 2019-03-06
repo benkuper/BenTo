@@ -17,10 +17,8 @@ public:
   
   void init()
   {
-     #if SERIAL_DEBUG
-      Serial.println("IR Manager init.");
-     #endif
-
+     DBG("IR Manager init.");
+     
       irFactor = 0;
       irState = 0;
       //pinMode(IR_PIN, OUTPUT);

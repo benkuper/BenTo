@@ -1,3 +1,6 @@
+#ifndef BUTTONMANAGER_H
+#define BUTTONMANAGER_H
+
 #define BUTTON_PIN 13
 #define LONGPRESS_TIME 700 //more than 500ms is long press
 #define SHORTPRESS_TIME 500 //less than 500ms is short press
@@ -95,3 +98,5 @@ public:
   }
   static void onMultipressDefaultCallback(int count) {}
 };
+
+#endif
