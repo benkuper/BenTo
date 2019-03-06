@@ -30,7 +30,7 @@ NodeConnection::~NodeConnection()
 
 void NodeConnection::dispatchParameterUpdate(Parameter * p)
 {
-	if (destSlot != nullptr && !destSlot.wasObjectDeleted() && destSlot->type == ConnectionType::Number)
+	if (destSlot != nullptr && !destSlot.wasObjectDeleted() && destSlot->type != ConnectionType::ColorBlock)
 	{
 		((ParameterSlot *)destSlot.get())->handleParameterUpdate(p);
 	}

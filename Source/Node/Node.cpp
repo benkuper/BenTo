@@ -74,11 +74,9 @@ void Node::removeSlot(bool isInput, NodeConnectionSlot * s)
 		s->removeSlotListener(this);
 		if (isInput)
 		{
-			DBG("Enter lock remove here");
 			inSlots.getLock().enter();
 			inSlots.removeObject(s, false);
 			inSlots.getLock().exit();
-			DBG("Exit lock remove");
 		}
 		else outSlots.removeObject(s, false);
 		nodeListeners.call(&NodeListener::slotRemoved, this, s, isInput);
@@ -154,7 +152,6 @@ var Node::getParameterValue(Parameter * p, var params)
 
 void Node::fillWithLocalParams(var params)
 {
-	DBG("Enter lock fill");
 	inSlots.getLock().enter();
 	for (auto &s : inSlots)
 	{
@@ -183,7 +180,6 @@ void Node::fillWithLocalParams(var params)
 		
 	}
 	inSlots.getLock().exit();
-	DBG("Exit lock fill");
 }
 
 NodeViewUI * Node::createUI()
