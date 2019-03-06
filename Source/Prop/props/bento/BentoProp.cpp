@@ -75,7 +75,7 @@ void BentoProp::uploadBakedData(BakeData data)
 	NLOG(niceName, "Uploading " << target << " to " << fileName << " :\n > " << data.numFrames << " frames\n > " << data.data.getSize() << " bytes");
 
 
-	MemoryBlock * dataToSend = &data.data;
+	MemoryBlock dataToSend = data.data;
 
 	MemoryOutputStream os;
 
@@ -88,13 +88,13 @@ void BentoProp::uploadBakedData(BakeData data)
 		builder.addEntry(iis, 9, "data", Time::getCurrentTime());
 		
 		builder.writeToStream(os, nullptr);
-		dataToSend = &os.getMemoryBlock();
+		dataToSend = os.getMemoryBlock();
 		
 	
 		//url = URL(target).withDataToUpload("fupload",, "application/zip");
 	}
 	
-	url = URL(target).withDataToUpload("fupload", fileName, *dataToSend, sendCompressedFile->boolValue()?"application/zip":"text/plain");
+	url = URL(target).withDataToUpload("fupload", fileName, dataToSend, sendCompressedFile->boolValue()?"application/zip":"text/plain");
 
 
 
