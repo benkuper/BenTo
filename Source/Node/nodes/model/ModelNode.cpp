@@ -66,7 +66,7 @@ void ModelNode::buildSlots()
 } 
 Array<Colour> ModelNode::getColors(Prop * p, double time, var params)
 {
-	if (currentBlock == nullptr) return ColorNode::getColors(p, time, params);
+	if (currentBlock == nullptr) return ColorNode::getColorsInternal(p, time, params);
 
 	fillWithLocalParams(params);
 	return currentBlock->getColors(p, time, params);

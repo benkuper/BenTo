@@ -13,6 +13,8 @@
 TimelineEditor::TimelineEditor(const String &contentName) :
 	TimeMachineView(contentName)
 {
+	TimelineBlock * b = InspectableSelectionManager::mainSelectionManager->getInspectableAs<TimelineBlock>();
+	if (b != nullptr) setSequence(&b->sequence);
 }
 
 TimelineEditor::~TimelineEditor()
@@ -20,8 +22,8 @@ TimelineEditor::~TimelineEditor()
 
 }
 
-void TimelineEditor::inspectablesSelectionChanged()
-{
-	TimelineBlock * b = InspectableSelectionManager::mainSelectionManager->getInspectableAs<TimelineBlock>();
-	if (b != nullptr) setSequence(&b->sequence);
-}
+//void TimelineEditor::inspectablesSelectionChanged()
+//{
+//	TimelineBlock * b = InspectableSelectionManager::mainSelectionManager->getInspectableAs<TimelineBlock>();
+//	if (b != nullptr) setSequence(&b->sequence);
+//}

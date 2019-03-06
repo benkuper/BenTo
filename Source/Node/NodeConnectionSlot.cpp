@@ -49,6 +49,22 @@ Array<Colour> ColorSlot::getColors(Prop * p, double time, var params)
 	return result;
 }
 
+NodeConnectionSlot::NodeConnectionSlot(Node * node, bool isInput, StringRef name, StringRef id, ConnectionType type) : 
+	node(node),
+	isInput(isInput),
+	name(name), 
+	id(id), 
+	type(type) 
+{
+
+}
+
+NodeConnectionSlot::~NodeConnectionSlot() 
+{ 
+	while (connections.size() > 0) connections[0]->remove();
+	masterReference.clear(); 
+}
+
 bool NodeConnectionSlot::isConnected()
 {
 	return connections.size() > 0;
@@ -57,11 +73,13 @@ bool NodeConnectionSlot::isConnected()
 void NodeConnectionSlot::addConnection(NodeConnection * c)
 {
 	connections.add(c);
+	slotListeners.call(&SlotListener::connectionAdded, this, c);
 }
 
 void NodeConnectionSlot::removeConnection(NodeConnection * c)
 {
 	connections.removeAllInstancesOf(c);
+	slotListeners.call(&SlotListener::connectionRemoved, this, c);
 }
 
 

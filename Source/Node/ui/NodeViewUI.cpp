@@ -11,18 +11,20 @@
 #include "NodeViewUI.h"
 #include "NodeConnectionUI.h"
 
-NodeViewUI::NodeViewUI(Node * node, Direction Direction) :
-	BaseItemUI(node, Direction),
+NodeViewUI::NodeViewUI(Node * node, Direction direction) :
+	BaseItemUI(node, direction, Direction::ALL),
 	propToPreview(nullptr)
 {
 	for (auto & s : node->inSlots) addConnector(true, s, false);
 	for (auto & s : node->outSlots) addConnector(false, s, false);
 	
+	node->addAsynNodeListener(this);
 	showEnableBT = false;
 }
 
 NodeViewUI::~NodeViewUI()
 {
+	if (!inspectable.wasObjectDeleted()) item->removeAsyncNodeListener(this);
 }
 
 
@@ -131,7 +133,7 @@ void NodeViewUI::newMessage(const Node::NodeEvent & e)
 	case Node::NodeEvent::OUTSLOT_REMOVED:
 	{
 
-		bool isInput = e.type == Node::NodeEvent::INSLOT_ADDED;
+		bool isInput = e.type == Node::NodeEvent::INSLOT_REMOVED;
 		removeConnector(isInput, getConnectorWithName(isInput, e.params.toString()));
 	}
 	break;

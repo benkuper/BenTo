@@ -21,7 +21,8 @@ public:
 	String paramType;
 	Parameter * parameter;
 
-	
+	virtual void connectionAdded(NodeConnectionSlot * s, NodeConnection * c) override;
+
 	String getTypeString() const override { return paramType; }
 	static ParameterNode * create(var params) { return new ParameterNode(params); }
 

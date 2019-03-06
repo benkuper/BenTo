@@ -14,7 +14,8 @@
 #include "ParameterNode.h"
 
 class ParameterNodeViewUI :
-	public NodeViewUI
+	public NodeViewUI,
+	public Parameter::AsyncListener
 {
 public:
 	ParameterNodeViewUI(ParameterNode * pn);
@@ -23,5 +24,8 @@ public:
 	ParameterNode * pn;
 	ScopedPointer<ControllableUI> pui;
 
+	void buildParameterUI();
 	void resizedInternalContent(Rectangle<int> &r) override;
+
+	void newMessage(const Parameter::ParameterEvent &e) override;
 };

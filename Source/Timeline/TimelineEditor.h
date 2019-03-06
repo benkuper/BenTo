@@ -19,7 +19,7 @@ public:
 	TimelineEditor(const String &contentName = "Timeline Editor");
 	~TimelineEditor();
 
-	virtual void inspectablesSelectionChanged() override;
+	//virtual void inspectablesSelectionChanged() override;
 
 	static TimelineEditor * create(const String &contentName) { return new TimelineEditor(contentName); }
 };

@@ -160,11 +160,11 @@ void NodeManagerUI::mouseUp(const MouseEvent & e)
 void NodeManagerUI::mouseEnter(const MouseEvent & e)
 {
 	BaseManagerViewUI::mouseEnter(e);
-	NodeViewUI::Connector * c = dynamic_cast<NodeViewUI::Connector *>(e.originalComponent);
+	/*NodeViewUI::Connector * c = dynamic_cast<NodeViewUI::Connector *>(e.originalComponent);
 	if (c != nullptr)
 	{
 		DBG("Mouse Enter on connector : " << c->slot->node->niceName << ":" << c->slot->name);
-	}
+	}*/
 }
 
 

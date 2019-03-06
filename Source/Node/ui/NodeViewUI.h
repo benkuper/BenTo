@@ -42,8 +42,6 @@ public:
 	Connector * getConnectorWithName(bool isInput, const String &name);
 
 
-
-
 	void newMessage(const Node::NodeEvent &e) override;
 
 	class Connector :

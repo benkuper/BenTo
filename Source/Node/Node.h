@@ -18,7 +18,8 @@ class NodeViewUI;
 class NodeConnection;
 
 class Node :
-	public BaseItem
+	public BaseItem,
+	public NodeConnectionSlot::SlotListener
 {
 public:
 	Node(const String &name = "Node", var params = var());
@@ -76,7 +77,7 @@ public:
 	QueuedNotifier<NodeEvent> nodeNotifier;
 	typedef QueuedNotifier<NodeEvent>::Listener AsyncListener;
 
-	void addAsynNodeistener(AsyncListener* newListener) { nodeNotifier.addListener(newListener); }
+	void addAsynNodeListener(AsyncListener* newListener) { nodeNotifier.addListener(newListener); }
 	void addAsyncCoalescedNodeListener(AsyncListener* newListener) { nodeNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncNodeListener(AsyncListener* listener) { nodeNotifier.removeListener(listener); }
 

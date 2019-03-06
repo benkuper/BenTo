@@ -15,13 +15,16 @@ NodeBlockEditor::NodeBlockEditor(const String & contentName) :
 	nodeBlock(nullptr),
 	nodeBlockRef(nullptr)
 {
-	InspectableSelectionManager::mainSelectionManager->addAsyncSelectionManagerListener(this);
+	//InspectableSelectionManager::mainSelectionManager->addAsyncSelectionManagerListener(this);
 	addAndMakeVisible(&toolbox);
+
+	NodeBlock * b = InspectableSelectionManager::mainSelectionManager->getInspectableAs<NodeBlock>();
+	if (b != nullptr) setNodeBlock(b);
 }
 
 NodeBlockEditor::~NodeBlockEditor()
 {
-	if (InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeAsyncSelectionManagerListener(this);
+	//if (InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeAsyncSelectionManagerListener(this);
 	setNodeBlock(nullptr);
 }
 
@@ -78,9 +81,11 @@ void NodeBlockEditor::inspectableDestroyed(Inspectable * i)
 
 void NodeBlockEditor::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 {
+	/*
 	if (e.type == InspectableSelectionManager::SelectionEvent::SELECTION_CHANGED)
 	{
 		NodeBlock * b = e.selectionManager->getInspectableAs<NodeBlock>();
 		if (b != nullptr) setNodeBlock(b);
 	}
+	*/
 }

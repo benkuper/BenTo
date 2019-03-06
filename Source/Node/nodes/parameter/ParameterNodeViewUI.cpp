@@ -14,18 +14,35 @@ ParameterNodeViewUI::ParameterNodeViewUI(ParameterNode * pn) :
 	NodeViewUI(pn, Direction::NONE),
 	pn(pn)
 {
-	pui = pn->parameter->createDefaultUI();
-	addAndMakeVisible(pui);
-
 	bgColor = BLUE_COLOR.withSaturation(.3f).withBrightness(.3f);
+
+	pn->parameter->addAsyncParameterListener(this);
+	buildParameterUI();
 }
 
 ParameterNodeViewUI::~ParameterNodeViewUI()
 {
+	if (pn != nullptr && pn->parameter != nullptr) pn->parameter->removeAsyncParameterListener(this);
+}
+
+void ParameterNodeViewUI::buildParameterUI()
+{
+	if (pui != nullptr) removeChildComponent(pui);
+	pui = pn->parameter->createDefaultUI();
+	addAndMakeVisible(pui);
+	resized();
 }
 
 void ParameterNodeViewUI::resizedInternalContent(Rectangle<int>& r)
 {
 	r.setSize(200, 20);
 	pui->setBounds(r);
+}
+
+void ParameterNodeViewUI::newMessage(const Parameter::ParameterEvent & e)
+{
+	if (e.type == Parameter::ParameterEvent::BOUNDS_CHANGED)
+	{
+		buildParameterUI();
+	}
 }

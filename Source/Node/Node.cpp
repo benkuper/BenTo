@@ -36,6 +36,7 @@ ParameterSlot * Node::addParameterSlot(bool isInput, Parameter * p)
 	if (s == nullptr)
 	{
 		s = new ParameterSlot(this, isInput, p);
+		s->addSlotListener(this);
 		if (isInput) inSlots.add(s);
 		else outSlots.add(s);
 		nodeListeners.call(&NodeListener::slotAdded, this, s, isInput);
@@ -51,6 +52,7 @@ ColorSlot * Node::addColorSlot(bool isInput, const String & name)
 	if (s == nullptr)
 	{
 		s = new ColorSlot(this, isInput, name);
+		s->addSlotListener(this);
 		if (isInput) inSlots.add(s);
 		else outSlots.add(s);
 		nodeListeners.call(&NodeListener::slotAdded, this, s, isInput);
@@ -69,7 +71,15 @@ void Node::removeSlot(bool isInput, NodeConnectionSlot * s)
 {
 	if (s != nullptr)
 	{
-		if (isInput) inSlots.removeObject(s, false);
+		s->removeSlotListener(this);
+		if (isInput)
+		{
+			DBG("Enter lock remove here");
+			inSlots.getLock().enter();
+			inSlots.removeObject(s, false);
+			inSlots.getLock().exit();
+			DBG("Exit lock remove");
+		}
 		else outSlots.removeObject(s, false);
 		nodeListeners.call(&NodeListener::slotRemoved, this, s, isInput);
 		nodeNotifier.addMessage(new NodeEvent(isInput ? NodeEvent::INSLOT_REMOVED : NodeEvent::OUTSLOT_REMOVED, this, s, s->name));
@@ -144,12 +154,15 @@ var Node::getParameterValue(Parameter * p, var params)
 
 void Node::fillWithLocalParams(var params)
 {
+	DBG("Enter lock fill");
+	inSlots.getLock().enter();
 	for (auto &s : inSlots)
 	{
 		if (s->type == ConnectionType::ColorBlock) continue;
 
 		if (s->isConnected())
 		{
+			if (s->connections[0]->sourceSlot == nullptr) continue;
 			ParameterNode * pn = dynamic_cast<ParameterNode *>(s->connections[0]->sourceSlot->node);
 			if (pn == nullptr) continue;
 			if (params.isVoid()) params = new DynamicObject();
@@ -167,7 +180,10 @@ void Node::fillWithLocalParams(var params)
 				params.getDynamicObject()->setProperty(s->id, value);
 			}
 		}
+		
 	}
+	inSlots.getLock().exit();
+	DBG("Exit lock fill");
 }
 
 NodeViewUI * Node::createUI()

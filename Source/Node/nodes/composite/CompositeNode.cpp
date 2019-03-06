@@ -30,7 +30,7 @@ Array<Colour> CompositeNode::getColorsInternal(Prop * p, double time, var params
 	Array<Colour> col1 = c1->getColors(p, time, params);
 	Array<Colour> col2 = c2->getColors(p, time, params);
 	
-	BlendMode b = blendMode->getValueDataAsEnum<BlendMode>();
+	BlendMode b = (BlendMode)(int)getParameterValue(blendMode, params);
 
 	Array<Colour> result;
 	int resolution = p->resolution->intValue();

@@ -31,11 +31,12 @@ PositionRemapNode::~PositionRemapNode()
 Array<Colour> PositionRemapNode::getColorsInternal(Prop * p, double time, var params)
 {
 	int resolution = p->resolution->intValue();
+	float bPosition = (float)getParameterValue(position, params);
+	float bSize = (float)getParameterValue(size, params);
+	int startLed = (bPosition - bSize / 2) * resolution;
+	int endLed = (bPosition+bSize / 2) * resolution;
 
-	int startLed = (position->floatValue() - size->floatValue() / 2) * resolution;
-	int endLed = (position->floatValue() + size->floatValue() / 2) * resolution;
-
-	Array<Colour> result = ColorNode::getColors(p, time, params);
+	Array<Colour> result = ColorNode::getColorsInternal(p, time, params);
 	Array<Colour> c = inColors->getColors(p, time, params);
 
 	RemapMode m = mode->getValueDataAsEnum<RemapMode>();

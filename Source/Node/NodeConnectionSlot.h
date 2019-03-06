@@ -20,8 +20,8 @@ enum ConnectionType { Color, ColorBlock, Number };
 class NodeConnectionSlot
 {
 public:
-	NodeConnectionSlot(Node * node, bool isInput, StringRef name, StringRef id, ConnectionType type) : node(node), isInput(isInput), name(name), id(id), type(type) {}
-	virtual ~NodeConnectionSlot() { masterReference.clear(); }
+	NodeConnectionSlot(Node * node, bool isInput, StringRef name, StringRef id, ConnectionType type);
+	virtual ~NodeConnectionSlot();
 
 	Node * node;
 	bool isInput;
@@ -35,6 +35,19 @@ public:
 	virtual void addConnection(NodeConnection * c);
 	virtual void removeConnection(NodeConnection *c);
 
+	class  SlotListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~SlotListener() {}
+		virtual void connectionAdded(NodeConnectionSlot *, NodeConnection *) {}
+		virtual void connectionRemoved(NodeConnectionSlot *, NodeConnection *) {}
+	};
+
+
+	ListenerList<SlotListener> slotListeners;
+	void addSlotListener(SlotListener * newListener) { slotListeners.add(newListener); }
+	void removeSlotListener(SlotListener * listener) { slotListeners.remove(listener); }
 
 	WeakReference<NodeConnectionSlot>::Master masterReference;
 };
