@@ -15,6 +15,7 @@ LightBlockClipManager::LightBlockClipManager(LightBlockLayer * layer) :
 	layer(layer)
 {
 	itemDataType = "LightBlockClip";
+	blocksCanOverlap = true;
 }
 
 

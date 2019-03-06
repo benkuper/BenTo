@@ -42,9 +42,16 @@ void PropUI::paintOverChildren(Graphics & g)
 	BaseItemUI::paintOverChildren(g);
 	if (item->isBaking->boolValue())
 	{
-		g.fillAll(Colours::black.withAlpha(.5f));
-		g.setColour(Colours::orange);
-		g.drawFittedText("Baking ...", getLocalBounds(), Justification::centred, 1);
+		g.fillAll(Colours::black.withAlpha(.3f));
+		
+		g.setColour(Colours::orange.darker().withAlpha(.2f));
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->bakingProgress->floatValue()*getHeight()).toFloat(), 2);
+		
+		g.setColour(Colours::limegreen.darker().withAlpha(.2f));
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->uploadProgress->floatValue()*getHeight()).toFloat(), 2);
+
+		g.setColour(item->isUploading->boolValue() ? Colours::limegreen : Colours::orange);
+		g.drawFittedText(item->isUploading->boolValue()?"Uploading ...":"Baking...", getLocalBounds(), Justification::centred, 1);
 	}
 
 	if (isDraggingItemOver)
@@ -92,7 +99,7 @@ void PropUI::resizedInternalContent(Rectangle<int> &r)
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->isBaking) repaint();
+	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress) repaint();
 }
 
 bool PropUI::isInterestedInDragSource(const SourceDetails & source)

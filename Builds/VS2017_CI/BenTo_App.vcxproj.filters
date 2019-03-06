@@ -14,9 +14,6 @@
     <Filter Include="BenTo\Source\Identification">
       <UniqueIdentifier>{3C151171-CE25-CDDD-9297-CCA3FA02EB0E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\WebServer">
-      <UniqueIdentifier>{45FDB2B9-4C2E-C6B6-D0B6-63CA6D0FDFA9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Common\Serial\lib\serial\impl\list_ports">
       <UniqueIdentifier>{7012EFAC-74D5-90E1-A943-D1395DE39E9A}</UniqueIdentifier>
     </Filter>
@@ -157,6 +154,9 @@
     </Filter>
     <Filter Include="BenTo\Source\Prop\Cluster">
       <UniqueIdentifier>{F32AE84B-651D-BFC6-096C-2A59DD39A244}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\props\bento">
+      <UniqueIdentifier>{E839EA69-D9C2-6463-CF90-72329177C01B}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\props\lighttoys\ft\ui">
       <UniqueIdentifier>{5C052753-DAE7-C293-05FA-C7E9AC33F9A7}</UniqueIdentifier>
@@ -563,24 +563,6 @@
     <Filter Include="JUCE Modules\juce_gui_extra">
       <UniqueIdentifier>{A4D76113-9EDC-DA60-D89B-5BACF7F1C426}</UniqueIdentifier>
     </Filter>
-    <Filter Include="JUCE Modules\juce_mongoose\demo\JuceLibraryCode">
-      <UniqueIdentifier>{5AC706B4-51CD-E993-DA26-70BB960B955B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_mongoose\demo\Source">
-      <UniqueIdentifier>{683FCE1B-EDCA-427C-DC4C-A85C0FCF6A0E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_mongoose\demo">
-      <UniqueIdentifier>{004325DC-3FBA-705C-663A-FC4B6ECC0712}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_mongoose\mongoose\cpp_wrapper">
-      <UniqueIdentifier>{87B0E99D-D02A-9588-563E-5106289AF80D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_mongoose\mongoose">
-      <UniqueIdentifier>{0DED0FDF-1678-1629-0845-C7AEE417699F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_mongoose">
-      <UniqueIdentifier>{EDEA5DC2-A524-005A-FFD8-CFBBD7ACC1CA}</UniqueIdentifier>
-    </Filter>
     <Filter Include="JUCE Modules\juce_opengl\geometry">
       <UniqueIdentifier>{1A9221A3-E993-70B2-6EA2-8E1DB5FF646A}</UniqueIdentifier>
     </Filter>
@@ -789,9 +771,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Identification\IdentificationRuleManager.cpp">
       <Filter>BenTo\Source\Identification</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\WebServer\BentoWebServer.cpp">
-      <Filter>BenTo\Source\WebServer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\lib\serial\serial.cc">
       <Filter>BenTo\Source\Common\Serial\lib\serial\impl</Filter>
@@ -1044,6 +1023,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
       <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
+      <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.cpp">
       <Filter>BenTo\Source\Prop\props\lighttoys</Filter>
@@ -2896,93 +2878,6 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.mm">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_core.cpp">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_core.mm">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_data_structures.cpp">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_data_structures.mm">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_events.cpp">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_events.mm">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_graphics.cpp">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_graphics.mm">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_gui_basics.cpp">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_gui_basics.mm">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\include_juce_mongoose.cpp">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\demo\Source\Main.cpp">
-      <Filter>JUCE Modules\juce_mongoose\demo\Source</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Controller.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonController.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonResponse.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Mutex.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Request.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Response.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Server.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Session.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Sessions.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_StreamResponse.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_UploadFile.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Utils.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebController.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSocket.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSockets.cpp">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\mongoose\mongoose_api.c">
-      <Filter>JUCE Modules\juce_mongoose\mongoose</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\External\juce_mongoose\juce_mongoose.cpp">
-      <Filter>JUCE Modules\juce_mongoose</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_opengl\opengl\juce_OpenGLContext.cpp">
       <Filter>JUCE Modules\juce_opengl\opengl</Filter>
     </ClCompile>
@@ -3745,9 +3640,6 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_gui_extra.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JuceLibraryCode\include_juce_mongoose.cpp">
-      <Filter>JUCE Library Code</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
@@ -3770,9 +3662,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Identification\IdentificationRuleManager.h">
       <Filter>BenTo\Source\Identification</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\WebServer\BentoWebServer.h">
-      <Filter>BenTo\Source\WebServer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h">
       <Filter>BenTo\Source\Common\Serial\lib\cobs</Filter>
@@ -4013,6 +3902,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h">
       <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
+      <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.h">
       <Filter>BenTo\Source\Prop\props\lighttoys</Filter>
@@ -6024,69 +5916,6 @@
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.h">
       <Filter>JUCE Modules\juce_gui_extra</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\AppConfig.h">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\JuceHeader.h">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\demo\Source\MainComponent.h">
-      <Filter>JUCE Modules\juce_mongoose\demo\Source</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Controller.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonController.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_JsonResponse.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Mutex.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Request.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_RequestHandler.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Response.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Server.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Session.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Sessions.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_StreamResponse.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_UploadFile.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_Utils.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebController.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSocket.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\cpp_wrapper\mongoose_WebSockets.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose\cpp_wrapper</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\mongoose\mongoose_api.h">
-      <Filter>JUCE Modules\juce_mongoose\mongoose</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\External\juce_mongoose\juce_mongoose.h">
-      <Filter>JUCE Modules\juce_mongoose</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_opengl\geometry\juce_Draggable3DOrientation.h">
       <Filter>JUCE Modules\juce_opengl\geometry</Filter>
     </ClInclude>
@@ -6847,12 +6676,6 @@
     </None>
     <None Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\libpng_readme.txt">
       <Filter>JUCE Modules\juce_graphics\image_formats\pnglib</Filter>
-    </None>
-    <None Include="..\..\External\juce_mongoose\demo\JuceLibraryCode\ReadMe.txt">
-      <Filter>JUCE Modules\juce_mongoose\demo\JuceLibraryCode</Filter>
-    </None>
-    <None Include="..\..\External\juce_mongoose\README.md">
-      <Filter>JUCE Modules\juce_mongoose</Filter>
     </None>
     <None Include="..\..\..\JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\ReadMe.txt">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>

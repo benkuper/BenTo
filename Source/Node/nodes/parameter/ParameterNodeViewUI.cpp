@@ -11,7 +11,7 @@
 #include "ParameterNodeViewUI.h"
 
 ParameterNodeViewUI::ParameterNodeViewUI(ParameterNode * pn) :
-	NodeViewUI(pn, ResizeMode::NONE),
+	NodeViewUI(pn, Direction::NONE),
 	pn(pn)
 {
 	pui = pn->parameter->createDefaultUI();

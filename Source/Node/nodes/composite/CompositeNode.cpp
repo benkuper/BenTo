@@ -25,7 +25,7 @@ CompositeNode::~CompositeNode()
 {
 }
 
-Array<Colour> CompositeNode::getColors(Prop * p, double time, var params)
+Array<Colour> CompositeNode::getColorsInternal(Prop * p, double time, var params)
 {
 	Array<Colour> col1 = c1->getColors(p, time, params);
 	Array<Colour> col2 = c2->getColors(p, time, params);

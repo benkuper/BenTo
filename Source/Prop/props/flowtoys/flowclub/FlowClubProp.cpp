@@ -14,6 +14,8 @@ FlowClubProp::FlowClubProp(var params) :
 	FlowtoysProp(getTypeString(),params)
 {
 	resolution->setValue(32);
+	button = sensorsCC.addBoolParameter("Button", "Is the button on the prop pressed ?", false);
+	button->setControllableFeedbackOnly(true);
 }
 
 FlowClubProp::~FlowClubProp()

@@ -28,7 +28,7 @@ PositionRemapNode::~PositionRemapNode()
 {
 }
 
-Array<Colour> PositionRemapNode::getColors(Prop * p, double time, var params)
+Array<Colour> PositionRemapNode::getColorsInternal(Prop * p, double time, var params)
 {
 	int resolution = p->resolution->intValue();
 

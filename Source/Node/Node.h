@@ -37,6 +37,8 @@ public:
 	ParameterSlot * getParameterSlot(Parameter * p, bool isInput);
 
 	var getParameterValue(Parameter * p, var params);
+
+	void fillWithLocalParams(var params);
 	
 	virtual NodeViewUI * createUI();
 

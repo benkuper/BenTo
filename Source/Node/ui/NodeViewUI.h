@@ -20,7 +20,7 @@ class NodeViewUI :
 public:
 	class Connector;
 
-	NodeViewUI(Node * node, ResizeMode resizeMode = ResizeMode::ALL);
+	NodeViewUI(Node * node, Direction Direction = Direction::ALL);
 	~NodeViewUI();
 
 	const int connectorSize = 10;

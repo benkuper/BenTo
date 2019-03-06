@@ -142,6 +142,34 @@ var Node::getParameterValue(Parameter * p, var params)
 	return params.getProperty(n->shortName, p->getValue());
 }
 
+void Node::fillWithLocalParams(var params)
+{
+	for (auto &s : inSlots)
+	{
+		if (s->type == ConnectionType::ColorBlock) continue;
+
+		if (s->isConnected())
+		{
+			ParameterNode * pn = dynamic_cast<ParameterNode *>(s->connections[0]->sourceSlot->node);
+			if (pn == nullptr) continue;
+			if (params.isVoid()) params = new DynamicObject();
+
+			NamedValueSet set = params.getDynamicObject()->getProperties();
+			for (auto & nv : set)
+			{
+				DBG(nv.name + " > " + nv.value.toString());
+			}
+
+			if (params.hasProperty(pn->shortName))
+			{
+				var value = params.getProperty(pn->shortName, pn->parameter->getValue());
+				DBG(s->id + " > " + value.toString());
+				params.getDynamicObject()->setProperty(s->id, value);
+			}
+		}
+	}
+}
+
 NodeViewUI * Node::createUI()
 {
 	return new NodeViewUI(this);

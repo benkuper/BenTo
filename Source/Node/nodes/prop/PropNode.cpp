@@ -23,7 +23,7 @@ PropNode::~PropNode()
 {
 }
 
-Array<Colour> PropNode::getColors(Prop * p, double time, var params)
+Array<Colour> PropNode::getColorsInternal(Prop * p, double time, var params)
 {
 	Array<Colour> c = inColors->getColors(p, time, params);
 	if (c.size() == 0) c = ColorNode::getColors(p, time, params);

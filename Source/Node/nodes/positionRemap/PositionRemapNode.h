@@ -29,7 +29,7 @@ public:
 	ParameterSlot * positionSlot;
 	ParameterSlot * sizeSlot;
 
-	Array<Colour> getColors(Prop * p, double time, var params) override;
+	Array<Colour> getColorsInternal(Prop * p, double time, var params) override;
 
 	String getTypeString() const override { return "Position Remap"; }
 	static PositionRemapNode * create(var params) { return new PositionRemapNode(params); }

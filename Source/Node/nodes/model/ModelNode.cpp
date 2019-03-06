@@ -67,32 +67,8 @@ void ModelNode::buildSlots()
 Array<Colour> ModelNode::getColors(Prop * p, double time, var params)
 {
 	if (currentBlock == nullptr) return ColorNode::getColors(p, time, params);
-	
-	for (auto &s : inSlots)
-	{
-		if (s->type == ConnectionType::ColorBlock) continue;
 
-		if (s->isConnected())
-		{
-			ParameterNode * pn = dynamic_cast<ParameterNode *>(s->connections[0]->sourceSlot->node);
-			if (pn == nullptr) continue;
-			if (params.isVoid()) params = new DynamicObject();
-			
-			NamedValueSet set = params.getDynamicObject()->getProperties();
-			for (auto & nv : set)
-			{
-				DBG(nv.name + " > " + nv.value.toString());
-			}
-
-			if (params.hasProperty(pn->shortName))
-			{
-				var value = params.getProperty(pn->shortName, pn->parameter->getValue());
-				DBG(s->id + " > " + value.toString());
-				params.getDynamicObject()->setProperty(s->id, value);
-			}
-		}
-	}
-
+	fillWithLocalParams(params);
 	return currentBlock->getColors(p, time, params);
 }
 

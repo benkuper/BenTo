@@ -20,7 +20,7 @@ public:
 
 	ColorSlot * inColors;
 
-	Array<Colour> getColors(Prop * p, double time, var params) override;
+	Array<Colour> getColorsInternal(Prop * p, double time, var params) override;
 
 	String getTypeString() const override { return "Prop"; }
 	static PropNode * create(var params) { return new PropNode(params); }

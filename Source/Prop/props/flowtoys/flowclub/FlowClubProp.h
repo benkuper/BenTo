@@ -19,6 +19,8 @@ public:
 	FlowClubProp(var params);
 	~FlowClubProp();
 
+	BoolParameter * button;
+
 	String getTypeString() const override { return  FlowClubProp::getTypeStringStatic(); }
 	static const String getTypeStringStatic() { return "Flowtoys Creator Club"; }
 

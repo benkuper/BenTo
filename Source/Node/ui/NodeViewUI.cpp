@@ -11,8 +11,8 @@
 #include "NodeViewUI.h"
 #include "NodeConnectionUI.h"
 
-NodeViewUI::NodeViewUI(Node * node, ResizeMode resizeMode) :
-	BaseItemUI(node, resizeMode),
+NodeViewUI::NodeViewUI(Node * node, Direction Direction) :
+	BaseItemUI(node, Direction),
 	propToPreview(nullptr)
 {
 	for (auto & s : node->inSlots) addConnector(true, s, false);

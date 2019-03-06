@@ -36,12 +36,6 @@
         <FILE id="b0hRAv" name="IdentificationRuleManager.h" compile="0" resource="0"
               file="Source/Identification/IdentificationRuleManager.h"/>
       </GROUP>
-      <GROUP id="{57294501-5658-E81F-20A1-197149325B67}" name="WebServer">
-        <FILE id="Ra1p1M" name="BentoWebServer.cpp" compile="1" resource="0"
-              file="Source/WebServer/BentoWebServer.cpp"/>
-        <FILE id="z3o8hC" name="BentoWebServer.h" compile="0" resource="0"
-              file="Source/WebServer/BentoWebServer.h"/>
-      </GROUP>
       <GROUP id="{EE130150-B1B1-4FF0-6360-8BEF17AAE2D5}" name="Common">
         <GROUP id="{E5AB7332-E8D5-6861-6B71-6BBA6E1DA217}" name="Serial">
           <GROUP id="{A05100E8-DD1D-77F5-EF15-6F01585C9AAA}" name="lib">
@@ -412,6 +406,10 @@
                 file="Source/Prop/Cluster/PropClusterGroupManager.h"/>
         </GROUP>
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
+          <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
+            <FILE id="e7lkEF" name="BentoProp.cpp" compile="1" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
+            <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>
+          </GROUP>
           <GROUP id="{C522011C-89AC-576D-FB1C-E685E5E8AE23}" name="lighttoys">
             <FILE id="aI6kbb" name="LighttoysFamily.cpp" compile="1" resource="0"
                   file="Source/Prop/props/lighttoys/LighttoysFamily.cpp"/>
@@ -506,7 +504,6 @@
         <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -532,7 +529,6 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../BenTo-dependencies"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl">
@@ -557,7 +553,6 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -582,7 +577,6 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -609,7 +603,6 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_mongoose" path="External"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -625,7 +618,6 @@
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_extra" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
-    <MODULE id="juce_mongoose" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

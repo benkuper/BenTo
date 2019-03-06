@@ -23,13 +23,17 @@ ColorNode::~ColorNode()
 
 Array<Colour> ColorNode::getColors(Prop * p, double time, var params)
 {
-	//to override by child classes
+	fillWithLocalParams(params);
+	return getColorsInternal(p, time, params);
+}
+
+Array<Colour> ColorNode::getColorsInternal(Prop * p, double time, var params)
+{
 	Array<Colour> result;
 	result.resize(p->resolution->intValue());
 	result.fill(Colours::black);
 	return result;
 }
-
 
 NodeViewUI * ColorNode::createUI()
 {

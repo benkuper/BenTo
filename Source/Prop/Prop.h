@@ -40,15 +40,26 @@ public:
 	ControllableContainer sensorsCC;
 	FloatParameter * battery;
 
-	//GenericControllableManager customParamsCC;
 
 	ControllableContainer bakingCC;
 	FloatParameter * bakeStartTime;
 	FloatParameter * bakeEndTime;
 	IntParameter * bakeFrequency;
 	Trigger * bakeAndUploadTrigger;
-	BoolParameter * isBaking;
+	Trigger * bakeAndExportTrigger;
 
+	BoolParameter * sendCompressedFile;
+	BoolParameter * isBaking;
+	
+	BoolParameter * isUploading;
+	FloatParameter * bakingProgress;
+	FloatParameter * uploadProgress;
+
+	enum AfterBakeAction { UPLOAD, EXPORT, NOTHING };
+	AfterBakeAction afterBake;
+
+	File exportFile;
+	
 	Array<Colour> colors;
 
 	ScopedPointer<LightBlock> currentBlock;
@@ -67,22 +78,25 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
-	void onContainerTriggerTriggered(Trigger * t) override;
 	void inspectableDestroyed(Inspectable *) override;
 
 	void sendColorsToProp(bool forceSend = false);
 	virtual void sendColorsToPropInternal() {}
 
 	static void fillTypeOptions(EnumParameter * p);
-
-	struct TimedColors
-	{
-		double time;
-		Array<Colour> colors;
-	};
 	
-	virtual Array<TimedColors> bakeCurrentBlock();
-	virtual void uploadCurrentBlock(Array<TimedColors> bakedColors);
+	struct BakeData
+	{
+		String name;
+		int fps;
+		int numFrames;
+		MemoryBlock data;
+		var metaData;
+	};
+
+	virtual BakeData bakeCurrentBlock();
+	virtual void uploadBakedData(BakeData data);
+	virtual void exportBakedData(BakeData data);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

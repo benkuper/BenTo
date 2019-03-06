@@ -10,26 +10,12 @@
 
 #pragma once
 
-#include "../../Prop.h"
+#include "../bento/BentoProp.h"
 
 class FlowtoysProp :
-	public Prop
+	public BentoProp
 {
 public:
 	FlowtoysProp(const String &name = "Flowtoys Prop", var params = var());
 	~FlowtoysProp();
-
-	StringParameter * remoteHost;
-	BoolParameter * button; 
-
-	const int remotePort = 8888;
-	DatagramSocket sender;
-	OSCSender oscSender;
-
-	//const int remotePort = 8888; //Bento udp streaming is done on this port
-
-	void onContainerParameterChangedInternal(Parameter * p) override;
-
-	virtual void sendColorsToPropInternal() override;
-
 };

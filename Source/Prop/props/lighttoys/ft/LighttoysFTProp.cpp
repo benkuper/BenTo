@@ -73,13 +73,15 @@ void LighttoysFTProp::sendColorsToPropInternal()
 	}
 }
 
-void LighttoysFTProp::uploadCurrentBlock(Array<TimedColors> bakedColors)
+void LighttoysFTProp::uploadBakedData(BakeData data)
 {
-	if (bakedColors.size() == 0) return;
+	if (data.numFrames == 0) return;
 
-	int showID = bakingShowID->intValue() - 1;// 1-4 > 0-3
+	//int showID = bakingShowID->intValue() - 1;// 1-4 > 0-3
 	//int numFrames = bakedColors.size();
-	int numProps = resolution->intValue();
+	//int numProps = resolution->intValue();
+	
+	/*
 	for (int i = 0; i < numProps; i++)
 	{
 		//send
@@ -130,7 +132,8 @@ void LighttoysFTProp::uploadCurrentBlock(Array<TimedColors> bakedColors)
 
 		//sendMessage("ldsoff", propMask);
 	}
-	
+	*/
+
 }
 
 void LighttoysFTProp::onContainerParameterChangedInternal(Parameter * p)

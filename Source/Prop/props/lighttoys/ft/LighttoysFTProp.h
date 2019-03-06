@@ -50,7 +50,7 @@ public:
 	bool slaveCheckList[32];
 
 	virtual void sendColorsToPropInternal() override;
-	virtual void uploadCurrentBlock(Array<TimedColors> bakedColors) override;
+	virtual void uploadBakedData(BakeData bakedColors) override;
 
 	virtual void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void onContainerTriggerTriggered(Trigger *) override;
