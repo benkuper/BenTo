@@ -129,10 +129,6 @@ class WiFiManager
       WiFi.softAP(wifiString.c_str());
     }
 
-    void update()
-    {
-    }
-
 #if USE_OSC
     boolean handleMessage(OSCMessage &msg)
     {

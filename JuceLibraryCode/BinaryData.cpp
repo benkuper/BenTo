@@ -604,6 +604,12 @@ static const unsigned char temp_binary_data_10[] =
 "                \"tabs\": [\r\n"
 "                  {\r\n"
 "                    \"name\": \"Node Editor\"\r\n"
+"                  },\r\n"
+"                  {\r\n"
+"                    \"name\": \"Timeline Editor\"\r\n"
+"                  },\r\n"
+"                  {\r\n"
+"                    \"name\": \"Spatializer Editor\"\r\n"
 "                  }\r\n"
 "                ]\r\n"
 "              },\r\n"
@@ -2177,7 +2183,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xcdd754b5:  numBytes = 2116; return script_png;
         case 0x576fad2b:  numBytes = 1253; return timeline_png;
         case 0x4f784065:  numBytes = 6004; return video_png;
-        case 0x7448d63a:  numBytes = 2467; return default_btlayout;
+        case 0x7448d63a:  numBytes = 2650; return default_btlayout;
         case 0x78c8c9ab:  numBytes = 1868; return fadeIn_png;
         case 0xeac7f79c:  numBytes = 392; return fadeOut_png;
         case 0xd4093963:  numBytes = 98974; return icon_png;

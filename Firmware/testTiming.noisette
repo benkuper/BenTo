@@ -1,0 +1,436 @@
+{
+  "metaData": {
+    "version": "1.5.9b2",
+    "versionNumber": 66825
+  },
+  "dashboardManager": {
+    "items": [
+      {
+        "niceName": "Dashboard",
+        "type": "BaseItem",
+        "panelManager": {
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": [
+                    -1.1e1,
+                    -6.5
+                  ],
+                  "controlMode": 0,
+                  "controlAddress": "/viewUIPosition"
+                },
+                {
+                  "value": [
+                    2.64e2,
+                    3.63e2
+                  ],
+                  "controlMode": 0,
+                  "controlAddress": "/viewUISize"
+                }
+              ],
+              "niceName": "Panel",
+              "type": "BaseItem",
+              "scripts": {
+              },
+              "itemManager": {
+                "items": [
+                  {
+                    "parameters": [
+                      {
+                        "value": "/sequences/sequence/currentTime",
+                        "controlMode": 0,
+                        "controlAddress": "/target"
+                      }
+                    ],
+                    "niceName": "Sequence : Current Time",
+                    "type": "BaseItem"
+                  },
+                  {
+                    "parameters": [
+                      {
+                        "value": "/modules/serial/values/val",
+                        "controlMode": 0,
+                        "controlAddress": "/target"
+                      }
+                    ],
+                    "niceName": "Values : val",
+                    "type": "BaseItem"
+                  },
+                  {
+                    "parameters": [
+                      {
+                        "value": "/modules/serial/values/val2",
+                        "controlMode": 0,
+                        "controlAddress": "/target"
+                      }
+                    ],
+                    "niceName": "Values : val2",
+                    "type": "BaseItem"
+                  },
+                  {
+                    "parameters": [
+                      {
+                        "value": "/customVariables/group/variables/newFloatParameter/newFloatParameter",
+                        "controlMode": 0,
+                        "controlAddress": "/target"
+                      }
+                    ],
+                    "niceName": "New Float Parameter : New Float Parameter",
+                    "type": "BaseItem"
+                  },
+                  {
+                    "parameters": [
+                      {
+                        "value": "/customVariables/group/variables/newFloatParameter1/newFloatParameter1",
+                        "controlMode": 0,
+                        "controlAddress": "/target"
+                      }
+                    ],
+                    "niceName": "New Float Parameter 1 : New Float Parameter 1",
+                    "type": "BaseItem"
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "moduleManager": {
+    "items": [
+      {
+        "parameters": [
+          {
+            "value": false,
+            "controlMode": 0,
+            "controlAddress": "/enabled"
+          }
+        ],
+        "niceName": "OSC",
+        "type": "OSC",
+        "scripts": {
+        },
+        "params": {
+          "containers": {
+            "oscinput": {
+            },
+            "oscoutputs": {
+              "items": [
+                {
+                  "parameters": [
+                    {
+                      "value": 43000,
+                      "controlMode": 0,
+                      "controlAddress": "/remotePort"
+                    }
+                  ],
+                  "niceName": "OSC Output",
+                  "type": "BaseItem"
+                }
+              ]
+            }
+          }
+        },
+        "values": {
+        },
+        "input": {
+        },
+        "outputs": {
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": 43000,
+                  "controlMode": 0,
+                  "controlAddress": "/remotePort"
+                }
+              ],
+              "niceName": "OSC Output",
+              "type": "BaseItem"
+            }
+          ]
+        }
+      },
+      {
+        "niceName": "Serial",
+        "type": "Serial",
+        "scripts": {
+        },
+        "params": {
+          "parameters": [
+            {
+              "value": "Not connected or disconnected",
+              "controlMode": 0,
+              "controlAddress": "/port"
+            },
+            {
+              "value": 115200,
+              "controlMode": 0,
+              "controlAddress": "/baudRate"
+            }
+          ]
+        },
+        "values": {
+          "parameters": [
+            {
+              "value": 2.6225e2,
+              "controlMode": 0,
+              "controlAddress": "/val"
+            },
+            {
+              "value": 2.6225e2,
+              "controlMode": 0,
+              "controlAddress": "/val2",
+              "type": "Float",
+              "niceName": "val2",
+              "customizable": true,
+              "removable": true,
+              "description": "val2",
+              "hideInEditor": false,
+              "feedbackOnly": false
+            }
+          ]
+        },
+        "portID": "Silicon Labs CP210x USB to UART Bridge (COM5)"
+      }
+    ]
+  },
+  "customVariables": {
+    "items": [
+      {
+        "niceName": "Group",
+        "type": "BaseItem",
+        "params": {
+        },
+        "variables": {
+          "items": [
+            {
+              "parameters": [
+                {
+                  "value": -2.225e1,
+                  "controlMode": 1,
+                  "expression": "root.sequences.sequence.currentTime.get()-root.modules.serial.values.val.get()",
+                  "controlAddress": "/newFloatParameter",
+                  "type": "Float",
+                  "niceName": "New Float Parameter",
+                  "customizable": true,
+                  "removable": false,
+                  "description": "Custom control of type Float",
+                  "hideInEditor": false,
+                  "feedbackOnly": false
+                }
+              ],
+              "niceName": "New Float Parameter",
+              "type": "Float Parameter"
+            },
+            {
+              "parameters": [
+                {
+                  "value": -2.225e1,
+                  "controlMode": 1,
+                  "expression": "root.sequences.sequence.currentTime.get()-root.modules.serial.values.val2.get()",
+                  "controlAddress": "/newFloatParameter1",
+                  "type": "Float",
+                  "niceName": "New Float Parameter 1",
+                  "customizable": true,
+                  "removable": false,
+                  "description": "Custom control of type Float",
+                  "hideInEditor": false,
+                  "feedbackOnly": false
+                }
+              ],
+              "niceName": "New Float Parameter 1",
+              "type": "Float Parameter"
+            }
+          ]
+        },
+        "presets": {
+        }
+      }
+    ]
+  },
+  "stateManager": {
+    "items": [
+      {
+        "parameters": [
+          {
+            "value": [
+              -1.12e2,
+              -1.7e1
+            ],
+            "controlMode": 0,
+            "controlAddress": "/viewUIPosition"
+          },
+          {
+            "value": true,
+            "controlMode": 0,
+            "controlAddress": "/active"
+          }
+        ],
+        "niceName": "State",
+        "type": "State",
+        "processors": {
+          "items": [
+            {
+              "niceName": "Action",
+              "editorIsCollapsed": true,
+              "type": "Action",
+              "conditions": {
+                "parameters": [
+                  {
+                    "value": false,
+                    "controlMode": 0,
+                    "controlAddress": "/isValid"
+                  },
+                  {
+                    "value": 0,
+                    "controlMode": 0,
+                    "controlAddress": "/progress"
+                  }
+                ],
+                "items": [
+                  {
+                    "parameters": [
+                      {
+                        "value": false,
+                        "controlMode": 0,
+                        "controlAddress": "/isValid"
+                      },
+                      {
+                        "value": "/sequences/sequence/isPlaying",
+                        "controlMode": 0,
+                        "controlAddress": "/inputValue"
+                      }
+                    ],
+                    "niceName": "From Input Value",
+                    "type": "From Input Value",
+                    "comparator": {
+                      "parameters": [
+                        {
+                          "value": "=",
+                          "controlMode": 0,
+                          "controlAddress": "/comparisonFunction"
+                        },
+                        {
+                          "value": true,
+                          "controlMode": 0,
+                          "controlAddress": "/reference"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "consequences": {
+                "items": [
+                  {
+                    "niceName": "Consequence",
+                    "type": "BaseItem",
+                    "commandModule": "osc",
+                    "commandPath": "",
+                    "commandType": "Custom Message",
+                    "command": {
+                      "parameters": [
+                        {
+                          "value": "/library/timeline/timeline1/sequence/play",
+                          "controlMode": 0,
+                          "controlAddress": "/address"
+                        }
+                      ],
+                      "arguments": {
+                      },
+                      "argManager": {
+                      }
+                    }
+                  },
+                  {
+                    "niceName": "Consequence 1",
+                    "type": "BaseItem",
+                    "commandModule": "serial",
+                    "commandPath": "",
+                    "commandType": "Send string",
+                    "command": {
+                      "parameters": [
+                        {
+                          "value": "r",
+                          "controlMode": 0,
+                          "controlAddress": "/value"
+                        },
+                        {
+                          "value": false,
+                          "controlMode": 0,
+                          "controlAddress": "/appendcr"
+                        },
+                        {
+                          "value": false,
+                          "controlMode": 0,
+                          "controlAddress": "/appendnl"
+                        }
+                      ]
+                    }
+                  }
+                ]
+              },
+              "consequencesOff": {
+                "items": [
+                  {
+                    "niceName": "Consequence",
+                    "type": "BaseItem",
+                    "commandModule": "osc",
+                    "commandPath": "",
+                    "commandType": "Custom Message",
+                    "command": {
+                      "parameters": [
+                        {
+                          "value": "/library/timeline/timeline1/sequence/pause",
+                          "controlMode": 0,
+                          "controlAddress": "/address"
+                        }
+                      ],
+                      "arguments": {
+                      },
+                      "argManager": {
+                      }
+                    }
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      }
+    ]
+  },
+  "sequenceManager": {
+    "items": [
+      {
+        "parameters": [
+          {
+            "value": 5,
+            "controlMode": 0,
+            "controlAddress": "/listSize"
+          },
+          {
+            "value": 2.4e2,
+            "controlMode": 0,
+            "controlAddress": "/totalTime"
+          },
+          {
+            "value": 2.4e2,
+            "controlMode": 0,
+            "controlAddress": "/viewEndTime"
+          }
+        ],
+        "niceName": "Sequence",
+        "type": "BaseItem",
+        "layerManager": {
+        },
+        "cueManager": {
+        },
+        "editing": true
+      }
+    ]
+  }
+}

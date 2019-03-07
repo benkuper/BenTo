@@ -22,7 +22,8 @@ public:
   //File info
   float totalTime;
   long totalFrames;
-
+  long timeSinceLastSend;
+  
   BakePlayer()
   {
     curTimeMs = 0;
@@ -47,31 +48,34 @@ public:
       play(0);
     }
 
-    curTimeMs += millis() - prevTimeMs; 
-    
-    prevTimeMs = millis();
-    
-    
-    long pos = msToBytePos(curTimeMs);
-    if(pos < curFile.position()) return; //waiting for frame
+    long mil = millis();
+    curTimeMs += mil - prevTimeMs; 
+    prevTimeMs = mil;
 
-    while(curFile.position() > pos)
+    long fPos = curFile.position();
+    long pos = msToBytePos(curTimeMs);
+    if(pos < fPos) return; //waiting for frame
+
+    while(fPos > pos)
     {
       curFile.read(buffer,FRAME_SIZE);
       DBG("SKIPPED FRAME");
     }
 
-    if(curFile.position() != pos)
+    if(fPos != pos)
     {
       DBG("SHOULD BE EXACTLY POS "+String(curFile.position())+", expected "+String(pos));
     }
 
-    curFile.read(buffer,FRAME_SIZE);
-    
-    DBG("Playing "+String(msToSeconds(curTimeMs))+"\t Frame : "+String(msToFrame(curTimeMs))
+    if(mil > timeSinceLastSend + 100)
+    {
+      DBG("Playing "+String(msToSeconds(curTimeMs))+"\t Frame : "+String(msToFrame(curTimeMs))
           +"\t, Color "+String(buffer[2])+"\t "+String(buffer[1])+"\t "+String(buffer[0])
         );
-        
+        timeSinceLastSend = mil;
+    }
+     
+    curFile.read(buffer,FRAME_SIZE);
     showCurrentFrame();
   }
 

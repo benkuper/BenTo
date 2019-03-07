@@ -533,7 +533,6 @@ void loop()
 #endif
 
 #if USE_WIFI
-  wifiManager.update();
 
 #if USE_OSC
   oscManager.update();
