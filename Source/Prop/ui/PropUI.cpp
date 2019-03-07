@@ -45,10 +45,10 @@ void PropUI::paintOverChildren(Graphics & g)
 		g.fillAll(Colours::black.withAlpha(.3f));
 		
 		g.setColour(Colours::orange.darker().withAlpha(.2f));
-		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->bakingProgress->floatValue()*getHeight()).toFloat(), 2);
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->bakingProgress->floatValue()*viz.getHeight()).toFloat(), 2);
 		
 		g.setColour(Colours::limegreen.darker().withAlpha(.2f));
-		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->uploadProgress->floatValue()*getHeight()).toFloat(), 2);
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->uploadProgress->floatValue()*viz.getHeight()).toFloat(), 2);
 
 		g.setColour(item->isUploading->boolValue() ? Colours::limegreen : Colours::orange);
 		g.drawFittedText(item->isUploading->boolValue()?"Uploading ...":"Baking...", getLocalBounds(), Justification::centred, 1);

@@ -14,16 +14,24 @@
 
 #include "PatternManager.h"
 
+#if USE_FILES
+#include "BakePlayer.h"
+#endif
+
 #define NUM_MODES 2
 
 class LedStripManager
 {
 public:
 
-  enum Mode { Streaming, Pattern };
+  enum Mode { Streaming, Pattern, Baked };
   Mode currentMode;
 
   PatternManager pm;
+
+  #if USE_FILES
+  BakePlayer bakePlayer;
+  #endif
   
   int propIDBufferIndex;
   int propBufferIndex;
@@ -88,6 +96,12 @@ public:
 
       case Mode::Pattern:
         pm.update();
+        break;
+
+      case Mode::Baked:
+      #if USE_FILES
+        bakePlayer.update();
+      #endif
         break;
     }
   }
@@ -239,6 +253,14 @@ public:
       setMode(Pattern);
       pm.setPattern(PatternManager::Snapshot);
       
+    }else if(msg.match("/play",offset))
+    {
+      #if USE_FILES
+      char filename[32];
+      msg.getString(0,filename, 32);
+      bakePlayer.playFile(String(filename));
+      setMode(Mode::Baked);
+      #endif
     }
     else
     {

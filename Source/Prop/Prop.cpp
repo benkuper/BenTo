@@ -58,6 +58,9 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 50, 1, 500);
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
 	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
+	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "demo.colors");
+	playBakeFile = bakingCC.addBoolParameter("Play bake file", "Play the bake file with name set above, or revert to streaming", false);
+	playBakeFile->isSavable = false;
 	
 	sendCompressedFile = bakingCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
 
@@ -250,7 +253,7 @@ Prop::BakeData Prop::bakeCurrentBlock()
 	
 	NLOG(niceName, "Baking block " << currentBlock->niceName);
 
-	result.name = currentBlock->shortName + "_" + globalID->stringValue();
+	result.name = bakeFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
 	result.fps = bakeFrequency->intValue();
 	result.numFrames = 0;
 	result.metaData = var(new DynamicObject());

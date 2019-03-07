@@ -36,6 +36,27 @@ void BentoProp::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
+void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+{
+	Prop::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == playBakeFile)
+	{
+		if (playBakeFile->boolValue())
+		{
+			OSCMessage m("/strip/play");
+			m.addString(bakeFileName->stringValue());
+			oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		}
+		else
+		{
+			OSCMessage m("/strip/mode");
+			m.addInt32(0);
+			oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		}
+		
+	}
+}
+
 void BentoProp::sendColorsToPropInternal()
 {
 	const int numLeds = resolution->intValue();
@@ -57,6 +78,8 @@ void BentoProp::sendColorsToPropInternal()
 
 	int dataSize = numLeds * 3 + 1;
 
+	DBG(colors[0].toString());
+
 	for (int i = 0; i < numPackets; i++)
 	{
 		int offset = i * maxLedsPerPacket * 3;
@@ -68,11 +91,10 @@ void BentoProp::sendColorsToPropInternal()
 
 void BentoProp::uploadBakedData(BakeData data)
 {
-	String target = "http://" + remoteHost->stringValue() +"/fupload";
+	String target = "http://" + remoteHost->stringValue() +"/upload";
 	//String target = "http://benjamin.kuperberg.fr/chataigne/releases/uploadTest.php";
 	
-	String fileName = data.name + ".colors";
-	NLOG(niceName, "Uploading " << target << " to " << fileName << " :\n > " << data.numFrames << " frames\n > " << data.data.getSize() << " bytes");
+	NLOG(niceName, "Uploading " << target << " to " << data.name << " :\n > " << data.numFrames << " frames\n > " << data.data.getSize() << " bytes");
 
 
 	MemoryBlock dataToSend = data.data;
@@ -94,7 +116,7 @@ void BentoProp::uploadBakedData(BakeData data)
 		//url = URL(target).withDataToUpload("fupload",, "application/zip");
 	}
 	
-	url = URL(target).withDataToUpload("fupload", fileName, dataToSend, sendCompressedFile->boolValue()?"application/zip":"text/plain");
+	url = URL(target).withDataToUpload("uploadData", data.name, dataToSend, sendCompressedFile->boolValue()?"application/zip":"text/plain");
 
 
 

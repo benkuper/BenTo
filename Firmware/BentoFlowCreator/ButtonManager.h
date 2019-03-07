@@ -2,7 +2,8 @@
 #define BUTTONMANAGER_H
 
 #define BUTTON_PIN 13
-#define LONGPRESS_TIME 700 //more than 500ms is long press
+#define LONGPRESS_TIME 500 //more than 500ms is long press
+#define VERYLONGPRESS_TIME 1500
 #define SHORTPRESS_TIME 500 //less than 500ms is short press
 #define MULTIPRESS_TIME 300 //each new press shorter than 500ms after the previous one will increase the multiclick
 
@@ -10,6 +11,7 @@
 #define BT_RELEASED 1
 #define BT_SHORTPRESS 2
 #define BT_LONGPRESS 3
+#define BT_VERYLONGPRESS 4
 
 #define BT_PRESS_DEBOUNCE 5
 
@@ -19,6 +21,7 @@ class ButtonManager
 public:
   bool pressed;
   bool longPress;
+  bool veryLongPress;
   long timeAtPress;
   int multipressCount;
   int debounceCount;
@@ -28,6 +31,7 @@ public:
   {
     pressed = false;
     longPress = false;
+    veryLongPress = false;
     timeAtPress = 0;
     debounceCount = 0;
     addButtonCallback(&ButtonManager::onButtonEventDefaultCallback);
@@ -52,6 +56,7 @@ public:
     {
       pressed = newPressed;
       longPress = false;
+      veryLongPress = false;
       if(pressed) 
       {
         timeAtPress = millis();
@@ -68,9 +73,14 @@ public:
     {
       if(pressed)
       {
-        if(millis() > timeAtPress + LONGPRESS_TIME)
+        if(!longPress && millis() > timeAtPress + LONGPRESS_TIME)
         {
           onButtonEvent(BT_LONGPRESS);
+        }
+
+        if(!veryLongPress && millis() > timeAtPress + VERYLONGPRESS_TIME)
+        {
+          onButtonEvent(BT_VERYLONGPRESS);
         }
       }
 

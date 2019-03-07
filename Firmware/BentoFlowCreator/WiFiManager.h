@@ -18,8 +18,8 @@ class WiFiManager
 {
   public:
 
-    String ssid = "spacenet";
-    String password = "jhfdb97531$$";
+    String ssid = "jonglissimo";
+    String password = "lightpainting";
 
     const int maxTries = 32;
 
@@ -59,7 +59,7 @@ class WiFiManager
       while (WiFi.status() != WL_CONNECTED && !turnOffWiFi) {
         delay(500);
 
-      DBG("*");
+        DBG("*");
 
         if (tryIndex >= maxTries)
         {
@@ -73,7 +73,7 @@ class WiFiManager
 
       if(!success)
       {
-            DBG("Failed");
+          DBG("Failed");
       }
 
       DBG("");

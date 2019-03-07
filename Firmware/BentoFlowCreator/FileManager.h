@@ -9,7 +9,7 @@
 #define SCK_PIN 33
 #define MISO_PIN 25
 #define MOSI_PIN 27
-#define CS_PIN 13
+#define CS_PIN 2 //not using 13 because button_pin is on it
 
 class FileManager
 {
@@ -35,10 +35,14 @@ public:
       }
    }
 
-   static File openFile(String fileName)
+   static File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true)
    {
-      DBG("Open file : "+fileName);
-      return SD.open(fileName.c_str(), FILE_WRITE);
+      if(forWriting && deleteIfExists) deleteFileIfExists(fileName);
+      
+      if(!fileName.startsWith("/")) fileName = "/"+fileName;
+      File f = SD.open(fileName.c_str(), forWriting?FILE_WRITE:FILE_READ);
+      DBG("Open file : "+String(f.name()));
+      return f;
    }
 
    static void deleteFileIfExists(String path)

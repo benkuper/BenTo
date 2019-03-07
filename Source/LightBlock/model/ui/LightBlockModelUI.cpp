@@ -124,7 +124,7 @@ void LightBlockModelUI::mouseDrag(const MouseEvent & e)
 
 	if (isDragAndDropActive()) return;
 	Image dndImage = modelImage.rescaled(60, 60);
-	dndImage.multiplyAllAlphas(.5f);
+	if(dndImage.hasAlphaChannel()) dndImage.multiplyAllAlphas(.5f);
 	if (e.getDistanceFromDragStart() > 40)
 	{
 		var desc = new DynamicObject();

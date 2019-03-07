@@ -34,8 +34,10 @@ using namespace std;
 #include "DeviceSettings.h"
 DeviceSettings settings;
 
+#if USE_BUTTON
 #include "ButtonManager.h"
 ButtonManager btManager;
+#endif
 
 #if USE_FILES
 #include "FileManager.h"
@@ -95,6 +97,7 @@ long orientationSendRateMS = 20;
 long lastOrientationSendTime = 0;
 
 //Callbacks
+#if USE_BUTTON
 void onButtonEvent(int type)
 {
   Serial.print("Button Event : ");
@@ -105,8 +108,8 @@ void onButtonEvent(int type)
   case BT_PRESSED:
   {
 #if USE_LEDSTRIP
-    if (stripManager.currentMode == LedStripManager::Mode::Pattern)
-      stripManager.pm.nextPattern();
+    if (stripManager.currentMode == LedStripManager::Mode::Pattern) stripManager.pm.nextPattern();
+    else if(stripManager.currentMode == LedStripManager::Mode::Baked) stripManager.bakePlayer.togglePlayPause();
 #endif
 
 #if USE_OSC
@@ -141,6 +144,14 @@ void onButtonEvent(int type)
   break;
 
   case BT_LONGPRESS:
+#if USE_LEDSTRIP
+#if USE_FILES
+   stripManager.bakePlayer.resetTime();
+#endif
+#endif
+    break;
+
+  case BT_VERYLONGPRESS:
     sleep();
     break;
   }
@@ -153,16 +164,23 @@ void onMultipress(int count)
   if (count == 2)
   {
 #if USE_LEDSTRIP
-    stripManager.nextMode();
+    stripManager.setMode(LedStripManager::Mode::Pattern);
 #endif
   }
   else if (count == 3)
   {
+/*    
 #if USE_LEDSTRIP
     stripManager.pm.setPattern(stripManager.pm.Fish);
 #endif
+*/
+#if USE_FILES
+  stripManager.setMode(LedStripManager::Mode::Baked);
+#endif
   }
 }
+
+#endif // USE_BUTTON
 
 #if USE_WIFI
 void wifiConnectingUpdate(int curTry)
@@ -171,8 +189,11 @@ void wifiConnectingUpdate(int curTry)
   setRange(0, curTry % NUM_LEDS, CRGB(0, 20, 20), true);
 #endif
 
-  if (btManager.buttonIsPressed())
+#if USE_BUTTON
+  if (curTry >= 2 && btManager.buttonIsPressed())
     wifiManager.cancelConnection();
+#endif
+
 }
 
 void wifiConfigSaved()
@@ -352,15 +373,42 @@ void sleep()
   esp_deep_sleep_start();
 }
 
+
+#if USE_SERVER
+void uploadStarted(const String &fileName)
+{
+  DBG("Upload started : "+fileName);
+  setFullColor(CRGB::Black);
+}
+
+void uploadProgress(float progress)
+{
+  DBG("Upload progress " + String(progress));
+  int index = ((int)(progress*NUM_LEDS))%NUM_LEDS;
+  setRange(0, index, CRGB(255,0,255), true);
+  setLed(index, CRGB(255,255,255));
+}
+
+void uploadFinished(const String &fileName)
+{
+  DBG("Upload finished, playing file");
+  stripManager.setMode(LedStripManager::Mode::Baked);
+  stripManager.bakePlayer.playFile(fileName);
+}
+#endif
+
+
 //Setup & loop
 void setup()
 {
   Serial.begin(115200);
   Serial.println("");
 
+#if USE_BUTTON
   btManager.init();
   btManager.addButtonCallback(&onButtonEvent);
   btManager.addMultipressCallback(&onMultipress);
+#endif
 
   //Keep the power
   pinMode(POWER_ENABLE_PIN, OUTPUT);
@@ -462,7 +510,9 @@ void setup()
 
 #if USE_SERVER
   webServer.init();
-  
+  webServer.addUploadStartCallback(&uploadStarted);
+  webServer.addUploadProgressCallback(&uploadProgress);
+  webServer.addUploadFinishCallback(&uploadFinished);
 #endif
 
 #endif // WIFI
@@ -477,7 +527,9 @@ void setup()
 void loop()
 {
 
+#if USE_BUTTON
   btManager.update();
+#endif
 
 #if USE_WIFI
   wifiManager.update();
@@ -508,7 +560,7 @@ void loop()
   batteryManager.update();
 #endif
 
-  //processSerial();
+  processSerial();
 }
 
 void processSerial()

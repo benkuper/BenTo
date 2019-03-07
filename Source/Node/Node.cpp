@@ -165,15 +165,10 @@ void Node::fillWithLocalParams(var params)
 			if (params.isVoid()) params = new DynamicObject();
 
 			NamedValueSet set = params.getDynamicObject()->getProperties();
-			for (auto & nv : set)
-			{
-				DBG(nv.name + " > " + nv.value.toString());
-			}
-
+			
 			if (params.hasProperty(pn->shortName))
 			{
 				var value = params.getProperty(pn->shortName, pn->parameter->getValue());
-				DBG(s->id + " > " + value.toString());
 				params.getDynamicObject()->setProperty(s->id, value);
 			}
 		}

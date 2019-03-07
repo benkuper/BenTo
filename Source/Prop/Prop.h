@@ -47,6 +47,8 @@ public:
 	IntParameter * bakeFrequency;
 	Trigger * bakeAndUploadTrigger;
 	Trigger * bakeAndExportTrigger;
+	StringParameter * bakeFileName;
+	BoolParameter * playBakeFile;
 
 	BoolParameter * sendCompressedFile;
 	BoolParameter * isBaking;

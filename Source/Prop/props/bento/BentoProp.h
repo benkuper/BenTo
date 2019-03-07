@@ -25,6 +25,8 @@ public:
 	OSCSender oscSender;
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
+
 	virtual void sendColorsToPropInternal() override;
 
 	virtual void uploadBakedData(BakeData data) override;
