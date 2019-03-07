@@ -11,6 +11,9 @@
 #pragma once
 #include "../../ColorNode.h"
 
+class LightBlock;
+class LightBlockColorProvider;
+
 class ModelNode :
 	public ColorNode
 {

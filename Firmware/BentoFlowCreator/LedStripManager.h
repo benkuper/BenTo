@@ -253,14 +253,6 @@ public:
       setMode(Pattern);
       pm.setPattern(PatternManager::Snapshot);
       
-    }else if(msg.match("/play",offset))
-    {
-      #if USE_FILES
-      char filename[32];
-      msg.getString(0,filename, 32);
-      bakePlayer.playFile(String(filename));
-      setMode(Mode::Baked);
-      #endif
     }
     else
     {
@@ -268,6 +260,17 @@ public:
       {
         setMode(Pattern);
         return true;
+      }else 
+      {
+      
+      #if USE_FILES
+      if(bakePlayer.handleMessage(msg, offset))
+      {
+        setMode(Baked);
+        return true;
+      }
+      #endif
+      
       }
       
       return false;

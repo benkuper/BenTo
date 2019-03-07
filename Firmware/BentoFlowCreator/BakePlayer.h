@@ -4,50 +4,80 @@
 #include "FileManager.h"
 #include "FastLEDDefs.h"
 
-#define BUFFER_LENGTH NUM_LEDS*4
+#define FRAME_SIZE (NUM_LEDS*4)
 
 class BakePlayer
 {
 public:
 
   File curFile;
-  long timeAtPlay = 0;
-  bool isPausing;
-  long timeAtPause;
-  
   int fps = 100;
-  byte buffer[BUFFER_LENGTH];
+  byte buffer[FRAME_SIZE];
+
+  bool isPlaying = false;
   
+  long curTimeMs;
+  long prevTimeMs;
+  
+  //File info
+  float totalTime;
+  long totalFrames;
+
   BakePlayer()
   {
-    isPausing = false;
+    curTimeMs = 0;
+    prevTimeMs = millis();
+    
   }
 
   void update()
   {
     if(!curFile) return;
-    
-    if(isPausing) 
-    {
-      return;
-    }
-    
-    if(curFile.available() < BUFFER_LENGTH)
+    if(!isPlaying) return;
+    playFrame();
+  }
+
+
+
+  void playFrame()
+  {
+    if(curFile.available() < FRAME_SIZE)
     {
       DBG("End of show, available = "+String(curFile.available()));
-      resetTime();
+      play(0);
     }
-    
-    long curTime = millis() - timeAtPlay;
-    long pos = getBytePosForTime(curTime);
 
-     if(pos <= curFile.position()) return; //waiting for frame
+    curTimeMs += millis() - prevTimeMs; 
     
-    int bytesRead = curFile.read(buffer,BUFFER_LENGTH);
+    prevTimeMs = millis();
+    
+    
+    long pos = msToBytePos(curTimeMs);
+    if(pos < curFile.position()) return; //waiting for frame
 
-    //DBG("Bake curTime "+String(curTime)+"\tpos : "+String(pos)+"\tfilePos : "+String(curFile.position())+"\t"+String(buffer[0]));
+    while(curFile.position() > pos)
+    {
+      curFile.read(buffer,FRAME_SIZE);
+      DBG("SKIPPED FRAME");
+    }
+
+    if(curFile.position() != pos)
+    {
+      DBG("SHOULD BE EXACTLY POS "+String(curFile.position())+", expected "+String(pos));
+    }
+
+    //DBG("Playing "+String(msToSeconds(curTimeMs))+"\t Frame : "+String(msToFrame(curTimeMs)));
+
+    curFile.read(buffer,FRAME_SIZE);
+    showCurrentFrame();
+  }
+
+  void showCurrentFrame()
+  {
+    
     for(int i=0;i<NUM_LEDS;i++)
     {
+      //ARGB format
       byte r = buffer[i*4+2];
       byte g = buffer[i*4+1];
       byte b = buffer[i*4+0];
@@ -59,15 +89,25 @@ public:
     FastLED.show();
   }
 
-  long getBytePosForTime(long t)
-  {
-    int curFrame = t*fps/1000;
-    return curFrame * NUM_LEDS * 4; //rgba
-  }
+  
 
-  void playFile(String path)
+
+  //Helpers
+  long msToBytePos(long t) const { return msToFrame(t) * FRAME_SIZE; } //rgba
+  long msToFrame(long timeMs) const { return timeMs*fps/1000; }
+  long frameToMs(long frame) const { return frame*1000/fps; }
+  float frameToSeconds(long frame) const { return frame*1.0f/fps; };
+  float msToSeconds(long timeMs) const { return timeMs/1000.0f; }
+  long secondsToMs(float s) const { return s * 1000; }
+  long secondsToFrame(float s) const { return s*fps; }
+  long bytePosToFrame(long pos) const { return pos / FRAME_SIZE; }
+  long bytePosToMs(long pos) const { return frameToMs(bytePosToFrame(pos)); }
+  long bytePosToSeconds (long pos) const { return frameToSeconds(bytePosToFrame(pos)); }
+  
+  //TIME COMMANDS
+  void load(String path)
   {
-    DBG("Play file "+path);
+    DBG("Load file "+path);
     setFullColor(CRGB::Black);
     curFile = FileManager::openFile(path, false); //false is for reading
     if(!curFile)
@@ -75,26 +115,99 @@ public:
       DBG("Error playing file "+path);
     }else
     {
-      DBG("File has "+String(curFile.size())+" bytes");
+      long totalBytes = curFile.size();
+      totalFrames = bytePosToFrame(totalBytes);
+      totalTime = bytePosToSeconds(totalBytes);
+      
+      DBG("File loaded, "+String(totalBytes)+" bytes"+", "+String(totalFrames)+" frames, "+String(totalTime)+" time");
     }
-    resetTime();
+  }
+
+  void play(float atTime = -1)
+  {
+    DBG("Play "+String(atTime));
+    if(!curFile) return;
+    
+    isPlaying = true;
+    
+    if(atTime >= 0)   seek(atTime);
+    prevTimeMs = millis();
+  }
+
+  void seek(float t)
+  {
+    if(!curFile) return;
+    
+    DBG("Seek to "+String(t));
+    curTimeMs = secondsToMs(t);
+    prevTimeMs = millis();
+    curFile.seek(msToBytePos(curTimeMs));
+    
+    if(!isPlaying)
+    {
+      curFile.read(buffer,FRAME_SIZE);
+      showCurrentFrame();
+    }
+  }
+
+  void pause()
+  {
+    DBG("Pause");
+    isPlaying = false;
+  }
+
+  void stop()
+  {
+    DBG("Stop");
+    isPlaying = false;
+    setFullColor(CRGB::Black);
   }
 
   void togglePlayPause()
   {
-    isPausing = !isPausing;
-    if(isPausing) timeAtPause = millis() - timeAtPlay;
-    else timeAtPlay = millis()- timeAtPause;
-    DBG("Toggle pause, isPaused ? "+String(isPausing));
+    if(!isPlaying) pause();
+    else play();
   }
 
-  void resetTime()
+
+  //OSC
+
+  #if USE_OSC
+  boolean handleMessage(OSCMessage &msg, int offset)
   {
-    isPausing = false;
-    timeAtPlay = millis();
-    curFile.seek(0);
+    DBG("Bake player parse message");
+    
+    int pOffset = msg.match("/player", offset);
+    if(pOffset == 0) return false;
+    int newOffset = offset+pOffset;
+    
+     if(msg.match("/load",newOffset))
+    {
+      char filename[32];
+      msg.getString(0,filename, 32);
+      load(String(filename));
+      
+    }else if(msg.match("/play",newOffset))
+    {
+      play(msg.size() > 0?msg.getFloat(0):-1);
+    }else if(msg.match("/pause",newOffset))
+    {
+      pause();
+    }else if(msg.match("/resume",newOffset))
+    {
+      play();
+    }else if(msg.match("/stop",newOffset))
+    {
+      stop();
+    }else if(msg.match("/seek",newOffset))
+    {
+      seek(msg.getFloat(0));
+    }
+    
+    return true;
   }
-  
+  #endif
+ 
 };
 
 #endif

@@ -9,7 +9,7 @@
 */
 
 #include "PositionRemapNode.h"
-
+#include "Prop/Prop.h"
 
 PositionRemapNode::PositionRemapNode(var params) :
 	ColorNode(getTypeString(), params)

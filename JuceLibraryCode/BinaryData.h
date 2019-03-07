@@ -26,6 +26,9 @@ namespace BinaryData
     extern const char*   node_png;
     const int            node_pngSize = 3682;
 
+    extern const char*   picture_png;
+    const int            picture_pngSize = 3156;
+
     extern const char*   script_png;
     const int            script_pngSize = 2116;
 
@@ -54,7 +57,7 @@ namespace BinaryData
     const int            shader_fragSize = 1012;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 15;
+    const int namedResourceListSize = 16;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

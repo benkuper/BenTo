@@ -3529,6 +3529,7 @@
     <None Include="..\..\Resources\models\patterns\strobe.png"/>
     <None Include="..\..\Resources\models\dmx.png"/>
     <None Include="..\..\Resources\models\node.png"/>
+    <None Include="..\..\Resources\models\picture.png"/>
     <None Include="..\..\Resources\models\script.png"/>
     <None Include="..\..\Resources\models\timeline.png"/>
     <None Include="..\..\Resources\models\video.png"/>

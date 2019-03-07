@@ -11,6 +11,7 @@
 #pragma once
 
 #include "Node.h"
+class Prop;
 
 class ColorNode :
 	public Node

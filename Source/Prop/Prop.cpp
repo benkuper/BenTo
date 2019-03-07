@@ -59,8 +59,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
 	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
 	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "demo.colors");
-	playBakeFile = bakingCC.addBoolParameter("Play bake file", "Play the bake file with name set above, or revert to streaming", false);
-	playBakeFile->isSavable = false;
+	bakeMode = bakingCC.addBoolParameter("Bake Mode", "Play the bake file with name set above, or revert to streaming", false);	
 	
 	sendCompressedFile = bakingCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
 
@@ -127,7 +126,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 			
 			linkedInspectables.removeAllInstancesOf(currentBlock->provider.get());
 			currentBlock->provider->linkedInspectables.removeAllInstancesOf(this);
-
+			currentBlock->provider->removeColorProviderListener(this);
 			currentBlock->provider->removeInspectableListener(this);
 		}
 
@@ -142,6 +141,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 	{
 		addChildControllableContainer(currentBlock);
 		currentBlock->provider->addInspectableListener(this);
+		currentBlock->provider->addColorProviderListener(this);
 
 		linkedInspectables.addIfNotAlreadyThere(currentBlock->provider.get());
 		currentBlock->provider->linkedInspectables.addIfNotAlreadyThere(this);
@@ -173,7 +173,7 @@ void Prop::update()
 		}
 	}
 
-	sendColorsToProp();
+	if(!bakeMode->boolValue()) sendColorsToProp();
 }
 
 void Prop::onContainerParameterChangedInternal(Parameter * p)
@@ -296,6 +296,30 @@ void Prop::uploadBakedData(BakeData bakedColors)
 void Prop::exportBakedData(BakeData data)
 {
 	NLOG(niceName, "Export bake data " << data.name);
+}
+
+void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data)
+{
+	if (!bakeMode->boolValue()) return;
+
+	switch (control)
+	{
+	case LightBlockColorProvider::BakeControl::PLAY:
+		playBake((float)data);
+		break;
+
+	case LightBlockColorProvider::BakeControl::PAUSE:
+		pauseBakePlaying();
+		break;
+
+	case LightBlockColorProvider::BakeControl::SEEK:
+		seekBakePlaying((float)data);
+		break;
+
+	case LightBlockColorProvider::BakeControl::STOP:
+		stopBakePlaying();
+		break;
+	}
 }
 
 var Prop::getJSONData()

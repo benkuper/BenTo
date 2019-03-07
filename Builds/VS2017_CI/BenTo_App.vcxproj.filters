@@ -6620,6 +6620,9 @@
     <None Include="..\..\Resources\models\node.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
+    <None Include="..\..\Resources\models\picture.png">
+      <Filter>BenTo\Resources\models</Filter>
+    </None>
     <None Include="..\..\Resources\models\script.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>

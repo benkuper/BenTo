@@ -20,9 +20,13 @@ PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 
 	autoDetectUI = manager->detectProps->createButtonUI();
 	autoAssignUI = manager->autoAssignIdTrigger->createButtonUI();
+	bakeAllUI = manager->bakeAll->createButtonUI();
+	bakeModeUI = manager->bakeMode->createToggle();
 
 	addAndMakeVisible(autoDetectUI);
 	addAndMakeVisible(autoAssignUI);
+	addAndMakeVisible(bakeAllUI);
+	addAndMakeVisible(bakeModeUI);
 }
 
 PropManagerUI::~PropManagerUI()
@@ -35,6 +39,10 @@ void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
 	autoAssignUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(2);
 	autoDetectUI->setBounds(hr.removeFromTop(20));
+	hr.removeFromTop(2);
+	bakeAllUI->setBounds(hr.removeFromTop(20));
+	hr.removeFromTop(2);
+	bakeModeUI->setBounds(hr.removeFromTop(20));
 }
 
 void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos)

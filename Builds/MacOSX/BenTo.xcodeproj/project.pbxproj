@@ -2239,6 +2239,13 @@
 			path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		E7B7F5671349BE13E13B25AF = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = picture.png;
+			path = ../../Resources/models/picture.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		E8CEE47ACD4FA5DC5692534A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2445,6 +2452,7 @@
 				208154AD871CA4748CAF4FD4,
 				7ADE26AC714AABF818B8BECE,
 				42D0B60221EE6B79C91E4545,
+				E7B7F5671349BE13E13B25AF,
 				484A93983DFB463CB048F899,
 				5617809C4A723B606C5B0812,
 				D2D2C8114E3834E55E3E0403,

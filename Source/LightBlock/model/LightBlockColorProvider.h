@@ -26,6 +26,9 @@ public:
 	virtual Array<WeakReference<Controllable>> getModelParameters() = 0;
 	virtual Array<Colour> getColors(Prop * p, double time, var params) = 0;
 
+	//Bake info
+	enum BakeControl { PLAY, PAUSE, STOP, SEEK };
+
 	void onContainerTriggerTriggered(Trigger *) override;
 
 	class ProviderListener
@@ -34,6 +37,7 @@ public:
 		virtual ~ProviderListener() {}
 		virtual void providerParametersChanged(LightBlockColorProvider *) {}
 		virtual void providerParameterValueUpdated(LightBlockColorProvider *, Parameter *) {}
+		virtual void providerBakeControlUpdate(BakeControl control, var data = var()) {}
 	};
 
 	ListenerList<ProviderListener> providerListeners;

@@ -36,7 +36,7 @@ public:
 
 	
 	PropNode * propNode;
-	Prop prop;
+	ScopedPointer<Prop> prop;
 
 	NodeConnectionManager connectionManager;
 	Array<WeakReference<Controllable>> getExposedParameters();

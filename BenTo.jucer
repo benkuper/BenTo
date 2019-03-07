@@ -13,6 +13,7 @@
         </GROUP>
         <FILE id="S1AUx7" name="dmx.png" compile="0" resource="1" file="Resources/models/dmx.png"/>
         <FILE id="OO6Nta" name="node.png" compile="0" resource="1" file="Resources/models/node.png"/>
+        <FILE id="MQHQlQ" name="picture.png" compile="0" resource="1" file="Resources/models/picture.png"/>
         <FILE id="a1DDEw" name="script.png" compile="0" resource="1" file="Resources/models/script.png"/>
         <FILE id="Rlqbru" name="timeline.png" compile="0" resource="1" file="Resources/models/timeline.png"/>
         <FILE id="ZghcER" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>

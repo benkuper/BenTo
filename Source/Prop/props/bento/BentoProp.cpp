@@ -39,13 +39,11 @@ void BentoProp::onContainerParameterChangedInternal(Parameter * p)
 void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	Prop::onControllableFeedbackUpdateInternal(cc, c);
-	if (c == playBakeFile)
+	if (c == bakeMode)
 	{
-		if (playBakeFile->boolValue())
+		if (bakeMode->boolValue())
 		{
-			OSCMessage m("/strip/play");
-			m.addString(bakeFileName->stringValue());
-			oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+			loadBake(bakeFileName->stringValue());
 		}
 		else
 		{
@@ -143,6 +141,44 @@ void BentoProp::exportBakedData(BakeData data)
 	FileOutputStream fs2(zf);
 	double progress = 0;
 	builder.writeToStream(fs2, &progress);
+}
+
+void BentoProp::loadBake(StringRef fileName, bool autoPlay)
+{
+	OSCMessage m("/strip/mode");
+	m.addInt32(2);
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m); 
+	
+	OSCMessage m2("/strip/player/load");
+	m2.addString(bakeFileName->stringValue());
+	m2.addInt32(autoPlay ? 1 : 0);
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m2);
+}
+
+void BentoProp::playBake(float time)
+{
+	OSCMessage m("/strip/player/play");
+	m.addFloat32(time == -1?-1:time+.1f);
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}
+
+void BentoProp::pauseBakePlaying()
+{
+	OSCMessage m("/strip/player/pause");
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}
+
+void BentoProp::seekBakePlaying(float time)
+{
+	OSCMessage m("/strip/player/seek");
+	m.addFloat32(time);
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}
+
+void BentoProp::stopBakePlaying()
+{
+	OSCMessage m("/strip/player/stop");
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
 
 bool BentoProp::uploadProgressCallback(void * context, int bytesSent, int totalBytes)

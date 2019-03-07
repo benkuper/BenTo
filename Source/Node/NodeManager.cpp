@@ -9,6 +9,7 @@
 */
 
 #include "NodeManager.h"
+#include "Prop/Prop.h"
 #include "nodes/colorRemap/ColorRemapNode.h"
 #include "nodes/composite/CompositeNode.h"
 #include "nodes/model/ModelNode.h"
@@ -27,8 +28,9 @@ NodeManager::NodeManager() :
 	propNode = new PropNode();
 	addItem(propNode);
 
-	prop.resolution->setValue(32);
-	addChildControllableContainer(&prop);
+	prop = new Prop();
+	prop->resolution->setValue(32);
+	addChildControllableContainer(prop);
 }
 
 NodeManager::~NodeManager()

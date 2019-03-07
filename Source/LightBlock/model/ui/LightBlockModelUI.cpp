@@ -54,15 +54,15 @@ void LightBlockModelUI::updateThumbnail()
 	if (item->customThumbnailPath.isNotEmpty())
 	{
 		modelImage = ImageCache::getFromFile(item->customThumbnailPath);
-
 	}
 
-	if (item->customThumbnailPath.isEmpty() || modelImage.getWidth() == 0)
+	if(modelImage.getWidth() == 0)
 	{
 		int numBytes;
 		const char * imgData = BinaryData::getNamedResource((StringUtil::toShortName(item->getTypeString()) + "_png").getCharPointer(), numBytes);
 		modelImage = ImageCache::getFromMemory(imgData, numBytes);
 	}
+
 
 	repaint();
 }
@@ -124,7 +124,8 @@ void LightBlockModelUI::mouseDrag(const MouseEvent & e)
 
 	if (isDragAndDropActive()) return;
 	Image dndImage = modelImage.rescaled(60, 60);
-	if(dndImage.hasAlphaChannel()) dndImage.multiplyAllAlphas(.5f);
+	if(dndImage.getWidth() > 0 && dndImage.hasAlphaChannel()) dndImage.multiplyAllAlphas(.5f);
+
 	if (e.getDistanceFromDragStart() > 40)
 	{
 		var desc = new DynamicObject();

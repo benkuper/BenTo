@@ -32,5 +32,12 @@ public:
 	virtual void uploadBakedData(BakeData data) override;
 	virtual void exportBakedData(BakeData data) override;
 
+	virtual void loadBake(StringRef fileName, bool autoPlay = false) override;
+	virtual void playBake(float time = -1) override;
+	virtual void pauseBakePlaying() override;
+	virtual void resumeBakePlaying() override {}
+	virtual void seekBakePlaying(float time) override;
+	virtual void stopBakePlaying() override;
+
 	static bool uploadProgressCallback(void * prop, int bytesSent, int totalBytes);
 };

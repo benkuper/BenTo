@@ -23,6 +23,8 @@ public:
 
 	ScopedPointer<TriggerButtonUI> autoDetectUI;
 	ScopedPointer<TriggerButtonUI> autoAssignUI;
+	ScopedPointer<TriggerButtonUI> bakeAllUI;
+	ScopedPointer<BoolToggleUI> bakeModeUI;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos) override;

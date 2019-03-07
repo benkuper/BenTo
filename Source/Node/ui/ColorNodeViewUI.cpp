@@ -9,10 +9,12 @@
 */
 
 #include "ColorNodeViewUI.h"
+#include "Prop/Prop.h"
 
 ColorNodeViewUI::ColorNodeViewUI(ColorNode * cn) :
 	NodeViewUI(cn),
-	cn(cn)
+	cn(cn),
+	propToPreview(nullptr)
 {
 }
 

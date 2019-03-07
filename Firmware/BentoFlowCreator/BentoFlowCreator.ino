@@ -146,7 +146,7 @@ void onButtonEvent(int type)
   case BT_LONGPRESS:
 #if USE_LEDSTRIP
 #if USE_FILES
-   stripManager.bakePlayer.resetTime();
+   stripManager.bakePlayer.play(0);
 #endif
 #endif
     break;
@@ -176,7 +176,7 @@ void onMultipress(int count)
 */
 #if USE_FILES
   stripManager.setMode(LedStripManager::Mode::Baked);
-  stripManager.bakePlayer.playFile("timeline.colors");
+  stripManager.bakePlayer.load("default.colors");
 #endif
   }
 }
@@ -394,7 +394,7 @@ void uploadFinished(const String &fileName)
 {
   DBG("Upload finished, playing file");
   stripManager.setMode(LedStripManager::Mode::Baked);
-  stripManager.bakePlayer.playFile(fileName);
+  stripManager.bakePlayer.load(fileName);
 }
 #endif
 

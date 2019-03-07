@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Prop/Prop.h"
 #include "NodeConnectionSlot.h"
 
 class NodeViewUI;

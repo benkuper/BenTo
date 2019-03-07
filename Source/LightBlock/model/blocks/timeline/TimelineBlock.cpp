@@ -47,8 +47,22 @@ Array<Colour> TimelineBlock::getColors(Prop * p, double time, var params)
 
 }
 
-void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float, bool)
+void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 {
+	if (!sequence.isPlaying->boolValue() || prevTime > sequence.currentTime->floatValue())
+	{
+		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SEEK, sequence.currentTime->floatValue());
+	}
 	//updateColorsForBlock(block);
+}
+
+void TimelineBlock::sequencePlayStateChanged(Sequence * s)
+{
+	providerListeners.call(&ProviderListener::providerBakeControlUpdate, sequence.isPlaying->boolValue() ? PLAY : PAUSE, sequence.currentTime->floatValue());
+}
+
+void TimelineBlock::sequenceLooped(Sequence * s)
+{
+	providerListeners.call(&ProviderListener::providerBakeControlUpdate, PLAY, 0);
 }
 

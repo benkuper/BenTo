@@ -36,6 +36,12 @@
                 "tabs": [
                   {
                     "name": "Node Editor"
+                  },
+                  {
+                    "name": "Timeline Editor"
+                  },
+                  {
+                    "name": "Spatializer Editor"
                   }
                 ]
               },

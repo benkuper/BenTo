@@ -11,6 +11,7 @@
 #include "NodeManagerUI.h"
 #include "../nodes/model/ModelNode.h"
 #include "LightBlock/model/ui/LightBlockModelUI.h"
+#include "ColorNodeViewUI.h"
 
 NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 	BaseManagerViewUI("Nodes", manager),
@@ -111,7 +112,8 @@ NodeViewUI::Connector * NodeManagerUI::getConnectorForSlot(NodeConnectionSlot * 
 NodeViewUI * NodeManagerUI::createUIForItem(Node * item)
 {
 	NodeViewUI * nui = item->createUI();
-	nui->propToPreview = &manager->prop;
+	ColorNodeViewUI * cnui = dynamic_cast<ColorNodeViewUI *>(nui);
+	if (cnui != nullptr) cnui->propToPreview = manager->prop;
 	return nui;
 }
 

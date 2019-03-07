@@ -12,6 +12,7 @@
 #include "NodeViewUI.h"
 #include "../ColorNode.h"
 
+class Prop;
 
 class ColorNodeViewUI :
 	public NodeViewUI
@@ -21,6 +22,7 @@ public:
 	virtual ~ColorNodeViewUI();
 
 	ColorNode * cn;
+	Prop * propToPreview;
 
 	virtual void paint(Graphics &g) override;
 

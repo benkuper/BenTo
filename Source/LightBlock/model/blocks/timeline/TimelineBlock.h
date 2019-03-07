@@ -28,6 +28,8 @@ public:
 	Array<Colour> getColors(Prop * p, double time, var params) override;
 
 	void sequenceCurrentTimeChanged(Sequence *, float /*prevTime*/, bool /*evaluateSkippedData*/) override;
+	void sequencePlayStateChanged(Sequence * s) override;
+	void sequenceLooped(Sequence * s) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

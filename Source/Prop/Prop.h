@@ -18,7 +18,8 @@ class PropFamily;
 class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
-	public Thread
+	public Thread,
+	public LightBlockColorProvider::ProviderListener
 {
 public:
 	enum Shape { CLUB, BALL, POI, HOOP, RING, BUGGENG, BOX };
@@ -48,7 +49,7 @@ public:
 	Trigger * bakeAndUploadTrigger;
 	Trigger * bakeAndExportTrigger;
 	StringParameter * bakeFileName;
-	BoolParameter * playBakeFile;
+	BoolParameter * bakeMode;
 
 	BoolParameter * sendCompressedFile;
 	BoolParameter * isBaking;
@@ -87,6 +88,7 @@ public:
 
 	static void fillTypeOptions(EnumParameter * p);
 	
+	//Baking
 	struct BakeData
 	{
 		String name;
@@ -99,6 +101,15 @@ public:
 	virtual BakeData bakeCurrentBlock();
 	virtual void uploadBakedData(BakeData data);
 	virtual void exportBakedData(BakeData data);
+
+	virtual void loadBake(StringRef /*fileName*/, bool /*autoPlay*/) {}
+	virtual void playBake(float /*time */ = -1) {}
+	virtual void pauseBakePlaying() {}
+	virtual void resumeBakePlaying() {}
+	virtual void seekBakePlaying(float /*time */) {}
+	virtual void stopBakePlaying() {}
+
+	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

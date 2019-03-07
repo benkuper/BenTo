@@ -25,7 +25,6 @@ public:
 
 	const int connectorSize = 10;
 
-	Prop * propToPreview;
 
 	OwnedArray<Connector> inConnectors;
 	OwnedArray<Connector> outConnectors;

@@ -10,6 +10,7 @@
 
 #include "ColorNode.h"
 #include "ui/ColorNodeViewUI.h"
+#include "Prop/Prop.h"
 
 ColorNode::ColorNode(const String & name, var params) : 
 	Node(name, params)

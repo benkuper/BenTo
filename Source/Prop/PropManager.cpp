@@ -31,10 +31,13 @@ PropManager::PropManager() :
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 	sendFeedback = addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
+	bakeAll = addTrigger("Bake All", "Bake all props");
+	bakeMode = addBoolParameter("Bake Mode", "Bake Mode", false);
 
 	String localIp = "";
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
+
 	for (auto &ip : ad)
 	{
 		if (ip.toString().startsWith("192.168.0.") || ip.toString().startsWith("192.168.1.") || ip.toString().startsWith("192.168.43."))
@@ -145,6 +148,19 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 
 		LighttoysFTProp::autoDetectRemotes();
 	}
+	else if (t == bakeAll)
+	{
+		for (auto & p : items) p->bakeAndUploadTrigger->trigger();
+	}
+}
+
+void PropManager::onContainerParameterChanged(Parameter * p)
+{
+	BaseManager::onContainerParameterChanged(p);
+	if (p == bakeMode)
+	{
+		for (auto &pr : items) pr->bakeMode->setValue(bakeMode->boolValue());
+	}
 }
 
 void PropManager::onControllableFeedbackUpdate(ControllableContainer *, Controllable * c)
@@ -202,7 +218,6 @@ void PropManager::propIDChanged(Prop * p, int previousID)
 
 void PropManager::oscMessageReceived(const OSCMessage & m)
 {
-
 	String address = m.getAddressPattern().toString();
 
 	if (address == "/wassup")
