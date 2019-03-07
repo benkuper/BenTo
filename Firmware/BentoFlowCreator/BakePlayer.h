@@ -66,9 +66,12 @@ public:
       DBG("SHOULD BE EXACTLY POS "+String(curFile.position())+", expected "+String(pos));
     }
 
-    //DBG("Playing "+String(msToSeconds(curTimeMs))+"\t Frame : "+String(msToFrame(curTimeMs)));
-
     curFile.read(buffer,FRAME_SIZE);
+    
+    DBG("Playing "+String(msToSeconds(curTimeMs))+"\t Frame : "+String(msToFrame(curTimeMs))
+          +"\t, Color "+String(buffer[2])+"\t "+String(buffer[1])+"\t "+String(buffer[0])
+        );
+        
     showCurrentFrame();
   }
 
