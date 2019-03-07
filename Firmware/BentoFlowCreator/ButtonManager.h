@@ -75,11 +75,13 @@ public:
       {
         if(!longPress && millis() > timeAtPress + LONGPRESS_TIME)
         {
+          longPress = true;
           onButtonEvent(BT_LONGPRESS);
         }
 
         if(!veryLongPress && millis() > timeAtPress + VERYLONGPRESS_TIME)
         {
+          veryLongPress = true;
           onButtonEvent(BT_VERYLONGPRESS);
         }
       }

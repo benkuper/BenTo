@@ -164,7 +164,7 @@ void onMultipress(int count)
   if (count == 2)
   {
 #if USE_LEDSTRIP
-    stripManager.setMode(LedStripManager::Mode::Pattern);
+    stripManager.nextMode();
 #endif
   }
   else if (count == 3)
@@ -176,6 +176,7 @@ void onMultipress(int count)
 */
 #if USE_FILES
   stripManager.setMode(LedStripManager::Mode::Baked);
+  stripManager.bakePlayer.playFile("timeline.colors");
 #endif
   }
 }

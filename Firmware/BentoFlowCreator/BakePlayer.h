@@ -13,6 +13,8 @@ public:
   File curFile;
   long timeAtPlay = 0;
   bool isPausing;
+  long timeAtPause;
+  
   int fps = 100;
   byte buffer[BUFFER_LENGTH];
   
@@ -25,19 +27,18 @@ public:
   {
     if(!curFile) return;
     
+    if(isPausing) 
+    {
+      return;
+    }
+    
     if(curFile.available() < BUFFER_LENGTH)
     {
       DBG("End of show, available = "+String(curFile.available()));
       resetTime();
     }
-
-    if(isPausing) 
-    {
-      timeAtPlay = millis();
-      return;
-    }
     
-    long curTime = millis()-timeAtPlay;
+    long curTime = millis() - timeAtPlay;
     long pos = getBytePosForTime(curTime);
 
      if(pos <= curFile.position()) return; //waiting for frame
@@ -82,10 +83,14 @@ public:
   void togglePlayPause()
   {
     isPausing = !isPausing;
+    if(isPausing) timeAtPause = millis() - timeAtPlay;
+    else timeAtPlay = millis()- timeAtPause;
+    DBG("Toggle pause, isPaused ? "+String(isPausing));
   }
 
   void resetTime()
   {
+    isPausing = false;
     timeAtPlay = millis();
     curFile.seek(0);
   }
