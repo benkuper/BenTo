@@ -47,11 +47,29 @@
     <Filter Include="BenTo\Source\Video">
       <UniqueIdentifier>{871EB0F9-7C2C-9AC7-2172-59ED2441BD4F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer\actions\generic">
+      <UniqueIdentifier>{FF4983B4-62A8-75BE-9008-0B5C2EF7290B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer\actions\identification">
+      <UniqueIdentifier>{17CDA66D-84B8-4458-F92A-518E4C292B15}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer\actions">
+      <UniqueIdentifier>{33127BF2-A178-2A12-16C1-F4E2187407AE}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer">
+      <UniqueIdentifier>{549072DD-AD9E-5304-0850-F2088CA58FDA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Timeline\layers\BlockLayer\ui">
       <UniqueIdentifier>{0582B79D-D7E8-BFFC-6CC8-D525FCDA1785}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Timeline\layers\BlockLayer">
       <UniqueIdentifier>{1D180609-0410-FDB8-8035-2B3646361230}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\Trigger\ui">
+      <UniqueIdentifier>{5BE09486-D727-7A23-8148-3922C1F35473}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\Trigger">
+      <UniqueIdentifier>{EEA924AC-EFFB-41BF-6C0D-77E5E1C1FAD0}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Timeline\layers">
       <UniqueIdentifier>{6EB5F6FF-FC23-E102-1E7A-00CB7E575EDD}</UniqueIdentifier>
@@ -823,6 +841,21 @@
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp">
       <Filter>BenTo\Source\Video</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Action\GenericActionTrigger.cpp">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\generic</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Action\IdentificationAction.cpp">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\identification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Action\Action.cpp">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Action\ActionLayer.cpp">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Action\ActionManager.cpp">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
     </ClCompile>
@@ -843,6 +876,30 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerManagerUI.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerMultiTransformer.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerUI.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerPanel.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerTimeline.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TimeTrigger.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TimeTriggerManager.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TriggerLayer.cpp">
+      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\TimelineBlockSequence.cpp">
       <Filter>BenTo\Source\Timeline</Filter>
@@ -3699,6 +3756,21 @@
     <ClInclude Include="..\..\Source\Video\SpatLayout.h">
       <Filter>BenTo\Source\Video</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Action\GenericActionTrigger.h">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\generic</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Action\IdentificationAction.h">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\identification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Action\Action.h">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Action\ActionLayer.h">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Action\ActionManager.h">
+      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
     </ClInclude>
@@ -3719,6 +3791,30 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.h">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerManagerUI.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerMultiTransformer.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerUI.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerPanel.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerTimeline.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TimeTrigger.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TimeTriggerManager.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TriggerLayer.h">
+      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\TimelineBlockSequence.h">
       <Filter>BenTo\Source\Timeline</Filter>

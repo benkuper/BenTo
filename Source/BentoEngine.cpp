@@ -15,6 +15,7 @@
 #include "Video/Spatializer.h"
 #include "Audio/AudioManager.h"
 #include "Timeline/layers/Block/LightBlockLayer.h"
+#include "Timeline/layers/Action/ActionLayer.h"
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
 #include "Prop/Cluster/PropClusterGroupManager.h"
@@ -39,6 +40,7 @@ BentoEngine::BentoEngine() :
 	
 	//Timeline
 	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Blocks", &LightBlockLayer::create));
+	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Actions", &ActionLayer::create));
 	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
 	
 	//Communication
