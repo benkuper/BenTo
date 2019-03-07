@@ -14,7 +14,7 @@
 FlowtoysFamily::FlowtoysFamily() :
 	PropFamily("Flowtoys")
 {
-	targetPropFPS = addIntParameter("Prop FPS", "", 60, 1, 1000);
+	targetPropFPS = addIntParameter("Prop FPS", "", 50, 1, 1000);
 }
 
 FlowtoysFamily::~FlowtoysFamily()
