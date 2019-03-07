@@ -55,7 +55,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	bakeStartTime->defaultUI = FloatParameter::TIME;
 	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1,1);
 	bakeEndTime->defaultUI = FloatParameter::TIME;
-	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 50, 1, 500);
+	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 50, 1, 800);
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
 	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
 	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "demo.colors");

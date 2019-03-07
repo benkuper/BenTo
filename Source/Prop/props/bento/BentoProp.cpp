@@ -78,8 +78,6 @@ void BentoProp::sendColorsToPropInternal()
 
 	int dataSize = numLeds * 3 + 1;
 
-	DBG(colors[0].toString());
-
 	for (int i = 0; i < numPackets; i++)
 	{
 		int offset = i * maxLedsPerPacket * 3;

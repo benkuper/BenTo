@@ -13,7 +13,7 @@ public:
   File curFile;
   long timeAtPlay = 0;
   bool isPausing;
-  int fps = 50;
+  int fps = 100;
   byte buffer[BUFFER_LENGTH];
   
   BakePlayer()
@@ -44,18 +44,14 @@ public:
     
     int bytesRead = curFile.read(buffer,BUFFER_LENGTH);
 
-    DBG("Bake curTime "+String(curTime)+"\tpos : "+String(pos)+"\tfilePos : "+String(curFile.position())+"\tread "+String(bytesRead));
-   
+    //DBG("Bake curTime "+String(curTime)+"\tpos : "+String(pos)+"\tfilePos : "+String(curFile.position())+"\t"+String(buffer[0]));
     for(int i=0;i<NUM_LEDS;i++)
     {
       byte r = buffer[i*4+2];
       byte g = buffer[i*4+1];
       byte b = buffer[i*4+0];
       simpleSetLed(i, CRGB(r,g,b));
-      if(i == 0)
-      {
-        DBG("Col 1"+String(r)+","+String(g)+","+String(b));
-      }
+  
      //buffer[i*4+3] /alpha
     }
 
