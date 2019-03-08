@@ -14,11 +14,18 @@ PictureBlockUI::PictureBlockUI(PictureBlock * block) :
 	LightBlockModelUI(block),
 	pb(block)
 {
-	modelImage = Image(pb->picture);
+	updateThumbnail();
 }
 
 PictureBlockUI::~PictureBlockUI()
 {
+}
+
+void PictureBlockUI::updateThumbnail()
+{
+	if (pb->picture.getWidth() > 0) modelImage = Image(pb->picture);
+	else LightBlockModelUI::updateThumbnail();
+	repaint();
 }
 
 void PictureBlockUI::controllableFeedbackUpdateInternal(Controllable * c)
@@ -26,7 +33,6 @@ void PictureBlockUI::controllableFeedbackUpdateInternal(Controllable * c)
 	LightBlockModelUI::controllableFeedbackUpdateInternal(c);
 	if (c == pb->pictureFile)
 	{
-		modelImage = Image(pb->picture);
-		repaint();
+		updateThumbnail();
 	}
 }

@@ -28,7 +28,7 @@ public:
 	void paint(Graphics &g) override;
 	void resized() override;
 
-	void updateThumbnail();
+	virtual void updateThumbnail();
 
 	virtual void editBlock() {} //to be overriden by child classes
 

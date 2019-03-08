@@ -22,5 +22,6 @@ public:
 
 	PictureBlock * pb;
 
+	virtual void updateThumbnail() override;
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 };
