@@ -42,14 +42,9 @@ void PictureBlock::getColorsInternal(Array<Colour> * result, Prop * p, double ti
 	{
 		float ty = jmin(i*numPixelsH / resolution, numPixelsH - 1);
 		
-		float hue = 0, saturation = 0, brightness = 0;
-		picture.getPixelAt(tx, ty).getHSB(hue, saturation, brightness);
-		
-		hue += bHue;
-		saturation = jmin (1.0f, saturation * bSaturation);
-		brightness = jmin (1.0f, brightness * bBrightness);
-		
-		result->set(i, Colour::fromHSV(hue,saturation,brightness, 1));
+		float h = 0, s = 0, b = 0;
+		picture.getPixelAt(tx, ty).getHSB(h, s, b);
+		result->set(i, Colour::fromHSV(h + bHue, jmin(1.0f, s * bSaturation), jmin(1.0f, b * bBrightness), 1));
 	}
 }
 
