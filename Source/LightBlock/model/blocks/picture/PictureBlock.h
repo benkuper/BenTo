@@ -20,7 +20,10 @@ public:
 	~PictureBlock() {}
 
 	FloatParameter * speed;
-    FloatParameter * offsetByID;
+	FloatParameter * offsetByID;
+	FloatParameter * brightness;
+	FloatParameter * saturation;
+	FloatParameter * hue;
 	FileParameter * pictureFile;
 	Image picture;
 
