@@ -19,7 +19,11 @@ public:
 	FlowtoysFamily();
 	~FlowtoysFamily();
 
+	ControllableContainer clubCC;
+	FloatParameter * irLevel;
+
 	IntParameter * targetPropFPS;
 
 	void onContainerParameterChanged(Parameter * p) override;
+	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 };

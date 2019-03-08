@@ -21,8 +21,14 @@ public:
 
 	BoolParameter * button;
 
+	ControllableContainer irCC;
+	FloatParameter * irLevel;
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
+
 	String getTypeString() const override { return  FlowClubProp::getTypeStringStatic(); }
 	static const String getTypeStringStatic() { return "Flowtoys Creator Club"; }
 
 	static FlowClubProp * create(var params) { return new FlowClubProp(params); } 
+
 };
