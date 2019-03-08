@@ -22,7 +22,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	bakingCC("Bake and Upload"),
 	currentBlock(nullptr),
 	previousID(-1),
-	updateRate(30),
+	updateRate(50),
 	propNotifier(50)
 {
 	registerFamily(familyName);
@@ -55,7 +55,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	bakeStartTime->defaultUI = FloatParameter::TIME;
 	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1,1);
 	bakeEndTime->defaultUI = FloatParameter::TIME;
-	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 50, 1, 800);
+	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 800);
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
 	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
 	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "demo.colors");
@@ -365,7 +365,7 @@ void Prop::run()
 		else
 		{
 			update();
-			sleep(1000.0f / updateRate); //60fps
+			sleep(1000.0f / updateRate); //50fps
 		}
 	}
 }

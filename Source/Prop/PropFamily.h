@@ -17,7 +17,7 @@ class PropFamily :
 	public EnablingControllableContainer
 {
 public:
-	PropFamily(StringRef name, int updateRate = 60);
+	PropFamily(StringRef name, int updateRate = 50);
 	~PropFamily();
 
 	IntParameter * updateRate;
