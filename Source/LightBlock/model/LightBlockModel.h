@@ -29,6 +29,9 @@ public:
 	//ui
 	String customThumbnailPath;
 
+	bool isBeingEdited;
+	void setBeingEdited(bool value);
+
 	void clear() override;
 
 	ScopedPointer<ControllableContainer> paramsContainer;
@@ -73,7 +76,7 @@ public:
 	class  ModelEvent
 	{
 	public:
-		enum Type { CUSTOM_THUMBNAIL_CHANGED };
+		enum Type { CUSTOM_THUMBNAIL_CHANGED, EDITING_STATE_CHANGED};
 
 		ModelEvent(Type t, LightBlockModel * m) :
 			type(t), model(m) {}

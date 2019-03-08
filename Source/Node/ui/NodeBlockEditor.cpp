@@ -9,13 +9,13 @@
 */
 
 #include "NodeBlockEditor.h" 
+#include "LightBlock/model/LightBlockModelLibrary.h"
 
 NodeBlockEditor::NodeBlockEditor(const String & contentName) :
 	ShapeShifterContentComponent(contentName),
 	nodeBlock(nullptr),
 	nodeBlockRef(nullptr)
 {
-	//InspectableSelectionManager::mainSelectionManager->addAsyncSelectionManagerListener(this);
 	addAndMakeVisible(&toolbox);
 
 	NodeBlock * b = InspectableSelectionManager::mainSelectionManager->getInspectableAs<NodeBlock>();
@@ -54,6 +54,7 @@ void NodeBlockEditor::setNodeBlock(NodeBlock * b)
 
 	if (nodeBlock != nullptr)
 	{
+		nodeBlock->setBeingEdited(false);
 		nodeBlock->removeInspectableListener(this);
 		nodeBlock = nullptr;
 		nodeBlockRef = nullptr;
@@ -64,6 +65,7 @@ void NodeBlockEditor::setNodeBlock(NodeBlock * b)
 
 	if (nodeBlock != nullptr)
 	{
+		nodeBlock->setBeingEdited(true);
 		nodeBlock->addInspectableListener(this);
 		nodeBlockRef = nodeBlock;
 		managerUI = new NodeManagerUI(&nodeBlock->manager);
@@ -79,13 +81,15 @@ void NodeBlockEditor::inspectableDestroyed(Inspectable * i)
 	if (i == nodeBlock) setNodeBlock(nullptr);
 }
 
-void NodeBlockEditor::newMessage(const InspectableSelectionManager::SelectionEvent & e)
+
+void NodeBlockEditor::endLoadFile()
 {
-	/*
-	if (e.type == InspectableSelectionManager::SelectionEvent::SELECTION_CHANGED)
+	for (auto &i : LightBlockModelLibrary::getInstance()->nodeBlocks.items)
 	{
-		NodeBlock * b = e.selectionManager->getInspectableAs<NodeBlock>();
-		if (b != nullptr) setNodeBlock(b);
+		if (i->isBeingEdited)
+		{
+			setNodeBlock((NodeBlock*)i);
+			break;
+		}
 	}
-	*/
 }

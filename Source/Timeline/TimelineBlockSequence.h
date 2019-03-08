@@ -26,7 +26,7 @@ public:
 
 	SequenceLayerFactory layerFactory;
 	Array<Colour> getColors(Prop * p, double time, var params);
-	Array<LightBlockLayer *> getLayersForProp(Prop * p);
+	Array<LightBlockLayer *> getLayersForProp(Prop * p, bool includeDisabled = false);
 
 	void itemAdded(SequenceLayer * s) override;
 

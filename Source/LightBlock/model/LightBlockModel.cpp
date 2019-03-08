@@ -16,6 +16,7 @@
 
 LightBlockModel::LightBlockModel(const String &name, var params) :
 	LightBlockColorProvider(name, false),
+	isBeingEdited(false),
 	presetManager(this),
 	modelNotifier(5)
 {
@@ -39,6 +40,14 @@ void LightBlockModel::clear()
 	{
 		if (p->type != Controllable::TRIGGER) dynamic_cast<Parameter *>(p.get())->resetValue();
 	}
+}
+
+
+void LightBlockModel::setBeingEdited(bool value)
+{
+	if (value == isBeingEdited) return;
+	isBeingEdited = value;
+	modelNotifier.addMessage(new ModelEvent(ModelEvent::EDITING_STATE_CHANGED, this));
 }
 
 Array<WeakReference<Controllable>> LightBlockModel::getModelParameters()

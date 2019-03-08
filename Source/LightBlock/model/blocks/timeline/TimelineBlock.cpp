@@ -41,6 +41,7 @@ LightBlockModelUI * TimelineBlock::createUI()
 	return new TimelineBlockUI(this);
 }
 
+
 Array<Colour> TimelineBlock::getColors(Prop * p, double time, var params)
 {
 	return sequence.getColors(p, time, params);
@@ -59,6 +60,11 @@ void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 void TimelineBlock::sequencePlayStateChanged(Sequence * s)
 {
 	providerListeners.call(&ProviderListener::providerBakeControlUpdate, sequence.isPlaying->boolValue() ? PLAY : PAUSE, sequence.currentTime->floatValue());
+}
+
+void TimelineBlock::sequenceEditingStateChanged(Sequence * s)
+{
+	setBeingEdited(sequence.isBeingEdited);
 }
 
 void TimelineBlock::sequenceLooped(Sequence * s)

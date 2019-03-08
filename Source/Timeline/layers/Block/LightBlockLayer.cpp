@@ -36,7 +36,7 @@ LightBlockLayer::~LightBlockLayer()
 
 Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 {
-	Array<LayerBlock *> blocks = blockClipManager.getBlocksAtTime(time);
+	Array<LayerBlock *> blocks = blockClipManager.getBlocksAtTime(time, false);
 
 	int resolution = p->resolution->intValue();
 

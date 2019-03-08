@@ -14,7 +14,7 @@
 #include "Prop/Prop.h"
 
 LightBlock::LightBlock(LightBlockColorProvider * provider) :
-	BaseItem(provider->niceName),
+	BaseItem(provider->niceName, false),
 	provider(provider),
 	paramsContainer("Parameters"),
 	paramsLoadData(var())

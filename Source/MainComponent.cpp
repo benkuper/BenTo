@@ -33,9 +33,9 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Props", &PropManagerUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Blocks", &LightBlockModelLibraryUI::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Block Visualizer", &BlockViz::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Node Editor", &NodeBlockEditor::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Timeline Editor", &TimelineEditor::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Spatializer Editor", &SpatializerPanel::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(NodeBlockEditor::getTypeStringStatic(), &NodeBlockEditor::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(TimelineEditor::getTypeStringStatic(), &TimelineEditor::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(SpatializerPanel::getTypeStringStatic(), &SpatializerPanel::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Clusters", &PropClusterGroupManagerUI::create));
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);

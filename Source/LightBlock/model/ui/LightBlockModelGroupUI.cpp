@@ -31,8 +31,8 @@ LightBlockModelGroupUI::~LightBlockModelGroupUI()
 void LightBlockModelGroupUI::paint(Graphics & g)
 {
 	Rectangle<int> hr = getLocalBounds().reduced(2).removeFromTop(headerHeight);
-	g.setColour(BG_COLOR.brighter(.3f));
-	g.fillRoundedRectangle(hr.toFloat(), 4);
+	g.setColour(BG_COLOR.brighter(.1f));
+	g.fillRoundedRectangle(hr.toFloat(), 2);
 	g.setColour(TEXT_COLOR);
 	g.drawFittedText(group->niceName, hr, Justification::centred, 1);
 }

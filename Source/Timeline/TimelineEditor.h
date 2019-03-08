@@ -13,13 +13,15 @@
 #include "LightBlock/model/blocks/timeline/TimelineBlock.h"
 
 class TimelineEditor :
-	public TimeMachineView
+	public TimeMachineView,
+	public EngineListener
 {
 public:
-	TimelineEditor(const String &contentName = "Timeline Editor");
+	TimelineEditor(const String &contentName = TimelineEditor::getTypeStringStatic());
 	~TimelineEditor();
 
-	//virtual void inspectablesSelectionChanged() override;
-
+	void endLoadFile() override;
+	
+	static const String getTypeStringStatic()  { return "Timeline Editor"; }
 	static TimelineEditor * create(const String &contentName) { return new TimelineEditor(contentName); }
 };

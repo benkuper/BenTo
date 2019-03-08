@@ -14,6 +14,9 @@
 #include "blocks/timeline/TimelineBlock.h"
 #include "blocks/picture/PictureBlock.h"
 
+#include "Timeline/TimelineEditor.h"
+#include "Node/ui/NodeBlockEditor.h"
+
 UserLightBlockModelManager::UserLightBlockModelManager(const String &name, BlockType type) :
 	BaseManager(name),
 	type(type)
@@ -32,13 +35,84 @@ LightBlockModel * UserLightBlockModelManager::createItem()
 	switch (type)
 	{
 	case PICTURE: return new PictureBlock();
-	case NODE: return new NodeBlock();
+	case NODE: 
+	{
+		NodeBlock * n = new NodeBlock();
+
+		if (!Engine::mainEngine->isLoadingFile)
+		{
+			ShapeShifterManager::getInstance()->showContent(NodeBlockEditor::getTypeStringStatic());
+			
+			NodeBlockEditor * ne = (NodeBlockEditor *)ShapeShifterManager::getInstance()->getContentForName(NodeBlockEditor::getTypeStringStatic());
+			if (ne != nullptr)
+			{
+				ne->setNodeBlock(n);
+			}
+		}
+		
+		return n;
+	}
 	case SCRIPT: return new ScriptBlock();
-	case TIMELINE: return new TimelineBlock();
+	case TIMELINE:
+	{
+		TimelineBlock * t = new TimelineBlock();
+
+		if (!Engine::mainEngine->isLoadingFile)
+		{
+			ShapeShifterManager::getInstance()->showContent(TimelineEditor::getTypeStringStatic());
+			TimelineEditor * te = (TimelineEditor *)ShapeShifterManager::getInstance()->getContentForName(TimelineEditor::getTypeStringStatic());
+			if (te != nullptr) te->setSequence(&t->sequence);
+		}
+		
+		return t;
+	}
 
 	default:
 		break;
 	}
 	jassertfalse;
 	return nullptr;
+}
+
+var UserLightBlockModelManager::getJSONData()
+{
+	var data = BaseManager::getJSONData();
+
+	/*
+	LightBlockModel * editingBlock = nullptr;
+	for (auto & i : items)
+	{
+		if (i->isBeingEdited)
+		{
+			editingBlock = i;
+			break;
+		}
+	}
+	*/
+
+	//if (editingBlock != nullptr) data.getDynamicObject()->setProperty("editingBlock", editingBlock->shortName);
+	return data;
+}
+
+void UserLightBlockModelManager::loadJSONDataInternal(var data)
+{
+	BaseManager::loadJSONDataInternal(data);
+	/*if (data.hasProperty("editingBlock"))
+	{
+		
+		LightBlockModel * m = getItemWithName(data.getProperty("editingBlock", ""));
+
+		if (NodeBlock * nb = dynamic_cast<NodeBlock *>(m))
+		{
+			DBG("Edit node block");
+			NodeBlockEditor * ne = (NodeBlockEditor *)ShapeShifterManager::getInstance()->getContentForName(NodeBlockEditor::getTypeStringStatic());
+			if (ne != nullptr) ne->setNodeBlock(nb);
+		}else if(TimelineBlock * t = dynamic_cast<TimelineBlock *>(m))
+		{
+			DBG("Edit timeline block"); 
+			TimelineEditor * te = (TimelineEditor *)ShapeShifterManager::getInstance()->getContentForName(TimelineEditor::getTypeStringStatic());
+			if (te != nullptr) te->setSequence(&t->sequence);
+		}
+		
+	}*/
 }

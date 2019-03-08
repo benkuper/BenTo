@@ -59,5 +59,6 @@ public:
 
 	void timerCallback() override;
 
-	static SpatializerPanel * create(const String &name) { return new SpatializerPanel(name); }
+	static const String getTypeStringStatic() { return "Spatializer"; }
+	static SpatializerPanel * create(const String &name = SpatializerPanel::getTypeStringStatic()) { return new SpatializerPanel(name); }
 };

@@ -16,6 +16,8 @@ const Identifier LightBlockModelUI::dragAndDropID = "LightBlockModel";
 LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	 BaseItemMinimalUI(model)
 {
+	bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bgColor = BG_COLOR.brighter(.1f);
+	
 	updateThumbnail();
 	
 	setSize(64, 64);
@@ -33,10 +35,10 @@ LightBlockModelUI::~LightBlockModelUI()
 
 void LightBlockModelUI::paint(Graphics & g)
 {
-	g.setColour(Colours::white.withAlpha(.1f));
-	g.fillRoundedRectangle(getLocalBounds().toFloat(), 8);
+	g.setColour(bgColor);
+	g.fillRoundedRectangle(getLocalBounds().toFloat(), 2);
 	g.setColour(Colours::white.withAlpha(isMouseOver() ? .2f : 1.f));
-	if (modelImage.getWidth() > 0) g.drawImage(modelImage, getLocalBounds().reduced(4).toFloat());
+	if (modelImage.getWidth() > 0) g.drawImage(modelImage, getLocalBounds().reduced(6).toFloat());
 
 	if (modelImage.getWidth() == 0 || isMouseOver())
 	{
@@ -142,6 +144,11 @@ void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent & e)
 	{
 	case LightBlockModel::ModelEvent::CUSTOM_THUMBNAIL_CHANGED:
 		updateThumbnail();
+		break;
+
+	case LightBlockModel::ModelEvent::EDITING_STATE_CHANGED:
+		bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bgColor = BG_COLOR.brighter(.1f);
+		repaint();
 		break;
 	}
 }

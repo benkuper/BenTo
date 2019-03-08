@@ -28,11 +28,9 @@ TimelineBlockSequence::~TimelineBlockSequence()
 
 Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params)
 {
-	
 	Array<LightBlockLayer *> layers = getLayersForProp(p);
 
 	int numLayers = layers.size();
-
 	float t = params.getProperty("sequenceTime", true) ? currentTime->floatValue() : time;
 	
 	if (numLayers == 1 && layers[0] != nullptr)
@@ -75,8 +73,9 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 
 }
 
-Array<LightBlockLayer *> TimelineBlockSequence::getLayersForProp(Prop * p)
+Array<LightBlockLayer*> TimelineBlockSequence::getLayersForProp(Prop * p, bool includeDisabled)
 {
+
 	if (layerManager == nullptr) return nullptr; 
 	if (Engine::mainEngine->isClearing) return nullptr;
 
@@ -85,6 +84,7 @@ Array<LightBlockLayer *> TimelineBlockSequence::getLayersForProp(Prop * p)
 	
 	for (auto &i : layerManager->items)
 	{
+		if (!includeDisabled && !i->enabled->boolValue()) continue;
 		LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(i);
 		if (l == nullptr) continue;
 		if (l->filterManager.getTargetIDForProp(p) >= 0) result.add(l);

@@ -16,8 +16,8 @@
 
 class NodeBlockEditor :
 	public ShapeShifterContentComponent,
-	public InspectableSelectionManager::AsyncListener,
-	public Inspectable::InspectableListener
+	public Inspectable::InspectableListener,
+	public EngineListener
 {
 public:
 	NodeBlockEditor(const String &contentName);
@@ -36,7 +36,9 @@ public:
 	void setNodeBlock(NodeBlock * b);
 
 	void inspectableDestroyed(Inspectable *) override;
-	void newMessage(const InspectableSelectionManager::SelectionEvent &e) override;
 
-	static NodeBlockEditor * create(const String &contentName) { return new NodeBlockEditor(contentName); }
+	void endLoadFile() override;
+
+	static const String getTypeStringStatic() { return "Node Editor"; }
+	static NodeBlockEditor * create(const String &contentName = NodeBlockEditor::getTypeStringStatic()) { return new NodeBlockEditor(contentName); }
 };

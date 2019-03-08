@@ -29,14 +29,15 @@ public:
 
 	void sequenceCurrentTimeChanged(Sequence *, float /*prevTime*/, bool /*evaluateSkippedData*/) override;
 	void sequencePlayStateChanged(Sequence * s) override;
+	void sequenceEditingStateChanged(Sequence *s) override;
+
 	void sequenceLooped(Sequence * s) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+
 	String getTypeString() const override { return "Timeline"; }
-
 	LightBlockModelUI * createUI() override;
-
 	static TimelineBlock * create(var params) { return new TimelineBlock(params); }
 };

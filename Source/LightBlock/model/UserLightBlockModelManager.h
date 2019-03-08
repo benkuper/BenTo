@@ -16,7 +16,6 @@ class UserLightBlockModelManager :
 	public BaseManager<LightBlockModel>
 {
 public:
-
 	enum BlockType { PICTURE, NODE, SCRIPT, TIMELINE };
 
 	UserLightBlockModelManager(const String &name, BlockType type);
@@ -26,4 +25,8 @@ public:
 	File libFolder;
 
 	LightBlockModel * createItem();
+
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 };

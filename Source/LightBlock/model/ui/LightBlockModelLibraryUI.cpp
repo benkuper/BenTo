@@ -67,7 +67,7 @@ void LightBlockModelLibraryUI::paint(Graphics & g)
 void LightBlockModelLibraryUI::resized()
 {
 	Rectangle<int> r = getLocalBounds();
-	Rectangle<int> hr = r.removeFromTop(16);
+	Rectangle<int> hr = r.removeFromTop(20);
 
 	iconSizeUI->setBounds(hr.removeFromRight(100).reduced(2));
 
