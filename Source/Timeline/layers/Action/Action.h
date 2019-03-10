@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "../Trigger/TimeTrigger.h"
+#include "JuceHeader.h"
 
 class Action :
 	public TimeTrigger

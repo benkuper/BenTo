@@ -1,8 +1,8 @@
 #define IR_PIN 14
 #define IR_RX 34
-#define MAX_IR_POWER 22
+#define MAX_IR_POWER 25 //10%
 #define IR_CHANNEL 0
-#define IR_PWM_RESOLUTION 8
+#define IR_PWM_RESOLUTION 8 //8 = value range from 0 to 255
 #define IR_FREQ 5000
 
 class IRManager

@@ -65,12 +65,6 @@
     <Filter Include="BenTo\Source\Timeline\layers\BlockLayer">
       <UniqueIdentifier>{1D180609-0410-FDB8-8035-2B3646361230}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\Trigger\ui">
-      <UniqueIdentifier>{5BE09486-D727-7A23-8148-3922C1F35473}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\Trigger">
-      <UniqueIdentifier>{EEA924AC-EFFB-41BF-6C0D-77E5E1C1FAD0}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Timeline\layers">
       <UniqueIdentifier>{6EB5F6FF-FC23-E102-1E7A-00CB7E575EDD}</UniqueIdentifier>
     </Filter>
@@ -752,6 +746,12 @@
     <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block">
       <UniqueIdentifier>{32D57B7D-AE7E-065F-7840-14410E2C21F8}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui">
+      <UniqueIdentifier>{B4D3CBA4-7C14-A44C-E2DA-67667C9F2E80}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger">
+      <UniqueIdentifier>{38321AC7-8947-F0A1-5A3D-3731F17C3F35}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers">
       <UniqueIdentifier>{AB1A1199-96AB-2A7E-9E0C-870A25DEB6A5}</UniqueIdentifier>
     </Filter>
@@ -876,30 +876,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerManagerUI.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerMultiTransformer.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerUI.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerPanel.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerTimeline.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TimeTrigger.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TimeTriggerManager.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TriggerLayer.cpp">
-      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\TimelineBlockSequence.cpp">
       <Filter>BenTo\Source\Timeline</Filter>
@@ -3607,6 +3583,30 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerPanel.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerTimeline.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTrigger.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTriggerManager.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui</Filter>
     </ClCompile>
@@ -3791,30 +3791,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.h">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerManagerUI.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerMultiTransformer.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerUI.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerPanel.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerTimeline.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TimeTrigger.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TimeTriggerManager.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TriggerLayer.h">
-      <Filter>BenTo\Source\Timeline\layers\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\TimelineBlockSequence.h">
       <Filter>BenTo\Source\Timeline</Filter>
@@ -6629,6 +6605,30 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerPanel.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerTimeline.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTrigger.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTriggerManager.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui</Filter>

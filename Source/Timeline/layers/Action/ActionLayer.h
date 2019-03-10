@@ -9,7 +9,8 @@
 */
 
 #pragma once
-#include "../Trigger/TriggerLayer.h"
+
+#include "JuceHeader.h"
 
 class ActionManager;
 
@@ -19,8 +20,6 @@ class ActionLayer :
 public:
 	ActionLayer(Sequence * _sequence, var params = var());
 	~ActionLayer();
-
-
 
 	String getTypeString() const override { return "Actions"; }
 	static ActionLayer * create(Sequence * s, var params) { return new ActionLayer(s, params); }

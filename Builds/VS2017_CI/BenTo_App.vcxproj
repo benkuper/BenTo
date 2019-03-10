@@ -114,14 +114,6 @@
     <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClip.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerMultiTransformer.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerPanel.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TimeTrigger.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TimeTriggerManager.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Trigger\TriggerLayer.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\TimelineBlockSequence.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\TimelineEditor.cpp"/>
     <ClCompile Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.cpp"/>
@@ -2480,6 +2472,30 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTrigger.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTriggerManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2579,14 +2595,6 @@
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockClip.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerManagerUI.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerMultiTransformer.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TimeTriggerUI.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerPanel.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\ui\TriggerLayerTimeline.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TimeTrigger.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TimeTriggerManager.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Trigger\TriggerLayer.h"/>
     <ClInclude Include="..\..\Source\Timeline\TimelineBlockSequence.h"/>
     <ClInclude Include="..\..\Source\Timeline\TimelineEditor.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.h"/>
@@ -3525,6 +3533,14 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlock.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerPanel.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TriggerLayerTimeline.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTrigger.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TimeTriggerManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\TriggerLayer.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanel.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerPanelManagerUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerTimeline.h"/>

@@ -158,38 +158,6 @@
             <FILE id="lOb1Wl" name="LightBlockLayer.h" compile="0" resource="0"
                   file="Source/Timeline/layers/Block/LightBlockLayer.h"/>
           </GROUP>
-          <GROUP id="{FE7FFBA1-BCF0-3A9D-2B04-F663A57EFDA9}" name="Trigger">
-            <GROUP id="{AF8993C2-DAC4-0D5F-AC04-9A87D53CD2DE}" name="ui">
-              <FILE id="FD0Vwc" name="TimeTriggerManagerUI.cpp" compile="1" resource="0"
-                    file="Source/Timeline/layers/Trigger/ui/TimeTriggerManagerUI.cpp"/>
-              <FILE id="LXBRTh" name="TimeTriggerManagerUI.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Trigger/ui/TimeTriggerManagerUI.h"/>
-              <FILE id="AbZafc" name="TimeTriggerMultiTransformer.cpp" compile="1"
-                    resource="0" file="Source/Timeline/layers/Trigger/ui/TimeTriggerMultiTransformer.cpp"/>
-              <FILE id="St1ef7" name="TimeTriggerMultiTransformer.h" compile="0"
-                    resource="0" file="Source/Timeline/layers/Trigger/ui/TimeTriggerMultiTransformer.h"/>
-              <FILE id="qrBaXG" name="TimeTriggerUI.cpp" compile="1" resource="0"
-                    file="Source/Timeline/layers/Trigger/ui/TimeTriggerUI.cpp"/>
-              <FILE id="Ndknor" name="TimeTriggerUI.h" compile="0" resource="0" file="Source/Timeline/layers/Trigger/ui/TimeTriggerUI.h"/>
-              <FILE id="EuovYJ" name="TriggerLayerPanel.cpp" compile="1" resource="0"
-                    file="Source/Timeline/layers/Trigger/ui/TriggerLayerPanel.cpp"/>
-              <FILE id="wpASnx" name="TriggerLayerPanel.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Trigger/ui/TriggerLayerPanel.h"/>
-              <FILE id="dpjxCz" name="TriggerLayerTimeline.cpp" compile="1" resource="0"
-                    file="Source/Timeline/layers/Trigger/ui/TriggerLayerTimeline.cpp"/>
-              <FILE id="ES6BPz" name="TriggerLayerTimeline.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Trigger/ui/TriggerLayerTimeline.h"/>
-            </GROUP>
-            <FILE id="wJWiSM" name="TimeTrigger.cpp" compile="1" resource="0" file="Source/Timeline/layers/Trigger/TimeTrigger.cpp"/>
-            <FILE id="ONso1E" name="TimeTrigger.h" compile="0" resource="0" file="Source/Timeline/layers/Trigger/TimeTrigger.h"/>
-            <FILE id="mCs2FM" name="TimeTriggerManager.cpp" compile="1" resource="0"
-                  file="Source/Timeline/layers/Trigger/TimeTriggerManager.cpp"/>
-            <FILE id="Y77krk" name="TimeTriggerManager.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Trigger/TimeTriggerManager.h"/>
-            <FILE id="qU9UU6" name="TriggerLayer.cpp" compile="1" resource="0"
-                  file="Source/Timeline/layers/Trigger/TriggerLayer.cpp"/>
-            <FILE id="jNqRoA" name="TriggerLayer.h" compile="0" resource="0" file="Source/Timeline/layers/Trigger/TriggerLayer.h"/>
-          </GROUP>
         </GROUP>
         <FILE id="GGKa6S" name="TimelineBlockSequence.cpp" compile="1" resource="0"
               file="Source/Timeline/TimelineBlockSequence.cpp"/>

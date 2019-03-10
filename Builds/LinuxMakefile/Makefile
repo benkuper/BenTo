@@ -99,14 +99,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockClip_fe937171.o \
   $(JUCE_OBJDIR)/LightBlockClipManager_20fcb186.o \
   $(JUCE_OBJDIR)/LightBlockLayer_d2da119a.o \
-  $(JUCE_OBJDIR)/TimeTriggerManagerUI_8c6825fc.o \
-  $(JUCE_OBJDIR)/TimeTriggerMultiTransformer_9a2a14f.o \
-  $(JUCE_OBJDIR)/TimeTriggerUI_c8ed9123.o \
-  $(JUCE_OBJDIR)/TriggerLayerPanel_ef9680af.o \
-  $(JUCE_OBJDIR)/TriggerLayerTimeline_2fe93cc0.o \
-  $(JUCE_OBJDIR)/TimeTrigger_8b1c5636.o \
-  $(JUCE_OBJDIR)/TimeTriggerManager_67b2d521.o \
-  $(JUCE_OBJDIR)/TriggerLayer_ecd01498.o \
   $(JUCE_OBJDIR)/TimelineBlockSequence_b60f4d48.o \
   $(JUCE_OBJDIR)/TimelineEditor_4cddf71d.o \
   $(JUCE_OBJDIR)/ColorRemapNode_4a14980f.o \
@@ -369,46 +361,6 @@ $(JUCE_OBJDIR)/LightBlockClipManager_20fcb186.o: ../../Source/Timeline/layers/Bl
 $(JUCE_OBJDIR)/LightBlockLayer_d2da119a.o: ../../Source/Timeline/layers/Block/LightBlockLayer.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LightBlockLayer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerManagerUI_8c6825fc.o: ../../Source/Timeline/layers/Trigger/ui/TimeTriggerManagerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerManagerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerMultiTransformer_9a2a14f.o: ../../Source/Timeline/layers/Trigger/ui/TimeTriggerMultiTransformer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerMultiTransformer.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerUI_c8ed9123.o: ../../Source/Timeline/layers/Trigger/ui/TimeTriggerUI.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerUI.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayerPanel_ef9680af.o: ../../Source/Timeline/layers/Trigger/ui/TriggerLayerPanel.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayerPanel.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayerTimeline_2fe93cc0.o: ../../Source/Timeline/layers/Trigger/ui/TriggerLayerTimeline.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayerTimeline.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTrigger_8b1c5636.o: ../../Source/Timeline/layers/Trigger/TimeTrigger.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTrigger.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TimeTriggerManager_67b2d521.o: ../../Source/Timeline/layers/Trigger/TimeTriggerManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TimeTriggerManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/TriggerLayer_ecd01498.o: ../../Source/Timeline/layers/Trigger/TriggerLayer.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling TriggerLayer.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/TimelineBlockSequence_b60f4d48.o: ../../Source/Timeline/TimelineBlockSequence.cpp

@@ -185,38 +185,6 @@
 			isa = PBXBuildFile;
 			fileRef = AA5294A14826CB5BBF76F43E;
 		};
-		DD7755D807B23FB7428E0223 = {
-			isa = PBXBuildFile;
-			fileRef = 484C67E04947C7610325A061;
-		};
-		56F07C99B2E01CB8A3685A6A = {
-			isa = PBXBuildFile;
-			fileRef = CCFBE5886A7F77CC5093DC5F;
-		};
-		79D80FF015D83D4DEC335C46 = {
-			isa = PBXBuildFile;
-			fileRef = D5BF322AF83D5BEA1C07236B;
-		};
-		BB7E2C4BF871A8A744BEAD37 = {
-			isa = PBXBuildFile;
-			fileRef = 681A951746B8AAA9E03982D3;
-		};
-		F5E7D26DFAA4C2C193E1C95E = {
-			isa = PBXBuildFile;
-			fileRef = 80F848EA8CD9C19E55AB785E;
-		};
-		59CDCFF5D81B8B5859D09B47 = {
-			isa = PBXBuildFile;
-			fileRef = 2C8F39FCFE4FA5EBEA5CBCC8;
-		};
-		9B1DB06B98BB860D161190C9 = {
-			isa = PBXBuildFile;
-			fileRef = 92C56D8B21F6701107455E02;
-		};
-		845843C9301A760EBAEDC2BF = {
-			isa = PBXBuildFile;
-			fileRef = C1FB8A07CA4BA813C55214F2;
-		};
 		1084B14B03C4C2C73719A7EC = {
 			isa = PBXBuildFile;
 			fileRef = 8409223F8EDA1B87DC3A05E6;
@@ -660,13 +628,6 @@
 			path = System/Library/Frameworks/Accelerate.framework;
 			sourceTree = SDKROOT;
 		};
-		0837D2BDADC56F9DDD8AF359 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerManager.h;
-			path = ../../Source/Timeline/layers/Trigger/TimeTriggerManager.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		089FDE5F833C3E3D27190338 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -777,13 +738,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AudioManager.cpp;
 			path = ../../Source/Audio/AudioManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		147F4D275FCD762D07F4B5D4 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerUI.h;
-			path = ../../Source/Timeline/layers/Trigger/ui/TimeTriggerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		148B6414B641D7110D3787A3 = {
@@ -940,13 +894,6 @@
 			path = ../../Source/Prop/props/garnav/GarnavFamily.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		2C8F39FCFE4FA5EBEA5CBCC8 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTrigger.cpp;
-			path = ../../Source/Timeline/layers/Trigger/TimeTrigger.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		2CEBB2A00E286CAFFB6A8908 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1066,13 +1013,6 @@
 			path = ../../Source/Prop/props/bento/BentoProp.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		3DD4576682760CD75A37B091 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TriggerLayer.h;
-			path = ../../Source/Timeline/layers/Trigger/TriggerLayer.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		3EA271EE23512DABADB0DB9A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1120,13 +1060,6 @@
 			lastKnownFileType = image.png;
 			name = script.png;
 			path = ../../Resources/models/script.png;
-			sourceTree = "SOURCE_ROOT";
-		};
-		484C67E04947C7610325A061 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerManagerUI.cpp;
-			path = ../../Source/Timeline/layers/Trigger/ui/TimeTriggerManagerUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		491070B201D8CE02E6ECF797 = {
@@ -1395,13 +1328,6 @@
 			path = ../../Source/Timeline/TimelineEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		65B81D2E131F3CE6C26AD9BA = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTrigger.h;
-			path = ../../Source/Timeline/layers/Trigger/TimeTrigger.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		66388F4448A0CA0C25C958C8 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1422,13 +1348,6 @@
 			name = DiscRecording.framework;
 			path = System/Library/Frameworks/DiscRecording.framework;
 			sourceTree = SDKROOT;
-		};
-		681A951746B8AAA9E03982D3 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TriggerLayerPanel.cpp;
-			path = ../../Source/Timeline/layers/Trigger/ui/TriggerLayerPanel.cpp;
-			sourceTree = "SOURCE_ROOT";
 		};
 		6859AC9F20337FC356EB2F6F = {
 			isa = PBXFileReference;
@@ -1458,13 +1377,6 @@
 			path = ../../Source/Node/ui/NodeViewUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		6BF20AD9DB744DAE28FCCB41 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TriggerLayerPanel.h;
-			path = ../../Source/Timeline/layers/Trigger/ui/TriggerLayerPanel.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		6E2670FAA1FA6D8C18008661 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1484,13 +1396,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = SpatializerEvent.h;
 			path = ../../Source/Video/SpatializerEvent.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		73EDE95445A6F0FE69E25180 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerManagerUI.h;
-			path = ../../Source/Timeline/layers/Trigger/ui/TimeTriggerManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		746266F5EEE79F13E1F107C5 = {
@@ -1561,13 +1466,6 @@
 			lastKnownFileType = image.png;
 			name = strobe.png;
 			path = ../../Resources/models/patterns/strobe.png;
-			sourceTree = "SOURCE_ROOT";
-		};
-		80F848EA8CD9C19E55AB785E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TriggerLayerTimeline.cpp;
-			path = ../../Source/Timeline/layers/Trigger/ui/TriggerLayerTimeline.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		81977C7AADE189929D88FAAE = {
@@ -1681,13 +1579,6 @@
 			name = "juce_audio_formats";
 			path = "~/JUCE/modules/juce_audio_formats";
 			sourceTree = "<absolute>";
-		};
-		92C56D8B21F6701107455E02 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerManager.cpp;
-			path = ../../Source/Timeline/layers/Trigger/TimeTriggerManager.cpp;
-			sourceTree = "SOURCE_ROOT";
 		};
 		93592C5CF17190CADC2C5DE3 = {
 			isa = PBXFileReference;
@@ -2025,13 +1916,6 @@
 			path = System/Library/Frameworks/AudioToolbox.framework;
 			sourceTree = SDKROOT;
 		};
-		B4C6A889AF12CA914E2FB05E = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TriggerLayerTimeline.h;
-			path = ../../Source/Timeline/layers/Trigger/ui/TriggerLayerTimeline.h;
-			sourceTree = "SOURCE_ROOT";
-		};
 		B4C9195A49494728EABE8E68 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2151,13 +2035,6 @@
 			path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		C1FB8A07CA4BA813C55214F2 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TriggerLayer.cpp;
-			path = ../../Source/Timeline/layers/Trigger/TriggerLayer.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		C20317C5C9EC77BCE435057B = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2226,13 +2103,6 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = LightBlockLayerPanel.h;
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h;
-			sourceTree = "SOURCE_ROOT";
-		};
-		CCFBE5886A7F77CC5093DC5F = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerMultiTransformer.cpp;
-			path = ../../Source/Timeline/layers/Trigger/ui/TimeTriggerMultiTransformer.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		CD67962FD72F93DC288712DE = {
@@ -2340,13 +2210,6 @@
 			path = "~/JUCE/modules/juce_gui_extra";
 			sourceTree = "<absolute>";
 		};
-		D5BF322AF83D5BEA1C07236B = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.cpp.cpp;
-			name = TimeTriggerUI.cpp;
-			path = ../../Source/Timeline/layers/Trigger/ui/TimeTriggerUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
 		D6B4CB4780E26B5B19D4768A = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2443,13 +2306,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = TimelineBlockUI.cpp;
 			path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E71065ACCA9603EDB33459D1 = {
-			isa = PBXFileReference;
-			lastKnownFileType = sourcecode.c.h;
-			name = TimeTriggerMultiTransformer.h;
-			path = ../../Source/Timeline/layers/Trigger/ui/TimeTriggerMultiTransformer.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		E715980DB4D9A95F8F6E2B8F = {
@@ -2903,43 +2759,11 @@
 			name = BlockLayer;
 			sourceTree = "<group>";
 		};
-		CB4B9647EF94397451ED3D9D = {
-			isa = PBXGroup;
-			children = (
-				484C67E04947C7610325A061,
-				73EDE95445A6F0FE69E25180,
-				CCFBE5886A7F77CC5093DC5F,
-				E71065ACCA9603EDB33459D1,
-				D5BF322AF83D5BEA1C07236B,
-				147F4D275FCD762D07F4B5D4,
-				681A951746B8AAA9E03982D3,
-				6BF20AD9DB744DAE28FCCB41,
-				80F848EA8CD9C19E55AB785E,
-				B4C6A889AF12CA914E2FB05E,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
-		55FC89791960731FEACB1BE6 = {
-			isa = PBXGroup;
-			children = (
-				CB4B9647EF94397451ED3D9D,
-				2C8F39FCFE4FA5EBEA5CBCC8,
-				65B81D2E131F3CE6C26AD9BA,
-				92C56D8B21F6701107455E02,
-				0837D2BDADC56F9DDD8AF359,
-				C1FB8A07CA4BA813C55214F2,
-				3DD4576682760CD75A37B091,
-			);
-			name = Trigger;
-			sourceTree = "<group>";
-		};
 		405AE5DBD0969E2CF1235F0F = {
 			isa = PBXGroup;
 			children = (
 				72EB76E4BF484E76E5EF5C27,
 				4C21860C0D17CB945AC099B1,
-				55FC89791960731FEACB1BE6,
 			);
 			name = layers;
 			sourceTree = "<group>";
@@ -3812,14 +3636,6 @@
 				FBD5D779D6E17704E749FBAD,
 				7EC0509183A6F3BC1A488432,
 				ADEF3C9F7BA88DEF8D7A057E,
-				DD7755D807B23FB7428E0223,
-				56F07C99B2E01CB8A3685A6A,
-				79D80FF015D83D4DEC335C46,
-				BB7E2C4BF871A8A744BEAD37,
-				F5E7D26DFAA4C2C193E1C95E,
-				59CDCFF5D81B8B5859D09B47,
-				9B1DB06B98BB860D161190C9,
-				845843C9301A760EBAEDC2BF,
 				1084B14B03C4C2C73719A7EC,
 				0086A64E7B42EF6D21508383,
 				5292B20D33B139BCC4437930,
