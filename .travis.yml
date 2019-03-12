@@ -20,6 +20,30 @@ matrix:
 
 before_install:
 - |
+  if [[ -n "$TRAVIS_TAG" ]]; 
+   then 
+    if [[ "$TRAVIS_TAG" == *b* ]]; 
+    then 
+      echo "Beta version, set config to Release"; 
+      export MAKECONF=Release
+      export SUFFIX=$TRAVIS_TAG
+    else 
+      echo "Stable version, set config to Release"; 
+      export MAKECONF=Release
+      export SUFFIX=$TRAVIS_TAG
+    fi; 
+  else 
+    echo "No tag set, set config to Debug / bleeding"; 
+    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
+      export MAKECONF=Debug
+    else
+      export MAKECONF=Release
+    fi
+    export SUFFIX=bleedingedge
+  fi;
+
+  echo "Suffix : $SUFFIX"
+
   if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
     cd ..
     pwd
