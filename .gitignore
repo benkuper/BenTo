@@ -72,3 +72,11 @@ Binaries/
 update\.json
 
 Firmware/ArduinoOutput/
+
+Builds/LinuxMakefile/appimagetool-x86_64\.AppImage
+
+Builds/LinuxMakefile/BenTo\.AppDir/\.DirIcon
+
+Builds/LinuxMakefile/BenTo\.AppDir/usr/bin/BenTo
+
+Builds/LinuxMakefile/BenTo-x86_64\.AppImage

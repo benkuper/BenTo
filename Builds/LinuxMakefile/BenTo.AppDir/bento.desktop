@@ -1,0 +1,13 @@
+[Desktop Entry]
+Name=BenTo
+Exec=BenTo
+Icon=bento
+Type=Application
+Categories=AudioVideo;Art;
+Comment=Cross Platform OSC Server for controlling a swarm of Crazyflies 2.0
+MimeType=text/bento;
+Name[en]=BenTo
+Terminal=false
+StartupNotify=true
+NoDisplay=false
+Name[en_US]=bento.desktop
