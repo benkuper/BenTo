@@ -129,5 +129,5 @@ after_success:
     ls
     packagesbuild BenTo.pkgproj
     mv BenTo.pkg BenTo-osx-$SUFFIX.pkg
-    curl -T BenTo-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/bento
+    curl -v -T BenTo-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/bento/
   fi
