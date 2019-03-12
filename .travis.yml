@@ -120,8 +120,9 @@ after_success:
     echo 'Uploading $SUFFIX ...';
     curl -X POST -F 'appFile=@BenTo-linux-x64-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' -F 'path=bento/' $UPLOAD_URL;"
   else
-    cd /Users/travis/build/benkuper/BenTo/Builds/MacOSX_CI/build/Release
+    cd /Users/travis/build/benkuper/BenTo/Package
     ls
-    zip -r -y BenTo-osx-bleedingedge.zip BenTo.app
-    curl --ftp-create-dirs -T BenTo-osx-bleedingedge.zip -u $FTP_USER:$FTP_PASSWORD --insecure ftp://home403871847.1and1-data.host/bento/
+    packagesbuild BenTo.pkgproj
+    mv BenTo.pkg BenTo-osx-$SUFFIX.pkg
+    curl -T BenTo-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/bento
   fi

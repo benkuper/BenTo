@@ -28,6 +28,7 @@ contents.xcworkspacedata
 .dirstamp
 profile
 **/MacOSX/build
+**/MacOSX_CI/build
 **/iOS/build
 **/IDEWorkspaceChecks.plist
 **/Linux/build
@@ -80,3 +81,5 @@ Builds/LinuxMakefile/BenTo\.AppDir/\.DirIcon
 Builds/LinuxMakefile/BenTo\.AppDir/usr/bin/BenTo
 
 Builds/LinuxMakefile/BenTo-x86_64\.AppImage
+
+Package/BenTo\.pkg

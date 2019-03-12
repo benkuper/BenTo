@@ -586,6 +586,13 @@
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		03D68912B90442DF90A21C42 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_organicui";
+			path = "../../../JUCE Modules/juce_organicui";
+			sourceTree = "SOURCE_ROOT";
+		};
 		042EE867E2552AD03EB3FC9D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1587,13 +1594,6 @@
 			path = ../../Source/LightBlock/model/ui/LightBlockModelParameterEditor.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		94BF7F62EEB12BDF95E97DDF = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_sharedtexture";
-			path = "../../../BenTo-dependencies/juce_sharedtexture";
-			sourceTree = "SOURCE_ROOT";
-		};
 		94E7764783E99087B327A706 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.objcpp;
@@ -1767,6 +1767,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = NodeBlock.cpp;
 			path = ../../Source/LightBlock/model/blocks/node/NodeBlock.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A1A6ABCA29E3787D9B68262F = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "../../../JUCE Modules/juce_timeline";
 			sourceTree = "SOURCE_ROOT";
 		};
 		A1C0F782FE9CBAEDE19E835F = {
@@ -2000,13 +2007,6 @@
 			path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
-		BEC21AD3092DA38C731D1A79 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_organicui";
-			path = "../../../BenTo-dependencies/juce_organicui";
-			sourceTree = "SOURCE_ROOT";
-		};
 		BF38126BEC2390273E9F498C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2138,6 +2138,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PropClusterGroupManager.cpp;
 			path = ../../Source/Prop/Cluster/PropClusterGroupManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		CFE4080B44BE37C07EB06068 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_sharedtexture";
+			path = "../../../JUCE Modules/juce_sharedtexture";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D027E1CD25E7821AE21678A1 = {
@@ -2278,13 +2285,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightBlockModelPresetManager.cpp;
 			path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		E0BA361C1604C29A9E816268 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_timeline";
-			path = "../../../BenTo-dependencies/juce_timeline";
 			sourceTree = "SOURCE_ROOT";
 		};
 		E1DCEBF74D7267366D54037F = {
@@ -3304,10 +3304,10 @@
 				CDF46B099D8A37106496ED1F,
 				D5BA4C7B914E43D3B54609C9,
 				9FC7CA34A6BC93158284E96E,
-				BEC21AD3092DA38C731D1A79,
+				03D68912B90442DF90A21C42,
 				5DBFCFF756AD9AF779C27EC0,
-				94BF7F62EEB12BDF95E97DDF,
-				E0BA361C1604C29A9E816268,
+				CFE4080B44BE37C07EB06068,
+				A1A6ABCA29E3787D9B68262F,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -3418,7 +3418,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"../../../BenTo-dependencies",
+					"\"../../../JUCE Modules\"",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3464,7 +3464,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"../../../BenTo-dependencies",
+					"\"../../../JUCE Modules\"",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",

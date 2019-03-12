@@ -537,9 +537,9 @@
         <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../BenTo-dependencies"/>
+        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../BenTo-dependencies"/>
+        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -552,7 +552,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../BenTo-dependencies"/>
+        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl">
