@@ -358,6 +358,9 @@ void Prop::run()
 			case EXPORT:
 				exportBakedData(data);
 				break;
+                    
+                default:
+                    break;
 			}
 
 			isBaking->setValue(false);

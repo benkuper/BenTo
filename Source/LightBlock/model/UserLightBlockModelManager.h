@@ -24,7 +24,7 @@ public:
 	BlockType type;
 	File libFolder;
 
-	LightBlockModel * createItem();
+	LightBlockModel * createItem() override;
 
 
 	var getJSONData() override;

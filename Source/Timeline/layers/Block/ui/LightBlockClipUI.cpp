@@ -18,9 +18,9 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	clip(_clip),
 	fadeInHandle(ImageCache::getFromMemory(BinaryData::fadeIn_png, BinaryData::fadeIn_pngSize)),
 	fadeOutHandle(ImageCache::getFromMemory(BinaryData::fadeOut_png, BinaryData::fadeOut_pngSize)),
-	imageIsReady(false),
 	shouldUpdateImage(true),
-	isDraggingModel(false)
+    imageIsReady(false),
+    isDraggingModel(false)
 {
 
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
@@ -95,7 +95,7 @@ void LightBlockClipUI::resizedBlockInternal()
 	if (!imageIsReady) generatePreview();
 	if (automationUI != nullptr) automationUI->setBounds(getCoreBounds());
 
-	Rectangle<int> r = getLocalBounds();
+	//Rectangle<int> r = getLocalBounds();
 	fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength())*getWidth(), fadeInHandle.getHeight() / 2);
 	fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength())*getWidth(), fadeOutHandle.getHeight() / 2);
 }

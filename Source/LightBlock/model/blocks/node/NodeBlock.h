@@ -34,8 +34,8 @@ public:
 
 	void childAddressChanged(ControllableContainer * cc) override;
 	
-	void onExternalParameterValueChanged(Parameter * p);
-	void onExternalParameterRangeChanged(Parameter * p);
+	void onExternalParameterValueChanged(Parameter * p) override;
+	void onExternalParameterRangeChanged(Parameter * p) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
