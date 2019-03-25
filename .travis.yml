@@ -61,6 +61,7 @@ before_install:
     cd "JUCE Modules"
     git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
     git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline
+    git clone --depth=1 --branch=master https://github.com/benkuper/juce_sharedtexture.git juce_sharedtexture
     cd ..
     pwd
     ls -d */
@@ -107,7 +108,7 @@ script:
     cd /benkuper/BenTo/Builds/LinuxMakefile;
     make -j 8 CONFIG=Release"
   else
-    xcodebuild -project BenTo/Builds/MacOSX_CI/BenTo.xcodeproj -configuration Release -jobs 8 -verbose
+    xcodebuild -project BenTo/Builds/MacOSX_CI/BenTo.xcodeproj -configuration Release -jobs 8 | xcpretty -f `xcpretty-travis-formatter`
   fi
 after_success:
 - |-
