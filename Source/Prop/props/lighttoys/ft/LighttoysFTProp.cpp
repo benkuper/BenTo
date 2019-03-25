@@ -80,7 +80,7 @@ void LighttoysFTProp::uploadBakedData(BakeData data)
 	//int showID = bakingShowID->intValue() - 1;// 1-4 > 0-3
 	//int numFrames = bakedColors.size();
 	//int numProps = resolution->intValue();
-	
+
 	/*
 	for (int i = 0; i < numProps; i++)
 	{
@@ -103,8 +103,8 @@ void LighttoysFTProp::uploadBakedData(BakeData data)
 
 			data += String(ms) + "ms: setrgb AB 0 > " + String(r) + "," + String(g) + "," + String(b) + "\n";
 
-			//sendMessage("ldswrite",propMask, showID, 
-			
+			//sendMessage("ldswrite",propMask, showID,
+
 		}
 
 		data += String(int(bakedColors[bakedColors.size() - 1].time + 1)) + "s: end";
@@ -128,31 +128,11 @@ void LighttoysFTProp::uploadBakedData(BakeData data)
 			}
 		}
 
-		
+
 
 		//sendMessage("ldsoff", propMask);
 	}
 	*/
-
-}
-
-void LighttoysFTProp::onContainerParameterChangedInternal(Parameter * p)
-{
-	Prop::onContainerParameterChangedInternal(p);
-	if (p == isConnected) battery->setValue(isConnected->boolValue() ? 1 : 0);
-	if (p == deviceParam) setCurrentDevice(deviceParam->getDevice());
-	else if (p == numPaired)
-	{
-		if (autoResolution->boolValue()) resolution->setValue(numPaired->intValue());
-	}
-}
-
-void LighttoysFTProp::onContainerTriggerTriggered(Trigger * t)
-{
-	Prop::onContainerTriggerTriggered(t);
-	if (t == addNewPairing) sendMessage("gadd 1");
-	else if (t == addToGroup) sendMessage("gadd 0");
-	else if (t == finishPairing) sendMessage("gstop");
 }
 
 void LighttoysFTProp::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
@@ -165,6 +145,18 @@ void LighttoysFTProp::onControllableFeedbackUpdateInternal(ControllableContainer
 			sendMessage("lstop", getPropMaskForId(ftp->propID));
 			sendMessage("gping",getPropMaskForId(ftp->propID));
 		}
+	}
+	else
+	{
+		if (c == isConnected) battery->setValue(isConnected->boolValue() ? 1 : 0);
+		else if (c == deviceParam) setCurrentDevice(deviceParam->getDevice());
+		else if (c == numPaired)
+		{
+			if (autoResolution->boolValue()) resolution->setValue(numPaired->intValue());
+		}
+		else if (c == addNewPairing) sendMessage("gadd 1");
+		else if (c == addToGroup) sendMessage("gadd 0");
+		else if (c == finishPairing) sendMessage("gstop");
 	}
 }
 

@@ -52,8 +52,6 @@ public:
 	virtual void sendColorsToPropInternal() override;
 	virtual void uploadBakedData(BakeData bakedColors) override;
 
-	virtual void onContainerParameterChangedInternal(Parameter * p) override;
-	virtual void onContainerTriggerTriggered(Trigger *) override;
 	virtual void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 
 	virtual void setCurrentDevice(SerialDevice *port);
