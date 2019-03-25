@@ -278,9 +278,22 @@ SerialDeviceInfo::SerialDeviceInfo(String _port, String _description, String _ha
 	deviceID = description;
 	uniqueDescription = description; //COM port integrated in description
 #else
-	vid = hardwareID.substring(16, 20).getHexValue32();
-	pid = hardwareID.substring(23, 27).getHexValue32();
-	deviceID = hardwareID;
-	uniqueDescription = description + "(SN : " + deviceID.substring(35) + ")";
+    //LOG("HID " << hardwareID);
+    StringArray hidSplit;
+    hidSplit.addTokens(hardwareID," ","\"");
+    deviceID = hardwareID;
+    
+    for(auto &s : hidSplit.strings)
+    {
+        if(s.startsWith("VID"))
+        {
+            vid = s.substring(8,12).getHexValue32();
+            pid = s.substring(13,17).getHexValue32();
+        }else if(s.startsWith("SNR"))
+        {
+            uniqueDescription = description + "(" + s + ")";
+        }
+    }
+	
 #endif
 }
