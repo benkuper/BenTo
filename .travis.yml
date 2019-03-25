@@ -107,7 +107,7 @@ script:
     cd /benkuper/BenTo/Builds/LinuxMakefile;
     make -j 8 CONFIG=Release"
   else
-    xcodebuild -project BenTo/Builds/MacOSX_CI/BenTo.xcodeproj -configuration Release -jobs 8 -verbose | xcpretty -f `xcpretty-travis-formatter`
+    xcodebuild -project BenTo/Builds/MacOSX_CI/BenTo.xcodeproj -configuration Release -jobs 8 -verbose
   fi
 after_success:
 - |-
