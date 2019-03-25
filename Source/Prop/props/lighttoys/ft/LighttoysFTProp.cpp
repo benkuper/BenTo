@@ -157,7 +157,7 @@ void LighttoysFTProp::onContainerTriggerTriggered(Trigger * t)
 
 void LighttoysFTProp::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	FTPropStatus * ftp = dynamic_cast<FTPropStatus *>(c->parentContainer);
+	FTPropStatus * ftp = c->getParentAs<FTPropStatus>();
 	if (ftp != nullptr)
 	{
 		if (c == ftp->flash)

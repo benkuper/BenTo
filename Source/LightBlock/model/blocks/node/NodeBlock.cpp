@@ -95,7 +95,7 @@ void NodeBlock::onExternalParameterValueChanged(Parameter * p)
 	}
 	else
 	{
-		ParameterNode * pn = dynamic_cast<ParameterNode *>(p->parentContainer);
+		ParameterNode * pn = p->getParentAs<ParameterNode>();
 		if (pn != nullptr) nodeToParamMap[pn]->setValue(pn->parameter->getValue());
 	}
 }
@@ -108,7 +108,7 @@ void NodeBlock::onExternalParameterRangeChanged(Parameter * p)
 	}
 	else
 	{
-		ParameterNode * pn = dynamic_cast<ParameterNode *>(p->parentContainer);
+		ParameterNode * pn = p->getParentAs<ParameterNode>();
 		if (pn != nullptr) nodeToParamMap[pn]->setRange(pn->parameter->minimumValue, pn->parameter->maximumValue);
 	}
 }

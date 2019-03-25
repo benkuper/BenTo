@@ -30,7 +30,7 @@ LayerBlock * LightBlockClipManager::createItem()
 
 void LightBlockClipManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
-	LightBlockClip * b = dynamic_cast<LightBlockClip *>(c->parentContainer);
+	LightBlockClip * b = c->getParentAs<LightBlockClip>();
 	if (b != nullptr)
 	{
 		if (c == b->time || c == b->coreLength || c == b->loopLength)

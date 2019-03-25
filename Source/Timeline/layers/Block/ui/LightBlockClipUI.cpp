@@ -227,7 +227,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 
 	if (c == clip->coreLength || c == clip->loopLength || c == clip->activeProvider || c == clip->fadeIn || c == clip->fadeOut) generatePreview();
 	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer && c->type != Controllable::TRIGGER && ((Parameter *)c)->controlMode == Parameter::MANUAL) generatePreview();
-	else if (dynamic_cast<AutomationKey *>(c->parentContainer) != nullptr)
+	else if (c->getParentAs<AutomationKey>() != nullptr)
 	{
 		generatePreview();
 	}
