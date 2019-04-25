@@ -32,4 +32,6 @@ public:
 	void resized() override;
 
 	void setThumbSize(int value);
+
+	bool keyPressed(const KeyPress & e) override;
 };

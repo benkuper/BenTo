@@ -39,21 +39,21 @@ void LightBlockModelGroupUI::paint(Graphics & g)
 
 void LightBlockModelGroupUI::resized()
 {
-	
+
 	Rectangle<int> r = getLocalBounds().reduced(2).translated(0, headerHeight + headerGap);
 	if (r.getWidth() == 0) return;
 
 	int numThumbs = modelsUI.size();
 	int numThumbPerLine = jmin(r.getWidth() / (thumbSize + gap), numThumbs);
-	int numLines = ceil(numThumbs*1.f/ numThumbPerLine);
-	
+	int numLines = ceil(numThumbs*1.f / numThumbPerLine);
+
 	r.setHeight(numLines * (thumbSize + gap) - gap);
 
 	int index = 0;
 	int yIndex = 0;
 
 	Rectangle<int> lr;
-	
+
 	for (auto &mui : modelsUI)
 	{
 		if (index % numThumbPerLine == 0)
@@ -68,13 +68,13 @@ void LightBlockModelGroupUI::resized()
 
 			yIndex++;
 		}
-			
+
 		mui->setBounds(lr.removeFromLeft(thumbSize));
 		lr.removeFromLeft(gap);
 		index++;
-	} 
+	}
 
-	setSize(getWidth(),r.getBottom());
+	setSize(getWidth(), r.getBottom());
 }
 
 void LightBlockModelGroupUI::setThumbSize(int value)
@@ -82,4 +82,25 @@ void LightBlockModelGroupUI::setThumbSize(int value)
 	if (value == thumbSize) return;
 	thumbSize = value;
 	resized();
+}
+
+bool LightBlockModelGroupUI::keyPressed(const KeyPress & e)
+{
+	if (e.getKeyCode() == e.tabKey)
+	{
+
+		bool hasFocus = hasKeyboardFocus(true);
+		if (hasFocus)
+		{
+			LightBlockModel * m = InspectableSelectionManager::activeSelectionManager->getInspectableAs<LightBlockModel>();
+			if (m != nullptr && group->controllableContainers.contains(m))
+			{
+				int newIndex = (group->controllableContainers.indexOf(m) + 1) % group->controllableContainers.size();
+				group->controllableContainers[newIndex]->selectThis();
+				return true;
+			}
+		}
+	}
+
+	return false;
 }
