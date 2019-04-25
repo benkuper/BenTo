@@ -12,6 +12,7 @@
 #include "../nodes/model/ModelNode.h"
 #include "LightBlock/model/ui/LightBlockModelUI.h"
 #include "ColorNodeViewUI.h"
+#include "LightBlock/model/blocks/node/NodeBlock.h"
 
 NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 	BaseManagerViewUI("Nodes", manager),
@@ -19,15 +20,21 @@ NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 	dropConnector(nullptr)
 {
 	animateItemOnAdd = false;
+	canZoom = true;
 
 	removeMouseListener(this);
 	addMouseListener(this, true);
 
+	acceptedDropTypes.add("NodeTool");
+	acceptedDropTypes.add("LightBlockModel");
+	
 	addExistingItems(false);
 	
 	connectionsUI = new NodeConnectionManagerUI(&manager->connectionManager, this);
 	addAndMakeVisible(connectionsUI);
 	connectionsUI->toBack();
+	connectionsUI->autoFilterHitTestOnItems = true;
+	connectionsUI->validateHitTestOnNoItem = false;
 
 	startTimerHz(30);
 
@@ -43,13 +50,13 @@ void NodeManagerUI::paintOverChildren(Graphics & g)
 	BaseManagerUI::paintOverChildren(g);
 	if (startConnector != nullptr) drawConnectionCreation(g);
 
-	if (!dragPosition.isOrigin())
+	/*if (!dragPosition.isOrigin())
 	{
 		Colour c = BLUE_COLOR;
 		if (dragType == "NodeTool") c = Colours::pink;
 		g.setColour(c.withAlpha(.3f));
 		g.drawRoundedRectangle(Rectangle<float>(0,0, 200, 200).withCentre(dragPosition+getViewCenter().toFloat()), 2, 4);
-	}
+	}*/
 }
 
 void NodeManagerUI::drawConnectionCreation(Graphics &g)
@@ -170,17 +177,10 @@ void NodeManagerUI::mouseEnter(const MouseEvent & e)
 }
 
 
-bool NodeManagerUI::isInterestedInDragSource(const SourceDetails & source)
-{
-	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString()
-		|| source.description.getProperty("type", "") == "NodeTool";
-
-}
-
 void NodeManagerUI::itemDragEnter(const SourceDetails & source)
 {
 	dragPosition = getViewMousePosition().toFloat();
-	dragType = source.description.getProperty("type", "");
+	dragType = source.description.getProperty("dataType", "");
 	repaint();
 }
 
@@ -198,19 +198,22 @@ void NodeManagerUI::itemDragMove(const SourceDetails & source)
 
 void NodeManagerUI::itemDropped(const SourceDetails & source)
 {
+	BaseManagerViewUI::itemDropped(source); 
 	
-	if (dragType == LightBlockModelUI::dragAndDropID.toString())
+	dragType = source.description.getProperty("dataType", "");
+	
+	if (dragType == "LightBlockModel")
 	{
 		LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
+		if (modelUI == nullptr ) return;
+
+		NodeBlock * nb = dynamic_cast<NodeBlock *>(modelUI->item);
+		if (nb != nullptr && manager == &nb->manager) return;
+
 		ModelNode * node = (ModelNode *)manager->addItem(NodeFactory::getInstance()->create("Model"));
+		if (node == nullptr) return;
 
-		if (modelUI == nullptr || node == nullptr)
-		{
-			dragPosition = Point<float>();
-			return;
-		}
-
-		node->viewUIPosition->setPoint(dragPosition);
+		node->viewUIPosition->setPoint(getViewMousePosition().toFloat() - node->viewUISize->getPoint() / 2);
 
 		LightBlockColorProvider * provider = modelUI->item;
 
@@ -227,8 +230,7 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 		}
 
 		node->activeProvider->setValueFromTarget(provider);
-	}
-	else if (dragType == "NodeTool")
+	}else if (dragType == "NodeTool")
 	{
 		Node * node = manager->addItem(NodeFactory::getInstance()->create(source.description.getProperty("nodeType", "")));
 		if (node == nullptr)
@@ -241,7 +243,6 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 	}
 	
 	dragPosition = Point<float>();
-	repaint();
 }
 
 

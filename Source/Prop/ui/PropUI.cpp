@@ -14,10 +14,11 @@
 
 PropUI::PropUI(Prop * p) :
 	BaseItemUI(p),
-	viz(p),
-	acceptModelDrop(true),
-	isDraggingItemOver(false)
+	viz(p)
 {
+
+	acceptedDropTypes.add("LightBlockModel");
+
 	idUI = p->globalID->createStepper();
 	idUI->showLabel = true;
 	targetUI = p->activeProvider->createTargetUI();
@@ -54,7 +55,7 @@ void PropUI::paintOverChildren(Graphics & g)
 		g.drawFittedText(item->isUploading->boolValue()?"Uploading ...":"Baking...", getLocalBounds(), Justification::centred, 1);
 	}
 
-	if (isDraggingItemOver)
+	if (isDraggingOver)
 	{
 		g.fillAll(BLUE_COLOR.withAlpha(.3f));
 	}
@@ -102,23 +103,6 @@ void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress) repaint();
 }
 
-bool PropUI::isInterestedInDragSource(const SourceDetails & source)
-{
-	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString();
-}
-
-void PropUI::itemDragEnter(const SourceDetails & source)
-{
-	isDraggingItemOver = true;
-	repaint();
-}
-
-void PropUI::itemDragExit(const SourceDetails & source)
-{
-	isDraggingItemOver = false;
-	repaint();
-}
-
 void PropUI::itemDropped(const SourceDetails & source)
 {
 	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
@@ -142,7 +126,6 @@ void PropUI::itemDropped(const SourceDetails & source)
 		item->activeProvider->setValueFromTarget(provider);
 	}
 	
+	BaseItemUI::itemDropped(source);
 
-	isDraggingItemOver = false;
-	repaint();
 }

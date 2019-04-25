@@ -15,8 +15,7 @@
 
 class NodeConnectionUI :
 	public BaseItemMinimalUI<NodeConnection>,
-	public ComponentListener,
-	public DragAndDropTarget
+	public ComponentListener
 {
 public:
 	NodeConnectionUI(NodeConnection * nc);
@@ -43,13 +42,8 @@ public:
 
 	void componentMovedOrResized(Component & c, bool, bool) override;
 	void componentBeingDeleted(Component &c) override;
-
-	bool isInterestedInDragSource(const SourceDetails &source) override;
-	void itemDragEnter(const SourceDetails &source) override;
-	void itemDragExit(const SourceDetails &source) override;
-	void itemDropped(const SourceDetails &source) override;
-
 	
+	void itemDropped(const SourceDetails &source) override;
 
 	static Colour getColorForType(ConnectionType t);
 	static String getStringForConnectionType(ConnectionType t);

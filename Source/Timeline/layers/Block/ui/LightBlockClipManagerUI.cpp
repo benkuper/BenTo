@@ -19,6 +19,8 @@ LightBlockClipManagerUI::LightBlockClipManagerUI(LightBlockLayerTimeline * _time
 	timeline(_timeline),
 	dropClipX(-1)
 {
+	acceptedDropTypes.add("LightBlockModel");
+
 	addExistingItems();
 }
 
@@ -42,10 +44,6 @@ LayerBlockUI * LightBlockClipManagerUI::createUIForItem(LayerBlock * item)
 	return new LightBlockClipUI((LightBlockClip *)item);
 }
 
-bool LightBlockClipManagerUI::isInterestedInDragSource(const SourceDetails & source)
-{
-	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString();
-}
 
 void LightBlockClipManagerUI::itemDragEnter(const SourceDetails & source)
 {

@@ -14,8 +14,7 @@
 #include "../ModelNode.h"
 
 class ModelNodeUI :
-	public ColorNodeViewUI,
-	public DragAndDropTarget
+	public ColorNodeViewUI
 {
 public:
 	ModelNodeUI(ModelNode * cn);
@@ -27,8 +26,5 @@ public:
 
 	void paintOverChildren(Graphics &g) override;
 
-	bool isInterestedInDragSource(const SourceDetails &source) override;
-	void itemDragEnter(const SourceDetails &source) override;
-	void itemDragExit(const SourceDetails &source) override;
 	void itemDropped(const SourceDetails &source) override;
 };

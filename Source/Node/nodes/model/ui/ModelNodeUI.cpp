@@ -16,6 +16,7 @@ ModelNodeUI::ModelNodeUI(ModelNode * mn) :
 	modelNode(mn),
 	isDraggingItemOver(false)
 {
+	acceptedDropTypes.add("LightBlockModel");
 }
 
 ModelNodeUI::~ModelNodeUI()
@@ -31,23 +32,6 @@ void ModelNodeUI::paintOverChildren(Graphics & g)
 	}
 }
 
-
-bool ModelNodeUI::isInterestedInDragSource(const SourceDetails & source)
-{
-	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString();
-}
-
-void ModelNodeUI::itemDragEnter(const SourceDetails & source)
-{
-	isDraggingItemOver = true;
-	repaint();
-}
-
-void ModelNodeUI::itemDragExit(const SourceDetails & source)
-{
-	isDraggingItemOver = false;
-	repaint();
-}
 
 void ModelNodeUI::itemDropped(const SourceDetails & source)
 {
@@ -72,6 +56,5 @@ void ModelNodeUI::itemDropped(const SourceDetails & source)
 		modelNode->activeProvider->setValueFromTarget(provider, true);
 	}
 
-	isDraggingItemOver = false;
-	repaint();
+	ColorNodeViewUI::itemDropped(source);
 }

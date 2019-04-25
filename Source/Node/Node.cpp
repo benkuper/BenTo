@@ -17,7 +17,7 @@ Node::Node(const String & name, var) :
 	BaseItem(name),
 	nodeNotifier(10)
 {
-
+	itemDataType = "Node";
 }
 
 Node::~Node()

@@ -38,7 +38,7 @@ void NodeBlockEditorToolItem::mouseDrag(const MouseEvent &e)
 	if (e.getDistanceFromDragStart() > 40)
 	{
 		var desc = new DynamicObject();
-		desc.getDynamicObject()->setProperty("type", "NodeTool");
+		desc.getDynamicObject()->setProperty("dataType", "NodeTool");
 		desc.getDynamicObject()->setProperty("nodeType", type);
 		startDragging(desc, this, dndImage, true);
 	}

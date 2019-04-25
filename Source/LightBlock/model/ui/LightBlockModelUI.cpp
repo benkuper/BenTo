@@ -11,8 +11,6 @@
 #include "LightBlockModelUI.h"
 #include "Prop/PropManager.h"
 
-const Identifier LightBlockModelUI::dragAndDropID = "LightBlockModel";
-
 LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	 BaseItemMinimalUI(model)
 {
@@ -20,6 +18,8 @@ LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	
 	updateThumbnail();
 	
+	autoHideWhenDragging = false;
+
 	setSize(64, 64);
 
 	setRepaintsOnMouseActivity(true);
@@ -119,24 +119,6 @@ void LightBlockModelUI::mouseDoubleClick(const MouseEvent & e)
 {
 	editBlock();
 }
-
-void LightBlockModelUI::mouseDrag(const MouseEvent & e)
-{
-	BaseItemMinimalUI::mouseDrag(e);
-
-	if (isDragAndDropActive()) return;
-	Image dndImage = modelImage.rescaled(60, 60);
-	if(dndImage.getWidth() > 0 && dndImage.hasAlphaChannel()) dndImage.multiplyAllAlphas(.5f);
-
-	if (e.getDistanceFromDragStart() > 40)
-	{
-		var desc = new DynamicObject();
-		desc.getDynamicObject()->setProperty("type", dragAndDropID.toString());
-		desc.getDynamicObject()->setProperty("model", item->getTypeString());
-		startDragging(desc, this, dndImage, true);
-	}
-}
-
 
 void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent & e)
 {

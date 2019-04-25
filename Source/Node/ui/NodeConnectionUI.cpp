@@ -18,6 +18,9 @@ NodeConnectionUI::NodeConnectionUI(NodeConnection * nc) :
 	destConnector(nullptr),
 	isDraggingModel(false)
 {
+	
+	acceptedDropTypes.add("NodeTool");
+
 	autoDrawContourWhenSelected = false;
 	setRepaintsOnMouseActivity(true);
 }
@@ -162,26 +165,6 @@ void NodeConnectionUI::componentBeingDeleted(Component & c)
 	else if (&c == destConnector) destConnector = nullptr;
 }
 
-
-
-bool NodeConnectionUI::isInterestedInDragSource(const SourceDetails & source)
-{
-	return source.description.getProperty("type", "") == "NodeTool";
-}
-
-void NodeConnectionUI::itemDragEnter(const SourceDetails & source)
-{
-	isDraggingModel = true;
-	repaint();
-}
-
-void NodeConnectionUI::itemDragExit(const SourceDetails & source)
-{
-	isDraggingModel = false;
-	repaint();
-}
-
-
 void NodeConnectionUI::itemDropped(const SourceDetails & source)
 {
 	String nodeType = source.description.getProperty("nodeType", "");
@@ -192,8 +175,7 @@ void NodeConnectionUI::itemDropped(const SourceDetails & source)
 	}
 
 	item->insertNode(nodeType);
-	isDraggingModel = false;
-	repaint();
+	BaseItemMinimalUI::itemDropped(source);
 }
 
 

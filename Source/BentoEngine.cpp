@@ -55,14 +55,13 @@ BentoEngine::~BentoEngine()
 	PropManager::deleteInstance();
 	PropClusterGroupManager::deleteInstance();
 
-	LightBlockModelLibrary::deleteInstance();
 	AudioManager::deleteInstance();
 	SequenceLayerFactory::deleteInstance();
 
 	SerialManager::deleteInstance();
 
 	NodeFactory::deleteInstance();
-
+	LightBlockModelLibrary::deleteInstance();
 	//BentoWebServer::deleteInstance();
 }
 

@@ -16,8 +16,7 @@
 
 class NodeManagerUI :
 	public BaseManagerViewUI<NodeManager, Node, NodeViewUI>,
-	public Timer,
-	public DragAndDropTarget
+	public Timer
 {
 public:
 	NodeManagerUI(NodeManager * manager);
@@ -50,7 +49,6 @@ public:
 	void mouseUp(const MouseEvent &e) override;
 	void mouseEnter(const MouseEvent &e) override;
 
-	bool isInterestedInDragSource(const SourceDetails &source) override;
 	void itemDragEnter(const SourceDetails &source) override;
 	void itemDragExit(const SourceDetails &source) override;
 	void itemDragMove(const SourceDetails &source) override;

@@ -26,6 +26,8 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
 	generatePreview();
 
+	acceptedDropTypes.add("LightBlockModel");
+
 	addChildComponent(&fadeInHandle, 0);
 	addChildComponent(&fadeOutHandle, 0);
 	
@@ -231,7 +233,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		generatePreview();
 	}
-	
+
 	if (c == clip->autoFade)
 	{
 		fadeInHandle.setVisible(!clip->autoFade->boolValue());
@@ -240,53 +242,34 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 }
 
-bool LightBlockClipUI::isInterestedInDragSource(const SourceDetails & source)
-{
-	return source.description.getProperty("type", "") == LightBlockModelUI::dragAndDropID.toString();
-}
-
-void LightBlockClipUI::itemDragEnter(const SourceDetails & source)
-{
-	isDraggingModel = true;
-	repaint();
-}
-
-void LightBlockClipUI::itemDragExit(const SourceDetails & source)
-{
-	isDraggingModel = false;
-	repaint();
-}
-
-void LightBlockClipUI::itemDragMove(const SourceDetails & source)
-{
-	
-}
-
 void LightBlockClipUI::itemDropped(const SourceDetails & source)
 {
-	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
 
-	if (modelUI != nullptr)
+	if (source.description.getProperty("dataType", "") == "LightBlockModel")
 	{
-		LightBlockColorProvider * provider = modelUI->item;
+		LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
 
-		bool shift = KeyPress::isKeyCurrentlyDown(16);
-		if (shift)
+		if (modelUI != nullptr)
 		{
-			PopupMenu m;
-			m.addItem(-1, "Default");
-			m.addSeparator();
-			int index = 1;
-			for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
-			int result = m.show();
-			if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
-		}
+			LightBlockColorProvider * provider = modelUI->item;
 
-		clip->activeProvider->setValueFromTarget(provider, true); 
+			bool shift = KeyPress::isKeyCurrentlyDown(16);
+			if (shift)
+			{
+				PopupMenu m;
+				m.addItem(-1, "Default");
+				m.addSeparator();
+				int index = 1;
+				for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+				int result = m.show();
+				if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+			}
+
+			clip->activeProvider->setValueFromTarget(provider, true);
+		}
 	}
 
-	isDraggingModel = false;
-	repaint();
+	LayerBlockUI::itemDropped(source);
 }
 
 void LightBlockClipUI::run()
