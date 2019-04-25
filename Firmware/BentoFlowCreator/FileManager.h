@@ -4,7 +4,7 @@
 #include <SPI.h>
 #include <SD.h>
 
-#define SDSPEED 27000000
+#define SDSPEED 4000000
 
 #define SCK_PIN 33
 #define MISO_PIN 27
@@ -29,6 +29,11 @@ public:
       
       pinMode(SD_ENABLE, OUTPUT);
       digitalWrite(SD_ENABLE, LOW);
+
+      pinMode(SCK_PIN, INPUT_PULLUP);
+      pinMode(MISO_PIN, INPUT_PULLUP);
+      pinMode(MOSI_PIN, INPUT_PULLUP);
+      pinMode(CS_PIN, INPUT_PULLUP);
       
       spiSD.begin(SCK_PIN, MISO_PIN, MOSI_PIN, CS_PIN);//SCK,MISO,MOSI,ss
       

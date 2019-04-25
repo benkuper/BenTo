@@ -24,6 +24,8 @@ class OSCManager
     {
       sprintf(remoteHost, "192.168.0.13");
 
+      
+
       addCallbackMessageReceived(&OSCManager::defaultCallback);
 
       isReadyToSend = false;

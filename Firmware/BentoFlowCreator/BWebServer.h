@@ -78,6 +78,7 @@ class BentoWebServer
           }else
           {
             uploadingFile.write(upload.buf, upload.currentSize);
+            DBG("New file size : "+String(uploadingFile.size()));
           }
           
           uploadedBytes += upload.currentSize;

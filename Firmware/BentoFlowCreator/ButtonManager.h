@@ -1,7 +1,7 @@
 #ifndef BUTTONMANAGER_H
 #define BUTTONMANAGER_H
 
-#define BUTTON_PIN 13
+#define BUTTON_PIN 23
 #define LONGPRESS_TIME 500 //more than 500ms is long press
 #define VERYLONGPRESS_TIME 1500
 #define SHORTPRESS_TIME 500 //less than 500ms is short press
@@ -14,7 +14,6 @@
 #define BT_VERYLONGPRESS 4
 
 #define BT_PRESS_DEBOUNCE 5
-
 
 class ButtonManager
 {
@@ -47,7 +46,7 @@ public:
     
     if(v) debounceCount = min(debounceCount+1,BT_PRESS_DEBOUNCE);
     else debounceCount = max(debounceCount-1, 0);
-    
+
     bool newPressed = pressed;
     if(pressed && debounceCount ==  0) newPressed = false;
     if(!pressed && debounceCount == BT_PRESS_DEBOUNCE)  newPressed = true; 

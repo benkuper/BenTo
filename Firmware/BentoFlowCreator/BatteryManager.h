@@ -46,6 +46,9 @@ class BatteryManager
     void init()
     {
       pinMode(BATTERY_PIN, INPUT);
+      adcAttachPin(BATTERY_PIN);
+      //analogReadResolution(11);
+      //analogSetAttenuation(ADC_6db);
     }
 
     void update()

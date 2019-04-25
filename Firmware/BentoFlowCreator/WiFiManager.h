@@ -18,8 +18,8 @@ class WiFiManager
 {
   public:
 
-    String ssid = "jonglissimo";
-    String password = "lightpainting";
+    String ssid = "flowspace";
+    String password = "flowarts";
 
     const int maxTries = 32;
 
@@ -44,8 +44,8 @@ class WiFiManager
 
       // Connect to WiFi network
 
-      WiFi.mode(WIFI_STA);
-      WiFi.printDiag(Serial);
+      //WiFi.mode(WIFI_STA);
+      //WiFi.printDiag(Serial);
       DBG(String("WiFiManager connecting to " + ssid + " : " + password));
 
       WiFi.begin(ssid.c_str(), password.c_str());
@@ -98,7 +98,9 @@ class WiFiManager
         DBG("WiFi AP created, IP address: "+String(WiFi.softAPIP()));
       } else
       {
-        DBG("Connected to "+String(ssid)+", IP address: "+String(WiFi.localIP()));
+        char buf[16];
+        sprintf(buf, "IP:%d.%d.%d.%d", WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], WiFi.localIP()[3] );
+        DBG("Connected to "+String(ssid)+", IP address: "+buf);
       }
 
       delay(500);

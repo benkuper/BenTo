@@ -3,7 +3,7 @@
 
 #define POWER_ENABLE_PIN 19
 
-#define BUTTON_PIN 13
+#define BUTTON_PIN 23
 
 #define DATA_PIN 5
 #define CLK_PIN 18
@@ -30,6 +30,7 @@ bool enableCheckBattery = false;
 
 int batteryPin = 32;
 
+bool rangeMode = true;
 
 #define NUM_LEDS 32 //need that global
 CRGBArray<NUM_LEDS> leds; //need that global
@@ -40,8 +41,12 @@ void setup() {
 
   // put your setup code here, to run once:
   pinMode(batteryPin, INPUT);
+  adcAttachPin(batteryPin);
+  analogReadResolution(11);
+  analogSetAttenuation(ADC_6db);
+  
   pinMode(BUTTON_PIN, INPUT);
-
+ 
   //Keep the power
   pinMode(POWER_ENABLE_PIN, OUTPUT);
   digitalWrite(POWER_ENABLE_PIN, HIGH);
@@ -114,7 +119,8 @@ void processMessage()
   {
      batteryPin = val;
      pinMode(batteryPin, INPUT);
-     Serial.println("Battery pin set to "+String(val));
+     adcAttachPin(batteryPin);
+    Serial.println("Battery pin set to "+String(val));
   } else if(cmd == "sleep")
   {
    sleep(); 
@@ -154,6 +160,12 @@ void checkBattery()
     rawData = analogRead(batteryPin);
     Serial.println("Battery check " + String(rawData));
   }
+
+  if(rangeMode)
+  {
+    setRange(CRGB(10, 10, 0),0, rawData*NUM_LEDS/2047 );
+  
+  }
 }
 
 
@@ -161,6 +173,17 @@ void checkBattery()
 void setFullColor(CRGB color)
 {
   for (int i = 0; i < NUM_LEDS; i++)
+  {
+    leds[i] = color;
+  }
+
+  FastLED.show();
+}
+
+void setRange(CRGB color, int start, int end)
+{
+  FastLED.clear();
+  for (int i = start; i < end && i < NUM_LEDS; i++)
   {
     leds[i] = color;
   }

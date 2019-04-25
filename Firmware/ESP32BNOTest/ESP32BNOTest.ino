@@ -33,9 +33,9 @@
 #define I2C_CLOCK 100000
 
 /* Set the delay between fresh samples */
-#define BNO055_SAMPLERATE_DELAY_MS (100)
+#define BNO055_SAMPLERATE_DELAY_MS (20)
 
-Adafruit_BNO055 bno = Adafruit_BNO055(55);
+Adafruit_BNO055 bno = Adafruit_BNO055(0x28);
 
 /**************************************************************************/
 /*
@@ -144,7 +144,7 @@ void setup(void)
   /* Optional: Display current status */
   displaySensorStatus();
 
-  bno.setExtCrystalUse(true);
+  bno.setExtCrystalUse(false);
 }
 
 /**************************************************************************/
@@ -160,15 +160,15 @@ void loop(void)
   bno.getEvent(&event);
 
   /* Display the floating point data */
-  Serial.print("X: ");
+  //Serial.print("X: ");
   Serial.print(event.orientation.x, 4);
-  Serial.print("\tY: ");
+  Serial.print("\t");
   Serial.print(event.orientation.y, 4);
-  Serial.print("\tZ: ");
+  Serial.print("\t");
   Serial.print(event.orientation.z, 4);
 
   /* Optional: Display calibration status */
-  displayCalStatus();
+  //displayCalStatus();
 
   /* Optional: Display sensor status (debug only) */
   //displaySensorStatus();
