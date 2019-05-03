@@ -98,9 +98,7 @@ class WiFiManager
         DBG("WiFi AP created, IP address: "+String(WiFi.softAPIP()));
       } else
       {
-        char buf[16];
-        sprintf(buf, "IP:%d.%d.%d.%d", WiFi.localIP()[0], WiFi.localIP()[1], WiFi.localIP()[2], WiFi.localIP()[3] );
-        DBG("Connected to "+String(ssid)+", IP address: "+buf);
+        DBG("Connected to "+String(ssid)+", IP address: "+String(WiFi.localIP()[0])+"."+String( WiFi.localIP()[1])+"."+String( WiFi.localIP()[2])+"."+String( WiFi.localIP()[3]));
       }
 
       delay(500);

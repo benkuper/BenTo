@@ -24,7 +24,7 @@
 #define USE_TOUCH 0
 #define USE_IMU 0
 #define USE_LEDSTRIP 1
-#define USE_BATTERY 1
+#define USE_BATTERY 0
 
 #define POWER_ENABLE_PIN 19
 
@@ -261,7 +261,9 @@ void messageReceived(OSCMessage &msg)
   }
   else if (msg.match("/battery"))
   {
+    #if USE_BATTERY
     batteryLevelUpdate();
+    #endif
   }
   else
   {
@@ -351,8 +353,11 @@ void sleep()
 {
 #if USE_LEDSTRIP
 
+#if USE_BATTERY
   int h = batteryManager.normalizedVoltage * 96;
-
+#else
+  int h = 150;
+#endif
   for (int i = 0; i < 5; i++)
   {
     setFullColor(CHSV(h, 255, 60));
