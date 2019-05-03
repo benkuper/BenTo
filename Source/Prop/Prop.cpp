@@ -174,6 +174,11 @@ void Prop::update()
 	}
 
 	if(!bakeMode->boolValue()) sendColorsToProp();
+	else if (seekBakeTime != -1)
+	{
+		seekBakePlaying(seekBakeTime);
+		seekBakeTime = -1;
+	}
 }
 
 void Prop::onContainerParameterChangedInternal(Parameter * p)
@@ -313,7 +318,8 @@ void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl contro
 		break;
 
 	case LightBlockColorProvider::BakeControl::SEEK:
-		seekBakePlaying((float)data);
+		seekBakeTime = (float)data;
+		//if(seekBakeTime == -1) seekBakePlaying((float)data);
 		break;
 
 	case LightBlockColorProvider::BakeControl::STOP:

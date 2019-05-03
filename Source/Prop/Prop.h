@@ -61,6 +61,8 @@ public:
 	enum AfterBakeAction { UPLOAD, EXPORT, NOTHING };
 	AfterBakeAction afterBake;
 
+	float seekBakeTime;
+
 	File exportFile;
 	
 	Array<Colour> colors;

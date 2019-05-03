@@ -38,7 +38,7 @@ public:
   {
     if(!curFile) return;
 
-    if(timeToSeek != -1 && millis() > timeSinceLastSeek + 100)
+    if(timeToSeek != -1 && millis() > timeSinceLastSeek + 20)
     {
       seek(timeToSeek);
       timeToSeek = -1;

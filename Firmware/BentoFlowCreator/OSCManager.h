@@ -52,7 +52,7 @@ class OSCManager
 
       if ( (size = udp.parsePacket()) > 0)
       {
-        while (size--)
+         while (size--)
         {
           msgIN.fill(udp.read());
         }
