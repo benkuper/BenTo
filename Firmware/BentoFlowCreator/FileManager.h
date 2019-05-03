@@ -4,7 +4,7 @@
 #include <SPI.h>
 #include <SD.h>
 
-#define SDSPEED 4000000
+#define SDSPEED 27000000
 
 #define SCK_PIN 33
 #define MISO_PIN 27

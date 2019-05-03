@@ -23,6 +23,9 @@ public:
   float totalTime;
   long totalFrames;
   long timeSinceLastSend;
+
+  long timeSinceLastSeek;
+  float timeToSeek; //used to limit seeking
   
   BakePlayer()
   {
@@ -34,6 +37,13 @@ public:
   void update()
   {
     if(!curFile) return;
+
+    if(timeToSeek != -1 && millis() > timeSinceLastSeek + 100)
+    {
+      seek(timeToSeek);
+      timeToSeek = -1;
+      timeSinceLastSeek = millis();
+    }
     if(!isPlaying) return;
     playFrame();
   }
@@ -208,7 +218,7 @@ public:
       stop();
     }else if(msg.match("/seek",newOffset))
     {
-      seek(msg.getFloat(0));
+      timeToSeek = msg.getFloat(0);
     }
     
     return true;
