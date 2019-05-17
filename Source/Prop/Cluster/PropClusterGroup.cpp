@@ -17,7 +17,7 @@ PropClusterGroup::PropClusterGroup() :
 	sendFeedback = addBoolParameter("Send Feedback", "If checked, Prop changes will be sent using their local ID", false);
 
 	//clusterManager.hideEditorHeader = true;
-	clusterManager.skipControllableNameInAddress = true;
+	//clusterManager.skipControllableNameInAddress = true;
 	clusterManager.selectItemWhenCreated = false;
 	clusterManager.editorCanBeCollapsed = false;
 
