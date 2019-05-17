@@ -31,7 +31,7 @@ public:
 	bool isInit;
 
 	//gl
-	LowLevelGraphicsContext * context;
+	std::unique_ptr<LowLevelGraphicsContext> context;
 	OpenGLFrameBuffer fbo;
 	OpenGLImageType fboImage;
 	OpenGLGraphicsContextCustomShader shader;

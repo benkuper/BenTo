@@ -275,6 +275,20 @@
 #endif
 
 //==============================================================================
+// juce_organicui flags:
+
+#ifndef    ORGANICUI_USE_SERVUS
+ //#define ORGANICUI_USE_SERVUS 0
+#endif
+
+//==============================================================================
+// juce_osc flags:
+
+#ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
+ //#define JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 0
+#endif
+
+//==============================================================================
 #ifndef    JUCE_STANDALONE_APPLICATION
  #if defined(JucePlugin_Name) && defined(JucePlugin_Build_Standalone)
   #define  JUCE_STANDALONE_APPLICATION JucePlugin_Build_Standalone

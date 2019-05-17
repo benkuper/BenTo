@@ -557,6 +557,10 @@
 			isa = PBXBuildFile;
 			fileRef = D6B4CB4780E26B5B19D4768A;
 		};
+		EB901348F68195A64875526D = {
+			isa = PBXBuildFile;
+			fileRef = 38F811D5159ADC42396F5517;
+		};
 		B08670E180B436DAF208B572 = {
 			isa = PBXBuildFile;
 			fileRef = 878A4313101E6FF0D57EE3CD;
@@ -1001,6 +1005,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = NodeManagerUI.cpp;
 			path = ../../Source/Node/ui/NodeManagerUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		38F811D5159ADC42396F5517 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_organicui2.cpp";
+			path = "../../JuceLibraryCode/include_juce_organicui2.cpp";
 			sourceTree = "SOURCE_ROOT";
 		};
 		393653FC8BDB7572FDBF4B4A = {
@@ -3342,6 +3353,7 @@
 				091DCFB72171D73649C6465B,
 				D239AAEE967D9E958B6ACAB3,
 				D6B4CB4780E26B5B19D4768A,
+				38F811D5159ADC42396F5517,
 				878A4313101E6FF0D57EE3CD,
 				F8CC2AA9A461022D52BD9030,
 				B3F00A16D10651397C0D1BAE,
@@ -3740,6 +3752,7 @@
 				A3AFC86C67024DF84AB349FB,
 				43EEF4DFA57501DE6D455005,
 				C81B7CA2C8D2947850A2243A,
+				EB901348F68195A64875526D,
 				B08670E180B436DAF208B572,
 				F1F282CEE91073ADD267F058,
 				A198394E001844380ACD129F,

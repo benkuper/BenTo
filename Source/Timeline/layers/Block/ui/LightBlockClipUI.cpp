@@ -175,7 +175,7 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 						pa->automation->mode->setValueWithData(PlayableParameterAutomation::MANUAL);
 					}
 
-					if (!pa.wasObjectDeleted()) setTargetAutomation(pa->automation);
+					if (!pa.wasObjectDeleted()) setTargetAutomation(pa->automation.get());
 				}
 			}
 		}
