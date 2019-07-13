@@ -10,16 +10,20 @@
 
 #include <Wire.h>
 
-#define USE_BUTTON 1
+//use for using bento on basic ESP32
+#define BAREBONE 1
+#define NUM_LEDS 144
+
+#define USE_BUTTON 0
 #define USE_WIFI 1
-#define USE_IR 1
+#define USE_IR 0
 
 #if USE_WIFI
 #define USE_OSC 1
 #endif
 
-#define USE_SERVER 1
-#define USE_FILES 1
+#define USE_SERVER 0
+#define USE_FILES 0
 
 #define USE_TOUCH 0
 #define USE_IMU 0
@@ -201,7 +205,7 @@ void wifiConfigSaved()
 {
   resetESP(false);
 }
-#endif
+#endif //WIFI
 
 #if USE_TOUCH
 void touchUpdate(int touchID, bool touched)
@@ -451,7 +455,7 @@ void setup()
   for (int i = 0; i < NUM_LEDS; i++)
   {
     setRange(0, i, CHSV(h, 255, 60), true);
-    delay(10);
+    delay(500/NUM_LEDS);
   }
 
   delay(50);

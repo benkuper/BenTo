@@ -119,7 +119,6 @@ public:
   #if USE_OSC
   boolean handleMessage(OSCMessage &msg, int offset)
   {
-
     int pOffset = msg.match("/pattern", offset);
     if(pOffset == 0) return false;
     

@@ -2,7 +2,10 @@
 #define FASTLEF_DEFS_H
 #pragma once
 
+#ifndef NUM_LEDS
 #define NUM_LEDS 32 //need that global
+#endif
+
 CRGBArray<NUM_LEDS> leds; //need that global
 CRGBArray<NUM_LEDS> snapshotLeds; //for snapshot
 

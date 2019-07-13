@@ -18,7 +18,7 @@ class Prop;
 
 class TimelineBlockSequence :
 	public Sequence,
-	public SequenceLayerManager::Listener
+	public SequenceLayerManager::ManagerListener
 {
 public:
 	TimelineBlockSequence();

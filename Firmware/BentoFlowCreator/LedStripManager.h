@@ -7,10 +7,16 @@
 #include "FastLED.h"
 #include "FastLEDDefs.h"
 
+#if BAREBONE
+#define DATA_PIN 5
+#define LED_TYPE    WS2812B
+#define COLOR_ORDER GRB
+#else
 #define DATA_PIN 5
 #define CLK_PIN 18
 #define LED_TYPE    SK9822
 #define COLOR_ORDER BGR
+#endif
 
 #include "PatternManager.h"
 
@@ -59,7 +65,7 @@ public:
   {
     currentMode = Mode::Streaming;
 
-    receiveRate = 60;
+    receiveRate = 20;
     lastReceiveTime = 0;
     
     lastStatTime = 0;
@@ -78,8 +84,14 @@ public:
     pinMode(LED_ENABLE_PIN, OUTPUT); //LED's enable
     digitalWrite(LED_ENABLE_PIN, HIGH);
 
+#if BAREBONE
+    FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
+    FastLED.setBrightness(40);
+#else
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-    FastLED.setBrightness(60);  
+    FastLED.setBrightness(60);
+#endif
+      
 
     initSnapshot();
   }
@@ -126,22 +138,33 @@ public:
       {
         byte b = udp.read();
   
-        if (b == 255) processBuffer();
+        if (b == 255)
+        {
+          processBuffer();
+          udp.flush();
+        }
         else
         {
-          
           if(propIDBufferIndex == DeviceSettings::propID)
           {
             colorBuffer[colorBufferIndex] = (uint8_t)b;
             colorBufferIndex++;
             if (colorBufferIndex == 3)
             {
-              leds[ledBufferIndex] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
-  
+              if(ledBufferIndex < NUM_LEDS)
+              {
+                leds[ledBufferIndex] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
+              }
+              else
+              {
+                DBG("Overflow ! "+String(ledBufferIndex));
+              }
+              
               //Serial.print(leds[ledBufferIndex],DEC);
               //Serial.print(" ");
               colorBufferIndex = 0;
               ledBufferIndex ++;
+             
             }
           }
 
@@ -184,6 +207,8 @@ public:
     propIDBufferIndex = 0;
     propBufferIndex = 0;
     ledBufferIndex = 0;
+
+    
     /*
     long t = millis();
     Serial.println("Process "+String(t-timeSinceLastPacket));

@@ -2160,6 +2160,9 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\help\HelpPanel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\helpers\StringUtil.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\inspectable\ui\InspectableContentComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2332,6 +2335,18 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\updater\AppUpdater.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningReporterPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningTargetUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningReporter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningTarget.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.cpp">
@@ -3167,6 +3182,7 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_graphics\image_formats\jpglib\transupp.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\png.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\pngconf.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\pngdebug.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\pnginfo.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\pngpriv.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_graphics\image_formats\pnglib\pngstruct.h"/>
@@ -3478,7 +3494,9 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericControllableItemEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\GenericManagerEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItemListener.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseManagerListener.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\Factory.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\GenericControllableItem.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\GenericControllableManager.h"/>
@@ -3516,6 +3534,10 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\ui\Style.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\undo\UndoMaster.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\updater\AppUpdater.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningReporterPanel.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\ui\WarningTargetUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningReporter.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\warning\WarningTarget.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\juce_organicui.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCAddress.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCArgument.h"/>

@@ -17,7 +17,7 @@
 class VideoBlock :
 	public LightBlockModel,
 	public SharedTextureReceiver::Listener,
-	public BaseManager<SpatLayout>::Listener
+	public BaseManager<SpatLayout>::ManagerListener
 {
 public:
 	VideoBlock(var params = var());

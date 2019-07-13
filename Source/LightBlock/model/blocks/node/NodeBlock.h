@@ -16,7 +16,7 @@ class ParameterNode;
 
 class NodeBlock :
 	public LightBlockModel,
-	public NodeManager::Listener
+	public NodeManager::ManagerListener
 {
 public:
 	NodeBlock(var params = var());

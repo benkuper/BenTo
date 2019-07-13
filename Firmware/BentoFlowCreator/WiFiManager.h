@@ -18,8 +18,8 @@ class WiFiManager
 {
   public:
 
-    String ssid = "flowspace";
-    String password = "flowarts";
+    String ssid = "Freebox-5BC00F";
+    String password = "depositiv-optatis%@-intentavit-coegisse!";
 
     const int maxTries = 32;
 
@@ -95,7 +95,7 @@ class WiFiManager
 
       if (apMode)
       {
-        DBG("WiFi AP created, IP address: "+String(WiFi.softAPIP()));
+        DBG("WiFi AP created, IP address: "+String(WiFi.softAPIP()[0])+"."+String( WiFi.softAPIP()[1])+"."+String( WiFi.softAPIP()[2])+"."+String( WiFi.softAPIP()[3]));
       } else
       {
         DBG("Connected to "+String(ssid)+", IP address: "+String(WiFi.localIP()[0])+"."+String( WiFi.localIP()[1])+"."+String( WiFi.localIP()[2])+"."+String( WiFi.localIP()[3]));
