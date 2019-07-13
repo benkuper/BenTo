@@ -27,9 +27,9 @@ ParameterNodeViewUI::~ParameterNodeViewUI()
 
 void ParameterNodeViewUI::buildParameterUI()
 {
-	if (pui != nullptr) removeChildComponent(pui);
-	pui = pn->parameter->createDefaultUI();
-	addAndMakeVisible(pui);
+	if (pui != nullptr) removeChildComponent(pui.get());
+	pui.reset(pn->parameter->createDefaultUI());
+	addAndMakeVisible(pui.get());
 	resized();
 }
 

@@ -21,9 +21,9 @@ LightBlockModel::LightBlockModel(const String &name, var params) :
 	modelNotifier(5)
 {
 	itemDataType = "LightBlockModel";
-	paramsContainer = new ControllableContainer("Parameters");
+	paramsContainer.reset(new ControllableContainer("Parameters"));
 	paramsContainer->saveAndLoadName = false;
-	addChildControllableContainer(paramsContainer);
+	addChildControllableContainer(paramsContainer.get());
 	addChildControllableContainer(&presetManager);
 }
 
@@ -100,10 +100,10 @@ LightBlockModelUI * LightBlockModel::createUI()
 void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	if (Engine::mainEngine->isClearing) return;
-	if (cc == paramsContainer) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
+	if (cc == paramsContainer.get()) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
 }
 
 void LightBlockModel::childStructureChanged(ControllableContainer * cc)
 {
-	if (cc == paramsContainer) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	if (cc == paramsContainer.get()) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }

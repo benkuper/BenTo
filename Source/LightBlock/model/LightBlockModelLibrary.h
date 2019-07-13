@@ -32,14 +32,14 @@ public:
 
 
 	//Generic / Patterns
-	ScopedPointer<LightBlockModel> solidColorBlock;
-	ScopedPointer<LightBlockModel> rainbowBlock;
-	ScopedPointer<LightBlockModel> strobeBlock;
-	ScopedPointer<LightBlockModel> noiseBlock;
+	std::unique_ptr<LightBlockModel> solidColorBlock;
+	std::unique_ptr<LightBlockModel> rainbowBlock;
+	std::unique_ptr<LightBlockModel> strobeBlock;
+	std::unique_ptr<LightBlockModel> noiseBlock;
 
 	//Live Feed
-	ScopedPointer<LightBlockModel> videoBlock;
-	ScopedPointer<LightBlockModel> dmxBlock;
+	std::unique_ptr<LightBlockModel> videoBlock;
+	std::unique_ptr<LightBlockModel> dmxBlock;
 
 	//Interface
 	IntParameter * iconSize;

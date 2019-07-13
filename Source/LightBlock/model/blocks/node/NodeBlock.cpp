@@ -89,7 +89,7 @@ void NodeBlock::childAddressChanged(ControllableContainer * cc)
 
 void NodeBlock::onExternalParameterValueChanged(Parameter * p)
 {
-	if (p->parentContainer == paramsContainer)
+	if (p->parentContainer == paramsContainer.get())
 	{
 		paramToNodeMap[p]->parameter->setValue(p->getValue());
 	}
@@ -102,7 +102,7 @@ void NodeBlock::onExternalParameterValueChanged(Parameter * p)
 
 void NodeBlock::onExternalParameterRangeChanged(Parameter * p)
 {
-	if (p->parentContainer == paramsContainer)
+	if (p->parentContainer == paramsContainer.get())
 	{
 		paramToNodeMap[p]->parameter->setRange(p->minimumValue, p->maximumValue);
 	}

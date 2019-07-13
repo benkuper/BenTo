@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.3" headerPath="../../Source"
-              id="LP0of5" version="1.0.5">
+              id="LP0of5" version="1.0.7">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -505,32 +505,8 @@
     <OSX/>
   </LIVE_SETTINGS>
   <EXPORTFORMATS>
-    <VS2017 targetFolder="Builds/VisualStudio2017" smallIcon="YlXmhK" bigIcon="YlXmhK"
-            externalLibraries="Setupapi.lib">
-      <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/Debug" headerPath="../../External/asio&#10;../../External/serial/include"/>
-        <CONFIGURATION name="Release" binaryPath="Binaries/Release" headerPath="../../External/asio&#10;../../External/serial/include"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_core" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_events" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_graphics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_data_structures" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_gui_extra" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_opengl" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_basics" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_devices" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_formats" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_audio_processors" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_osc" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_audio_utils" path="D:/Softwares\JUCE\modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
-      </MODULEPATHS>
-    </VS2017>
-    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="Setupapi.lib">
+    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="Setupapi.lib"
+            smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/asio&#10;../../External/serial/include"
                        binaryPath="Binaries/Debug"/>
@@ -581,7 +557,8 @@
         <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl">
+    <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl"
+                smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64" headerPath="../../External/serial/include"/>
         <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include"/>

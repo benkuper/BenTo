@@ -20,7 +20,7 @@ public:
 	VideoBlockUI(VideoBlock * block);
 	~VideoBlockUI();
 
-	ScopedPointer<BoolToggleUI> liveUI;
+	std::unique_ptr<BoolToggleUI> liveUI;
 	VideoBlock * vb;
 
 	void paint(Graphics &g) override;

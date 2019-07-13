@@ -19,15 +19,15 @@ PropUI::PropUI(Prop * p) :
 
 	acceptedDropTypes.add("LightBlockModel");
 
-	idUI = p->globalID->createStepper();
+	idUI.reset(p->globalID->createStepper());
 	idUI->showLabel = true;
-	targetUI = p->activeProvider->createTargetUI();
-	batteryUI = p->battery->createSlider();
+	targetUI.reset(p->activeProvider->createTargetUI());
+	batteryUI.reset(p->battery->createSlider());
 	batteryUI->showLabel = false;
 
-	addAndMakeVisible(targetUI);
-	addAndMakeVisible(idUI);
-	addAndMakeVisible(batteryUI); 
+	addAndMakeVisible(targetUI.get());
+	addAndMakeVisible(idUI.get());
+	addAndMakeVisible(batteryUI.get());
 	addAndMakeVisible(&viz);
 
 	setSize(100, 100);

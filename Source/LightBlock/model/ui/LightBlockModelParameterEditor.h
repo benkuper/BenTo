@@ -21,7 +21,7 @@ public:
 
 	LightBlockModelParameter * arg;
 
-	ScopedPointer<BoolToggleUI> editableUI;
+	std::unique_ptr<BoolToggleUI> editableUI;
 
 	void resetAndBuild() override;
 	void resizedInternalHeaderItemInternal(Rectangle<int> &r) override;

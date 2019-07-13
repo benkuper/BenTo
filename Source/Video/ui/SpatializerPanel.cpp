@@ -36,14 +36,14 @@ void SpatializerPanel::setCurrentLayoutView(SpatLayout * layout)
 	if(currentLayoutView != nullptr && layout == currentLayoutView->layout) return;
 	if (currentLayoutView != nullptr)
 	{
-		removeChildComponent(currentLayoutView);
+		removeChildComponent(currentLayoutView.get());
 		currentLayoutView = nullptr;
 	}
 	
 	if(layout != nullptr)
 	{
-		currentLayoutView = new SpatLayoutView(&videoBlock->spat, layout);
-		addAndMakeVisible(currentLayoutView);
+		currentLayoutView.reset(new SpatLayoutView(&videoBlock->spat, layout));
+		addAndMakeVisible(currentLayoutView.get());
 		resized();
 	}
 }

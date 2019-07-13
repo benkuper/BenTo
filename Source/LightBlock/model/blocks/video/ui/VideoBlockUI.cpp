@@ -15,8 +15,8 @@ VideoBlockUI::VideoBlockUI(VideoBlock * block) :
 	LightBlockModelUI(block),
 	vb(block)
 {
-	liveUI = vb->inputIsLive->createToggle();
-	addAndMakeVisible(liveUI);
+	liveUI.reset(vb->inputIsLive->createToggle());
+	addAndMakeVisible(liveUI.get());
 	resized();
 }
 

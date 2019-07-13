@@ -28,23 +28,23 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	timelineBlocks("Timeline", UserLightBlockModelManager::TIMELINE)
 {
 	//patterns
-	solidColorBlock = new SolidColorPattern();
-	rainbowBlock = new RainbowPattern();
-	strobeBlock = new StrobePattern();
-	noiseBlock = new NoisePattern();
+	solidColorBlock.reset(new SolidColorPattern());
+	rainbowBlock.reset(new RainbowPattern());
+	strobeBlock.reset(new StrobePattern());
+	noiseBlock.reset(new NoisePattern());
 
-	videoBlock = new VideoBlock();
-	dmxBlock = new DMXBlock();
+	videoBlock.reset(new VideoBlock());
+	dmxBlock.reset(new DMXBlock());
 
-	genericBlocks.addChildControllableContainer(solidColorBlock);
-	genericBlocks.addChildControllableContainer(rainbowBlock);
-	genericBlocks.addChildControllableContainer(strobeBlock);
-	genericBlocks.addChildControllableContainer(noiseBlock);
+	genericBlocks.addChildControllableContainer(solidColorBlock.get());
+	genericBlocks.addChildControllableContainer(rainbowBlock.get());
+	genericBlocks.addChildControllableContainer(strobeBlock.get());
+	genericBlocks.addChildControllableContainer(noiseBlock.get());
 
 	addChildControllableContainer(&genericBlocks);
 
-	liveFeedBlocks.addChildControllableContainer(videoBlock);
-	liveFeedBlocks.addChildControllableContainer(dmxBlock);
+	liveFeedBlocks.addChildControllableContainer(videoBlock.get());
+	liveFeedBlocks.addChildControllableContainer(dmxBlock.get());
 	addChildControllableContainer(&liveFeedBlocks);
 
 	addChildControllableContainer(&pictureBlocks);

@@ -14,9 +14,9 @@ LightBlockModelParameterEditor::LightBlockModelParameterEditor(LightBlockModelPa
 	BaseItemEditor(a, isRoot),
 	arg(a)
 {
-	editableUI = arg->editable->createToggle();
+	editableUI.reset(arg->editable->createToggle());
 
-	addAndMakeVisible(editableUI);
+	addAndMakeVisible(editableUI.get());
 
 	resetAndBuild();
 }

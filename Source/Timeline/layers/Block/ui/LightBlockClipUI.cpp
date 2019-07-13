@@ -112,14 +112,14 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
 {
 	if (automationUI != nullptr)
 	{
-		removeChildComponent(automationUI);
+		removeChildComponent(automationUI.get());
 		automationUI = nullptr;
 	}
 
 	if (a == nullptr) return;
 
-	automationUI = new AutomationUI(&a->automation);
-	addAndMakeVisible(automationUI);
+	automationUI.reset(new AutomationUI(&a->automation));
+	addAndMakeVisible(automationUI.get());
 	resized();
 	repaint();
 	automationUI->updateROI();
@@ -134,12 +134,12 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 	else if (e.eventComponent == &fadeOutHandle) fadeValueAtMouseDown = clip->fadeOut->floatValue();
 
 
-	if (e.eventComponent == automationUI && e.mods.isLeftButtonDown()) //because recursive mouseListener is removed to have special handling of automation
+	if (e.eventComponent == automationUI.get() && e.mods.isLeftButtonDown()) //because recursive mouseListener is removed to have special handling of automation
 	{
 		item->selectThis();
 	}
 
-	if (e.mods.isRightButtonDown() && (e.eventComponent == this || e.eventComponent == automationUI))
+	if (e.mods.isRightButtonDown() && (e.eventComponent == this || e.eventComponent == automationUI.get()))
 	{
 		if (clip->currentBlock != nullptr)
 		{

@@ -22,7 +22,7 @@ public:
 	~ParameterNodeViewUI();
 
 	ParameterNode * pn;
-	ScopedPointer<ControllableUI> pui;
+	std::unique_ptr<ControllableUI> pui;
 
 	void buildParameterUI();
 	void resizedInternalContent(Rectangle<int> &r) override;

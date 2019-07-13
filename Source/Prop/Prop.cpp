@@ -119,7 +119,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		signalThreadShouldExit();
 		waitForThreadToExit(100);
 
-		removeChildControllableContainer(currentBlock);
+		removeChildControllableContainer(currentBlock.get());
 		if (!currentBlock->provider.wasObjectDeleted())
 		{
 			currentBlock->provider->setHighlighted(false);
@@ -134,12 +134,12 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		currentBlock = nullptr;
 	}
 
-	if(model != nullptr) currentBlock = new LightBlock(model);
+	if (model != nullptr) currentBlock.reset(new LightBlock(model));
 	
 
 	if (currentBlock != nullptr)
 	{
-		addChildControllableContainer(currentBlock);
+		addChildControllableContainer(currentBlock.get());
 		currentBlock->provider->addInspectableListener(this);
 		currentBlock->provider->addColorProviderListener(this);
 

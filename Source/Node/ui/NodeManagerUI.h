@@ -29,7 +29,7 @@ public:
 	String dragType; 
 	Point<float> dragPosition;
 	
-	ScopedPointer<NodeConnectionManagerUI> connectionsUI;
+	std::unique_ptr<NodeConnectionManagerUI> connectionsUI;
 
 	
 	void paintOverChildren(Graphics &g) override;

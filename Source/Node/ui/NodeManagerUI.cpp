@@ -30,8 +30,8 @@ NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 	
 	addExistingItems(false);
 	
-	connectionsUI = new NodeConnectionManagerUI(&manager->connectionManager, this);
-	addAndMakeVisible(connectionsUI);
+	connectionsUI.reset(new NodeConnectionManagerUI(&manager->connectionManager, this));
+	addAndMakeVisible(connectionsUI.get());
 	connectionsUI->toBack();
 	connectionsUI->autoFilterHitTestOnItems = true;
 	connectionsUI->validateHitTestOnNoItem = false;

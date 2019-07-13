@@ -26,7 +26,7 @@ public:
 	Viewport viewport;
 	Component container;
 
-	ScopedPointer<IntSliderUI> iconSizeUI;
+	std::unique_ptr<IntSliderUI> iconSizeUI;
 
 	LightBlockModelLibrary * library;
 	LightBlockModelGroupUI genericGroupUI;

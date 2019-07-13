@@ -23,7 +23,7 @@ public:
 	~LightBlockClip();
 
 	LightBlockLayer * layer;
-	ScopedPointer<LightBlock> currentBlock;
+	std::unique_ptr<LightBlock> currentBlock;
 	
 	TargetParameter * activeProvider;
 

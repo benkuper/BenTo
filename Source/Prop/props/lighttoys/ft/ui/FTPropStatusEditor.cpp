@@ -13,12 +13,12 @@
 FTPropStatusEditor::FTPropStatusEditor(FTPropStatus * ftp, bool isRoot) :
 	InspectableEditor(ftp, isRoot)
 {
-	isConnectedUI = ftp->isConnected->createToggle();
-	addAndMakeVisible(isConnectedUI);
-	voltageUI = ftp->voltage->createSlider();
-	addAndMakeVisible(voltageUI);
-	flashUI = ftp->flash->createButtonUI();
-	addAndMakeVisible(flashUI);
+	isConnectedUI.reset(ftp->isConnected->createToggle());
+	addAndMakeVisible(isConnectedUI.get());
+	voltageUI.reset( ftp->voltage->createSlider());
+	addAndMakeVisible(voltageUI.get());
+	flashUI.reset(ftp->flash->createButtonUI());
+	addAndMakeVisible(flashUI.get());
 	setSize(100, 14);
 }
 

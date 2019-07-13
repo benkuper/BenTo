@@ -67,7 +67,7 @@ public:
 	
 	Array<Colour> colors;
 
-	ScopedPointer<LightBlock> currentBlock;
+	std::unique_ptr<LightBlock> currentBlock;
 	TargetParameter * activeProvider; 
 
 	int previousID; //for swapping

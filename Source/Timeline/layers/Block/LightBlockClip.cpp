@@ -42,17 +42,17 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 
 	if (currentBlock != nullptr)
 	{
-		removeChildControllableContainer(currentBlock);
+		removeChildControllableContainer(currentBlock.get());
 		currentBlock->removeLightBlockListener(this);
 		currentBlock = nullptr;
 	}
 
-	if (provider != nullptr) currentBlock = new LightBlock(provider);
+	if (provider != nullptr) currentBlock.reset(new LightBlock(provider));
 
 
 	if (currentBlock != nullptr)
 	{
-		addChildControllableContainer(currentBlock);
+		addChildControllableContainer(currentBlock.get());
 		currentBlock->addLightBlockListener(this);
 
 	}

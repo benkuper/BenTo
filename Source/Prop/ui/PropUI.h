@@ -21,9 +21,9 @@ public:
 	~PropUI();
 
 	PropViz viz;
-	ScopedPointer<IntStepperUI> idUI;
-	ScopedPointer<TargetParameterUI> targetUI;
-	ScopedPointer<FloatSliderUI> batteryUI;
+	std::unique_ptr<IntStepperUI> idUI;
+	std::unique_ptr<TargetParameterUI> targetUI;
+	std::unique_ptr<FloatSliderUI> batteryUI;
 
 
 	void paintOverChildren(Graphics &g) override;

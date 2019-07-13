@@ -18,15 +18,15 @@ PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 	setDefaultLayout(HORIZONTAL);
 	addExistingItems();
 
-	autoDetectUI = manager->detectProps->createButtonUI();
-	autoAssignUI = manager->autoAssignIdTrigger->createButtonUI();
-	bakeAllUI = manager->bakeAll->createButtonUI();
-	bakeModeUI = manager->bakeMode->createToggle();
+	autoDetectUI.reset(manager->detectProps->createButtonUI());
+	autoAssignUI.reset(manager->autoAssignIdTrigger->createButtonUI());
+	bakeAllUI.reset(manager->bakeAll->createButtonUI());
+	bakeModeUI.reset(manager->bakeMode->createToggle());
 
-	addAndMakeVisible(autoDetectUI);
-	addAndMakeVisible(autoAssignUI);
-	addAndMakeVisible(bakeAllUI);
-	addAndMakeVisible(bakeModeUI);
+	addAndMakeVisible(autoDetectUI.get());
+	addAndMakeVisible(autoAssignUI.get());
+	addAndMakeVisible(bakeAllUI.get());
+	addAndMakeVisible(bakeModeUI.get());
 }
 
 PropManagerUI::~PropManagerUI()

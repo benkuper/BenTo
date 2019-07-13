@@ -116,7 +116,7 @@ void BentoProp::uploadBakedData(BakeData data)
 
 
 
-	ScopedPointer<InputStream> stream = url.createInputStream(true, &BentoProp::uploadProgressCallback, this);// , "Content-Type: Text/plain");
+	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this));// , "Content-Type: Text/plain");
 
 	if (stream != nullptr)
 	{

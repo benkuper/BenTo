@@ -21,7 +21,7 @@ public:
 	ModelNode(var params = var());
 	~ModelNode();
 
-	ScopedPointer<LightBlock> currentBlock;
+	std::unique_ptr<LightBlock> currentBlock;
 	TargetParameter * activeProvider;
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);

@@ -19,7 +19,7 @@ public:
 	LightBlockLayerPanel(LightBlockLayer * layer);
 	~LightBlockLayerPanel();
 
-	ScopedPointer<IntStepperUI> previewIDUI;
+	std::unique_ptr<IntStepperUI> previewIDUI;
 	
 	LightBlockLayer * blockLayer;
 

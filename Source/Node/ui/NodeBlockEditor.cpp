@@ -58,7 +58,7 @@ void NodeBlockEditor::setNodeBlock(NodeBlock * b)
 		nodeBlock->removeInspectableListener(this);
 		nodeBlock = nullptr;
 		nodeBlockRef = nullptr;
-		removeChildComponent(managerUI);
+		removeChildComponent(managerUI.get());
 	}
 
 	nodeBlock = b;
@@ -68,8 +68,8 @@ void NodeBlockEditor::setNodeBlock(NodeBlock * b)
 		nodeBlock->setBeingEdited(true);
 		nodeBlock->addInspectableListener(this);
 		nodeBlockRef = nodeBlock;
-		managerUI = new NodeManagerUI(&nodeBlock->manager);
-		addAndMakeVisible(managerUI);
+		managerUI.reset(new NodeManagerUI(&nodeBlock->manager));
+		addAndMakeVisible(managerUI.get());
 	}
 
 	repaint();

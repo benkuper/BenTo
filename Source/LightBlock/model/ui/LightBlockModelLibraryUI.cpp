@@ -21,8 +21,8 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	scriptBlocksManagerUI("Scripts", &library->scriptBlocks),
 	timelineBlocksManagerUI("Timelines",&library->timelineBlocks)
 {
-	iconSizeUI = library->iconSize->createSlider();
-	addAndMakeVisible(iconSizeUI);
+	iconSizeUI.reset(library->iconSize->createSlider());
+	addAndMakeVisible(iconSizeUI.get());
 
 	viewport.setViewedComponent(&container, false);
 	viewport.setScrollBarsShown(true, false);

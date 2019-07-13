@@ -18,9 +18,9 @@ public:
 	FTPropStatusEditor(FTPropStatus * ftp, bool isRoot);
 	~FTPropStatusEditor();
 
-	ScopedPointer<BoolToggleUI> isConnectedUI;
-	ScopedPointer<FloatSliderUI> voltageUI;
-	ScopedPointer<TriggerButtonUI> flashUI;
+	std::unique_ptr<BoolToggleUI> isConnectedUI;
+	std::unique_ptr<FloatSliderUI> voltageUI;
+	std::unique_ptr<TriggerButtonUI> flashUI;
 
 	void resized() override;
 };

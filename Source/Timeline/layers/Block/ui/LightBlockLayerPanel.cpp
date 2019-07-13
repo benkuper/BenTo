@@ -14,10 +14,10 @@ LightBlockLayerPanel::LightBlockLayerPanel(LightBlockLayer * layer) :
 	SequenceLayerPanel(layer),
 	blockLayer(layer)
 {
-	previewIDUI = layer->previewID->createStepper();
+	previewIDUI.reset(layer->previewID->createStepper());
 	previewIDUI->showLabel = true;
 
-	addAndMakeVisible(previewIDUI);
+	addAndMakeVisible(previewIDUI.get());
 	minContentHeight = 80;
 }
 

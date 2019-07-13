@@ -34,7 +34,7 @@ public:
 
 	void clear() override;
 
-	ScopedPointer<ControllableContainer> paramsContainer;
+	std::unique_ptr<ControllableContainer> paramsContainer;
 	LightBlockModelPresetManager presetManager;
 
 	virtual Array<WeakReference<Controllable>> getModelParameters() override;

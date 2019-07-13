@@ -38,16 +38,16 @@ void ModelNode::setBlockFromProvider(LightBlockColorProvider * provider)
 	
 	if (currentBlock != nullptr)
 	{
-		removeChildControllableContainer(currentBlock);
+		removeChildControllableContainer(currentBlock.get());
 		currentBlock = nullptr;
 	}
 
-	if (provider != nullptr) currentBlock = new LightBlock(provider);
+	if (provider != nullptr) currentBlock.reset(new LightBlock(provider));
 
 
 	if (currentBlock != nullptr)
 	{
-		addChildControllableContainer(currentBlock);
+		addChildControllableContainer(currentBlock.get());
 	}
 
 	buildSlots();

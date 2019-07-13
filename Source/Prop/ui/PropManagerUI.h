@@ -21,10 +21,10 @@ public:
 	PropManagerUI(const String &name, PropManager * manager);
 	~PropManagerUI();
 
-	ScopedPointer<TriggerButtonUI> autoDetectUI;
-	ScopedPointer<TriggerButtonUI> autoAssignUI;
-	ScopedPointer<TriggerButtonUI> bakeAllUI;
-	ScopedPointer<BoolToggleUI> bakeModeUI;
+	std::unique_ptr<TriggerButtonUI> autoDetectUI;
+	std::unique_ptr<TriggerButtonUI> autoAssignUI;
+	std::unique_ptr<TriggerButtonUI> bakeAllUI;
+	std::unique_ptr<BoolToggleUI> bakeModeUI;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos) override;

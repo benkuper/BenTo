@@ -48,7 +48,7 @@ public:
 	Image bgImage;
 	bool needsRepaint;
 
-	ScopedPointer<SpatLayoutView> currentLayoutView;
+	std::unique_ptr<SpatLayoutView> currentLayoutView;
 	void setCurrentLayoutView(SpatLayout * newView);
 
 	void paint(Graphics &g) override;

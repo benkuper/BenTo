@@ -35,7 +35,7 @@ public:
 
 	LightBlockClip * clip;
 
-	ScopedPointer<AutomationUI> automationUI;
+	std::unique_ptr<AutomationUI> automationUI;
 
 	LightBlockFadeHandle fadeInHandle;
 	LightBlockFadeHandle fadeOutHandle;

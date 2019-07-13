@@ -26,7 +26,7 @@ public:
 	NodeBlock * nodeBlock;
 	WeakReference<Inspectable> nodeBlockRef;
 
-	ScopedPointer<NodeManagerUI> managerUI;
+	std::unique_ptr<NodeManagerUI> managerUI;
 	
 	NodeBlockEditorToolbox toolbox;
 
