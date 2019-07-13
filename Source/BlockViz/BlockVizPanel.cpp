@@ -17,13 +17,13 @@ BlockViz::BlockViz(const String & contentName) :
 	vizProp.resolution->setValue(32);
 	vizProp.type->setValueWithData(Prop::CLUB);
 
-	idUI = vizProp.globalID->createStepper();
-	resolutionUI = vizProp.resolution->createStepper();
-	shapeUI = vizProp.type->createUI();
+	idUI.reset(vizProp.globalID->createStepper());
+	resolutionUI.reset(vizProp.resolution->createStepper());
+	shapeUI.reset(vizProp.type->createUI());
 
-	addAndMakeVisible(idUI);
-	addAndMakeVisible(resolutionUI);
-	addAndMakeVisible(shapeUI);
+	addAndMakeVisible(idUI.get());
+	addAndMakeVisible(resolutionUI.get());
+	addAndMakeVisible(shapeUI.get());
 
 	
 	InspectableSelectionManager::mainSelectionManager->addAsyncSelectionManagerListener(this);
@@ -61,9 +61,9 @@ void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 			resolutionUI->setVisible(true);
 			shapeUI->setVisible(true);
 			vizProp.setBlockFromProvider(m);
-			if (propViz != nullptr) removeChildComponent(propViz);
-			propViz = new PropViz(&vizProp);
-			addAndMakeVisible(propViz);
+			if (propViz != nullptr) removeChildComponent(propViz.get());
+			propViz.reset(new PropViz(&vizProp));
+			addAndMakeVisible(propViz.get());
 			resized();
 			return;
 		}
@@ -75,9 +75,9 @@ void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 			resolutionUI->setVisible(false);
 			shapeUI->setVisible(false);
 			vizProp.setBlockFromProvider(m);
-			if (propViz != nullptr) removeChildComponent(propViz);
-			propViz = new PropViz(p);
-			addAndMakeVisible(propViz);
+			if (propViz != nullptr) removeChildComponent(propViz.get());
+			propViz.reset(new PropViz(p));
+			addAndMakeVisible(propViz.get());
 			resized();
 			return;
 		}

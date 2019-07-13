@@ -120,7 +120,7 @@ NodeViewUI * NodeManagerUI::createUIForItem(Node * item)
 {
 	NodeViewUI * nui = item->createUI();
 	ColorNodeViewUI * cnui = dynamic_cast<ColorNodeViewUI *>(nui);
-	if (cnui != nullptr) cnui->propToPreview = manager->prop;
+	if (cnui != nullptr) cnui->propToPreview = manager->prop.get();
 	return nui;
 }
 

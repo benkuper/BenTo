@@ -36,7 +36,7 @@ public:
 
 	
 	PropNode * propNode;
-	ScopedPointer<Prop> prop;
+	std::unique_ptr<Prop> prop;
 
 	NodeConnectionManager connectionManager;
 	Array<WeakReference<Controllable>> getExposedParameters();

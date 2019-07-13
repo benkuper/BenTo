@@ -28,11 +28,11 @@ public:
 	Prop vizProp;
 	LightBlock * vizBlock;
 
-	ScopedPointer<PropViz> propViz;
+	std::unique_ptr<PropViz> propViz;
 
-	ScopedPointer<ParameterUI> idUI;
-	ScopedPointer<ParameterUI> resolutionUI;
-	ScopedPointer<ParameterUI> shapeUI;
+	std::unique_ptr<ParameterUI> idUI;
+	std::unique_ptr<ParameterUI> resolutionUI;
+	std::unique_ptr<ParameterUI> shapeUI;
 
 	Rectangle<int> vizBounds;
 

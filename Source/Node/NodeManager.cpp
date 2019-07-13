@@ -28,9 +28,9 @@ NodeManager::NodeManager() :
 	propNode = new PropNode();
 	addItem(propNode);
 
-	prop = new Prop();
+	prop.reset(new Prop());
 	prop->resolution->setValue(32);
-	addChildControllableContainer(prop);
+	addChildControllableContainer(prop.get());
 }
 
 NodeManager::~NodeManager()
