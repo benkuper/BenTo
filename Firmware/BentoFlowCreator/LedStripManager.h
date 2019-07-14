@@ -59,7 +59,7 @@ public:
   {
     currentMode = Mode::Streaming;
 
-    receiveRate = 20;
+    receiveRate = 50;
     lastReceiveTime = 0;
     
     lastStatTime = 0;

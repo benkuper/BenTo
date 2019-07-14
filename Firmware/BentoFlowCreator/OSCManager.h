@@ -23,9 +23,6 @@ class OSCManager
     OSCManager(WiFiUDP &udp): udp(udp)
     {
       sprintf(remoteHost, "192.168.0.13");
-
-      
-
       addCallbackMessageReceived(&OSCManager::defaultCallback);
 
       isReadyToSend = false;

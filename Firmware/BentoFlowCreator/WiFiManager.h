@@ -18,8 +18,8 @@ class WiFiManager
 {
   public:
 
-    String ssid = "Freebox-5BC00F";
-    String password = "depositiv-optatis%@-intentavit-coegisse!";
+    String ssid = "jonglissimo";
+    String password = "lightpainting";
 
     const int maxTries = 32;
 

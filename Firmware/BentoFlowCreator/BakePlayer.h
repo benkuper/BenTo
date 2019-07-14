@@ -64,8 +64,10 @@ public:
 
     long fPos = curFile.position();
     long pos = msToBytePos(curTimeMs);
-    if(pos < fPos) return; //waiting for frame
 
+    if(pos < 0) return;
+    if(pos < fPos) return; //waiting for frame
+    
     while(fPos > pos)
     {
       curFile.read(buffer,FRAME_SIZE);
@@ -77,18 +79,25 @@ public:
       DBG("SHOULD BE EXACTLY POS "+String(curFile.position())+", expected "+String(pos));
     }
 
-    if(mil > timeSinceLastSend + 100)
+  /*  if(mil > timeSinceLastSend + 100)
     {
       DBG("Playing "+String(msToSeconds(curTimeMs))+"\t Frame : "+String(msToFrame(curTimeMs))
           +"\t, Color "+String(buffer[2])+"\t "+String(buffer[1])+"\t "+String(buffer[0])
         );
         timeSinceLastSend = mil;
     }
+    */
      
     curFile.read(buffer,FRAME_SIZE);
     showCurrentFrame();
   }
 
+  void showBlackFrame()
+  {
+    for(int i=0;i<NUM_LEDS;i++) simpleSetLed(i, CRGB::Black);
+    FastLED.show();
+  }
+    
   void showCurrentFrame()
   {
     
@@ -147,7 +156,7 @@ public:
     
     isPlaying = true;
     
-    if(atTime >= 0)   seek(atTime);
+    seek(atTime);
     prevTimeMs = millis();
   }
 
@@ -158,9 +167,13 @@ public:
     DBG("Seek to "+String(t));
     curTimeMs = secondsToMs(t);
     prevTimeMs = millis();
-    curFile.seek(msToBytePos(curTimeMs));
     
-    if(!isPlaying)
+    curFile.seek(msToBytePos(max(curTimeMs, (long)0)));
+
+    if(curTimeMs < 0)
+    {
+      showBlackFrame();
+    }else if(!isPlaying)
     {
       curFile.read(buffer,FRAME_SIZE);
       showCurrentFrame();

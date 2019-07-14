@@ -19,7 +19,8 @@ class Prop;
 
 class TimelineBlockSequence :
 	public Sequence,
-	public SequenceLayerManager::ManagerListener
+	public SequenceLayerManager::ManagerListener,
+	public PropClusterGroupManager::ManagerListener
 {
 public:
 	TimelineBlockSequence();
@@ -27,16 +28,27 @@ public:
 
 	Factory<SequenceLayer> layerFactory;
 
-	PropClusterGroupManager clusterGroupManager;
+	BoolParameter* identityMode;
+	EnumParameter* identityClusterGroup;
+	PropClusterGroup* currentIdentityGroup;
 
+	PropClusterGroupManager clusterGroupManager;
+	
 	Array<Colour> getColors(Prop * p, double time, var params);
 	Array<LightBlockLayer *> getLayersForProp(Prop * p, bool includeDisabled = false);
 
 	void itemAdded(SequenceLayer * s) override;
 
+	void itemAdded(PropClusterGroup* g) override;
+	void itemRemoved(PropClusterGroup* g) override;
+
+	void updateGroupList();
+
+	void bakeToAllProps();
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-
+	void onContainerParameterChangedInternal(Parameter* p) override; 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 };

@@ -19,11 +19,15 @@ public:
 	PropClusterGroup();
 	~PropClusterGroup();
 
+	ColorParameter * color; 
 	BoolParameter * sendFeedback;
 
 	BaseManager<PropCluster> clusterManager;
 
 	PropCluster * getClusterForProp(Prop * p, int &localID);
+
+	Array<Colour> getColorsForProp(Prop* p);
+	
 	int getLocalPropID(Prop * p);
 
 	var getJSONData() override;

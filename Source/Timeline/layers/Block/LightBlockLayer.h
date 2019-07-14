@@ -22,7 +22,6 @@ public:
 	LightBlockLayer(Sequence * s, var params = var());
 	~LightBlockLayer();
 
-
 	LightBlockClipManager blockClipManager;
 
 	BoolParameter * defaultLayer;

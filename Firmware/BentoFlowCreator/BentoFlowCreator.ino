@@ -11,16 +11,16 @@
 #include <Wire.h>
 
 
-#define USE_BUTTON 0
+#define USE_BUTTON 1
 #define USE_WIFI 1
-#define USE_IR 0
+#define USE_IR 1
 
 #if USE_WIFI
 #define USE_OSC 1
 #endif
 
-#define USE_SERVER 0
-#define USE_FILES 0
+#define USE_SERVER 1
+#define USE_FILES 1
 
 #define USE_TOUCH 0
 #define USE_IMU 0

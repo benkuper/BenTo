@@ -124,11 +124,11 @@ after_success:
     cp build/BenTo BenTo.AppDir/usr/bin/;
     ./appimagetool-x86_64.AppImage BenTo.AppDir BenTo-linux-x64-$SUFFIX.AppImage;
     echo 'Uploading $SUFFIX ...';
-    curl -X POST -F 'appFile=@BenTo-linux-x64-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' -F 'path=bento/' $UPLOAD_URL;"
+    curl -X POST -F 'appFile=@BenTo-linux-x64-$SUFFIX.AppImage' -F 'pass=$UPLOAD_PASS' -F 'path=download/' $UPLOAD_URL;"
   else
     cd /Users/travis/build/benkuper/BenTo/Package
     ls
     packagesbuild BenTo.pkgproj -v
     mv BenTo.pkg BenTo-osx-$SUFFIX.pkg
-    curl -v -T BenTo-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/bento/
+    curl -v -T BenTo-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD --insecure ftp://ftp.kuperberg.fr/download/
   fi

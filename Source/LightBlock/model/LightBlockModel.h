@@ -18,7 +18,6 @@
 class LightBlock;
 class LightBlockModelUI;
 
-
 class LightBlockModel :
 	public LightBlockColorProvider
 {

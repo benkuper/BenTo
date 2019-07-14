@@ -15,19 +15,27 @@
 #include "Prop/Prop.h"
 
 TimelineBlockSequence::TimelineBlockSequence() :
-	Sequence()
+	Sequence(),
+	currentIdentityGroup(nullptr)
 {
+	identityClusterGroup = addEnumParameter("Calibration Group", "The cluster group to choose to show the calibration frame");
+	identityMode = addBoolParameter("Identity mode", "If checked, this will override the colors to show identity", false, false);
+
 	layerManager->managerFactory = &layerFactory;
+	clusterGroupManager.addBaseManagerListener(this);
 	addChildControllableContainer(&clusterGroupManager);
 
+	
 	//Timeline
 	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Blocks", &LightBlockLayer::create, this));
 	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Actions", &ActionLayer::create, this));
 	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Audio", &AudioLayer::create, this));
 
-	layerManager->addItem(new LightBlockLayer(this));
+	layerManager->addItem(new LightBlockLayer(this, &clusterGroupManager));
 	layerManager->addBaseManagerListener(this);
 	setAudioDeviceManager(&AudioManager::getInstance()->am);
+
+	updateGroupList();
 }
 
 TimelineBlockSequence::~TimelineBlockSequence()
@@ -36,6 +44,11 @@ TimelineBlockSequence::~TimelineBlockSequence()
 
 Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params)
 {
+	if (identityMode->boolValue() && currentIdentityGroup != nullptr)
+	{
+		return currentIdentityGroup->getColorsForProp(p);
+	}
+
 	Array<LightBlockLayer *> layers = getLayersForProp(p);
 
 	int numLayers = layers.size();
@@ -120,6 +133,32 @@ void TimelineBlockSequence::itemAdded(SequenceLayer * s)
 
 }
 
+void TimelineBlockSequence::itemAdded(PropClusterGroup* g)
+{
+	identityClusterGroup->addOption(g->niceName, g->shortName);
+
+}
+
+void TimelineBlockSequence::itemRemoved(PropClusterGroup* g)
+{
+	identityClusterGroup->removeOption(g->niceName);
+}
+
+void TimelineBlockSequence::updateGroupList()
+{
+	String oldValue = identityClusterGroup->getValueData().toString();
+	identityClusterGroup->clearOptions();
+	identityClusterGroup->addOption("No group", "");
+	for (auto& g : clusterGroupManager.items) identityClusterGroup->addOption(g->niceName, g->shortName);
+
+	identityClusterGroup->setValueWithData(oldValue);
+}
+
+void TimelineBlockSequence::bakeToAllProps()
+{
+	
+}
+
 var TimelineBlockSequence::getJSONData()
 {
 	var data = Sequence::getJSONData();
@@ -131,6 +170,21 @@ void TimelineBlockSequence::loadJSONDataInternal(var data)
 {
 	Sequence::loadJSONDataInternal(data);
 	clusterGroupManager.loadJSONData(data.getProperty("clusterGroups", var()));
+}
+
+void TimelineBlockSequence::onContainerParameterChangedInternal(Parameter* p)
+{
+	Sequence::onContainerParameterChangedInternal(p);
+
+	if (p == identityClusterGroup)
+	{
+		identityMode->setEnabled(identityClusterGroup->getValueData() != "");
+		currentIdentityGroup = clusterGroupManager.getItemWithName(identityClusterGroup->getValueData());
+	}
+	else if (p == identityMode)
+	{
+		//
+	}
 }
 
 void TimelineBlockSequence::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)

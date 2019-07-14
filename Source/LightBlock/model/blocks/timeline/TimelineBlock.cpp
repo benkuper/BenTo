@@ -50,7 +50,7 @@ Array<Colour> TimelineBlock::getColors(Prop * p, double time, var params)
 
 void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 {
-	if (!sequence.isPlaying->boolValue() || prevTime > sequence.currentTime->floatValue())
+	if (sequence.isSeeking)
 	{
 		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SEEK, sequence.currentTime->floatValue());
 	}
