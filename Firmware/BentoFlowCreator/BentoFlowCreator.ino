@@ -10,9 +10,6 @@
 
 #include <Wire.h>
 
-//use for using bento on basic ESP32
-#define BAREBONE 1
-#define NUM_LEDS 144
 
 #define USE_BUTTON 0
 #define USE_WIFI 1

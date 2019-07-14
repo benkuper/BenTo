@@ -7,16 +7,10 @@
 #include "FastLED.h"
 #include "FastLEDDefs.h"
 
-#if BAREBONE
-#define DATA_PIN 5
-#define LED_TYPE    WS2812B
-#define COLOR_ORDER GRB
-#else
 #define DATA_PIN 5
 #define CLK_PIN 18
 #define LED_TYPE    SK9822
 #define COLOR_ORDER BGR
-#endif
 
 #include "PatternManager.h"
 
@@ -84,15 +78,9 @@ public:
     pinMode(LED_ENABLE_PIN, OUTPUT); //LED's enable
     digitalWrite(LED_ENABLE_PIN, HIGH);
 
-#if BAREBONE
-    FastLED.addLeds<LED_TYPE,DATA_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
-    FastLED.setBrightness(40);
-#else
     FastLED.addLeds<LED_TYPE,DATA_PIN,CLK_PIN,COLOR_ORDER>(leds, NUM_LEDS).setCorrection(TypicalLEDStrip);
     FastLED.setBrightness(60);
-#endif
-      
-
+    
     initSnapshot();
   }
 
