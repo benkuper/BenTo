@@ -25,7 +25,7 @@ TimelineBlockSequence::TimelineBlockSequence() :
 	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Actions", &ActionLayer::create, this));
 	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Audio", &AudioLayer::create, this));
 
-	layerManager->addItem(new LightBlockLayer(this, &clusterGroupManager));
+	layerManager->addItem(new LightBlockLayer(this));
 	layerManager->addBaseManagerListener(this);
 	setAudioDeviceManager(&AudioManager::getInstance()->am);
 }
