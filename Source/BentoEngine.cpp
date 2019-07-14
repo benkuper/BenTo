@@ -18,7 +18,6 @@
 #include "Timeline/layers/Action/ActionLayer.h"
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
-#include "Prop/Cluster/PropClusterGroupManager.h"
 #include "Node/NodeManager.h"
 
 BentoEngine::BentoEngine() :
@@ -29,7 +28,6 @@ BentoEngine::BentoEngine() :
 
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
-	addChildControllableContainer(PropClusterGroupManager::getInstance());
 
 	remoteHost = ioCC.addStringParameter("Remote Host", "Global remote host to send OSC to", "127.0.0.1");
 	remotePort = ioCC.addIntParameter("Remote port", "Remote port to send OSC to", 43001, 1024, 65535); 
@@ -38,10 +36,6 @@ BentoEngine::BentoEngine() :
 	ProjectSettings::getInstance()->addChildControllableContainer(&ioCC);
 	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 	
-	//Timeline
-	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Blocks", &LightBlockLayer::create));
-	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Actions", &ActionLayer::create));
-	SequenceLayerFactory::getInstance()->layerDefs.add(SequenceLayerDefinition::createDef("Audio", &AudioLayer::create));
 	
 	//Communication
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
@@ -53,10 +47,8 @@ BentoEngine::BentoEngine() :
 BentoEngine::~BentoEngine()
 {
 	PropManager::deleteInstance();
-	PropClusterGroupManager::deleteInstance();
 
 	AudioManager::deleteInstance();
-	SequenceLayerFactory::deleteInstance();
 
 	SerialManager::deleteInstance();
 
@@ -68,7 +60,6 @@ BentoEngine::~BentoEngine()
 void BentoEngine::clearInternal()
 {
 	PropManager::getInstance()->clear();
-	PropClusterGroupManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
 }
 
@@ -152,9 +143,6 @@ var BentoEngine::getJSONData()
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
 	
-	var clusterData = PropClusterGroupManager::getInstance()->getJSONData();
-	if (!clusterData.isVoid() && clusterData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("clusters", clusterData);
-
 	return data;
 }
 
@@ -163,14 +151,8 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTas
 	//ProgressTask * projectTask = loadingTask->addTask("Project"
 	ProgressTask * modelsTask = loadingTask->addTask("Models");
 	ProgressTask * propTask = loadingTask->addTask("Props");
-	ProgressTask * clusterTask = loadingTask->addTask("Clusters");
 
 	
-	clusterTask->start();
-	PropClusterGroupManager::getInstance()->loadJSONData(data.getProperty("clusters", var()));
-	clusterTask->setProgress(1);
-	clusterTask->end(); 
-
 	modelsTask->start();
 	LightBlockModelLibrary::getInstance()->loadJSONData(data.getProperty("models", var()));
 	modelsTask->setProgress(1);

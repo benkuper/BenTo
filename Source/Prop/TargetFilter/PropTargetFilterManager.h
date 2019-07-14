@@ -16,10 +16,12 @@ class PropTargetFilterManager :
 	public BaseManager<PropTargetFilter>
 {
 public:
-	PropTargetFilterManager();
+	PropTargetFilterManager(PropClusterGroupManager * clusterGroupManager = nullptr);
 	~PropTargetFilterManager();
 
 	Factory<PropTargetFilter> factory;
+
+	PropClusterGroupManager* clusterGroupManager;
 
 	int getTargetIDForProp(Prop *);
 

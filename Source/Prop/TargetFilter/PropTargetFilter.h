@@ -10,6 +10,8 @@
 
 #pragma once
 #include "Prop/Prop.h"
+class PropClusterGroupManager;
+
 
 class PropTargetFilter :
 	public BaseItem
@@ -72,9 +74,11 @@ class PropFilterCluster :
 	PropTargetFilter
 {
 public:
-	PropFilterCluster();
+	PropFilterCluster(PropClusterGroupManager * manager = nullptr);
 	~PropFilterCluster();
 	 
+	PropClusterGroupManager* manager;
+
 	BoolParameter * specificClusterGroup;
 	TargetParameter * clusterGroup;
 	BoolParameter * specificCluster;
@@ -89,7 +93,21 @@ public:
 	static bool targetIsCluster(ControllableContainer * cc);
 
 	String getTypeString() const override { return "Cluster"; }
-	static PropTargetFilter * create(var) { return new PropFilterCluster(); }
+	static PropTargetFilter * create(PropClusterGroupManager * m) { return new PropFilterCluster(m); }
+
+	class PropFilterClusterDefinition :
+		public FactoryDefinition<PropTargetFilter, std::function<PropTargetFilter* (PropClusterGroupManager*)>>
+	{
+	public:
+		PropFilterClusterDefinition(StringRef menu, StringRef type, std::function<PropTargetFilter* (PropClusterGroupManager*)> createFunc, PropClusterGroupManager * pcgm) :
+			FactoryDefinition(menu, type, createFunc),
+			pcgm(pcgm)
+		{}
+		~PropFilterClusterDefinition() {}
+
+		PropClusterGroupManager* pcgm;
+		virtual PropTargetFilter * create() { return createFunc(pcgm); }
+	};
 };
 
 

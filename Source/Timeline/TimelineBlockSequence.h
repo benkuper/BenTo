@@ -11,6 +11,7 @@
 #pragma once
 
 #include "JuceHeader.h"
+#include "Prop/Cluster/PropClusterGroupManager.h"
 
 class LightBlock;
 class LightBlockLayer;
@@ -24,11 +25,18 @@ public:
 	TimelineBlockSequence();
 	~TimelineBlockSequence();
 
-	SequenceLayerFactory layerFactory;
+	Factory<SequenceLayer> layerFactory;
+
+	PropClusterGroupManager clusterGroupManager;
+
 	Array<Colour> getColors(Prop * p, double time, var params);
 	Array<LightBlockLayer *> getLayersForProp(Prop * p, bool includeDisabled = false);
 
 	void itemAdded(SequenceLayer * s) override;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
+
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 };

@@ -289,6 +289,13 @@
 #endif
 
 //==============================================================================
+// juce_timeline flags:
+
+#ifndef    TIMELINE_UNIQUE_LAYER_FACTORY
+ #define   TIMELINE_UNIQUE_LAYER_FACTORY 0
+#endif
+
+//==============================================================================
 #ifndef    JUCE_STANDALONE_APPLICATION
  #if defined(JucePlugin_Name) && defined(JucePlugin_Build_Standalone)
   #define  JUCE_STANDALONE_APPLICATION JucePlugin_Build_Standalone

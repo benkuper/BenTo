@@ -12,11 +12,10 @@
 #include "Prop/PropManager.h"
 #include "BentoEngine.h"
 
-juce_ImplementSingleton(PropClusterGroupManager)
-
 PropClusterGroupManager::PropClusterGroupManager() :
 	BaseManager("Cluster Groups")
 {
+	selectItemWhenCreated = false;
 	PropManager::getInstance()->addControllableContainerListener(this);
 }
 

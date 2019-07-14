@@ -22,10 +22,11 @@ public:
 	LightBlockLayer(Sequence * s, var params = var());
 	~LightBlockLayer();
 
+
 	LightBlockClipManager blockClipManager;
 
 	BoolParameter * defaultLayer;
-	PropTargetFilterManager filterManager;
+	std::unique_ptr<PropTargetFilterManager> filterManager;
 	IntParameter * previewID;
 
 	Array<Colour> getColors(Prop * p, double time, var params);

@@ -16,7 +16,6 @@ class PropClusterGroupManager :
 	public BaseManager<PropClusterGroup>
 {
 public:
-	juce_DeclareSingleton(PropClusterGroupManager, true);
 
 	PropClusterGroupManager();
 	~PropClusterGroupManager();

@@ -14,6 +14,8 @@
 PropCluster::PropCluster() :
 	BaseItem("Cluster", false, false)
 {
+	showInspectorOnSelect = false;
+
 	userCanAddControllables = true;
 	userAddControllablesFilters.add(IntParameter::getTypeStringStatic());
 }

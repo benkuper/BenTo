@@ -9,6 +9,7 @@
 */
 
 #pragma once
+/*
 #include "../PropClusterGroupManager.h"
 
 class PropClusterGroupManagerUI :
@@ -20,3 +21,4 @@ public:
 
 	static PropClusterGroupManagerUI * create(const String &contentName) { return new PropClusterGroupManagerUI(contentName, PropClusterGroupManager::getInstance()); }
 };
+*/

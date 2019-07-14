@@ -12,8 +12,10 @@
 #include "ui/LightBlockLayerPanel.h"
 #include "ui/LightBlockLayerTimeline.h"
 #include "Prop/PropManager.h"
+#include "Prop/Cluster/PropClusterGroupManager.h"
+#include "Timeline/TimelineBlockSequence.h"
 
-LightBlockLayer::LightBlockLayer(Sequence * s, var) :
+LightBlockLayer::LightBlockLayer(Sequence * s, var params) :
 	SequenceLayer(s, "Block Layer"),
 	blockClipManager(this)
 {
@@ -21,8 +23,9 @@ LightBlockLayer::LightBlockLayer(Sequence * s, var) :
 	previewID = addIntParameter("Preview ID", "ID to preview the content", 0, 0, 500);
 	previewID->hideInEditor = true;
 
-	addChildControllableContainer(&filterManager);
-	filterManager.addFilterManagerListener(this);
+	filterManager.reset(new PropTargetFilterManager(&((TimelineBlockSequence*)sequence)->clusterGroupManager));
+	addChildControllableContainer(filterManager.get());
+	filterManager->addFilterManagerListener(this);
 
 	updateLinkedProps();
 
@@ -82,7 +85,7 @@ void LightBlockLayer::updateLinkedProps()
 	{
 		for (auto &p : PropManager::getInstance()->items)
 		{
-			if (filterManager.getTargetIDForProp(p) >= 0)
+			if (filterManager->getTargetIDForProp(p) >= 0)
 			{
 				linkedInspectables.addIfNotAlreadyThere(p);
 				p->linkedInspectables.addIfNotAlreadyThere(this);
@@ -121,7 +124,7 @@ var LightBlockLayer::getJSONData()
 {
 	var data = SequenceLayer::getJSONData();
 	data.getDynamicObject()->setProperty("blocks", blockClipManager.getJSONData());
-	data.getDynamicObject()->setProperty("filters", filterManager.getJSONData());
+	data.getDynamicObject()->setProperty("filters", filterManager->getJSONData());
 	return data;
 }
 
@@ -129,5 +132,5 @@ void LightBlockLayer::loadJSONDataInternal(var data)
 {
 	SequenceLayer::loadJSONDataInternal(data);
 	blockClipManager.loadJSONData(data.getProperty("blocks", var()));
-	filterManager.loadJSONData(data.getProperty("filters", var()));
+	filterManager->loadJSONData(data.getProperty("filters", var()));
 }

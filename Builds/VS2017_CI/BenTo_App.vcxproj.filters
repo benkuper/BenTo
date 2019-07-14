@@ -3247,9 +3247,6 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\Factory.cpp">
-      <Filter>JUCE Modules\juce_organicui\manager</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\GenericControllableItem.cpp">
       <Filter>JUCE Modules\juce_organicui\manager</Filter>
     </ClCompile>
@@ -3671,9 +3668,6 @@
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.cpp">
-      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerFactory.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.cpp">
@@ -6730,9 +6724,6 @@
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.h">
-      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerFactory.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Layer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.h">

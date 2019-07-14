@@ -1,5 +1,6 @@
 #if defined(_WIN32)
 
+#pragma warning(disable:4244)
 /* Copyright 2012 William Woodall and John Harrison */
 
 #include <sstream>

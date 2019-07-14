@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+/*
 #include "PropClusterGroupManagerUI.h"
 
 PropClusterGroupManagerUI::PropClusterGroupManagerUI(const String & name, PropClusterGroupManager * manager) :
@@ -18,3 +19,4 @@ PropClusterGroupManagerUI::PropClusterGroupManagerUI(const String & name, PropCl
 PropClusterGroupManagerUI::~PropClusterGroupManagerUI()
   {
   }
+*/

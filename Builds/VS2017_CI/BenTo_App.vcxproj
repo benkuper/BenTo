@@ -2199,9 +2199,6 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\BaseItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\Factory.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\manager\GenericControllableItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2545,9 +2542,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerFactory.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.cpp">
@@ -3594,7 +3588,6 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerTimeline.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\ui\SequenceLayerTimelineManagerUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayer.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerFactory.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Layer\SequenceLayerManager.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceEditorView.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\ui\SequenceTimelineHeader.h"/>

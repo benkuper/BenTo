@@ -10,14 +10,22 @@
 
 #include "TimelineBlockSequence.h"
 #include "layers/Block/LightBlockLayer.h"
+#include "layers/Action/ActionLayer.h"
 #include "Audio/AudioManager.h"
 #include "Prop/Prop.h"
 
 TimelineBlockSequence::TimelineBlockSequence() :
 	Sequence()
 {
+	layerManager->managerFactory = &layerFactory;
+	addChildControllableContainer(&clusterGroupManager);
 
-	layerManager->addItem(new LightBlockLayer(this));
+	//Timeline
+	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Blocks", &LightBlockLayer::create, this));
+	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Actions", &ActionLayer::create, this));
+	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Audio", &AudioLayer::create, this));
+
+	layerManager->addItem(new LightBlockLayer(this, &clusterGroupManager));
 	layerManager->addBaseManagerListener(this);
 	setAudioDeviceManager(&AudioManager::getInstance()->am);
 }
@@ -35,7 +43,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	
 	if (numLayers == 1 && layers[0] != nullptr)
 	{
-		params.getDynamicObject()->setProperty("forceID", layers[0]->filterManager.getTargetIDForProp(p));
+		params.getDynamicObject()->setProperty("forceID", layers[0]->filterManager->getTargetIDForProp(p));
 		return layers[0]->getColors(p, t, params); //use sequence's time instead of prop time
 	}
 
@@ -52,7 +60,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	{
 		if (l == nullptr) continue;
 		String s = l->niceName;
-		params.getDynamicObject()->setProperty("forceID", l->filterManager.getTargetIDForProp(p));
+		params.getDynamicObject()->setProperty("forceID", l->filterManager->getTargetIDForProp(p));
 		colors.add(l->getColors(p, t, params)); //use sequence's time instead of prop time
 	}
 
@@ -87,7 +95,7 @@ Array<LightBlockLayer*> TimelineBlockSequence::getLayersForProp(Prop * p, bool i
 		if (!includeDisabled && !i->enabled->boolValue()) continue;
 		LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(i);
 		if (l == nullptr) continue;
-		if (l->filterManager.getTargetIDForProp(p) >= 0) result.add(l);
+		if (l->filterManager->getTargetIDForProp(p) >= 0) result.add(l);
 		if (l->defaultLayer->boolValue()) defaultLayers.add(l);
 	}
 
@@ -110,6 +118,19 @@ void TimelineBlockSequence::itemAdded(SequenceLayer * s)
 		al->setAudioProcessorGraph(&AudioManager::getInstance()->graph, AUDIO_OUTPUT_GRAPH_ID);
 	}
 
+}
+
+var TimelineBlockSequence::getJSONData()
+{
+	var data = Sequence::getJSONData();
+	data.getDynamicObject()->setProperty("clusterGroups", clusterGroupManager.getJSONData());
+	return data;
+}
+
+void TimelineBlockSequence::loadJSONDataInternal(var data)
+{
+	Sequence::loadJSONDataInternal(data);
+	clusterGroupManager.loadJSONData(data.getProperty("clusterGroups", var()));
 }
 
 void TimelineBlockSequence::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
