@@ -85,3 +85,5 @@ Builds/LinuxMakefile/BenTo\.AppDir/usr/bin/BenTo
 Builds/LinuxMakefile/BenTo-x86_64\.AppImage
 
 Package/BenTo\.pkg
+
+site/
