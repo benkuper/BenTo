@@ -12,8 +12,12 @@
 #include "../PropManager.h"
 
 PropCluster::PropCluster() :
-	BaseItem("Cluster", false, false)
+	BaseItem("Cluster", false, false),
+	color(nullptr)
 {
+	color = addColorParameter("Color", "Color of this group, to identify props", Colours::red);
+	color->isRemovableByUser = false;
+
 	showInspectorOnSelect = false;
 
 	userCanAddControllables = true;
@@ -32,8 +36,8 @@ void PropCluster::updateIDs()
 	int index = 0;
 	for (auto &p : params)
 	{
-		p->setNiceName("Prop ID " + String(index));
 		if (p->type != Controllable::INT) continue;
+		p->setNiceName("Prop ID " + String(index));
 		propIDs.add(p->intValue());
 		index++;
 	}
@@ -47,13 +51,15 @@ void PropCluster::onContainerParameterChanged(Parameter *)
 
 void PropCluster::onControllableAdded(Controllable * c)
 {
+	if (c == color) return;
 	c->isRemovableByUser = true;
 	c->saveValueOnly = false;
 	updateIDs();
 }
 
-void PropCluster::onControllableRemoved(Controllable *)
+void PropCluster::onControllableRemoved(Controllable * c)
 {
+	if (c == color) return; 
 	updateIDs();
 }
 

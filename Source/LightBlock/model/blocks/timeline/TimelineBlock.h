@@ -23,15 +23,22 @@ public:
 	TimelineBlock(var params = var());
 	~TimelineBlock();
 
+	Trigger* bakeToProps;
+
 	TimelineBlockSequence sequence;
 
 	Array<Colour> getColors(Prop * p, double time, var params) override;
+
+	BakeData getBakeDataForProp(Prop * p) override;
+
 
 	void sequenceCurrentTimeChanged(Sequence *, float /*prevTime*/, bool /*evaluateSkippedData*/) override;
 	void sequencePlayStateChanged(Sequence * s) override;
 	void sequenceEditingStateChanged(Sequence *s) override;
 
 	void sequenceLooped(Sequence * s) override;
+
+	void onContainerTriggerTriggered(Trigger* t) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

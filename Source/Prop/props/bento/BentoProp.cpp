@@ -43,7 +43,8 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer * cc,
 	{
 		if (bakeMode->boolValue())
 		{
-			loadBake(bakeFileName->stringValue());
+			String filename = currentBlock != nullptr ? currentBlock->shortName : (bakeFileName->enabled ? bakeFileName->stringValue() : "");
+			if(filename.isNotEmpty()) loadBake(filename);
 		}
 		else
 		{
@@ -92,6 +93,23 @@ void BentoProp::uploadBakedData(BakeData data)
 	
 	NLOG(niceName, "Uploading " << target << " to " << data.name << " :\n > " << data.numFrames << " frames\n > " << data.data.getSize() << " bytes");
 
+	MemoryOutputStream mos;
+	var mData = data.metaData;
+	mData.getDynamicObject()->setProperty("fps", data.fps);
+	mos.writeString(JSON::toString(data.metaData));
+	MemoryBlock metaData = mos.getMemoryBlock();
+
+	URL metaUrl = URL(target).withDataToUpload("uploadData", data.name+".meta", metaData, "text/plain");
+
+	std::unique_ptr<InputStream> mStream(metaUrl.createInputStream(true, &BentoProp::uploadMetaDataProgressCallback, this));
+
+	if (mStream != nullptr)
+	{
+		String response = mStream->readEntireStreamAsString();
+		DBG("Got response : " << response);
+		NLOG(niceName, "Metadata upload complete");
+	}
+
 
 	MemoryBlock dataToSend = data.data;
 
@@ -108,13 +126,10 @@ void BentoProp::uploadBakedData(BakeData data)
 		builder.writeToStream(os, nullptr);
 		dataToSend = os.getMemoryBlock();
 		
-	
 		//url = URL(target).withDataToUpload("fupload",, "application/zip");
 	}
 	
-	url = URL(target).withDataToUpload("uploadData", data.name, dataToSend, sendCompressedFile->boolValue()?"application/zip":"text/plain");
-
-
+	url = URL(target).withDataToUpload("uploadData", data.name+".colors", dataToSend, sendCompressedFile->boolValue() ? "application/zip" : "text/plain");
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this));// , "Content-Type: Text/plain");
 
@@ -150,7 +165,7 @@ void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m); 
 	
 	OSCMessage m2("/strip/player/load");
-	m2.addString(bakeFileName->stringValue());
+	m2.addString(fileName);
 	m2.addInt32(autoPlay ? 1 : 0);
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m2);
 }
@@ -185,7 +200,20 @@ bool BentoProp::uploadProgressCallback(void * context, int bytesSent, int totalB
 {
 	BentoProp * prop = (BentoProp *)context;
 	jassert(prop != nullptr);
-	prop->uploadProgress->setValue(bytesSent * 1.0f / totalBytes);
-	NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue()*100) << "% (" << bytesSent << " / " << totalBytes << ")");
+	float p = bytesSent * 1.0f / totalBytes;
+	prop->uploadProgress->setValue(.1f+p*.5f);
+	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
+	
+	return true;
+}
+
+bool BentoProp::uploadMetaDataProgressCallback(void* context, int bytesSent, int totalBytes)
+{
+	BentoProp* prop = (BentoProp*)context;
+	jassert(prop != nullptr);
+	float p = bytesSent * 1.0f / totalBytes;
+	prop->uploadProgress->setValue(p*.1f);
+	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
+	
 	return true;
 }

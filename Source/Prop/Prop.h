@@ -61,6 +61,8 @@ public:
 	enum AfterBakeAction { UPLOAD, EXPORT, NOTHING };
 	AfterBakeAction afterBake;
 
+	BaseColorProvider* providerToBake;
+
 	float seekBakeTime;
 
 	File exportFile;
@@ -90,17 +92,9 @@ public:
 
 	static void fillTypeOptions(EnumParameter * p);
 	
-	//Baking
-	struct BakeData
-	{
-		String name;
-		int fps;
-		int numFrames;
-		MemoryBlock data;
-		var metaData;
-	};
+	virtual void initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction);
+	virtual BakeData bakeBlock();
 
-	virtual BakeData bakeCurrentBlock();
 	virtual void uploadBakedData(BakeData data);
 	virtual void exportBakedData(BakeData data);
 

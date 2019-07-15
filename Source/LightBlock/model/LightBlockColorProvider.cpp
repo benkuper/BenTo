@@ -23,6 +23,11 @@ LightBlockColorProvider::~LightBlockColorProvider() {
 }
 
 
+BakeData LightBlockColorProvider::getBakeDataForProp(Prop *)
+{
+	return BakeData();
+}
+
 void LightBlockColorProvider::onContainerTriggerTriggered(Trigger * t)
 {
 	BaseItem::onContainerTriggerTriggered(t);
@@ -35,3 +40,9 @@ void LightBlockColorProvider::onContainerTriggerTriggered(Trigger * t)
 	}
 
 }
+
+Array<Colour> LightBlockColorProvider::getColors(Prop* p, double time, var params)
+{
+	return Array<Colour>();
+}
+

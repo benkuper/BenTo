@@ -19,6 +19,8 @@ public:
 	PropCluster();
 	~PropCluster();
 
+	ColorParameter* color;
+
 	//ControllableContainer propIDsCC;
 	Array<int,CriticalSection> propIDs;
 

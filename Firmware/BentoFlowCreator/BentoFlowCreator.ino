@@ -177,7 +177,7 @@ void onMultipress(int count)
 */
 #if USE_FILES
   stripManager.setMode(LedStripManager::Mode::Baked);
-  stripManager.bakePlayer.load("default.colors");
+  stripManager.bakePlayer.load("default");
 #endif
   }
 }
@@ -399,8 +399,8 @@ void uploadProgress(float progress)
 void uploadFinished(const String &fileName)
 {
   DBG("Upload finished, playing file");
-  stripManager.setMode(LedStripManager::Mode::Baked);
-  stripManager.bakePlayer.load(fileName);
+  //stripManager.setMode(LedStripManager::Mode::Baked);
+  //stripManager.bakePlayer.load(fileName);
 }
 #endif
 

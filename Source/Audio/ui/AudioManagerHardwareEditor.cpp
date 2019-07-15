@@ -19,6 +19,8 @@ AudioManagerHardwareEditor::AudioManagerHardwareEditor(AudioModuleHardwareSettin
 	addAndMakeVisible(selector);
 	selector.setSize(100, 500);
 	selector.setVisible(!container->editorIsCollapsed);
+
+	setSize(100,600);
 }
 
 AudioManagerHardwareEditor::~AudioManagerHardwareEditor()

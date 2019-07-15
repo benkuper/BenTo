@@ -33,6 +33,7 @@ public:
 
 	void clear() override;
 
+
 	std::unique_ptr<ControllableContainer> paramsContainer;
 	LightBlockModelPresetManager presetManager;
 

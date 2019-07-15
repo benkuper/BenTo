@@ -39,4 +39,7 @@ public:
 	AudioDeviceManager am;
 	AudioProcessorPlayer player;
 	AudioProcessorGraph graph;
+
+	var getJSONData() override;
+	void loadJSONDataInternal(var data) override;
 };

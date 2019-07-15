@@ -13,8 +13,10 @@
 #include "JuceHeader.h"
 #include "model/LightBlockModel.h"
 
+
 class LightBlock :
 	public BaseItem,
+	public BaseColorProvider,
 	public LightBlockColorProvider::ProviderListener
 {
 public:
@@ -26,8 +28,8 @@ public:
 
 	var paramsLoadData;
 
-	
-	Array<Colour> getColors(Prop * p, double time, var params);
+	Array<Colour> getColors(Prop* p, double time, var params) override;
+	BakeData getBakeDataForProp(Prop* prop) override;
 
 	void rebuildArgsFromModel();
 
@@ -35,15 +37,16 @@ public:
 	void providerParameterValueUpdated(LightBlockColorProvider *, Parameter * p) override;
 	virtual void parameterControlModeChanged(Parameter * p) override;
 
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
 	
 	class  LightBlockListener
 	{
 	public:
 		virtual ~LightBlockListener() {}
 		virtual void blockParamControlModeChanged(Parameter * p) {}
+		virtual void blockBakingProgress(float progress) {}
 		//virtual void colorsUpdated() {}
 	};
 

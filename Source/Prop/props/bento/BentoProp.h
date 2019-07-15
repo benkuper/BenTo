@@ -39,5 +39,6 @@ public:
 	virtual void seekBakePlaying(float time) override;
 	virtual void stopBakePlaying() override;
 
-	static bool uploadProgressCallback(void * prop, int bytesSent, int totalBytes);
+	static bool uploadProgressCallback(void* prop, int bytesSent, int totalBytes);
+	static bool uploadMetaDataProgressCallback(void * prop, int bytesSent, int totalBytes);
 };

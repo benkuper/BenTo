@@ -87,13 +87,11 @@ void LightBlockLayer::updateLinkedProps()
 		{
 			if (filterManager->getTargetIDForProp(p) >= 0)
 			{
-				linkedInspectables.addIfNotAlreadyThere(p);
-				p->linkedInspectables.addIfNotAlreadyThere(this);
+				registerLinkedInspectable(p);
 			}
 			else
 			{
-				linkedInspectables.removeAllInstancesOf(p);
-				p->linkedInspectables.removeAllInstancesOf(this);
+				unregisterLinkedInspectable(p);
 			}
 		}
 	}

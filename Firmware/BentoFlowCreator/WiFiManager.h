@@ -49,7 +49,7 @@ class WiFiManager
       DBG(String("WiFiManager connecting to " + ssid + " : " + password));
 
       WiFi.begin(ssid.c_str(), password.c_str());
-
+      
       int tryIndex = 0;
       bool success = true;
 
@@ -103,6 +103,9 @@ class WiFiManager
 
       delay(500);
 
+      DBG("Disabling wifi sleep mode");
+      WiFi.setSleep(false);
+      
       DBG("Setting up UDP...");
       oscUDP.begin(9000);
       streamingUDP.begin(8888);

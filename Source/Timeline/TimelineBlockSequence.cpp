@@ -31,7 +31,11 @@ TimelineBlockSequence::TimelineBlockSequence() :
 	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Actions", &ActionLayer::create, this));
 	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Audio", &AudioLayer::create, this));
 
-	layerManager->addItem(new LightBlockLayer(this, &clusterGroupManager));
+	if (!Engine::mainEngine->isLoadingFile)
+	{
+		layerManager->addItem(new LightBlockLayer(this, &clusterGroupManager));
+	}
+
 	layerManager->addBaseManagerListener(this);
 	setAudioDeviceManager(&AudioManager::getInstance()->am);
 
@@ -136,12 +140,13 @@ void TimelineBlockSequence::itemAdded(SequenceLayer * s)
 void TimelineBlockSequence::itemAdded(PropClusterGroup* g)
 {
 	identityClusterGroup->addOption(g->niceName, g->shortName);
-
+	currentIdentityGroup = clusterGroupManager.getItemWithName(identityClusterGroup->getValueData());
 }
 
 void TimelineBlockSequence::itemRemoved(PropClusterGroup* g)
 {
-	identityClusterGroup->removeOption(g->niceName);
+	identityClusterGroup->removeOption(g->niceName);	
+	currentIdentityGroup = clusterGroupManager.getItemWithName(identityClusterGroup->getValueData());
 }
 
 void TimelineBlockSequence::updateGroupList()
@@ -152,11 +157,7 @@ void TimelineBlockSequence::updateGroupList()
 	for (auto& g : clusterGroupManager.items) identityClusterGroup->addOption(g->niceName, g->shortName);
 
 	identityClusterGroup->setValueWithData(oldValue);
-}
-
-void TimelineBlockSequence::bakeToAllProps()
-{
-	
+	currentIdentityGroup = clusterGroupManager.getItemWithName(identityClusterGroup->getValueData());
 }
 
 var TimelineBlockSequence::getJSONData()

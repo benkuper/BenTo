@@ -11,10 +11,13 @@
 #include "TimelineBlock.h"
 #include "Timeline/layers/Block/LightBlockLayer.h"
 #include "ui/TimelineBlockUI.h"
+#include "Prop/PropManager.h"
 
 TimelineBlock::TimelineBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {
+	bakeToProps = addTrigger("Bake to props", "");
+
 	sequence.addSequenceListener(this);
 	addChildControllableContainer(&sequence);
 }
@@ -48,6 +51,29 @@ Array<Colour> TimelineBlock::getColors(Prop * p, double time, var params)
 
 }
 
+BakeData TimelineBlock::getBakeDataForProp(Prop* p)
+{
+	var metaData = new DynamicObject();
+
+	int groupID = -1;
+	int localID = -1;
+	
+	if (sequence.currentIdentityGroup != nullptr)
+	{
+		groupID = sequence.currentIdentityGroup->getClusterIDForProp(p);
+		PropCluster* c = sequence.currentIdentityGroup->getClusterForProp(p, localID);
+		if (c != nullptr)
+		{
+			metaData.getDynamicObject()->setProperty("groupColor", c->color->value);
+		}
+	}
+
+	metaData.getDynamicObject()->setProperty("id", localID);
+	metaData.getDynamicObject()->setProperty("group", groupID);
+
+	return BakeData(shortName, 0, sequence.totalTime->floatValue(), sequence.fps->intValue(), metaData);
+}
+
 void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 {
 	if (sequence.isSeeking)
@@ -70,5 +96,15 @@ void TimelineBlock::sequenceEditingStateChanged(Sequence * s)
 void TimelineBlock::sequenceLooped(Sequence * s)
 {
 	providerListeners.call(&ProviderListener::providerBakeControlUpdate, PLAY, 0);
+}
+
+void TimelineBlock::onContainerTriggerTriggered(Trigger* t)
+{
+	LightBlockModel::onContainerTriggerTriggered(t);
+
+	if (t == bakeToProps)
+	{
+		for (auto& p : PropManager::getInstance()->items) p->initBaking(this, Prop::AfterBakeAction::UPLOAD);
+	}
 }
 

@@ -19,12 +19,12 @@ public:
 	PropClusterGroup();
 	~PropClusterGroup();
 
-	ColorParameter * color; 
 	BoolParameter * sendFeedback;
 
 	BaseManager<PropCluster> clusterManager;
 
-	PropCluster * getClusterForProp(Prop * p, int &localID);
+	PropCluster* getClusterForProp(Prop* p, int& localID);
+	int getClusterIDForProp(Prop * p);
 
 	Array<Colour> getColorsForProp(Prop* p);
 	

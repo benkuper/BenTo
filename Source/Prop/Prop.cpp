@@ -20,13 +20,14 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	ioCC("Communication"),
 	sensorsCC("SensorsCC"),
 	bakingCC("Bake and Upload"),
+	providerToBake(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
 	updateRate(50),
 	propNotifier(50)
 {
 	registerFamily(familyName);
-	
+
 	editorIsCollapsed = true;
 
 	saveAndLoadRecursiveData = true;
@@ -44,23 +45,30 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	findPropMode = addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
 	findPropMode->setControllableFeedbackOnly(true);
 	findPropMode->isSavable = false;
-	
+
 	addChildControllableContainer(&sensorsCC);
 	battery = sensorsCC.addFloatParameter("Battery", "The battery level, between 0 and 1", 0);
 	battery->setControllableFeedbackOnly(true);
-
+	 
 	addChildControllableContainer(&bakingCC);
-	bakingCC.editorIsCollapsed = true;
-	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0,0);
+	
+	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
 	bakeStartTime->defaultUI = FloatParameter::TIME;
-	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1,1);
+	bakeStartTime->canBeDisabledByUser = true;
+	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1, 1, INT32_MAX, false);
 	bakeEndTime->defaultUI = FloatParameter::TIME;
-	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 800);
+	bakeEndTime->canBeDisabledByUser = true; 
+	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 800, false);
+	bakeFrequency->canBeDisabledByUser = true;
+	
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
 	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
-	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "demo.colors");
-	bakeMode = bakingCC.addBoolParameter("Bake Mode", "Play the bake file with name set above, or revert to streaming", false);	
-	
+
+	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "", false);
+	bakeFileName->canBeDisabledByUser = true;
+
+	bakeMode = bakingCC.addBoolParameter("Bake Mode", "Play the bake file with name set above, or revert to streaming", false);
+
 	sendCompressedFile = bakingCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
 
 	isBaking = bakingCC.addBoolParameter("Is Baking", "Is this prop currently baking ?", false);
@@ -101,7 +109,7 @@ void Prop::clearItem()
 
 void Prop::registerFamily(StringRef familyName)
 {
-	PropFamily * f = PropManager::getInstance()->getFamilyWithName(familyName);
+	PropFamily* f = PropManager::getInstance()->getFamilyWithName(familyName);
 	if (f != nullptr)
 	{
 		family = f;
@@ -109,7 +117,7 @@ void Prop::registerFamily(StringRef familyName)
 	}
 }
 
-void Prop::setBlockFromProvider(LightBlockColorProvider * model)
+void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 {
 	if (currentBlock == nullptr && model == nullptr) return;
 	if (model != nullptr && currentBlock != nullptr && currentBlock->provider == model) return;
@@ -123,9 +131,8 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		if (!currentBlock->provider.wasObjectDeleted())
 		{
 			currentBlock->provider->setHighlighted(false);
-			
-			linkedInspectables.removeAllInstancesOf(currentBlock->provider.get());
-			currentBlock->provider->linkedInspectables.removeAllInstancesOf(this);
+
+			unregisterLinkedInspectable(currentBlock->provider.get());
 			currentBlock->provider->removeColorProviderListener(this);
 			currentBlock->provider->removeInspectableListener(this);
 		}
@@ -135,7 +142,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 	}
 
 	if (model != nullptr) currentBlock.reset(new LightBlock(model));
-	
+
 
 	if (currentBlock != nullptr)
 	{
@@ -143,8 +150,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider * model)
 		currentBlock->provider->addInspectableListener(this);
 		currentBlock->provider->addColorProviderListener(this);
 
-		linkedInspectables.addIfNotAlreadyThere(currentBlock->provider.get());
-		currentBlock->provider->linkedInspectables.addIfNotAlreadyThere(this);
+		registerLinkedInspectable(currentBlock->provider.get());
 
 		startThread();
 	}
@@ -161,7 +167,14 @@ void Prop::update()
 	if (findPropMode->boolValue())
 	{
 		colors.fill(Colours::white.withBrightness(.3f));
-	}else if (currentBlock != nullptr)
+
+		if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
+		{
+			propListeners.call(&PropListener::colorsUpdated, this);
+			propNotifier.addMessage(new PropEvent(PropEvent::COLORS_UPDATED, this));
+		}
+	}
+	else if (currentBlock != nullptr)
 	{
 		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
 		colors = currentBlock->getColors(this, time, var());
@@ -173,7 +186,7 @@ void Prop::update()
 		}
 	}
 
-	if(!bakeMode->boolValue()) sendColorsToProp();
+	if (!bakeMode->boolValue()) sendColorsToProp();
 	else if (seekBakeTime != -1)
 	{
 		seekBakePlaying(seekBakeTime);
@@ -181,12 +194,13 @@ void Prop::update()
 	}
 }
 
-void Prop::onContainerParameterChangedInternal(Parameter * p)
+void Prop::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == activeProvider)
 	{
-		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
-	}else if (p == enabled)
+		setBlockFromProvider(dynamic_cast<LightBlockColorProvider*>(activeProvider->targetContainer.get()));
+	}
+	else if (p == enabled)
 	{
 		if (!enabled->boolValue())
 		{
@@ -196,7 +210,7 @@ void Prop::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-void Prop::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	if (c == resolution)
 	{
@@ -209,32 +223,15 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Cont
 	}
 	else if (c == findPropMode)
 	{
-		if(!findPropMode->boolValue()) colors.fill(Colours::black);
-	}else if(c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
+		if (!findPropMode->boolValue()) colors.fill(Colours::black);
+	}
+	else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
 	{
-		if (currentBlock != nullptr)
-		{
-			afterBake = c == bakeAndUploadTrigger ? UPLOAD : EXPORT;
-
-			if (afterBake == EXPORT)
-			{
-				FileChooser fc("Export a block");
-				if(fc.browseForFileToSave(true)) exportFile = fc.getResult();
-				else return;
-			}
-
-			bakingProgress->setValue(0);
-			uploadProgress->setValue(0);
-			isBaking->setValue(true);
-		}
-		else
-		{
-			NLOGWARNING(niceName, "Current block not assigned, cannot bake");
-		}
+		initBaking(currentBlock.get(), c == bakeAndUploadTrigger ? UPLOAD : EXPORT);
 	}
 }
 
-void Prop::inspectableDestroyed(Inspectable * i)
+void Prop::inspectableDestroyed(Inspectable* i)
 {
 	if (currentBlock != nullptr && i == currentBlock->provider) setBlockFromProvider(nullptr);
 }
@@ -246,45 +243,75 @@ void Prop::sendColorsToProp(bool forceSend)
 	sendColorsToPropInternal();
 }
 
-void Prop::fillTypeOptions(EnumParameter * p)
+void Prop::fillTypeOptions(EnumParameter* p)
 {
-	p->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP)->addOption("Ring", RING)->addOption("Buggeng", BUGGENG)->addOption("Box",BOX);
+	p->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP)->addOption("Ring", RING)->addOption("Buggeng", BUGGENG)->addOption("Box", BOX);
 }
 
-Prop::BakeData Prop::bakeCurrentBlock()
+void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
 {
-	BakeData result;
-	if (currentBlock == nullptr) return result;
-	
-	NLOG(niceName, "Baking block " << currentBlock->niceName);
+	if (block == nullptr)
+	{
+		NLOGWARNING(niceName, "Current block not assigned, cannot bake");
+		return;
+	}
 
-	result.name = bakeFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
-	result.fps = bakeFrequency->intValue();
-	result.numFrames = 0;
-	result.metaData = var(new DynamicObject());
-	result.metaData.getDynamicObject()->setProperty("block", currentBlock->niceName);
-	result.metaData.getDynamicObject()->setProperty("id", globalID->intValue());
+	afterBake = afterBakeAction;
+	providerToBake = block;
 
-	double stepTime = 1.0 / bakeFrequency->intValue();
-	float startTime = bakeStartTime->floatValue();
-	float endTime = bakeEndTime->floatValue();
+	if (afterBake == EXPORT)
+	{
+		FileChooser fc("Export a block");
+		if (fc.browseForFileToSave(true)) exportFile = fc.getResult();
+		else return;
+	}
+
+	bakingProgress->setValue(0);
+	uploadProgress->setValue(0);
+	isBaking->setValue(true);
+}
+
+BakeData Prop::bakeBlock()
+{
+	if (providerToBake == nullptr) return BakeData();
+
+
+	BakeData result = providerToBake->getBakeDataForProp(this);
+	NLOG(niceName, "Baking block " << result.name);
+
+
+	//overrides
+	if(bakeFileName->enabled && bakeFileName->stringValue().isNotEmpty()) result.name = bakeFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
+	if(bakeStartTime->enabled) result.startTime = bakeStartTime->floatValue();
+	if(bakeEndTime->enabled) result.endTime = bakeEndTime->floatValue();
+	if(bakeFrequency->enabled) result.fps = bakeFrequency->intValue();
+
+	if (!result.metaData.hasProperty("id"))
+	{
+		DBG("No ID set, default to global ID ");
+		result.metaData.getDynamicObject()->setProperty("id", globalID->intValue());
+	}
+	else
+	{
+		DBG("ID already set " << result.metaData.getProperty("id", "[notset]").toString());
+	}
 
 	var params = new DynamicObject();
-
 	params.getDynamicObject()->setProperty("updateAutomation", false); //Avoid actually updating the block parameter automations if there are some (in timeline for instance)
 	params.getDynamicObject()->setProperty("sequenceTime", false); //Avoid using sequence's time
 
-	
 	MemoryOutputStream os(result.data, false);
-	for (double curTime = startTime; curTime <= endTime; curTime += stepTime)
-	{
 
-		Array<Colour> cols = currentBlock->getColors(this, curTime, params);
-		for (auto &c : cols) os.writeInt(c.getARGB()); 
+	double stepTime = 1.0 / result.fps;
+	for (double curTime = result.startTime; curTime <= result.endTime; curTime += stepTime)
+	{
+		if (providerToBake == nullptr) return result;
+		Array<Colour> cols = providerToBake->getColors(this, curTime, params);
+		for (auto& c : cols) os.writeInt(c.getARGB());
 		result.numFrames++;
 
 		DBG("Check for cur time " << curTime << " / " << cols[0].toString());
-		bakingProgress->setValue(jmap<float>(curTime, startTime, endTime, 0, 1));
+		bakingProgress->setValue(jmap<float>(curTime, result.startTime, result.endTime, 0, 1));
 	}
 
 	os.flush();
@@ -351,7 +378,7 @@ void Prop::run()
 	{
 		if (isBaking->boolValue())
 		{
-			BakeData data = bakeCurrentBlock();
+			BakeData data = bakeBlock();
 
 			switch (afterBake)
 			{
@@ -364,9 +391,9 @@ void Prop::run()
 			case EXPORT:
 				exportBakedData(data);
 				break;
-                    
-                default:
-                    break;
+
+			default:
+				break;
 			}
 
 			isBaking->setValue(false);

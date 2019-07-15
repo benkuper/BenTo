@@ -17,7 +17,6 @@ AudioManager::AudioManager() :
 	ControllableContainer("Audio Manager"),
 	hs(&am)
 {
-	editorIsCollapsed = true; 
 	
 	am.initialiseWithDefaultDevices(2, 2);
 	am.addAudioCallback(&player);
@@ -47,6 +46,28 @@ AudioManager::~AudioManager()
 
 	am.removeAudioCallback(&player);
 	player.setProcessor(nullptr);
+}
+
+var AudioManager::getJSONData()
+{
+	var data = ControllableContainer::getJSONData();
+
+	std::unique_ptr<XmlElement> xmlData(am.createStateXml());
+	if (xmlData != nullptr) data.getDynamicObject()->setProperty("audioSettings", xmlData->toString());
+
+	return data;
+}
+
+void AudioManager::loadJSONDataInternal(var data)
+{
+	ControllableContainer::loadJSONDataInternal(data);
+
+	if (data.getDynamicObject()->hasProperty("audioSettings"))
+	{
+
+		std::unique_ptr<XmlElement> elem = XmlDocument::parse(data.getProperty("audioSettings", ""));
+		am.initialise(2, 2, elem.get(), true);
+	}
 }
 
 AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager * am) :

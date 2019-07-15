@@ -15,14 +15,15 @@ PropClusterGroup::PropClusterGroup() :
 	clusterManager("Clusters")
 {
 	sendFeedback = addBoolParameter("Send Feedback", "If checked, Prop changes will be sent using their local ID", false);
-	color = addColorParameter("Color", "Color of this group, to identify props", Colours::black);
 
 	//clusterManager.hideEditorHeader = true;
 	//clusterManager.skipControllableNameInAddress = true;
 	clusterManager.selectItemWhenCreated = false;
-	clusterManager.editorCanBeCollapsed = false;
 
-	clusterManager.addItem(); //add one item here
+	if (!Engine::mainEngine->isLoadingFile)
+	{
+		clusterManager.addItem(); //add one item here
+	}
 
 	addChildControllableContainer(&clusterManager);
 }
@@ -46,6 +47,18 @@ PropCluster * PropClusterGroup::getClusterForProp(Prop * p, int &localID)
 	return nullptr;
 }
 
+int PropClusterGroup::getClusterIDForProp(Prop* p)
+{
+	int index = 0;
+	for (auto& c : clusterManager.items)
+	{
+		if (c->isPropIsInCluster(p)) return index;
+		index++;
+	}
+
+	return -1;
+}
+
 Array<Colour> PropClusterGroup::getColorsForProp(Prop* p)
 {
 	int numPixels = p->resolution->intValue();
@@ -53,21 +66,12 @@ Array<Colour> PropClusterGroup::getColorsForProp(Prop* p)
 	result.resize(numPixels);
 	result.fill(Colours::black);
 
-	for (int i = 0; i < 3 && i < numPixels / 2; i++) result.set(i, color->getColor());
-
-	for (auto& c : clusterManager.items)
+	int id = -1;
+	PropCluster* c = getClusterForProp(p, id);
+	if (c != nullptr)
 	{
-		int id = c->getLocalPropID(p);
-		
-		if (id != -1)
-		{
-			for (int i = numPixels - 1; i > numPixels - 1 - id && i > numPixels / 2; i--)
-			{
-				result.set(i, Colour::fromHSV(id * 1.0f / 12, 1, 1, 1));
-			}
-			break;
-		}
-
+		for (int i = 0; i < 3 && i < numPixels / 2; i++) result.set(i, c->color->getColor());
+		for (int i = numPixels - 1; i > numPixels - 1 - id -1 && i > numPixels / 2; i--) result.set(i, Colour::fromHSV(id * 1.0f / 4, 1, 1, 1));
 	}
 
 	return result;

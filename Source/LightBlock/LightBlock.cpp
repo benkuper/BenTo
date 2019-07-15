@@ -45,6 +45,7 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 	{
 		for (auto &param : paramList)
 		{
+			if (param.wasObjectDeleted()) continue;
 			if (param->controlMode != Parameter::AUTOMATION  || param->automation == nullptr) continue;
 			param->automation->currentTime->setValue(fmodf(time, param->automation->automation.length->floatValue()));
 		}
@@ -142,6 +143,14 @@ void LightBlock::parameterControlModeChanged(Parameter * p)
 
 	blockListeners.call(&LightBlockListener::blockParamControlModeChanged, p);
 }
+
+BakeData LightBlock::getBakeDataForProp(Prop * p)
+{
+	BakeData result = (!provider.wasObjectDeleted() && provider != nullptr) ? provider->getBakeDataForProp(p) : BakeData(shortName);
+	result.metaData.getDynamicObject()->setProperty("blockName", niceName);
+	return result;
+}
+
 
 var LightBlock::getJSONData()
 {

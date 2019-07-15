@@ -6,13 +6,22 @@
 
 #define FRAME_SIZE (NUM_LEDS*4)
 
+#include <ArduinoJson.h>
+
 class BakePlayer
 {
 public:
 
   File curFile;
+  File metaDataFile;
+  
   int fps = 100;
   byte buffer[FRAME_SIZE];
+
+  int groupID = -1;
+  int localID = -1;
+  CRGB groupColor = CRGB::Black;
+  StaticJsonDocument<200> metaData;
 
   bool isPlaying = false;
   
@@ -26,9 +35,12 @@ public:
 
   long timeSinceLastSeek;
   float timeToSeek; //used to limit seeking
+
+  bool idMode;
   
   BakePlayer()
   {
+    idMode = false;
     curTimeMs = 0;
     prevTimeMs = millis();
     
@@ -38,17 +50,22 @@ public:
   {
     if(!curFile) return;
 
+    if(idMode)
+    {
+      showIdFrame();
+      return;
+    }
+    
     if(timeToSeek != -1 && millis() > timeSinceLastSeek + 20)
     {
       seek(timeToSeek);
       timeToSeek = -1;
       timeSinceLastSeek = millis();
     }
+
     if(!isPlaying) return;
     playFrame();
   }
-
-
 
   void playFrame()
   {
@@ -89,6 +106,7 @@ public:
     */
      
     curFile.read(buffer,FRAME_SIZE);
+  
     showCurrentFrame();
   }
 
@@ -96,6 +114,13 @@ public:
   {
     for(int i=0;i<NUM_LEDS;i++) simpleSetLed(i, CRGB::Black);
     FastLED.show();
+  }
+
+  void showIdFrame()
+  {
+    if(groupID == -1 || localID == -1) return;
+    setRange(0, 3, groupColor);
+    setRange(NUM_LEDS-1-localID, NUM_LEDS-1, CHSV(localID * 255.0f / 12, 255, 255));
   }
     
   void showCurrentFrame()
@@ -133,9 +158,39 @@ public:
   //TIME COMMANDS
   void load(String path)
   {
-    DBG("Load file "+path);
     setFullColor(CRGB::Black);
-    curFile = FileManager::openFile(path, false); //false is for reading
+    
+    DBG("Load file "+path);
+  
+    DBG("Reading meta data");
+    metaDataFile = FileManager::openFile(path+".meta", false); //false is for reading
+    if(!metaDataFile)
+    {
+      DBG("Error reading metadata");
+    }else
+    {
+      DeserializationError error = deserializeJson(metaData, metaDataFile);
+       if (error) {
+        Serial.print(F("deserializeJson() failed: "));
+        Serial.println(error.c_str());
+      }else
+      {
+        fps = metaData["fps"];
+        groupID = metaData["group"];
+        localID = metaData["id"];
+
+        groupColor = CRGB((float)(metaData["groupColor"][0])*255,
+        (float)(metaData["groupColor"][1])*255,
+        (float)(metaData["groupColor"][2])*255);
+        
+        Serial.println("Loaded meta, id "+String(groupID)+":"+String(localID)+" at "+String(fps)+" fps.");
+      }
+
+      metaDataFile.close();
+    }
+
+    DBG("Loading colors..");
+    curFile = FileManager::openFile(path+".colors", false); //false is for reading
     if(!curFile)
     {
       DBG("Error playing file "+path);
@@ -144,12 +199,13 @@ public:
       long totalBytes = curFile.size();
       totalFrames = bytePosToFrame(totalBytes);
       totalTime = bytePosToSeconds(totalBytes);
-      
+      curTimeMs = 0;
+      isPlaying = false;
       DBG("File loaded, "+String(totalBytes)+" bytes"+", "+String(totalFrames)+" frames, "+String(totalTime)+" time");
     }
   }
 
-  void play(float atTime = -1)
+  void play(float atTime = 0)
   {
     DBG("Play "+String(atTime));
     if(!curFile) return;
@@ -216,10 +272,28 @@ public:
       char filename[32];
       msg.getString(0,filename, 32);
       load(String(filename));
-      
+
+      idMode = false;
+      if(msg.size() >= 2)
+      {
+        if(msg.isFloat(1)) idMode = msg.getFloat(1);
+        else if(msg.isBoolean(1)) idMode = msg.getBoolean(1);
+        else if(msg.isInt(1)) idMode = msg.getInt(1);
+      }
     }else if(msg.match("/play",newOffset))
     {
-      play(msg.size() > 0?msg.getFloat(0):-1);
+      if(msg.size() >= 1 && msg.isString(0))
+      {
+        char filename[32];
+        msg.getString(0,filename, 32);
+        load(String(filename));
+        play(msg.size() >= 2?msg.getFloat(1):-1);
+      }else
+      {
+        play(msg.size() >= 1?msg.getFloat(0):-1);
+      }
+      idMode = false;
+      
     }else if(msg.match("/pause",newOffset))
     {
       pause();
@@ -232,6 +306,27 @@ public:
     }else if(msg.match("/seek",newOffset))
     {
       timeToSeek = msg.getFloat(0);
+    }else if(msg.match("/id",newOffset))
+    {
+      if(msg.size() >= 1)
+      {
+        if(msg.isFloat(0)) idMode = msg.getFloat(0);
+        else if(msg.isBoolean(0)) idMode = msg.getBoolean(0);
+        else if(msg.isInt(0)) idMode = msg.getInt(0);
+
+        if(idMode)
+        {
+          showIdFrame();
+          isPlaying = false;
+        }
+        else 
+        {
+          showBlackFrame();
+        }
+      }
+    }else
+    {
+      DBG("Bake player :: message not handled");
     }
     
     return true;

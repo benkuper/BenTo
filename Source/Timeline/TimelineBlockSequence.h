@@ -44,8 +44,6 @@ public:
 
 	void updateGroupList();
 
-	void bakeToAllProps();
-
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
