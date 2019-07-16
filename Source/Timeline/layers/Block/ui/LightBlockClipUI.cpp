@@ -12,15 +12,16 @@
 #include "../LightBlockLayer.h"
 #include "LightBlock/model/ui/LightBlockModelUI.h"
 
-LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
+LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	LayerBlockUI(_clip),
 	Thread(_clip->niceName + "_preview"),
 	clip(_clip),
 	fadeInHandle(ImageCache::getFromMemory(BinaryData::fadeIn_png, BinaryData::fadeIn_pngSize)),
 	fadeOutHandle(ImageCache::getFromMemory(BinaryData::fadeOut_png, BinaryData::fadeOut_pngSize)),
 	shouldUpdateImage(true),
-    imageIsReady(false),
-    isDraggingModel(false)
+	shouldRepaint(false),
+	imageIsReady(false),
+	isDraggingModel(false)
 {
 
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
@@ -37,13 +38,14 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip * _clip) :
 	fadeInHandle.addMouseListener(this, false);
 	fadeOutHandle.addMouseListener(this, false);
 
+	startTimerHz(10);
 	startThread();
 }
 
 LightBlockClipUI::~LightBlockClipUI()
 {
 	signalThreadShouldExit();
-	waitForThreadToExit(300);
+	waitForThreadToExit(500);
 }
 
 void LightBlockClipUI::paint(Graphics & g)
@@ -121,7 +123,7 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
 	automationUI.reset(new AutomationUI(&a->automation));
 	addAndMakeVisible(automationUI.get());
 	resized();
-	repaint();
+	shouldRepaint = true;
 	automationUI->updateROI();
 	automationUI->addMouseListener(this, true);
 }
@@ -238,7 +240,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		fadeInHandle.setVisible(!clip->autoFade->boolValue());
 		fadeOutHandle.setVisible(!clip->autoFade->boolValue());
-		repaint();
+		shouldRepaint = true;
 	}
 }
 
@@ -270,6 +272,15 @@ void LightBlockClipUI::itemDropped(const SourceDetails & source)
 	}
 
 	LayerBlockUI::itemDropped(source);
+}
+
+void LightBlockClipUI::timerCallback()
+{
+	if (shouldRepaint)
+	{
+		repaint();
+		shouldRepaint = false;
+	}
 }
 
 void LightBlockClipUI::run()
@@ -314,27 +325,25 @@ void LightBlockClipUI::run()
 		for (int i = 0; i < resX; i++)
 		{
 			if (threadShouldExit()) return;
-
 			float relTotal = i * length / resX;
 			float absT = start + relTotal;
+
 			Array<Colour> c = clip->getColors(&previewProp, absT, params);
+
 			for (int ty = 0; ty < resY; ty++)
 			{
 				if (relTotal > coreLength) c.set(ty, c[ty].darker());// c[ty].darker();
 				tmpImg.setPixelAt(i, ty, c[ty]);
 			}
+
 		}
 
 		imgLock.enter();
 		previewImage = tmpImg.createCopy();
 		imgLock.exit();
 		imageIsReady = true;
-
-		{
-			MessageManagerLock mmLock;
-			repaint();
-		}
-
+		
+		shouldRepaint = true;
 	}
 }
 

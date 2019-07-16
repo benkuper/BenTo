@@ -19,6 +19,8 @@ AudioManager::AudioManager() :
 {
 	
 	am.initialiseWithDefaultDevices(2, 2);
+
+	DBG("Add AUDIO CALLBACK here");
 	am.addAudioCallback(&player);
 
 	graph.reset();
@@ -42,9 +44,11 @@ AudioManager::AudioManager() :
 
 AudioManager::~AudioManager()
 {
-	graph.clear();
 
+	DBG("Remove audio callback here");
 	am.removeAudioCallback(&player);
+
+	graph.clear();
 	player.setProcessor(nullptr);
 }
 

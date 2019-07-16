@@ -27,7 +27,8 @@ public:
 
 class LightBlockClipUI :
 	public LayerBlockUI,
-	public Thread //Threaded preview generation
+	public Thread, //Threaded preview generation
+	public Timer
 {
 public:
 	LightBlockClipUI(LightBlockClip * clip);
@@ -46,9 +47,11 @@ public:
 	Prop previewProp;
 	bool shouldUpdateImage;
 	bool imageIsReady;
+	bool shouldRepaint;
 
 	SpinLock imgLock;
 	Image previewImage;
+
 
 	bool isDraggingModel;
 
@@ -71,6 +74,7 @@ public:
 
 	void itemDropped(const SourceDetails &source) override;
 
+	void timerCallback() override;
 
 	void run() override;
 

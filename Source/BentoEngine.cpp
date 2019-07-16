@@ -48,12 +48,13 @@ BentoEngine::~BentoEngine()
 {
 	PropManager::deleteInstance();
 
-	AudioManager::deleteInstance();
-
 	SerialManager::deleteInstance();
 
 	NodeFactory::deleteInstance();
 	LightBlockModelLibrary::deleteInstance();
+
+	AudioManager::deleteInstance();
+
 	//BentoWebServer::deleteInstance();
 }
 
