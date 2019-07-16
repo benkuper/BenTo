@@ -97,32 +97,28 @@ public:
           file = root.openNextFile();
       }
   }
-/*
-  }
 
-  File dataFile = SD.open(path.c_str());
-  if (dataFile.isDirectory()) {
-    path += "/index.htm";
-    dataType = "text/html";
-    dataFile = SD.open(path.c_str());
+#if USE_OSC
+  boolean handleMessage(OSCMessage &msg)
+  {
+    DBG("File Manager parse message");
+    
+    int offset = msg.match("/file");
+    if(offset == 0) return false;
+    
+    if(msg.match("/delete", offset))
+    {
+      char filename[32];
+      msg.getString(0,filename, 32);
+      deleteFileIfExists(String(filename));
+    }else
+    {
+      DBG("Message not handled");
+    }
+    
+    return true;
   }
-
-  if (!dataFile) {
-    return false;
-  }
-
-  if (server.hasArg("download")) {
-    dataType = "application/octet-stream";
-  }
-
-  if (server.streamFile(dataFile, dataType) != dataFile.size()) {
-    DBG("Sent less data than expected!");
-  }
-
-  dataFile.close();
-  return true;
-}
-*/
+#endif
 
 };
 

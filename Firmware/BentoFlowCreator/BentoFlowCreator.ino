@@ -40,26 +40,24 @@ DeviceSettings settings;
 ButtonManager btManager;
 #endif
 
-#if USE_FILES
-#include "FileManager.h"
-FileManager fileManager;
-#endif
-
 #if USE_WIFI
 #include "WiFiManager.h"
 WiFiManager wifiManager;
 #endif
 
+#if USE_OSC
+#include "OSCManager.h"
+OSCManager oscManager(wifiManager.oscUDP);
+#endif
+
+#if USE_FILES
+#include "FileManager.h"
+FileManager fileManager;
+#endif
 
 #if USE_SERVER
 #include "BWebServer.h"
 BentoWebServer webServer;
-#endif
-
-
-#if USE_OSC
-#include "OSCManager.h"
-OSCManager oscManager(wifiManager.oscUDP);
 #endif
 
 #if USE_IMU
@@ -286,6 +284,11 @@ void messageReceived(OSCMessage &msg)
 #if USE_IR
     if (irManager.handleMessage(msg))
       return;
+#endif
+
+#if USE_FILES
+    if(fileManager.handleMessage(msg))
+    return;
 #endif
 
     DBG("...message not handled");

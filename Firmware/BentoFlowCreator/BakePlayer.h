@@ -140,9 +140,6 @@ public:
     FastLED.show();
   }
 
-  
-
-
   //Helpers
   long msToBytePos(long t) const { return msToFrame(t) * FRAME_SIZE; } //rgba
   long msToFrame(long timeMs) const { return timeMs*fps/1000; }
@@ -267,7 +264,7 @@ public:
     if(pOffset == 0) return false;
     int newOffset = offset+pOffset;
     
-     if(msg.match("/load",newOffset))
+    if(msg.match("/load",newOffset))
     {
       char filename[32];
       msg.getString(0,filename, 32);
@@ -306,7 +303,8 @@ public:
     }else if(msg.match("/seek",newOffset))
     {
       timeToSeek = msg.getFloat(0);
-    }else if(msg.match("/id",newOffset))
+    }
+    else if(msg.match("/id",newOffset))
     {
       if(msg.size() >= 1)
       {
@@ -324,7 +322,15 @@ public:
           showBlackFrame();
         }
       }
-    }else
+    }
+    else if(msg.match("/delete", newOffset))
+    {
+      char showName[32];
+      msg.getString(0,showName, 32);
+      FileManager::deleteFileIfExists(String(showName)+".colors");
+      FileManager::deleteFileIfExists(String(showName)+".meta");
+    }
+    else
     {
       DBG("Bake player :: message not handled");
     }
