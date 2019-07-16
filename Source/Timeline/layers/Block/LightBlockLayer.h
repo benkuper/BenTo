@@ -33,6 +33,9 @@ public:
 	void updateLinkedProps();
 
 	void filtersChanged() override;
+
+	bool paste() override;
+
 	void endLoadFile() override;
 	
 	var getJSONData() override;

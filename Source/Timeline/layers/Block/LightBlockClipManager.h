@@ -21,7 +21,7 @@ public:
 	LightBlockClipManager(LightBlockLayer * layer);
 	~LightBlockClipManager();
 
-	LightBlockLayer * layer;
+	LightBlockLayer * lightBlockLayer;
 	LayerBlock * createItem() override;
 
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;

@@ -38,6 +38,9 @@ BentoEngine::BentoEngine() :
 	
 	
 	//Communication
+	OSCRemoteControl::getInstance()->localPort->defaultValue = 43000;
+	OSCRemoteControl::getInstance()->localPort->resetValue();
+
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
 	SerialManager::getInstance(); // init
 	//BentoWebServer::getInstance(); //init

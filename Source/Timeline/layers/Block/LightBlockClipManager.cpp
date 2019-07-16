@@ -9,10 +9,11 @@
 */
 
 #include "LightBlockClipManager.h"
+#include "LightBlockLayer.h"
 
 LightBlockClipManager::LightBlockClipManager(LightBlockLayer * layer) :
-	LayerBlockManager(),
-	layer(layer)
+	LayerBlockManager(layer),
+	lightBlockLayer(layer)
 {
 	itemDataType = "LightBlockClip";
 	blocksCanOverlap = true;
@@ -25,7 +26,7 @@ LightBlockClipManager::~LightBlockClipManager()
 
 LayerBlock * LightBlockClipManager::createItem()
 {
-	return new LightBlockClip(layer);
+	return new LightBlockClip(lightBlockLayer);
 }
 
 void LightBlockClipManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)

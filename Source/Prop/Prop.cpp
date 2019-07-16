@@ -34,7 +34,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 
 	addChildControllableContainer(&generalCC);
 	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
-	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1, INT32_MAX);
+	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1);
 	type = generalCC.addEnumParameter("Type", "The type of the prop");
 	fillTypeOptions(type);
 
@@ -310,7 +310,6 @@ BakeData Prop::bakeBlock()
 		for (auto& c : cols) os.writeInt(c.getARGB());
 		result.numFrames++;
 
-		DBG("Check for cur time " << curTime << " / " << cols[0].toString());
 		bakingProgress->setValue(jmap<float>(curTime, result.startTime, result.endTime, 0, 1));
 	}
 

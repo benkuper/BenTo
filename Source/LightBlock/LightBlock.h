@@ -25,6 +25,7 @@ public:
 
 	WeakReference<LightBlockColorProvider> provider;
 	ControllableContainer paramsContainer;
+	SpinLock paramsLock;
 
 	var paramsLoadData;
 

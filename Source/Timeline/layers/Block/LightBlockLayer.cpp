@@ -102,6 +102,13 @@ void LightBlockLayer::filtersChanged()
 	updateLinkedProps();
 }
 
+bool LightBlockLayer::paste()
+{
+	Array<LayerBlock *> p = blockClipManager.addItemsFromClipboard(false);
+	if (p.isEmpty()) return SequenceLayer::paste();
+	return true;
+}
+
 void LightBlockLayer::endLoadFile()
 {
 	updateLinkedProps();

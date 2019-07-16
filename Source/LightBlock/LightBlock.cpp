@@ -40,6 +40,7 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 	var localParams = params.isVoid()?new DynamicObject():new DynamicObject(*params.getDynamicObject());
 	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
 	
+	paramsLock.enter();
 
 	if (localParams.getProperty("updateAutomation", true))
 	{
@@ -68,6 +69,8 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 		if(!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, param->getValue());
 	}
 
+	paramsLock.exit();
+
 	if (provider.wasObjectDeleted())
 	{
 		Array<Colour> result;
@@ -75,6 +78,8 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 		result.fill(Colours::black);
 		return result;
 	}
+
+
 
 	return provider->getColors(p, time, localParams);
 }
@@ -84,8 +89,10 @@ void LightBlock::rebuildArgsFromModel()
 	if(paramsContainer.controllables.size() > 0) paramsLoadData = paramsContainer.getJSONData();
 	//var aData = automationsManager.getJSONData();
 
+	paramsLock.enter();
 	paramsContainer.clear();
 	//automationsManager.clear();
+
 
 	Array<WeakReference<Controllable>> params = provider->getModelParameters();
 
@@ -105,6 +112,8 @@ void LightBlock::rebuildArgsFromModel()
 
 	paramsContainer.hideInEditor = paramsContainer.controllables.size() == 0;
 	paramsContainer.loadJSONData(paramsLoadData);
+
+	paramsLock.exit();
 
 	//automationsManager.hideInEditor = paramsContainer.hideInEditor;
 	//automationsManager.loadJSONData(aData);
