@@ -166,7 +166,7 @@ void Prop::update()
 {
 	if (findPropMode->boolValue())
 	{
-		colors.fill(Colours::white.withBrightness(.3f));
+		colors.fill(Colours::white.withBrightness(.5f));
 
 		if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
 		{
@@ -208,6 +208,12 @@ void Prop::onContainerParameterChangedInternal(Parameter* p)
 			sendColorsToProp(true);
 		}
 	}
+	else if (p == findPropMode)
+	{
+		colors.fill(findPropMode->boolValue() ? Colours::white : Colours::black);
+		update();
+
+	}
 }
 
 void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -220,12 +226,7 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		propListeners.call(&PropListener::propIDChanged, this, previousID);
 		previousID = globalID->intValue();
-	}
-	else if (c == findPropMode)
-	{
-		if (!findPropMode->boolValue()) colors.fill(Colours::black);
-	}
-	else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
+	}else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
 	{
 		initBaking(currentBlock.get(), c == bakeAndUploadTrigger ? UPLOAD : EXPORT);
 	}

@@ -30,6 +30,8 @@ PropUI::PropUI(Prop * p) :
 	addAndMakeVisible(batteryUI.get());
 	addAndMakeVisible(&viz);
 
+	viz.setInterceptsMouseClicks(false, false);
+
 	setSize(100, 100);
 	
 }
