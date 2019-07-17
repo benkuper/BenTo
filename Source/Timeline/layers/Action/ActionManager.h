@@ -21,8 +21,6 @@ public:
 	ActionManager(ActionLayer * layer, Sequence * sequence);
 	~ActionManager();
 
-	
 	TimeTrigger * createItem() override;
-     void addTriggerAt(float time = 0, float flagY = 0) override;
 
 };

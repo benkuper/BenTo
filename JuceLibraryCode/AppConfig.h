@@ -281,11 +281,22 @@
  //#define ORGANICUI_USE_SERVUS 0
 #endif
 
+#ifndef    ORGANICUI_DEFAULT_REMOTECONTROL_PORT
+ //#define ORGANICUI_DEFAULT_REMOTECONTROL_PORT 0
+#endif
+
 //==============================================================================
 // juce_osc flags:
 
 #ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
  //#define JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 0
+#endif
+
+//==============================================================================
+// juce_timeline flags:
+
+#ifndef    TIMELINE_USE_SEQUENCEMANAGER_SINGLETON
+ //#define TIMELINE_USE_SEQUENCEMANAGER_SINGLETON 0
 #endif
 
 //==============================================================================

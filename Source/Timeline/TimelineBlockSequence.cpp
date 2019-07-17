@@ -27,9 +27,9 @@ TimelineBlockSequence::TimelineBlockSequence() :
 
 	
 	//Timeline
-	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Blocks", &LightBlockLayer::create, this));
-	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Actions", &ActionLayer::create, this));
-	layerFactory.defs.add(new SequenceLayerManager::LayerDefinition("", "Audio", &AudioLayer::create, this));
+	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Blocks", &LightBlockLayer::create, this));
+	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Actions", &ActionLayer::create, this));
+	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &AudioLayer::create, this));
 
 	if (!Engine::mainEngine->isLoadingFile)
 	{

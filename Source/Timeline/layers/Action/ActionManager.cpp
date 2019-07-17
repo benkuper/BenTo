@@ -24,9 +24,3 @@ TimeTrigger * ActionManager::createItem()
   {
 	  return new Action();
   }
-
-void ActionManager::addTriggerAt(float time, float flagY)
-{
-	Action * a = new Action(time, flagY);
-	TimeTriggerManager::addItem(a);
-}

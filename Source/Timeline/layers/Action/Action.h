@@ -16,6 +16,6 @@ class Action :
 	public TimeTrigger
 {
 public:
-	Action(float time = 0, float flagYPos = 0, const String &name = "Action");
+	Action(StringRef name = "Action");
 	~Action();
 };
