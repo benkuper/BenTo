@@ -18,14 +18,17 @@ public:
 	CompositeNode(var params = var());
 	~CompositeNode();
 
-	enum BlendMode { ADD, SUBTRACT, MIX, MAX, MIN};
+	enum BlendMode { ADD, ALPHA, SUBTRACT, MIX, MAX, MIN};
 
 	ColorSlot * c1;
 	ColorSlot * c2;
 
 	EnumParameter * blendMode;
+	FloatParameter* mix;
 
 	Array<Colour> getColorsInternal(Prop * p, double time, var params) override;
+
+	void onContainerParameterChangedInternal(Parameter* p) override;
 
 	String getTypeString() const override { return "Composite"; }
 	static CompositeNode * create(var params) { return new CompositeNode(params); }
