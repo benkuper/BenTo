@@ -21,13 +21,8 @@ PropUI::PropUI(Prop * p) :
 
 	idUI.reset(p->globalID->createStepper());
 	idUI->showLabel = true;
-	targetUI.reset(p->activeProvider->createTargetUI());
-	batteryUI.reset(p->battery->createSlider());
-	batteryUI->showLabel = false;
 
-	addAndMakeVisible(targetUI.get());
 	addAndMakeVisible(idUI.get());
-	addAndMakeVisible(batteryUI.get());
 	addAndMakeVisible(&viz);
 
 	viz.setInterceptsMouseClicks(false, false);
@@ -56,6 +51,13 @@ void PropUI::paintOverChildren(Graphics & g)
 		g.setColour(item->isUploading->boolValue() ? Colours::limegreen : Colours::orange);
 		g.drawFittedText(item->isUploading->boolValue()?"Uploading ...":"Baking...", getLocalBounds(), Justification::centred, 1);
 	}
+
+	g.setColour(item->isConnected->boolValue() ? GREEN_COLOR : BG_COLOR);
+	Rectangle<int> r = getMainBounds().translated(0, headerHeight + headerGap).removeFromRight(20);
+	g.fillEllipse(r.removeFromTop(20).toFloat().reduced(4));
+
+	g.setColour(item->twoWayConnected->boolValue() ? GREEN_COLOR : BG_COLOR);
+	g.fillEllipse(r.removeFromTop(20).toFloat().reduced(4));
 
 	if (isDraggingOver)
 	{
@@ -94,15 +96,13 @@ void PropUI::resizedInternalHeader(Rectangle<int>& r)
 
 void PropUI::resizedInternalContent(Rectangle<int> &r)
 {
-	targetUI->setBounds(r.removeFromTop(16));
-	batteryUI->setBounds(r.removeFromTop(10));
 	r.removeFromTop(2);
 	viz.setBounds(r.reduced(2));
 }
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress) repaint();
+	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == item->twoWayConnected) repaint();
 }
 
 void PropUI::itemDropped(const SourceDetails & source)

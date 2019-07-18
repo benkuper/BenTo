@@ -9,7 +9,9 @@
 #endif
 
 #include <Wire.h>
+#include <Preferences.h>
 
+Preferences preferences;
 
 #define USE_BUTTON 1
 #define USE_WIFI 1
@@ -29,7 +31,6 @@
 
 #define POWER_ENABLE_PIN 19
 
-
 using namespace std;
 
 #include "DeviceSettings.h"
@@ -46,6 +47,7 @@ WiFiManager wifiManager;
 #endif
 
 #if USE_OSC
+#define USE_PING 1
 #include "OSCManager.h"
 OSCManager oscManager(wifiManager.oscUDP);
 #endif
@@ -395,13 +397,14 @@ void uploadProgress(float progress)
 {
   DBG("Upload progress " + String(progress));
   int index = ((int)(progress*NUM_LEDS))%NUM_LEDS;
-  setRange(0, index, CRGB(255,0,255), true);
+  if(index > 0) setRange(0, index, CRGB(255,0,255), true);
   setLed(index, CRGB(255,255,255));
 }
 
 void uploadFinished(const String &fileName)
 {
   DBG("Upload finished, playing file");
+  stripManager.setMode(LedStripManager::Mode::Streaming);
   //stripManager.setMode(LedStripManager::Mode::Baked);
   //stripManager.bakePlayer.load(fileName);
 }
@@ -413,22 +416,22 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("");
+  
+  Wire.begin(2, 4);
+  preferences.begin("bento-settings",false);
+  settings.init();
 
+   //Keep the power
+  pinMode(POWER_ENABLE_PIN, OUTPUT);
+  digitalWrite(POWER_ENABLE_PIN, HIGH);
+  
 #if USE_BUTTON
   btManager.init();
   btManager.addButtonCallback(&onButtonEvent);
   btManager.addMultipressCallback(&onMultipress);
 #endif
 
-  //Keep the power
-  pinMode(POWER_ENABLE_PIN, OUTPUT);
-  digitalWrite(POWER_ENABLE_PIN, HIGH);
-
-  Wire.begin(2, 4);
-  settings.init();
-
   DBG("BentoV4 Initialization. (DeviceID : " + String(settings.deviceID) + ")");
-  //Serial.println(ESP.getResetReason());
   DBG("Will init all modules");
 
 #if USE_IR

@@ -20,6 +20,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	ioCC("Communication"),
 	sensorsCC("SensorsCC"),
 	bakingCC("Bake and Upload"),
+	receivedPongSinceLastPingSent(false),
 	providerToBake(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
@@ -27,6 +28,8 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	propNotifier(50)
 {
 	registerFamily(familyName);
+
+	showWarningInUI = true;
 
 	editorIsCollapsed = true;
 
@@ -41,10 +44,21 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	colors.resize(resolution->intValue());
 
 	addChildControllableContainer(&ioCC);
-	ioCC.editorIsCollapsed = true;
-	findPropMode = addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
+	
+	isConnected = ioCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
+	isConnected->setControllableFeedbackOnly(true);
+	isConnected->isSavable = false; 
+	twoWayConnected = ioCC.addBoolParameter("2-way Connected", "This is checked if the prop is connected and communication works both directions", false);
+	twoWayConnected->setControllableFeedbackOnly(true);
+	twoWayConnected->isSavable = false;
+
+	findPropMode = ioCC.addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
 	findPropMode->setControllableFeedbackOnly(true);
 	findPropMode->isSavable = false;
+	
+	powerOffTrigger = ioCC.addTrigger("Power off", "Power off the prop if possible");
+
+
 
 	addChildControllableContainer(&sensorsCC);
 	battery = sensorsCC.addFloatParameter("Battery", "The battery level, between 0 and 1", 0);
@@ -94,9 +108,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 
 Prop::~Prop()
 {
-	signalThreadShouldExit();
-	waitForThreadToExit(100);
-	setBlockFromProvider(nullptr);
+	clearItem();
 }
 
 void Prop::clearItem()
@@ -105,6 +117,9 @@ void Prop::clearItem()
 	sendColorsToProp();
 	setBlockFromProvider(nullptr);
 	if (family != nullptr) family->unregisterProp(this);
+	signalThreadShouldExit();
+	waitForThreadToExit(1000);
+	setBlockFromProvider(nullptr);
 }
 
 void Prop::registerFamily(StringRef familyName)
@@ -208,12 +223,6 @@ void Prop::onContainerParameterChangedInternal(Parameter* p)
 			sendColorsToProp(true);
 		}
 	}
-	else if (p == findPropMode)
-	{
-		colors.fill(findPropMode->boolValue() ? Colours::white : Colours::black);
-		update();
-
-	}
 }
 
 void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -229,6 +238,15 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	}else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
 	{
 		initBaking(currentBlock.get(), c == bakeAndUploadTrigger ? UPLOAD : EXPORT);
+	}
+	else if (c == findPropMode)
+	{
+		colors.fill(findPropMode->boolValue() ? Colours::white : Colours::black);
+		update();
+	}
+	else if (c == powerOffTrigger)
+	{
+		powerOffProp();
 	}
 }
 
@@ -306,6 +324,8 @@ BakeData Prop::bakeBlock()
 	double stepTime = 1.0 / result.fps;
 	for (double curTime = result.startTime; curTime <= result.endTime; curTime += stepTime)
 	{
+		if (threadShouldExit()) return result;
+
 		if (providerToBake == nullptr) return result;
 		Array<Colour> cols = providerToBake->getColors(this, curTime, params);
 		for (auto& c : cols) os.writeInt(c.getARGB());
@@ -355,6 +375,43 @@ void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl contro
 	}
 }
 
+
+void Prop::handlePing(bool isPong)
+{
+	if (!isPong)
+	{
+		isConnected->setValue(true);
+		stopTimer(PROP_PING_TIMERID);
+		startTimer(PROP_PING_TIMERID, 2000); //2s
+
+		if (!isTimerRunning(PROP_PINGPONG_TIMERID)) startTimer(PROP_PINGPONG_TIMERID, 2000); // only once, but launch only if it received a first ping
+	}
+	else
+	{
+		receivedPongSinceLastPingSent = true;
+		twoWayConnected->setValue(true); 
+	}
+}
+
+void Prop::timerCallback(int timerID)
+{
+	switch (timerID)
+	{
+	case PROP_PING_TIMERID:
+		isConnected->setValue(false);
+		stopTimer(PROP_PING_TIMERID);
+		break;
+
+	case PROP_PINGPONG_TIMERID:
+		if(!receivedPongSinceLastPingSent) twoWayConnected->setValue(false);
+
+		sendPing();
+		receivedPongSinceLastPingSent = false;
+		break;
+	}
+}
+
+
 var Prop::getJSONData()
 {
 	var data = BaseItem::getJSONData();
@@ -380,12 +437,17 @@ void Prop::run()
 		{
 			BakeData data = bakeBlock();
 
+			if (threadShouldExit()) return;
+
 			switch (afterBake)
 			{
 			case UPLOAD:
 				isUploading->setValue(true);
 				uploadBakedData(data);
+				if (threadShouldExit()) return;
 				isUploading->setValue(false);
+
+				bakeMode->setValue(bakeMode->value, false, true); //force resend bakeMode
 				break;
 
 			case EXPORT:

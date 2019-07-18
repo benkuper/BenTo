@@ -33,6 +33,8 @@ PropManager::PropManager() :
 	sendFeedback = addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
 	bakeAll = addTrigger("Bake All", "Bake all props");
 	bakeMode = addBoolParameter("Bake Mode", "Bake Mode", false);
+	powerOffAll = addTrigger("Poweroff All", "");
+	clearAll = addTrigger("Clear all props", "Remove all props from manager");
 
 	String localIp = "";
 	Array<IPAddress> ad;
@@ -87,10 +89,17 @@ void PropManager::setupReceiver()
 	receiver.disconnect();
 	bool result = receiver.connect(localPort);
 
-	if (result) NLOG(niceName, "Now receiving on port : " << localPort);
-	else NLOGERROR(niceName, "Error binding port " << localPort);
-
-
+	if (result)
+	{
+		NLOG(niceName, "Now receiving on port : " << localPort);
+		clearWarning();
+	}
+	else
+	{
+		NLOGERROR(niceName, "Error binding port " << localPort);
+		setWarningMessage("Error binding port " +  String(localPort));
+	}
+	
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
 
@@ -153,6 +162,16 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	else if (t == bakeAll)
 	{
 		for (auto & p : items) p->bakeAndUploadTrigger->trigger();
+	}
+	else if (t == powerOffAll)
+	{
+		for (auto& p : items) p->powerOffTrigger->trigger();
+	}
+	else if (t == clearAll)
+	{
+		Array<Prop*> itemsToRemove;
+		itemsToRemove.addArray(items);
+		removeItems(itemsToRemove);
 	}
 }
 
@@ -233,13 +252,17 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr)
 		{
-			FlowClubProp * fp = static_cast<FlowClubProp *>(managerFactory->create(pType));
-			if (fp != nullptr)
+			p = static_cast<Prop *>(managerFactory->create(pType));
+			if (p != nullptr)
 			{
-				fp->deviceID = pid;
-				fp->remoteHost->setValue(pHost);
-				LOG("Found ! " << fp->deviceID << " : " << fp->remoteHost->stringValue());
-				addItem(fp);
+				p->deviceID = pid;
+				
+				BentoProp* bp = dynamic_cast<BentoProp*>(p);
+				if(bp != nullptr) bp->remoteHost->setValue(pHost);
+				
+				LOG("Found " << p->type->getValueKey() << " with ID : " << p->deviceID);
+
+				addItem(p);
 				autoAssignIdTrigger->trigger();
 			}
 			else
@@ -247,7 +270,22 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 				DBG("Type does not exist " << pType);
 			}
 		}
-	}/*
+		else
+		{
+			LOG("Got : " << p->deviceID << ", already there");
+		}
+	}
+	else if (address == "/ping" || address == "/pong")
+	{
+		String pid = OSCHelpers::getStringArg(m[0]);
+		Prop* p = getPropWithHardwareId(pid);
+		if (p != nullptr)
+		{
+			p->handlePing(address == "/pong");
+		}
+	}
+	
+	/*
 	else if (address == "/battery/level")
 	{
 		String pid = OSCHelpers::getStringArg(m[0]);

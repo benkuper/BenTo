@@ -25,12 +25,7 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 	numConnected = generalCC.addIntParameter("Num Connected", "Number of connected props", 0, 0, 31);
 	autoResolution = generalCC.addBoolParameter("Auto resolution", "If checked, the resolution will be automatically set depending on number of paired devices", true);
 	
-	
-	isConnected = ioCC.addBoolParameter("Is Connected", "This is checked if a serial device is connected.", false);
-	isConnected->setControllableFeedbackOnly(true);
-	isConnected->isSavable = false;
 
-	
 	addNewPairing = ioCC.addTrigger("Add New Pairing Group", "Start pairing");
 	addToGroup = ioCC.addTrigger("Add To Group", "Add to the existing paired group");
 	finishPairing = ioCC.addTrigger("Finish Pairing", "Finish the pairing");
@@ -49,7 +44,7 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 		
 	SerialManager::getInstance()->addSerialManagerListener(this);
 
-	startTimer(2000);
+	startTimer(FT_SERIAL_CHECK_TIMERID, 2000);
 }
 
 LighttoysFTProp::~LighttoysFTProp()
@@ -293,12 +288,22 @@ void LighttoysFTProp::sendMessage(StringRef command, const int propMask, int num
 	//DBG("Send message : " << msg);
 }
 
-void LighttoysFTProp::timerCallback()
+void LighttoysFTProp::timerCallback(int timerID)
 {
-	//check connected devices
-	memset(slaveCheckList, 0, 32);
-	sendMessage("glist");
+	Prop::timerCallback(timerID);
+
+	switch (timerID)
+	{
+	case FT_SERIAL_CHECK_TIMERID:
+		//check connected devices
+		memset(slaveCheckList, 0, 32);
+		sendMessage("glist");
+		break;
+
+	}
+	
 }
+
 
 void LighttoysFTProp::autoDetectRemotes()
 {

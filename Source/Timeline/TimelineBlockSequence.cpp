@@ -19,7 +19,7 @@ TimelineBlockSequence::TimelineBlockSequence() :
 	currentIdentityGroup(nullptr)
 {
 	identityClusterGroup = addEnumParameter("Calibration Group", "The cluster group to choose to show the calibration frame");
-	identityMode = addBoolParameter("Identity mode", "If checked, this will override the colors to show identity", false, false);
+	identityMode = addBoolParameter("Identity mode", "If checked, this will override the colors to show identity", false);
 
 	layerManager->managerFactory = &layerFactory;
 	clusterGroupManager.addBaseManagerListener(this);

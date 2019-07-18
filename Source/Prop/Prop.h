@@ -15,10 +15,14 @@
 
 class PropFamily;
 
+#define PROP_PING_TIMERID 0
+#define PROP_PINGPONG_TIMERID 1
+
 class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
 	public Thread,
+	public MultiTimer,
 	public LightBlockColorProvider::ProviderListener
 {
 public:
@@ -36,11 +40,16 @@ public:
 	EnumParameter * type;
 	
 	ControllableContainer ioCC;
+	BoolParameter* isConnected;
+	
+	BoolParameter* twoWayConnected;
+	bool receivedPongSinceLastPingSent;
+
 	BoolParameter * findPropMode;
+	Trigger* powerOffTrigger;
 
 	ControllableContainer sensorsCC;
 	FloatParameter * battery;
-
 
 	ControllableContainer bakingCC;
 	FloatParameter * bakeStartTime;
@@ -75,6 +84,8 @@ public:
 	int previousID; //for swapping
 	int updateRate;
 
+	//ping
+
 	virtual void clearItem() override;
 
 	void registerFamily(StringRef familyName);
@@ -105,8 +116,15 @@ public:
 	virtual void seekBakePlaying(float /*time */) {}
 	virtual void stopBakePlaying() {}
 
+
 	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 
+	virtual void powerOffProp() {}
+
+	virtual void handlePing(bool isPong = false);
+	virtual void sendPing() {}
+	virtual void timerCallback(int timerID) override;
+	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 

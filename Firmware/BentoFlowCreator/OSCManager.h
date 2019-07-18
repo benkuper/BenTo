@@ -12,33 +12,35 @@ class OSCManager
   public:
     WiFiUDP &udp;
 
-    char remoteHost[32];
+    String remoteHost;
     const int remotePort = 10000;
 
-    bool pingEnabled;
-    long lastPingTime;
-    long pingTime;
     bool isReadyToSend;
+
+#if USE_PING
+    long lastPingTime;
+    const long pingTime = 1000;
+#endif
 
     OSCManager(WiFiUDP &udp): udp(udp)
     {
-      sprintf(remoteHost, "192.168.0.13");
       addCallbackMessageReceived(&OSCManager::defaultCallback);
-
       isReadyToSend = false;
-      pingEnabled = false;
-      lastPingTime = 0;
-      pingTime = 1000;
     }
 
     void init()
     {
-        DBG("OCSManager init.");
+      DBG("OCSManager init.");
+      remoteHost = preferences.getString("remoteHost", "");
+      lastPingTime = 0;
     }
 
     void update()
     {
-      if (pingEnabled) ping();
+#if USE_PING
+      ping();
+#endif
+
       receiveOSC();
     }
 
@@ -49,7 +51,7 @@ class OSCManager
 
       if ( (size = udp.parsePacket()) > 0)
       {
-         while (size--)
+        while (size--)
         {
           msgIN.fill(udp.read());
         }
@@ -59,23 +61,31 @@ class OSCManager
           if (msgIN.match("/yo"))
           {
 
-            msgIN.getString(0, remoteHost, 32);
+            char hostData[32];
+            msgIN.getString(0, hostData, 32);
+            remoteHost = String(hostData);
+            DBG("Got yo request from : " + remoteHost);
+            preferences.putString("remoteHost", remoteHost);
 
-            DBG("Got yo request from : "+String(remoteHost));
-           
-           OSCMessage msg("/wassup");
-           msg.add(ipToString().c_str());
+            OSCMessage msg("/wassup");
+            msg.add(ipToString().c_str());
             msg.add(DeviceSettings::deviceID.c_str());
             msg.add(DeviceSettings::deviceType.c_str());
-           sendMessage(msg);
+            sendMessage(msg);
 
-          } else
+          }
+          else if (msgIN.match("/ping"))
+          {
+            DBG("Got ping !");
+            ping(true);
+          }
+          else
           {
             onMessageReceived(msgIN);
           }
         } else
         {
-            DBG("Msg got error");
+          DBG("Msg got error");
         }
       }
     }
@@ -83,12 +93,12 @@ class OSCManager
 
     void sendMessageTo(OSCMessage & msg, const char * host, int port)
     {
-     
+
       if (!isReadyToSend) return;
-      
+
       char addr[32];
       msg.getAddress(addr);
-      DBG("Send OSC message " + String(addr)+", isReadyToSend ? "+String(isReadyToSend));
+      DBG("Send OSC message " + String(addr) + ", isReadyToSend ? " + String(isReadyToSend));
 
       udp.beginPacket(host, port);
       msg.send(udp);
@@ -98,17 +108,23 @@ class OSCManager
 
     void sendMessage(OSCMessage &msg)
     {
-      sendMessageTo(msg, remoteHost, remotePort);
+      if (remoteHost.length() == 0)
+      {
+        DBG("Remote host address is empty, not sending !");
+        return;
+      }
+      sendMessageTo(msg, remoteHost.c_str(), remotePort);
     }
 
-    void ping()
+    void ping(bool isPong = false)
     {
-      if (millis() - lastPingTime < pingTime) return;
+      if (!isPong && (millis() - lastPingTime < pingTime)) return;
 
-      OSCMessage msg("/ping");
+      OSCMessage msg(isPong?"/pong":"/ping");
+      msg.add(DeviceSettings::deviceID.c_str());
       sendMessage(msg);
 
-      lastPingTime = millis();
+      if(!isPong) lastPingTime = millis();
     }
 
 
@@ -117,7 +133,7 @@ class OSCManager
     {
       char myIpString[24];
       IPAddress myIp = WiFi.localIP();
-      return String(myIp[0])+"."+String(myIp[1])+"."+String(myIp[2])+"."+String(myIp[3]);
+      return String(myIp[0]) + "." + String(myIp[1]) + "." + String(myIp[2]) + "." + String(myIp[3]);
     }
 
 

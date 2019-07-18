@@ -41,6 +41,8 @@ public:
 	Trigger * detectProps;
 	Trigger * autoAssignIdTrigger;
 	Trigger * bakeAll;
+	Trigger* powerOffAll;
+	Trigger* clearAll;
 	BoolParameter * bakeMode;
 
 	void setupReceiver();

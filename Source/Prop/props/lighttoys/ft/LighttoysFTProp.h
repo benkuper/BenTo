@@ -16,18 +16,19 @@
 
 #include "FTPropStatus.h"
 
+
+#define FT_SERIAL_CHECK_TIMERID 10
+
 class LighttoysFTProp :
 	public Prop,
 	public SerialDevice::SerialDeviceListener,
-	public SerialManager::SerialManagerListener,
-	public Timer
+	public SerialManager::SerialManagerListener
 {
 public:
 	LighttoysFTProp(var params);
 	~LighttoysFTProp();
 
 	SerialDeviceParameter * deviceParam;
-	BoolParameter * isConnected;
 	IntParameter * numPaired;
 	IntParameter * numConnected;
 	BoolParameter * autoResolution;
@@ -71,7 +72,7 @@ public:
 	int getPropMaskForId(int propID) const { return 1 << propID; }
 	int getPropMaskForRange(int startID, int endID) const { int result = 0; for (int i = startID; i <= endID; i++) result += 1 << i; return result; }
 
-	void timerCallback() override;
+	virtual void timerCallback(int timerID) override;
 
 	static void autoDetectRemotes();
 

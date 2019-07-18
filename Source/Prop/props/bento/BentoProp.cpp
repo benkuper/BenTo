@@ -22,6 +22,7 @@ BentoProp::BentoProp(StringRef name, StringRef family, var params) :
 
 BentoProp::~BentoProp()
 {
+	
 }
 
 void BentoProp::onContainerParameterChangedInternal(Parameter * p)
@@ -101,13 +102,18 @@ void BentoProp::uploadBakedData(BakeData data)
 
 	URL metaUrl = URL(target).withDataToUpload("uploadData", data.name+".meta", metaData, "text/plain");
 
-	std::unique_ptr<InputStream> mStream(metaUrl.createInputStream(true, &BentoProp::uploadMetaDataProgressCallback, this));
+	std::unique_ptr<InputStream> mStream(metaUrl.createInputStream(true, &BentoProp::uploadMetaDataProgressCallback, this,"", 1000));
 
 	if (mStream != nullptr)
 	{
 		String response = mStream->readEntireStreamAsString();
 		DBG("Got response : " << response);
 		NLOG(niceName, "Metadata upload complete");
+	}
+	else
+	{
+		NLOGERROR(niceName, "Error uploading meta data to prop, stopping here.");
+		return;
 	}
 
 
@@ -131,13 +137,18 @@ void BentoProp::uploadBakedData(BakeData data)
 	
 	url = URL(target).withDataToUpload("uploadData", data.name+".colors", dataToSend, sendCompressedFile->boolValue() ? "application/zip" : "text/plain");
 
-	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this));// , "Content-Type: Text/plain");
+	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this,"",1000));// , "Content-Type: Text/plain");
 
 	if (stream != nullptr)
 	{
 		String response = stream->readEntireStreamAsString();
 		DBG("Got response : " << response);
 		NLOG(niceName, "Upload complete");
+	}
+	else
+	{
+		NLOGERROR(niceName, "Error uploading color data to prop");
+		return;
 	}
 }
 
@@ -200,8 +211,9 @@ bool BentoProp::uploadProgressCallback(void * context, int bytesSent, int totalB
 {
 	BentoProp * prop = (BentoProp *)context;
 	jassert(prop != nullptr);
+	if (prop->threadShouldExit()) return false; 
 	float p = bytesSent * 1.0f / totalBytes;
-	prop->uploadProgress->setValue(.1f+p*.5f);
+	prop->uploadProgress->setValue(.1f + p * .5f);
 	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
 	
 	return true;
@@ -209,11 +221,27 @@ bool BentoProp::uploadProgressCallback(void * context, int bytesSent, int totalB
 
 bool BentoProp::uploadMetaDataProgressCallback(void* context, int bytesSent, int totalBytes)
 {
-	BentoProp* prop = (BentoProp*)context;
+	BentoProp* prop = dynamic_cast<BentoProp *>((BentoProp *)context);
 	jassert(prop != nullptr);
+	if (prop->threadShouldExit()) return false;
+
 	float p = bytesSent * 1.0f / totalBytes;
-	prop->uploadProgress->setValue(p*.1f);
+	prop->uploadProgress->setValue(p * .1f);
+
 	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
 	
 	return true;
+}
+
+void BentoProp::sendPing()
+{
+	OSCMessage m("/ping");
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}
+
+void BentoProp::powerOffProp()
+{
+	NLOG(niceName, "Powering off");
+	OSCMessage m("/sleep");
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }

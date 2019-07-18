@@ -18,8 +18,8 @@ class WiFiManager
 {
   public:
 
-    String ssid = "jonglissimo";
-    String password = "lightpainting";
+    String ssid = "";
+    String password = "";
 
     const int maxTries = 32;
 
@@ -40,16 +40,14 @@ class WiFiManager
 
     void init()
     {
-       DBG("WiFiManager init.");
+      DBG("WiFiManager init.");
+      ssid = preferences.getString("wifiSSID", "jonglissimo");
+      password = preferences.getString("wifiPassword", "lightpainting");
 
-      // Connect to WiFi network
-
-      //WiFi.mode(WIFI_STA);
-      //WiFi.printDiag(Serial);
       DBG(String("WiFiManager connecting to " + ssid + " : " + password));
 
       WiFi.begin(ssid.c_str(), password.c_str());
-      
+
       int tryIndex = 0;
       bool success = true;
 
@@ -71,9 +69,9 @@ class WiFiManager
       }
 
 
-      if(!success)
+      if (!success)
       {
-          DBG("Failed");
+        DBG("Failed");
       }
 
       DBG("");
@@ -83,7 +81,7 @@ class WiFiManager
         if (turnOffWiFi)
         {
           WiFi.mode(WIFI_OFF);
-         DBG("Turn OFF WiFi");
+          DBG("Turn OFF WiFi");
           return;
         } else
         {
@@ -95,17 +93,17 @@ class WiFiManager
 
       if (apMode)
       {
-        DBG("WiFi AP created, IP address: "+String(WiFi.softAPIP()[0])+"."+String( WiFi.softAPIP()[1])+"."+String( WiFi.softAPIP()[2])+"."+String( WiFi.softAPIP()[3]));
+        DBG("WiFi AP created, IP address: " + String(WiFi.softAPIP()[0]) + "." + String( WiFi.softAPIP()[1]) + "." + String( WiFi.softAPIP()[2]) + "." + String( WiFi.softAPIP()[3]));
       } else
       {
-        DBG("Connected to "+String(ssid)+", IP address: "+String(WiFi.localIP()[0])+"."+String( WiFi.localIP()[1])+"."+String( WiFi.localIP()[2])+"."+String( WiFi.localIP()[3]));
+        DBG("Connected to " + String(ssid) + ", IP address: " + String(WiFi.localIP()[0]) + "." + String( WiFi.localIP()[1]) + "." + String( WiFi.localIP()[2]) + "." + String( WiFi.localIP()[3]));
       }
 
       delay(500);
 
       DBG("Disabling wifi sleep mode");
       WiFi.setSleep(false);
-      
+
       DBG("Setting up UDP...");
       oscUDP.begin(9000);
       streamingUDP.begin(8888);
@@ -128,7 +126,7 @@ class WiFiManager
       //String macString((const char *)mac);
       String wifiString(String("BenTo v4.2 ") +  settings.deviceID);
 
-      DBG("Setting up AP WiFi : "+wifiString);
+      DBG("Setting up AP WiFi : " + wifiString);
       WiFi.softAP(wifiString.c_str());
     }
 
@@ -145,7 +143,9 @@ class WiFiManager
           msg.getString(0, ssidData, msg.getDataLength(0));
           msg.getString(1, passData, msg.getDataLength(1));
 
-          //saveWiFiConfig(ssidData, passData);
+          preferences.putString("wifiSSID", String(ssidData));
+          preferences.putString("wifiPassword", String(passData));
+
         }
         return true;
       }

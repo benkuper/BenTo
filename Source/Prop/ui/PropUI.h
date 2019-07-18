@@ -22,9 +22,6 @@ public:
 
 	PropViz viz;
 	std::unique_ptr<IntStepperUI> idUI;
-	std::unique_ptr<TargetParameterUI> targetUI;
-	std::unique_ptr<FloatSliderUI> batteryUI;
-
 
 	void paintOverChildren(Graphics &g) override;
 	void mouseDown(const MouseEvent &e) override;

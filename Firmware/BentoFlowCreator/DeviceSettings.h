@@ -5,12 +5,14 @@
 #include <OSCMessage.h>
 #endif
 
+
 class DeviceSettings
 {
 public:
   static String deviceID;
   static uint32_t propID; //
   static String deviceType;
+
 
   DeviceSettings()
   {
@@ -20,7 +22,7 @@ public:
   {
     uint64_t did = ESP.getEfuseMac();
     deviceID = String((uint32_t)(did >> 32)) + String((uint32_t)(did & 0xffffffff));
-
+    
     DBG("DeviceSettings init, device ID " + deviceID);
   }
 
@@ -51,4 +53,5 @@ String DeviceSettings::deviceID = "notset";
 uint32_t DeviceSettings::propID = 0;
 String DeviceSettings::deviceType = "Flowtoys Creator Club";
 
+  
 #endif //DEVICESETTINGS_H
