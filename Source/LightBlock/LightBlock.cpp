@@ -75,7 +75,7 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 	{
 		Array<Colour> result;
 		result.resize(p->resolution->intValue());
-		result.fill(Colours::black);
+		result.fill(Colours::transparentBlack);
 		return result;
 	}
 

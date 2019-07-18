@@ -58,6 +58,7 @@ public:
 	FloatParameter * contrast;
 	FloatParameter * brightness;
 	ColorParameter * color;
+	ColorParameter* bgColor;
 	FloatParameter * idOffset;
 
 	void getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params) override;
@@ -89,7 +90,8 @@ public:
 	StrobePattern(var params = var());
 	~StrobePattern() {}
 
-	ColorParameter * color;
+	ColorParameter* color;
+	ColorParameter * color2;
 	FloatParameter * frequency;
 	FloatParameter * onOffBalance;
 	FloatParameter * idOffset;

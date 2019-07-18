@@ -57,7 +57,9 @@ PropManager::PropManager() :
 	if (a.size() == 4) broadcastIp = a[0] + "." + a[1] + "." + a[2] + ".255";
 
 	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.", localIp);
+	localHost->isSavable = false;
 	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs", broadcastIp);
+	remoteHost->isSavable = false;
 
 	addChildControllableContainer(&familiesCC);
 	families.add(new FlowtoysFamily());

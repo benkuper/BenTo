@@ -12,6 +12,7 @@
 #include "Timeline/layers/Block/LightBlockLayer.h"
 #include "ui/TimelineBlockUI.h"
 #include "Prop/PropManager.h"
+#include "BentoEngine.h"
 
 TimelineBlock::TimelineBlock(var params) :
 	LightBlockModel(getTypeString(), params)
@@ -80,6 +81,11 @@ void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 	{
 		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SEEK, sequence.currentTime->floatValue());
 	}
+
+	OSCMessage msg("/" + shortName + "/currentTime");
+	msg.addFloat32(sequence.currentTime->floatValue());
+	BentoEngine* be = (BentoEngine*)Engine::mainEngine;
+	be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
 	//updateColorsForBlock(block);
 }
 

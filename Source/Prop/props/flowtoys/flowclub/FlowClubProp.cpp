@@ -32,8 +32,8 @@ void FlowClubProp::onControllableFeedbackUpdateInternal(ControllableContainer * 
 
 	if (c == irLevel)
 	{
-				OSCMessage m("/ir");
-				m.addFloat32(irLevel->floatValue());
-				oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		OSCMessage m("/ir");
+		m.addFloat32(irLevel->floatValue());
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 	}
 }

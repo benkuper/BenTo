@@ -66,7 +66,7 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 	{
 		Array<Colour> result;
 		result.resize(resolution);
-		result.fill(Colours::black);
+		result.fill(Colours::transparentBlack);
 		return result;
 	}
 		

@@ -60,6 +60,7 @@ NoisePattern::NoisePattern(var params) :
 	contrast = paramsContainer->addFloatParameter("Contrast", "", 3, 0, 10);
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 0, -1, 1);
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
+	bgColor = paramsContainer->addColorParameter("Background Color", "", Colours::black);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the animation depending on id of the prop", 0, 0, 10);
 }
 
@@ -74,13 +75,14 @@ void NoisePattern::getColorsInternal(Array<Colour> * result, Prop * p, double ti
 
 	var colorVar = getParamValue<var>(color, params);
 	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
-
+	var bgColorVar = getParamValue<var>(bgColor, params);
+	Colour bbgColor = Colour::fromFloatRGBA(bgColorVar[0], bgColorVar[1], bgColorVar[2], bgColorVar[3]);
 	float curTime = time * bSpeed;
 
 	for (int i = 0; i < resolution; i++)
 	{
 		float v = (perlin.noise0_1((i*bScale) / resolution, curTime, id*bIdOffset) - .5f)*bContrast + .5f + bBrightness;
-		result->set(i, bColor.withMultipliedBrightness(v));
+		result->set(i, bbgColor.interpolatedWith(bColor, v));
 	}
 }
 
@@ -113,6 +115,7 @@ StrobePattern::StrobePattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
+	color2 = paramsContainer->addColorParameter("Color 2", "", Colours::black);
 	frequency = paramsContainer->addFloatParameter("Frequency", "", 1, .01f, 100);
 	onOffBalance = paramsContainer->addFloatParameter("On-Off Balance", "The balance between on and off time. 0.5s means equals on and off time. .8 means 80% on time, 20% off time.", .5f, 0, 1);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the timing depending on id of the prop", 0, 0, 10);
@@ -122,14 +125,16 @@ void StrobePattern::getColorsInternal(Array<Colour> * result, Prop * p, double t
 {
 	var colorVar = getParamValue<var>(color, params);
 	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
-	
+	var color2Var = getParamValue<var>(color2, params);
+	Colour bColor2 = Colour::fromFloatRGBA(color2Var[0], color2Var[1], color2Var[2], color2Var[3]);
+
 	float bFrequency = getParamValue<float>(frequency, params);
 	float bOnOffBalance = getParamValue<float>(onOffBalance, params);
 	float bIdOffset = getParamValue<float>(idOffset, params);
 
 	float curTime = time * bFrequency + id * bIdOffset;
 
-	Colour c = fmodf(curTime, 1) < bOnOffBalance ? bColor : Colours::black;
+	Colour c = fmodf(curTime, 1) < bOnOffBalance ? bColor : bColor2;
 	result->fill(c);
 }
 

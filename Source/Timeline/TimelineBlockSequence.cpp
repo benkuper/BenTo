@@ -68,27 +68,56 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	
 	Array<Colour> result;
 	result.resize(resolution);
-	result.fill(Colours::black);
+	result.fill(Colours::transparentBlack);
 
 	if (numLayers == 0) return result;
 
 	Array<Array<Colour>> colors;
+	Array<LightBlockLayer::BlendMode> blendModes;
+
+	int numActiveLayers = 0;
 	for (auto &l : layers)
 	{
 		if (l == nullptr) continue;
 		String s = l->niceName;
 		params.getDynamicObject()->setProperty("forceID", l->filterManager->getTargetIDForProp(p));
 		colors.add(l->getColors(p, t, params)); //use sequence's time instead of prop time
+		blendModes.add(l->blendMode->getValueDataAsEnum<LightBlockLayer::BlendMode>());
+		numActiveLayers++;
 	}
 
 	for (int i = 0; i < resolution; i++)
 	{
 		float r = 0, g = 0, b = 0;
-		for (int j = 0; j < numLayers; j++)
+		for (int j = numActiveLayers - 1; j >= 0; j--)
 		{
-			r += colors[j][i].getFloatRed();
-			g += colors[j][i].getFloatGreen();
-			b += colors[j][i].getFloatBlue();
+			switch (blendModes[j])
+			{
+			case LightBlockLayer::ADD:
+				r += colors[j][i].getFloatRed();
+				g += colors[j][i].getFloatGreen();
+				b += colors[j][i].getFloatBlue();
+				break;
+
+			case LightBlockLayer::ALPHA:
+			{
+				float a = colors[j][i].getFloatAlpha();
+				r = r + (colors[j][i].getFloatRed() - r) * a;
+				g = g + (colors[j][i].getFloatGreen() - g) * a;
+				b = b + (colors[j][i].getFloatBlue() - b) * a;
+			}
+			break;
+
+			case LightBlockLayer::MASK:
+			{
+				float a = colors[j][i].getFloatAlpha();
+				r = jmin(r,colors[j][i].getFloatRed()) * a;
+				g = jmin(g,colors[j][i].getFloatGreen()) * a;
+				b = jmin(b,colors[j][i].getFloatBlue()) * a;
+			}
+			break;
+			}
+			
 		}
 
 		result.set(i, Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f),1));

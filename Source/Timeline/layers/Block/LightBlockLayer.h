@@ -24,7 +24,11 @@ public:
 
 	LightBlockClipManager blockClipManager;
 
+	enum BlendMode { ADD, ALPHA, MASK };
+	
 	BoolParameter * defaultLayer;
+	EnumParameter* blendMode;
+	
 	std::unique_ptr<PropTargetFilterManager> filterManager;
 	IntParameter * previewID;
 

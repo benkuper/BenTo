@@ -23,6 +23,9 @@ LightBlockLayer::LightBlockLayer(Sequence * s, var params) :
 	previewID = addIntParameter("Preview ID", "ID to preview the content", 0, 0, 500);
 	previewID->hideInEditor = true;
 
+	blendMode = addEnumParameter("Blend Mode", "The Blend mode of this layer");
+	blendMode->addOption("Add", ADD)->addOption("Alpha", ALPHA)->addOption("Mask", MASK);
+
 	filterManager.reset(new PropTargetFilterManager(&((TimelineBlockSequence*)sequence)->clusterGroupManager));
 	addChildControllableContainer(filterManager.get());
 	filterManager->addFilterManagerListener(this);
@@ -48,7 +51,7 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 
 	if (blocks.size() == 0)
 	{
-		result.fill(Colours::black);
+		result.fill(Colours::transparentBlack);
 		return result;
 	}
 
@@ -62,7 +65,7 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 
 	for (int i = 0; i < resolution; i++)
 	{
-		float r = 0, g = 0, b = 0;
+		float r = 0, g = 0, b = 0, a = 0;
 
 		for (int j = 0; j < clipColors.size(); j++)
 		{
@@ -71,9 +74,10 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 			r += clipColors[j][i].getFloatRed();
 			g += clipColors[j][i].getFloatGreen();
 			b += clipColors[j][i].getFloatBlue();
+			a += clipColors[j][i].getFloatAlpha();
 		}
 
-		result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), 1)));
+		result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), jmin(a, 1.f))));
 	}
 
 	return result;

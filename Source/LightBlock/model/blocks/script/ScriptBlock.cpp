@@ -58,7 +58,10 @@ void ScriptBlock::getColorsInternal(Array<Colour> * result, Prop * p, double tim
 		int numColors = jmin<int>(resolution, scriptResult.size());
 		for (int i = 0; i < numColors; i++)
 		{
-			colors.set(i, Colour::fromRGB((float)scriptResult[i][0] * 255, (float)scriptResult[i][1] * 255, (float)scriptResult[i][2] * 255));
+			colors.set(i, Colour::fromFloatRGBA((float)scriptResult[i][0], 
+										   (float)scriptResult[i][1], 
+				                           (float)scriptResult[i][2], 
+				                           scriptResult[i].size() > 3? (float)scriptResult[i][3]:1));
 		}
 	}
 	else
@@ -127,7 +130,7 @@ var ColourScriptData::updateColorRGBFromScript(const var::NativeFunctionArgs & a
 		return var();
 	}
 	int index = args.arguments[0];
-	p->colorArray.set(index, Colour::fromRGB((float)args.arguments[1] * 255, (float)args.arguments[2] * 255, (float)args.arguments[3] * 255));
+	p->colorArray.set(index, Colour::fromFloatRGBA((float)args.arguments[1], (float)args.arguments[2], (float)args.arguments[3], args.numArguments > 4?(float)args.arguments[4]:1));
 
 
 	return var();
@@ -143,7 +146,7 @@ var ColourScriptData::updateColorHSVFromScript(const var::NativeFunctionArgs & a
 		return var();
 	}
 	int index = args.arguments[0];
-	p->colorArray.set(index, Colour::fromHSV((float)args.arguments[1], (float)args.arguments[2], (float)args.arguments[3], 1));
+	p->colorArray.set(index, Colour::fromHSV((float)args.arguments[1], (float)args.arguments[2], (float)args.arguments[3], args.numArguments > 4 ? (float)args.arguments[4] : 1));
 
 	
 	return var();
@@ -163,7 +166,7 @@ var ColourScriptData::updateColorsRGBFromScript(const var::NativeFunctionArgs & 
 	int numColors = jmin<int>(p->colorArray.size(), colors.size());
 	for (int i = 0; i < numColors; i++)
 	{
-		p->colorArray.set(i, Colour::fromRGB((float)colors[i][0] * 255, (float)colors[i][1] * 255, (float)colors[i][2] * 255));
+		p->colorArray.set(i, Colour::fromFloatRGBA((float)colors[i][0], (float)colors[i][1], (float)colors[i][2], args.numArguments > 3 ? (float)args.arguments[3] : 1));
 	}
 
 	return colors;
@@ -183,7 +186,7 @@ var ColourScriptData::updateColorsHSVFromScript(const var::NativeFunctionArgs & 
 	int numColors = jmin<int>(p->colorArray.size(), colors.size());
 	for (int i = 0; i < numColors; i++)
 	{
-		p->colorArray.set(i, Colour::fromHSV((float)colors[i][0] * 255, (float)colors[i][1] * 255, (float)colors[i][2] * 255, 1));
+		p->colorArray.set(i, Colour::fromHSV((float)colors[i][0], (float)colors[i][1], (float)colors[i][2], args.numArguments > 3 ? (float)args.arguments[3] : 1));
 	}
 
 	return colors;

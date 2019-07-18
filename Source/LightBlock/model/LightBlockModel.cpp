@@ -60,7 +60,7 @@ Array<Colour> LightBlockModel::getColors(Prop * p, double time, var params)
 {
 	Array<Colour> result;
 	result.resize(p->resolution->intValue());
-	result.fill(Colours::black);
+	result.fill(Colours::transparentBlack);
 
 	int id = params.getProperty("forceID", p->globalID->intValue());
 	getColorsInternal(&result, p, time, id, p->resolution->intValue(), params);
