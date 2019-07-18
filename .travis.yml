@@ -130,5 +130,5 @@ after_success:
     ls
     packagesbuild BenTo.pkgproj -v
     mv BenTo.pkg BenTo-osx-$SUFFIX.pkg
-    curl -k -v -T BenTo-osx-$SUFFIX.pkg -u $FTP_USER:$FTP_PASSWORD sftp://ftp.kuperberg.fr/download/
+    curl -k -X POST -F 'appFile=@BenTo-osx-$SUFFIX.pkg' -F 'pass=$UPLOAD_PASS' -F 'path=download/' $UPLOAD_URL;"
   fi
