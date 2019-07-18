@@ -32,6 +32,8 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	rainbowBlock.reset(new RainbowPattern());
 	strobeBlock.reset(new StrobePattern());
 	noiseBlock.reset(new NoisePattern());
+	pointBlock.reset(new PointPattern());
+	multiPointBlock.reset(new MultiPointPattern());
 
 	videoBlock.reset(new VideoBlock());
 	dmxBlock.reset(new DMXBlock());
@@ -40,6 +42,8 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	genericBlocks.addChildControllableContainer(rainbowBlock.get());
 	genericBlocks.addChildControllableContainer(strobeBlock.get());
 	genericBlocks.addChildControllableContainer(noiseBlock.get());
+	genericBlocks.addChildControllableContainer(pointBlock.get());
+	genericBlocks.addChildControllableContainer(multiPointBlock.get());
 
 	addChildControllableContainer(&genericBlocks);
 

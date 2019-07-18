@@ -36,6 +36,8 @@ public:
 	std::unique_ptr<LightBlockModel> rainbowBlock;
 	std::unique_ptr<LightBlockModel> strobeBlock;
 	std::unique_ptr<LightBlockModel> noiseBlock;
+	std::unique_ptr<LightBlockModel> pointBlock;
+	std::unique_ptr<LightBlockModel> multiPointBlock;
 
 	//Live Feed
 	std::unique_ptr<LightBlockModel> videoBlock;

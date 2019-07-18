@@ -201,7 +201,7 @@ void Prop::update()
 		}
 	}
 
-	if (!bakeMode->boolValue()) sendColorsToProp();
+	if (!bakeMode->boolValue() && !isBaking->boolValue() && !isUploading->boolValue()) sendColorsToProp();
 	else if (seekBakeTime != -1)
 	{
 		seekBakePlaying(seekBakeTime);

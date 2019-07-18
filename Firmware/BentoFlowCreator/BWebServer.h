@@ -15,6 +15,9 @@ class BentoWebServer
     static File uploadingFile;
     static WebServer server;
     static int uploadedBytes;
+    
+    static bool isUploading;
+        
      BentoWebServer()
      {
         instance = this;
@@ -41,6 +44,8 @@ class BentoWebServer
       addUploadStartCallback(&BentoWebServer::onUploadDefaultCallback);
       addUploadProgressCallback(&BentoWebServer::onUploadProgressDefaultCallback);
       addUploadFinishCallback(&BentoWebServer::onUploadDefaultCallback); 
+
+        isUploading = false;
     }
 
     void update()
@@ -59,6 +64,8 @@ class BentoWebServer
       if (upload.status == UPLOAD_FILE_START) 
       {
         uploadedBytes = 0;
+        //totalBytes = server.header("Content-Length").toInt();
+        
         uploadingFile = FileManager::openFile(upload.filename, true, true);
         if(uploadingFile)
         {
@@ -67,6 +74,9 @@ class BentoWebServer
         {
           DBG("ERROR WHEN CREATING THE FILE");
         }
+
+        isUploading = true;
+        
       } 
       else if (upload.status == UPLOAD_FILE_WRITE) 
       {
@@ -78,12 +88,13 @@ class BentoWebServer
           }else
           {
             uploadingFile.write(upload.buf, upload.currentSize);
-            DBG("New file size : "+String(uploadingFile.size()));
           }
           
           uploadedBytes += upload.currentSize;
+
+          DBG("Uploaded "+String(uploadedBytes));
           float p = uploadedBytes*1.0f/1000000;
-          instance->onUploadProgressEvent(p);
+          if(uploadedBytes % 4000 < 2000) instance->onUploadProgressEvent(p);
         } 
       }
       else if (upload.status == UPLOAD_FILE_END) 
@@ -95,13 +106,18 @@ class BentoWebServer
           DBG("Upload total size "+String(upload.totalSize)+" < > "+String(uploadingFile.size()));
           uploadingFile.close();
           instance->onUploadFinishEvent(n);
+          isUploading = false;
         }else
         {
           DBG("Upload finish ERROR");
+          isUploading = false;
         }
         
+      }else if(upload.status == UPLOAD_FILE_ABORTED)
+      {
+        DBG("ABOORT !!!!!!!!!!");
+        isUploading = false;
       }
-      
     }
 
     static void returnOK() {
@@ -109,10 +125,12 @@ class BentoWebServer
     }
 
     static void returnFail(String msg) {
+      DBG("Failed here");
       server.send(500, "text/plain", msg + "\r\n");
     }
 
     static void handleNotFound() {
+      DBG("Not found here");
       server.send(404, "text/plain", "[notfound]");
     }
 
@@ -138,4 +156,6 @@ BentoWebServer * BentoWebServer::instance = NULL;
 WebServer BentoWebServer::server(80);
 File BentoWebServer::uploadingFile;
 int BentoWebServer::uploadedBytes = 0;
+bool BentoWebServer::isUploading = false;
+//static BentoWebServer::totalBytes = 1000000;
 #endif

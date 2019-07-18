@@ -100,3 +100,44 @@ public:
 
 	String getTypeString() const override { return "Strobe"; }
 };
+
+
+class PointPattern :
+	public PatternBlock
+{
+public:
+	PointPattern(var params = var());
+	~PointPattern() {}
+
+	FloatParameter* position;
+	FloatParameter* size;
+	FloatParameter* fade;
+	ColorParameter* color;
+	ColorParameter* bgColor;
+	IntParameter* extendNum;
+	BoolParameter* invertOdds;
+	BoolParameter* invertEvens;
+
+	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
+
+	String getTypeString() const override { return "Point"; }
+};
+
+class MultiPointPattern :
+	public PatternBlock
+{
+public:
+	MultiPointPattern(var params = var());
+	~MultiPointPattern() {}
+
+	IntParameter* numPoints;
+	FloatParameter* position;
+	FloatParameter* size;
+	FloatParameter* fade;
+	ColorParameter* color;
+	ColorParameter* bgColor;
+
+	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
+
+	String getTypeString() const override { return "Multipoint"; }
+};

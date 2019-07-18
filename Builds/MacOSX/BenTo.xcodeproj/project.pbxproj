@@ -573,6 +573,13 @@
 			isa = PBXBuildFile;
 			fileRef = B3F00A16D10651397C0D1BAE;
 		};
+		003661861512974059D9E83E = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = multipoint.png;
+			path = ../../Resources/models/multipoint.png;
+			sourceTree = "SOURCE_ROOT";
+		};
 		014A84A6934D87C73CBD3B5C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -872,6 +879,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = TimelineBlock.h;
 			path = ../../Source/LightBlock/model/blocks/timeline/TimelineBlock.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		2802E348ED9155CFCD865E76 = {
+			isa = PBXFileReference;
+			lastKnownFileType = image.png;
+			name = point.png;
+			path = ../../Resources/models/point.png;
 			sourceTree = "SOURCE_ROOT";
 		};
 		2863F55FB1348E82DB781B00 = {
@@ -2563,8 +2577,10 @@
 			children = (
 				208154AD871CA4748CAF4FD4,
 				7ADE26AC714AABF818B8BECE,
+				003661861512974059D9E83E,
 				42D0B60221EE6B79C91E4545,
 				E7B7F5671349BE13E13B25AF,
+				2802E348ED9155CFCD865E76,
 				484A93983DFB463CB048F899,
 				5617809C4A723B606C5B0812,
 				D2D2C8114E3834E55E3E0403,

@@ -6788,10 +6788,16 @@
     <None Include="..\..\Resources\models\dmx.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
+    <None Include="..\..\Resources\models\multipoint.png">
+      <Filter>BenTo\Resources\models</Filter>
+    </None>
     <None Include="..\..\Resources\models\node.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
     <None Include="..\..\Resources\models\picture.png">
+      <Filter>BenTo\Resources\models</Filter>
+    </None>
+    <None Include="..\..\Resources\models\point.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
     <None Include="..\..\Resources\models\script.png">

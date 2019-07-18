@@ -101,8 +101,7 @@ long lastOrientationSendTime = 0;
 #if USE_BUTTON
 void onButtonEvent(int type)
 {
-  Serial.print("Button Event : ");
-  Serial.println(type);
+  DBG("Button Event : "+String(type));
 
   switch (type)
   {
@@ -396,9 +395,11 @@ void uploadStarted(const String &fileName)
 void uploadProgress(float progress)
 {
   DBG("Upload progress " + String(progress));
-  int index = ((int)(progress * NUM_LEDS)) % NUM_LEDS;
-  if (index > 0) setRange(0, index, CRGB(255, 0, 255), true);
-  setLed(index, CRGB(255, 255, 255));
+  float fIndex = fmodf(progress * NUM_LEDS, NUM_LEDS);
+  int index = floor(fIndex);
+  if (index > 0) setRange(0, index, CHSV(30+progress*40, 255, 255));
+  int rest = (fmodf(fIndex,1)-.5f*2)*255;
+  setLed(index, CHSV(30+progress*40,std::max(rest,0), std::min(rest,0)+255));
 }
 
 void uploadFinished(const String &fileName)
@@ -534,11 +535,19 @@ void setup()
   setFullColor(CRGB::Black);
 #endif
 
+  Serial.setDebugOutput(true);
   DBG("Bento is READY :)");
 }
 
 void loop()
 {
+  processSerial();
+  
+#if USE_SERVER
+  webServer.update();
+  if(BentoWebServer::isUploading) return;
+#endif
+
 
 #if USE_BUTTON
   btManager.update();
@@ -548,10 +557,6 @@ void loop()
 
 #if USE_OSC
   oscManager.update();
-#endif
-
-#if USE_SERVER
-  webServer.update();
 #endif
 
 #endif //WIFI
@@ -572,7 +577,6 @@ void loop()
   batteryManager.update();
 #endif
 
-  processSerial();
 }
 
 void processSerial()

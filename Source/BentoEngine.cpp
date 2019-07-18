@@ -119,6 +119,7 @@ void BentoEngine::processMessage(const OSCMessage & m)
 
 		if (aList[2] == "enable")
 		{
+			if (m.size() < 2) return;
 			bool active = OSCHelpers::getIntArg(m[1]) > 0;
 
 			if (id == -1)

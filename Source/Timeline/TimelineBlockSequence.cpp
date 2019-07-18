@@ -88,7 +88,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 
 	for (int i = 0; i < resolution; i++)
 	{
-		float r = 0, g = 0, b = 0;
+		float r = 0, g = 0, b = 0, a = 0;
 		for (int j = numActiveLayers - 1; j >= 0; j--)
 		{
 			switch (blendModes[j])
@@ -97,30 +97,34 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 				r += colors[j][i].getFloatRed();
 				g += colors[j][i].getFloatGreen();
 				b += colors[j][i].getFloatBlue();
+				a += colors[j][i].getFloatAlpha();
 				break;
 
 			case LightBlockLayer::ALPHA:
 			{
-				float a = colors[j][i].getFloatAlpha();
 				r = r + (colors[j][i].getFloatRed() - r) * a;
 				g = g + (colors[j][i].getFloatGreen() - g) * a;
 				b = b + (colors[j][i].getFloatBlue() - b) * a;
+				a += colors[j][i].getFloatAlpha();
 			}
 			break;
 
 			case LightBlockLayer::MASK:
 			{
-				float a = colors[j][i].getFloatAlpha();
-				r = jmin(r,colors[j][i].getFloatRed()) * a;
-				g = jmin(g,colors[j][i].getFloatGreen()) * a;
-				b = jmin(b,colors[j][i].getFloatBlue()) * a;
+				float br = colors[j][i].getBrightness();
+				float ma = colors[j][i].getFloatAlpha();
+				float fac = jmap<float>(ma, 1, br);
+				r *=  fac;// jmin(r, colors[j][i].getFloatRed())* a;
+				g *= fac;// jmin(g, colors[j][i].getFloatGreen())* a;
+				b *= fac;// jmin(b, colors[j][i].getFloatBlue())* a;
+				a *= fac;
 			}
 			break;
 			}
 			
 		}
 
-		result.set(i, Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f),1));
+		result.set(i, Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f),jmin(a, 1.f)));
 	}
 
 	return result;

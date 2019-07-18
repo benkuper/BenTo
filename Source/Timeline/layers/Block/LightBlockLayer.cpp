@@ -71,10 +71,11 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 		{
 			if (i >= clipColors[j].size()) continue;
 
-			r += clipColors[j][i].getFloatRed();
-			g += clipColors[j][i].getFloatGreen();
-			b += clipColors[j][i].getFloatBlue();
-			a += clipColors[j][i].getFloatAlpha();
+			float ca = clipColors[j][i].getFloatAlpha();
+			r += clipColors[j][i].getFloatRed() * ca;
+			g += clipColors[j][i].getFloatGreen() * ca;
+			b += clipColors[j][i].getFloatBlue() * ca;
+			a += ca;
 		}
 
 		result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), jmin(a, 1.f))));
