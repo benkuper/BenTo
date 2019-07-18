@@ -36,6 +36,7 @@ struct BakeData
 class BaseColorProvider
 {
 public:
+	virtual ~BaseColorProvider() {}
 	virtual Array<Colour> getColors(Prop* p, double time, var params) = 0;
 	virtual BakeData getBakeDataForProp(Prop*) = 0;
 };
