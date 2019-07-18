@@ -27,7 +27,7 @@ PropUI::PropUI(Prop * p) :
 
 	viz.setInterceptsMouseClicks(false, false);
 
-	setSize(100, 100);
+	setSize(80, 100);
 	
 }
 
@@ -90,12 +90,12 @@ void PropUI::mouseUp(const MouseEvent & e)
 
 void PropUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	r.removeFromRight(2);
-	idUI->setBounds(r.removeFromRight(60));
+	
 }
 
 void PropUI::resizedInternalContent(Rectangle<int> &r)
 {
+	idUI->setBounds(r.removeFromTop(16).removeFromLeft(60));
 	r.removeFromTop(2);
 	viz.setBounds(r.reduced(2));
 }

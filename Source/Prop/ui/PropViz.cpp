@@ -27,8 +27,8 @@ void PropViz::paint(Graphics & g)
 {
 	if (propRef.wasObjectDeleted() || prop->currentBlock == nullptr)
 	{
-		g.setColour(TEXT_COLOR.darker());
-		g.drawFittedText("No active block", getLocalBounds().reduced(10), Justification::centred, 5);
+		//g.setColour(TEXT_COLOR.darker());
+		//g.drawFittedText("No active block", getLocalBounds().reduced(10), Justification::centred, 5);
 		return;
 	}
 

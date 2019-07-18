@@ -106,61 +106,61 @@ void onButtonEvent(int type)
 
   switch (type)
   {
-  case BT_PRESSED:
-  {
+    case BT_PRESSED:
+      {
 #if USE_LEDSTRIP
-    if (stripManager.currentMode == LedStripManager::Mode::Pattern) stripManager.pm.nextPattern();
-    else if(stripManager.currentMode == LedStripManager::Mode::Baked) stripManager.bakePlayer.togglePlayPause();
+        if (stripManager.currentMode == LedStripManager::Mode::Pattern) stripManager.pm.nextPattern();
+        else if (stripManager.currentMode == LedStripManager::Mode::Baked) stripManager.bakePlayer.togglePlayPause();
 #endif
 
 #if USE_OSC
-    OSCMessage msg("/touch/pressed");
-    msg.add(DeviceSettings::deviceID.c_str());
-    msg.add(1);
-    oscManager.sendMessage(msg);
+        OSCMessage msg("/touch/pressed");
+        msg.add(DeviceSettings::deviceID.c_str());
+        msg.add(1);
+        oscManager.sendMessage(msg);
 #endif
-  }
-  break;
+      }
+      break;
 
-  case BT_RELEASED:
-  {
+    case BT_RELEASED:
+      {
 #if USE_OSC
-    OSCMessage msg("/touch/pressed");
-    msg.add(DeviceSettings::deviceID.c_str());
-    msg.add(0);
-    oscManager.sendMessage(msg);
+        OSCMessage msg("/touch/pressed");
+        msg.add(DeviceSettings::deviceID.c_str());
+        msg.add(0);
+        oscManager.sendMessage(msg);
 
 #endif
-  }
-  break;
+      }
+      break;
 
-  case BT_SHORTPRESS:
-  {
+    case BT_SHORTPRESS:
+      {
 #if USE_OSC
-    OSCMessage msg("/touch/shortPress");
-    msg.add(DeviceSettings::deviceID.c_str());
-    oscManager.sendMessage(msg);
+        OSCMessage msg("/touch/shortPress");
+        msg.add(DeviceSettings::deviceID.c_str());
+        oscManager.sendMessage(msg);
 #endif
-  }
-  break;
+      }
+      break;
 
-  case BT_LONGPRESS:
+    case BT_LONGPRESS:
 #if USE_LEDSTRIP
 #if USE_FILES
-   stripManager.bakePlayer.play(0);
+      stripManager.bakePlayer.play(0);
 #endif
 #endif
-    break;
+      break;
 
-  case BT_VERYLONGPRESS:
-    sleep();
-    break;
+    case BT_VERYLONGPRESS:
+      sleep();
+      break;
   }
 }
 
 void onMultipress(int count)
 {
-  DBG("Multipress : "+String(count));
+  DBG("Multipress : " + String(count));
 
   if (count == 2)
   {
@@ -170,14 +170,14 @@ void onMultipress(int count)
   }
   else if (count == 3)
   {
-/*    
-#if USE_LEDSTRIP
-    stripManager.pm.setPattern(stripManager.pm.Fish);
-#endif
-*/
+    /*
+      #if USE_LEDSTRIP
+        stripManager.pm.setPattern(stripManager.pm.Fish);
+      #endif
+    */
 #if USE_FILES
-  stripManager.setMode(LedStripManager::Mode::Baked);
-  stripManager.bakePlayer.load("default");
+    stripManager.setMode(LedStripManager::Mode::Baked);
+    stripManager.bakePlayer.load("default");
 #endif
   }
 }
@@ -208,7 +208,7 @@ void wifiConfigSaved()
 void touchUpdate(int touchID, bool touched)
 {
 
-  DBG("Touch "+String(touchID)+" : "+String((int)touched));
+  DBG("Touch " + String(touchID) + " : " + String((int)touched));
 
 #if USE_OSC
   OSCMessage msg("/touch");
@@ -226,13 +226,13 @@ void orientationUpdate(float yaw, float pitch, float roll)
   if (millis() - lastOrientationSendTime > orientationSendRateMS)
   {
 #if USE_OSC
-/*
-    OSCMessage msg("/orientation");
-    msg.add(DeviceSettings::deviceID.c_str());
-    msg.add(yaw);
-    msg.add(pitch);
-    msg.add(roll);
-    oscManager.sendMessage(msg);
+    /*
+        OSCMessage msg("/orientation");
+        msg.add(DeviceSettings::deviceID.c_str());
+        msg.add(yaw);
+        msg.add(pitch);
+        msg.add(roll);
+        oscManager.sendMessage(msg);
     */
 #endif
 
@@ -246,7 +246,7 @@ void messageReceived(OSCMessage &msg)
 {
   char address[256];
   msg.getAddress(address);
-  DBG("OSC Message received : "+String(address));
+  DBG("OSC Message received : " + String(address));
 
   if (msg.match("/reset"))
   {
@@ -262,9 +262,9 @@ void messageReceived(OSCMessage &msg)
   }
   else if (msg.match("/battery"))
   {
-    #if USE_BATTERY
+#if USE_BATTERY
     batteryLevelUpdate();
-    #endif
+#endif
   }
   else
   {
@@ -289,8 +289,8 @@ void messageReceived(OSCMessage &msg)
 #endif
 
 #if USE_FILES
-    if(fileManager.handleMessage(msg))
-    return;
+    if (fileManager.handleMessage(msg))
+      return;
 #endif
 
     DBG("...message not handled");
@@ -320,11 +320,11 @@ void batteryCriticalLevel()
 void batteryChargingStateChanged()
 {
 #if USE_OSC
-/*
-  OSCMessage msg("/battery/charging");
-  msg.add(DeviceSettings::deviceID.c_str());
-  msg.add(batteryManager.isCharging ? 1 : 0);
-  oscManager.sendMessage(msg);
+  /*
+    OSCMessage msg("/battery/charging");
+    msg.add(DeviceSettings::deviceID.c_str());
+    msg.add(batteryManager.isCharging ? 1 : 0);
+    oscManager.sendMessage(msg);
   */
 #endif
 }
@@ -332,13 +332,13 @@ void batteryChargingStateChanged()
 void batteryLevelUpdate()
 {
 #if USE_OSC
-/*
-  OSCMessage msg("/battery/level");
-  msg.add(DeviceSettings::deviceID.c_str());
-  msg.add(batteryManager.normalizedVoltage);
-  msg.add(batteryManager.voltage);
-  msg.add(batteryManager.rawData);
-  oscManager.sendMessage(msg);
+  /*
+    OSCMessage msg("/battery/level");
+    msg.add(DeviceSettings::deviceID.c_str());
+    msg.add(batteryManager.normalizedVoltage);
+    msg.add(batteryManager.voltage);
+    msg.add(batteryManager.rawData);
+    oscManager.sendMessage(msg);
   */
 #endif
 }
@@ -389,16 +389,16 @@ void sleep()
 #if USE_SERVER
 void uploadStarted(const String &fileName)
 {
-  DBG("Upload started : "+fileName);
+  DBG("Upload started : " + fileName);
   setFullColor(CRGB::Black);
 }
 
 void uploadProgress(float progress)
 {
   DBG("Upload progress " + String(progress));
-  int index = ((int)(progress*NUM_LEDS))%NUM_LEDS;
-  if(index > 0) setRange(0, index, CRGB(255,0,255), true);
-  setLed(index, CRGB(255,255,255));
+  int index = ((int)(progress * NUM_LEDS)) % NUM_LEDS;
+  if (index > 0) setRange(0, index, CRGB(255, 0, 255), true);
+  setLed(index, CRGB(255, 255, 255));
 }
 
 void uploadFinished(const String &fileName)
@@ -416,15 +416,15 @@ void setup()
 {
   Serial.begin(115200);
   Serial.println("");
-  
+
   Wire.begin(2, 4);
-  preferences.begin("bento-settings",false);
+  preferences.begin("bento-settings", false);
   settings.init();
 
-   //Keep the power
+  //Keep the power
   pinMode(POWER_ENABLE_PIN, OUTPUT);
   digitalWrite(POWER_ENABLE_PIN, HIGH);
-  
+
 #if USE_BUTTON
   btManager.init();
   btManager.addButtonCallback(&onButtonEvent);
@@ -458,7 +458,7 @@ void setup()
   for (int i = 0; i < NUM_LEDS; i++)
   {
     setRange(0, i, CHSV(h, 255, 60), true);
-    delay(500/NUM_LEDS);
+    delay(500 / NUM_LEDS);
   }
 
   delay(50);
@@ -585,13 +585,13 @@ void processSerial()
     char c = Serial.read();
     switch (c)
     {
-    case 'r':
-      resetESP(false);
-      break;
+      case 'r':
+        resetESP(false);
+        break;
 
-    case 'b':
-      resetESP(true);
-      break;
+      case 'b':
+        resetESP(true);
+        break;
     }
   }
 }
