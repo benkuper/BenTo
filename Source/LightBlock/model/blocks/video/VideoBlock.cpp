@@ -11,6 +11,7 @@
 #include "VideoBlock.h"
 #include "ui/VideoBlockUI.h"
 #include "Video/Spatializer.h"
+#include "Prop/Prop.h"
 
 VideoBlock::VideoBlock(var params) :
 	LightBlockModel(getTypeString(), params),

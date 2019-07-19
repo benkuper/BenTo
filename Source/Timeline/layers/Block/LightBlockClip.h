@@ -10,7 +10,7 @@
 
 #pragma once
 
-#include "Prop/Prop.h"
+#include "LightBlock/LightBlock.h"
 
 class LightBlockLayer;
 

@@ -63,31 +63,38 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 		clipColors.add(clip->getColors(p, time, params));
 	}
 
-	for (int i = 0; i < resolution; i++)
+	if (clipColors.size() > 0)
 	{
-		float r = 0, g = 0, b = 0, a = 0;
-
-		for (int j = 0; j < clipColors.size(); j++)
+		for (int i = 0; i < resolution; i++)
 		{
-			if (i >= clipColors[j].size()) continue;
+			//float r = clipColors[0][i].getFloatRed(), g = clipColors[0][i].getFloatGreen(), b = clipColors[0][i].getFloatBlue(), a = clipColors[0][i].getFloatAlpha();
+			float r = 0, g = 0, b = 0, a = 0;
 
-			float ca = clipColors[j][i].getFloatAlpha();
-			r += clipColors[j][i].getFloatRed() * ca;
-			g += clipColors[j][i].getFloatGreen() * ca;
-			b += clipColors[j][i].getFloatBlue() * ca;
-			a += ca;
+			for (int j = 0; j < clipColors.size(); j++)
+			{
+				if (i >= clipColors[j].size()) continue;
+
+				float ca = clipColors[j][i].getFloatAlpha();
+				r += clipColors[j][i].getFloatRed() * ca;
+				g += clipColors[j][i].getFloatGreen() * ca;
+				b += clipColors[j][i].getFloatBlue() * ca;
+				a += ca;
+			}
+
+			result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), jmin(a, 1.f))));
 		}
-
-		result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), jmin(a, 1.f))));
 	}
+	
 
 	return result;
 }
 
 void LightBlockLayer::updateLinkedProps()
 {
-	if (PropManager::getInstanceWithoutCreating() != nullptr)
+	if (PropManager::getInstanceWithoutCreating() != nullptr && !Engine::mainEngine->isLoadingFile && !Engine::mainEngine->isClearing)
 	{
+		DBG("Update linked props " << niceName);
+		/*
 		for (auto &p : PropManager::getInstance()->items)
 		{
 			if (filterManager->getTargetIDForProp(p) >= 0)
@@ -99,6 +106,7 @@ void LightBlockLayer::updateLinkedProps()
 				unregisterLinkedInspectable(p);
 			}
 		}
+		*/
 	}
 }
 

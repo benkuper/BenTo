@@ -57,6 +57,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	findPropMode->isSavable = false;
 	
 	powerOffTrigger = ioCC.addTrigger("Power off", "Power off the prop if possible");
+	resetTrigger = ioCC.addTrigger("Reset", "Reset the prop if possible");
 
 
 
@@ -104,6 +105,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 	activeProvider->hideInEditor = true;
+
 }
 
 Prop::~Prop()
@@ -136,6 +138,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 {
 	if (currentBlock == nullptr && model == nullptr) return;
 	if (model != nullptr && currentBlock != nullptr && currentBlock->provider == model) return;
+	if (isBaking->boolValue()) return;
 
 	if (currentBlock != nullptr)
 	{
@@ -248,6 +251,10 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		powerOffProp();
 	}
+	else if (c == resetTrigger)
+	{
+		resetProp();
+	}
 }
 
 void Prop::inspectableDestroyed(Inspectable* i)
@@ -259,6 +266,7 @@ void Prop::inspectableDestroyed(Inspectable* i)
 void Prop::sendColorsToProp(bool forceSend)
 {
 	if (!enabled->boolValue() && !forceSend) return;
+	if (!isConnected->boolValue() || !twoWayConnected->boolValue()) return;
 	sendColorsToPropInternal();
 }
 
@@ -384,7 +392,11 @@ void Prop::handlePing(bool isPong)
 		stopTimer(PROP_PING_TIMERID);
 		startTimer(PROP_PING_TIMERID, 2000); //2s
 
-		if (!isTimerRunning(PROP_PINGPONG_TIMERID)) startTimer(PROP_PINGPONG_TIMERID, 2000); // only once, but launch only if it received a first ping
+		if (!isTimerRunning(PROP_PINGPONG_TIMERID))
+		{
+			sendPing();
+			startTimer(PROP_PINGPONG_TIMERID, 2000); // only once, but launch only if it received a first ping
+		}
 	}
 	else
 	{

@@ -212,7 +212,6 @@ void TimelineBlockSequence::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == identityClusterGroup)
 	{
-		identityMode->setEnabled(identityClusterGroup->getValueData() != "");
 		currentIdentityGroup = clusterGroupManager.getItemWithName(identityClusterGroup->getValueData());
 	}
 	else if (p == identityMode)

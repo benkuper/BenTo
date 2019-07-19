@@ -15,7 +15,7 @@ Preferences preferences;
 
 #define USE_BUTTON 1
 #define USE_WIFI 1
-#define USE_IR 1
+#define USE_IR 0
 
 #if USE_WIFI
 #define USE_OSC 1
@@ -97,6 +97,7 @@ IRManager irManager;
 long orientationSendRateMS = 20;
 long lastOrientationSendTime = 0;
 
+
 //Callbacks
 #if USE_BUTTON
 void onButtonEvent(int type)
@@ -152,7 +153,7 @@ void onButtonEvent(int type)
       break;
 
     case BT_VERYLONGPRESS:
-      sleep();
+      sleepESP();
       break;
   }
 }
@@ -257,7 +258,7 @@ void messageReceived(OSCMessage &msg)
   }
   else if (msg.match("/sleep"))
   {
-    sleep();
+    sleepESP();
   }
   else if (msg.match("/battery"))
   {
@@ -295,7 +296,24 @@ void messageReceived(OSCMessage &msg)
     DBG("...message not handled");
   }
 }
-#endif
+
+
+void oscConnectionChanged(bool isConnected)
+{
+  DBG("OSC connection change "+String(isConnected));
+#if USE_LEDSTRIP
+    if(stripManager.currentMode == LedStripManager::Mode::Streaming)
+    {
+      setFullColor(CRGB::Black);
+      if(!isConnected) setRange(NUM_LEDS/2, NUM_LEDS/2 + 4, CRGB::Red);
+    }
+#endif //LEDSTRIP
+}
+
+#endif //OSC
+
+
+
 
 #if USE_BATTERY
 void batteryCriticalLevel()
@@ -313,7 +331,7 @@ void batteryCriticalLevel()
 #endif
 
   delay(100);
-  sleep();
+  sleepESP();
 }
 
 void batteryChargingStateChanged()
@@ -354,7 +372,7 @@ void resetESP(bool toBootloader)
   ESP.restart();
 }
 
-void sleep()
+void sleepESP()
 {
 #if USE_LEDSTRIP
 
@@ -377,9 +395,10 @@ void sleep()
     delay(10);
   }
   FastLED.clear();
+  FastLED.show();
 #endif
 
-  delay(1000);
+  delay(200);
   esp_sleep_enable_ext0_wakeup(GPIO_NUM_13, HIGH);
   esp_deep_sleep_start();
 }
@@ -389,25 +408,41 @@ void sleep()
 void uploadStarted(const String &fileName)
 {
   DBG("Upload started : " + fileName);
-  setFullColor(CRGB::Black);
+  
+#if USE_LEDSTRIP
+setFullColor(CRGB::Black);
+#endif
+
+#if USE_WIFI
+  wifiManager.stopConnections();
+#endif
 }
 
 void uploadProgress(float progress)
 {
   DBG("Upload progress " + String(progress));
+  #if USE_LEDSTRIP
   float fIndex = fmodf(progress * NUM_LEDS, NUM_LEDS);
   int index = floor(fIndex);
   if (index > 0) setRange(0, index, CHSV(30+progress*40, 255, 255));
   int rest = (fmodf(fIndex,1)-.5f*2)*255;
   setLed(index, CHSV(30+progress*40,std::max(rest,0), std::min(rest,0)+255));
+  #endif
 }
 
 void uploadFinished(const String &fileName)
 {
-  DBG("Upload finished, playing file");
+  DBG("Upload finished !");
+
+  #if USE_LEDSTRIP
   stripManager.setMode(LedStripManager::Mode::Streaming);
   //stripManager.setMode(LedStripManager::Mode::Baked);
   //stripManager.bakePlayer.load(fileName);
+  #endif
+
+  #if USE_WIFI
+  wifiManager.startConnections();
+  #endif
 }
 #endif
 
@@ -520,6 +555,7 @@ void setup()
 #if USE_OSC
   oscManager.init();
   oscManager.addCallbackMessageReceived(&messageReceived);
+  oscManager.addCallbackConnectionChanged(&oscConnectionChanged);
 #endif
 
 #if USE_SERVER
@@ -596,6 +632,24 @@ void processSerial()
       case 'b':
         resetESP(true);
         break;
+
+      case 'c':
+#if USE_WIFI
+    DBG("Restarting connections");
+     wifiManager.stopConnections();
+     delay(2000);
+     wifiManager.startConnections();
+#endif
+     break;
+
+     case 's':
+     if(webServer.isEnabled) webServer.closeServer();
+     else webServer.initServer();
+     break;
+
+     case 'w':
+     wifiManager.reset();
+     break;
     }
   }
 }

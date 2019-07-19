@@ -17,39 +17,49 @@ class BentoWebServer
     static int uploadedBytes;
     
     static bool isUploading;
-        
+    static int uploadIndex;
+
+    bool isEnabled;
+    
      BentoWebServer()
      {
         instance = this;
+
+        server.onNotFound(BentoWebServer::handleNotFound);
+        server.on("/upload", HTTP_POST, []() { returnOK(); }, BentoWebServer::handleFileUpload);
      }
     
     void init()
     {
-      server.onNotFound(BentoWebServer::handleNotFound);
-      server.on("/upload", HTTP_POST, []() {
-        returnOK();
-      },
-      BentoWebServer::handleFileUpload
-      );
-
-      server.begin();
-      DBG("HTTP server started");
-
-      /* if (MDNS.begin(settings.deviceID.c_str())) {
-        MDNS.addService("http", "tcp", 80);
-        DBG("MDNS responder started, you can now connect to http://"+settings.deviceID+".local");
-        }
-      */
-
+      isUploading = false;
+      isEnabled = false;
+      
       addUploadStartCallback(&BentoWebServer::onUploadDefaultCallback);
       addUploadProgressCallback(&BentoWebServer::onUploadProgressDefaultCallback);
       addUploadFinishCallback(&BentoWebServer::onUploadDefaultCallback); 
 
-        isUploading = false;
+      initServer();
+      
+    }
+
+    void initServer()
+    {
+      server.begin();
+      DBG("HTTP server started");
+      isEnabled = true;
+    }
+
+    void closeServer()
+    {
+      server.close();
+      DBG("HTTP server closed");
+      isEnabled = false;
     }
 
     void update()
     {
+      if(!isEnabled) return;
+      
       server.handleClient();
     }
 
@@ -65,6 +75,7 @@ class BentoWebServer
       {
         uploadedBytes = 0;
         //totalBytes = server.header("Content-Length").toInt();
+        uploadIndex = 0;
         
         uploadingFile = FileManager::openFile(upload.filename, true, true);
         if(uploadingFile)
@@ -91,10 +102,9 @@ class BentoWebServer
           }
           
           uploadedBytes += upload.currentSize;
-
           DBG("Uploaded "+String(uploadedBytes));
           float p = uploadedBytes*1.0f/1000000;
-          if(uploadedBytes % 4000 < 2000) instance->onUploadProgressEvent(p);
+          if(uploadedBytes % 8000 < 4000) instance->onUploadProgressEvent(p);
         } 
       }
       else if (upload.status == UPLOAD_FILE_END) 
@@ -157,5 +167,5 @@ WebServer BentoWebServer::server(80);
 File BentoWebServer::uploadingFile;
 int BentoWebServer::uploadedBytes = 0;
 bool BentoWebServer::isUploading = false;
-//static BentoWebServer::totalBytes = 1000000;
+int BentoWebServer::uploadIndex = 0;
 #endif

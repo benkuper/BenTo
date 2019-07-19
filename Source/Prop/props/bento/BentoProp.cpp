@@ -246,3 +246,10 @@ void BentoProp::powerOffProp()
 	OSCMessage m("/sleep");
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
+
+void BentoProp::resetProp()
+{
+	NLOG(niceName, "Resetting ");
+	OSCMessage m("/reset");
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}

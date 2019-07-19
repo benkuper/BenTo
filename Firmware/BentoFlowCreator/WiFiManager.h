@@ -45,7 +45,7 @@ class WiFiManager
       password = preferences.getString("wifiPassword", "lightpainting");
 
       DBG(String("WiFiManager connecting to " + ssid + " : " + password));
-
+      
       WiFi.begin(ssid.c_str(), password.c_str());
 
       int tryIndex = 0;
@@ -104,12 +104,9 @@ class WiFiManager
       DBG("Disabling wifi sleep mode");
       WiFi.setSleep(false);
 
-      DBG("Setting up UDP...");
-      oscUDP.begin(9000);
-      streamingUDP.begin(8888);
-      DBG("UPD is init.");
-
-
+      DBG("Starting Connections");
+      startConnections();
+      
       isConnected = true;
       delay(500);
     }
@@ -119,6 +116,12 @@ class WiFiManager
       turnOffWiFi = true;
     }
 
+    void reset()
+    {
+      DBG("Reset Wifi !");
+      init();
+    }
+    
     void setupLocalWiFi()
     {
       //uint8 mac[6];
@@ -128,6 +131,37 @@ class WiFiManager
 
       DBG("Setting up AP WiFi : " + wifiString);
       WiFi.softAP(wifiString.c_str());
+    }
+
+
+    void stopConnections()
+    {
+       #if USE_OSC
+      oscUDP.flush();
+      oscUDP.stop();
+      DBG("OSC UDP is stopped.");
+      #endif
+
+      #if USE_LEDSTRIP  
+      streamingUDP.flush();
+      streamingUDP.stop();
+      DBG("Streaming UPD is stopped.");
+      #endif
+    }
+
+    void startConnections()
+    {
+       #if USE_OSC
+      oscUDP.begin(9000);
+      oscUDP.flush();
+      DBG("OSC UDP is init.");
+      #endif
+
+      #if USE_LEDSTRIP
+      streamingUDP.begin(8888);
+      streamingUDP.flush();
+       DBG("Streaming UPD is init.");
+      #endif
     }
 
 #if USE_OSC

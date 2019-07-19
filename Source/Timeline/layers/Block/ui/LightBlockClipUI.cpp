@@ -11,6 +11,7 @@
 #include "LightBlockClipUI.h"
 #include "../LightBlockLayer.h"
 #include "LightBlock/model/ui/LightBlockModelUI.h"
+#include "Prop/Prop.h"
 
 LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	LayerBlockUI(_clip),
@@ -25,6 +26,9 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 {
 
 	bgColor = BG_COLOR.brighter().withAlpha(.5f);
+
+	previewProp.reset(new Prop());
+
 	generatePreview();
 
 	acceptedDropTypes.add("LightBlockModel");
@@ -312,8 +316,9 @@ void LightBlockClipUI::run()
 
 		int id = clip->layer->previewID->intValue();
 
-		previewProp.globalID->setValue(id, true);
-		previewProp.resolution->setValue(resY, true);
+
+		previewProp->globalID->setValue(id, true);
+		previewProp->resolution->setValue(resY, true);
 
 		var params = new DynamicObject();
 		params.getDynamicObject()->setProperty("updateAutomation", false);
@@ -328,7 +333,7 @@ void LightBlockClipUI::run()
 			float relTotal = i * length / resX;
 			float absT = start + relTotal;
 
-			Array<Colour> c = clip->getColors(&previewProp, absT, params);
+			Array<Colour> c = clip->getColors(previewProp.get(), absT, params);
 
 			for (int ty = 0; ty < resY; ty++)
 			{

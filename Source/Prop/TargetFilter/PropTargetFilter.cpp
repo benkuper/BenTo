@@ -11,6 +11,7 @@
 #include "PropTargetFilter.h"
 #include "../PropManager.h"
 #include "Prop/Cluster/PropClusterGroupManager.h"
+#include "Prop/Prop.h"
 
 PropTargetFilter::PropTargetFilter(StringRef name) :
 	BaseItem(name)

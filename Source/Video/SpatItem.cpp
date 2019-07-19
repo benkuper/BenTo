@@ -9,6 +9,7 @@
 */
 
 #include "SpatItem.h"
+#include "Prop/Prop.h"
 
 SpatItem::SpatItem() :
 	BaseItem("Spat Item")

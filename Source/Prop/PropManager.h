@@ -42,6 +42,7 @@ public:
 	Trigger * autoAssignIdTrigger;
 	Trigger * bakeAll;
 	Trigger* powerOffAll;
+	Trigger* resetAll;
 	Trigger* clearAll;
 	BoolParameter * bakeMode;
 

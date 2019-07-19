@@ -47,6 +47,7 @@ public:
 
 	BoolParameter * findPropMode;
 	Trigger* powerOffTrigger;
+	Trigger* resetTrigger;
 
 	ControllableContainer sensorsCC;
 	FloatParameter * battery;
@@ -120,6 +121,7 @@ public:
 	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 
 	virtual void powerOffProp() {}
+	virtual void resetProp() {}
 
 	virtual void handlePing(bool isPong = false);
 	virtual void sendPing() {}
@@ -127,7 +129,6 @@ public:
 	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
-
 
 	//Listener
 	class  PropListener

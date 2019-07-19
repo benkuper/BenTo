@@ -9,9 +9,10 @@
 */
 
 #pragma once
-#include "Prop/Prop.h"
-class PropClusterGroupManager;
+#include "JuceHeader.h"
 
+class PropClusterGroupManager;
+class Prop;
 
 class PropTargetFilter :
 	public BaseItem

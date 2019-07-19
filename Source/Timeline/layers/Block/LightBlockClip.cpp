@@ -11,6 +11,7 @@
 #include "LightBlockClip.h"
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "LightBlock/model/blocks/timeline/TimelineBlock.h"
+#include "Prop/Prop.h"
 
 LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 	LayerBlock("LightBlockClip", _time),

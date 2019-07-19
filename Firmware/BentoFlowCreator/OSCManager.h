@@ -7,6 +7,8 @@
 #include <OSCMessage.h>
 #include <OSCBoards.h>
 
+#define PING_RECEIVE_TIMEOUT 4000
+
 class OSCManager
 {
   public:
@@ -16,15 +18,19 @@ class OSCManager
     const int remotePort = 10000;
 
     bool isReadyToSend;
+    bool isConnected;
 
 #if USE_PING
     long lastPingTime;
     const long pingTime = 1000;
+    long timeSinceLastReceivedPing;
+    bool pongEnabled = true;
 #endif
 
     OSCManager(WiFiUDP &udp): udp(udp)
     {
       addCallbackMessageReceived(&OSCManager::defaultCallback);
+      addCallbackConnectionChanged(&OSCManager::defaultConnectionCallback);
       isReadyToSend = false;
     }
 
@@ -32,13 +38,27 @@ class OSCManager
     {
       DBG("OCSManager init.");
       remoteHost = preferences.getString("remoteHost", "");
+      
+      #if USE_PING
       lastPingTime = 0;
+      timeSinceLastReceivedPing = millis();
+      pongEnabled = true;
+      #endif
+      
+      isConnected = true;
     }
 
     void update()
     {
 #if USE_PING
       ping();
+      if(isConnected && pongEnabled && millis() > timeSinceLastReceivedPing + PING_RECEIVE_TIMEOUT)
+      {
+        DBG("MAY BE DISCONNECTED ?");
+        pongEnabled = false;
+        
+        setConnected(false);
+      }
 #endif
 
       receiveOSC();
@@ -78,6 +98,9 @@ class OSCManager
           {
             DBG("Got ping !");
             ping(true);
+            pongEnabled = true;
+            setConnected(true);
+            timeSinceLastReceivedPing = millis();
           }
           else
           {
@@ -98,7 +121,7 @@ class OSCManager
 
       char addr[32];
       msg.getAddress(addr);
-      DBG("Send OSC message " + String(addr) + ", isReadyToSend ? " + String(isReadyToSend));
+     // DBG("Send OSC message " + String(addr) + ", isReadyToSend ? " + String(isReadyToSend));
 
       udp.beginPacket(host, port);
       msg.send(udp);
@@ -119,7 +142,7 @@ class OSCManager
     void ping(bool isPong = false)
     {
       if (!isPong && (millis() - lastPingTime < pingTime)) return;
-
+      
       OSCMessage msg(isPong?"/pong":"/ping");
       msg.add(DeviceSettings::deviceID.c_str());
       sendMessage(msg);
@@ -127,6 +150,12 @@ class OSCManager
       if(!isPong) lastPingTime = millis();
     }
 
+    void setConnected(bool value)
+    {
+      if(isConnected == value) return;
+      isConnected = value;
+      onConnectionChanged(isConnected);
+    }
 
     //Helpers
     String ipToString()
@@ -140,8 +169,15 @@ class OSCManager
     typedef void(*onEvent)(OSCMessage &);
     void (*onMessageReceived) (OSCMessage &);
 
+    typedef void (*onConnectionEvent)(bool);
+    void (*onConnectionChanged) (bool);
+
     void addCallbackMessageReceived (onEvent func) {
       onMessageReceived = func;
+    }
+
+    void addCallbackConnectionChanged (onConnectionEvent func) {
+      onConnectionChanged = func;
     }
 
     static void defaultCallback(OSCMessage &msg)
@@ -149,6 +185,10 @@ class OSCManager
       //nothing
     }
 
+    static void defaultConnectionCallback(bool isConnected)
+    {
+      //nothing
+    }
 };
 
 #endif

@@ -11,6 +11,7 @@
 #include "SpatItemUI.h"
 #include "SpatializerPanel.h"
 #include "Video/Spatializer.h"
+#include "Prop/Prop.h"
 
 SpatItemUI::SpatItemUI(SpatItem * i, Spatializer * spat, SpatLayoutView * panel) :
 	BaseItemMinimalUI(i),

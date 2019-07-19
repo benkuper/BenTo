@@ -13,7 +13,6 @@
 #include "LightBlockModelParameterManager.h"
 #include "preset/LightBlockModelPresetManager.h"
 #include "LightBlockColorProvider.h"
-#include "Prop/Prop.h"
 
 class LightBlock;
 class LightBlockModelUI;

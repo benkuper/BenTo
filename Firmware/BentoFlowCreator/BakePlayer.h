@@ -37,6 +37,7 @@ public:
   float timeToSeek; //used to limit seeking
 
   bool idMode;
+  bool loopShow = false;
   
   BakePlayer()
   {
@@ -71,8 +72,12 @@ public:
   {
     if(curFile.available() < FRAME_SIZE)
     {
-      DBG("End of show, available = "+String(curFile.available()));
-      play(0);
+      DBG("End of show");
+      if(loopShow) 
+      {
+        DBG("Loop");
+        play(0);
+      }
     }
 
     long mil = millis();

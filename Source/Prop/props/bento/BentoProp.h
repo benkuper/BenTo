@@ -44,5 +44,6 @@ public:
 
 	virtual void sendPing() override;
 	virtual void powerOffProp() override;
+	virtual void resetProp() override;
 
 };

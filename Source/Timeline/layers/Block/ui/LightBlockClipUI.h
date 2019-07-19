@@ -11,7 +11,8 @@
 #pragma once
 
 #include "../LightBlockClip.h"
-#include "Prop/Prop.h"
+
+class Prop;
 
 class LightBlockFadeHandle :
 	public Component
@@ -44,7 +45,7 @@ public:
 	//
 	float fadeValueAtMouseDown;
 
-	Prop previewProp;
+	std::unique_ptr<Prop> previewProp;
 	bool shouldUpdateImage;
 	bool imageIsReady;
 	bool shouldRepaint;

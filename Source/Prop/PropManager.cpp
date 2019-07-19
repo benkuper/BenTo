@@ -27,6 +27,7 @@ PropManager::PropManager() :
 	familiesCC("Families")
 {
 	managerFactory = &factory;
+	selectItemWhenCreated = false;
 
 	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
@@ -34,6 +35,7 @@ PropManager::PropManager() :
 	bakeAll = addTrigger("Bake All", "Bake all props");
 	bakeMode = addBoolParameter("Bake Mode", "Bake Mode", false);
 	powerOffAll = addTrigger("Poweroff All", "");
+	resetAll = addTrigger("Reset All", "");
 	clearAll = addTrigger("Clear all props", "Remove all props from manager");
 
 	String localIp = NetworkHelpers::getLocalIP();
@@ -152,6 +154,10 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	{
 		for (auto& p : items) p->powerOffTrigger->trigger();
 	}
+	else if (t == resetAll)
+	{
+		for (auto& p : items) p->resetTrigger->trigger();
+	}
 	else if (t == clearAll)
 	{
 		Array<Prop*> itemsToRemove;
@@ -253,11 +259,14 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 			else
 			{
 				DBG("Type does not exist " << pType);
+
 			}
 		}
 		else
 		{
-			LOG("Got : " << p->deviceID << ", already there");
+			LOG(p->deviceID << " already there, updating prop's remoteHost");
+			BentoProp* bp = dynamic_cast<BentoProp*>(p);
+			if (bp != nullptr) bp->remoteHost->setValue(pHost);
 		}
 	}
 	else if (address == "/ping" || address == "/pong")

@@ -11,7 +11,6 @@
 #pragma once
 
 #include "JuceHeader.h"
-#include "Prop/Prop.h"
 #include "Prop/TargetFilter/PropTargetFilterManager.h"
 
 class SpatItem :
