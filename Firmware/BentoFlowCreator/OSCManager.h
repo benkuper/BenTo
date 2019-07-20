@@ -7,7 +7,7 @@
 #include <OSCMessage.h>
 #include <OSCBoards.h>
 
-#define PING_RECEIVE_TIMEOUT 4000
+#define PING_RECEIVE_TIMEOUT 8000
 
 class OSCManager
 {

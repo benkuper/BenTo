@@ -79,8 +79,6 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 		return result;
 	}
 
-
-
 	return provider->getColors(p, time, localParams);
 }
 

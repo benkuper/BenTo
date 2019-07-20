@@ -743,6 +743,9 @@
     <Filter Include="JUCE Modules\juce_timeline\resources">
       <UniqueIdentifier>{D391EFE7-9D9C-64D9-7CA8-C06DBE64F72C}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Common">
+      <UniqueIdentifier>{87993395-387D-3067-FA8B-D7C9311C4390}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui">
       <UniqueIdentifier>{675B1DB0-7AEA-A463-6F13-A6C8D7C5D25A}</UniqueIdentifier>
     </Filter>
@@ -3585,6 +3588,9 @@
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.cpp">
       <Filter>JUCE Modules\juce_timeline\resources</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Common</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui</Filter>
@@ -6641,6 +6647,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\resources\BinaryData.h">
       <Filter>JUCE Modules\juce_timeline\resources</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui</Filter>

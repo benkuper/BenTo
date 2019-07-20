@@ -23,11 +23,19 @@ public:
 
 	EnumParameter * mode;
 	Parameter * position;
-	Parameter * size;
+	Parameter* size;
+	Parameter * extendNum;
+	Parameter* invertOdds;
+	Parameter* invertEvens;
+	Parameter* bgColor;
 
 	ColorSlot * inColors;
 	ParameterSlot * positionSlot;
 	ParameterSlot * sizeSlot;
+	ParameterSlot* extendNumSlot;
+	ParameterSlot* invertOddsSlot;
+	ParameterSlot* invertEvensSlot;
+	ParameterSlot* bgColorSlot;
 
 	Array<Colour> getColorsInternal(Prop * p, double time, var params) override;
 

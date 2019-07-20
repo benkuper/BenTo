@@ -39,6 +39,7 @@ public:
 	void filtersChanged() override;
 
 	bool paste() override;
+	void selectAll(bool addToSelection = false) override;
 
 	void endLoadFile() override;
 	

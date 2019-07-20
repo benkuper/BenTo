@@ -114,3 +114,12 @@ void TimelineBlock::onContainerTriggerTriggered(Trigger* t)
 	}
 }
 
+void TimelineBlock::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	LightBlockModel::onControllableFeedbackUpdateInternal(cc, c);
+	if (c == sequence.identityMode)
+	{
+		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SHOW_ID, sequence.identityMode->boolValue());
+	} 
+}
+

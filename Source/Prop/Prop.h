@@ -116,7 +116,7 @@ public:
 	virtual void resumeBakePlaying() {}
 	virtual void seekBakePlaying(float /*time */) {}
 	virtual void stopBakePlaying() {}
-
+	virtual void sendShowPropID(bool value) {}
 
 	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 

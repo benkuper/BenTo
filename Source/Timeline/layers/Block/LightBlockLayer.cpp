@@ -122,6 +122,12 @@ bool LightBlockLayer::paste()
 	return true;
 }
 
+void LightBlockLayer::selectAll(bool addToSelection)
+{
+	deselectThis(false);
+	blockClipManager.askForSelectAllItems(addToSelection);
+}
+
 void LightBlockLayer::endLoadFile()
 {
 	updateLinkedProps();

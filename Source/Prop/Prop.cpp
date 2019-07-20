@@ -380,6 +380,10 @@ void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl contro
 	case LightBlockColorProvider::BakeControl::STOP:
 		stopBakePlaying();
 		break;
+
+	case LightBlockColorProvider::BakeControl::SHOW_ID:
+		sendShowPropID((bool)data);
+		break;
 	}
 }
 

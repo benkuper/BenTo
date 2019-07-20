@@ -208,6 +208,13 @@ void BentoProp::stopBakePlaying()
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
 
+void BentoProp::sendShowPropID(bool value)
+{
+	OSCMessage m("/strip/player/id");
+	m.addInt32(value);
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}
+
 bool BentoProp::uploadProgressCallback(void* context, int bytesSent, int totalBytes)
 {
 	BentoProp* prop = (BentoProp*)context;

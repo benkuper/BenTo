@@ -178,7 +178,7 @@ void PointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 	for (int i = relStart; i <= relEnd && i < resolution; i++)
 	{
 		float diff = 1 - (fabsf(i - relPos) * 1.f / (relSize /(bFade*2)));
-		bool invert = i % 2 == 0 ? bInvertEvens : bInvertOdds;
+		bool invert = id % 2 == 0 ? bInvertEvens : bInvertOdds;
 		result->set(invert?resolution-i:i, bBGColor.interpolatedWith(bColor, diff));
 	}
 }

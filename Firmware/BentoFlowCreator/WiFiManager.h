@@ -38,7 +38,7 @@ class WiFiManager
       addCallbackConnectingUpdate(&WiFiManager::connectingUpdateDefaultCallback);
     }
 
-    void init()
+    void init(bool silentMode = false, bool apModeIfFail = true)
     {
       DBG("WiFiManager init.");
       ssid = preferences.getString("wifiSSID", "jonglissimo");
@@ -64,7 +64,7 @@ class WiFiManager
           success = false;
           break;
         }
-        onConnectingUpdate(tryIndex);
+        if(!silentMode) onConnectingUpdate(tryIndex);
         tryIndex++;
       }
 
@@ -83,11 +83,15 @@ class WiFiManager
           WiFi.mode(WIFI_OFF);
           DBG("Turn OFF WiFi");
           return;
-        } else
+        } else if(apModeIfFail)
         {
           isConnected = false;
           setupLocalWiFi();
           apMode = true;
+        }else
+        {
+          isConnected = false;
+          return;
         }
       }
 
@@ -119,7 +123,7 @@ class WiFiManager
     void reset()
     {
       DBG("Reset Wifi !");
-      init();
+      init(true, false);
     }
     
     void setupLocalWiFi()

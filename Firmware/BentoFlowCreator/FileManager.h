@@ -111,6 +111,20 @@ public:
       char filename[32];
       msg.getString(0,filename, 32);
       deleteFileIfExists(String(filename));
+    }else if(msg.match("/deleteAll", offset))
+    {
+
+      if(msg.size() > 0)
+      {
+         char folderData[32];
+         msg.getString(0,folderData, 32);
+         DBG("Deleting folder "+String(folderData));
+         SD.rmdir(folderData);
+      }else
+      {
+        DBG("Deleting all files");
+        SD.rmdir("/");
+      }
     }else
     {
       DBG("Message not handled");

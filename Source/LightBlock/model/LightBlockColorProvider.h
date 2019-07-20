@@ -53,7 +53,7 @@ public:
 
 
 	//Bake info
-	enum BakeControl { PLAY, PAUSE, STOP, SEEK };
+	enum BakeControl { PLAY, PAUSE, STOP, SEEK, SHOW_ID };
 	
 	virtual Array<WeakReference<Controllable>> getModelParameters() = 0;
 

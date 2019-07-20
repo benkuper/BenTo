@@ -50,6 +50,8 @@ WiFiManager wifiManager;
 #define USE_PING 1
 #include "OSCManager.h"
 OSCManager oscManager(wifiManager.oscUDP);
+#define RESETWIFI_ON_DISCONNECT 1
+#define RESETWIFI_MAXTRIES 5
 #endif
 
 #if USE_FILES
@@ -308,6 +310,15 @@ void oscConnectionChanged(bool isConnected)
       if(!isConnected) setRange(NUM_LEDS/2, NUM_LEDS/2 + 4, CRGB::Red);
     }
 #endif //LEDSTRIP
+
+
+ #if RESETWIFI_ON_DISCONNECT
+ if(!isConnected && !wifiManager.apMode && !wifiManager.turnOffWiFi)
+  {
+    wifiManager.reset();
+    oscManager.isConnected = true;//force 
+  }
+#endif
 }
 
 #endif //OSC
@@ -553,9 +564,12 @@ void setup()
 #endif // WIFI/LEDSTRIP
 
 #if USE_OSC
+if(!wifiManager.turnOffWiFi)
+{
   oscManager.init();
   oscManager.addCallbackMessageReceived(&messageReceived);
   oscManager.addCallbackConnectionChanged(&oscConnectionChanged);
+}
 #endif
 
 #if USE_SERVER
@@ -592,7 +606,10 @@ void loop()
 #if USE_WIFI
 
 #if USE_OSC
+if(!wifiManager.turnOffWiFi)
+{
   oscManager.update();
+}
 #endif
 
 #endif //WIFI

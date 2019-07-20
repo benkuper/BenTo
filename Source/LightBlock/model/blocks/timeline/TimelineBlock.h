@@ -39,6 +39,7 @@ public:
 	void sequenceLooped(Sequence * s) override;
 
 	void onContainerTriggerTriggered(Trigger* t) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer*, Controllable* c) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
