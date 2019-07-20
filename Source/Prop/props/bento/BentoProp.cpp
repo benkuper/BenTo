@@ -221,7 +221,7 @@ bool BentoProp::uploadProgressCallback(void* context, int bytesSent, int totalBy
 	jassert(prop != nullptr);
 	if (prop->threadShouldExit()) return false;
 	float p = bytesSent * 1.0f / totalBytes;
-	prop->uploadProgress->setValue(.1f + p * .5f);
+	prop->uploadProgress->setValue(.1f + p * .9f);
 	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
 
 	return true;
