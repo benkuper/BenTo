@@ -23,8 +23,6 @@ LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	setSize(64, 64);
 
 	setRepaintsOnMouseActivity(true);
-	removeMouseListener(this);
-
 	model->addAsyncModelListener(this);
 } 
 
@@ -47,9 +45,6 @@ void LightBlockModelUI::paint(Graphics & g)
 	}
 }
 
-void LightBlockModelUI::resized()
-{
-}
 
 void LightBlockModelUI::updateThumbnail()
 {

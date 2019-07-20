@@ -25,7 +25,6 @@ public:
 	//static const Identifier dragAndDropID;
 
 	void paint(Graphics &g) override;
-	void resized() override;
 
 	virtual void updateThumbnail();
 
