@@ -98,8 +98,8 @@ void LightBlockClip::blockParamControlModeChanged(Parameter * p)
 {
 	if (p->controlMode == Parameter::AUTOMATION)
 	{
-		p->automation->automation.setLength(coreLength->floatValue());
-		p->automation->automation.allowKeysOutside = true;
+		p->automation->setLength(coreLength->floatValue());
+		p->automation->setAllowKeysOutside(true);
 	}
 }
 
@@ -112,7 +112,9 @@ void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEn
 		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
 		for (auto & pa : params)
 		{
-			if (pa->controlMode == Parameter::AUTOMATION) pa->automation->automation.setLength(coreLength->floatValue(), stretch, stickToCoreEnd);
+			if (pa->automation == nullptr) continue;
+			pa->automation->setLength(coreLength->floatValue(), stretch, stickToCoreEnd);
+			pa->automation->setAllowKeysOutside(true);
 		}
 	}
 }
@@ -155,10 +157,8 @@ void LightBlockClip::loadJSONDataInternal(var data)
 
 		for (auto & pa : params)
 		{
-			if (pa->controlMode == Parameter::AUTOMATION)
-			{
-				pa->automation->automation.allowKeysOutside = true;
-			}
+			if (pa->automation == nullptr) continue;
+			pa->automation->setAllowKeysOutside(true);
 		}
 	}
 

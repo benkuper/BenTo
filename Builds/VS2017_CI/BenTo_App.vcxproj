@@ -47,7 +47,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\..\JUCE Modules;../../External/asio;../../External/serial/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.0.11;JUCE_APP_VERSION_HEX=0x1000b;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.0.12b1;JUCE_APP_VERSION_HEX=0x1000c;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -1941,13 +1941,10 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.cpp">
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.cpp">
@@ -1984,6 +1981,21 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\comment\CommentManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColorManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.cpp">
@@ -3389,9 +3401,8 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\app\OrganicMainComponent.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\ui\EasingUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.h"/>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\AutomationRecorder.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\ui\AutomationEditor.h"/>
@@ -3404,6 +3415,11 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\comment\ui\CommentUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\comment\Comment.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\comment\CommentManager.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorUI.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColor.h"/>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColorManager.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BoolImageToggleUI.h"/>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BoolToggleUI.h"/>

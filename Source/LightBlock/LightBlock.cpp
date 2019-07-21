@@ -48,18 +48,31 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 		{
 			if (param.wasObjectDeleted()) continue;
 			if (param->controlMode != Parameter::AUTOMATION  || param->automation == nullptr) continue;
-			param->automation->currentTime->setValue(fmodf(time, param->automation->automation.length->floatValue()));
+			param->automation->timeParamRef->setValue(fmodf(time, param->automation->lengthParamRef->floatValue()));
 		}
 	} else
 	{
 		for (auto &param : paramList)
 		{
 			if (param->controlMode != Parameter::AUTOMATION) continue;
-			Automation * a = &param->automation->automation;
+			ParameterAutomation* a = param->automation.get();
 
-			float value = a->getValueForPosition(fmodf(time, a->length->floatValue()));
-			float normValue = jmap<float>(value, param->minimumValue, param->maximumValue);
-			localParams.getDynamicObject()->setProperty(param->shortName,normValue);
+			if (dynamic_cast<Automation*>(a->automationContainer) != nullptr)
+			{
+				float value = ((Automation *)a->automationContainer)->getValueForPosition(fmodf(time, a->lengthParamRef->floatValue()));
+				float normValue = jmap<float>(value, param->minimumValue, param->maximumValue);
+				localParams.getDynamicObject()->setProperty(param->shortName, normValue);
+			}else if (dynamic_cast<GradientColorManager *>(a->automationContainer) != nullptr)
+			{
+				Colour value = ((GradientColorManager*)a->automationContainer)->getColorForPosition(fmodf(time, a->lengthParamRef->floatValue()));
+				var colorParam;
+				colorParam.append(value.getFloatRed());
+				colorParam.append(value.getFloatGreen());
+				colorParam.append(value.getFloatBlue());
+				colorParam.append(value.getFloatAlpha());
+				localParams.getDynamicObject()->setProperty(param->shortName, colorParam);
+			}
+			
 		}
 	}
 
@@ -144,7 +157,7 @@ void LightBlock::parameterControlModeChanged(Parameter * p)
 {
 	if (p->controlMode == Parameter::AUTOMATION)
 	{
-		p->automation->mode->setValueWithData(PlayableParameterAutomation::MANUAL);
+		p->automation->setManualMode(true);
 		//p->automation->hideInEditor = true;
 	}
 

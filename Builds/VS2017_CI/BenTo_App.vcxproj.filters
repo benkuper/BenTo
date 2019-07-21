@@ -623,6 +623,12 @@
     <Filter Include="JUCE Modules\juce_organicui\comment">
       <UniqueIdentifier>{B600888C-9BF5-F2DA-748A-D86465A33FFD}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\gradient\ui">
+      <UniqueIdentifier>{59B19CB2-CF22-F681-38D2-5345DC070B6A}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\gradient">
+      <UniqueIdentifier>{20C49B18-CE94-9D44-6A5C-225B00E1D038}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\ui">
       <UniqueIdentifier>{8985EB6E-3B3D-2F50-8596-35A90644BBDF}</UniqueIdentifier>
     </Filter>
@@ -2992,13 +2998,10 @@
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.cpp">
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\parameter\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.cpp">
-      <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.cpp">
@@ -3036,6 +3039,21 @@
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\comment\CommentManager.cpp">
       <Filter>JUCE Modules\juce_organicui\comment</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColor.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColorManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
@@ -6126,13 +6144,10 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\easing\Easing.h">
       <Filter>JUCE Modules\juce_organicui\automation\easing</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\PlayableParameterAutomationEditor.h">
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h">
       <Filter>JUCE Modules\juce_organicui\automation\parameter\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomation.h">
-      <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\parameter\ParameterAutomationManager.h">
       <Filter>JUCE Modules\juce_organicui\automation\parameter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\automation\recorder\ui\AutomationRecorderEditor.h">
@@ -6170,6 +6185,21 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\comment\CommentManager.h">
       <Filter>JUCE Modules\juce_organicui\comment</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColor.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\gradient\GradientColorManager.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\BetterStepper.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>

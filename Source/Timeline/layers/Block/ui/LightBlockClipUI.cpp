@@ -101,7 +101,12 @@ void LightBlockClipUI::paintOverChildren(Graphics & g)
 void LightBlockClipUI::resizedBlockInternal()
 {
 	if (!imageIsReady) generatePreview();
-	if (automationUI != nullptr) automationUI->setBounds(getCoreBounds());
+	if (automationUI != nullptr)
+	{
+		Rectangle<int> r = getCoreBounds();
+		if (dynamic_cast<GradientColorManagerUI*>(automationUI.get()) != nullptr) r = r.removeFromBottom(jmax(r.getHeight() / 2, 20));
+		automationUI->setBounds(r);
+	}
 
 	//Rectangle<int> r = getLocalBounds();
 	fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength())*getWidth(), fadeInHandle.getHeight() / 2);
@@ -124,12 +129,24 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
 
 	if (a == nullptr) return;
 
-	automationUI.reset(new AutomationUI(&a->automation));
-	addAndMakeVisible(automationUI.get());
-	resized();
-	shouldRepaint = true;
-	automationUI->updateROI();
-	automationUI->addMouseListener(this, true);
+	if (dynamic_cast<ParameterNumberAutomation*>(a) != nullptr)
+	{
+		AutomationUI* aui = new AutomationUI((Automation *)a->automationContainer);
+		aui->updateROI();
+		automationUI.reset(aui);
+	}
+	else if (dynamic_cast<ParameterColorAutomation*>(a) != nullptr)
+	{
+		automationUI.reset(new GradientColorManagerUI((GradientColorManager*)a->automationContainer));
+	}
+
+	if (automationUI != nullptr)
+	{
+		automationUI->addMouseListener(this, true);
+		addAndMakeVisible(automationUI.get());
+		resized();
+		shouldRepaint = true;
+	}
 }
 
 void LightBlockClipUI::mouseDown(const MouseEvent & e)
@@ -178,7 +195,7 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 					if (pa->controlMode != Parameter::ControlMode::AUTOMATION)
 					{
 						pa->setControlMode(Parameter::ControlMode::AUTOMATION);
-						pa->automation->mode->setValueWithData(PlayableParameterAutomation::MANUAL);
+						pa->automation->setManualMode(true);
 					}
 
 					if (!pa.wasObjectDeleted()) setTargetAutomation(pa->automation.get());
