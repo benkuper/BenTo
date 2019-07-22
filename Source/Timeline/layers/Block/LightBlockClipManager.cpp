@@ -29,6 +29,20 @@ LayerBlock * LightBlockClipManager::createItem()
 	return new LightBlockClip(lightBlockLayer);
 }
 
+void LightBlockClipManager::addItemInternal(LayerBlock* block, var data)
+{
+	LayerBlockManager::addItemInternal(block, data);
+	LightBlockClip* clip = dynamic_cast<LightBlockClip*>(block);
+	clip->addClipListener(this);
+}
+
+void LightBlockClipManager::removeItemInternal(LayerBlock* block)
+{
+	LayerBlockManager::removeItemInternal(block);
+	LightBlockClip* clip = dynamic_cast<LightBlockClip*>(block);
+	clip->removeClipListener(this);
+}
+
 void LightBlockClipManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
 	LightBlockClip * b = c->getParentAs<LightBlockClip>();
@@ -40,6 +54,11 @@ void LightBlockClipManager::onControllableFeedbackUpdate(ControllableContainer *
 			computeFadesForClip(b, true);
 		}
 	}
+}
+
+void LightBlockClipManager::clipFadesChanged(LightBlockClip* clip)
+{
+	computeFadesForClip(clip, false);
 }
 
 void LightBlockClipManager::computeFadesForClip(LightBlockClip * clip, bool propagate)
@@ -63,12 +82,15 @@ void LightBlockClipManager::computeFadesForClip(LightBlockClip * clip, bool prop
 		return;
 	}
 
-	if (clip->autoFade->boolValue())
+	if (!clip->fadeIn->enabled)
 	{
 		float fadeIn = prevBlock == nullptr ? 0 : jmax(prevBlock->getEndTime() - clip->time->floatValue(), 0.f);
-		float fadeOut = nextBlock == nullptr ? 0 : jmax(clip->getEndTime() - nextBlock->time->floatValue(), 0.f);
-
 		clip->fadeIn->setValue(fadeIn);
+	}
+	
+	if (!clip->fadeOut->enabled)
+	{
+		float fadeOut = nextBlock == nullptr ? 0 : jmax(clip->getEndTime() - nextBlock->time->floatValue(), 0.f);
 		clip->fadeOut->setValue(fadeOut);
 	}
 

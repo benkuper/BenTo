@@ -15,7 +15,8 @@
 class LightBlockLayer;
 
 class LightBlockClipManager :
-	public LayerBlockManager
+	public LayerBlockManager,
+	public LightBlockClip::ClipListener
 {
 public:
 	LightBlockClipManager(LightBlockLayer * layer);
@@ -24,7 +25,11 @@ public:
 	LightBlockLayer * lightBlockLayer;
 	LayerBlock * createItem() override;
 
+	void addItemInternal(LayerBlock* clip, var) override;
+	void removeItemInternal(LayerBlock* clip) override;
+
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 
+	void clipFadesChanged(LightBlockClip* clip) override;
 	void computeFadesForClip(LightBlockClip * clip, bool propagate);
 };

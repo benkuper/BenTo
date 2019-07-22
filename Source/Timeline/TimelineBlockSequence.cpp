@@ -79,10 +79,15 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	for (auto &l : layers)
 	{
 		if (l == nullptr) continue;
-		String s = l->niceName;
+
 		params.getDynamicObject()->setProperty("forceID", l->filterManager->getTargetIDForProp(p));
-		colors.add(l->getColors(p, t, params)); //use sequence's time instead of prop time
+		Array<Colour> cols = l->getColors(p, t, params); //use sequence's time instead of prop time
+
+		if (cols.isEmpty()) continue;
+
+		colors.add(cols); 
 		blendModes.add(l->blendMode->getValueDataAsEnum<LightBlockLayer::BlendMode>());
+
 		numActiveLayers++;
 	}
 
@@ -102,10 +107,11 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 
 			case LightBlockLayer::ALPHA:
 			{
-				r = r + (colors[j][i].getFloatRed() - r) * a;
-				g = g + (colors[j][i].getFloatGreen() - g) * a;
-				b = b + (colors[j][i].getFloatBlue() - b) * a;
-				a += colors[j][i].getFloatAlpha();
+				float ca = colors[j][i].getFloatAlpha();
+				r = r + (colors[j][i].getFloatRed() - r) * ca;
+				g = g + (colors[j][i].getFloatGreen() - g) * ca;
+				b = b + (colors[j][i].getFloatBlue() - b) * ca;
+				a += ca;
 			}
 			break;
 

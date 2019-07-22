@@ -25,8 +25,8 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	isDraggingModel(false)
 {
 
-	bgColor = BG_COLOR.brighter().withAlpha(.5f);
-
+	bgColor = Colours::transparentBlack;// BG_COLOR.brighter().withAlpha(.5f);
+	
 	previewProp.reset(new Prop());
 
 	generatePreview();
@@ -36,11 +36,13 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	addChildComponent(&fadeInHandle, 0);
 	addChildComponent(&fadeOutHandle, 0);
 	
-	fadeInHandle.setVisible(!clip->autoFade->boolValue());
-	fadeOutHandle.setVisible(!clip->autoFade->boolValue());
+	fadeInHandle.setVisible(clip->fadeIn->enabled);
+	fadeOutHandle.setVisible(clip->fadeOut->enabled);
 
 	fadeInHandle.addMouseListener(this, false);
 	fadeOutHandle.addMouseListener(this, false);
+
+	clip->addAsyncClipListener(this);
 
 	startTimerHz(10);
 	startThread();
@@ -48,12 +50,15 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 
 LightBlockClipUI::~LightBlockClipUI()
 {
+	if (!inspectable.wasObjectDeleted()) clip->removeAsyncClipListener(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(500);
 }
 
 void LightBlockClipUI::paint(Graphics & g)
 {
+	bgColor = clip->currentBlock != nullptr ? Colours::transparentBlack : BG_COLOR.brighter().withAlpha(.5f);
+
 	LayerBlockUI::paint(g);
 
 
@@ -76,17 +81,18 @@ void LightBlockClipUI::paint(Graphics & g)
 		g.setColour(Colours::white.withAlpha(.5f));
 	}
 
-	Colour fColor = (clip->autoFade->boolValue() ? BLUE_COLOR : Colours::yellow).withAlpha(.5f);
+	Colour fInColor = (clip->fadeIn->enabled ? Colours::yellow : BLUE_COLOR).withAlpha(.5f);
+	Colour fOutColor = (clip->fadeOut->enabled?Colours::yellow : BLUE_COLOR).withAlpha(.5f);
 
 	if (clip->fadeIn->floatValue() > 0)
 	{
-		g.setColour(fColor);
+		g.setColour(fInColor);
 		g.drawLine(0, getHeight(), getWidth()*(clip->fadeIn->floatValue() / clip->getTotalLength()), fadeInHandle.getY() + fadeInHandle.getHeight() / 2);
 	}
 
 	if (clip->fadeOut->floatValue() > 0)
 	{
-		g.setColour(fColor);
+		g.setColour(fOutColor);
 		g.drawLine(getWidth()*(1 - (clip->fadeOut->floatValue() / clip->getTotalLength())), fadeOutHandle.getY() + fadeOutHandle.getHeight() / 2, getWidth(), getHeight());
 	}
 }
@@ -256,12 +262,18 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
 	{
 		generatePreview();
 	}
+}
 
-	if (c == clip->autoFade)
+void LightBlockClipUI::newMessage(const LightBlockClip::ClipEvent& e)
+{
+	switch (e.type)
 	{
-		fadeInHandle.setVisible(!clip->autoFade->boolValue());
-		fadeOutHandle.setVisible(!clip->autoFade->boolValue());
+	case LightBlockClip::ClipEvent::FADES_CHANGED:
+		fadeInHandle.setVisible(clip->fadeIn->enabled);
+		fadeOutHandle.setVisible(clip->fadeOut->enabled);
 		shouldRepaint = true;
+		resized();
+		break;
 	}
 }
 
@@ -329,7 +341,7 @@ void LightBlockClipUI::run()
 			continue;
 		}
 
-		Image tmpImg = Image(Image::RGB, resX, resY, true);
+		Image tmpImg = Image(Image::ARGB, resX, resY, true);
 
 		int id = clip->layer->previewID->intValue();
 

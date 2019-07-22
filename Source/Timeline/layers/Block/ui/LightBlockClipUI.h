@@ -28,6 +28,7 @@ public:
 
 class LightBlockClipUI :
 	public LayerBlockUI,
+	public LightBlockClip::AsyncListener,
 	public Thread, //Threaded preview generation
 	public Timer
 {
@@ -72,6 +73,8 @@ public:
 	Rectangle<int> getDragBounds() override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
+
+	void newMessage(const LightBlockClip::ClipEvent& e) override;
 
 	void itemDropped(const SourceDetails &source) override;
 

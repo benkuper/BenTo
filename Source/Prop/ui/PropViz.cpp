@@ -42,7 +42,7 @@ void PropViz::paint(Graphics & g)
 	for (int i = 0; i < numLeds; i++)
 	{
 		Rectangle<float> ledR = lr.removeFromTop(ledSize).reduced(1).toFloat();
-		g.setColour(Colours::white.withAlpha(.15f));
+		g.setColour(Colours::white.withAlpha(.2f));
 		g.drawEllipse(ledR, .5f);
 		g.setColour(prop->colors[i]);
 		g.fillEllipse(ledR);

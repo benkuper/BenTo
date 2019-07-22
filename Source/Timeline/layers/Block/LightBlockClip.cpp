@@ -15,7 +15,8 @@
 
 LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 	LayerBlock("LightBlockClip", _time),
-	layer(layer)
+	layer(layer),
+	clipNotifier(10)
 {
 	itemDataType = "LightBlockClip";
 
@@ -23,11 +24,12 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 
-	autoFade = addBoolParameter("Auto Fade", "If checked, when clips are overlapping, fade will be adjusted automatically", true);
-	fadeIn = addFloatParameter("Fade In", "Fade in time", 0, 0, getTotalLength());
-	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength());
-	fadeIn->setControllableFeedbackOnly(autoFade->boolValue());
-	fadeOut->setControllableFeedbackOnly(autoFade->boolValue());
+	//autoFade = addBoolParameter("Auto Fade", "If checked, when clips are overlapping, fade will be adjusted automatically", true);
+
+	fadeIn = addFloatParameter("Fade In", "Fade in time", 0, 0, getTotalLength(), false);
+	fadeIn->canBeDisabledByUser = true;
+	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength(), false);
+	fadeOut->canBeDisabledByUser = true;
 }
 
 LightBlockClip::~LightBlockClip()
@@ -132,10 +134,21 @@ void LightBlockClip::onContainerParameterChangedInternal(Parameter * p)
 		fadeIn->setRange(0, getTotalLength());
 		fadeOut->setRange(0, getTotalLength());
 	}
+	/*
 	else if (p == autoFade)
 	{
 		fadeIn->setControllableFeedbackOnly(autoFade->boolValue());
 		fadeOut->setControllableFeedbackOnly(autoFade->boolValue());
+	}*/
+}
+
+void LightBlockClip::controllableStateChanged(Controllable* c)
+{
+	LayerBlock::controllableStateChanged(c);
+	if (c == fadeIn || c == fadeOut)
+	{
+		clipListeners.call(&ClipListener::clipFadesChanged, this);
+		clipNotifier.addMessage(new ClipEvent(ClipEvent::FADES_CHANGED, this));
 	}
 }
 
@@ -161,5 +174,20 @@ void LightBlockClip::loadJSONDataInternal(var data)
 			pa->automation->setAllowKeysOutside(true);
 		}
 	}
+
+	//Retro compatibility, to remove after
+	var params = data.getProperty("parameters",var());
+	for (int i = 0; i < params.size(); i++)
+	{
+		if (params[i].getProperty("controlAddress", "") == "/autoFade")
+		{
+			bool val = params[i].getProperty("value", false);
+			fadeIn->setEnabled(!val);
+			fadeOut->setEnabled(!val);
+			break;
+		}
+	}
+	
+	
 
 }
