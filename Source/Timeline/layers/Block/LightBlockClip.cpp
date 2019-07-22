@@ -43,8 +43,10 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 
 	if (provider != nullptr && currentBlock != nullptr && currentBlock->provider == provider) return;
 
+	var prevData;
 	if (currentBlock != nullptr)
 	{
+		prevData = currentBlock->getJSONData();
 		removeChildControllableContainer(currentBlock.get());
 		currentBlock->removeLightBlockListener(this);
 		currentBlock = nullptr;
@@ -57,7 +59,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 	{
 		addChildControllableContainer(currentBlock.get());
 		currentBlock->addLightBlockListener(this);
-
+		currentBlock->loadJSONData(prevData);
 	}
 }
 Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var params)
@@ -100,8 +102,8 @@ void LightBlockClip::blockParamControlModeChanged(Parameter * p)
 {
 	if (p->controlMode == Parameter::AUTOMATION)
 	{
-		p->automation->setLength(coreLength->floatValue());
 		p->automation->setAllowKeysOutside(true);
+		p->automation->setLength(coreLength->floatValue());
 	}
 }
 
@@ -115,8 +117,8 @@ void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEn
 		for (auto & pa : params)
 		{
 			if (pa->automation == nullptr) continue;
-			pa->automation->setLength(coreLength->floatValue(), stretch, stickToCoreEnd);
 			pa->automation->setAllowKeysOutside(true);
+			pa->automation->setLength(coreLength->floatValue(), stretch, stickToCoreEnd);
 		}
 	}
 }
