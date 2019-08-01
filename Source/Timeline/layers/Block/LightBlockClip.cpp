@@ -103,7 +103,7 @@ void LightBlockClip::blockParamControlModeChanged(Parameter * p)
 	if (p->controlMode == Parameter::AUTOMATION)
 	{
 		p->automation->setAllowKeysOutside(true);
-		p->automation->setLength(coreLength->floatValue());
+		p->automation->setLength(coreLength->floatValue(),true);
 	}
 }
 

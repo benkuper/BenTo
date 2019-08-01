@@ -26,7 +26,7 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 {
 
 	bgColor = Colours::transparentBlack;// BG_COLOR.brighter().withAlpha(.5f);
-	
+
 	previewProp.reset(new Prop());
 
 	generatePreview();
@@ -35,7 +35,7 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 
 	addChildComponent(&fadeInHandle, 0);
 	addChildComponent(&fadeOutHandle, 0);
-	
+
 	fadeInHandle.setVisible(clip->fadeIn->enabled);
 	fadeOutHandle.setVisible(clip->fadeOut->enabled);
 
@@ -55,7 +55,7 @@ LightBlockClipUI::~LightBlockClipUI()
 	waitForThreadToExit(500);
 }
 
-void LightBlockClipUI::paint(Graphics & g)
+void LightBlockClipUI::paint(Graphics& g)
 {
 	bgColor = clip->currentBlock != nullptr ? Colours::transparentBlack : BG_COLOR.brighter().withAlpha(.5f);
 
@@ -82,7 +82,7 @@ void LightBlockClipUI::paint(Graphics & g)
 	}
 }
 
-void LightBlockClipUI::paintOverChildren(Graphics & g)
+void LightBlockClipUI::paintOverChildren(Graphics& g)
 {
 	LayerBlockUI::paintOverChildren(g);
 
@@ -100,7 +100,7 @@ void LightBlockClipUI::paintOverChildren(Graphics & g)
 		g.setColour(fOutColor);
 		g.drawLine(getWidth() * (1 - (clip->fadeOut->floatValue() / clip->getTotalLength())), fadeOutHandle.getY() + fadeOutHandle.getHeight() / 2, getWidth(), getHeight());
 	}
-	
+
 	if (isDraggingModel) g.fillAll(BLUE_COLOR.withAlpha(.3f));
 }
 
@@ -110,13 +110,16 @@ void LightBlockClipUI::resizedBlockInternal()
 	if (automationUI != nullptr)
 	{
 		Rectangle<int> r = getCoreBounds();
-		if (dynamic_cast<GradientColorManagerUI*>(automationUI.get()) != nullptr) automationUI->setBounds(r.removeFromBottom(20));
-		
+		if (automationUI != nullptr)
+		{
+			if (dynamic_cast<GradientColorManagerUI*>(automationUI.get()) != nullptr) automationUI->setBounds(r.removeFromBottom(20));
+			else automationUI->setBounds(r); 
+		}
 	}
 
 	//Rectangle<int> r = getLocalBounds();
-	fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength())*getWidth(), fadeInHandle.getHeight() / 2);
-	fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength())*getWidth(), fadeOutHandle.getHeight() / 2);
+	fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength()) * getWidth(), fadeInHandle.getHeight() / 2);
+	fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength()) * getWidth(), fadeOutHandle.getHeight() / 2);
 }
 
 void LightBlockClipUI::generatePreview()
@@ -125,7 +128,7 @@ void LightBlockClipUI::generatePreview()
 	shouldUpdateImage = true;
 }
 
-void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
+void LightBlockClipUI::setTargetAutomation(ParameterAutomation* a)
 {
 	if (automationUI != nullptr)
 	{
@@ -133,21 +136,27 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
 		automationUI = nullptr;
 	}
 
+	canBeGrabbed = true;
+
 	if (a == nullptr) return;
+
 
 	if (dynamic_cast<ParameterNumberAutomation*>(a) != nullptr)
 	{
-		AutomationUI* aui = new AutomationUI((Automation *)a->automationContainer);
+		AutomationUI* aui = new AutomationUI((Automation*)a->automationContainer);
 		aui->updateROI();
 		automationUI.reset(aui);
 	}
 	else if (dynamic_cast<ParameterColorAutomation*>(a) != nullptr)
 	{
-		automationUI.reset(new GradientColorManagerUI((GradientColorManager*)a->automationContainer));
+		GradientColorManagerUI* gui = new GradientColorManagerUI((GradientColorManager*)a->automationContainer);
+		gui->autoResetViewRangeOnLengthUpdate = true;
+		automationUI.reset(gui);
 	}
 
 	if (automationUI != nullptr)
 	{
+		canBeGrabbed = false;
 		automationUI->addMouseListener(this, true);
 		addAndMakeVisible(automationUI.get());
 		resized();
@@ -155,7 +164,7 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation * a)
 	}
 }
 
-void LightBlockClipUI::mouseDown(const MouseEvent & e)
+void LightBlockClipUI::mouseDown(const MouseEvent& e)
 {
 	LayerBlockUI::mouseDown(e);
 
@@ -183,9 +192,9 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 
 
 			int index = 2;
-			for (auto &pa : params)
+			for (auto& pa : params)
 			{
-				if(pa->canBeAutomated) ap.addItem(index, pa->niceName, true, pa->controlMode == Parameter::ControlMode::AUTOMATION);
+				if (pa->canBeAutomated) ap.addItem(index, pa->niceName, true, pa->controlMode == Parameter::ControlMode::AUTOMATION);
 				index++;
 			}
 
@@ -202,6 +211,14 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 					{
 						pa->setControlMode(Parameter::ControlMode::AUTOMATION);
 						pa->automation->setManualMode(true);
+						Automation* a = dynamic_cast<Automation*>(pa->automation->automationContainer);
+						if (a != nullptr)
+						{
+							a->clear();
+							AutomationKey * k = a->addItem(0, 0);
+							k->setEasing(Easing::BEZIER);
+							a->addItem(a->length->floatValue(), 1);
+						}
 					}
 
 					if (!pa.wasObjectDeleted()) setTargetAutomation(pa->automation.get());
@@ -211,18 +228,18 @@ void LightBlockClipUI::mouseDown(const MouseEvent & e)
 	}
 }
 
-void LightBlockClipUI::mouseDrag(const MouseEvent & e)
+void LightBlockClipUI::mouseDrag(const MouseEvent& e)
 {
 	LayerBlockUI::mouseDrag(e);
 
 	if (e.eventComponent == &fadeInHandle)
 	{
-		clip->fadeIn->setValue((getMouseXYRelative().x * 1.0f / getWidth())*clip->getTotalLength());
+		clip->fadeIn->setValue((getMouseXYRelative().x * 1.0f / getWidth()) * clip->getTotalLength());
 		resized();
 	}
 	else if (e.eventComponent == &fadeOutHandle)
 	{
-		clip->fadeOut->setValue((1 - (getMouseXYRelative().x *1.0f / getWidth()))*clip->getTotalLength());
+		clip->fadeOut->setValue((1 - (getMouseXYRelative().x * 1.0f / getWidth())) * clip->getTotalLength());
 		resized();
 	}
 	else if (automationUI != nullptr)
@@ -231,7 +248,7 @@ void LightBlockClipUI::mouseDrag(const MouseEvent & e)
 	}
 }
 
-void LightBlockClipUI::mouseUp(const MouseEvent & e)
+void LightBlockClipUI::mouseUp(const MouseEvent& e)
 {
 	LayerBlockUI::mouseUp(e);
 
@@ -252,17 +269,17 @@ Rectangle<int> LightBlockClipUI::getDragBounds()
 	return LayerBlockUI::getLocalBounds();
 }
 
-void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable * c)
+void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	LayerBlockUI::controllableFeedbackUpdateInternal(c);
 
 	if (c == clip->coreLength || c == clip->loopLength || c == clip->activeProvider || c == clip->fadeIn || c == clip->fadeOut) generatePreview();
-	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer && c->type != Controllable::TRIGGER && ((Parameter *)c)->controlMode == Parameter::MANUAL) generatePreview();
+	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer && c->type != Controllable::TRIGGER && ((Parameter*)c)->controlMode == Parameter::MANUAL) generatePreview();
 	else if (c->getParentAs<AutomationKey>() != nullptr)
 	{
 		generatePreview();
 	}
-	
+
 	if (c == clip->fadeIn) fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength()) * getWidth(), fadeInHandle.getHeight() / 2);
 	else if (c == clip->fadeOut) fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength()) * getWidth(), fadeOutHandle.getHeight() / 2);
 }
@@ -280,16 +297,16 @@ void LightBlockClipUI::newMessage(const LightBlockClip::ClipEvent& e)
 	}
 }
 
-void LightBlockClipUI::itemDropped(const SourceDetails & source)
+void LightBlockClipUI::itemDropped(const SourceDetails& source)
 {
 
 	if (source.description.getProperty("dataType", "") == "LightBlockModel")
 	{
-		LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
+		LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get());
 
 		if (modelUI != nullptr)
 		{
-			LightBlockColorProvider * provider = modelUI->item;
+			LightBlockColorProvider* provider = modelUI->item;
 
 			bool shift = KeyPress::isKeyCurrentlyDown(16);
 			if (shift)
@@ -298,7 +315,7 @@ void LightBlockClipUI::itemDropped(const SourceDetails & source)
 				m.addItem(-1, "Default");
 				m.addSeparator();
 				int index = 1;
-				for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+				for (auto& p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
 				int result = m.show();
 				if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
 			}
@@ -379,18 +396,18 @@ void LightBlockClipUI::run()
 		previewImage = tmpImg.createCopy();
 		imgLock.exit();
 		imageIsReady = true;
-		
+
 		shouldRepaint = true;
 	}
 }
 
-LightBlockFadeHandle::LightBlockFadeHandle(const Image & image) :
+LightBlockFadeHandle::LightBlockFadeHandle(const Image& image) :
 	img(image)
 {
 	setSize(14, 14);
 }
 
-void LightBlockFadeHandle::paint(Graphics & g)
+void LightBlockFadeHandle::paint(Graphics& g)
 {
 	g.setColour(Colours::white);
 	g.drawImage(img, getLocalBounds().toFloat().reduced(2));
