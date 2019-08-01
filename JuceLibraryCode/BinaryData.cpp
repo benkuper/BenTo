@@ -689,24 +689,21 @@ static const unsigned char temp_binary_data_12[] =
 "              },\r\n"
 "              {\r\n"
 "                \"type\": 0,\r\n"
-"                \"width\": 1297,\r\n"
+"                \"width\": 1062,\r\n"
 "                \"height\": 638,\r\n"
-"                \"currentContent\": \"Node Editor\",\r\n"
+"                \"currentContent\": \"Sequence Editor\",\r\n"
 "                \"tabs\": [\r\n"
 "                  {\r\n"
 "                    \"name\": \"Node Editor\"\r\n"
 "                  },\r\n"
 "                  {\r\n"
-"                    \"name\": \"Timeline Editor\"\r\n"
-"                  },\r\n"
-"                  {\r\n"
-"                    \"name\": \"Spatializer Editor\"\r\n"
+"                    \"name\": \"Sequence Editor\"\r\n"
 "                  }\r\n"
 "                ]\r\n"
 "              },\r\n"
 "              {\r\n"
 "                \"type\": 0,\r\n"
-"                \"width\": 329,\r\n"
+"                \"width\": 566,\r\n"
 "                \"height\": 638,\r\n"
 "                \"currentContent\": \"Inspector\",\r\n"
 "                \"tabs\": [\r\n"
@@ -725,7 +722,7 @@ static const unsigned char temp_binary_data_12[] =
 "            \"shifters\": [\r\n"
 "              {\r\n"
 "                \"type\": 0,\r\n"
-"                \"width\": 1348,\r\n"
+"                \"width\": 1288,\r\n"
 "                \"height\": 352,\r\n"
 "                \"currentContent\": \"Props\",\r\n"
 "                \"tabs\": [\r\n"
@@ -736,7 +733,7 @@ static const unsigned char temp_binary_data_12[] =
 "              },\r\n"
 "              {\r\n"
 "                \"type\": 0,\r\n"
-"                \"width\": 289,\r\n"
+"                \"width\": 199,\r\n"
 "                \"height\": 352,\r\n"
 "                \"currentContent\": \"Block Visualizer\",\r\n"
 "                \"tabs\": [\r\n"
@@ -747,7 +744,7 @@ static const unsigned char temp_binary_data_12[] =
 "              },\r\n"
 "              {\r\n"
 "                \"type\": 0,\r\n"
-"                \"width\": 269,\r\n"
+"                \"width\": 421,\r\n"
 "                \"height\": 352,\r\n"
 "                \"currentContent\": \"Logger\",\r\n"
 "                \"tabs\": [\r\n"
@@ -2276,7 +2273,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xcdd754b5:  numBytes = 2116; return script_png;
         case 0x576fad2b:  numBytes = 1253; return timeline_png;
         case 0x4f784065:  numBytes = 6004; return video_png;
-        case 0x7448d63a:  numBytes = 2650; return default_btlayout;
+        case 0x7448d63a:  numBytes = 2561; return default_btlayout;
         case 0x78c8c9ab:  numBytes = 1868; return fadeIn_png;
         case 0xeac7f79c:  numBytes = 392; return fadeOut_png;
         case 0xd4093963:  numBytes = 98974; return icon_png;

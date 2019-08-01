@@ -867,6 +867,13 @@
 			path = ../../Source/Prop/props/flowtoys/FlowtoysProp.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		25A86663AB1BCEB88DE5C5ED = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = JuceHeader.h;
+			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		27E52FAF0E1B45CBE00E5FEA = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3366,6 +3373,7 @@
 				878A4313101E6FF0D57EE3CD,
 				F8CC2AA9A461022D52BD9030,
 				B3F00A16D10651397C0D1BAE,
+				25A86663AB1BCEB88DE5C5ED,
 			);
 			name = "JUCE Library Code";
 			sourceTree = "<group>";

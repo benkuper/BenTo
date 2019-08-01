@@ -45,7 +45,7 @@ namespace BinaryData
     const int            video_pngSize = 6004;
 
     extern const char*   default_btlayout;
-    const int            default_btlayoutSize = 2650;
+    const int            default_btlayoutSize = 2561;
 
     extern const char*   fadeIn_png;
     const int            fadeIn_pngSize = 1868;

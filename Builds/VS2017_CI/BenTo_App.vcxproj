@@ -3627,6 +3627,7 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_timeline\juce_timeline.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h"/>
+    <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\Resources\models\patterns\noise.png"/>

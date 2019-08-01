@@ -22,6 +22,6 @@ public:
 
 	void endLoadFile() override;
 	
-	static const String getTypeStringStatic()  { return "Timeline Editor"; }
+	static const String getTypeStringStatic()  { return "Sequence Editor"; }
 	static TimelineEditor * create(const String &contentName) { return new TimelineEditor(contentName); }
 };

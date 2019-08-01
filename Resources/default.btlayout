@@ -30,24 +30,21 @@
               },
               {
                 "type": 0,
-                "width": 1297,
+                "width": 1062,
                 "height": 638,
-                "currentContent": "Node Editor",
+                "currentContent": "Sequence Editor",
                 "tabs": [
                   {
                     "name": "Node Editor"
                   },
                   {
-                    "name": "Timeline Editor"
-                  },
-                  {
-                    "name": "Spatializer Editor"
+                    "name": "Sequence Editor"
                   }
                 ]
               },
               {
                 "type": 0,
-                "width": 329,
+                "width": 566,
                 "height": 638,
                 "currentContent": "Inspector",
                 "tabs": [
@@ -66,7 +63,7 @@
             "shifters": [
               {
                 "type": 0,
-                "width": 1348,
+                "width": 1288,
                 "height": 352,
                 "currentContent": "Props",
                 "tabs": [
@@ -77,7 +74,7 @@
               },
               {
                 "type": 0,
-                "width": 289,
+                "width": 199,
                 "height": 352,
                 "currentContent": "Block Visualizer",
                 "tabs": [
@@ -88,7 +85,7 @@
               },
               {
                 "type": 0,
-                "width": 269,
+                "width": 421,
                 "height": 352,
                 "currentContent": "Logger",
                 "tabs": [
