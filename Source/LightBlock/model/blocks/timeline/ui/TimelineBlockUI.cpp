@@ -23,10 +23,6 @@ TimelineBlockUI::~TimelineBlockUI()
 
 void TimelineBlockUI::editBlock()
 {
-	ShapeShifterManager::getInstance()->showContent("Timeline Editor");
-	TimeMachineView * view = (TimeMachineView *)ShapeShifterManager::getInstance()->getContentForName("Timeline Editor");
-	if (view != nullptr)
-	{
-		view->setSequence(&tb->sequence);
-	}
+	TimeMachineView* view = dynamic_cast<TimeMachineView*>(ShapeShifterManager::getInstance()->showContent(TimelineEditor::getTypeStringStatic()));
+	if (view != nullptr) view->setSequence(&tb->sequence);
 }
