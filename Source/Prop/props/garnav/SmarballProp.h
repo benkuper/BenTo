@@ -16,7 +16,7 @@ class SmartballProp :
 	public BentoProp
 {
 public:
-	SmartballProp(const String &name = "SmartBall", var params = var());
+	SmartballProp(var params = var());
 	~SmartballProp();
 
 	Point3DParameter * accelerometer;

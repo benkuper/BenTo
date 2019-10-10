@@ -10,11 +10,13 @@
 
 #include "SmarballProp.h"
 
-SmartballProp::SmartballProp(const String & name, var params) :
-	BentoProp(name, "Garnav", params)
+SmartballProp::SmartballProp(var params) :
+	BentoProp(getTypeString(), "Garnav", params)
 {
 	accelerometer = sensorsCC.addPoint3DParameter("Accelerometer", "Accelerometer data");
 	accelerometer->setControllableFeedbackOnly(true);
+
+	resolution->setValue(6);
 }
 
 SmartballProp::~SmartballProp()
