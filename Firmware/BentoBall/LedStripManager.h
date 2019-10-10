@@ -120,10 +120,8 @@ public:
 
   void receiveUDP()
   {
-    DBG("Here");
     if (udp.parsePacket())
     {
-      DBG("Here 2, available : "+String(udp.available());
       while (udp.available() > 0)
       {
         byte b = udp.read();
