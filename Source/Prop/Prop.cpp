@@ -266,7 +266,7 @@ void Prop::inspectableDestroyed(Inspectable* i)
 void Prop::sendColorsToProp(bool forceSend)
 {
 	if (!enabled->boolValue() && !forceSend) return;
-	if (!isConnected->boolValue() || !twoWayConnected->boolValue()) return;
+	//if (!isConnected->boolValue() || !twoWayConnected->boolValue()) return; //tmp unblock that
 	sendColorsToPropInternal();
 }
 

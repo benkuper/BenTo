@@ -159,12 +159,13 @@ void processWifi()
   
     void processBuffer()
   {
-    /*
+    
     Serial.println("");
     Serial.print("process Buffer : ");
     Serial.print(ledBufferIndex);
     Serial.println(" received.");
-    */
+
+    
     //FastLED.clear();
     FastLED.show();
     

@@ -11,6 +11,7 @@ public :
 
   static uint32_t deviceID;
   static uint32_t propID; //
+  static String deviceType;
   
   DeviceSettings()
   {
@@ -57,5 +58,5 @@ public :
 
 uint32_t DeviceSettings::deviceID = 0;
 uint32_t DeviceSettings::propID = 0;
-
+String DeviceSettings::deviceType = "Flowtoys ESP8266 Proto";
 #endif //DEVICESETTINGS_H

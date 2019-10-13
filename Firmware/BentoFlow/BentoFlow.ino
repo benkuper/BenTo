@@ -331,8 +331,8 @@ void setup() {
   if(!btManager.buttonIsPressed())
   {
     Serial.println("\nButton not pressed at power up, sleep again.");
-    ESP.deepSleep(5e6); //5 seconds sleep
-    return;
+    //ESP.deepSleep(5e6); //5 seconds sleep
+    //return;
   }
 
   //Keep the power

@@ -71,7 +71,7 @@ public:
           OSCMessage msg("/wassup");
           msg.add(ipToString());
           msg.add(String(DeviceSettings::deviceID).c_str());
-          msg.add("Flowtoys Creator Club");
+          msg.add(DeviceSettings::deviceType.c_str());
           
           sendMessage(msg);
           
