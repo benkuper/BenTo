@@ -114,6 +114,10 @@ void BentoEngine::processMessage(const OSCMessage & m)
 
 	} else if (aList[1] == "prop")
 	{
+		if (m.size() < 2)
+		{
+			LOGWARNING("Prop message should have at least 2 arguments, current num : " << m.size());
+		}
 		int id = OSCHelpers::getIntArg(m[0]);
 		//Prop * p = PropManager::getInstance()->getPropWithId(id);
 

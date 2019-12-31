@@ -13,6 +13,7 @@
 SmartballProp::SmartballProp(var params) :
 	BentoProp(getTypeString(), "Garnav", params)
 {
+	type->setValueWithData(BALL);
 	accelerometer = sensorsCC.addPoint3DParameter("Accelerometer", "Accelerometer data");
 	accelerometer->setControllableFeedbackOnly(true);
 

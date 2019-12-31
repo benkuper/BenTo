@@ -36,5 +36,5 @@ void VideoBlockUI::resized()
 
 void VideoBlockUI::editBlock()
 {
-	ShapeShifterManager::getInstance()->showContent("Spatializer Editor");
+	ShapeShifterManager::getInstance()->showContent(SpatializerPanel::getTypeStringStatic());
 }

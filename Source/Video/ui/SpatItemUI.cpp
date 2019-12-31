@@ -41,13 +41,15 @@ void SpatItemUI::paint(Graphics & g)
 	Point<float> startHandlePos = startHandle.getBounds().getCentre().toFloat();
 	Point<float> endHandlePos = endHandle.getBounds().getCentre().toFloat();
 
+	Colour c = item->isSelected ? Colours::yellow : (isMouseOver() ? HIGHLIGHT_COLOR : Colours::white);
+	g.setColour(c.withAlpha(.4f));
+	
 	if (spat->showHandles->boolValue())
 	{
 		Prop::Shape s = item->shape->getValueDataAsEnum<Prop::Shape>();
 		switch (s)
 		{
 		case Prop::Shape::CLUB:
-			g.setColour(item->isSelected ? Colours::yellow : (isMouseOver() ? HIGHLIGHT_COLOR : Colours::white));
 			g.drawLine(Line<float>(startHandlePos, endHandlePos), item->isSelected ? 2 : 1);
 			break;
 
@@ -56,7 +58,18 @@ void SpatItemUI::paint(Graphics & g)
 		case Prop::Shape::POI:
 			break;
 		case Prop::Shape::HOOP:
-			break;
+		{
+			Rectangle<float> hr;
+
+			Point<float> startPos = item->startPos->getPoint();
+			Point<float> endPos = item->endPos->getPoint(); 
+			float distP = endPos.getDistanceFrom(startPos);
+			Point<float> relDistP = panel->getPositionForRelative(Point<float>(distP, distP)) *2;
+			hr.setSize(relDistP.x, relDistP.y);
+			hr.setCentre(startHandlePos);
+			g.drawEllipse(hr, item->isSelected ? 2 : 1);
+		}
+		break;
                 
             default:
                 break;
@@ -87,14 +100,38 @@ void SpatItemUI::updateBounds()
 {
 	if (lockBounds) return;
 
+	Prop::Shape s = item->shape->getValueDataAsEnum<Prop::Shape>();
+	Rectangle<int> r;
+		
 	Point<float> p1 = panel->getPositionForRelative(item->startPos->getPoint());
 	Point<float> p2 = panel->getPositionForRelative(item->endPos->getPoint());
 
-	Point<int> points[2];
-	points[0] = p1.toInt();
-	points[1] = p2.toInt();
+	switch (s)
+	{
 
-	Rectangle<int> r = Rectangle<int>::findAreaContainingPoints(points, 2).expanded(10);
+	case Prop::Shape::HOOP:
+	{
+		float margin = 8;
+		Point<float> startPos = item->startPos->getPoint();
+		Point<float> endPos = item->endPos->getPoint();
+		float distP = endPos.getDistanceFrom(startPos);
+		Point<float> relDistP = panel->getPositionForRelative(Point<float>(distP, distP)) * 2;
+		r.setSize(relDistP.x + margin, relDistP.y + margin);
+		r.setCentre(p1.x, p1.y);
+
+	}
+	break;
+
+	default:
+	{
+		Point<int> points[2];
+		points[0] = p1.toInt();
+		points[1] = p2.toInt();
+		r = Rectangle<int>::findAreaContainingPoints(points, 2).expanded(10);
+	}
+	break;
+	}
+
 	setBounds(r);
 }
 
@@ -126,6 +163,7 @@ void SpatItemUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	if (c == item->shape)
 	{
+		setPaintingIsUnclipped(item->shape == Prop::Shape::HOOP);
 		repaint();
 	} else if (c == item->startPos || c == item->endPos)
 	{

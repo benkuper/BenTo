@@ -19,8 +19,6 @@ AudioManager::AudioManager() :
 {
 	
 	am.initialiseWithDefaultDevices(2, 2);
-
-	DBG("Add AUDIO CALLBACK here");
 	am.addAudioCallback(&player);
 
 	graph.reset();

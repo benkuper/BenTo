@@ -17,7 +17,7 @@
 Preferences preferences;
 #endif
 
-#define USE_BUTTON 1
+#define USE_BUTTON 0
 #define USE_WIFI 1
 #define USE_IR 0
 
@@ -33,7 +33,7 @@ Preferences preferences;
 #define USE_LEDSTRIP 1
 #define USE_BATTERY 0
 
-#define USE_VIBRATOR 1
+#define USE_VIBRATOR 0
 
 //#define POWER_ENABLE_PIN 19
 
@@ -115,7 +115,8 @@ long lastOrientationSendTime = 0;
 void onButtonEvent(int type)
 {
   DBG("Button Event : "+String(type));
-
+  if(true) return;
+  
   switch (type)
   {
     case BT_PRESSED:
@@ -281,15 +282,6 @@ void messageReceived(OSCMessage &msg)
     batteryLevelUpdate();
 #endif
   }
-#if USE_VIBRATOR
-  else if(msg.match("/vibrate"))
-  {
-     digitalWrite(VIBRATOR_PIN, HIGH);
-     delay(100);
-     digitalWrite(VIBRATOR_PIN, LOW);
-  }
-#endif
-
   else
   {
     if (settings.handleMessage(msg))
@@ -316,7 +308,6 @@ void messageReceived(OSCMessage &msg)
     if (fileManager.handleMessage(msg))
       return;
 #endif
-
 
     DBG("...message not handled");
   }
@@ -490,7 +481,7 @@ void setup()
   Serial.begin(115200);
   Serial.println("");
 
-  Wire.begin(2, 4);
+  //Wire.begin(2, 4);
 
   #if USE_PREFERENCES
   preferences.begin("bento-settings", false);

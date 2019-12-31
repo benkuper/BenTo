@@ -179,6 +179,9 @@
     <Filter Include="BenTo\Source\Prop\props\lighttoys">
       <UniqueIdentifier>{9F30B32A-59CF-6038-D38A-EA6C62949032}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Prop\props\lightrix">
+      <UniqueIdentifier>{49F89602-F0E2-0B20-B04B-FFD2F47E505D}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Prop\props\garnav">
       <UniqueIdentifier>{7A6D1F25-927C-F908-3882-976D74D13D94}</UniqueIdentifier>
     </Filter>
@@ -1119,6 +1122,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\lightrix\LightrixFamily.cpp">
+      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\lightrix\LightrixHoop.cpp">
+      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\garnav\GarnavFamily.cpp">
       <Filter>BenTo\Source\Prop\props\garnav</Filter>
@@ -4125,6 +4134,12 @@
     <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h">
       <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\lightrix\LightrixFamily.h">
+      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\lightrix\LightrixHoop.h">
+      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\garnav\GarnavFamily.h">
       <Filter>BenTo\Source\Prop\props\garnav</Filter>
     </ClInclude>
@@ -6333,9 +6348,6 @@
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\ParameterUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\StringParameterTextUI.h">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\controllable\parameter\ui\StringParameterUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
@@ -6550,6 +6562,9 @@
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerUI.h">
+      <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerViewMiniPane.h">
       <Filter>JUCE Modules\juce_organicui\manager\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE Modules\juce_organicui\manager\ui\BaseManagerViewUI.h">

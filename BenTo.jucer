@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.4" headerPath="../../Source"
-              id="LP0of5" version="1.0.14">
+<JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.5" headerPath="../../Source"
+              id="LP0of5" version="1.0.15">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -456,6 +456,15 @@
               <FILE id="zTJcPB" name="LighttoysFTProp.h" compile="0" resource="0"
                     file="Source/Prop/props/lighttoys/ft/LighttoysFTProp.h"/>
             </GROUP>
+          </GROUP>
+          <GROUP id="{A3EE6158-7B58-5AE6-761D-3243872E8AFD}" name="lightrix">
+            <FILE id="EmIrtB" name="LightrixFamily.cpp" compile="1" resource="0"
+                  file="Source/Prop/props/lightrix/LightrixFamily.cpp"/>
+            <FILE id="Me4LHb" name="LightrixFamily.h" compile="0" resource="0"
+                  file="Source/Prop/props/lightrix/LightrixFamily.h"/>
+            <FILE id="FAouVQ" name="LightrixHoop.cpp" compile="1" resource="0"
+                  file="Source/Prop/props/lightrix/LightrixHoop.cpp"/>
+            <FILE id="Fw1acN" name="LightrixHoop.h" compile="0" resource="0" file="Source/Prop/props/lightrix/LightrixHoop.h"/>
           </GROUP>
           <GROUP id="{2ABCE6F1-98C0-E49C-51B2-9A06C1A77026}" name="garnav">
             <FILE id="d8Vegd" name="GarnavFamily.cpp" compile="1" resource="0"

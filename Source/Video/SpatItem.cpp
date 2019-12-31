@@ -48,20 +48,39 @@ void SpatItem::updatePoints()
 	switch (shape->getValueDataAsEnum<Prop::Shape>())
 	{
 	case Prop::Shape::CLUB:
-		for (int i = 0; i < numPoints ; i++)
+	{
+
+		for (int i = 0; i < numPoints; i++)
 		{
-			points.add(startPoint + (endPoint-startPoint) * (i * 1.0f / jmax(numPoints - 1, 1)));
+			points.add(startPoint + (endPoint - startPoint) * (i * 1.0f / jmax(numPoints - 1, 1)));
 		}
-		break;
+	}
+	break;
 
 	case Prop::Shape::BALL:
-		break;
+	{
+		for (int i = 0; i < numPoints; i++)
+		{
+			points.add(startPoint);
+		}
+	}
+	break;
 
 	case Prop::Shape::POI:
 		break;
 
 	case Prop::Shape::HOOP:
-		break;
+	{
+		float angle = float_Pi * 2 / numPoints;
+		float startAngle = startPoint.getAngleToPoint(endPoint);
+		float radius = startPoint.getDistanceFrom(endPoint);
+		for (int i = 0; i < numPoints; i++)
+		{
+			float tAngle = startAngle + angle * i;
+			points.add(startPoint + Point<float>(cosf(tAngle) * radius, sinf(tAngle) * radius));
+		}
+	}
+	break;
             
         default:
             break;

@@ -1,5 +1,3 @@
-#include <Arduino.h>
-
 #define SERIAL_DEBUG 1
 #include <Wire.h>
 
