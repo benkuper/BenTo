@@ -280,7 +280,7 @@
 // juce_organicui flags:
 
 #ifndef    ORGANICUI_USE_SERVUS
- //#define ORGANICUI_USE_SERVUS 0
+ #define   ORGANICUI_USE_SERVUS 1
 #endif
 
 #ifndef    ORGANICUI_DEFAULT_REMOTECONTROL_PORT
