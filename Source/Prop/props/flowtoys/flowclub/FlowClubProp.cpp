@@ -15,6 +15,10 @@ FlowClubProp::FlowClubProp(var params) :
 	irCC("IR LED")
 {
 	resolution->setValue(32);
+
+	serialParam->vidFilter = vidFilter;
+	serialParam->pidFilter = pidFilter;
+
 	button = sensorsCC.addBoolParameter("Button", "Is the button on the prop pressed ?", false);
 	button->setControllableFeedbackOnly(true);
 
@@ -24,9 +28,17 @@ FlowClubProp::FlowClubProp(var params) :
 
 FlowClubProp::~FlowClubProp()
 {
+
 }
 
-void FlowClubProp::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void FlowClubProp::clearItem()
+{
+	FlowtoysProp::clearItem();
+	setSerialDevice(nullptr);
+}
+
+
+void FlowClubProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	FlowtoysProp::onControllableFeedbackUpdateInternal(cc, c);
 

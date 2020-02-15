@@ -1,5 +1,4 @@
 /* Copyright 2012 William Woodall and John Harrison */
-#if !defined(__arm__)
 #include <algorithm>
 
 #if !defined(_WIN32) && !defined(__OpenBSD__) && !defined(__FreeBSD__)
@@ -420,4 +419,11 @@ bool Serial::getCD ()
   return pimpl_->getCD ();
 }
 
+int Serial::getHandle()
+{
+#if !defined(_WIN32)
+  return pimpl_->getHandle();
+#else
+  return 0;
 #endif
+}

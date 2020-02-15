@@ -27,7 +27,8 @@ public:
 	int openBaudRate;
 	int vidFilter;
 	int pidFilter;
-
+	
+	void setValueForDevice(SerialDevice* d);
 	void setValueInternal(var &value) override;
 
 	void updatePortList();

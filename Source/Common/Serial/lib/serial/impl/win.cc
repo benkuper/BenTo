@@ -1,11 +1,12 @@
 #if defined(_WIN32)
 
-#pragma warning(disable:4244)
 /* Copyright 2012 William Woodall and John Harrison */
 
 #include <sstream>
 
 #include "serial/impl/win.h"
+ 
+#pragma warning(disable:4244)
 
 using std::string;
 using std::wstring;

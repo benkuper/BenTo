@@ -245,7 +245,6 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		String pid = OSCHelpers::getStringArg(m[1]);
 		String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Flowtoys Creator Club";
 
-		//ToDo : fix propID on ESP32 chips ot have proper hardwareID
 		DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
 		Prop * p = getPropWithHardwareId(pid);
 		if (p == nullptr)

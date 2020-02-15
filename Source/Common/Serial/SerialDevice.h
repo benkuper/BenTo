@@ -117,7 +117,7 @@ public:
 		virtual void portOpened(SerialDevice  *) {};
 		virtual void portClosed(SerialDevice  *) {};
 		virtual void portRemoved(SerialDevice *) {};
-		virtual void serialDataReceived(const var &) {};
+		virtual void serialDataReceived(SerialDevice *, const var &) {};
 	};
 
 	ListenerList<SerialDeviceListener> listeners;

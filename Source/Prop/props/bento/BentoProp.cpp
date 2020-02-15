@@ -12,10 +12,15 @@
 
 
 BentoProp::BentoProp(StringRef name, StringRef family, var params) :
-	Prop(name, family, params)
+	Prop(name, family, params),
+	serialDevice(nullptr)
 {
 	updateRate = 50;
 	remoteHost = ioCC.addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
+
+
+	serialParam = new SerialDeviceParameter("Serial Device", "For connecting props trhough USB", true);
+	ioCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
 }
@@ -23,6 +28,25 @@ BentoProp::BentoProp(StringRef name, StringRef family, var params) :
 BentoProp::~BentoProp()
 {
 
+}
+
+void BentoProp::setSerialDevice(SerialDevice* d)
+{
+	if (serialDevice == d) return;
+
+	if (serialDevice != nullptr)
+	{
+		serialDevice->removeSerialDeviceListener(this);
+	}
+
+	serialDevice = d;
+
+	if (serialDevice != nullptr)
+	{
+		serialDevice->open(115200);
+		if (!serialDevice->openedOk) serialDevice->addSerialDeviceListener(this);
+		else NLOGERROR(niceName, "Error opening port " << serialDevice->info->description);
+	}
 }
 
 void BentoProp::onContainerParameterChangedInternal(Parameter* p)
@@ -55,7 +79,17 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 		}
 
 	}
+	else if (c == serialParam)
+	{
+		setSerialDevice(serialParam->getDevice());
+	}
 }
+
+void BentoProp::serialDataReceived(SerialDevice* d, const var&)
+{
+	LOG(niceName, "Serial Data : " << data.toString());
+}
+
 
 void BentoProp::sendColorsToPropInternal()
 {

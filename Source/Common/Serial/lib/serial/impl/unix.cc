@@ -3,7 +3,7 @@
  * Additional Contributors: Christopher Baker @bakercp
  */
 
-#if !defined(_WIN32)  && !defined(__arm__)
+#if !defined(_WIN32)
 
 #include <stdio.h>
 #include <string.h>
@@ -1053,6 +1053,12 @@ Serial::SerialImpl::writeUnlock ()
   if (result) {
     THROW (IOException, result);
   }
+}
+
+int
+Serial::SerialImpl::getHandle() 
+{
+  return fd_;
 }
 
 #endif // !defined(_WIN32)

@@ -178,7 +178,7 @@ int SerialDevice::writeBytes(Array<uint8_t> data)
 }
 
 void SerialDevice::dataReceived(const var & data) {
-	listeners.call(&SerialDeviceListener::serialDataReceived, data);
+	listeners.call(&SerialDeviceListener::serialDataReceived, this, data);
 }
 
 void SerialDevice::addSerialDeviceListener(SerialDeviceListener * newListener) { listeners.add(newListener); }

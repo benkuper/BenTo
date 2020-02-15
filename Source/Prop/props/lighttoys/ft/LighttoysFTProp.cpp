@@ -206,7 +206,7 @@ void LighttoysFTProp::portRemoved(SerialDevice *)
 	setCurrentDevice(nullptr);
 }
 
-void LighttoysFTProp::serialDataReceived(const var & data)
+void LighttoysFTProp::serialDataReceived(SerialDevice* d, const var& data)
 {
 	//DBG("Serial data received : " << data.toString());
 	String msg = data.toString();

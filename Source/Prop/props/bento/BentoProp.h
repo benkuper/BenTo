@@ -11,9 +11,12 @@
 #pragma once
 
 #include "../../Prop.h"
+#include "Common/Serial/SerialDeviceParameter.h"
+
 
 class BentoProp :
-	public Prop
+	public Prop,
+	public SerialDevice::SerialDeviceListener
 {
 public:
 	BentoProp(StringRef name = "Bento", StringRef family = "Family", var params = var());
@@ -24,8 +27,15 @@ public:
 	DatagramSocket sender;
 	OSCSender oscSender;
 
+	SerialDeviceParameter* serialParam;
+	SerialDevice* serialDevice;
+
+	virtual void setSerialDevice(SerialDevice* d);
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
+
+	virtual void serialDataReceived(SerialDevice * d, const var &) override;
 
 	virtual void sendColorsToPropInternal() override;
 

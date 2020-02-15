@@ -31,6 +31,18 @@ SerialDevice * SerialDeviceParameter::getDevice()
 	return currentDevice;
 }
 
+void SerialDeviceParameter::setValueForDevice(SerialDevice* d)
+{
+	for (auto& p : SerialManager::getInstance()->openedPorts)
+	{
+		if (p == d)
+		{
+			setValueWithKey(p->info->uniqueDescription);
+			return;
+		}
+	}
+}
+
 void SerialDeviceParameter::setValueInternal(var &v)
 {
 	EnumParameter::setValueInternal(v);
