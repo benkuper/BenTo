@@ -41,7 +41,7 @@ void ParameterNodeViewUI::resizedInternalContent(Rectangle<int>& r)
 
 void ParameterNodeViewUI::newMessage(const Parameter::ParameterEvent & e)
 {
-	NodeViewUI::newMessage(e);
+	BaseItemUI::newMessage(e);
 
 	if (e.type == Parameter::ParameterEvent::BOUNDS_CHANGED)
 	{
