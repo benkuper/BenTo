@@ -575,9 +575,9 @@
                 smallIcon="YlXmhK" bigIcon="YlXmhK" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/x86_64-linux-gnu/"/>
+                       libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
         <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/x86_64-linux-gnu/"/>
+                       libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
@@ -602,7 +602,7 @@
                 externalLibraries="curl&#10;Servus" smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/linux&#10;/usr/lib/arm-linux-gnueabihf"
+                       libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=native"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
