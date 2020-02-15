@@ -12,6 +12,7 @@ matrix:
     - os: osx
       osx_image: xcode10.1
       compiler: clang
+      env: BUILD_FOLDER=MacOSX_CI
     - os: linux 
       arch: amd64
       dist: bionic
@@ -116,7 +117,7 @@ script:
     make -j2 CONFIG=$MAKECONF
   else
     cd $TRAVIS_BUILD_DIR
-    xcodebuild -project Builds/MacOSX/BenTo.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
+    xcodebuild -project Builds/$BUILD_FOLDER/BenTo.xcodeproj -configuration $MAKECONF -jobs 2 -verbose | xcpretty -f `xcpretty-travis-formatter`
   fi
 
 after_success:
