@@ -77,7 +77,7 @@ IMUManager imuManager;
 #endif
 
 #if USE_LEDSTRIP
-#include "FastLED.h"
+#include <FastLED.h>
 #include "LedStripManager.h"
 
 LedStripManager stripManager;

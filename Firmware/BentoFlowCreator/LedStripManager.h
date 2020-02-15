@@ -257,7 +257,7 @@ public:
   #if USE_OSC
   boolean handleMessage(OSCMessage &msg)
   { 
-    int offset = msg.match("/strip");
+    int offset = msg.match("/leds");
     
     
     if(offset == 0) return false;
