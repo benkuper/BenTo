@@ -56,20 +56,11 @@ before_install:
     ls -d */
     cd /Users/travis
     git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE
-    cd /Users/travis/build/benkuper
-    mkdir "JUCE Modules"
-    cd "JUCE Modules"
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_sharedtexture.git juce_sharedtexture
-    cd ..
-    pwd
     ls -d */
     curl -L -o Packages.dmg 'http://s.sudre.free.fr/Software/files/Packages.dmg'
     hdiutil mount Packages.dmg
     sudo installer -pkg /Volumes/Packages\ $PACKAGES_VERSION/Install\ Packages.pkg -target /
     hdiutil detach /Volumes/Packages\ $PACKAGES_VERSION/
-    cd /Users/travis/build/benkuper
   fi
 install:
 - |
@@ -94,12 +85,6 @@ install:
     cd ~;
     pwd;
     git clone --depth=1 --branch=develop-local https://github.com/benkuper/JUCE.git JUCE;
-    cd /benkuper;
-    mkdir 'JUCE Modules';
-    cd 'JUCE Modules';
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_organicui.git juce_organicui
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_sharedtexture.git juce_sharedtexture
-    git clone --depth=1 --branch=master https://github.com/benkuper/juce_timeline.git juce_timeline"
   fi
 script:
 - |

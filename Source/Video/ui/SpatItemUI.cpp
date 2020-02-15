@@ -163,7 +163,7 @@ void SpatItemUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	if (c == item->shape)
 	{
-		setPaintingIsUnclipped(item->shape == Prop::Shape::HOOP);
+		setPaintingIsUnclipped(item->shape->getValueDataAsEnum<Prop::Shape>() == Prop::Shape::HOOP);
 		repaint();
 	} else if (c == item->startPos || c == item->endPos)
 	{

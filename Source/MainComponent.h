@@ -25,7 +25,8 @@ public:
     ~MainComponent();
 
 	void init() override;
-
+	
+	void setupOpenGLInternal() override;
 private:
     //==============================================================================
     // Your private member variables go here...

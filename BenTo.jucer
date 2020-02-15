@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.5" headerPath="../../Source"
-              id="LP0of5" version="1.0.15">
+<JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.7" headerPath="../../Source"
+              id="LP0of5" version="1.0.16">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -525,10 +525,10 @@
                        binaryPath="Binaries/Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_sharedtexture"/>
         <MODULEPATH id="juce_osc"/>
-        <MODULEPATH id="juce_organicui"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
         <MODULEPATH id="juce_opengl"/>
         <MODULEPATH id="juce_gui_extra"/>
         <MODULEPATH id="juce_gui_basics"/>
@@ -550,9 +550,9 @@
         <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -565,7 +565,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl"
@@ -575,9 +575,9 @@
         <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
@@ -590,7 +590,7 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -599,9 +599,9 @@
         <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_osc" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
         <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
@@ -614,7 +614,7 @@
         <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -625,10 +625,10 @@
         <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="../JUCE Modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
         <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="../JUCE Modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
         <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>

@@ -17,10 +17,10 @@
 #include "Prop/Cluster/ui/PropClusterGroupManagerUI.h"
 
 //==============================================================================
-MainComponent::MainComponent()
+MainComponent::MainComponent() :
+	OrganicMainContentComponent()
 {
 	SharedTextureManager::getInstance(); //create the main instance
-	openGLContext.setRenderer(this);
 }
 
 MainComponent::~MainComponent()
@@ -44,8 +44,14 @@ void MainComponent::init()
 	OrganicMainContentComponent::init();
 }
 
+void MainComponent::setupOpenGLInternal()
+{
+	openGLContext->setRenderer(this);
+}
+
 void MainComponent::newOpenGLContextCreated()
 {
+	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->initGL();
 }
 
 void MainComponent::renderOpenGL()
@@ -55,4 +61,5 @@ void MainComponent::renderOpenGL()
 
 void MainComponent::openGLContextClosing()
 {
+	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->clearGL();
 }

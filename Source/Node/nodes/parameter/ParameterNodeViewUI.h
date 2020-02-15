@@ -14,8 +14,7 @@
 #include "ParameterNode.h"
 
 class ParameterNodeViewUI :
-	public NodeViewUI,
-	public Parameter::AsyncListener
+	public NodeViewUI
 {
 public:
 	ParameterNodeViewUI(ParameterNode * pn);

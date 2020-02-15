@@ -33,7 +33,7 @@ TimelineBlockSequence::TimelineBlockSequence() :
 
 	if (!Engine::mainEngine->isLoadingFile)
 	{
-		layerManager->addItem(new LightBlockLayer(this, &clusterGroupManager));
+		layerManager->addItem(new LightBlockLayer(this));
 	}
 
 	layerManager->addBaseManagerListener(this);

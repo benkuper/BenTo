@@ -609,13 +609,6 @@
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		03D68912B90442DF90A21C42 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_organicui";
-			path = "../../../JUCE Modules/juce_organicui";
-			sourceTree = "SOURCE_ROOT";
-		};
 		042EE867E2552AD03EB3FC9D = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1610,6 +1603,13 @@
 			path = ../../Source/Prop/ui/PropManagerUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		90358C616892A9E4A0BAE0E0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_sharedtexture";
+			path = "../../Modules/juce_sharedtexture";
+			sourceTree = "SOURCE_ROOT";
+		};
 		9127201DD1B7A0F4C442C85E = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1834,13 +1834,6 @@
 			path = ../../Source/LightBlock/model/blocks/node/NodeBlock.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
-		A1A6ABCA29E3787D9B68262F = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_timeline";
-			path = "../../../JUCE Modules/juce_timeline";
-			sourceTree = "SOURCE_ROOT";
-		};
 		A1C0F782FE9CBAEDE19E835F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1916,6 +1909,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightBlockModel.cpp;
 			path = ../../Source/LightBlock/model/LightBlockModel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		AED1C1F9172B482D4CC281F2 = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_timeline";
+			path = "../../Modules/juce_timeline";
 			sourceTree = "SOURCE_ROOT";
 		};
 		AEF39637DB6CA28A00644DE6 = {
@@ -2023,6 +2023,13 @@
 			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc";
 			sourceTree = "SOURCE_ROOT";
 		};
+		BAEFF9889C95827D6D0A3AFE = {
+			isa = PBXFileReference;
+			lastKnownFileType = file;
+			name = "juce_organicui";
+			path = "../../Modules/juce_organicui";
+			sourceTree = "SOURCE_ROOT";
+		};
 		BB49CE530EF2DF020DBCAA60 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2098,13 +2105,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = LightBlockLayerTimeline.cpp;
 			path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		C13B0C1BAB87E71874F833B7 = {
-			isa = PBXFileReference;
-			lastKnownFileType = text.plist.xml;
-			name = BenTo.entitlements;
-			path = BenTo.entitlements;
 			sourceTree = "SOURCE_ROOT";
 		};
 		C15F2A6F1FD48A1EFD75B7EB = {
@@ -2217,13 +2217,6 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = PropClusterGroupManager.cpp;
 			path = ../../Source/Prop/Cluster/PropClusterGroupManager.cpp;
-			sourceTree = "SOURCE_ROOT";
-		};
-		CFE4080B44BE37C07EB06068 = {
-			isa = PBXFileReference;
-			lastKnownFileType = file;
-			name = "juce_sharedtexture";
-			path = "../../../JUCE Modules/juce_sharedtexture";
 			sourceTree = "SOURCE_ROOT";
 		};
 		D027E1CD25E7821AE21678A1 = {
@@ -3397,10 +3390,10 @@
 				CDF46B099D8A37106496ED1F,
 				D5BA4C7B914E43D3B54609C9,
 				9FC7CA34A6BC93158284E96E,
-				03D68912B90442DF90A21C42,
+				BAEFF9889C95827D6D0A3AFE,
 				5DBFCFF756AD9AF779C27EC0,
-				CFE4080B44BE37C07EB06068,
-				A1A6ABCA29E3787D9B68262F,
+				90358C616892A9E4A0BAE0E0,
+				AED1C1F9172B482D4CC281F2,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -3499,8 +3492,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.0.15",
-					"JUCE_APP_VERSION_HEX=0x1000f",
+					"JUCE_APP_VERSION=1.0.16",
+					"JUCE_APP_VERSION_HEX=0x10010",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3514,7 +3507,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"\"../../../JUCE Modules\"",
+					"../../Modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3545,8 +3538,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.0.15",
-					"JUCE_APP_VERSION_HEX=0x1000f",
+					"JUCE_APP_VERSION=1.0.16",
+					"JUCE_APP_VERSION_HEX=0x10010",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3561,7 +3554,7 @@
 				HEADER_SEARCH_PATHS = (
 					"../../JuceLibraryCode",
 					"$(HOME)/JUCE/modules",
-					"\"../../../JUCE Modules\"",
+					"../../Modules",
 					"../../External/serial/include",
 					"../../Source",
 					"$(inherited)",
@@ -3619,6 +3612,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				PRODUCT_NAME = "BenTo";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
@@ -3664,6 +3658,7 @@
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				PRODUCT_NAME = "BenTo";
+				SDKROOT = macosx;
 				WARNING_CFLAGS = "-Wreorder";
 				ZERO_LINK = NO;
 			};
