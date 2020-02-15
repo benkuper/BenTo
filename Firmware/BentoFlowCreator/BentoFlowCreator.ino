@@ -1,20 +1,9 @@
-#include <Arduino.h>
-
+// ---------------------------------  DEFINES
 #define USE_SERIAL 1
 
 #if USE_SERIAL
 #define SERIAL_DEBUG 1
 #endif
-
-#if USE_SERIAL
-#include "SerialManager.h"
-SerialManager serialManager;
-#endif
-
-#include <Wire.h>
-#include <Preferences.h>
-
-Preferences preferences;
 
 #define USE_BUTTON 1
 #define USE_WIFI 1
@@ -34,7 +23,22 @@ Preferences preferences;
 
 #define POWER_ENABLE_PIN 19
 
+
+
+// ---------------------------------  NATIVE INCLUDES
+
+#include <Arduino.h>
+#include <Wire.h>
+#include <Preferences.h>
+Preferences preferences;
 using namespace std;
+
+// ---------------------------------  INCLUDES AND MANAGERS
+
+#if USE_SERIAL
+#include "SerialManager.h"
+SerialManager serialManager;
+#endif
 
 #include "DeviceSettings.h"
 DeviceSettings settings;
@@ -52,7 +56,7 @@ WiFiManager wifiManager;
 #if USE_OSC
 #define USE_PING 1
 #include "OSCManager.h"
-OSCManager oscManager(wifiManager.oscUDP);
+OSCManager oscManager;
 #define RESETWIFI_ON_DISCONNECT 1
 #define RESETWIFI_MAXTRIES 5
 #endif
@@ -76,11 +80,7 @@ IMUManager imuManager;
 #include "FastLED.h"
 #include "LedStripManager.h"
 
-#if USE_WIFI
-LedStripManager stripManager(wifiManager.streamingUDP);
-#else
 LedStripManager stripManager;
-#endif
 
 #endif
 
@@ -99,20 +99,26 @@ BatteryManager batteryManager;
 IRManager irManager;
 #endif
 
+
+// ---------------------------------  VARIABLES
+
 long orientationSendRateMS = 20;
 long lastOrientationSendTime = 0;
 
-
-//Callbacks
+// ---------------------------------  BUTTON AND SENSORS
 #if USE_BUTTON
 void onButtonEvent(int type)
 {
-  DBG("Button Event : " + String(type));
+
 
   switch (type)
   {
     case BT_PRESSED:
       {
+#if USE_SERIAL
+        serialManager.sendBool("bt.pressed", true);
+#endif
+
 #if USE_LEDSTRIP
         if (stripManager.currentMode == LedStripManager::Mode::Pattern) stripManager.pm.nextPattern();
         else if (stripManager.currentMode == LedStripManager::Mode::Baked) stripManager.bakePlayer.togglePlayPause();
@@ -134,13 +140,20 @@ void onButtonEvent(int type)
         msg.add(DeviceSettings::deviceID.c_str());
         msg.add(0);
         oscManager.sendMessage(msg);
+#endif
 
+#if USE_SERIAL
+        serialManager.sendBool("bt.pressed", false);
 #endif
       }
       break;
 
     case BT_SHORTPRESS:
       {
+#if USE_SERIAL
+        serialManager.sendTrigger("bt.shortPress");
+#endif
+
 #if USE_OSC
         OSCMessage msg("/touch/shortPress");
         msg.add(DeviceSettings::deviceID.c_str());
@@ -150,14 +163,29 @@ void onButtonEvent(int type)
       break;
 
     case BT_LONGPRESS:
+      {
+
+#if USE_SERIAL
+        serialManager.sendTrigger("bt.longPress");
+#endif
+
+#if USE_WIFI
+        if (wifiManager.isConnecting) wifiManager.cancelConnection();
+#endif
+
 #if USE_LEDSTRIP
 #if USE_FILES
-      stripManager.bakePlayer.play(0);
+        stripManager.bakePlayer.play(0);
 #endif
 #endif
+
+      }
       break;
 
     case BT_VERYLONGPRESS:
+#if USE_SERIAL
+      serialManager.sendTrigger("bt.veryLongPress");
+#endif
       sleepESP();
       break;
   }
@@ -165,7 +193,9 @@ void onButtonEvent(int type)
 
 void onMultipress(int count)
 {
-  DBG("Multipress : " + String(count));
+ #if USE_SERIAL
+  serialManager.sendInt("bt.multiPress", count);
+#endif
 
   if (count == 2)
   {
@@ -189,25 +219,6 @@ void onMultipress(int count)
 
 #endif // USE_BUTTON
 
-#if USE_WIFI
-void wifiConnectingUpdate(int curTry)
-{
-#if USE_LEDSTRIP
-  setRange(0, curTry % NUM_LEDS, CRGB(0, 20, 20), true);
-#endif
-
-#if USE_BUTTON
-  if (curTry >= 2 && btManager.buttonIsPressed())
-    wifiManager.cancelConnection();
-#endif
-
-}
-
-void wifiConfigSaved()
-{
-  resetESP(false);
-}
-#endif //WIFI
 
 #if USE_TOUCH
 void touchUpdate(int touchID, bool touched)
@@ -246,8 +257,47 @@ void orientationUpdate(float yaw, float pitch, float roll)
 }
 #endif
 
+
+// ---------------------------------  WIFI
+
+#if USE_WIFI
+void wifiConnectionUpdate()
+{
+  if (wifiManager.isConnected || wifiManager.noWiFiMode)
+  {
+
+    int index = min((int)((cos(millis() / 100.0f) * .5f + .5f) * NUM_LEDS), NUM_LEDS - 1);
+    CRGB color = wifiManager.noWiFiMode ? CRGB::Purple : (wifiManager.apMode ? CRGB::Yellow : CRGB::Green);
+
+    for (int i = 0; i < NUM_LEDS; i++)
+    {
+
+      setRange(index - i, index + i, color, true);
+      delay(10);
+    }
+
+    for (int i = 0; i < 255; i++)
+    {
+      CRGB c = color.fadeToBlackBy(i);
+      setFullColor(c);
+      delay(5);
+    }
+  }
+
+  if (wifiManager.isConnected) startConnections();
+}
+
+void wifiConfigSaved()
+{
+  resetESP(false);
+}
+#endif //WIFI
+
+
+// ---------------------------------  OSC
+
 #if USE_OSC
-void messageReceived(OSCMessage &msg)
+void messageReceived(OSCMessage & msg)
 {
   char address[256];
   msg.getAddress(address);
@@ -302,7 +352,6 @@ void messageReceived(OSCMessage &msg)
   }
 }
 
-
 void oscConnectionChanged(bool isConnected)
 {
   DBG("OSC connection change " + String(isConnected));
@@ -316,7 +365,7 @@ void oscConnectionChanged(bool isConnected)
 
 
 #if RESETWIFI_ON_DISCONNECT
-  if (!isConnected && !wifiManager.apMode && !wifiManager.turnOffWiFi)
+  if (!isConnected && !wifiManager.apMode && !wifiManager.noWiFiMode)
   {
     wifiManager.reset();
     oscManager.isConnected = true;//force
@@ -326,6 +375,7 @@ void oscConnectionChanged(bool isConnected)
 
 #endif //OSC
 
+// ---------------------------------  SERIAL
 
 #if USE_SERIAL
 void serialMessageReceived(String message)
@@ -345,12 +395,13 @@ void serialMessageReceived(String message)
       break;
 
     case 'c':
-#if USE_WIFI
-      DBG("Restarting connections");
-      wifiManager.stopConnections();
-      delay(2000);
-      wifiManager.startConnections();
-#endif
+      {
+        DBG("Restarting connections");
+
+        stopConnections();
+        delay(2000);
+        startConnections();
+      }
       break;
 
     case 's':
@@ -365,6 +416,7 @@ void serialMessageReceived(String message)
 }
 #endif //end USE_SERIAL
 
+// ---------------------------------  BATTERY
 
 #if USE_BATTERY
 void batteryCriticalLevel()
@@ -412,6 +464,77 @@ void batteryLevelUpdate()
 }
 #endif
 
+
+// ---------------------------------  WEBSERVER AND UPLOAD
+#if USE_SERVER
+void uploadStarted(const String & fileName)
+{
+  DBG("Upload started : " + fileName);
+
+#if USE_LEDSTRIP
+  setFullColor(CRGB::Black);
+#endif
+
+#if USE_WIFI
+  stopConnections();
+#endif
+}
+
+void uploadProgress(float progress)
+{
+  DBG("Upload progress " + String(progress));
+#if USE_LEDSTRIP
+  float fIndex = fmodf(progress * NUM_LEDS, NUM_LEDS);
+  int index = floor(fIndex);
+  if (index > 0) setRange(0, index, CHSV(30 + progress * 40, 255, 255));
+  int rest = (fmodf(fIndex, 1) - .5f * 2) * 255;
+  setLed(index, CHSV(30 + progress * 40, std::max(rest, 0), std::min(rest, 0) + 255));
+#endif
+}
+
+void uploadFinished(const String & fileName)
+{
+  DBG("Upload finished !");
+
+#if USE_LEDSTRIP
+  stripManager.setMode(LedStripManager::Mode::Streaming);
+  //stripManager.setMode(LedStripManager::Mode::Baked);
+  //stripManager.bakePlayer.load(fileName);
+#endif
+
+#if USE_WIFI
+  startConnections();
+#endif
+}
+#endif
+
+
+
+// ---------------------------------  CONNECTIONS HELPERS
+void startConnections()
+{
+#if USE_OSC
+  oscManager.startUDP();
+#endif
+
+#if USE_LEDSTRIP
+  stripManager.startUDP();
+#endif
+}
+
+void stopConnections()
+{
+#if USE_OSC
+  oscManager.stopUDP();
+#endif
+
+#if USE_LEDSTRIP
+  stripManager.stopUDP();
+#endif
+}
+
+// ---------------------------------  SYSTEM HELPERS
+
 void resetESP(bool toBootloader)
 {
   if (toBootloader)
@@ -454,51 +577,7 @@ void sleepESP()
   esp_deep_sleep_start();
 }
 
-
-#if USE_SERVER
-void uploadStarted(const String &fileName)
-{
-  DBG("Upload started : " + fileName);
-
-#if USE_LEDSTRIP
-  setFullColor(CRGB::Black);
-#endif
-
-#if USE_WIFI
-  wifiManager.stopConnections();
-#endif
-}
-
-void uploadProgress(float progress)
-{
-  DBG("Upload progress " + String(progress));
-#if USE_LEDSTRIP
-  float fIndex = fmodf(progress * NUM_LEDS, NUM_LEDS);
-  int index = floor(fIndex);
-  if (index > 0) setRange(0, index, CHSV(30 + progress * 40, 255, 255));
-  int rest = (fmodf(fIndex, 1) - .5f * 2) * 255;
-  setLed(index, CHSV(30 + progress * 40, std::max(rest, 0), std::min(rest, 0) + 255));
-#endif
-}
-
-void uploadFinished(const String &fileName)
-{
-  DBG("Upload finished !");
-
-#if USE_LEDSTRIP
-  stripManager.setMode(LedStripManager::Mode::Streaming);
-  //stripManager.setMode(LedStripManager::Mode::Baked);
-  //stripManager.bakePlayer.load(fileName);
-#endif
-
-#if USE_WIFI
-  wifiManager.startConnections();
-#endif
-}
-#endif
-
-
-//Setup & loop
+// ---------------------------------  SETUP AND LOOP
 void setup()
 {
 
@@ -543,16 +622,16 @@ void setup()
   batteryManager.checkBattery(true);
   int h = batteryManager.normalizedVoltage * 96;
 #else
-  int h = 150;
+  int h = 120;
 #endif
 
   for (int i = 0; i < NUM_LEDS; i++)
   {
-    setRange(0, i, CHSV(h, 255, 60), true);
-    delay(500 / NUM_LEDS);
+    setRange(0, i, CHSV(h, 255, 120), true);
+    delay(300 / NUM_LEDS);
   }
+  delay(100);
 
-  delay(50);
 #endif
 
 #if USE_TOUCH
@@ -571,49 +650,17 @@ void setup()
 
   //WiFi & OSC
 #if USE_WIFI
-  wifiManager.addCallbackConnectingUpdate(&wifiConnectingUpdate);
+  wifiManager.addCallbackConnectionUpdate(&wifiConnectionUpdate);
   wifiManager.init();
 
 #if USE_LEDSTRIP
-  if (wifiManager.isConnected)
-  {
-#if USE_OSC
-    oscManager.isReadyToSend = true;
-#endif
-    if (!wifiManager.apMode)
-      setFullColor(CRGB(5, 20, 0));
-    else
-      setFullColor(CRGB(15, 15, 0));
-
-    delay(300);
-  }
-  else
-  {
-    if (wifiManager.turnOffWiFi)
-    {
-      for (int i = 0; i < 3; i++)
-      {
-        setFullColor(CRGB(20, 0, 20));
-        delay(100);
-      }
-    }
-    else
-    {
-      setFullColor(CRGB(20, 0, 0));
-      delay(300);
-    }
-  }
-
-  setFullColor(CRGB::Black);
-#endif // WIFI/LEDSTRIP
+  stripManager.init();
+#endif //LEDSTRIP
 
 #if USE_OSC
-  if (!wifiManager.turnOffWiFi)
-  {
-    oscManager.init();
-    oscManager.addCallbackMessageReceived(&messageReceived);
-    oscManager.addCallbackConnectionChanged(&oscConnectionChanged);
-  }
+  oscManager.init();
+  oscManager.addCallbackMessageReceived(&messageReceived);
+  oscManager.addCallbackConnectionChanged(&oscConnectionChanged);
 #endif
 
 #if USE_SERVER
@@ -650,9 +697,10 @@ void loop()
 #endif
 
 #if USE_WIFI
+  wifiManager.update();
 
 #if USE_OSC
-  if (!wifiManager.turnOffWiFi)
+  if (!wifiManager.noWiFiMode)
   {
     oscManager.update();
   }
@@ -668,12 +716,21 @@ void loop()
   imuManager.update();
 #endif
 
-#if USE_LEDSTRIP
-  stripManager.update();
-#endif
 
 #if USE_BATTERY
   batteryManager.update();
+#endif
+
+
+#if USE_LEDSTRIP
+
+  if (wifiManager.isConnecting)
+  {
+    int index = min((int)((cos(millis() / 100.0f) * .5f + .5f) * NUM_LEDS), NUM_LEDS - 1);
+    setLed(index, CRGB::Blue, true);
+  }
+
+  stripManager.update();
 #endif
 
 }

@@ -61,7 +61,7 @@ PropManager::PropManager() :
 
 	for (auto & f : families) familiesCC.addChildControllableContainer(f);
 
-	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "Flowtoys Creator Club", FlowClubProp::create));
+	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", FlowClubProp::getTypeStringStatic(), FlowClubProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "Flowtoys ESP8266 Proto", FlowClubProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "SmartBall", SmartballProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys FT", LighttoysFTProp::create));
@@ -152,6 +152,7 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 		LOG("Auto detecting props on " << remoteHost->stringValue() << "...");
 
 		LighttoysFTProp::autoDetectRemotes();
+		((FlowtoysFamily *)getFamilyWithName("Flowtoys"))->checkSerialDevices();
 	}
 	else if (t == bakeAll)
 	{

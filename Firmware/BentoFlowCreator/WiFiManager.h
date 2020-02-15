@@ -13,6 +13,8 @@
 #include <OSCMessage.h>
 #endif
 
+#define CONNECT_TIMEOUT 5000
+#define CONNECT_TRYTIME 500
 
 class WiFiManager
 {
@@ -22,108 +24,93 @@ class WiFiManager
     String password = "";
 
     const int maxTries = 32;
-
-    WiFiUDP oscUDP;
-    WiFiUDP streamingUDP;
-
     bool isConnected;
-    bool apMode;
-    bool turnOffWiFi;
+    bool isConnecting;
 
+    bool autoAPMode;
+    bool apMode;
+    bool noWiFiMode;
+    
+    long timeAtStartConnect;
+    long timeAtLastConnect;
 
     WiFiManager() {
-      turnOffWiFi = false;
+      noWiFiMode = false;
       apMode = false;
       isConnected = false;
-      addCallbackConnectingUpdate(&WiFiManager::connectingUpdateDefaultCallback);
-    }
-
-    void init(bool silentMode = false, bool apModeIfFail = true)
-    {
-      DBG("WiFiManager init.");
-      ssid = preferences.getString("wifiSSID", "jonglissimo");
-      password = preferences.getString("wifiPassword", "lightpainting");
-
-      DBG(String("WiFiManager connecting to " + ssid + " : " + password));
-      
-      WiFi.begin(ssid.c_str(), password.c_str());
-
-      int tryIndex = 0;
-      bool success = true;
-
-      DBG("Connecting : ");
-
-      // Wait for connection
-      while (WiFi.status() != WL_CONNECTED && !turnOffWiFi) {
-        delay(500);
-
-        DBG("*");
-
-        if (tryIndex >= maxTries)
-        {
-          success = false;
-          break;
-        }
-        if(!silentMode) onConnectingUpdate(tryIndex);
-        tryIndex++;
-      }
-
-
-      if (!success)
-      {
-        DBG("Failed");
-      }
-
-      DBG("");
-
-      if (!success || turnOffWiFi)
-      {
-        if (turnOffWiFi)
-        {
-          WiFi.mode(WIFI_OFF);
-          DBG("Turn OFF WiFi");
-          return;
-        } else if(apModeIfFail)
-        {
-          isConnected = false;
-          setupLocalWiFi();
-          apMode = true;
-        }else
-        {
-          isConnected = false;
-          return;
-        }
-      }
-
-      if (apMode)
-      {
-        DBG("WiFi AP created, IP address: " + String(WiFi.softAPIP()[0]) + "." + String( WiFi.softAPIP()[1]) + "." + String( WiFi.softAPIP()[2]) + "." + String( WiFi.softAPIP()[3]));
-      } else
-      {
-        DBG("Connected to " + String(ssid) + ", IP address: " + String(WiFi.localIP()[0]) + "." + String( WiFi.localIP()[1]) + "." + String( WiFi.localIP()[2]) + "." + String( WiFi.localIP()[3]));
-      }
-
-      delay(500);
-
-      DBG("Disabling wifi sleep mode");
-      WiFi.setSleep(false);
-
-      DBG("Starting Connections");
-      startConnections();
-      
-      isConnected = true;
-      delay(500);
-    }
-
-    void cancelConnection()
-    {
-      turnOffWiFi = true;
+      isConnecting = false;
+      addCallbackConnectionUpdate(&WiFiManager::connectionUpdateDefaultCallback);
     }
 
     void reset()
     {
       DBG("Reset Wifi !");
       init(true, false);
+    }
+    
+    void init(bool silentMode = false, bool apModeIfFail = true)
+    {
+      autoAPMode = apModeIfFail;
+      ssid = preferences.getString("wifiSSID", "jonglissimo");
+      password = preferences.getString("wifiPassword", "lightpainting");
+
+      DBG(String("WiFiManager init, connecting to " + ssid + " : " + password));
+
+      WiFi.mode(WIFI_STA);
+      WiFi.begin(ssid.c_str(), password.c_str());
+
+      timeAtStartConnect = millis();
+      timeAtLastConnect = millis();
+
+      noWiFiMode = false;
+      apMode = false;
+      isConnected = false;
+      isConnecting = true;
+    }
+    
+
+    void update()
+    {
+      if (isConnected || noWiFiMode) return;
+      if (!isConnecting) return;
+
+      if (millis() > timeAtLastConnect + CONNECT_TRYTIME)
+      {
+        DBG(".");
+        if (WiFi.status() == WL_CONNECTED)
+        {
+          DBG("WiFi Connected, local IP : " + String(WiFi.localIP()[0]) +
+              "." + String(WiFi.localIP()[1]) +
+              "." + String(WiFi.localIP()[2]) +
+              "." + String(WiFi.localIP()[3]));
+
+          setConnected(true);
+          return;
+        }
+        
+        timeAtLastConnect = millis();
+      }
+
+      //Timeout
+      if (millis() > timeAtStartConnect + CONNECT_TIMEOUT)
+      {
+        if (autoAPMode) setupLocalWiFi();
+      }
+    }
+
+    void setConnected(bool value)
+    {
+      isConnected = value;
+      isConnecting = false;
+      onConnectionUpdate();
+    }
+
+    void cancelConnection()
+    {
+      DBG("Turn OFF WiFi");
+      noWiFiMode = true;
+      WiFi.mode(WIFI_OFF);
+      setConnected(false);
     }
     
     void setupLocalWiFi()
@@ -135,39 +122,13 @@ class WiFiManager
 
       DBG("Setting up AP WiFi : " + wifiString);
       WiFi.softAP(wifiString.c_str());
+      DBG("WiFi AP created, IP address: " + String(WiFi.softAPIP()[0]) + "." + String( WiFi.softAPIP()[1]) + "." + String( WiFi.softAPIP()[2]) + "." + String( WiFi.softAPIP()[3]));
+
+      apMode = true;
+      setConnected(true);
     }
 
-
-    void stopConnections()
-    {
-       #if USE_OSC
-      oscUDP.flush();
-      oscUDP.stop();
-      DBG("OSC UDP is stopped.");
-      #endif
-
-      #if USE_LEDSTRIP  
-      streamingUDP.flush();
-      streamingUDP.stop();
-      DBG("Streaming UPD is stopped.");
-      #endif
-    }
-
-    void startConnections()
-    {
-       #if USE_OSC
-      oscUDP.begin(9000);
-      oscUDP.flush();
-      DBG("OSC UDP is init.");
-      #endif
-
-      #if USE_LEDSTRIP
-      streamingUDP.begin(8888);
-      streamingUDP.flush();
-       DBG("Streaming UPD is init.");
-      #endif
-    }
-
+   
 #if USE_OSC
     boolean handleMessage(OSCMessage &msg)
     {
@@ -195,17 +156,17 @@ class WiFiManager
 
     //EVENTS
 
-    typedef void(*onConnectingUpdateEvent)(int);
-    void (*onConnectingUpdate) (int);
+    typedef void(*onConnectionUpdateEvent)();
+    void (*onConnectionUpdate) ();
 
 
-    void addCallbackConnectingUpdate (onConnectingUpdateEvent func) {
-      onConnectingUpdate = func;
+    void addCallbackConnectionUpdate (onConnectionUpdateEvent func) {
+      onConnectionUpdate = func;
     }
 
 
 
-    static void connectingUpdateDefaultCallback(int curTry)
+    static void connectionUpdateDefaultCallback()
     {
       //nothing
     }

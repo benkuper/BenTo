@@ -50,12 +50,10 @@ public:
   long timeSinceLastPacket;
   long numLoops;
   
-  #if USE_WIFI
-  WiFiUDP &udp;
-  LedStripManager(WiFiUDP &udp):udp(udp)
-  #else
+  WiFiUDP udp;
+  bool isConnected;
+  
   LedStripManager()
-  #endif
   {
     currentMode = Mode::Streaming;
 
@@ -70,6 +68,8 @@ public:
     ledBufferIndex = 0;
     colorBufferIndex = 0;
     for(int i=0;i<3;i++) colorBuffer[i] = 0;
+
+    isConnected = false;
   }
   
   void init(){
@@ -82,6 +82,23 @@ public:
     FastLED.setBrightness(60);
     
     initSnapshot();
+  }
+
+
+  void startUDP()
+  {
+    udp.begin(8888);
+    udp.flush();
+    isConnected = true;
+    DBG("LedStrip Streaming UPD is init.");
+  }
+  
+  void stopUDP()
+  {
+      udp.flush();
+      udp.stop();
+      isConnected = false;
+      DBG("LedStrip Streaming UPD is stopped.");
   }
 
   void update()
@@ -105,11 +122,14 @@ public:
         break;
     }
   }
+
   
   
   #if USE_WIFI
   void processWiFi()
   {
+    if(!isConnected) return;
+    
     long curTime = millis();
     if(curTime > lastReceiveTime + (1000/receiveRate))
     {

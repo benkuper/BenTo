@@ -20,6 +20,7 @@ BentoProp::BentoProp(StringRef name, StringRef family, var params) :
 
 
 	serialParam = new SerialDeviceParameter("Serial Device", "For connecting props trhough USB", true);
+	serialParam->openBaudRate = 115200;
 	ioCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
@@ -43,8 +44,7 @@ void BentoProp::setSerialDevice(SerialDevice* d)
 
 	if (serialDevice != nullptr)
 	{
-		serialDevice->open(115200);
-		if (!serialDevice->openedOk) serialDevice->addSerialDeviceListener(this);
+		if(serialDevice->isOpen()) serialDevice->addSerialDeviceListener(this);
 		else NLOGERROR(niceName, "Error opening port " << serialDevice->info->description);
 	}
 }
@@ -85,9 +85,9 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	}
 }
 
-void BentoProp::serialDataReceived(SerialDevice* d, const var&)
+void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
 {
-	LOG(niceName, "Serial Data : " << data.toString());
+
 }
 
 

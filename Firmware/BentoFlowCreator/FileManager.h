@@ -40,7 +40,7 @@ public:
       if(SD.begin( CS_PIN, spiSD, SDSPEED))
       {
         DBG("SD Card initialized.");
-        listDir(SD, "/", 0);
+        //listDir(SD, "/", 0);
         sdIsDetected = true;
       }else{
         DBG("SD Card Initialization failed.");

@@ -19,8 +19,8 @@ public:
 	FlowClubProp(var params);
 	~FlowClubProp();
 
-	static const int vidFilter = 0x00;
-	static const int pidFilter = 0x00;
+	static const int vidFilter = 0x10c4;
+	static const int pidFilter = 0xea60;
 
 	virtual void clearItem() override;
 
@@ -31,6 +31,7 @@ public:
 
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 
+	virtual void serialDataReceived(SerialDevice* d, const var& data) override;
 
 	String getTypeString() const override { return  FlowClubProp::getTypeStringStatic(); }
 	static const String getTypeStringStatic() { return "Flowtoys Creator Club"; }

@@ -23,11 +23,14 @@ FlowtoysFamily::FlowtoysFamily() :
 
 	addChildControllableContainer(&clubCC);
 	irLevel = clubCC.addFloatParameter("IR Level", "IR LED brightness level", 0, 0, 1);
-
+	
+	SerialManager::getInstance()->addSerialManagerListener(this);
 }
 
 FlowtoysFamily::~FlowtoysFamily()
 {
+	SerialManager::getInstance()->removeSerialManagerListener(this);
+
 }
 
 void FlowtoysFamily::onContainerParameterChanged(Parameter * p)
@@ -73,9 +76,18 @@ void FlowtoysFamily::portAdded(SerialDeviceInfo* info)
 	}
 }
 
-void FlowtoysFamily::portRemoved(SerialDeviceInfo* d)
+void FlowtoysFamily::portRemoved(SerialDeviceInfo* info)
 {
-	//	
+	pendingDevices.removeAllInstancesOf(SerialManager::getInstance()->getPort(info,false));
+}
+
+void FlowtoysFamily::checkSerialDevices()
+{
+	for (auto& info : SerialManager::getInstance()->portInfos)
+	{
+		if (info->vid == FlowClubProp::vidFilter && info->pid == FlowClubProp::pidFilter) checkDeviceHardwareID(info);
+	}
+	
 }
 
 void FlowtoysFamily::checkDeviceHardwareID(SerialDeviceInfo* info)
@@ -88,29 +100,32 @@ void FlowtoysFamily::checkDeviceHardwareID(SerialDeviceInfo* info)
 	}
 	
 	d->setMode(SerialDevice::LINES);
-	d->writeString("yo\n");
 
-	pendingDevices.add(d);
+	if (d->isOpen())
+	{
+		d->addSerialDeviceListener(this);
 
-	startTimerHz(1);
+		startTimer(1, 200);
+		startTimer(2, 1000);
+
+		pendingDevices.addIfNotAlreadyThere(d);
+	}
 }
 
-void FlowtoysFamily::addPropForHardwareID(SerialDevice *device, String hardwareId)
+void FlowtoysFamily::addPropForHardwareID(SerialDevice *device, String hardwareId, String type)
 {
 	Prop* p = PropManager::getInstance()->getPropWithHardwareId(hardwareId);
 	if (p == nullptr)
 	{
-		p = static_cast<Prop*>(PropManager::getInstance()->managerFactory->create(FlowClubProp::getTypeStringStatic()));
+		p = static_cast<Prop*>(PropManager::getInstance()->managerFactory->create(type));
 		if (p != nullptr)
 		{
 			p->deviceID = hardwareId;
 
 			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 			{
-				bp->setSerialDevice(device);
+				bp->serialParam->setValueForDevice(device);
 			}
-
-			LOG("Found " << p->type->getValueKey() << " with ID : " << p->deviceID);
 
 			PropManager::getInstance()->addItem(p);
 		}
@@ -124,22 +139,39 @@ void FlowtoysFamily::addPropForHardwareID(SerialDevice *device, String hardwareI
 
 void FlowtoysFamily::serialDataReceived(SerialDevice *d, const var& data)
 {
+
 	StringArray dataSplit;
-	dataSplit.addTokens("data", true);
+	dataSplit.addTokens(data.toString(), true);
 	if (dataSplit.size() == 0) return;
 	if (dataSplit[0] == "wassup")
 	{
 		String fw = dataSplit[1];
+		String type = dataSplit[2].removeCharacters("\"");
 		LOG("Got wassup from " << d->info->description << " : " << fw);
-		d->close();
+		addPropForHardwareID(d, fw, type);
+		d->removeSerialDeviceListener(this); //only remove after so it's not deleted
 		pendingDevices.removeAllInstancesOf(d);
-
-		addPropForHardwareID(d, fw);
 	}
 }
 
-void FlowtoysFamily::timerCallback()
+void FlowtoysFamily::timerCallback(int timerID)
 {
-	for (auto& d : pendingDevices) d->close();
-	pendingDevices.clear();
+	if (timerID == 1)
+	{
+		for (auto& d : pendingDevices)
+		{
+			d->writeString("yo\n");
+		}
+	}
+	else if (timerID == 2)
+	{
+		for (auto& d : pendingDevices)
+		{
+			d->removeSerialDeviceListener(this);
+		}
+		pendingDevices.clear();
+		stopTimer(1);
+		stopTimer(2);
+	}
+	
 }

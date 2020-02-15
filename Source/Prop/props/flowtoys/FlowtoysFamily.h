@@ -17,7 +17,7 @@ class FlowtoysFamily :
 	public PropFamily,
 	public SerialManager::SerialManagerListener,
 	public SerialDevice::SerialDeviceListener,
-	public Timer
+	public MultiTimer
 {
 public:
 	FlowtoysFamily();
@@ -29,17 +29,18 @@ public:
 	BoolParameter* autoAddSerialDevices;
 	IntParameter * targetPropFPS;
 
-	Array<SerialDevice*> pendingDevices;
+	Array<SerialDevice *> pendingDevices;
 
 	void onContainerParameterChanged(Parameter * p) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 
 	void portAdded(SerialDeviceInfo* d) override;
 	void portRemoved(SerialDeviceInfo * d) override;
-
+	
+	void checkSerialDevices();
 	void checkDeviceHardwareID(SerialDeviceInfo* d);
-	void addPropForHardwareID(SerialDevice *d, String firmware);
+	void addPropForHardwareID(SerialDevice *d, String firmware, String type);
 
 	void serialDataReceived(SerialDevice* d, const var& data) override;
-	void timerCallback() override;
+	void timerCallback(int timerID) override;
 };

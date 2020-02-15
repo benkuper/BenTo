@@ -12,7 +12,7 @@
 class OSCManager
 {
   public:
-    WiFiUDP &udp;
+    WiFiUDP udp;
 
     String remoteHost;
     const int remotePort = 10000;
@@ -27,7 +27,8 @@ class OSCManager
     bool pongEnabled = true;
 #endif
 
-    OSCManager(WiFiUDP &udp): udp(udp)
+
+    OSCManager()
     {
       addCallbackMessageReceived(&OSCManager::defaultCallback);
       addCallbackConnectionChanged(&OSCManager::defaultConnectionCallback);
@@ -38,25 +39,46 @@ class OSCManager
     {
       DBG("OCSManager init.");
       remoteHost = preferences.getString("remoteHost", "");
-      
-      #if USE_PING
+
+#if USE_PING
       lastPingTime = 0;
       timeSinceLastReceivedPing = millis();
       pongEnabled = true;
-      #endif
-      
-      isConnected = true;
+#endif
     }
+
+
+    void startUDP()
+    {
+      udp.begin(9000);
+      udp.flush();
+      isReadyToSend = true;
+      isConnected = false;
+      timeSinceLastReceivedPing = millis();
+      DBG("OSC Streaming UPD is init.");
+    }
+
+    void stopUDP()
+    {
+      udp.flush();
+      udp.stop();
+      isConnected =  false;
+      isReadyToSend = false;
+      DBG("OSC Streaming UPD is stopped.");
+    }
+
+
 
     void update()
     {
 #if USE_PING
       ping();
-      if(isConnected && pongEnabled && millis() > timeSinceLastReceivedPing + PING_RECEIVE_TIMEOUT)
+
+      if (isConnected && pongEnabled && millis() > timeSinceLastReceivedPing + PING_RECEIVE_TIMEOUT)
       {
         DBG("MAY BE DISCONNECTED ?");
         pongEnabled = false;
-        
+
         setConnected(false);
       }
 #endif
@@ -121,7 +143,7 @@ class OSCManager
 
       char addr[32];
       msg.getAddress(addr);
-     // DBG("Send OSC message " + String(addr) + ", isReadyToSend ? " + String(isReadyToSend));
+      // DBG("Send OSC message " + String(addr) + ", isReadyToSend ? " + String(isReadyToSend));
 
       udp.beginPacket(host, port);
       msg.send(udp);
@@ -142,17 +164,17 @@ class OSCManager
     void ping(bool isPong = false)
     {
       if (!isPong && (millis() - lastPingTime < pingTime)) return;
-      
-      OSCMessage msg(isPong?"/pong":"/ping");
+
+      OSCMessage msg(isPong ? "/pong" : "/ping");
       msg.add(DeviceSettings::deviceID.c_str());
       sendMessage(msg);
 
-      if(!isPong) lastPingTime = millis();
+      if (!isPong) lastPingTime = millis();
     }
 
     void setConnected(bool value)
     {
-      if(isConnected == value) return;
+      if (isConnected == value) return;
       isConnected = value;
       onConnectionChanged(isConnected);
     }

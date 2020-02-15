@@ -1,10 +1,13 @@
-#pragma once
+#ifndef SERIAL_H_INCLUDED
+#define SERIAL_H_INCLUDED
 
 #if SERIAL_DEBUG
 #define DBG(msg) Serial.println(msg)
 #else
 #define DBG(msg)
 #endif
+
+#include "DeviceSettings.h"
 
 class SerialManager
 {
@@ -36,7 +39,7 @@ class SerialManager
         //DBG("Got char : "+String(c));
         if (c == 255 || c == '\n')
         {
-          onMessageReceived(buffer);
+          parseMessage(buffer);
           memset(buffer, 0, 255);
           bufferIndex = 0;
         } else
@@ -44,6 +47,18 @@ class SerialManager
           if (bufferIndex < 255) buffer[bufferIndex] = c;
           bufferIndex++;
         }
+      }
+    }
+
+    void parseMessage(String message)
+    {
+      if (strcmp(message.substring(0, 2).c_str(), "yo") == 0)
+      {
+        Serial.println("wassup " + DeviceSettings::deviceID + " \"" + DeviceSettings::deviceType + "\"");
+      } 
+      else
+      {
+        onMessageReceived(message);
       }
     }
 
@@ -66,29 +81,36 @@ class SerialManager
       Serial.println(name);
     }
 
-    void sendBoolValue(String name, bool value)
+    void sendBool(String name, bool value)
     {
       Serial.println(name + " " + (value ? 1 : 0));
     }
 
-    void sendIntValue(String name, int value)
+    void sendInt(String name, int value)
     {
       Serial.println(name + " " + String(value));
     }
 
-    void sendFloatValue(String name, float value)
+    void sendFloat(String name, float value)
     {
       Serial.println(name + " " + String(value));
     }
 
-      typedef void(*onEvent)(String message);
+    void sendString(String name, String value)
+    {
+      Serial.println(name + " " + value);
+    }
+
+    typedef void(*onEvent)(String message);
     void (*onMessageReceived) (String);
-    
+
     void addCallbackMessageReceived (onEvent func) {
       onMessageReceived = func;
     }
 
-     static void defaultCallback(String message){}
+    static void defaultCallback(String message) {}
 };
 
 SerialManager * SerialManager::instance = nullptr;
+
+#endif

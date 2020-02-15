@@ -18,7 +18,7 @@ port(_port),
 info(_info),
 mode(_mode)
 {
-	open();
+	open(port->getBaudrate());
 }
 #else
 SerialDevice::SerialDevice(SerialDeviceInfo  * _info, PortMode _mode) :
