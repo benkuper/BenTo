@@ -130,7 +130,7 @@ after_success:
     cp build/BenTo BenTo.AppDir/usr/bin/
     $HOME/appimagetool-x86_64.AppImage $APPIMAGE_RUNTIME BenTo.AppDir BenTo-$TARGET_SYSTEM-$SUFFIX.AppImage
     echo 'Uploading $SUFFIX ...'
-    curl -X POST -F "appFile=@BenTo-$TARGET_SYSTEM-$SUFFIX.AppImage" -F "pass=$UPLOAD_PASS" $UPLOAD_URL
+    curl -X POST -F "appFile=@BenTo-$TARGET_SYSTEM-$SUFFIX.AppImage" -F "pass=$UPLOAD_PASS" -F "path=download/" $UPLOAD_URL
   else
     cd $TRAVIS_BUILD_DIR/Package
     ls
