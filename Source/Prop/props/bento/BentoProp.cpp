@@ -93,7 +93,7 @@ void BentoProp::uploadBakedData(BakeData data)
 	String target = "http://" + remoteHost->stringValue() + "/upload";
 	//String target = "http://benjamin.kuperberg.fr/chataigne/releases/uploadTest.php";
 
-	NLOG(niceName, "Uploading " << target << " to " << data.name << " :\n > " << data.numFrames << " frames\n > " << data.data.getSize() << " bytes");
+	NLOG(niceName, "Uploading " << target << " to " << data.name << " :\n > " << data.numFrames << " frames\n > " << (int)(data.data.getSize()) << " bytes");
 
 	MemoryOutputStream mos;
 	var mData = data.metaData;
