@@ -13,6 +13,7 @@
 SerialDeviceParameter::SerialDeviceParameter(const String & name, const String & description, bool enabled) :
 	EnumParameter(name,description,enabled),
 	currentDevice(nullptr),
+	openBaudRate(9600),
 	vidFilter(-1),
 	pidFilter(-1)
 {
@@ -35,7 +36,7 @@ void SerialDeviceParameter::setValueInternal(var &v)
 	EnumParameter::setValueInternal(v);
 	var data = getValueData();
 	if (data.isVoid()) currentDevice = nullptr;
-	else currentDevice = SerialManager::getInstance()->getPort(data.getProperty("deviceID","").toString(), data.getProperty("port", "").toString(),true);
+	else currentDevice = SerialManager::getInstance()->getPort(data.getProperty("deviceID","").toString(), data.getProperty("port", "").toString(),true,openBaudRate);
 	//DBG("current device from setValueInternal : " << (int)currentDevice);
 }
 

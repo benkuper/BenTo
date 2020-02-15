@@ -8,17 +8,11 @@
   ==============================================================================
 */
 
-#ifndef SERIALDEVICE_H_INCLUDED
-#define SERIALDEVICE_H_INCLUDED
-
+#pragma once
 
 #define SYNCHRONOUS_SERIAL_LISTENERS
 
-#if !defined __arm__
 #define SERIALSUPPORT 1
-#else
-#define SERIALSUPPORT 0
-#endif
 
 #if SERIALSUPPORT
 #include "serial/serial.h"
@@ -96,6 +90,8 @@ public:
 
 	SerialDeviceInfo * info;
 
+	bool openedOk; //have to have that because when erroring on openPort, port stills says it's open
+
 	PortMode mode;
 	void setMode(PortMode mode);
 	void setBaudRate(int baudRate);
@@ -103,10 +99,11 @@ public:
 	void open(int baud = 9600);
 	void close();
 
+
 	bool isOpen();
 
 	//write functions
-	int writeString(String message, bool endLine = true);
+	int writeString(String message);
 	int writeBytes(Array<uint8_t> data);
 
 	virtual void dataReceived(const var &data) override;
@@ -127,9 +124,3 @@ public:
 	void addSerialDeviceListener(SerialDeviceListener* newListener);
 	void removeSerialDeviceListener(SerialDeviceListener* listener);
 };
-
-
-
-
-
-#endif  // SERIALDEVICE_H_INCLUDED
