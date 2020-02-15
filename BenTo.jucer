@@ -627,7 +627,7 @@
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
             externalLibraries="Setupapi.lib&#10;Servus.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include"
+        <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include"
                        libraryPath="../../External/servus/lib/win/x64/release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
