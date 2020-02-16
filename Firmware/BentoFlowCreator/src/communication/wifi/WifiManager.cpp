@@ -56,7 +56,7 @@ void WifiManager::connect()
     WiFi.setSleep(false);
     WiFi.setTxPower(WIFI_POWER_19dBm);
 
-    prefs.begin("wifiConfig");
+    prefs.begin(name.c_str(), true);
     String ssid = prefs.getString("ssid", "jonglissimo");
     String pass = prefs.getString("pass", "lightpainting");
     prefs.end();
@@ -77,6 +77,14 @@ void WifiManager::turnOff()
 {
     WiFi.disconnect();
     setState(Off);
+}
+
+void WifiManager::saveWifiConfig(String ssid, String pass)
+{
+    prefs.begin(name.c_str());
+    prefs.putString("ssid", ssid);
+    prefs.getString("pass", pass);
+    prefs.end();
 }
 
 

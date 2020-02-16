@@ -14,75 +14,25 @@ public:
     };
     const String typeNames[TYPES_MAX]{"MessageReceived"};
 
-    CommunicationEvent(Type type, String source, String target, var *data, int numData) : 
-        type(type), source(source), target(target), data(data), numData(numData)
+    CommunicationEvent(Type type, String source, String target, String command, var *data, int numData) : 
+        type(type), source(source), target(target), command(command), data(data), numData(numData)
     {
     }
 
     Type type;
     String source;
     String target;
+    String command;
     var *data;
     int numData;
 
-    int getInt(int index) const
-    {
-        if (index < 0 || index >= numData)
-            return 0;
-
-        switch (data[index].type)
-        {
-        case 'i':
-            return data[index].value.i;
-        case 'f':
-            return (int)data[index].value.f;
-        case 's':
-            return String(data[index].value.s).toInt();
-        }
-        return 0;
-    }
-
-    float getFloat(int index) const
-    {
-        if (index < 0 || index >= numData)
-            return 0;
-
-        switch (data[index].type)
-        {
-        case 'i':
-            return (float)data[index].value.i;
-        case 'f':
-            return data[index].value.f;
-        case 's':
-            return String(data[index].value.s).toFloat();
-        }
-
-        return 0;
-    }
-
-    String getString(int index) const
-    {
-        if (index < 0 || index >= numData)
-            return "";
-
-        switch (data[index].type)
-        {
-        case 'i':
-            return String(data[index].value.i);
-        case 'f':
-            return String(data[index].value.f);
-        case 's':
-            return data[index].value.s;
-        }
-        return "";
-    }
-
     String toString() const
     {
-        String s = "*" + typeNames[type] + "* from " + source + " to " + target + " : ";
+        String s = "*" + typeNames[type] + "* source : " + source + ", target : " + target + ", command : "+command+", data : ";
         for (int i = 0; i < numData; i++)
-            s += (i > 0 ? ", " : "") + getString(i)+ "("+data[i].type+")";
-        return s;
+            s += (i > 0 ? ", " : "") + data[i].stringValue()+ "("+data[i].type+")";
+        
+       return s;
     }
 };
 

@@ -7,6 +7,8 @@
 #include "sensors/SensorManager.h"
 #include "files/FileManager.h"
 
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
+
 class MainManager :
     public Component
 {
@@ -26,5 +28,10 @@ public:
     void init();
     void update();
 
+
+    void sleep();
+
     void communicationEvent(const CommunicationEvent &e);
+
+    bool handleCommand(String command, var * data, int numData) override;
 };

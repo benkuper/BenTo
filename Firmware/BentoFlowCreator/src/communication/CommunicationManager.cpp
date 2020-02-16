@@ -26,8 +26,7 @@ void CommunicationManager::update()
 
 void CommunicationManager::serialMessageEvent(const SerialEvent &e)
 {
-    ///NDBG("Serial Event " + String(e.type) + ", target : " + e.target+", data : "+e.data);
-
+    NDBG("Received serial");
     switch (e.type)
     {
     case SerialEvent::MessageReceived:
@@ -65,8 +64,7 @@ void CommunicationManager::serialMessageEvent(const SerialEvent &e)
             index++;
         }
 
-        //realloc(data, index * sizeof(var));
-        sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, serialManager.name, e.target, data, index));
+        sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, serialManager.name, e.target, e.command, data, index));
         free(data);
 
         DBG("Heap check " +String(ESP.getFreeHeap()));
@@ -86,8 +84,8 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
 {
     char addr[32];
     e.msg->getAddress(addr, 1); //remove the first slash
-    String target(addr);
-    target.replace("/", ".");
+    String tc(addr);
+    int tcIndex = tc.indexOf('/');
 
     int numData = e.msg->size();
     var *data = (var *)malloc(numData * sizeof(var));
@@ -111,6 +109,6 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
         }
     }
 
-    sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, target, data, numData));
+    sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, tc.substring(0,tcIndex), tc.substring(tcIndex+1), data, numData));
     free(data);
 }

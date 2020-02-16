@@ -4,14 +4,4 @@
 
 #include "Component.h"
 #include "events/EventBroadcaster.h"
-
-struct var
-{
-    char type;
-    union
-    {
-        int i;
-        float f;
-        char * s;
-    } value;
-};
+#include <Preferences.h>

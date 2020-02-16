@@ -6,12 +6,13 @@ class SerialEvent
 public:
     enum Type { MessageReceived };
     SerialEvent(Type type) : type(type) {}
-    SerialEvent(Type type, String target, String data) :
-        type(type),target(target),data(data)
+    SerialEvent(Type type, String target, String command, String data) :
+        type(type),target(target), command(command), data(data)
     {}
 
     Type type;
     String target;
+    String command;
     String data;
 };
 

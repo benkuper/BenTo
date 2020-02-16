@@ -1,9 +1,6 @@
 #pragma once
 
 #include "../../common/Common.h"
-
-
-#include "Preferences.h"
 #include <WiFi.h>
 
 
@@ -43,5 +40,6 @@ public:
 
   void update();
 
+  void saveWifiConfig(String ssid, String pass);
   String getIP();
 };
