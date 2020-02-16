@@ -34,7 +34,7 @@ public:
     void init();
     void update();
 
-    void serialMessageEvent(SerialEvent e);
-    void wifiConnectionEvent(WifiManagerEvent e);
-    void oscMessageEvent(OSCEvent e);
+    void serialMessageEvent(const SerialEvent& e);
+    void wifiConnectionEvent(const WifiManagerEvent& e);
+    void oscMessageEvent(const OSCEvent& e);
 };

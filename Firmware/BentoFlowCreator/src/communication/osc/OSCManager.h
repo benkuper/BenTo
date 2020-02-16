@@ -10,8 +10,9 @@
 class OSCEvent
 {
 public:
-    OSCEvent(OSCMessage m) : message(m) {}
-    OSCMessage message;
+    OSCEvent(OSCMessage *m) : msg(m) {}
+    OSCMessage * msg;
+    OSCMessage &getMessage() {return *msg;}
 };
 
 class OSCManager :
@@ -39,7 +40,8 @@ public:
     void setEnabled(bool value);
 
     void receiveOSC();
+    void processMessage(OSCMessage &m);
 
-    void sendMessage(OSCMessage m);
+    void sendMessage(OSCMessage &m);
     void sendMessage(String address);
 };

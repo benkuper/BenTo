@@ -25,7 +25,7 @@ void CommunicationManager::update() {
 }
 
 
-void CommunicationManager::serialMessageEvent(SerialEvent e) 
+void CommunicationManager::serialMessageEvent(const SerialEvent &e) 
 {
     NDBG("Serial Event "+String(e.type)+", target : "+e.target);
     switch(e.type)
@@ -36,16 +36,16 @@ void CommunicationManager::serialMessageEvent(SerialEvent e)
     }
 }
 
-void CommunicationManager::wifiConnectionEvent(WifiManagerEvent e) 
+void CommunicationManager::wifiConnectionEvent(const WifiManagerEvent &e) 
 {
     //NDBG("Wifi connection Event "+wifiManager.stateNames[wifiManager.state]);
     if(wifiManager.state == WifiManager::Connected) NDBG("Connected with IP "+wifiManager.getIP());
 }
 
 
-void CommunicationManager::oscMessageEvent(OSCEvent e) 
+void CommunicationManager::oscMessageEvent(const OSCEvent &e) 
 {
     char addr[32];
-    e.message.getAddress(addr, 0);
+    e.msg->getAddress(addr, 0);
     NDBG("OSC Message received "+String(addr));
 }

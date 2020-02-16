@@ -8,12 +8,12 @@ public:
     EventBroadcaster();
     virtual ~EventBroadcaster() {}
 
-    typedef std::function<void(T)> onEvent;
+    typedef std::function<void(const T &)> onEvent;
     onEvent listeners[8];
     void addListener(onEvent func);
 
 protected:
-    virtual void sendEvent(T data = T());
+    virtual void sendEvent(const T &data = T());
 
 private:
     int numListeners;
@@ -25,7 +25,7 @@ EventBroadcaster<T>::EventBroadcaster() : numListeners(0)
 }
 
 template <class T>
-void EventBroadcaster<T>::sendEvent(T data)
+void EventBroadcaster<T>::sendEvent(const T &data)
 {
     for (int i = 0; i < numListeners; i++)
     {

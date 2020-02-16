@@ -45,11 +45,16 @@ void OSCManager::receiveOSC()
     if ((size = udp.parsePacket()) > 0)
     {
         while (size--) msg.fill(udp.read());
-        if (!msg.hasError())  sendEvent(OSCEvent(msg));
+        if (!msg.hasError()) processMessage(msg);
     }
 }
 
-void OSCManager::sendMessage(OSCMessage msg)
+void OSCManager::processMessage(OSCMessage &msg)
+{
+    sendEvent(OSCEvent(&msg));
+}
+
+void OSCManager::sendMessage(OSCMessage &msg)
 {
     if (remoteHost.length() == 0)
         return;
@@ -66,5 +71,6 @@ void OSCManager::sendMessage(OSCMessage msg)
 
 void OSCManager::sendMessage(String address)
 {
-    sendMessage(OSCMessage(address.c_str()));
+    OSCMessage m(address.c_str());
+    sendMessage(m);
 }
