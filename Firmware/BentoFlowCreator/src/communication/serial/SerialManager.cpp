@@ -33,5 +33,5 @@ void SerialManager::update()
 void SerialManager::processMessage(String buffer)
 {
     int splitIndex = buffer.indexOf(' ');
-    sendEvent(SerialEvent(SerialEvent::MessageReceived, buffer.substring(0, splitIndex), buffer.substring(splitIndex + 1, buffer.length() - 1)));
+    sendEvent(SerialEvent(SerialEvent::MessageReceived, buffer.substring(0, splitIndex), buffer.substring(splitIndex + 1)));
 }

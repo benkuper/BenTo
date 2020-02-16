@@ -7,7 +7,8 @@
 #include "sensors/SensorManager.h"
 #include "files/FileManager.h"
 
-class MainManager
+class MainManager :
+    public Component
 {
 public:
     MainManager(String deviceType, String fwVersion);
@@ -24,4 +25,6 @@ public:
 
     void init();
     void update();
+
+    void communicationEvent(const CommunicationEvent &e);
 };

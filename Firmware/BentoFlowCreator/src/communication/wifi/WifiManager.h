@@ -1,7 +1,7 @@
 #pragma once
 
-#include "../../common/Component.h"
-#include "../../common/events/EventBroadcaster.h"
+#include "../../common/Common.h"
+
 
 #include "Preferences.h"
 #include <WiFi.h>

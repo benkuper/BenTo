@@ -11,7 +11,7 @@ public:
     typedef std::function<void(const T &)> onEvent;
     onEvent listeners[8];
     void addListener(onEvent func);
-
+    
 protected:
     virtual void sendEvent(const T &data = T());
 
