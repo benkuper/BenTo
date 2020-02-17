@@ -19,9 +19,7 @@ public:
   WifiManager();
   ~WifiManager() {}
 
-  enum WifiState { Off, Disconnected, Connecting, Connected, Hotspot, STATES_MAX };
-  const String stateNames[STATES_MAX] {"Off", "Disconnected", "Connecting", "Connected", "Hotspot"};
-  WifiState state;
+  ConnectionState state;
 
   Preferences prefs;
 
@@ -30,13 +28,13 @@ public:
   long timeAtConnect;
   long lastConnectTime;
 
-  void setState(WifiState s);
+  void setState(ConnectionState s);
 
   void init();
 
   void connect();
   void disconnect();
-  void turnOff();
+  void disable();
 
   void update();
 

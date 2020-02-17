@@ -9,9 +9,7 @@
 
 #define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
 
-class MainManager :
-    public Component
-{
+class MainManager : public Component {
 public:
     MainManager(String deviceType, String fwVersion);
     ~MainManager() {}
@@ -28,10 +26,11 @@ public:
     void init();
     void update();
 
-
     void sleep();
 
+    void connectionEvent(const ConnectionEvent &e);
     void communicationEvent(const CommunicationEvent &e);
+    void sensorEvent(const SensorEvent &e);
 
-    bool handleCommand(String command, var * data, int numData) override;
+    bool handleCommand(String command, var *data, int numData) override;
 };

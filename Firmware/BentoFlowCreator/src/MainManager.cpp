@@ -10,11 +10,17 @@ MainManager::MainManager(String deviceType, String fwVersion) :
 
 void MainManager::init() 
 {
-    comm.init();
-    comm.addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
-
     leds.init();
+    leds.wakeup(CRGB::Cyan); //to replace with battery color
+    
+    ((EventBroadcaster<CommunicationEvent> * )&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
+    ((EventBroadcaster<ConnectionEvent> *) &comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
+    comm.init();
+
+    sensors.addListener(std::bind(&MainManager::sensorEvent, this, std::placeholders::_1));
     sensors.init();
+
+    
     files.init();
 }
 
@@ -29,6 +35,11 @@ void MainManager::update()
     
 void MainManager::sleep() 
 {
+    NDBG("Sleep now ! ");
+    leds.shutdown(CRGB::Orange); //to replace with battery color
+
+    delay(500);
+
     esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, HIGH);
     esp_deep_sleep_start();
 }
@@ -50,6 +61,44 @@ void MainManager::communicationEvent(const CommunicationEvent &e)
     }
 }
 
+void MainManager::sensorEvent(const SensorEvent &e)
+{
+    switch(e.type)
+    {
+        case SensorEvent::ButtonUpdate:
+        {
+            ButtonEvent::Type btEventType = (ButtonEvent::Type)e.data[0].intValue();
+            switch(btEventType)
+            {
+                case ButtonEvent::Pressed:
+                break;
+
+                case ButtonEvent::Released:
+                break;
+
+                case ButtonEvent::ShortPress:
+                break;
+
+                case ButtonEvent::LongPress:
+                break;
+
+                case ButtonEvent::VeryLongPress:
+                {
+                    sleep();
+                }
+                break;
+
+                case ButtonEvent::MultiPress:
+                {
+                    int count = e.data[1].intValue();
+
+                }
+                break;
+            }
+        }
+        break;
+    }
+}
 
 bool MainManager::handleCommand(String command, var * data, int numData)
 {
@@ -60,4 +109,9 @@ bool MainManager::handleCommand(String command, var * data, int numData)
     }
     
     return false;
+}
+void MainManager::connectionEvent(const ConnectionEvent &e)
+{
+    NDBG("Connection Event");
+    leds.sysLedMode.setConnectionState(e.type);
 }

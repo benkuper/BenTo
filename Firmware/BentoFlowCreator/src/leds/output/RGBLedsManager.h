@@ -1,10 +1,10 @@
 #pragma once
 
 #include "../../common/Common.h"
-#include "FastLED/FastLED.h"
+#include "LedHelpers.h"
 
 //To move to custom board definition
-#define LEDS_COUNT      32
+#define LEDS_COUNT 32
 #define LEDS_ENABLE_PIN 26
 #define LEDS_DATA_PIN   5
 #define LEDS_CLK_PIN    18
@@ -19,16 +19,21 @@ public:
 
     CRGB leds[LEDS_COUNT];
     float globalBrightness;
-    Preferences prefs;
 
     void init();
     void update();
-    void updateLeds();
 
-    void fillColor(CRGB c);
 
     void setBrightness(float value, bool save = false);
-
     bool handleCommand(String command, var * data, int numData) override;
+
+    //Helpers
+    void clear();
+    void fillAll(CRGB c);
+    void fillRange(CRGB c, float start, float end, bool clear = true);
+    void point(CRGB c, float pos, float radius, bool clear = true);
+        
+private:
+    Preferences prefs;
 };
     

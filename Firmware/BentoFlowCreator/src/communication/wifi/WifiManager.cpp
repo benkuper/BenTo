@@ -21,12 +21,12 @@ void WifiManager::update()
         long curTime = millis();
         if (curTime > lastConnectTime + timeBetweenTries)
         {
-            setState(Connected);
+            if(WiFi.isConnected()) setState(Connected);
         }
 
         if(curTime > timeAtConnect + connectionTimeout)
         {
-            setState(Disconnected);
+            setState(ConnectionError);
         }
     }
     break;
@@ -36,7 +36,7 @@ void WifiManager::update()
     }
 }
 
-void WifiManager::setState(WifiState s)
+void WifiManager::setState(ConnectionState s)
 {
     if (state == s)
         return;
@@ -70,13 +70,13 @@ void WifiManager::connect()
 void WifiManager::disconnect()
 {
     WiFi.disconnect();
-    setState(Disconnected);
+    setState(Off);
 }
 
-void WifiManager::turnOff()
+void WifiManager::disable()
 {
     WiFi.disconnect();
-    setState(Off);
+    setState(Disabled);
 }
 
 void WifiManager::saveWifiConfig(String ssid, String pass)

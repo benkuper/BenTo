@@ -4,6 +4,15 @@
 #include "serial/SerialManager.h"
 #include "osc/OSCManager.h"
 
+class ConnectionEvent
+{
+public:
+    ConnectionEvent(ConnectionState type, String source, String info = "") : type(type), source(source), info(info) {}
+    ConnectionState type;
+    String source;
+    String info;
+};
+
 class CommunicationEvent
 {
 public:
@@ -37,7 +46,8 @@ public:
 };
 
 class CommunicationManager : public Component,
-                             public EventBroadcaster<CommunicationEvent>
+                             public EventBroadcaster<CommunicationEvent>,
+                             public EventBroadcaster<ConnectionEvent>
 {
 public:
     CommunicationManager();

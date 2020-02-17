@@ -37,6 +37,5 @@ void SerialManager::processMessage(String buffer)
     String tc = buffer.substring(0, splitIndex);
     int tcIndex = tc.indexOf('.');
 
-    NDBG("Received message "+buffer);
     sendEvent(SerialEvent(SerialEvent::MessageReceived, tc.substring(0,tcIndex), tc.substring(tcIndex+1), buffer.substring(splitIndex + 1)));
 }

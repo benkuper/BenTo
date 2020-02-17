@@ -26,7 +26,6 @@ void CommunicationManager::update()
 
 void CommunicationManager::serialMessageEvent(const SerialEvent &e)
 {
-    NDBG("Received serial");
     switch (e.type)
     {
     case SerialEvent::MessageReceived:
@@ -36,38 +35,37 @@ void CommunicationManager::serialMessageEvent(const SerialEvent &e)
         int index = 0;
 
         //COUNT
-        char * pch = strtok ((char *)e.data.c_str(), ",");
-        while (pch != NULL && index < maxData) 
+        char *pch = strtok((char *)e.data.c_str(), ",");
+        while (pch != NULL && index < maxData)
         {
             String s = String(pch);
             float f = s.toFloat();
             int i = s.toInt();
-            if(f != 0 || s.indexOf('0') == 0)
+            if (f != 0 || s.indexOf('0') == 0)
             {
-                if(f == i && s.indexOf('.') == -1) 
+                if (f == i && s.indexOf('.') == -1)
                 {
                     data[index].value.i = i;
                     data[index].type = 'i';
                 }
-                else 
+                else
                 {
                     data[index].value.f = f;
                     data[index].type = 'f';
                 }
-            }else
+            }
+            else
             {
                 data[index].value.s = pch;
                 data[index].type = 's';
             }
 
-            pch = strtok (NULL, ",");
+            pch = strtok(NULL, ",");
             index++;
         }
 
-        sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, serialManager.name, e.target, e.command, data, index));
+        EventBroadcaster<CommunicationEvent>::sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, serialManager.name, e.target, e.command, data, index));
         free(data);
-
-        DBG("Heap check " +String(ESP.getFreeHeap()));
     }
     break;
     }
@@ -75,9 +73,12 @@ void CommunicationManager::serialMessageEvent(const SerialEvent &e)
 
 void CommunicationManager::wifiConnectionEvent(const WifiManagerEvent &e)
 {
-    //NDBG("Wifi connection Event "+wifiManager.stateNames[wifiManager.state]);
-    if (wifiManager.state == WifiManager::Connected)
-        NDBG("Connected with IP " + wifiManager.getIP());
+    NDBG("Connection event update "+connectionStateNames[wifiManager.state]);
+    EventBroadcaster<ConnectionEvent>::sendEvent(ConnectionEvent(wifiManager.state, 
+                              wifiManager.name, 
+                              (wifiManager.state == Connected || wifiManager.state == Hotspot)?wifiManager.getIP():""
+                             )
+             );
 }
 
 void CommunicationManager::oscMessageEvent(const OSCEvent &e)
@@ -109,6 +110,6 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
         }
     }
 
-    sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, tc.substring(0,tcIndex), tc.substring(tcIndex+1), data, numData));
+    EventBroadcaster<CommunicationEvent>::sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, tc.substring(0, tcIndex), tc.substring(tcIndex + 1), data, numData));
     free(data);
 }
