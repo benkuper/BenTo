@@ -1,7 +1,8 @@
 #pragma once
 #include "../LedMode.h"
 
-class SystemLedMode : public LedMode {
+class SystemLedMode : public LedMode 
+{
 public:
     SystemLedMode(CRGB * leds, int numLeds);
     ~SystemLedMode() {}

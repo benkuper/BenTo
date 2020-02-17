@@ -1,8 +1,6 @@
 #pragma once
 #include "../../common/Common.h"
 
-#define BUTTON_PIN 23
-
 class ButtonEvent
 {
 public:

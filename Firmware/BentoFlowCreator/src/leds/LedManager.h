@@ -1,6 +1,7 @@
 #pragma once
 
 #include "system/SystemLedMode.h"
+#include "stream/StreamMode.h"
 #include "output/RGBLedsManager.h"
 
 class LedManager : public Component {
@@ -14,9 +15,13 @@ public:
     //source
     LedMode * currentMode;
     SystemLedMode sysLedMode;
-
+    StreamMode streamMode;
+    
     //out
     RGBLedsManager rgbManager;
+
+    //timers
+    Timer connectedTimer;
     
     void init();
     void update();
@@ -25,5 +30,8 @@ public:
 
     void shutdown(CRGB color);
 
+    void setConnectionState(ConnectionState state);
+
     bool handleCommand(String command, var *data, int numData) override;
+    void timerEvent(const TimerEvent &e);
 };

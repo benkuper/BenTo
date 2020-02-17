@@ -31,7 +31,7 @@ void MainManager::update()
 
 void MainManager::sleep()
 {
-    NDBG("Sleep now ! ");
+    //NDBG("Sleep now ! ");
     leds.shutdown(CRGB::Orange); //to replace with battery color
 
     delay(500);
@@ -42,13 +42,13 @@ void MainManager::sleep()
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
 {
-    NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
-    leds.sysLedMode.setConnectionState(e.type);
+    //NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
+    leds.setConnectionState(e.type);
 }
 
 void MainManager::communicationEvent(const CommunicationEvent &e)
 {
-    NDBG(e.toString());
+    //NDBG(e.toString());
 
     Component *c = Component::getComponentForName(e.target);
 

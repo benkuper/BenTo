@@ -2,9 +2,12 @@
 
 #pragma once
 
+#include "config/Config.h"
+
 #include "Component.h"
 #include "events/EventBroadcaster.h"
 #include <Preferences.h>
+#include "Timer.h"
 
 enum ConnectionState { Off, Connecting, Connected, ConnectionError, Disabled, Hotspot, CONNECTION_STATES_MAX };
 const String connectionStateNames[CONNECTION_STATES_MAX] {"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot"};
