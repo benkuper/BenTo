@@ -7,7 +7,8 @@ public:
     ~SystemLedMode() {}
     
     ConnectionState connectionState;
-    long timeAtStateChange;
+    float timeAtStateChange;
+    float timeAtConnecting;
     const long stateAnimationTime = 1000;
 
     float pointPos;

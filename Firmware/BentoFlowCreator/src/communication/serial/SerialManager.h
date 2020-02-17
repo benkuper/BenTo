@@ -24,7 +24,7 @@ public:
     SerialManager();
     ~SerialManager(){}
 
-    char buffer[64];
+    char buffer[512];
     byte bufferIndex;
 
     void init();

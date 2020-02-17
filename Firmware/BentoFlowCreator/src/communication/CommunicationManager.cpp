@@ -73,12 +73,10 @@ void CommunicationManager::serialMessageEvent(const SerialEvent &e)
 
 void CommunicationManager::wifiConnectionEvent(const WifiManagerEvent &e)
 {
-    NDBG("Connection event update "+connectionStateNames[wifiManager.state]);
-    EventBroadcaster<ConnectionEvent>::sendEvent(ConnectionEvent(wifiManager.state, 
-                              wifiManager.name, 
-                              (wifiManager.state == Connected || wifiManager.state == Hotspot)?wifiManager.getIP():""
-                             )
-             );
+    NDBG("Connection event update " + connectionStateNames[wifiManager.state]);
+    EventBroadcaster<ConnectionEvent>::sendEvent(ConnectionEvent(wifiManager.state,
+                                                                 wifiManager.name,
+                                                                 (wifiManager.state == Connected || wifiManager.state == Hotspot) ? wifiManager.getIP() : ""));
 }
 
 void CommunicationManager::oscMessageEvent(const OSCEvent &e)
@@ -90,6 +88,9 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
 
     int numData = e.msg->size();
     var *data = (var *)malloc(numData * sizeof(var));
+    int numUsedData = 0;
+
+    char tmpStr[32][32]; //contains potential strings
 
     for (int i = 0; i < e.msg->size(); i++)
     {
@@ -98,18 +99,26 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
         case 'i':
             data[i].value.i = e.msg->getInt(i);
             data[i].type = 'i';
+            numUsedData++;
             break;
         case 'f':
             data[i].value.f = e.msg->getFloat(i);
             data[i].type = 'f';
+            numUsedData++;
             break;
         case 's':
-            e.msg->getString(i, data[i].value.s);
+            e.msg->getString(i, tmpStr[i]);
+            data[i].value.s = tmpStr[i];
             data[i].type = 's';
+            numUsedData++;
+            break;
+
+        default:
             break;
         }
     }
 
-    EventBroadcaster<CommunicationEvent>::sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, tc.substring(0, tcIndex), tc.substring(tcIndex + 1), data, numData));
+    EventBroadcaster<CommunicationEvent>::sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, tc.substring(0, tcIndex), tc.substring(tcIndex + 1), data, numUsedData));
+
     free(data);
 }

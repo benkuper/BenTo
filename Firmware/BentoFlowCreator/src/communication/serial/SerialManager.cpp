@@ -3,7 +3,7 @@
 SerialManager::SerialManager() :
     Component("serial")
 {
-    memset(buffer, 0, 64);
+    memset(buffer, 0, 512);
 }
 
 void SerialManager::init()
@@ -19,11 +19,11 @@ void SerialManager::update()
         if (c == '\n')
         {
             processMessage(buffer);
-            memset(buffer, 0, 64);
+            memset(buffer, 0, 512);
             bufferIndex = 0;
         }else
         {
-            if(bufferIndex < 64) buffer[bufferIndex] = c;
+            if(bufferIndex < 512) buffer[bufferIndex] = c;
             bufferIndex++;
         }
         

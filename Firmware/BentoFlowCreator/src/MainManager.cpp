@@ -1,30 +1,27 @@
 #include "MainManager.h"
 
-MainManager::MainManager(String deviceType, String fwVersion) :
-    Component("root"),
-    deviceType(deviceType),
-    fwVersion(fwVersion)
+MainManager::MainManager(String deviceType, String fwVersion) : Component("root"),
+                                                                deviceType(deviceType),
+                                                                fwVersion(fwVersion)
 {
-    
 }
 
-void MainManager::init() 
+void MainManager::init()
 {
     leds.init();
     leds.wakeup(CRGB::Cyan); //to replace with battery color
-    
-    ((EventBroadcaster<CommunicationEvent> * )&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
-    ((EventBroadcaster<ConnectionEvent> *) &comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
+
+    ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
+    ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
     comm.init();
 
     sensors.addListener(std::bind(&MainManager::sensorEvent, this, std::placeholders::_1));
     sensors.init();
 
-    
     files.init();
 }
 
-void MainManager::update() 
+void MainManager::update()
 {
     comm.update();
     leds.update();
@@ -32,8 +29,7 @@ void MainManager::update()
     files.update();
 }
 
-    
-void MainManager::sleep() 
+void MainManager::sleep()
 {
     NDBG("Sleep now ! ");
     leds.shutdown(CRGB::Orange); //to replace with battery color
@@ -44,74 +40,75 @@ void MainManager::sleep()
     esp_deep_sleep_start();
 }
 
+void MainManager::connectionEvent(const ConnectionEvent &e)
+{
+    NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
+    leds.sysLedMode.setConnectionState(e.type);
+}
 
 void MainManager::communicationEvent(const CommunicationEvent &e)
 {
     NDBG(e.toString());
-    Component  * c = Component::getComponentForName(e.target);
 
-    if(c != nullptr) 
+    Component *c = Component::getComponentForName(e.target);
+
+    if (c != nullptr)
     {
         bool result = c->handleCommand(e.command, e.data, e.numData);
-        if(!result) NDBG("Command not handled : "+e.target+"."+e.command);
+        if (!result)
+            NDBG("Command not handled : " + e.target + "." + e.command);
     }
-    else 
+    else
     {
-        NDBG("Target not found : "+e.target);
+        NDBG("Target not found : " + e.target);
     }
 }
 
 void MainManager::sensorEvent(const SensorEvent &e)
 {
-    switch(e.type)
+    switch (e.type)
     {
-        case SensorEvent::ButtonUpdate:
+    case SensorEvent::ButtonUpdate:
+    {
+        ButtonEvent::Type btEventType = (ButtonEvent::Type)e.data[0].intValue();
+        switch (btEventType)
         {
-            ButtonEvent::Type btEventType = (ButtonEvent::Type)e.data[0].intValue();
-            switch(btEventType)
-            {
-                case ButtonEvent::Pressed:
-                break;
+        case ButtonEvent::Pressed:
+            break;
 
-                case ButtonEvent::Released:
-                break;
+        case ButtonEvent::Released:
+            break;
 
-                case ButtonEvent::ShortPress:
-                break;
+        case ButtonEvent::ShortPress:
+            break;
 
-                case ButtonEvent::LongPress:
-                break;
+        case ButtonEvent::LongPress:
+            break;
 
-                case ButtonEvent::VeryLongPress:
-                {
-                    sleep();
-                }
-                break;
-
-                case ButtonEvent::MultiPress:
-                {
-                    int count = e.data[1].intValue();
-
-                }
-                break;
-            }
+        case ButtonEvent::VeryLongPress:
+        {
+            sleep();
         }
         break;
+
+        case ButtonEvent::MultiPress:
+        {
+            int count = e.data[1].intValue();
+        }
+        break;
+        }
+    }
+    break;
     }
 }
 
-bool MainManager::handleCommand(String command, var * data, int numData)
+bool MainManager::handleCommand(String command, var *data, int numData)
 {
-    if(checkCommand(command, "sleep", numData, 0))
+    if (checkCommand(command, "sleep", numData, 0))
     {
         sleep();
         return true;
     }
-    
+
     return false;
-}
-void MainManager::connectionEvent(const ConnectionEvent &e)
-{
-    NDBG("Connection Event");
-    leds.sysLedMode.setConnectionState(e.type);
 }

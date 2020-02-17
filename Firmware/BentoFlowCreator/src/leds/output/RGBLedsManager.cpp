@@ -43,13 +43,24 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         return true;
     }else if(checkCommand(command, "fill", numData, 3))
     {
-        fillAll(CRGB(data[0].floatValue()*255, data[1].floatValue()*255, data[2].floatValue()*255));
+        CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
+        if(numData >= 4) c.nscale8((int)(data[3].floatValue() * 255));
+        fillAll(c);
+        return true;
     }else if(checkCommand(command, "range", numData, 5))
     {
-        fillRange(CRGB(data[0].floatValue()*255, data[1].floatValue()*255, data[2].floatValue()*255), data[3].floatValue(), data[4].floatValue());
+        bool hasAlpha = numData >= 6;
+        CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
+        if(hasAlpha) c.nscale8((int)(data[3].floatValue() * 255));
+        fillRange(c, data[hasAlpha?4:3].floatValue(), data[hasAlpha?5:4].floatValue());
+        return true;
     }else if(checkCommand(command, "point", numData, 5))
     {
-        point(CRGB(data[0].floatValue()*255, data[1].floatValue()*255, data[2].floatValue()*255), data[3].floatValue(), data[4].floatValue());
+        bool hasAlpha = numData >= 6;
+        CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
+        if(hasAlpha) c.nscale8((int)(data[3].floatValue() * 255));
+        point(c, data[hasAlpha?4:3].floatValue(), data[hasAlpha?5:4].floatValue());
+        return true;
     }
 
     return false;

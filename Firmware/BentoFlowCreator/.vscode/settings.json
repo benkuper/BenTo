@@ -78,5 +78,7 @@
         "string_view": "cpp",
         "cinttypes": "cpp"
     },
-    "C_Cpp.errorSquiggles": "Disabled"
+    "C_Cpp.errorSquiggles": "Disabled",
+
+    "arduino.defaultBaudRate": 115200
 }

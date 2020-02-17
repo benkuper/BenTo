@@ -16,9 +16,11 @@ void LedManager::init()
 
 void LedManager::update()
 {
-    rgbManager.clear();
-
-    if(currentMode != nullptr) currentMode->update();
+    if(currentMode != nullptr) 
+    {
+        rgbManager.clear();
+        currentMode->update();
+    }
 
     rgbManager.update();
 }
@@ -30,6 +32,7 @@ void LedManager::setMode(Mode m)
     {
     case Direct:
         currentMode = nullptr;
+        rgbManager.clear();
         break;
 
     case System:
@@ -44,7 +47,7 @@ void LedManager::setMode(Mode m)
 
 void LedManager::wakeup(CRGB color)
 {
-    for (float i = 0; i < 1; i += .01f)
+   /* for (float i = 0; i < 1; i += .01f)
     {
         rgbManager.fillRange(color, 0, i, true);
         rgbManager.update();
@@ -52,6 +55,7 @@ void LedManager::wakeup(CRGB color)
     }
 
     delay(100);
+    */
 }
 
 void LedManager::shutdown(CRGB color)
