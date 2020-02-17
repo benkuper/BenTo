@@ -89,3 +89,9 @@ void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear)
     if (doClear) clear();
     LedHelpers::point(leds, LEDS_COUNT, c, pos, fade);
 }
+
+void RGBLedsManager::setLed(int index, CRGB c) 
+{
+    if(index < 0 || index >= LEDS_COUNT) return;
+    leds[index] = c;
+}

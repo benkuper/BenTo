@@ -9,7 +9,7 @@ MainManager::MainManager(String deviceType, String fwVersion) : Component("root"
 void MainManager::init()
 {
     leds.init();
-    leds.wakeup(CRGB::Cyan); //to replace with battery color
+    //leds.sysLedMode.setBattery(sensors.battery.getVoltage());
 
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));

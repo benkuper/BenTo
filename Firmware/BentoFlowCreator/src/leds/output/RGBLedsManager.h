@@ -11,9 +11,7 @@
 #define LEDS_TYPE       SK9822
 #define LEDS_COLOR_ORDER BGR
 
-class RGBLedsManager :
-    public Component
-{
+class RGBLedsManager : public Component {
 public:
     RGBLedsManager();
 
@@ -32,6 +30,8 @@ public:
     void fillAll(CRGB c);
     void fillRange(CRGB c, float start, float end, bool clear = true);
     void point(CRGB c, float pos, float radius, bool clear = true);
+
+    void setLed(int index, CRGB c);
         
 private:
     Preferences prefs;

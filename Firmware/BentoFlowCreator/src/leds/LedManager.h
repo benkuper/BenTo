@@ -23,7 +23,6 @@ public:
 
     void setMode(Mode m);
 
-    void wakeup(CRGB color);
     void shutdown(CRGB color);
 
     bool handleCommand(String command, var *data, int numData) override;
