@@ -16,6 +16,6 @@ public:
     virtual void init() {}
     virtual void update() {}
 
-    virtual void start() { isActive = true; }
-    virtual void stop() { isActive = false; }
+    virtual void start() { NDBG("Start"); isActive = true; }
+    virtual void stop() { NDBG("Stop"); isActive = false; }
 };

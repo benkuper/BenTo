@@ -3,6 +3,7 @@
 LedManager::LedManager() : Component("leds"),
                            mode(Mode::Direct),
                            currentMode(nullptr),
+                           connectionIsAlive(false),
                            sysLedMode(rgbManager.leds, LED_COUNT),
                            streamMode(rgbManager.leds, LED_COUNT),
                            playerMode(rgbManager.leds, LED_COUNT),
@@ -24,9 +25,16 @@ void LedManager::update()
 {
     if (mode == System)
         rgbManager.clear();
-    
-    if (currentMode != nullptr)
-        currentMode->update();
+
+    if (connectionIsAlive || playerMode.isPlaying)
+    {
+        if (currentMode != nullptr)
+            currentMode->update();
+    }
+    else
+    {
+        rgbManager.point(CHSV(0, 255, cos(millis() / 100.0f) * 127 + 127), .5f, .1f);
+    }
 
     rgbManager.update();
 
@@ -38,15 +46,13 @@ void LedManager::setMode(Mode m)
     if (m == mode)
         return;
 
-    DBG("Set mode "+String(m));
-
     if (currentMode != nullptr)
     {
         currentMode->stop();
     }
 
     mode = m;
-    
+
     switch (mode)
     {
     case Direct:
@@ -60,14 +66,14 @@ void LedManager::setMode(Mode m)
         currentMode = &streamMode;
         break;
 
-    case Player: 
+    case Player:
         currentMode = &playerMode;
         break;
 
     default:
         break;
     }
-    
+
     rgbManager.clear();
 
     if (currentMode != nullptr)
@@ -105,6 +111,15 @@ void LedManager::shutdown(CRGB color)
 
 void LedManager::setConnectionState(ConnectionState state)
 {
+    NDBG("Set connectionState : " + connectionStateNames[state]);
+
+    if (state == ConnectionState::PingDead || state == ConnectionState::PingAlive)
+    {
+        connectionIsAlive = state == ConnectionState::PingAlive;
+        rgbManager.clear();
+        return;
+    }
+
     setMode(System);
     sysLedMode.setConnectionState(state);
 
@@ -114,15 +129,13 @@ void LedManager::setConnectionState(ConnectionState state)
         connectedTimer.stop();
 }
 
-
-void LedManager::playerEvent(const PlayerEvent &e) 
+void LedManager::playerEvent(const PlayerEvent &e)
 {
-    if(e.type == PlayerEvent::Load || e.type == PlayerEvent::Play)
+    if (e.type == PlayerEvent::Load || e.type == PlayerEvent::Play)
     {
         setMode(Player);
-    }    
+    }
 }
-
 
 bool LedManager::handleCommand(String command, var *data, int numData)
 {

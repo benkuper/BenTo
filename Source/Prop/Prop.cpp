@@ -48,9 +48,6 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	isConnected = ioCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
 	isConnected->isSavable = false; 
-	twoWayConnected = ioCC.addBoolParameter("2-way Connected", "This is checked if the prop is connected and communication works both directions", false);
-	twoWayConnected->setControllableFeedbackOnly(true);
-	twoWayConnected->isSavable = false;
 
 	findPropMode = ioCC.addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
 	findPropMode->setControllableFeedbackOnly(true);
@@ -105,6 +102,8 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 	activeProvider->hideInEditor = true;
+
+	startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 
 }
 
@@ -388,25 +387,9 @@ void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl contro
 }
 
 
-void Prop::handlePing(bool isPong)
+void Prop::handlePong()
 {
-	if (!isPong)
-	{
-		isConnected->setValue(true);
-		stopTimer(PROP_PING_TIMERID);
-		startTimer(PROP_PING_TIMERID, 2000); //2s
-
-		if (!isTimerRunning(PROP_PINGPONG_TIMERID))
-		{
-			sendPing();
-			startTimer(PROP_PINGPONG_TIMERID, 2000); // only once, but launch only if it received a first ping
-		}
-	}
-	else
-	{
-		receivedPongSinceLastPingSent = true;
-		twoWayConnected->setValue(true); 
-	}
+	receivedPongSinceLastPingSent = true;
 }
 
 void Prop::timerCallback(int timerID)
@@ -414,15 +397,8 @@ void Prop::timerCallback(int timerID)
 	switch (timerID)
 	{
 	case PROP_PING_TIMERID:
-		isConnected->setValue(false);
-		stopTimer(PROP_PING_TIMERID);
-		break;
-
-	case PROP_PINGPONG_TIMERID:
-		if(!receivedPongSinceLastPingSent) twoWayConnected->setValue(false);
-
+		isConnected->setValue(receivedPongSinceLastPingSent);
 		sendPing();
-		receivedPongSinceLastPingSent = false;
 		break;
 	}
 }

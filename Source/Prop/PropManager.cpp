@@ -276,14 +276,22 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 			if (bp != nullptr) bp->remoteHost->setValue(pHost);
 		}
 	}
-	else if (address == "/ping" || address == "/pong")
+	else if (address == "/pong")
 	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		Prop* p = getPropWithHardwareId(pid);
-		if (p != nullptr)
+		if (m.size() > 0)
 		{
-			p->handlePing(address == "/pong");
+			String pid = OSCHelpers::getStringArg(m[0]);
+			Prop* p = getPropWithHardwareId(pid);
+			if (p != nullptr)
+			{
+				p->handlePong();
+			}
 		}
+		else
+		{
+			NLOGWARNING(niceName, "Got pong without prop ID");
+		}
+		
 	}
 	
 	/*

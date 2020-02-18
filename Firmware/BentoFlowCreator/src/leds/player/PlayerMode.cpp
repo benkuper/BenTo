@@ -60,6 +60,10 @@ void PlayerMode::playFrame()
       DBG("Loop");
       sendEvent(PlayerEvent(PlayerEvent::Loop));
       play(0);
+    }else
+    {
+      isPlaying = false;
+      return;
     }
   }
 
@@ -133,6 +137,7 @@ void PlayerMode::start()
 void PlayerMode::stop()
 {
   LedMode::stop();
+  stopPlaying();
 }
 
 void PlayerMode::load(String path)

@@ -25,6 +25,9 @@ public:
 
     //timers
     Timer connectedTimer;
+
+    //ping feedback
+    bool connectionIsAlive;
     
     void init();
     void update();

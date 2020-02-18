@@ -16,7 +16,6 @@
 class PropFamily;
 
 #define PROP_PING_TIMERID 0
-#define PROP_PINGPONG_TIMERID 1
 
 class Prop :
 	public BaseItem,
@@ -42,7 +41,6 @@ public:
 	ControllableContainer ioCC;
 	BoolParameter* isConnected;
 	
-	BoolParameter* twoWayConnected;
 	bool receivedPongSinceLastPingSent;
 
 	BoolParameter * findPropMode;
@@ -123,7 +121,7 @@ public:
 	virtual void powerOffProp() {}
 	virtual void resetProp() {}
 
-	virtual void handlePing(bool isPong = false);
+	virtual void handlePong();
 	virtual void sendPing() {}
 	virtual void timerCallback(int timerID) override;
 	

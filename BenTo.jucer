@@ -696,5 +696,6 @@
     <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"/>
+  <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"
+               JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1"/>
 </JUCERPROJECT>

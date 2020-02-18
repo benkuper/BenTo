@@ -24,10 +24,12 @@ void MainManager::init()
 
 void MainManager::update()
 {
+    files.update();
+    if(files.isUploading) return;
+    
     comm.update();
     leds.update();
     sensors.update();
-    files.update();
 }
 
 void MainManager::sleep()
@@ -43,7 +45,7 @@ void MainManager::sleep()
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
 {
-    //NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
+    NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
     leds.setConnectionState(e.type);
 }
 
@@ -104,11 +106,12 @@ void MainManager::sensorEvent(const SensorEvent &e)
 }
 
 void MainManager::fileEvent(const FileEvent &e) {
-    NDBG("File event "+String(e.type)+" : "+e.data.stringValue());
+    
     if(e.type == FileEvent::UploadStart) 
     {
-        leds.sysLedMode.uploadFeedback = true;
         leds.setMode(LedManager::System);
+        leds.sysLedMode.uploadFeedback = true;
+        comm.oscManager.setEnabled(false);
     }
     else if(e.type == FileEvent::UploadProgress)
     {
@@ -117,6 +120,7 @@ void MainManager::fileEvent(const FileEvent &e) {
     {
         leds.sysLedMode.uploadFeedback = false;
         leds.setMode(LedManager::Stream);
+        comm.oscManager.setEnabled(true);
     }
 }
 

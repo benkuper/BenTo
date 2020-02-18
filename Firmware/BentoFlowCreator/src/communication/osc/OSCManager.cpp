@@ -1,13 +1,20 @@
 #include "OSCManager.h"
+#include "../wifi/WifiManager.h"
 
-OSCManager::OSCManager() : 
-    Component("osc"),
-    enabled(false)
+OSCManager::OSCManager(WifiManager * wifi) : Component("osc"),
+                           wifi(wifi),    
+                           enabled(false),
+                           pingTimeout(5000),
+                           isAlive(false)
 {
 }
 
 void OSCManager::init()
 {
+    prefs.begin("osc", true);
+    remoteHost = prefs.getString("remoteHost", "");
+    prefs.end();
+    
     setEnabled(true);
 }
 
@@ -15,6 +22,11 @@ void OSCManager::update()
 {
     if (!enabled)
         return;
+
+    if(pingEnabled && millis() > timeSinceLastReceivedPing + pingTimeout)
+    {
+        setAlive(false);
+    }
 
     receiveOSC();
 }
@@ -30,13 +42,26 @@ void OSCManager::setEnabled(bool value)
     {
         udp.begin(localPort);
         udp.flush();
+        setAlive(true);
+        timeSinceLastReceivedPing = millis();
     }
     else
     {
         udp.flush();
         udp.stop();
-    }
+        setAlive(false);
+    }   
 }
+
+
+void OSCManager::setAlive(bool value) 
+{
+    if(isAlive == value) return;
+    isAlive = value;
+    NDBG("Set alive "+String(isAlive));
+    sendEvent(OSCEvent(OSCEvent::AliveChanged));
+}
+
 
 void OSCManager::receiveOSC()
 {
@@ -44,14 +69,47 @@ void OSCManager::receiveOSC()
     int size;
     if ((size = udp.parsePacket()) > 0)
     {
-        while (size--) msg.fill(udp.read());
-        if (!msg.hasError()) processMessage(msg);
+        while (size--)
+            msg.fill(udp.read());
+        if (!msg.hasError())
+            processMessage(msg);
     }
 }
 
 void OSCManager::processMessage(OSCMessage &msg)
 {
-    sendEvent(OSCEvent(&msg));
+    if (msg.match("/yo"))
+    {
+        char hostData[32];
+        msg.getString(0, hostData, 32);
+        remoteHost = String(hostData);
+        NDBG("Got yo request from : " + remoteHost);
+
+        prefs.begin("osc");
+        prefs.putString("remoteHost", remoteHost);
+        prefs.end();
+
+        OSCMessage msg("/wassup");
+        
+        msg.add(wifi->getIP().c_str());
+        msg.add(getDeviceID().c_str());
+        msg.add(DEVICE_TYPE);
+
+        sendMessage(msg);
+    }
+    else if (msg.match("/ping"))
+    {
+        DBG("Got ping !");
+        setAlive(true);
+        pingEnabled = true;
+        timeSinceLastReceivedPing = millis();
+        OSCMessage msg("/pong");
+        msg.add(getDeviceID().c_str());
+        sendMessage(msg);
+    }else
+    {
+        sendEvent(OSCEvent(OSCEvent::MessageReceived, &msg));
+    }
 }
 
 void OSCManager::sendMessage(OSCMessage &msg)
@@ -60,9 +118,8 @@ void OSCManager::sendMessage(OSCMessage &msg)
         return;
 
     char addr[32];
-    msg.getAddress((char *)remoteHost.c_str());
-
-    NDBG("Send OSC message " + String(addr));
+    msg.getAddress(addr);
+    NDBG("Send OSC message to "+ remoteHost + " : " + String(addr));
     udp.beginPacket((char *)remoteHost.c_str(), (uint16_t)remotePort);
     msg.send(udp);
     udp.endPacket();

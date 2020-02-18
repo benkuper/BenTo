@@ -1,7 +1,8 @@
 
 #include "CommunicationManager.h"
 
-CommunicationManager::CommunicationManager() : Component("comm")
+CommunicationManager::CommunicationManager() : Component("comm"),
+                                               oscManager(&wifiManager)
 {
 }
 
@@ -81,44 +82,51 @@ void CommunicationManager::wifiConnectionEvent(const WifiManagerEvent &e)
 
 void CommunicationManager::oscMessageEvent(const OSCEvent &e)
 {
-    char addr[32];
-    e.msg->getAddress(addr, 1); //remove the first slash
-    String tc(addr);
-    int tcIndex = tc.indexOf('/');
-
-    int numData = e.msg->size();
-    var *data = (var *)malloc(numData * sizeof(var));
-    int numUsedData = 0;
-
-    char tmpStr[32][32]; //contains potential strings
-
-    for (int i = 0; i < e.msg->size(); i++)
+    if (e.type == OSCEvent::AliveChanged)
     {
-        switch (e.msg->getType(i))
-        {
-        case 'i':
-            data[i].value.i = e.msg->getInt(i);
-            data[i].type = 'i';
-            numUsedData++;
-            break;
-        case 'f':
-            data[i].value.f = e.msg->getFloat(i);
-            data[i].type = 'f';
-            numUsedData++;
-            break;
-        case 's':
-            e.msg->getString(i, tmpStr[i]);
-            data[i].value.s = tmpStr[i];
-            data[i].type = 's';
-            numUsedData++;
-            break;
-
-        default:
-            break;
-        }
+        EventBroadcaster<ConnectionEvent>::sendEvent(ConnectionEvent(oscManager.isAlive ? ConnectionState::PingAlive : ConnectionState::PingDead, oscManager.name));
     }
+    if (e.type == OSCEvent::MessageReceived)
+    {
+        char addr[32];
+        e.msg->getAddress(addr, 1); //remove the first slash
+        String tc(addr);
+        int tcIndex = tc.indexOf('/');
 
-    EventBroadcaster<CommunicationEvent>::sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, tc.substring(0, tcIndex), tc.substring(tcIndex + 1), data, numUsedData));
+        int numData = e.msg->size();
+        var *data = (var *)malloc(numData * sizeof(var));
+        int numUsedData = 0;
 
-    free(data);
+        char tmpStr[32][32]; //contains potential strings
+
+        for (int i = 0; i < e.msg->size(); i++)
+        {
+            switch (e.msg->getType(i))
+            {
+            case 'i':
+                data[i].value.i = e.msg->getInt(i);
+                data[i].type = 'i';
+                numUsedData++;
+                break;
+            case 'f':
+                data[i].value.f = e.msg->getFloat(i);
+                data[i].type = 'f';
+                numUsedData++;
+                break;
+            case 's':
+                e.msg->getString(i, tmpStr[i]);
+                data[i].value.s = tmpStr[i];
+                data[i].type = 's';
+                numUsedData++;
+                break;
+
+            default:
+                break;
+            }
+        }
+
+        EventBroadcaster<CommunicationEvent>::sendEvent(CommunicationEvent(CommunicationEvent::MessageReceived, oscManager.name, tc.substring(0, tcIndex), tc.substring(tcIndex + 1), data, numUsedData));
+
+        free(data);
+    }
 }

@@ -83,6 +83,10 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		setSerialDevice(serialParam->getDevice());
 	}
+	else if (c == remoteHost)
+	{
+		sendPing();
+	}
 }
 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)

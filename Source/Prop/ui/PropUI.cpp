@@ -56,9 +56,6 @@ void PropUI::paintOverChildren(Graphics & g)
 	Rectangle<int> r = getMainBounds().translated(0, headerHeight + headerGap).removeFromRight(20);
 	g.fillEllipse(r.removeFromTop(20).toFloat().reduced(4));
 
-	g.setColour(item->twoWayConnected->boolValue() ? GREEN_COLOR : BG_COLOR);
-	g.fillEllipse(r.removeFromTop(20).toFloat().reduced(4));
-
 	if (isDraggingOver)
 	{
 		g.fillAll(BLUE_COLOR.withAlpha(.3f));
@@ -102,7 +99,7 @@ void PropUI::resizedInternalContent(Rectangle<int> &r)
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == item->twoWayConnected) repaint();
+	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected) repaint();
 }
 
 void PropUI::itemDropped(const SourceDetails & source)

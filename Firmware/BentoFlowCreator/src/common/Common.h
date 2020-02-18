@@ -9,5 +9,7 @@
 #include <Preferences.h>
 #include "Timer.h"
 
-enum ConnectionState { Off, Connecting, Connected, ConnectionError, Disabled, Hotspot, CONNECTION_STATES_MAX };
-const String connectionStateNames[CONNECTION_STATES_MAX] {"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot"};
+enum ConnectionState { Off, Connecting, Connected, ConnectionError, Disabled, Hotspot, PingAlive, PingDead, CONNECTION_STATES_MAX };
+const String connectionStateNames[CONNECTION_STATES_MAX] {"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot", "PingAlive","PingDead" };
+
+String getDeviceID();

@@ -5,7 +5,8 @@ bool FileManager::sdIsDetected = false;
 
 FileManager::FileManager() : Component("files"),
                              isUploading(false),
-                             serverIsEnabled(false)
+                             serverIsEnabled(false),
+                             server(80)
 {
     server.onNotFound(std::bind(&FileManager::handleNotFound, this));
     server.on("/upload", HTTP_POST, std::bind(&FileManager::returnOK, this), std::bind(&FileManager::handleFileUpload, this));
@@ -130,7 +131,7 @@ void FileManager::handleFileUpload()
         uploadedBytes = 0;
         //totalBytes = server.header("Content-Length").toInt();
         
-        uploadingFile = FileManager::openFile(upload.filename, true, true);
+        uploadingFile = openFile(upload.filename, true, true);
         if(uploadingFile)
         {
           var data;
@@ -158,7 +159,6 @@ void FileManager::handleFileUpload()
           }
           
           uploadedBytes += upload.currentSize;
-          NDBG("Uploaded "+String(uploadedBytes));
           float p = uploadedBytes*1.0f/1000000;
           if(uploadedBytes % 8000 < 4000) 
           {
