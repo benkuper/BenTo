@@ -1,8 +1,7 @@
 #pragma once
 #include "../LedMode.h"
 
-class SystemLedMode : public LedMode 
-{
+class SystemLedMode : public LedMode {
 public:
     SystemLedMode(CRGB * leds, int numLeds);
     ~SystemLedMode() {}
@@ -14,11 +13,13 @@ public:
 
     float pointPos;
 
+    bool uploadFeedback;
+    float uploadProgress;
+
     void init() override;
     void update() override;
 
     void setBatteryColor(CRGB color);
     void setConnectionState(ConnectionState state);
-
-    bool handleCommand(String command, var *data, int numData) override;
+    void showUploadProgress(float value);
 };

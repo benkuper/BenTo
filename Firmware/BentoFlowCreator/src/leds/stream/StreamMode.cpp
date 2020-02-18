@@ -67,13 +67,15 @@ void StreamMode::receiveUDP()
 
 void StreamMode::processBuffer()
 {
-    memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
+    if(isActive) memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
     colorBufferIndex = 0;
     ledBufferIndex = 0;
 }
 
 void StreamMode::start()
 {
+    LedMode::start();
+
     DBG("Start receiving on port 8888");
     udp.begin(8888);
     udp.flush();
@@ -81,6 +83,8 @@ void StreamMode::start()
 
 void StreamMode::stop()
 {
+    LedMode::stop();
+
     DBG("Stop receiving");
     udp.flush();
     udp.stop();

@@ -18,6 +18,7 @@ void MainManager::init()
     sensors.addListener(std::bind(&MainManager::sensorEvent, this, std::placeholders::_1));
     sensors.init();
 
+    files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
     files.init();
 }
 
@@ -101,6 +102,24 @@ void MainManager::sensorEvent(const SensorEvent &e)
     break;
     }
 }
+
+void MainManager::fileEvent(const FileEvent &e) {
+    NDBG("File event "+String(e.type)+" : "+e.data.stringValue());
+    if(e.type == FileEvent::UploadStart) 
+    {
+        leds.sysLedMode.uploadFeedback = true;
+        leds.setMode(LedManager::System);
+    }
+    else if(e.type == FileEvent::UploadProgress)
+    {
+        leds.sysLedMode.showUploadProgress(e.data.floatValue());
+    }else if(e.type == FileEvent::UploadComplete)
+    {
+        leds.sysLedMode.uploadFeedback = false;
+        leds.setMode(LedManager::Stream);
+    }
+}
+
 
 bool MainManager::handleCommand(String command, var *data, int numData)
 {

@@ -5,8 +5,10 @@
 class LedMode : public Component
 {
 public:
-    LedMode(const String &name, CRGB * leds, int numLeds) : Component(name), leds(leds), numLeds(numLeds)  {}
+    LedMode(const String &name, CRGB * leds, int numLeds) : Component(name), isActive(false), leds(leds), numLeds(numLeds)  {}
     virtual ~LedMode() {}
+
+    bool isActive;
 
     CRGB * leds;
     int numLeds;
@@ -14,6 +16,6 @@ public:
     virtual void init() {}
     virtual void update() {}
 
-    virtual void start() {}
-    virtual void stop() {}
+    virtual void start() { isActive = true; }
+    virtual void stop() { isActive = false; }
 };

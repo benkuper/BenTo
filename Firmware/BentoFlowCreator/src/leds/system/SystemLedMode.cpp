@@ -4,7 +4,8 @@
 SystemLedMode::SystemLedMode(CRGB *leds, int numLeds) : LedMode("systemLedMode", leds, numLeds),
                                                         connectionState(Off),
                                                         timeAtStateChange(millis()),
-                                                        pointPos(0)
+                                                        pointPos(0),
+                                                        uploadProgress(0)
 {
 }
 
@@ -14,6 +15,14 @@ void SystemLedMode::init()
 
 void SystemLedMode::update()
 {
+   if (uploadFeedback)
+   {
+      LedHelpers::fillRange(leds, numLeds, CRGB::Purple, 1 - uploadProgress, 1);
+      LedHelpers::point(leds, numLeds, CRGB::White, 1 - uploadProgress, .1f, false);
+
+      return;
+   }
+
    float relT = millis() / 1000.0f - timeAtStateChange;
    const float animTime = 2.0f; //2 second anim time
 
@@ -59,15 +68,15 @@ void SystemLedMode::update()
    LedHelpers::point(leds, numLeds, color, pos, radius, true);
 }
 
-bool SystemLedMode::handleCommand(String command, var *data, int numData)
-{
-   return false;
-}
-
 void SystemLedMode::setConnectionState(ConnectionState state)
 {
    connectionState = state;
    timeAtStateChange = millis() / 1000.0f;
    if (connectionState == Connecting)
       timeAtConnecting = timeAtStateChange;
+}
+
+void SystemLedMode::showUploadProgress(float value)
+{
+   uploadProgress = value;
 }

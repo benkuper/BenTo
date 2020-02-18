@@ -2,6 +2,8 @@
 
 #include "system/SystemLedMode.h"
 #include "stream/StreamMode.h"
+#include "player/PlayerMode.h"
+
 #include "output/RGBLedsManager.h"
 
 class LedManager : public Component {
@@ -16,7 +18,8 @@ public:
     LedMode * currentMode;
     SystemLedMode sysLedMode;
     StreamMode streamMode;
-    
+    PlayerMode playerMode;
+
     //out
     RGBLedsManager rgbManager;
 
@@ -32,6 +35,8 @@ public:
 
     void setConnectionState(ConnectionState state);
 
+    void playerEvent(const PlayerEvent &e);
+    
     bool handleCommand(String command, var *data, int numData) override;
     void timerEvent(const TimerEvent &e);
 };

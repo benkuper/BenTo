@@ -5,8 +5,10 @@ LedManager::LedManager() : Component("leds"),
                            currentMode(nullptr),
                            sysLedMode(rgbManager.leds, LED_COUNT),
                            streamMode(rgbManager.leds, LED_COUNT),
+                           playerMode(rgbManager.leds, LED_COUNT),
                            connectedTimer(2000)
 {
+    playerMode.addListener(std::bind(&LedManager::playerEvent, this, std::placeholders::_1));
     connectedTimer.addListener(std::bind(&LedManager::timerEvent, this, std::placeholders::_1));
 }
 
@@ -36,17 +38,19 @@ void LedManager::setMode(Mode m)
     if (m == mode)
         return;
 
+    DBG("Set mode "+String(m));
+
     if (currentMode != nullptr)
     {
         currentMode->stop();
     }
 
     mode = m;
+    
     switch (mode)
     {
     case Direct:
         currentMode = nullptr;
-        rgbManager.clear();
         break;
 
     case System:
@@ -56,11 +60,15 @@ void LedManager::setMode(Mode m)
         currentMode = &streamMode;
         break;
 
-        //case Player: currentMode = &playerMode; break;
+    case Player: 
+        currentMode = &playerMode;
+        break;
 
     default:
         break;
     }
+    
+    rgbManager.clear();
 
     if (currentMode != nullptr)
     {
@@ -105,6 +113,16 @@ void LedManager::setConnectionState(ConnectionState state)
     else
         connectedTimer.stop();
 }
+
+
+void LedManager::playerEvent(const PlayerEvent &e) 
+{
+    if(e.type == PlayerEvent::Load || e.type == PlayerEvent::Play)
+    {
+        setMode(Player);
+    }    
+}
+
 
 bool LedManager::handleCommand(String command, var *data, int numData)
 {

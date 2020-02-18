@@ -37,6 +37,6 @@ void LedHelpers::point(CRGB *leds, int numLeds, CRGB c, float pos, float radius,
     {
         float rel = i * 1.0f / (numLeds - 1);
         float fac = max(1 - (abs(pos - rel) / radius), 0.f);
-        leds[i] = CRGB(c.r * fac, c.g * fac, c.b * fac);
+        leds[i] += CRGB(c.r * fac, c.g * fac, c.b * fac);
     }
 }

@@ -4,5 +4,5 @@
     "sketch": "BentoFlowCreator.ino",
     "output": "../ArduinoOutput",
     "programmer": "AVRISP mkII",
-    "port": "COM15"
+    "port": "COM18"
 }

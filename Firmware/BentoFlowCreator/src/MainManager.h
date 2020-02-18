@@ -31,6 +31,7 @@ public:
     void connectionEvent(const ConnectionEvent &e);
     void communicationEvent(const CommunicationEvent &e);
     void sensorEvent(const SensorEvent &e);
+    void fileEvent(const FileEvent &e);
 
     bool handleCommand(String command, var *data, int numData) override;
 };
