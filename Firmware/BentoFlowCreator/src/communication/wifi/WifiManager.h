@@ -40,4 +40,6 @@ public:
 
   void saveWifiConfig(String ssid, String pass);
   String getIP();
+
+  bool handleCommand(String command, var * data, int numData) override;
 };

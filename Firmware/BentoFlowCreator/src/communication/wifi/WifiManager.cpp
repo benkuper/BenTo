@@ -52,6 +52,8 @@ void WifiManager::connect()
     lastConnectTime = millis();
     timeAtConnect = millis();
 
+    if(state == Connected || state == Hotspot) WiFi.disconnect();
+    
     WiFi.mode(WIFI_STA);
     WiFi.setAutoConnect(true);
     WiFi.setAutoReconnect(true);
@@ -87,6 +89,8 @@ void WifiManager::saveWifiConfig(String ssid, String pass)
     prefs.putString("ssid", ssid);
     prefs.getString("pass", pass);
     prefs.end();
+
+    connect();
 }
 
 
@@ -103,4 +107,15 @@ String WifiManager::getIP()
               "." + String( WiFi.softAPIP()[3]);
 
     return "[noip]";
+}
+
+bool WifiManager::handleCommand(String command, var * data, int numData)
+{
+    if(checkCommand(command,"setCredentials",data, 2))
+    {
+        saveWifiConfig(data[0].stringValue(), data[1].stringValue());
+        return true;
+    }
+
+    return false;
 }
