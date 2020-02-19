@@ -9,6 +9,7 @@ SerialManager::SerialManager() :
 void SerialManager::init()
 {
     Serial.begin(115200);
+    NDBG("Init");
 }
 
 void SerialManager::update()

@@ -28,8 +28,7 @@ void LedManager::update()
 
     if (connectionIsAlive || playerMode.isPlaying)
     {
-        if (currentMode != nullptr)
-            currentMode->update();
+        if(currentMode != nullptr) currentMode->update();
     }
     else
     {
@@ -113,11 +112,11 @@ void LedManager::setConnectionState(ConnectionState state)
 {
     NDBG("Set connectionState : " + connectionStateNames[state]);
 
-    if (state == ConnectionState::PingDead || state == ConnectionState::PingAlive)
+    if (state == PingDead || state == PingAlive || state == Connected || state == Connecting)
     {
-        connectionIsAlive = state == ConnectionState::PingAlive;
+        connectionIsAlive = state == PingAlive || state == Connected || state == Connecting;
         rgbManager.clear();
-        return;
+        if(state == PingAlive || state == PingDead) return;
     }
 
     setMode(System);

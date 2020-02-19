@@ -12,6 +12,7 @@ ButtonManager::ButtonManager() : Component("button"),
 void ButtonManager::init()
 {
     pinMode(BUTTON_PIN, INPUT);
+    isPressed = digitalRead(BUTTON_PIN); //init here so it won't send an event at first update
 }
 
 void ButtonManager::update()

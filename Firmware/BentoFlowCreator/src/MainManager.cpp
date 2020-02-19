@@ -9,15 +9,14 @@ MainManager::MainManager(String deviceType, String fwVersion) : Component("root"
 void MainManager::init()
 {
     leds.init();
-    //leds.sysLedMode.setBattery(sensors.battery.getVoltage());
-
+    
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
     comm.init();
 
     sensors.addListener(std::bind(&MainManager::sensorEvent, this, std::placeholders::_1));
     sensors.init();
-
+    
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
     files.init();
 }
@@ -47,6 +46,25 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
 {
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
     leds.setConnectionState(e.type);
+   
+    if(e.source == "wifi") 
+    {
+        switch(e.type)
+        {
+            case Connected :
+                comm.oscManager.setEnabled(true);
+                files.initServer();
+                break;
+
+            case Off:
+            case ConnectionError:
+            case Disabled:
+                comm.oscManager.setEnabled(false);
+                files.closeServer();
+                break;
+        }
+    }
+
 }
 
 void MainManager::communicationEvent(const CommunicationEvent &e)
@@ -77,6 +95,7 @@ void MainManager::sensorEvent(const SensorEvent &e)
         switch (btEventType)
         {
         case ButtonEvent::Pressed:
+            if(comm.wifiManager.state == Connecting) comm.wifiManager.disable();
             break;
 
         case ButtonEvent::Released:

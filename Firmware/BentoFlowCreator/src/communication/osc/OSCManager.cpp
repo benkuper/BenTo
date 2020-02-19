@@ -15,7 +15,7 @@ void OSCManager::init()
     remoteHost = prefs.getString("remoteHost", "");
     prefs.end();
     
-    setEnabled(true);
+    NDBG("Init");
 }
 
 void OSCManager::update()
@@ -99,7 +99,6 @@ void OSCManager::processMessage(OSCMessage &msg)
     }
     else if (msg.match("/ping"))
     {
-        DBG("Got ping !");
         setAlive(true);
         pingEnabled = true;
         timeSinceLastReceivedPing = millis();

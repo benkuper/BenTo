@@ -3,12 +3,14 @@
 
 WifiManager::WifiManager() : 
     Component("wifi"),
+    state(Off),
     lastConnectTime(0)
 {
 }
 
 void WifiManager::init()
 {
+    NDBG("Init");
     connect();
 }
 

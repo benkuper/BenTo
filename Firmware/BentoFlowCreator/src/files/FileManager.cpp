@@ -34,9 +34,6 @@ void FileManager::init()
     {
         NDBG("SD Card Initialization failed.");
     }
-
-
-    initServer();
 }
 
 void FileManager::update()
