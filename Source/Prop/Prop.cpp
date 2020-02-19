@@ -54,7 +54,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	findPropMode->isSavable = false;
 	
 	powerOffTrigger = ioCC.addTrigger("Power off", "Power off the prop if possible");
-	resetTrigger = ioCC.addTrigger("Reset", "Reset the prop if possible");
+	restartTrigger = ioCC.addTrigger("Restart", "Restart the prop, if the prop allows it");
 
 
 
@@ -250,9 +250,9 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		powerOffProp();
 	}
-	else if (c == resetTrigger)
+	else if (c == restartTrigger)
 	{
-		resetProp();
+		restartProp();
 	}
 }
 

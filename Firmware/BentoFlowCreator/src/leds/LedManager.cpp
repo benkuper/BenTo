@@ -136,6 +136,16 @@ void LedManager::playerEvent(const PlayerEvent &e)
     }
 }
 
+
+
+void LedManager::timerEvent(const TimerEvent &e)
+{
+    if (e.timer == &connectedTimer)
+        setMode(Stream);
+}
+
+
+
 bool LedManager::handleCommand(String command, var *data, int numData)
 {
     if (checkCommand(command, "mode", numData, 1))
@@ -156,10 +166,4 @@ bool LedManager::handleCommand(String command, var *data, int numData)
             setMode((Mode)data[0].intValue());
         }
     }
-}
-
-void LedManager::timerEvent(const TimerEvent &e)
-{
-    if (e.timer == &connectedTimer)
-        setMode(Stream);
 }

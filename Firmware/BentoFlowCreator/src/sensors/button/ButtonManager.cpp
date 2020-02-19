@@ -1,6 +1,8 @@
 
 #include "ButtonManager.h"
 
+const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX] {"pressed","released","shortPress","longPress","multiPress" };
+
 ButtonManager::ButtonManager() : Component("button"),
                                  isPressed(false),
                                  debounceCount(0),

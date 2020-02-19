@@ -14,6 +14,7 @@
 #define HAS_POWEROFF_PIN 0
 
 // button pin
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
 #define BUTTON_PIN 23 // pin for sensing the button press.
 
 //battery sence

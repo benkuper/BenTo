@@ -2,27 +2,39 @@
 
 MainManager::MainManager(String deviceType, String fwVersion) : Component("root"),
                                                                 deviceType(deviceType),
-                                                                fwVersion(fwVersion)
+                                                                fwVersion(fwVersion),
+                                                                initTimer(2000)
 {
 }
 
 void MainManager::init()
 {
+
+
     leds.init();
     
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
     comm.init();
 
+    #if HAS_POWEROFF_PIN
+        NDBG("PUT THE PIN TO HIGH");
+        pinMode(SLEEP_PIN, OUTPUT);
+        digitalWrite(SLEEP_PIN, HIGH);
+    #endif
+
     sensors.addListener(std::bind(&MainManager::sensorEvent, this, std::placeholders::_1));
     sensors.init();
     
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
-    files.init();
+
+    initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
 }
 
 void MainManager::update()
 {
+    initTimer.update();
+
     files.update();
     if(files.isUploading) return;
     
@@ -38,8 +50,13 @@ void MainManager::sleep()
 
     delay(500);
 
+#if HAS_POWEROFF_PIN
+    digitalWrite(SLEEP_PIN, LOW);
+#else
     esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, HIGH);
     esp_deep_sleep_start();
+#endif
+
 }
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
@@ -52,8 +69,9 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
         switch(e.type)
         {
             case Connected :
+                NDBG("Connected with IP "+comm.wifiManager.getIP());
                 comm.oscManager.setEnabled(true);
-                files.initServer();
+                initTimer.start();
                 break;
 
             case Off:
@@ -69,7 +87,7 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
 
 void MainManager::communicationEvent(const CommunicationEvent &e)
 {
-    //NDBG(e.toString());
+    NDBG(e.toString());
 
     Component *c = Component::getComponentForName(e.target);
 
@@ -87,11 +105,13 @@ void MainManager::communicationEvent(const CommunicationEvent &e)
 
 void MainManager::sensorEvent(const SensorEvent &e)
 {
+    String command = "";
     switch (e.type)
     {
     case SensorEvent::ButtonUpdate:
     {
         ButtonEvent::Type btEventType = (ButtonEvent::Type)e.data[0].intValue();
+        command = ButtonEvent::eventNames[btEventType];
         switch (btEventType)
         {
         case ButtonEvent::Pressed:
@@ -121,7 +141,24 @@ void MainManager::sensorEvent(const SensorEvent &e)
         }
     }
     break;
+
+    case SensorEvent::OrientationUpdate:
+    {
+        IMUEvent::Type imuEventType = (IMUEvent::Type)e.data[0].intValue();
+        command = IMUEvent::eventNames[imuEventType];
+        switch (imuEventType)
+        {
+            case IMUEvent::OrientationUpdate:
+            {
+                //NDBG(String(event.orientation.x, 4) + " " + String(event.orientation.y, 4) + " " + String(event.orientation.z, 4));
+            }
+            break;
+        }
     }
+    break;
+    }
+
+    if(command.length() > 0) comm.sendMessage(e.source, command, e.data+1, e.numData-1); //data+1 and numData -1 to remove the subEventType data
 }
 
 void MainManager::fileEvent(const FileEvent &e) {
@@ -144,11 +181,23 @@ void MainManager::fileEvent(const FileEvent &e) {
 }
 
 
+void MainManager::timerEvent(const TimerEvent &e)
+{
+    NDBG("Timer Event, init fileSystem and IMU");
+    files.init();
+    sensors.imuManager.init();
+}
+
+
 bool MainManager::handleCommand(String command, var *data, int numData)
 {
     if (checkCommand(command, "sleep", numData, 0))
     {
         sleep();
+        return true;
+    }else if(checkCommand(command, "restart", numData, 0))
+    {
+        ESP.restart();
         return true;
     }
 

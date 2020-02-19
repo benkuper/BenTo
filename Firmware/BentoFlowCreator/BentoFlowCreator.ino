@@ -1,5 +1,4 @@
 #include "src/MainManager.h"
-
 MainManager main("Flowtoys Creator Club", "2.0");
 
 void setup()

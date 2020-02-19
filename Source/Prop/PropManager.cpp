@@ -164,7 +164,7 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	}
 	else if (t == resetAll)
 	{
-		for (auto& p : items) p->resetTrigger->trigger();
+		for (auto& p : items) p->restartTrigger->trigger();
 	}
 	else if (t == clearAll)
 	{
@@ -290,8 +290,7 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		else
 		{
 			NLOGWARNING(niceName, "Got pong without prop ID");
-		}
-		
+		}	
 	}
 	
 	/*

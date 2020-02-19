@@ -45,7 +45,7 @@ public:
 
 	BoolParameter * findPropMode;
 	Trigger* powerOffTrigger;
-	Trigger* resetTrigger;
+	Trigger* restartTrigger;
 
 	ControllableContainer sensorsCC;
 	FloatParameter * battery;
@@ -119,7 +119,7 @@ public:
 	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 
 	virtual void powerOffProp() {}
-	virtual void resetProp() {}
+	virtual void restartProp() {}
 
 	virtual void handlePong();
 	virtual void sendPing() {}

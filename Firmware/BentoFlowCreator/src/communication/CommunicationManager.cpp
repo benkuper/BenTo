@@ -130,3 +130,9 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
         free(data);
     }
 }
+
+void CommunicationManager::sendMessage(String source, String command, var * data, int numData)
+{
+    serialManager.sendMessage(source, command, data, numData);
+    oscManager.sendMessage(source, command, data, numData);
+}

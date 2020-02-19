@@ -63,4 +63,6 @@ public:
     void serialMessageEvent(const SerialEvent &e);
     void wifiConnectionEvent(const WifiManagerEvent &e);
     void oscMessageEvent(const OSCEvent &e);
+
+    void sendMessage(String source, String command, var * data, int numData);
 };

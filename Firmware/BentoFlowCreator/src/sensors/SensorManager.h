@@ -1,5 +1,6 @@
 #pragma once
 #include "button/ButtonManager.h"
+#include "imu/IMUManager.h"
 
 class SensorEvent
 {
@@ -14,12 +15,13 @@ public:
 
     const String typeNames[TYPES_MAX]{"OrientationUpdate","ButtonUpdate","TouchUpdate"};
 
-    SensorEvent(Type type, var *data, int numData) : 
-        type(type), data(data), numData(numData)
+    SensorEvent(Type type, String source, var *data, int numData) : 
+        type(type), source(source), data(data), numData(numData)
     {
     }
 
     Type type;
+    String source;
     var *data;
     int numData;
 
@@ -42,9 +44,11 @@ public:
     ~SensorManager(){}
 
     ButtonManager btManager;
+    IMUManager imuManager;
     
-    void init();
+    void init(bool initIMU = false);
     void update();
 
     void buttonEvent(const ButtonEvent &e);
+    void imuEvent(const IMUEvent &e);
 };

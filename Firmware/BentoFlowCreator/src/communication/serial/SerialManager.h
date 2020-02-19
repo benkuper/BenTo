@@ -27,8 +27,12 @@ public:
     char buffer[512];
     byte bufferIndex;
 
+    bool outputEnabled;
+
     void init();
     void update();
 
     void processMessage(String buffer);
+
+    void sendMessage(String source, String command, var * data, int numData);
 };

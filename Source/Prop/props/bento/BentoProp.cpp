@@ -55,7 +55,7 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == globalID)
 	{
-		OSCMessage m("/settings/propID");
+		OSCMessage m("/config/propID");
 		m.addInt32(globalID->intValue());
 		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 	}
@@ -73,8 +73,8 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 		}
 		else
 		{
-			OSCMessage m("/strip/mode");
-			m.addInt32(0);
+			OSCMessage m("/leds/mode");
+			m.addString("stream");
 			oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 		}
 
@@ -210,11 +210,13 @@ void BentoProp::exportBakedData(BakeData data)
 
 void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 {
-	OSCMessage m("/strip/mode");
-	m.addInt32(2);
+	/*
+	OSCMessage m("/leds/mode");
+	m.addString("player");
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	*/
 
-	OSCMessage m2("/strip/player/load");
+	OSCMessage m2("/player/load");
 	m2.addString(fileName);
 	m2.addInt32(autoPlay ? 1 : 0);
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m2);
@@ -222,33 +224,33 @@ void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 
 void BentoProp::playBake(float time)
 {
-	OSCMessage m("/strip/player/play");
+	OSCMessage m("/player/play");
 	m.addFloat32(time == -1 ? -1 : time + .1f);
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
 
 void BentoProp::pauseBakePlaying()
 {
-	OSCMessage m("/strip/player/pause");
+	OSCMessage m("/player/pause");
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
 
 void BentoProp::seekBakePlaying(float time)
 {
-	OSCMessage m("/strip/player/seek");
+	OSCMessage m("/player/seek");
 	m.addFloat32(time);
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
 
 void BentoProp::stopBakePlaying()
 {
-	OSCMessage m("/strip/player/stop");
+	OSCMessage m("/player/stop");
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
 
 void BentoProp::sendShowPropID(bool value)
 {
-	OSCMessage m("/strip/player/id");
+	OSCMessage m("/player/id");
 	m.addInt32(value);
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
@@ -288,13 +290,13 @@ void BentoProp::sendPing()
 void BentoProp::powerOffProp()
 {
 	NLOG(niceName, "Powering off");
-	OSCMessage m("/sleep");
+	OSCMessage m("/root/sleep");
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }
 
-void BentoProp::resetProp()
+void BentoProp::restartProp()
 {
-	NLOG(niceName, "Resetting ");
-	OSCMessage m("/reset");
+	NLOG(niceName, "Restarting");
+	OSCMessage m("/root/restart");
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }

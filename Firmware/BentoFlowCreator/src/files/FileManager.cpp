@@ -14,6 +14,9 @@ FileManager::FileManager() : Component("files"),
 
 void FileManager::init()
 {
+    if(sdIsDetected) return;
+    NDBG("Init");
+
     pinMode(SD_EN, OUTPUT);
     digitalWrite(SD_EN, LOW);
 
@@ -34,6 +37,9 @@ void FileManager::init()
     {
         NDBG("SD Card Initialization failed.");
     }
+
+    initServer();
+    
 }
 
 void FileManager::update()

@@ -1,7 +1,8 @@
 #include "SerialManager.h"
 
 SerialManager::SerialManager() :
-    Component("serial")
+    Component("serial"),
+    outputEnabled(false)
 {
     memset(buffer, 0, 512);
 }
@@ -37,6 +38,21 @@ void SerialManager::processMessage(String buffer)
     
     String tc = buffer.substring(0, splitIndex);
     int tcIndex = tc.indexOf('.');
+    String args = splitIndex != -1 ?buffer.substring(splitIndex + 1):"";
 
-    sendEvent(SerialEvent(SerialEvent::MessageReceived, tc.substring(0,tcIndex), tc.substring(tcIndex+1), buffer.substring(splitIndex + 1)));
+    sendEvent(SerialEvent(SerialEvent::MessageReceived, tc.substring(0,tcIndex), tc.substring(tcIndex+1), args));
+}
+
+
+void SerialManager::sendMessage(String source, String command, var * data, int numData)
+{
+    if(!outputEnabled) return;
+
+    String msg = source+"."+command;
+    for(int i=0;i<numData;i++)
+    {
+        msg += " "+data[i].stringValue();
+    }
+
+    Serial.println(msg);
 }

@@ -15,7 +15,7 @@ public:
         TYPES_MAX
     };
 
-    const String typeNames[TYPES_MAX]{"Pressed","Released","ShortPress","LongPress","MultiPress" };
+    static const String eventNames[TYPES_MAX];
 
     ButtonEvent(Type type, int count = 0) : type(type), count(count) {}
 
@@ -49,4 +49,5 @@ private :
 
     long timeAtPress;
     int multiPressCount;
+
 };

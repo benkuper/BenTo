@@ -118,7 +118,7 @@ void OSCManager::sendMessage(OSCMessage &msg)
 
     char addr[32];
     msg.getAddress(addr);
-    NDBG("Send OSC message to "+ remoteHost + " : " + String(addr));
+    //NDBG("Send OSC message to "+ remoteHost + " : " + String(addr));
     udp.beginPacket((char *)remoteHost.c_str(), (uint16_t)remotePort);
     msg.send(udp);
     udp.endPacket();
@@ -129,4 +129,25 @@ void OSCManager::sendMessage(String address)
 {
     OSCMessage m(address.c_str());
     sendMessage(m);
+}
+
+void OSCManager::sendMessage(String source, String command, var *data, int numData)
+{
+    OSCMessage msg(("/"+source+"/"+command).c_str());
+    msg.add(getDeviceID().c_str());
+    for(int i=0;i<numData;i++)
+    {
+        switch(data[i].type)
+        {
+            case 'f': msg.add(data[i].floatValue());
+            break;
+
+            case 'i': msg.add(data[i].intValue());
+            break;
+
+            case 's': msg.add(data[i].stringValue().c_str());
+            break;
+        }
+    } 
+    sendMessage(msg);
 }
