@@ -208,16 +208,6 @@ var ColourScriptData::fillRGBFromScript(const var::NativeFunctionArgs& args)
 	if (args.numArguments == 0) return var();
 
 	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, false);
-	p->colorArray.fill(c);
-}
-
-var ColourScriptData::fillHSVFromScript(const var::NativeFunctionArgs& args)
-{
-	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
-	if (p == nullptr) return var();
-	if (args.numArguments == 0) return var();
-
-	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, false);
 
 	if (args.numArguments < 3 || !args.arguments[0].isArray()) p->colorArray.fill(c);
 	else
@@ -234,6 +224,33 @@ var ColourScriptData::fillHSVFromScript(const var::NativeFunctionArgs& args)
 			p->colorArray.set(i, c);
 		}
 	}
+	return var();
+}
+
+var ColourScriptData::fillHSVFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments == 0) return var();
+
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, true);
+
+	if (args.numArguments < 3 || !args.arguments[0].isArray()) p->colorArray.fill(c);
+	else
+	{
+		float start = (float)args.arguments[1];
+		float end = (float)args.arguments[2];
+
+		int resolution = p->colorArray.size();
+		int s = jmax(jmin(start, end), 0.f) * (resolution - 1);
+		int e = jmin(jmax(start, end), 1.f) * (resolution - 1);
+
+		for (int i = s; i <= e; i++)
+		{
+			p->colorArray.set(i, c);
+		}
+	}
+	return var();
 }
 
 var ColourScriptData::pointRGBFromScript(const var::NativeFunctionArgs& args)
@@ -242,7 +259,7 @@ var ColourScriptData::pointRGBFromScript(const var::NativeFunctionArgs& args)
 	if (p == nullptr) return var();
 	if (args.numArguments < 3) return var();
 
-	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0);
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, false);
 	float pos = args.arguments[1];
 	float radius = args.arguments[2];
 	if (radius == 0) return var();
@@ -253,8 +270,8 @@ var ColourScriptData::pointRGBFromScript(const var::NativeFunctionArgs& args)
 	{
 		float rel = i * 1.0f / (resolution - 1);
 		float fac = jmax(1 - (abs(pos - rel) / radius), 0.f);
-		Colour ic = c.withMultipliedBrightness(fac);
-		p->colorArray.set(i, ic);
+		Colour ic = c.withMultipliedAlpha(fac);
+		p->colorArray.set(i, p->colorArray[i].overlaidWith(ic));
 	}
 	return var();
 }
@@ -276,8 +293,8 @@ var ColourScriptData::pointHSVFromScript(const var::NativeFunctionArgs& args)
 	{
 		float rel = i * 1.0f / (resolution - 1);
 		float fac = jmax(1 - (abs(pos - rel) / radius), 0.f);
-		Colour ic = c.withMultipliedBrightness(fac);
-		p->colorArray.set(i, ic);
+		Colour ic = c.withMultipliedAlpha(fac);
+		p->colorArray.set(i, p->colorArray[i].overlaidWith(ic));
 	}
 	return var();
 }
@@ -304,6 +321,7 @@ var ColourScriptData::gradientRGBFromScript(const var::NativeFunctionArgs& args)
 		float rel = (i - s) * 1.0f / (e - s);
 		p->colorArray.set(i, c1.interpolatedWith(c2, rel));
 	}
+	return var();
 }
 
 var ColourScriptData::gradientHSVFromScript(const var::NativeFunctionArgs& args)
@@ -327,6 +345,7 @@ var ColourScriptData::gradientHSVFromScript(const var::NativeFunctionArgs& args)
 		float rel = (i - s) * 1.0f / (e - s);
 		p->colorArray.set(i, c1.interpolatedWith(c2, rel));
 	}
+	return var();
 }
 
 var ColourScriptData::lerpColorFromScript(const var::NativeFunctionArgs& args)
@@ -335,8 +354,8 @@ var ColourScriptData::lerpColorFromScript(const var::NativeFunctionArgs& args)
 	if (p == nullptr) return var();
 	if (args.numArguments < 3 || !args.arguments[0].isArray() || !args.arguments[1].isArray()) return var();
 
-	Colour c1 = getColorFromArgs(args.arguments, args.numArguments, 0, true);
-	Colour c2 = getColorFromArgs(args.arguments, args.numArguments, 1, true);
+	Colour c1 = getColorFromArgs(args.arguments, args.numArguments, 0);
+	Colour c2 = getColorFromArgs(args.arguments, args.numArguments, 1);
 
 	float rel = (float)args.arguments[2];
 	Colour cr =  c1.interpolatedWith(c2, rel);
@@ -356,7 +375,7 @@ var ColourScriptData::getHSVColorFromScript(const var::NativeFunctionArgs& args)
 	if (p == nullptr) return var();
 	if (args.numArguments == 0) return var();
 
-	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, true);
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0);
 
 	var result;
 	result.append(c.getHue());
