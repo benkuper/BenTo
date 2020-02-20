@@ -113,11 +113,11 @@ void MainManager::sensorEvent(const SensorEvent &e)
         switch (btEventType)
         {
         case ButtonEvent::Pressed:
-            if (comm.wifiManager.state == Connecting)
-                comm.wifiManager.disable();
-            break;
-
-        case ButtonEvent::Released:
+            if (e.data[1].intValue() == 1)
+            {
+                if (comm.wifiManager.state == Connecting)
+                    comm.wifiManager.disable();
+            }
             break;
 
         case ButtonEvent::ShortPress:

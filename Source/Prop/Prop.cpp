@@ -59,8 +59,6 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 
 
 	addChildControllableContainer(&sensorsCC);
-	battery = sensorsCC.addFloatParameter("Battery", "The battery level, between 0 and 1", 0);
-	battery->setControllableFeedbackOnly(true);
 	 
 	addChildControllableContainer(&bakingCC);
 	
@@ -386,6 +384,15 @@ void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl contro
 	}
 }
 
+
+void Prop::handleOSCMessage(const OSCMessage &m)
+{
+	if (m.getAddressPattern().toString() == "/pong") handlePong();
+	else
+	{
+		Controllable* c = OSCHelpers::findControllableAndHandleMessage(&sensorsCC, m, 1);
+	}
+}
 
 void Prop::handlePong()
 {

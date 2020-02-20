@@ -48,7 +48,6 @@ public:
 	Trigger* restartTrigger;
 
 	ControllableContainer sensorsCC;
-	FloatParameter * battery;
 
 	ControllableContainer bakingCC;
 	FloatParameter * bakeStartTime;
@@ -120,6 +119,8 @@ public:
 
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
+
+	virtual void handleOSCMessage(const OSCMessage &m);
 
 	virtual void handlePong();
 	virtual void sendPing() {}

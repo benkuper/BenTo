@@ -1,6 +1,6 @@
 #include "BatteryManager.h"
 
-const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"update", "criticalLevel", "charging", "discharging"};
+const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level","voltage", "criticalLevel", "charging", "discharging"};
 
 BatteryManager::BatteryManager() : Component("battery"),
                                    voltage(4.1f),
@@ -30,7 +30,8 @@ void BatteryManager::update()
         voltage = (rawValue * 10 / 4.0f) / 1000;
         timeSinceLastBatterySent = curTime;
 
-        sendEvent(BatteryEvent(BatteryEvent::Update));
+        sendEvent(BatteryEvent(BatteryEvent::Level, value));
+        sendEvent(BatteryEvent(BatteryEvent::Voltage, voltage));
     }
 #endif
 }

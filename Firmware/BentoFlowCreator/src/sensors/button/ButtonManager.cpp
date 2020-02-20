@@ -1,7 +1,7 @@
 
 #include "ButtonManager.h"
 
-const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX] {"pressed","released","shortPress","longPress","multiPress" };
+const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX] {"pressed","shortPress","longPress","multiPress" };
 
 ButtonManager::ButtonManager() : Component("button"),
                                  isPressed(false),
@@ -41,7 +41,7 @@ void ButtonManager::update()
         if (isPressed)
         {
             timeAtPress = millis();
-            sendEvent(ButtonEvent(ButtonEvent::Pressed));
+            sendEvent(ButtonEvent(ButtonEvent::Pressed, 1));
 
             multiPressCount++;
             if (multiPressCount > 1)
@@ -54,7 +54,7 @@ void ButtonManager::update()
                 sendEvent(ButtonEvent(ButtonEvent::ShortPress));
             }
 
-            sendEvent(ButtonEvent(ButtonEvent::Released));
+            sendEvent(ButtonEvent(ButtonEvent::Pressed, 0));
         }
     }
     else

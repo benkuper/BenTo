@@ -7,7 +7,6 @@ public:
     enum Type
     {
         Pressed,
-        Released,
         ShortPress,
         LongPress,
         VeryLongPress,
@@ -17,10 +16,10 @@ public:
 
     static const String eventNames[TYPES_MAX];
 
-    ButtonEvent(Type type, int count = 0) : type(type), count(count) {}
+    ButtonEvent(Type type, int value = 1) : type(type), value(value) {}
 
     Type type;
-    int count;
+    int value;
 };
 
 class ButtonManager :

@@ -5,12 +5,13 @@
 class BatteryEvent
 {
 public:
-    enum Type { Update, CriticalLevel, Charging, Discharging, TYPES_MAX};
+    enum Type { Level, Voltage, CriticalLevel, Charging, Discharging, TYPES_MAX};
 
     static const String eventNames[TYPES_MAX];
 
-    BatteryEvent(Type type) : type(type) {}
+    BatteryEvent(Type type, float value) : type(type), value(value) {}
     Type type;
+    float value;
 };
 
 class BatteryManager : public Component, public EventBroadcaster<BatteryEvent> {

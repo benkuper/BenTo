@@ -276,49 +276,11 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 			if (bp != nullptr) bp->remoteHost->setValue(pHost);
 		}
 	}
-	else if (address == "/pong")
+	else  if(m.size() > 0 && m[0].isString())
 	{
-		if (m.size() > 0)
+		if (Prop* p = getPropWithHardwareId(OSCHelpers::getStringArg(m[0])))
 		{
-			String pid = OSCHelpers::getStringArg(m[0]);
-			Prop* p = getPropWithHardwareId(pid);
-			if (p != nullptr)
-			{
-				p->handlePong();
-			}
+			p->handleOSCMessage(m);
 		}
-		else
-		{
-			NLOGWARNING(niceName, "Got pong without prop ID");
-		}	
 	}
-	
-	/*
-	else if (address == "/battery/level")
-	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		Prop * p = getPropWithHardwareId(pid);
-		if (p == nullptr) return;
-		p->battery->setValue(m[1].getFloat32());
-	}
-	else if (address == "/battery/charging")
-	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		Prop * p = getPropWithHardwareId(pid);
-		if (p == nullptr) return;
-		p->battery->setValue(m[1].getFloat32());
-	}
-	else if (address == "/touch/pressed")
-	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		FlowClubProp * fp = static_cast<FlowClubProp *>(getPropWithHardwareId(pid));
-		if (fp == nullptr) return;
-		fp->button->setValue(m[1].getInt32() == 1);
-	}
-	else
-	{
-		LOG("Message not handled : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
-
-	}
-	*/
 }

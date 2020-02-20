@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    ScriptBlock.cpp
-    Created: 10 Apr 2018 6:59:13pm
-    Author:  Ben
+	ScriptBlock.cpp
+	Created: 10 Apr 2018 6:59:13pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -34,7 +34,7 @@ Array<WeakReference<Controllable>> ScriptBlock::getModelParameters()
 	return script.scriptParamsContainer.getAllControllables();
 }
 
-void ScriptBlock::getColorsInternal(Array<Colour> * result, Prop * p, double time, int id, int resolution, var params)
+void ScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
 {
 
 	ColourScriptData cData;
@@ -46,9 +46,10 @@ void ScriptBlock::getColorsInternal(Array<Colour> * result, Prop * p, double tim
 	args.add(resolution);
 	args.add(time);
 	args.add(params);
+	args.add(p->sensorsCC.getScriptObject());
 
-	var scriptResult = script.callFunction(updateColorsFunc, args); 
-	
+	var scriptResult = script.callFunction(updateColorsFunc, args);
+
 	Array<Colour> colors;
 
 	if (scriptResult.isArray())
@@ -58,10 +59,10 @@ void ScriptBlock::getColorsInternal(Array<Colour> * result, Prop * p, double tim
 		int numColors = jmin<int>(resolution, scriptResult.size());
 		for (int i = 0; i < numColors; i++)
 		{
-			colors.set(i, Colour::fromFloatRGBA((float)scriptResult[i][0], 
-										   (float)scriptResult[i][1], 
-				                           (float)scriptResult[i][2], 
-				                           scriptResult[i].size() > 3? (float)scriptResult[i][3]:1));
+			colors.set(i, Colour::fromFloatRGBA((float)scriptResult[i][0],
+				(float)scriptResult[i][1],
+				(float)scriptResult[i][2],
+				scriptResult[i].size() > 3 ? (float)scriptResult[i][3] : 1));
 		}
 	}
 	else
@@ -70,12 +71,12 @@ void ScriptBlock::getColorsInternal(Array<Colour> * result, Prop * p, double tim
 	}
 }
 
-void ScriptBlock::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void ScriptBlock::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
+	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter*>(c));
 }
 
-void ScriptBlock::childStructureChanged(ControllableContainer * cc)
+void ScriptBlock::childStructureChanged(ControllableContainer* cc)
 {
 	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }
@@ -95,7 +96,7 @@ void ScriptBlock::loadJSONDataInternal(var data)
 
 }
 
-void ScriptBlock::newMessage(const Script::ScriptEvent & e)
+void ScriptBlock::newMessage(const Script::ScriptEvent& e)
 {
 	switch (e.type)
 	{
@@ -103,58 +104,64 @@ void ScriptBlock::newMessage(const Script::ScriptEvent & e)
 		setCustomThumbnail(script.filePath->getFile().withFileExtension("png").getFullPathName());
 		setNiceName(script.niceName);
 
-		if(script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+		if (script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 		break;
 	}
 }
 
 ColourScriptData::ColourScriptData() :
-	ScriptTarget("colours",this)
+	ScriptTarget("colours", this)
 {
 	scriptObject.setMethod("setRGB", &ColourScriptData::updateColorRGBFromScript);
 	scriptObject.setMethod("setHSV", &ColourScriptData::updateColorHSVFromScript);
 	scriptObject.setMethod("setColorsRGB", &ColourScriptData::updateColorsRGBFromScript);
 	scriptObject.setMethod("setColorsHSV", &ColourScriptData::updateColorsHSVFromScript);
+	scriptObject.setMethod("fillRGB", &ColourScriptData::fillRGBFromScript);
+	scriptObject.setMethod("fillHSV", &ColourScriptData::fillHSVFromScript);
+	scriptObject.setMethod("pointRGB", &ColourScriptData::pointRGBFromScript);
+	scriptObject.setMethod("pointHSV", &ColourScriptData::pointHSVFromScript);
+	scriptObject.setMethod("gradientRGB", &ColourScriptData::gradientRGBFromScript);
+	scriptObject.setMethod("gradientHSV", &ColourScriptData::gradientHSVFromScript);
+	scriptObject.setMethod("lerpColor", &ColourScriptData::lerpColorFromScript);
+	scriptObject.setMethod("getHSV", &ColourScriptData::getHSVColorFromScript);
 }
 
 
 //COLOUR SCRIPT DATA
 
-var ColourScriptData::updateColorRGBFromScript(const var::NativeFunctionArgs & args)
+var ColourScriptData::updateColorRGBFromScript(const var::NativeFunctionArgs& args)
 {
-	ColourScriptData * p = getObjectFromJS<ColourScriptData>(args);
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
 	if (p == nullptr) return var();
-	if (args.numArguments < 4)
+	if (args.numArguments < 2)
 	{
 		LOGWARNING("SetColor RGB from script not enough parameters");
 		return var();
 	}
 	int index = args.arguments[0];
-	p->colorArray.set(index, Colour::fromFloatRGBA((float)args.arguments[1], (float)args.arguments[2], (float)args.arguments[3], args.numArguments > 4?(float)args.arguments[4]:1));
-
-
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 1, false);
+	p->colorArray.set(index, c);
 	return var();
 }
 
-var ColourScriptData::updateColorHSVFromScript(const var::NativeFunctionArgs & args)
+var ColourScriptData::updateColorHSVFromScript(const var::NativeFunctionArgs& args)
 {
-	ColourScriptData * p = getObjectFromJS<ColourScriptData>(args);
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
 	if (p == nullptr) return var();
-	if (args.numArguments < 4)
+	if (args.numArguments < 2)
 	{
 		LOGWARNING("SetColor HSV from script not enough parameters");
 		return var();
 	}
 	int index = args.arguments[0];
-	p->colorArray.set(index, Colour::fromHSV((float)args.arguments[1], (float)args.arguments[2], (float)args.arguments[3], args.numArguments > 4 ? (float)args.arguments[4] : 1));
-
-	
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 1, true);
+	p->colorArray.set(index, c);
 	return var();
 }
 
-var ColourScriptData::updateColorsRGBFromScript(const var::NativeFunctionArgs & args)
+var ColourScriptData::updateColorsRGBFromScript(const var::NativeFunctionArgs& args)
 {
-	ColourScriptData * p = getObjectFromJS<ColourScriptData>(args);
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
 	if (p == nullptr) return var();
 	if (args.numArguments == 0 || !args.arguments[0].isArray())
 	{
@@ -166,15 +173,16 @@ var ColourScriptData::updateColorsRGBFromScript(const var::NativeFunctionArgs & 
 	int numColors = jmin<int>(p->colorArray.size(), colors.size());
 	for (int i = 0; i < numColors; i++)
 	{
-		p->colorArray.set(i, Colour::fromFloatRGBA((float)colors[i][0], (float)colors[i][1], (float)colors[i][2], args.numArguments > 3 ? (float)args.arguments[3] : 1));
+		Colour c = getColorFromArgs(&colors[i], colors[i].size(), 0, false);
+		p->colorArray.set(i, c);
 	}
 
 	return colors;
 }
 
-var ColourScriptData::updateColorsHSVFromScript(const var::NativeFunctionArgs & args)
+var ColourScriptData::updateColorsHSVFromScript(const var::NativeFunctionArgs& args)
 {
-	ColourScriptData * p = getObjectFromJS<ColourScriptData>(args);
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
 	if (p == nullptr) return var();
 	if (args.numArguments == 0 || !args.arguments[0].isArray())
 	{
@@ -186,8 +194,192 @@ var ColourScriptData::updateColorsHSVFromScript(const var::NativeFunctionArgs & 
 	int numColors = jmin<int>(p->colorArray.size(), colors.size());
 	for (int i = 0; i < numColors; i++)
 	{
-		p->colorArray.set(i, Colour::fromHSV((float)colors[i][0], (float)colors[i][1], (float)colors[i][2], args.numArguments > 3 ? (float)args.arguments[3] : 1));
+		Colour c = getColorFromArgs(&colors[i], colors[i].size(), 0, true);
+		p->colorArray.set(i, c);
 	}
 
 	return colors;
+}
+
+var ColourScriptData::fillRGBFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments == 0) return var();
+
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, false);
+	p->colorArray.fill(c);
+}
+
+var ColourScriptData::fillHSVFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments == 0) return var();
+
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, false);
+
+	if (args.numArguments < 3 || !args.arguments[0].isArray()) p->colorArray.fill(c);
+	else
+	{
+		float start = (float)args.arguments[1];
+		float end = (float)args.arguments[2];
+
+		int resolution = p->colorArray.size();
+		int s = jmax(jmin(start, end), 0.f) * (resolution - 1);
+		int e = jmin(jmax(start, end), 1.f) * (resolution - 1);
+
+		for (int i = s; i <= e; i++)
+		{
+			p->colorArray.set(i, c);
+		}
+	}
+}
+
+var ColourScriptData::pointRGBFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments < 3) return var();
+
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0);
+	float pos = args.arguments[1];
+	float radius = args.arguments[2];
+	if (radius == 0) return var();
+
+	int resolution = p->colorArray.size();
+
+	for (int i = 0; i < resolution; i++)
+	{
+		float rel = i * 1.0f / (resolution - 1);
+		float fac = jmax(1 - (abs(pos - rel) / radius), 0.f);
+		Colour ic = c.withMultipliedBrightness(fac);
+		p->colorArray.set(i, ic);
+	}
+	return var();
+}
+
+var ColourScriptData::pointHSVFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments < 3) return var();
+
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, true);
+	float pos = args.arguments[1];
+	float radius = args.arguments[2];
+	if (radius == 0) return var();
+
+	int resolution = p->colorArray.size();
+
+	for (int i = 0; i < resolution; i++)
+	{
+		float rel = i * 1.0f / (resolution - 1);
+		float fac = jmax(1 - (abs(pos - rel) / radius), 0.f);
+		Colour ic = c.withMultipliedBrightness(fac);
+		p->colorArray.set(i, ic);
+	}
+	return var();
+}
+
+
+var ColourScriptData::gradientRGBFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments < 2 || !args.arguments[0].isArray() || !args.arguments[1].isArray()) return var();
+
+	Colour c1 = getColorFromArgs(args.arguments, args.numArguments, 0, false);
+	Colour c2 = getColorFromArgs(args.arguments, args.numArguments, 1, false);
+
+	float start = args.numArguments > 3 ? (float)args.arguments[3] : 0;
+	float end = args.numArguments > 3 ? (float)args.arguments[3] : 1;
+
+	int resolution = p->colorArray.size();
+	int s = jmax(jmin(start, end), 0.f) * (resolution - 1);
+	int e = jmin(jmax(start, end), 1.f) * (resolution - 1);
+
+	for (int i = s; i <= e; i++)
+	{
+		float rel = (i - s) * 1.0f / (e - s);
+		p->colorArray.set(i, c1.interpolatedWith(c2, rel));
+	}
+}
+
+var ColourScriptData::gradientHSVFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments < 2 || !args.arguments[0].isArray() || !args.arguments[1].isArray()) return var();
+
+	Colour c1 = getColorFromArgs(args.arguments, args.numArguments, 0, true);
+	Colour c2 = getColorFromArgs(args.arguments, args.numArguments, 1, true);
+
+	float start = args.numArguments > 3 ? (float)args.arguments[3] : 0;
+	float end = args.numArguments > 3 ? (float)args.arguments[3] : 1;
+
+	int resolution = p->colorArray.size();
+	int s = jmax(jmin(start, end), 0.f) * (resolution - 1);
+	int e = jmin(jmax(start, end), 1.f) * (resolution - 1);
+
+	for (int i = s; i <= e; i++)
+	{
+		float rel = (i - s) * 1.0f / (e - s);
+		p->colorArray.set(i, c1.interpolatedWith(c2, rel));
+	}
+}
+
+var ColourScriptData::lerpColorFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments < 3 || !args.arguments[0].isArray() || !args.arguments[1].isArray()) return var();
+
+	Colour c1 = getColorFromArgs(args.arguments, args.numArguments, 0, true);
+	Colour c2 = getColorFromArgs(args.arguments, args.numArguments, 1, true);
+
+	float rel = (float)args.arguments[2];
+	Colour cr =  c1.interpolatedWith(c2, rel);
+
+	var result;
+	result.append(cr.getFloatRed());
+	result.append(cr.getFloatGreen());
+	result.append(cr.getFloatBlue());
+	result.append(cr.getFloatAlpha());
+	return result;
+}
+
+
+var ColourScriptData::getHSVColorFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments == 0) return var();
+
+	Colour c = getColorFromArgs(args.arguments, args.numArguments, 0, true);
+
+	var result;
+	result.append(c.getHue());
+	result.append(c.getSaturation());
+	result.append(c.getBrightness());
+	result.append(c.getFloatAlpha());
+	return result;
+}
+
+Colour ColourScriptData::getColorFromArgs(const var* a, int numArgs, int offset, bool useHSV)
+{
+	Colour c;
+	if (numArgs <= offset) return c;
+
+	if (a[offset].isArray() && a[offset].size() >= 3)
+	{
+		if (useHSV) c = Colour::fromHSV((float)a[offset][0], (float)a[offset][1], (float)a[offset][2], a[offset].size() > 3 ? (float)a[offset][3] : (numArgs > offset + 1 ? (float)a[offset + 1] : 1));
+		else c = Colour::fromFloatRGBA((float)a[offset][0], (float)a[offset][1], (float)a[offset][2], a[offset].size() > 3 ? (float)a[offset][3] : (numArgs > offset + 1 ? (float)a[offset + 1] : 1));
+	}
+	else if (numArgs >= offset + 3)
+	{
+		if (useHSV) c = Colour::fromHSV((float)a[offset], (float)a[offset + 1], (float)a[offset + 2], numArgs > offset + 3 ? (float)a[offset + 3] : 1);
+		else  c = Colour::fromFloatRGBA((float)a[offset], (float)a[offset + 1], (float)a[offset + 2], numArgs > offset + 3 ? (float)a[offset + 3] : 1);
+	}
+	return c;
 }

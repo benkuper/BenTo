@@ -25,28 +25,24 @@ void SensorManager::update()
 
 void SensorManager::batteryEvent(const BatteryEvent &e)
 {
-    var data[4];
+    var data[2];
     data[0].type = 'i';
     data[0].value.i = e.type;
-    data[1].type = 'i';
-    data[1].value.i = batteryManager.rawValue;
-    data[2].type = 'f';
-    data[2].value.f = batteryManager.value;
-    data[3].type = 'f';
-    data[3].value.f = batteryManager.voltage;
-    sendEvent(SensorEvent(SensorEvent::BatteryUpdate, batteryManager.name, data, 4));
+    data[1].type = 'f';
+    data[1].value.f = e.value;
+    sendEvent(SensorEvent(SensorEvent::BatteryUpdate, batteryManager.name, data, 2));
 }
 
 void SensorManager::buttonEvent(const ButtonEvent &e)
 {
-    int numBTData = e.type == ButtonEvent::MultiPress ? 1 : 0;
+    int numBTData = (e.type == ButtonEvent::MultiPress || e.type == ButtonEvent::Pressed)  ? 1 : 0;
     var *data = (var *)malloc((numBTData + 1) * sizeof(var));
     data[0].value.i = e.type;
     data[0].type = 'i';
 
-    if (e.type == ButtonEvent::MultiPress)
+    if (e.type == ButtonEvent::Pressed || e.type == ButtonEvent::MultiPress)
     {
-        data[1].value.i = e.count;
+        data[1].value.i = e.value;
         data[1].type = 'i';
     }
     
