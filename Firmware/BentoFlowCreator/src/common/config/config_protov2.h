@@ -19,6 +19,7 @@
 #define BUTTON_PIN 32 // pin for sensing the button press.
 
 //battery sence
+#define HAS_BATTERY_SENSING 1
 #define BATTERY_PIN 35 // takes the measurment from the battery sence. 
 
 // imu config

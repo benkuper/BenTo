@@ -1,17 +1,17 @@
 #include "IRLedsManager.h"
 
-IRLedManager::IRLedsManager() : Component("ir") {
+IRLedsManager::IRLedsManager() : Component("ir") {
     
 }
 
-IRLedManager::~IRLedsManager() {
+IRLedsManager::~IRLedsManager() {
     
 }
 
-void IRLedManager::setBrightness(float value) {
+void IRLedsManager::setBrightness(float value) {
     
 }
 
-void IRLedManager::handleCommand(String command, data * data, int numData) {
-    
+bool IRLedsManager::handleCommand(String command, var * data, int numData) {
+    return false;
 }

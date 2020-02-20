@@ -1,6 +1,6 @@
-#include "../../Common.h"
+#include "../../common/Common.h"
 
-class IRLedManager : public Component {
+class IRLedsManager : public Component {
 public:
     IRLedsManager();
     ~IRLedsManager();
@@ -8,5 +8,5 @@ public:
     const int maxBrightness = 60;
 
     void setBrightness(float value);
-    void handleCommand(String command, data * data, int numData) override;
+    bool handleCommand(String command, var * data, int numData) override;
 };

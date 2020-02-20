@@ -6,6 +6,9 @@ SensorManager::SensorManager() : Component("sensors")
 
 void SensorManager::init(bool initIMU)
 {
+    batteryManager.init();
+    batteryManager.addListener(std::bind(&SensorManager::batteryEvent, this, std::placeholders::_1));
+
     btManager.init();
     btManager.addListener(std::bind(&SensorManager::buttonEvent, this, std::placeholders::_1));
 
@@ -15,8 +18,24 @@ void SensorManager::init(bool initIMU)
 
 void SensorManager::update()
 {
+    batteryManager.update();
     btManager.update();
     imuManager.update();
+}
+
+void SensorManager::batteryEvent(const BatteryEvent &e)
+{
+    NDBG("Battery event");
+    var data[4];
+    data[0].type = 'i';
+    data[0].value.i = e.type;
+    data[1].type = 'i';
+    data[1].value.i = batteryManager.rawValue;
+    data[2].type = 'f';
+    data[2].value.f = batteryManager.value;
+    data[3].type = 'f';
+    data[3].value.f = batteryManager.voltage;
+    sendEvent(SensorEvent(SensorEvent::BatteryUpdate, batteryManager.name, data, 4));
 }
 
 void SensorManager::buttonEvent(const ButtonEvent &e)

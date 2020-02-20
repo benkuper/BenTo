@@ -53,7 +53,7 @@ void WifiManager::connect()
     timeAtConnect = millis();
 
     if(state == Connected || state == Hotspot) WiFi.disconnect();
-    
+
     WiFi.mode(WIFI_STA);
     WiFi.setAutoConnect(true);
     WiFi.setAutoReconnect(true);
@@ -111,7 +111,7 @@ String WifiManager::getIP()
 
 bool WifiManager::handleCommand(String command, var * data, int numData)
 {
-    if(checkCommand(command,"setCredentials",data, 2))
+    if(checkCommand(command,"setCredentials",numData, 2))
     {
         saveWifiConfig(data[0].stringValue(), data[1].stringValue());
         return true;

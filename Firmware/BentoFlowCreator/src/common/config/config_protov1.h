@@ -12,13 +12,13 @@
 
 //main power
 #define HAS_POWEROFF_PIN 0
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
 
 // button pin
-#define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
 #define BUTTON_PIN 23 // pin for sensing the button press.
 
 //battery sence
-#define BATTERY_PIN 35 // takes the measurment from the battery sence. 
+#define HAS_BATTERY_SENSING 0
 
 // imu config
 #define HAS_IMU 0
