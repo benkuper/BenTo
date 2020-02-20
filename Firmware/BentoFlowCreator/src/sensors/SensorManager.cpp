@@ -25,7 +25,6 @@ void SensorManager::update()
 
 void SensorManager::batteryEvent(const BatteryEvent &e)
 {
-    NDBG("Battery event");
     var data[4];
     data[0].type = 'i';
     data[0].value.i = e.type;

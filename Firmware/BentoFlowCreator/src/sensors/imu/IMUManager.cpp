@@ -6,7 +6,7 @@ const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", 
 IMUManager::IMUManager() : Component("imu"),
                            bno(55),
                            isConnected(false),
-                           isEnabled(true),
+                           isEnabled(false),
                            orientationSendTime(20),
                            timeSinceOrientationLastSent(0)
 
@@ -57,10 +57,17 @@ void IMUManager::update()
 
 void IMUManager::setEnabled(bool value)
 {
+  if(isEnabled == value) return;
+  isEnabled = value;
 }
 
 bool IMUManager::handleCommand(String command, var *data, int numData)
 {
+  if(checkCommand(command, "enabled", numData, 1))
+  {
+    setEnabled(data[0].intValue());
+  }
+
   return false;
 }
 

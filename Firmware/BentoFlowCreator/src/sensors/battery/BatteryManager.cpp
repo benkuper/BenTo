@@ -28,8 +28,6 @@ void BatteryManager::update()
         rawValue = analogRead(BATTERY_PIN);
         value = (rawValue - minVal)*1.0f / (maxVal-minVal);
         voltage = (rawValue * 10 / 4.0f) / 1000;
-        NDBG("Readings : "+String(rawValue)+" / "+String(value)+" /"+String(voltage));
-
         timeSinceLastBatterySent = curTime;
 
         sendEvent(BatteryEvent(BatteryEvent::Update));
