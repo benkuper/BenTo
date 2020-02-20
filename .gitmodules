@@ -9,7 +9,7 @@
 	url = http://github.com/benkuper/juce_sharedtexture
 [submodule "Firmware/BentoFlowCreator/src/leds/output/FastLED"]
 	path = Firmware/BentoFlowCreator/src/leds/output/FastLED
-	url = https://github.com/FastLED/FastLED
+	url = https://github.com/benkuper/FastLED
 [submodule "Firmware/BentoFlowCreator/src/leds/player/ArduinoJson"]
 	path = Firmware/BentoFlowCreator/src/leds/player/ArduinoJson
-	url = https://github.com/bblanchon/ArduinoJson
+	url = https://github.com/benkuper/ArduinoJson

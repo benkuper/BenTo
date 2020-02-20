@@ -15,7 +15,7 @@ void BatteryManager::init()
 
 #if HAS_BATTERY_SENSING
     pinMode(BATTERY_PIN, INPUT);
-    analogSetAttenuation(ADC_0db);
+    analogSetPinAttenuation(BATTERY_PIN, ADC_0db);
 #endif
 }
 
