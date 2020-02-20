@@ -6,11 +6,15 @@ const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", 
 IMUManager::IMUManager() : Component("imu"),
                            bno(55),
                            isConnected(false),
-                           isEnabled(false),
+                           isEnabled(true),
                            orientationSendTime(20),
                            timeSinceOrientationLastSent(0)
 
 {
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
+  bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
+  bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 }
 
 IMUManager::~IMUManager()
@@ -29,6 +33,11 @@ void IMUManager::init()
     isConnected = false;
   }
 
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
+  bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
+  bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
+
   isConnected = true;
   bno.setExtCrystalUse(true);
   NDBG("Imu is connected.");
@@ -40,12 +49,13 @@ void IMUManager::update()
 
   imu::Quaternion q = bno.getQuat();
   q.normalize();
+  
   //float temp = q.x();  q.x() = -q.y();  q.y() = temp;
   //q.z() = -q.z();
   imu::Vector<3> euler = q.toEuler();
-  orientation[0] = euler.x() * 180/PI;  // heading, nose-right is positive, z-axis points up
-  orientation[1] = euler.y() * 180/PI;  // roll, rightwing-up is positive, y-axis points forward
-  orientation[2] = euler.z() * 180/PI;  // pitch, nose-down is positive, x-axis points right
+  orientation[0] = euler.x() * 180/PI;  //Yaw
+  orientation[1] = euler.y() * 180/PI;  //Pitch
+  orientation[2] = euler.z() * 180/PI;  //Roll
   
   long curTime = millis();
   if (curTime > timeSinceOrientationLastSent + orientationSendTime)

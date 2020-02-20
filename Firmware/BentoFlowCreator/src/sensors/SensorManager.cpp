@@ -59,11 +59,11 @@ void SensorManager::imuEvent(const IMUEvent &e)
     data[0].type = 'i';
     data[0].value.i = e.type;
 
-    for(int i=0;i<3;i++)
+    for(int i=0;i<4;i++)
     {
         data[i+1].type = 'f';
         data[i+1].value.f = imuManager.orientation[i];
     }
 
-    if(e.type == IMUEvent::OrientationUpdate) sendEvent(SensorEvent(SensorEvent::OrientationUpdate, imuManager.name, data, 4));
+    if(e.type == IMUEvent::OrientationUpdate) sendEvent(SensorEvent(SensorEvent::OrientationUpdate, imuManager.name, data, 5));
 }
