@@ -76,9 +76,11 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
   if(checkCommand(command, "enabled", numData, 1))
   {
     setEnabled(data[0].intValue());
+    return true;
   }else if(checkCommand(command, "updateRate", numData, 1))
   {
     orientationSendTime = 1000/data[0].intValue();
+    return true;
   }
 
   return false;

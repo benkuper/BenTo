@@ -55,5 +55,5 @@ public:
     void sendMessage(String address);
     void sendMessage(String source, String command, var * data, int numData);
 
-    bool handleMessage(String command, var * data, int numData) override;
+    bool handleCommand(String command, var * data, int numData) override;
 };
