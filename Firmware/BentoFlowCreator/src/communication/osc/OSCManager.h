@@ -3,8 +3,8 @@
 #include "../../common/Common.h"
 
 #include <WiFiUdp.h>
-#include <OSCMessage.h>
-#include <OSCBoards.h>
+#include "OSC/OSCMessage.h"
+#include "OSC/OSCBoards.h"
 
 class OSCEvent
 {
