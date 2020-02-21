@@ -158,7 +158,7 @@ void OSCManager::sendMessage(String source, String command, var *data, int numDa
     sendMessage(msg);
 }
 
-void OSCManager::handleMessage(String command, var * data, int numData)
+bool OSCManager::handleMessage(String command, var * data, int numData)
 {
 
     if(checkCommand(command, "enabled", numData, 1))
