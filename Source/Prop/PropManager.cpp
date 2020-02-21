@@ -41,6 +41,11 @@ PropManager::PropManager() :
 	resetAll = addTrigger("Reset All", "");
 	clearAll = addTrigger("Clear all props", "Remove all props from manager");
 
+	fileName = addStringParameter("Show filename", "Filename of the show", "timeline");
+	loadAll = addTrigger("Load all", "Load show on all devices that can play");
+	playAll = addTrigger("Play all", "Play show on all devices that can play");
+	stopAll = addTrigger("Stop all", "Stop show on all devices that can stop");
+
 	String localIp = NetworkHelpers::getLocalIP();
 
 	StringArray a;
@@ -171,6 +176,18 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 		Array<Prop*> itemsToRemove;
 		itemsToRemove.addArray(items);
 		removeItems(itemsToRemove);
+	}
+	else if (t == loadAll || t == playAll || t == stopAll)
+	{
+		for (auto& p : items)
+		{
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+			{
+				if (t == loadAll) bp->loadBake(fileName->stringValue());
+				else if (t == playAll) bp->playBake();
+				else if (t == stopAll) bp->stopBakePlaying();
+			}
+		}
 	}
 }
 

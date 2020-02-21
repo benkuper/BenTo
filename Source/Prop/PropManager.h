@@ -44,6 +44,11 @@ public:
 	Trigger* powerOffAll;
 	Trigger* resetAll;
 	Trigger* clearAll;
+
+	StringParameter* fileName;
+	Trigger* loadAll;
+	Trigger* playAll;
+	Trigger* stopAll;
 	BoolParameter * bakeMode;
 
 	void setupReceiver();

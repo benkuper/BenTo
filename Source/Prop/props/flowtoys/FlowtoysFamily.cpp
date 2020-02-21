@@ -112,7 +112,7 @@ void FlowtoysFamily::checkDeviceHardwareID(SerialDeviceInfo* info)
 	}
 }
 
-void FlowtoysFamily::addPropForHardwareID(SerialDevice *device, String hardwareId, String type)
+Prop * FlowtoysFamily::addPropForHardwareID(SerialDevice *device, String hardwareId, String type)
 {
 	Prop* p = PropManager::getInstance()->getPropWithHardwareId(hardwareId);
 	if (p == nullptr)
@@ -135,6 +135,8 @@ void FlowtoysFamily::addPropForHardwareID(SerialDevice *device, String hardwareI
 		LOG(p->deviceID << " already there, updating prop's remoteHost");
 		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->setSerialDevice(device);
 	}
+	
+	return p;
 }
 
 void FlowtoysFamily::serialDataReceived(SerialDevice *d, const var& data)
@@ -148,9 +150,12 @@ void FlowtoysFamily::serialDataReceived(SerialDevice *d, const var& data)
 		String fw = dataSplit[1];
 		String type = dataSplit[2].removeCharacters("\"");
 		LOG("Got wassup from " << d->info->description << " : " << fw);
-		addPropForHardwareID(d, fw, type);
-		d->removeSerialDeviceListener(this); //only remove after so it's not deleted
-		pendingDevices.removeAllInstancesOf(d);
+		Prop * p = addPropForHardwareID(d, fw, type);
+		if (p != nullptr)
+		{
+			d->removeSerialDeviceListener(this); //only remove after so it's not deleted
+			pendingDevices.removeAllInstancesOf(d);
+		}
 	}
 }
 

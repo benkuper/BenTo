@@ -34,6 +34,12 @@ void SerialManager::update()
 
 void SerialManager::processMessage(String buffer)
 {
+    if(buffer.substring(0,2) == "yo")
+    {
+         Serial.println("wassup "+getDeviceID()+" \""+String(DEVICE_TYPE)+"\"");
+        return;
+    }
+
     int splitIndex = buffer.indexOf(' ');
     
     String tc = buffer.substring(0, splitIndex);
@@ -55,4 +61,15 @@ void SerialManager::sendMessage(String source, String command, var * data, int n
     }
 
     Serial.println(msg);
+}
+
+bool SerialManager::handleCommand(String command, var * data, int numData)
+{
+    if(checkCommand(command,"outputEnabled", numData, 1))
+    {
+        outputEnabled = data[0].intValue() == 1;
+        return true;
+    }
+
+    return false;
 }

@@ -63,22 +63,20 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
     leds.setConnectionState(e.type);
 
+    
     if (e.source == "wifi")
     {
-        switch (e.type)
-        {
-        case Connected:
+        if(e.type == Connected || e.type == Hotspot){
             NDBG("Connected with IP " + comm.wifiManager.getIP());
             comm.oscManager.setEnabled(true);
-            initTimer.start();
-            break;
-
-        case Off:
-        case ConnectionError:
-        case Disabled:
+        }else
+        {
             comm.oscManager.setEnabled(false);
-            files.closeServer();
-            break;
+        }
+
+        if(e.type == Connected || e.type == ConnectionError || e.type == Hotspot)
+        {
+            initTimer.start();
         }
     }
 }

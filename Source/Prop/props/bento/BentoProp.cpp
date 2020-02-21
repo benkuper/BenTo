@@ -210,49 +210,88 @@ void BentoProp::exportBakedData(BakeData data)
 
 void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 {
-	/*
-	OSCMessage m("/leds/mode");
-	m.addString("player");
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
-	*/
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.load " + fileName + "\n");// +" " + (autoPlay ? "1" : "0") + " \n");
+	}
+	else
+	{
+		OSCMessage m2("/player/load");
+		m2.addString(fileName);
+		m2.addInt32(autoPlay ? 1 : 0);
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m2);
+	}
 
-	OSCMessage m2("/player/load");
-	m2.addString(fileName);
-	m2.addInt32(autoPlay ? 1 : 0);
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m2);
+	
 }
 
 void BentoProp::playBake(float time)
 {
-	OSCMessage m("/player/play");
-	m.addFloat32(time == -1 ? -1 : time + .1f);
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.play\n");// +String(time == -1 ? -1 : time + .1f) + " \n");
+	}
+	else
+	{
+
+		OSCMessage m("/player/play");
+		m.addFloat32(time == -1 ? -1 : time + .1f);
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
 }
 
 void BentoProp::pauseBakePlaying()
 {
-	OSCMessage m("/player/pause");
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.pause\n");
+	}
+	else
+	{
+		OSCMessage m("/player/pause");
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
 }
 
 void BentoProp::seekBakePlaying(float time)
 {
-	OSCMessage m("/player/seek");
-	m.addFloat32(time);
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.seek "+String(time)+"\n");
+	}
+	else
+	{
+		OSCMessage m("/player/seek");
+		m.addFloat32(time);
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
 }
 
 void BentoProp::stopBakePlaying()
 {
-	OSCMessage m("/player/stop");
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.stop\n");
+	}
+	else
+	{
+		OSCMessage m("/player/stop");
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
 }
 
 void BentoProp::sendShowPropID(bool value)
 {
-	OSCMessage m("/player/id");
-	m.addInt32(value);
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.id "+String(value?1:0)+"\n");
+	}
+	else
+	{
+		OSCMessage m("/player/id");
+		m.addInt32(value);
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
 }
 
 bool BentoProp::uploadProgressCallback(void* context, int bytesSent, int totalBytes)

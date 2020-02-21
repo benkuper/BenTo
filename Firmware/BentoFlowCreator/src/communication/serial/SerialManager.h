@@ -35,4 +35,6 @@ public:
     void processMessage(String buffer);
 
     void sendMessage(String source, String command, var * data, int numData);
+
+    bool handleCommand(String command, var * data, int numData) override;
 };
