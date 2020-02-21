@@ -37,6 +37,7 @@ void RGBLedsManager::setBrightness(float value, bool save)
 
 bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 {
+    NDBG("Handle command : "+command);
     if (checkCommand(command, "brightness", numData, 1))
     {
         setBrightness(data[0].floatValue());
@@ -45,6 +46,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
     {
         CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
         if(numData >= 4) c.nscale8((int)(data[3].floatValue() * 255));
+        sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         fillAll(c);
         return true;
     }else if(checkCommand(command, "range", numData, 5))
@@ -53,6 +55,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
         if(hasAlpha) c.nscale8((int)(data[3].floatValue() * 255));
         fillRange(c, data[hasAlpha?4:3].floatValue(), data[hasAlpha?5:4].floatValue());
+        sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         return true;
     }else if(checkCommand(command, "point", numData, 5))
     {
@@ -60,6 +63,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
         if(hasAlpha) c.nscale8((int)(data[3].floatValue() * 255));
         point(c, data[hasAlpha?4:3].floatValue(), data[hasAlpha?5:4].floatValue());
+        sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         return true;
     }
 
@@ -95,3 +99,4 @@ void RGBLedsManager::setLed(int index, CRGB c)
     if(index < 0 || index >= LED_COUNT) return;
     leds[index] = c;
 }
+

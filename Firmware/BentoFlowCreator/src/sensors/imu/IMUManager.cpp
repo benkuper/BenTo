@@ -6,7 +6,7 @@ const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", 
 IMUManager::IMUManager() : Component("imu"),
                            bno(55),
                            isConnected(false),
-                           isEnabled(true),
+                           isEnabled(false),
                            orientationSendTime(50),
                            timeSinceOrientationLastSent(0)
 

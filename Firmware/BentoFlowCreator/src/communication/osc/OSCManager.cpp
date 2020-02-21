@@ -113,6 +113,8 @@ void OSCManager::processMessage(OSCMessage &msg)
 
 void OSCManager::sendMessage(OSCMessage &msg)
 {
+    if(!enabled) return;
+
     if (remoteHost.length() == 0)
         return;
 
@@ -127,12 +129,16 @@ void OSCManager::sendMessage(OSCMessage &msg)
 
 void OSCManager::sendMessage(String address)
 {
+    if(!enabled) return;
+
     OSCMessage m(address.c_str());
     sendMessage(m);
 }
 
 void OSCManager::sendMessage(String source, String command, var *data, int numData)
 {
+    if(!enabled) return;
+
     OSCMessage msg(("/"+source+"/"+command).c_str());
     msg.add(getDeviceID().c_str());
     for(int i=0;i<numData;i++)
@@ -150,4 +156,16 @@ void OSCManager::sendMessage(String source, String command, var *data, int numDa
         }
     } 
     sendMessage(msg);
+}
+
+void OSCManager::handleMessage(String command, var * data, int numData)
+{
+
+    if(checkCommand(command, "enabled", numData, 1))
+    {
+        setEnabled(data[0].intValue() == 1);
+        return true;
+    }
+
+    return false;
 }

@@ -16,6 +16,7 @@ LedManager::LedManager() : Component("leds"),
 void LedManager::init()
 {
     rgbManager.init();
+    rgbManager.addListener(std::bind(&LedManager::rgbLedsEvent, this, std::placeholders::_1));
     sysLedMode.init();
 
     setMode(System);
@@ -126,6 +127,12 @@ void LedManager::setConnectionState(ConnectionState state)
         connectedTimer.start();
     else
         connectedTimer.stop();
+}
+
+void LedManager::rgbLedsEvent(const RGBLedsEvent &e)
+{
+    NDBG("RGB Leds event");
+    if(e.type == RGBLedsEvent::ASK_FOCUS) setMode(Direct);
 }
 
 void LedManager::playerEvent(const PlayerEvent &e)

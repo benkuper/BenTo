@@ -1,6 +1,6 @@
 #include "BatteryManager.h"
 
-const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level","voltage", "criticalLevel", "charging", "discharging"};
+const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level", "voltage", "rawValue", "criticalLevel", "charging", "discharging"};
 
 BatteryManager::BatteryManager() : Component("battery"),
                                    voltage(4.1f),
@@ -14,7 +14,6 @@ void BatteryManager::init()
 {
 
 #if HAS_BATTERY_SENSING
-    pinMode(BATTERY_PIN, INPUT);
     analogSetPinAttenuation(BATTERY_PIN, ADC_0db);
 #endif
 }
@@ -32,6 +31,7 @@ void BatteryManager::update()
 
         sendEvent(BatteryEvent(BatteryEvent::Level, value));
         sendEvent(BatteryEvent(BatteryEvent::Voltage, voltage));
+        sendEvent(BatteryEvent(BatteryEvent::RawValue, rawValue));
     }
 #endif
 }

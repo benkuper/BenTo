@@ -38,6 +38,7 @@ public:
 
     void setConnectionState(ConnectionState state);
 
+    void rgbLedsEvent(const RGBLedsEvent &e);
     void playerEvent(const PlayerEvent &e);
     
     bool handleCommand(String command, var *data, int numData) override;

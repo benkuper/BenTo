@@ -13,3 +13,6 @@
 [submodule "Firmware/BentoFlowCreator/src/leds/player/ArduinoJson"]
 	path = Firmware/BentoFlowCreator/src/leds/player/ArduinoJson
 	url = https://github.com/benkuper/ArduinoJson
+[submodule "Firmware\\BentoFlowCreator\\src\\sensors\\imu\\"]
+	path = Firmware\\BentoFlowCreator\\src\\sensors\\imu\\
+	url = https://github.com/adafruit/Adafruit_Sensor

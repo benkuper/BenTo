@@ -112,15 +112,15 @@ void ScriptBlock::newMessage(const Script::ScriptEvent& e)
 ColourScriptData::ColourScriptData() :
 	ScriptTarget("colours", this)
 {
-	scriptObject.setMethod("setRGB", &ColourScriptData::updateColorRGBFromScript);
+	scriptObject.setMethod("set", &ColourScriptData::updateColorRGBFromScript);
 	scriptObject.setMethod("setHSV", &ColourScriptData::updateColorHSVFromScript);
-	scriptObject.setMethod("setColorsRGB", &ColourScriptData::updateColorsRGBFromScript);
+	scriptObject.setMethod("setColors", &ColourScriptData::updateColorsRGBFromScript);
 	scriptObject.setMethod("setColorsHSV", &ColourScriptData::updateColorsHSVFromScript);
-	scriptObject.setMethod("fillRGB", &ColourScriptData::fillRGBFromScript);
+	scriptObject.setMethod("fill", &ColourScriptData::fillRGBFromScript);
 	scriptObject.setMethod("fillHSV", &ColourScriptData::fillHSVFromScript);
-	scriptObject.setMethod("pointRGB", &ColourScriptData::pointRGBFromScript);
+	scriptObject.setMethod("point", &ColourScriptData::pointRGBFromScript);
 	scriptObject.setMethod("pointHSV", &ColourScriptData::pointHSVFromScript);
-	scriptObject.setMethod("gradientRGB", &ColourScriptData::gradientRGBFromScript);
+	scriptObject.setMethod("gradient", &ColourScriptData::gradientRGBFromScript);
 	scriptObject.setMethod("gradientHSV", &ColourScriptData::gradientHSVFromScript);
 	scriptObject.setMethod("lerpColor", &ColourScriptData::lerpColorFromScript);
 	scriptObject.setMethod("getHSV", &ColourScriptData::getHSVColorFromScript);

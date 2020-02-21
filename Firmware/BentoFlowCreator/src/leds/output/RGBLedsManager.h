@@ -3,7 +3,15 @@
 #include "../../common/Common.h"
 #include "LedHelpers.h"
 
-class RGBLedsManager : public Component {
+class RGBLedsEvent
+{
+public:
+    enum Type { ASK_FOCUS };
+    RGBLedsEvent(Type type) : type(type) {}
+    Type type;
+};
+
+class RGBLedsManager : public Component, public EventBroadcaster<RGBLedsEvent> {
 public:
     RGBLedsManager();
 

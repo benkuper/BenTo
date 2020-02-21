@@ -54,4 +54,6 @@ public:
     void sendMessage(OSCMessage &m);
     void sendMessage(String address);
     void sendMessage(String source, String command, var * data, int numData);
+
+    void handleMessage(String command, var * data, int numData) override;
 };
