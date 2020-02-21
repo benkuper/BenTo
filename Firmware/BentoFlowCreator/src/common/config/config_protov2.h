@@ -11,8 +11,8 @@
 #define LED_COLOR_ORDER BGR
 
 //main power
-#define HAS_POWEROFF_PIN 1
 #define SLEEP_PIN 12 // pin for turning the LDO on and off. LOW for off and HIGH for on. 
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_32
 //setting low will colapse the power and the club will only turn on from USB or button press.
 
 // button pin

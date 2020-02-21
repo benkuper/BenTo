@@ -11,7 +11,6 @@
 #define LED_COLOR_ORDER BGR
 
 //main power
-#define HAS_POWEROFF_PIN 0
 #define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
 
 // button pin
