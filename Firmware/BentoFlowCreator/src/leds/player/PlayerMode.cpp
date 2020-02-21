@@ -273,7 +273,7 @@ bool PlayerMode::handleCommand(String command, var *data, int numData)
       load(data[0].stringValue());
       play(numData > 1 ? data[1].floatValue() : 0);
     }
-    else-
+    else
     {
       play(numData > 0 ? data[0].floatValue() : 0);
     }
