@@ -50,9 +50,11 @@ void MainManager::sleep()
 
     delay(500);
 
-#if HAS_POWEROFF_PIN
+#ifdef SLEEP_PIN
     digitalWrite(SLEEP_PIN, LOW);
-#else
+#endif
+
+#ifdef SLEEP_WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, HIGH);
     esp_deep_sleep_start();
 #endif
