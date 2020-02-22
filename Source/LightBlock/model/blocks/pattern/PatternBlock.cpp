@@ -55,8 +55,8 @@ void RainbowPattern::getColorsInternal(Array<Colour>* result, Prop* p, double ti
 NoisePattern::NoisePattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
-	scale = paramsContainer->addFloatParameter("Scale", "", 3, 0.1f, 200);
-	speed = paramsContainer->addFloatParameter("Speed", "", 1, 0.1f, 20);
+	scale = paramsContainer->addFloatParameter("Scale", "", 3, 0.1f);
+	speed = paramsContainer->addFloatParameter("Speed", "", 1, 0.1f);
 	contrast = paramsContainer->addFloatParameter("Contrast", "", 3, 0, 10);
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 0, -1, 1);
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
@@ -92,7 +92,7 @@ SolidColorPattern::SolidColorPattern(var params) :
 {
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 0.5, 0, 1);
-	hueSpeed = paramsContainer->addFloatParameter("Hue Speed", "The animation speed of the hue, in full spectrum cycle / second", 0, 0, 20);
+	hueSpeed = paramsContainer->addFloatParameter("Hue Speed", "The animation speed of the hue, in full spectrum cycle / second", 0, 0);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the hue depending on id of the prop", 0, 0, 10);
 
 }
@@ -116,7 +116,7 @@ StrobePattern::StrobePattern(var params) :
 {
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
 	color2 = paramsContainer->addColorParameter("Color 2", "", Colours::black);
-	frequency = paramsContainer->addFloatParameter("Frequency", "", 1, .01f, 100);
+	frequency = paramsContainer->addFloatParameter("Frequency", "", 1, .01f);
 	onOffBalance = paramsContainer->addFloatParameter("On-Off Balance", "The balance between on and off time. 0.5s means equals on and off time. .8 means 80% on time, 20% off time.", .5f, 0, 1);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the timing depending on id of the prop", 0, 0, 10);
 }

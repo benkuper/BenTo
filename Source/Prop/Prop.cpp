@@ -68,7 +68,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1, 1, INT32_MAX, false);
 	bakeEndTime->defaultUI = FloatParameter::TIME;
 	bakeEndTime->canBeDisabledByUser = true; 
-	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 800, false);
+	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 50000, false);
 	bakeFrequency->canBeDisabledByUser = true;
 	
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
