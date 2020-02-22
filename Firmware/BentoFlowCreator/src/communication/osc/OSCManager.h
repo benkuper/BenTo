@@ -32,9 +32,9 @@ public:
     Preferences prefs;
     WiFiUDP udp;
 
-    const int localPort = 9000;
+    const int localPort = 9000; // input port
     String remoteHost;
-    const int remotePort = 10000;
+    const int remotePort = 10000; // output port
 
     long timeSinceLastReceivedPing;
     long pingTimeout;
