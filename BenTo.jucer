@@ -503,6 +503,9 @@
         <FILE id="e3SfwF" name="PropManager.cpp" compile="1" resource="0" file="Source/Prop/PropManager.cpp"/>
         <FILE id="PX1SDd" name="PropManager.h" compile="0" resource="0" file="Source/Prop/PropManager.h"/>
       </GROUP>
+      <FILE id="tOdLFU" name="BentoSettings.cpp" compile="1" resource="0"
+            file="Source/BentoSettings.cpp"/>
+      <FILE id="o4vHyg" name="BentoSettings.h" compile="0" resource="0" file="Source/BentoSettings.h"/>
       <FILE id="z7KsWh" name="BentoEngine.cpp" compile="1" resource="0" file="Source/BentoEngine.cpp"/>
       <FILE id="zg8iGH" name="BentoEngine.h" compile="0" resource="0" file="Source/BentoEngine.h"/>
       <FILE id="NA8DkH" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>

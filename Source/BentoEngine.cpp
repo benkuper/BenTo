@@ -20,6 +20,8 @@
 //#include "WebServer/BentoWebServer.h"
 #include "Node/NodeManager.h"
 
+#include "BentoSettings.h"
+
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento"),
 	ioCC("Input - Output")
@@ -43,6 +45,8 @@ BentoEngine::BentoEngine() :
 
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
 	SerialManager::getInstance(); // init
+
+	GlobalSettings::getInstance()->addChildControllableContainer(BentoSettings::getInstance());
 	//BentoWebServer::getInstance(); //init
 
 }
@@ -59,6 +63,8 @@ BentoEngine::~BentoEngine()
 	AudioManager::deleteInstance();
 
 	//BentoWebServer::deleteInstance();
+
+	BentoSettings::deleteInstance();
 }
 
 void BentoEngine::clearInternal()

@@ -53,10 +53,6 @@ public:
 
 	BoolParameter * bakeMode;
 
-	ControllableContainer flashCC;
-	FileParameter* arduinoPath;
-	FileParameter* firmwareFile;
-	Trigger* flashConnected;
 
 	void setupReceiver();
 

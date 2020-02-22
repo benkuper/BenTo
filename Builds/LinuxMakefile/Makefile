@@ -176,6 +176,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/PropViz_32565136.o \
   $(JUCE_OBJDIR)/Prop_c0de1090.o \
   $(JUCE_OBJDIR)/PropManager_8695a187.o \
+  $(JUCE_OBJDIR)/BentoSettings_c196016a.o \
   $(JUCE_OBJDIR)/BentoEngine_f46ef489.o \
   $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
@@ -749,6 +750,11 @@ $(JUCE_OBJDIR)/Prop_c0de1090.o: ../../Source/Prop/Prop.cpp
 $(JUCE_OBJDIR)/PropManager_8695a187.o: ../../Source/Prop/PropManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PropManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BentoSettings_c196016a.o: ../../Source/BentoSettings.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BentoSettings.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/BentoEngine_f46ef489.o: ../../Source/BentoEngine.cpp
