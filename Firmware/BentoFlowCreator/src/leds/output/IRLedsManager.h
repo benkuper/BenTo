@@ -5,7 +5,10 @@ public:
     IRLedsManager();
     ~IRLedsManager();
 
-    const int maxBrightness = 60;
+    float brightness;
+
+    void init();
+    void update();
 
     void setBrightness(float value);
     bool handleCommand(String command, var * data, int numData) override;

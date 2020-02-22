@@ -35,6 +35,10 @@
 
 // ir config
 #define IR_TX_PIN 17 // drive with PWM HIGH is on and LOW is off.
+#define IR_MAX_POWER 25 // 10%
+#define IR_CHANNEL 0
+#define IR_PWM_RESOLUTION 8 //8 = value range from 0 to 255
+#define IR_FREQ 5000
 
 // SD config
 #define SDSPEED 27000000
