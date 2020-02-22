@@ -16,8 +16,7 @@
 // button pin
 #define BUTTON_PIN 23 // pin for sensing the button press.
 
-//battery sence
-#define HAS_BATTERY_SENSING 0
+//battery sense (no battery sensing)
 
 // imu config
 #define HAS_IMU 0

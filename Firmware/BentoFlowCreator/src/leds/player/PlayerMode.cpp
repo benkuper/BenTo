@@ -278,6 +278,11 @@ bool PlayerMode::handleCommand(String command, var *data, int numData)
       play(numData > 0 ? data[0].floatValue() : 0);
     }
 
+    if(numData > 1)
+    {
+      loopShow = data[1].intValue() == 1;
+    }
+    
     idMode = false;
     return true;
   }

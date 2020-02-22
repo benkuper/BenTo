@@ -225,7 +225,7 @@ void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 	
 }
 
-void BentoProp::playBake(float time)
+void BentoProp::playBake(float time, bool loop)
 {
 	if (serialDevice != nullptr)
 	{
@@ -236,6 +236,7 @@ void BentoProp::playBake(float time)
 
 		OSCMessage m("/player/play");
 		m.addFloat32(time == -1 ? -1 : time + .1f);
+		m.addInt32(loop ? 1 : 0);
 		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 	}
 }

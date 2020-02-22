@@ -16,8 +16,7 @@ void MainManager::init()
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
     comm.init();
 
-#if HAS_POWEROFF_PIN
-    NDBG("PUT THE PIN TO HIGH");
+#ifdef SLEEP_PIN
     pinMode(SLEEP_PIN, OUTPUT);
     digitalWrite(SLEEP_PIN, HIGH);
 #endif
@@ -45,7 +44,7 @@ void MainManager::update()
 
 void MainManager::sleep()
 {
-    //NDBG("Sleep now ! ");
+    NDBG("Sleep now ! ");
     leds.shutdown(CRGB::Orange); //to replace with battery color
 
     delay(500);

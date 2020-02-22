@@ -8,21 +8,21 @@ BatteryManager::BatteryManager() : Component("battery"),
                                    value(1),
                                    timeSinceLastBatterySent(0),
                                    isCriticalBattery(false),
-                                   timeAtCriticalBattery(0),
+                                   timeAtCriticalBattery(0)
 {
 }
 
 void BatteryManager::init()
 {
 
-#if HAS_BATTERY_SENSING
+#ifdef BATTERY_PIN
     analogSetPinAttenuation(BATTERY_PIN, ADC_0db);
 #endif
 }
 
 void BatteryManager::update()
 {
-#if HAS_BATTERY_SENSING
+#ifdef BATTERY_PIN
     long curTime = millis();
     rawValue = analogRead(BATTERY_PIN);
     value = (rawValue - minVal)*1.0f / (maxVal-minVal);
@@ -37,7 +37,7 @@ void BatteryManager::update()
     }
 
     bool batteryIsOK = value >= criticalBatteryThreshold;
-    if(batteryIsOk) 
+    if(batteryIsOK) 
     {
         timeAtCriticalBattery = 0;
         isCriticalBattery = false;

@@ -49,7 +49,14 @@ public:
 	Trigger* loadAll;
 	Trigger* playAll;
 	Trigger* stopAll;
+	BoolParameter* loop;
+
 	BoolParameter * bakeMode;
+
+	ControllableContainer flashCC;
+	FileParameter* arduinoPath;
+	FileParameter* firmwareFile;
+	Trigger* flashConnected;
 
 	void setupReceiver();
 

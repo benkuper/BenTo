@@ -33,6 +33,12 @@ SerialDevice * SerialDeviceParameter::getDevice()
 
 void SerialDeviceParameter::setValueForDevice(SerialDevice* d)
 {
+	if (d == nullptr)
+	{
+		setValue("");
+		return;
+	}
+
 	for (auto& p : SerialManager::getInstance()->openedPorts)
 	{
 		if (p == d)
