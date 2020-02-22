@@ -18,6 +18,7 @@ void LedManager::init()
     rgbManager.init();
     rgbManager.addListener(std::bind(&LedManager::rgbLedsEvent, this, std::placeholders::_1));
     sysLedMode.init();
+    irManager.init();
 
     setMode(System);
 }
@@ -37,6 +38,7 @@ void LedManager::update()
     }
 
     rgbManager.update();
+    irManager.update();
 
     connectedTimer.update();
 }

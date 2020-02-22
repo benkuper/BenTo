@@ -5,6 +5,7 @@
 #include "player/PlayerMode.h"
 
 #include "output/RGBLedsManager.h"
+#include "output/IRLedsManager.h"
 
 class LedManager : public Component {
 public:
@@ -22,6 +23,7 @@ public:
 
     //out
     RGBLedsManager rgbManager;
+    IRLedsManager irManager;
 
     //timers
     Timer connectedTimer;
