@@ -192,6 +192,7 @@ void MainManager::timerEvent(const TimerEvent &e)
 {
     NDBG("Timer Event, init fileSystem and IMU");
     files.init();
+
     sensors.imuManager.init();
 }
 

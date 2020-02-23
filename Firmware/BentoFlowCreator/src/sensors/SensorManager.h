@@ -47,12 +47,14 @@ public:
 
     BatteryManager batteryManager;
     ButtonManager btManager;
+
     IMUManager imuManager;
-    
+
     void init(bool initIMU = false);
     void update();
 
     void batteryEvent(const BatteryEvent &e);
     void buttonEvent(const ButtonEvent &e);
+
     void imuEvent(const IMUEvent &e);
 };

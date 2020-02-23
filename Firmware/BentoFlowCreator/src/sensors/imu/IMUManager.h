@@ -1,6 +1,5 @@
 #include "../../common/Common.h"
 
-#if HAS_IMU
 #include <Wire.h>
 #include "Adafruit_BNO055/Adafruit_BNO055.h"
 
@@ -20,7 +19,9 @@ public:
     IMUManager();
     ~IMUManager();
 
+#if HAS_IMU
     Adafruit_BNO055 bno;
+#endif
 
     bool isConnected;
     bool isEnabled;
@@ -38,5 +39,3 @@ public:
 
     bool handleCommand(String command, var * data, int numData) override;
 };
-
-#endif

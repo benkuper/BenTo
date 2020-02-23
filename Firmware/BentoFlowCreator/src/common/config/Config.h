@@ -4,7 +4,7 @@
 #define PROTO_V2 2
 
 #ifndef MODEL
-#define MODEL PROTO_V2
+#define MODEL PROTO_V1
 #endif
 
 #if MODEL == PROTO_V1

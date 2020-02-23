@@ -1,20 +1,24 @@
 #include "IMUManager.h"
-#if HAS_IMU
 
 const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", "freefall" };
 
 IMUManager::IMUManager() : Component("imu"),
+#if HAS_IMU
                            bno(55),
+#endif                          
                            isConnected(false),
                            isEnabled(false),
                            orientationSendTime(50),
                            timeSinceOrientationLastSent(0)
 
 {
+#if HAS_IMU
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
   bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
   bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
+#endif
+
 }
 
 IMUManager::~IMUManager()
@@ -25,11 +29,13 @@ void IMUManager::init()
 {
   NDBG("Init");
   if(isConnected) return;
+
+#if HAS_IMU
   Wire.begin(SDA_PIN, SCL_PIN);
 
   if (!bno.begin())
   {
-    Serial.print("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+    NDBG("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
     isConnected = false;
   }
 
@@ -38,8 +44,10 @@ void IMUManager::init()
   bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 
-  isConnected = true;
   bno.setExtCrystalUse(true);
+#endif
+
+  isConnected = true;
   NDBG("Imu is connected.");
 }
 
@@ -47,6 +55,7 @@ void IMUManager::update()
 {
   if(!isEnabled || !isConnected) return;
 
+#if HAS_IMU
   imu::Quaternion q = bno.getQuat();
   q.normalize();
   
@@ -63,6 +72,8 @@ void IMUManager::update()
     sendEvent(IMUEvent(IMUEvent::OrientationUpdate));
     timeSinceOrientationLastSent = curTime;
   }
+#endif
+
 }
 
 void IMUManager::setEnabled(bool value)
@@ -85,5 +96,3 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
 
   return false;
 }
-
-#endif
