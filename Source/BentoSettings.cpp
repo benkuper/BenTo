@@ -52,8 +52,12 @@ void BentoSettings::onControllableFeedbackUpdate(ControllableContainer* cc, Cont
 			NLOGERROR(niceName, "Partitions file not found : " << partitionsFwFile.getFullPathName());
 			return;
 		}
-
-		File flasher = esp32F.getChildFile("packages/esp32/tools/esptool_py/2.6.1/esptool.exe");
+		
+		String fileName = "esptool";
+#if JUCE_WINDOWS
+		fileName += ".exe";
+#endif
+		File flasher = esp32F.getChildFile("packages/esp32/tools/esptool_py/2.6.1/"+fileName);
 		File espFolder = esp32F.getChildFile("packages/esp32/hardware/esp32");
 		Array<File> toolsFolders = espFolder.findChildFiles(File::TypesOfFileToFind::findDirectories, true, "tools");
 
