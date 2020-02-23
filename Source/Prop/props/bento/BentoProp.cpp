@@ -94,6 +94,11 @@ void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
 
 }
 
+void BentoProp::portRemoved(SerialDevice* d)
+{
+	setSerialDevice(nullptr);
+}
+
 
 void BentoProp::sendColorsToPropInternal()
 {
@@ -235,7 +240,7 @@ void BentoProp::playBake(float time, bool loop)
 	{
 
 		OSCMessage m("/player/play");
-		m.addFloat32(time == -1 ? -1 : time + .1f);
+		m.addFloat32(time);
 		m.addInt32(loop ? 1 : 0);
 		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 	}

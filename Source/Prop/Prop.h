@@ -108,7 +108,7 @@ public:
 	virtual void exportBakedData(BakeData data);
 
 	virtual void loadBake(StringRef /*fileName*/, bool /*autoPlay*/) {}
-	virtual void playBake(float /*time */ = -1, bool /* loop */ = false) {}
+	virtual void playBake(float /*time */ = 0, bool /* loop */ = false) {}
 	virtual void pauseBakePlaying() {}
 	virtual void resumeBakePlaying() {}
 	virtual void seekBakePlaying(float /*time */) {}

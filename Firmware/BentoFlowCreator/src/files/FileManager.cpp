@@ -223,7 +223,7 @@ bool FileManager::handleCommand(String command, var *data, int numData)
         deleteFileIfExists(data[0].stringValue());
         return true;
     }
-    else if (checkCommand(command, "delete", numData, 0))
+    else if (checkCommand(command, "deleteFolder", numData, 0))
     {
         if (numData > 0)
         {

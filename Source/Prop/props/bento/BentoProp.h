@@ -36,6 +36,7 @@ public:
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 
 	virtual void serialDataReceived(SerialDevice * d, const var &) override;
+	virtual void portRemoved(SerialDevice* d) override;
 
 	virtual void sendColorsToPropInternal() override;
 
@@ -43,7 +44,7 @@ public:
 	virtual void exportBakedData(BakeData data) override;
 
 	virtual void loadBake(StringRef fileName, bool autoPlay = false) override;
-	virtual void playBake(float time = -1, bool loop = false) override;
+	virtual void playBake(float time = 0, bool loop = false) override;
 	virtual void pauseBakePlaying() override;
 	virtual void resumeBakePlaying() override {}
 	virtual void seekBakePlaying(float time) override;
