@@ -37,6 +37,7 @@ void FlowtoysFamily::onContainerParameterChanged(Parameter * p)
 {
 	PropFamily::onContainerParameterChanged(p);
 
+	/* TO KEEP OR NOT TO KEEP ?
 	if (p == targetPropFPS)
 	{
 		for (auto &prop : props)
@@ -44,12 +45,13 @@ void FlowtoysFamily::onContainerParameterChanged(Parameter * p)
 			FlowtoysProp * fp = dynamic_cast<FlowtoysProp *>(prop);
 			if (fp != nullptr)
 			{
-				OSCMessage m("/strip/fps");
+				OSCMessage m("/leds/fps");
 				m.addInt32(targetPropFPS->intValue());
 				fp->oscSender.sendToIPAddress(fp->remoteHost->stringValue(), 9000, m);
 			}
 		}
 	}
+	*/
 }
 
 void FlowtoysFamily::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
