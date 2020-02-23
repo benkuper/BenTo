@@ -24,7 +24,19 @@ public:
 
 	virtual void clearItem() override;
 
+	ControllableContainer batteryCC;
+	FloatParameter* batteryLevel;
+	FloatParameter* batteryVoltage;
+
+	ControllableContainer buttonCC;
 	BoolParameter * button;
+	Trigger* shortPress;
+	Trigger* longPress;
+	IntParameter* multiPress;
+
+	EnablingControllableContainer imuCC;
+	IntParameter* imuUpdateRate;
+	Point3DParameter* orientation;
 
 	ControllableContainer irCC;
 	FloatParameter * irLevel;

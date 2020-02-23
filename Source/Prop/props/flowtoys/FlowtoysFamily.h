@@ -39,7 +39,7 @@ public:
 	
 	void checkSerialDevices();
 	void checkDeviceHardwareID(SerialDeviceInfo* d);
-	void addPropForHardwareID(SerialDevice *d, String firmware, String type);
+	Prop * addPropForHardwareID(SerialDevice *d, String firmware, String type);
 
 	void serialDataReceived(SerialDevice* d, const var& data) override;
 	void timerCallback(int timerID) override;

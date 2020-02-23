@@ -16,7 +16,6 @@
 class PropFamily;
 
 #define PROP_PING_TIMERID 0
-#define PROP_PINGPONG_TIMERID 1
 
 class Prop :
 	public BaseItem,
@@ -42,15 +41,13 @@ public:
 	ControllableContainer ioCC;
 	BoolParameter* isConnected;
 	
-	BoolParameter* twoWayConnected;
 	bool receivedPongSinceLastPingSent;
 
 	BoolParameter * findPropMode;
 	Trigger* powerOffTrigger;
-	Trigger* resetTrigger;
+	Trigger* restartTrigger;
 
 	ControllableContainer sensorsCC;
-	FloatParameter * battery;
 
 	ControllableContainer bakingCC;
 	FloatParameter * bakeStartTime;
@@ -111,7 +108,7 @@ public:
 	virtual void exportBakedData(BakeData data);
 
 	virtual void loadBake(StringRef /*fileName*/, bool /*autoPlay*/) {}
-	virtual void playBake(float /*time */ = -1) {}
+	virtual void playBake(float /*time */ = 0, bool /* loop */ = false) {}
 	virtual void pauseBakePlaying() {}
 	virtual void resumeBakePlaying() {}
 	virtual void seekBakePlaying(float /*time */) {}
@@ -121,9 +118,11 @@ public:
 	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 
 	virtual void powerOffProp() {}
-	virtual void resetProp() {}
+	virtual void restartProp() {}
 
-	virtual void handlePing(bool isPong = false);
+	virtual void handleOSCMessage(const OSCMessage &m);
+
+	virtual void handlePong();
 	virtual void sendPing() {}
 	virtual void timerCallback(int timerID) override;
 	

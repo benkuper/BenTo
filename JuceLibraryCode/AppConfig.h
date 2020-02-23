@@ -291,7 +291,7 @@
 // juce_osc flags:
 
 #ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
- //#define JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 0
+ #define   JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 1
 #endif
 
 //==============================================================================

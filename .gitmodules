@@ -7,3 +7,21 @@
 [submodule "Modules/juce_sharedtexture"]
 	path = Modules/juce_sharedtexture
 	url = http://github.com/benkuper/juce_sharedtexture
+[submodule "Firmware/BentoFlowCreator/src/leds/output/FastLED"]
+	path = Firmware/BentoFlowCreator/src/leds/output/FastLED
+	url = https://github.com/benkuper/FastLED
+[submodule "Firmware/BentoFlowCreator/src/leds/player/ArduinoJson"]
+	path = Firmware/BentoFlowCreator/src/leds/player/ArduinoJson
+	url = https://github.com/benkuper/ArduinoJson
+[submodule "Firmware\\BentoFlowCreator\\src\\sensors\\imu\\"]
+	path = Firmware\\BentoFlowCreator\\src\\sensors\\imu\\
+	url = https://github.com/adafruit/Adafruit_Sensor
+[submodule "Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_BNO055"]
+	path = Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_BNO055
+	url = https://github.com/benkuper/Adafruit_BNO055
+[submodule "Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_Sensor"]
+	path = Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_Sensor
+	url = https://github.com/benkuper/Adafruit_Sensor
+[submodule "Firmware/BentoFlowCreator/src/communication/osc/OSC"]
+	path = Firmware/BentoFlowCreator/src/communication/osc/OSC
+	url = https://github.com/benkuper/OSC

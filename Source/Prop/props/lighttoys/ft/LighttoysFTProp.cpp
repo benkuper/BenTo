@@ -25,7 +25,6 @@ LighttoysFTProp::LighttoysFTProp(var params) :
 	numConnected = generalCC.addIntParameter("Num Connected", "Number of connected props", 0, 0, 31);
 	autoResolution = generalCC.addBoolParameter("Auto resolution", "If checked, the resolution will be automatically set depending on number of paired devices", true);
 	
-
 	addNewPairing = ioCC.addTrigger("Add New Pairing Group", "Start pairing");
 	addToGroup = ioCC.addTrigger("Add To Group", "Add to the existing paired group");
 	finishPairing = ioCC.addTrigger("Finish Pairing", "Finish the pairing");
@@ -143,8 +142,7 @@ void LighttoysFTProp::onControllableFeedbackUpdateInternal(ControllableContainer
 	}
 	else
 	{
-		if (c == isConnected) battery->setValue(isConnected->boolValue() ? 1 : 0);
-		else if (c == deviceParam) setCurrentDevice(deviceParam->getDevice());
+		if (c == deviceParam) setCurrentDevice(deviceParam->getDevice());
 		else if (c == numPaired)
 		{
 			if (autoResolution->boolValue()) resolution->setValue(numPaired->intValue());

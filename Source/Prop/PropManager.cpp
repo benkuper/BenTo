@@ -29,6 +29,8 @@ PropManager::PropManager() :
 	BaseManager("Props"),
 	familiesCC("Families")
 {
+	saveAndLoadRecursiveData = true;
+
 	managerFactory = &factory;
 	selectItemWhenCreated = false;
 
@@ -41,6 +43,13 @@ PropManager::PropManager() :
 	resetAll = addTrigger("Reset All", "");
 	clearAll = addTrigger("Clear all props", "Remove all props from manager");
 
+	fileName = addStringParameter("Show filename", "Filename of the show", "timeline");
+	loadAll = addTrigger("Load all", "Load show on all devices that can play");
+	playAll = addTrigger("Play all", "Play show on all devices that can play");
+	stopAll = addTrigger("Stop all", "Stop show on all devices that can stop");
+	loop = addBoolParameter("Loop show", "If checked, this will tell the player to loop the playing", false);
+
+	
 	String localIp = NetworkHelpers::getLocalIP();
 
 	StringArray a;
@@ -164,13 +173,25 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	}
 	else if (t == resetAll)
 	{
-		for (auto& p : items) p->resetTrigger->trigger();
+		for (auto& p : items) p->restartTrigger->trigger();
 	}
 	else if (t == clearAll)
 	{
 		Array<Prop*> itemsToRemove;
 		itemsToRemove.addArray(items);
 		removeItems(itemsToRemove);
+	}
+	else if (t == loadAll || t == playAll || t == stopAll)
+	{
+		for (auto& p : items)
+		{
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+			{
+				if (t == loadAll) bp->loadBake(fileName->stringValue());
+				else if (t == playAll) bp->playBake(0, loop->boolValue());
+				else if (t == stopAll) bp->stopBakePlaying();
+			}
+		}
 	}
 }
 
@@ -276,42 +297,11 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 			if (bp != nullptr) bp->remoteHost->setValue(pHost);
 		}
 	}
-	else if (address == "/ping" || address == "/pong")
+	else  if(m.size() > 0 && m[0].isString())
 	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		Prop* p = getPropWithHardwareId(pid);
-		if (p != nullptr)
+		if (Prop* p = getPropWithHardwareId(OSCHelpers::getStringArg(m[0])))
 		{
-			p->handlePing(address == "/pong");
+			p->handleOSCMessage(m);
 		}
 	}
-	
-	/*
-	else if (address == "/battery/level")
-	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		Prop * p = getPropWithHardwareId(pid);
-		if (p == nullptr) return;
-		p->battery->setValue(m[1].getFloat32());
-	}
-	else if (address == "/battery/charging")
-	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		Prop * p = getPropWithHardwareId(pid);
-		if (p == nullptr) return;
-		p->battery->setValue(m[1].getFloat32());
-	}
-	else if (address == "/touch/pressed")
-	{
-		String pid = OSCHelpers::getStringArg(m[0]);
-		FlowClubProp * fp = static_cast<FlowClubProp *>(getPropWithHardwareId(pid));
-		if (fp == nullptr) return;
-		fp->button->setValue(m[1].getInt32() == 1);
-	}
-	else
-	{
-		LOG("Message not handled : " << m.getAddressPattern().toString() << " >> " << m[0].getType() << " args");
-
-	}
-	*/
 }

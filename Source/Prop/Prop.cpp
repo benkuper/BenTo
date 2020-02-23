@@ -48,22 +48,17 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	isConnected = ioCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
 	isConnected->isSavable = false; 
-	twoWayConnected = ioCC.addBoolParameter("2-way Connected", "This is checked if the prop is connected and communication works both directions", false);
-	twoWayConnected->setControllableFeedbackOnly(true);
-	twoWayConnected->isSavable = false;
 
 	findPropMode = ioCC.addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
 	findPropMode->setControllableFeedbackOnly(true);
 	findPropMode->isSavable = false;
 	
 	powerOffTrigger = ioCC.addTrigger("Power off", "Power off the prop if possible");
-	resetTrigger = ioCC.addTrigger("Reset", "Reset the prop if possible");
+	restartTrigger = ioCC.addTrigger("Restart", "Restart the prop, if the prop allows it");
 
 
 
 	addChildControllableContainer(&sensorsCC);
-	battery = sensorsCC.addFloatParameter("Battery", "The battery level, between 0 and 1", 0);
-	battery->setControllableFeedbackOnly(true);
 	 
 	addChildControllableContainer(&bakingCC);
 	
@@ -73,7 +68,7 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1, 1, INT32_MAX, false);
 	bakeEndTime->defaultUI = FloatParameter::TIME;
 	bakeEndTime->canBeDisabledByUser = true; 
-	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 800, false);
+	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 50000, false);
 	bakeFrequency->canBeDisabledByUser = true;
 	
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
@@ -105,6 +100,8 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 	activeProvider->hideInEditor = true;
+
+	startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 
 }
 
@@ -251,9 +248,9 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		powerOffProp();
 	}
-	else if (c == resetTrigger)
+	else if (c == restartTrigger)
 	{
-		resetProp();
+		restartProp();
 	}
 }
 
@@ -388,25 +385,18 @@ void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl contro
 }
 
 
-void Prop::handlePing(bool isPong)
+void Prop::handleOSCMessage(const OSCMessage &m)
 {
-	if (!isPong)
-	{
-		isConnected->setValue(true);
-		stopTimer(PROP_PING_TIMERID);
-		startTimer(PROP_PING_TIMERID, 2000); //2s
-
-		if (!isTimerRunning(PROP_PINGPONG_TIMERID))
-		{
-			sendPing();
-			startTimer(PROP_PINGPONG_TIMERID, 2000); // only once, but launch only if it received a first ping
-		}
-	}
+	if (m.getAddressPattern().toString() == "/pong") handlePong();
 	else
 	{
-		receivedPongSinceLastPingSent = true;
-		twoWayConnected->setValue(true); 
+		Controllable* c = OSCHelpers::findControllableAndHandleMessage(&sensorsCC, m, 1);
 	}
+}
+
+void Prop::handlePong()
+{
+	receivedPongSinceLastPingSent = true;
 }
 
 void Prop::timerCallback(int timerID)
@@ -414,15 +404,8 @@ void Prop::timerCallback(int timerID)
 	switch (timerID)
 	{
 	case PROP_PING_TIMERID:
-		isConnected->setValue(false);
-		stopTimer(PROP_PING_TIMERID);
-		break;
-
-	case PROP_PINGPONG_TIMERID:
-		if(!receivedPongSinceLastPingSent) twoWayConnected->setValue(false);
-
+		isConnected->setValue(receivedPongSinceLastPingSent);
 		sendPing();
-		receivedPongSinceLastPingSent = false;
 		break;
 	}
 }

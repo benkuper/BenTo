@@ -24,6 +24,17 @@ public:
 	static var updateColorHSVFromScript(const var::NativeFunctionArgs &args);
 	static var updateColorsRGBFromScript(const var::NativeFunctionArgs &args);
 	static var updateColorsHSVFromScript(const var::NativeFunctionArgs &args);
+
+	static var fillRGBFromScript(const var::NativeFunctionArgs& args);
+	static var fillHSVFromScript(const var::NativeFunctionArgs& args);
+	static var pointRGBFromScript(const var::NativeFunctionArgs& args);
+	static var pointHSVFromScript(const var::NativeFunctionArgs& args);
+	static var gradientRGBFromScript(const var::NativeFunctionArgs& args);
+	static var gradientHSVFromScript(const var::NativeFunctionArgs& args);
+	static var lerpColorFromScript(const var::NativeFunctionArgs& args);
+	static var getHSVColorFromScript(const var::NativeFunctionArgs& args);
+
+	static Colour getColorFromArgs(const var * a, int numArgs, int offset, bool useHSV = false);
 };
 
 class ScriptBlock :

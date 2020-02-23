@@ -1153,6 +1153,9 @@
     <ClCompile Include="..\..\Source\Prop\PropManager.cpp">
       <Filter>BenTo\Source\Prop</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\BentoSettings.cpp">
+      <Filter>BenTo\Source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\BentoEngine.cpp">
       <Filter>BenTo\Source</Filter>
     </ClCompile>
@@ -3286,6 +3289,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\crypto\hmac\SHA1.cpp">
       <Filter>JUCE Modules\juce_organicui\helpers\crypto\hmac</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\helpers\OSCHelpers.cpp">
+      <Filter>JUCE Modules\juce_organicui\helpers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\helpers\StringUtil.cpp">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClCompile>
@@ -4082,6 +4088,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\PropManager.h">
       <Filter>BenTo\Source\Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\BentoSettings.h">
+      <Filter>BenTo\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\BentoEngine.h">
       <Filter>BenTo\Source</Filter>

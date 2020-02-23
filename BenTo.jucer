@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.7" headerPath="../../Source"
-              id="LP0of5" version="1.0.16" projectLineFeed="&#10;">
+              id="LP0of5" version="1.1.0" projectLineFeed="&#10;">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -503,6 +503,9 @@
         <FILE id="e3SfwF" name="PropManager.cpp" compile="1" resource="0" file="Source/Prop/PropManager.cpp"/>
         <FILE id="PX1SDd" name="PropManager.h" compile="0" resource="0" file="Source/Prop/PropManager.h"/>
       </GROUP>
+      <FILE id="tOdLFU" name="BentoSettings.cpp" compile="1" resource="0"
+            file="Source/BentoSettings.cpp"/>
+      <FILE id="o4vHyg" name="BentoSettings.h" compile="0" resource="0" file="Source/BentoSettings.h"/>
       <FILE id="z7KsWh" name="BentoEngine.cpp" compile="1" resource="0" file="Source/BentoEngine.cpp"/>
       <FILE id="zg8iGH" name="BentoEngine.h" compile="0" resource="0" file="Source/BentoEngine.h"/>
       <FILE id="NA8DkH" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
@@ -545,7 +548,7 @@
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               extraLinkerFlags="Servus">
+               externalLibraries="Servus">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include&#10;../../External/servus/include"
                        libraryPath="../../External/servus/lib/osx/debug"/>
@@ -554,20 +557,20 @@
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_osc" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_osc" path="../chataigne/JUCE/modules"/>
         <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="../chataigne/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
@@ -696,5 +699,6 @@
     <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
-  <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"/>
+  <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"
+               JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1"/>
 </JUCERPROJECT>
