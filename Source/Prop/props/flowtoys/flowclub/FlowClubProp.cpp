@@ -65,7 +65,7 @@ void FlowClubProp::onControllableFeedbackUpdateInternal(ControllableContainer* c
 
 	if (c == irLevel)
 	{
-		OSCMessage m("/ir/level");
+		OSCMessage m("/ir/brightness");
 		m.addFloat32(irLevel->floatValue());
 		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 	}
