@@ -9,27 +9,37 @@
 class OSCEvent
 {
 public:
-    enum Type { MessageReceived, AliveChanged };
+    enum Type
+    {
+        MessageReceived,
+        AliveChanged
+    };
 
     OSCEvent(Type t, OSCMessage *m = nullptr) : type(t), msg(m) {}
 
     Type type;
-    OSCMessage * msg;
-    OSCMessage &getMessage() {return *msg;}
+    OSCMessage *msg;
+    OSCMessage &getMessage() { return *msg; }
 };
 
 class WifiManager; //forward declaration
 
-class OSCManager : public Component, public EventBroadcaster<OSCEvent> {
+class OSCManager : public Component, public EventBroadcaster<OSCEvent>
+{
 public:
-    OSCManager(WifiManager * wifi);
+    OSCManager(WifiManager *wifi);
     ~OSCManager() {}
 
-    WifiManager * wifi;
+    WifiManager *wifi;
 
     bool enabled;
-    
+
+#ifdef USE_PREFERENCES
     Preferences prefs;
+#elif defined USE_SETTINGS_MANAGER
+    SettingsManager prefs;
+#endif
+
     WiFiUDP udp;
 
     const int localPort = 9000; // input port
@@ -53,7 +63,7 @@ public:
 
     void sendMessage(OSCMessage &m);
     void sendMessage(String address);
-    void sendMessage(String source, String command, var * data, int numData);
+    void sendMessage(String source, String command, var *data, int numData);
 
-    bool handleCommand(String command, var * data, int numData) override;
+    bool handleCommand(String command, var *data, int numData) override;
 };

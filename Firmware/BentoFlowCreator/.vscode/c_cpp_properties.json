@@ -3,9 +3,9 @@
         {
             "name": "Win32",
             "includePath": [
+                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
+                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.5.2\\**",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
-                "D:\\Documents\\Arduino\\libraries\\FastLED",
-                "D:\\Documents\\Arduino\\libraries\\OSC",
                 "${workspaceFolder}/**",
                 "${workspaceFolder}",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.4\\**"

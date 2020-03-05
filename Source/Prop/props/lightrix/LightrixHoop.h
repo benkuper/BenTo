@@ -19,6 +19,12 @@ public:
 	LightrixHoopProp(var params = var());
 	~LightrixHoopProp();
 
+	ControllableContainer buttonCC;
+	BoolParameter* button;
+	Trigger* shortPress;
+	Trigger* longPress;
+	IntParameter* multiPress;
+
 	String getTypeString() const override { return "Lightrix Hoop"; }
 	static LightrixHoopProp* create(var params) { return new LightrixHoopProp(params); }
 

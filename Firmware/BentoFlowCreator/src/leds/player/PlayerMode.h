@@ -2,7 +2,7 @@
 
 #include "../LedMode.h"
 #include "../../files/FileManager.h"
-#include "ArduinoJson/ArduinoJson.h"
+#include "../../common/ArduinoJson/ArduinoJson.h"
 
 #define FRAME_SIZE (LED_COUNT * 4)
 
@@ -30,8 +30,11 @@ public:
   ~PlayerMode();
 
   //file
+#ifdef HAS_FILS
   File curFile;
   File metaDataFile;
+#endif
+  
   StaticJsonDocument<200> metaData;
 
   //info

@@ -1,5 +1,6 @@
 #include "LedManager.h"
 
+
 LedManager::LedManager() : Component("leds"),
                            mode(Mode::Direct),
                            currentMode(nullptr),

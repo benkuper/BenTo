@@ -1,20 +1,26 @@
 #include "OSCManager.h"
 #include "../wifi/WifiManager.h"
 
-OSCManager::OSCManager(WifiManager * wifi) : Component("osc"),
-                           wifi(wifi),    
-                           enabled(false),
-                           pingTimeout(5000),
-                           isAlive(false)
+OSCManager::OSCManager(WifiManager *wifi) : Component("osc"),
+                                            wifi(wifi),
+                                            enabled(false),
+                                            pingTimeout(5000),
+                                            isAlive(false)
 {
 }
 
 void OSCManager::init()
 {
-    prefs.begin("osc", true);
+
+#ifdef USE_PREFERENCES
+    prefs.begin(name.c_str(), true);
     remoteHost = prefs.getString("remoteHost", "");
     prefs.end();
-    
+
+#elif defined USE_SETTINGS_MANAGER
+    prefs.readSettings(String("/" + name + ".json").c_str());
+    remoteHost = prefs.getString("remoteHost", "");
+#endif
     NDBG("Init");
 }
 
@@ -23,7 +29,7 @@ void OSCManager::update()
     if (!enabled)
         return;
 
-    if(pingEnabled && millis() > timeSinceLastReceivedPing + pingTimeout)
+    if (pingEnabled && millis() > timeSinceLastReceivedPing + pingTimeout)
     {
         setAlive(false);
     }
@@ -50,18 +56,17 @@ void OSCManager::setEnabled(bool value)
         udp.flush();
         udp.stop();
         setAlive(false);
-    }   
+    }
 }
 
-
-void OSCManager::setAlive(bool value) 
+void OSCManager::setAlive(bool value)
 {
-    if(isAlive == value) return;
+    if (isAlive == value)
+        return;
     isAlive = value;
-    NDBG("Set alive "+String(isAlive));
+    //NDBG("Set alive "+String(isAlive));
     sendEvent(OSCEvent(OSCEvent::AliveChanged));
 }
-
 
 void OSCManager::receiveOSC()
 {
@@ -83,14 +88,19 @@ void OSCManager::processMessage(OSCMessage &msg)
         char hostData[32];
         msg.getString(0, hostData, 32);
         remoteHost = String(hostData);
-        NDBG("Got yo request from : " + remoteHost);
+        //NDBG("Got yo request from : " + remoteHost);
 
-        prefs.begin("osc");
+#ifdef USE_PREFERENCES
+        prefs.begin(name.c_str());
         prefs.putString("remoteHost", remoteHost);
         prefs.end();
+#elif defined USE_SETTINGS_MANAGER
+        prefs.setString("remoteHost", remoteHost);
+        prefs.writeSettings(String("/" + name + ".json").c_str());
+#endif
 
         OSCMessage msg("/wassup");
-        
+
         msg.add(wifi->getIP().c_str());
         msg.add(getDeviceID().c_str());
         msg.add(DEVICE_TYPE);
@@ -105,7 +115,8 @@ void OSCManager::processMessage(OSCMessage &msg)
         OSCMessage msg("/pong");
         msg.add(getDeviceID().c_str());
         sendMessage(msg);
-    }else
+    }
+    else
     {
         sendEvent(OSCEvent(OSCEvent::MessageReceived, &msg));
     }
@@ -113,7 +124,8 @@ void OSCManager::processMessage(OSCMessage &msg)
 
 void OSCManager::sendMessage(OSCMessage &msg)
 {
-    if(!enabled) return;
+    if (!enabled)
+        return;
 
     if (remoteHost.length() == 0)
         return;
@@ -129,7 +141,8 @@ void OSCManager::sendMessage(OSCMessage &msg)
 
 void OSCManager::sendMessage(String address)
 {
-    if(!enabled) return;
+    if (!enabled)
+        return;
 
     OSCMessage m(address.c_str());
     sendMessage(m);
@@ -137,31 +150,35 @@ void OSCManager::sendMessage(String address)
 
 void OSCManager::sendMessage(String source, String command, var *data, int numData)
 {
-    if(!enabled) return;
+    if (!enabled)
+        return;
 
-    OSCMessage msg(("/"+source+"/"+command).c_str());
+    OSCMessage msg(("/" + source + "/" + command).c_str());
     msg.add(getDeviceID().c_str());
-    for(int i=0;i<numData;i++)
+    for (int i = 0; i < numData; i++)
     {
-        switch(data[i].type)
+        switch (data[i].type)
         {
-            case 'f': msg.add(data[i].floatValue());
+        case 'f':
+            msg.add(data[i].floatValue());
             break;
 
-            case 'i': msg.add(data[i].intValue());
+        case 'i':
+            msg.add(data[i].intValue());
             break;
 
-            case 's': msg.add(data[i].stringValue().c_str());
+        case 's':
+            msg.add(data[i].stringValue().c_str());
             break;
         }
-    } 
+    }
     sendMessage(msg);
 }
 
-bool OSCManager::handleCommand(String command, var * data, int numData)
+bool OSCManager::handleCommand(String command, var *data, int numData)
 {
 
-    if(checkCommand(command, "enabled", numData, 1))
+    if (checkCommand(command, "enabled", numData, 1))
     {
         setEnabled(data[0].intValue() == 1);
         return true;

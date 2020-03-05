@@ -1,14 +1,24 @@
 #pragma once
+#include "Arduino.h"
 
-#define PROTO_V1 1
-#define PROTO_V2 2
+// #define CREATOR_PROTO_V0
+// #define CREATOR_PROTO_V1
+// #define CREATOR_PROTO_V2
+// #define LT_BALL
+ #define LT_HOOP
 
-#ifndef MODEL
-#define MODEL PROTO_V1
-#endif
-
-#if MODEL == PROTO_V1
+#if defined PROTO_V0
+#include "config_protov0.h"
+#elif defined PROTO_V1
 #include "config_protov1.h"
-#elif MODEL == PROTO_V2
+#elif defined PROTO_V2
 #include "config_protov2.h"
+#elif defined LT_HOOP
+#include "config_lthoop.h"
+#elif defined LT_BALL
+#include "config_ltball.h"
 #endif
+
+
+#pragma message("Compiling for " __DEVICE_TYPE__)
+

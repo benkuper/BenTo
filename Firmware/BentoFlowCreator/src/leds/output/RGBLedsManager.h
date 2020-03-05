@@ -34,6 +34,10 @@ public:
     void setLed(int index, CRGB c);
         
 private:
-    Preferences prefs;
+#ifdef USE_PREFERENCES
+   Preferences prefs;
+#elif defined USE_SETTINGS_MANAGER
+    SettingsManager prefs;
+#endif
 };
     

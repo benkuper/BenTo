@@ -18,9 +18,6 @@
 
 //battery sense (no battery sensing)
 
-// imu config
-#define HAS_IMU 0
-
 // ir config
 #define IR_TX_PIN 17 // drive with PWM HIGH is on and LOW is off.
 

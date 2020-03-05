@@ -10,11 +10,10 @@
 
 class MainManager : public Component {
 public:
-    MainManager(String deviceType, String fwVersion);
+    MainManager(String fwVersion);
     ~MainManager() {}
 
     String hardwareID;
-    String deviceType;
     String fwVersion;
 
     CommunicationManager comm;

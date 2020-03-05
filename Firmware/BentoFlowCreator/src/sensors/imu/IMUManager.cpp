@@ -30,7 +30,7 @@ void IMUManager::init()
   NDBG("Init");
   if(isConnected) return;
 
-#if HAS_IMU
+#ifdef HAS_IMU
   Wire.begin(SDA_PIN, SCL_PIN);
 
   if (!bno.begin())

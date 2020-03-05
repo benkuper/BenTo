@@ -1,8 +1,12 @@
 #pragma once
 
 #include "../../common/Common.h"
-#include <WiFi.h>
 
+#ifdef ESP32
+#include <WiFi.h>
+#elif defined ESP8266
+#include <ESP8266WiFi.h>
+#endif
 
 class WifiManagerEvent
 {
@@ -21,7 +25,11 @@ public:
 
   ConnectionState state;
 
+#ifdef USE_PREFERENCES
   Preferences prefs;
+#elif defined USE_SETTINGS_MANAGER
+  SettingsManager prefs;
+#endif
 
   const long timeBetweenTries = 500; //ms
   const long connectionTimeout = 5000; //ms

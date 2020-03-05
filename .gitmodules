@@ -10,9 +10,6 @@
 [submodule "Firmware/BentoFlowCreator/src/leds/output/FastLED"]
 	path = Firmware/BentoFlowCreator/src/leds/output/FastLED
 	url = https://github.com/benkuper/FastLED
-[submodule "Firmware/BentoFlowCreator/src/leds/player/ArduinoJson"]
-	path = Firmware/BentoFlowCreator/src/leds/player/ArduinoJson
-	url = https://github.com/benkuper/ArduinoJson
 [submodule "Firmware\\BentoFlowCreator\\src\\sensors\\imu\\"]
 	path = Firmware\\BentoFlowCreator\\src\\sensors\\imu\\
 	url = https://github.com/adafruit/Adafruit_Sensor
@@ -25,3 +22,6 @@
 [submodule "Firmware/BentoFlowCreator/src/communication/osc/OSC"]
 	path = Firmware/BentoFlowCreator/src/communication/osc/OSC
 	url = https://github.com/benkuper/OSC
+[submodule "Firmware/BentoFlowCreator/src/common/ArduinoJson"]
+	path = Firmware/BentoFlowCreator/src/common/ArduinoJson
+	url = http://github.com/benkuper/ArduinoJson

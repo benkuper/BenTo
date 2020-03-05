@@ -2,10 +2,18 @@
 
 #include "../common/Common.h"
 
+#ifdef HAS_FILES
+#include <WebServer.h>
+#ifdef ESP32
 #include <SPI.h>
 #include <SD.h>
 #include <ESPmDNS.h>
-#include <WebServer.h>
+#elif defined ESP8266
+#include <ESP8266mDNS.h>
+#endif
+
+#endif
+
 
 class FileEvent
 {
@@ -22,12 +30,15 @@ public:
     FileManager();
     ~FileManager() {}
 
+ #ifdef HAS_FILES
     static SPIClass spiSD;
+    File uploadingFile;
+    WebServer server;
+#endif
+
     static bool sdIsDetected;
 
     bool serverIsEnabled;
-    File uploadingFile;
-    WebServer server;
     int uploadedBytes;
     bool isUploading;
 
@@ -35,9 +46,11 @@ public:
     void update();
 
     //File manipulation
+#ifdef HAS_FILES
     static File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
     static void deleteFileIfExists(String path);
     static void listDir(fs::FS &fs, const char *dirname, uint8_t levels);
+#endif
 
     //Server handling
     void initServer();

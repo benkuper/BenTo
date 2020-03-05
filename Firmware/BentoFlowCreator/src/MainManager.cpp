@@ -1,9 +1,8 @@
 #include "MainManager.h"
 
-MainManager::MainManager(String deviceType, String fwVersion) : Component("root"),
-                                                                deviceType(deviceType),
-                                                                fwVersion(fwVersion),
-                                                                initTimer(2000)
+MainManager::MainManager(String fwVersion) : Component("root"),
+                                             fwVersion(fwVersion),
+                                             initTimer(2000)
 {
 }
 
@@ -17,8 +16,10 @@ void MainManager::init()
     comm.init();
 
 #ifdef SLEEP_PIN
+#ifdef KEEP_SLEEP_PIN_HIGH
     pinMode(SLEEP_PIN, OUTPUT);
     digitalWrite(SLEEP_PIN, HIGH);
+#endif
 #endif
 
     sensors.addListener(std::bind(&MainManager::sensorEvent, this, std::placeholders::_1));
@@ -50,12 +51,24 @@ void MainManager::sleep()
     delay(500);
 
 #ifdef SLEEP_PIN
-    digitalWrite(SLEEP_PIN, LOW);
-#endif
+    pinMode(SLEEP_PIN, OUTPUT);
+
+#ifdef INFINITE_LOOP_ON_SLEEP
+    while (true)
+        digitalWrite(SLEEP_PIN, SLEEP_PIN_SLEEP_VAL);
+#else
+    digitalWrite(SLEEP_PIN, SLEEP_PIN_SLEEP_VAL);
+#endif //INFINITE LOOP
+
+#endif //SLEEP_PIN
 
 #ifdef SLEEP_WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, HIGH);
     esp_deep_sleep_start();
+#endif
+
+#ifdef ESP8266
+    ESP.deepSleep(5e6);
 #endif
 }
 
@@ -64,18 +77,19 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
     leds.setConnectionState(e.type);
 
-    
     if (e.source == "wifi")
     {
-        if(e.type == Connected || e.type == Hotspot){
+        if (e.type == Connected || e.type == Hotspot)
+        {
             NDBG("Connected with IP " + comm.wifiManager.getIP());
             comm.oscManager.setEnabled(true);
-        }else
+        }
+        else
         {
             comm.oscManager.setEnabled(false);
         }
 
-        if(e.type == Connected || e.type == ConnectionError || e.type == Hotspot)
+        if (e.type == Connected || e.type == ConnectionError || e.type == Hotspot)
         {
             initTimer.start();
         }

@@ -29,6 +29,7 @@ void PlayerMode::init()
 
 void PlayerMode::update()
 {
+#ifdef HAS_FILES
   if (!curFile)
     return;
 
@@ -48,10 +49,12 @@ void PlayerMode::update()
   if (!isPlaying)
     return;
   playFrame();
+#endif
 }
 
 void PlayerMode::playFrame()
 {
+#ifdef HAS_FILES
   if (curFile.available() < FRAME_SIZE)
   {
     DBG("End of show");
@@ -93,6 +96,7 @@ void PlayerMode::playFrame()
   curFile.read(buffer, FRAME_SIZE);
 
   showCurrentFrame();
+#endif  
 }
 
 void PlayerMode::showBlackFrame()
@@ -144,8 +148,8 @@ void PlayerMode::load(String path)
 {
   showBlackFrame();
 
+#ifdef HAS_FILES
   DBG("Load file " + path);
-
   DBG("Reading meta data");
   metaDataFile = FileManager::openFile(path + ".meta", false); //false is for reading
   if (!metaDataFile)
@@ -193,10 +197,12 @@ void PlayerMode::load(String path)
   }
 
   sendEvent(PlayerEvent(PlayerEvent::Play));
+#endif
 }
 
 void PlayerMode::play(float atTime)
 {
+#ifdef HAS_FILES
   DBG("Play " + String(atTime));
   if (!curFile)
     return;
@@ -207,10 +213,12 @@ void PlayerMode::play(float atTime)
   prevTimeMs = millis();
 
   sendEvent(PlayerEvent(PlayerEvent::Play));
+#endif
 }
 
 void PlayerMode::seek(float t, bool doSendEvent)
 {
+#ifdef HAS_FILES
   if (!curFile)
     return;
 
@@ -232,21 +240,26 @@ void PlayerMode::seek(float t, bool doSendEvent)
 
   if (doSendEvent)
     sendEvent(PlayerEvent(PlayerEvent::Play));
+#endif    
 }
 
 void PlayerMode::pause()
 {
+#ifdef HAS_FILES
   DBG("Pause");
   isPlaying = false;
   sendEvent(PlayerEvent(PlayerEvent::Pause));
+#endif    
 }
 
 void PlayerMode::stopPlaying()
 {
+#ifdef HAS_FILES
   DBG("Stop");
   isPlaying = false;
   showBlackFrame();
   sendEvent(PlayerEvent(PlayerEvent::Stop));
+#endif
 }
 
 void PlayerMode::togglePlayPause()
@@ -330,8 +343,10 @@ bool PlayerMode::handleCommand(String command, var *data, int numData)
   
   if (checkCommand(command, "delete", numData, 1))
   {
+  #ifdef HAS_FILES
     FileManager::deleteFileIfExists(String(data[0].stringValue()) + ".colors");
     FileManager::deleteFileIfExists(String(data[0].stringValue()) + ".meta");
+  #endif
     return true;
   }
 

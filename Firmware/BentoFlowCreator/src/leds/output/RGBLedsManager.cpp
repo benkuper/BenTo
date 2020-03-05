@@ -7,13 +7,21 @@ RGBLedsManager::RGBLedsManager() : Component("rgb"),
 
 void RGBLedsManager::init()
 {
+#ifdef LED_EN_PIN
     pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
     digitalWrite(LED_EN_PIN, HIGH);
+#endif
 
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
-    prefs.begin(name.c_str(), true);
+
+#ifdef USE_PREFERENCES
+    prefs.begin(name.c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
     prefs.end();
+#elif defined USE_SETTINGS_MANAGER
+    prefs.readSettings(String("/" + name + ".json").c_str());
+    setBrightness(prefs.getFloat("brightness", globalBrightness), false);
+#endif
 }
 
 void RGBLedsManager::update()
@@ -29,47 +37,57 @@ void RGBLedsManager::setBrightness(float value, bool save)
 
     if (save)
     {
+#ifdef USE_PREFERENCES
         prefs.begin(name.c_str());
-        globalBrightness = prefs.getFloat("brightness", globalBrightness);
+        prefs.putFloat("brightness", globalBrightness);
         prefs.end();
+#elif defined USE_SETTINGS_MANAGER
+        prefs.readSettings(String("/" + name + ".json").c_str());
+        prefs.setFloat("brightness", globalBrightness);
+#endif
     }
 }
 
 bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 {
-    NDBG("Handle command : "+command);
+    NDBG("Handle command : " + command);
     if (checkCommand(command, "brightness", numData, 1))
     {
         setBrightness(data[0].floatValue());
         return true;
-    }else if(checkCommand(command, "fill", numData, 3))
+    }
+    else if (checkCommand(command, "fill", numData, 3))
     {
-        CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
-        if(numData >= 4) c.nscale8((int)(data[3].floatValue() * 255));
+        CRGB c((int)(data[0].floatValue() * 255), (int)(data[1].floatValue() * 255), (int)(data[2].floatValue() * 255));
+        if (numData >= 4)
+            c.nscale8((int)(data[3].floatValue() * 255));
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         fillAll(c);
         return true;
-    }else if(checkCommand(command, "range", numData, 5))
+    }
+    else if (checkCommand(command, "range", numData, 5))
     {
         bool hasAlpha = numData >= 6;
-        CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
-        if(hasAlpha) c.nscale8((int)(data[3].floatValue() * 255));
-        fillRange(c, data[hasAlpha?4:3].floatValue(), data[hasAlpha?5:4].floatValue());
+        CRGB c((int)(data[0].floatValue() * 255), (int)(data[1].floatValue() * 255), (int)(data[2].floatValue() * 255));
+        if (hasAlpha)
+            c.nscale8((int)(data[3].floatValue() * 255));
+        fillRange(c, data[hasAlpha ? 4 : 3].floatValue(), data[hasAlpha ? 5 : 4].floatValue());
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         return true;
-    }else if(checkCommand(command, "point", numData, 5))
+    }
+    else if (checkCommand(command, "point", numData, 5))
     {
         bool hasAlpha = numData >= 6;
-        CRGB c((int)(data[0].floatValue()*255), (int)(data[1].floatValue()*255), (int)(data[2].floatValue()*255));
-        if(hasAlpha) c.nscale8((int)(data[3].floatValue() * 255));
-        point(c, data[hasAlpha?4:3].floatValue(), data[hasAlpha?5:4].floatValue());
+        CRGB c((int)(data[0].floatValue() * 255), (int)(data[1].floatValue() * 255), (int)(data[2].floatValue() * 255));
+        if (hasAlpha)
+            c.nscale8((int)(data[3].floatValue() * 255));
+        point(c, data[hasAlpha ? 4 : 3].floatValue(), data[hasAlpha ? 5 : 4].floatValue());
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         return true;
     }
 
     return false;
 }
-
 
 //Helpers
 void RGBLedsManager::clear()
@@ -79,24 +97,26 @@ void RGBLedsManager::clear()
 
 void RGBLedsManager::fillAll(CRGB c)
 {
-    fillRange(c, 0 , 1);
+    fillRange(c, 0, 1);
 }
 
 void RGBLedsManager::fillRange(CRGB c, float start, float end, bool doClear)
 {
-    if (doClear) clear();
+    if (doClear)
+        clear();
     LedHelpers::fillRange(leds, LED_COUNT, c, start, end);
 }
 
 void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear)
 {
-    if (doClear) clear();
+    if (doClear)
+        clear();
     LedHelpers::point(leds, LED_COUNT, c, pos, fade);
 }
 
-void RGBLedsManager::setLed(int index, CRGB c) 
+void RGBLedsManager::setLed(int index, CRGB c)
 {
-    if(index < 0 || index >= LED_COUNT) return;
+    if (index < 0 || index >= LED_COUNT)
+        return;
     leds[index] = c;
 }
-

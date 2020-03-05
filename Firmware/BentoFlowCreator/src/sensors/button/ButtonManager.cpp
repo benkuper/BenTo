@@ -15,12 +15,17 @@ void ButtonManager::init()
 {
     pinMode(BUTTON_PIN, INPUT);
     isPressed = digitalRead(BUTTON_PIN); //init here so it won't send an event at first update
+ #ifdef BUTTON_INVERTED
+    isPressed = !isPressed;
+#endif
 }
 
 void ButtonManager::update()
 {
     bool v = digitalRead(BUTTON_PIN);
-
+#ifdef BUTTON_INVERTED
+    v = !v;
+#endif
     if (v)
         debounceCount = min(debounceCount + 1, buttonPressDebounce);
     else
