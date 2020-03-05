@@ -30,6 +30,8 @@ public:
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
 
+	virtual void clearItem() override;
+
 	virtual void setSerialDevice(SerialDevice* d);
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
@@ -57,5 +59,6 @@ public:
 	virtual void sendPing() override;
 	virtual void powerOffProp() override;
 	virtual void restartProp() override;
+	virtual void sendWiFiCredentials(String ssid, String pass);
 
 };

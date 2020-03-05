@@ -23,10 +23,11 @@
 #pragma once
 #include <Arduino.h>
 
-#ifdef ARDUINO_ARCH_ESP32
+#ifdef ESP32
 #  include "SPIFFS.h"
 #endif
-#ifdef ARDUINO_ARCH_ESP8266
+
+#ifdef ESP8266
 #  include "FS.h"
 #endif
 

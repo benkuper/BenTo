@@ -33,9 +33,6 @@ public:
 	
 	const int localPort = 10000;
 
-	StringParameter * localHost;
-	StringParameter * remoteHost;
-
 	BoolParameter * sendFeedback;
 
 	Trigger * detectProps;

@@ -19,6 +19,13 @@ void RGBLedsManager::init()
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
     prefs.end();
 #elif defined USE_SETTINGS_MANAGER
+//init once with a json if it doesn't exist yet
+    prefs.readSettings(String("/" + name + ".json").c_str());
+    float brightness = prefs.getFloat("brightness", globalBrightness);
+    prefs.loadJson(String("{\"brightness\":\""+String(brightness)+"\"}").c_str());
+    prefs.writeSettings(String("/" + name + ".json").c_str());
+
+//actually read the data
     prefs.readSettings(String("/" + name + ".json").c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
 #endif

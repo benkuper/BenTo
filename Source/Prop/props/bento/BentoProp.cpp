@@ -31,6 +31,12 @@ BentoProp::~BentoProp()
 
 }
 
+void BentoProp::clearItem()
+{
+	Prop::clearItem();
+	setSerialDevice(nullptr);
+}
+
 void BentoProp::setSerialDevice(SerialDevice* d)
 {
 	if (serialDevice == d) return;
@@ -335,13 +341,43 @@ void BentoProp::sendPing()
 void BentoProp::powerOffProp()
 {
 	NLOG(niceName, "Powering off");
-	OSCMessage m("/root/sleep");
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("root.sleep\n");
+	}
+	else
+	{
+		OSCMessage m("/root/sleep");
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
 }
 
 void BentoProp::restartProp()
 {
 	NLOG(niceName, "Restarting");
-	OSCMessage m("/root/restart");
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("root.restart\n");
+	}
+	else
+	{
+		OSCMessage m("/root/restart");
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
+}
+
+void BentoProp::sendWiFiCredentials(String ssid, String pass)
+{
+	NLOG(niceName, "Set Wifi Credentials : " << ssid << ":" << pass);
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("wifi.setCredentials "+ssid+","+pass+"\n");
+	}
+	else
+	{
+		OSCMessage m("/wifi/setCredentials");
+		m.addString(ssid);
+		m.addString(pass);
+		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	}
 }

@@ -20,11 +20,12 @@
 
 */
 
+//#include "../DebugHelpers.h"
 #include "SettingsManager.h"
-#ifdef ARDUINO_ARCH_ESP32
+#ifdef ESP32
 #  include "SPIFFS.h"
 #endif
-#ifdef ARDUINO_ARCH_ESP8266
+#ifdef ESP8266
 #  include "FS.h"
 #endif
 
@@ -43,6 +44,7 @@ int SettingsManager::readSettings(const char *fileName) {
   } else {
     char js[JSON_LEN] = {0};
     getFileContent(js, file);
+    // DBG("File content : "+String(js));
     loaded = loadJson(js);
     file.close();
     SPIFFS.end();
@@ -72,7 +74,7 @@ int SettingsManager::writeSettings(const char *fileName, JsonVariant conf) {
     return SM_ERROR;
   } else {
     serializeJson(conf, file);
-    delay(1000);
+    delay(20);
     // DBG("File written");
   }
   file.close();
@@ -120,7 +122,7 @@ int SettingsManager::loadJson(const char *payload) {
 */
 void SettingsManager::openSPIFFS() {
   if (!SPIFFS.begin()) {
-    delay(100);
+    delay(20);
     // DBG("Could not mount SPIFFS file system");
   } else {
     // DBG("SPIFFS file system, open");

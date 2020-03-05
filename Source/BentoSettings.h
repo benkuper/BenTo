@@ -19,6 +19,11 @@ public:
 
 	BentoSettings();
 	~BentoSettings();
+	
+	ControllableContainer wifiCC;
+	StringParameter * wifiSSID;
+	StringParameter * wifiPass;
+	Trigger* saveWifiTrigger;
 
 	ControllableContainer flashCC;
 	FileParameter* arduinoPath;

@@ -52,16 +52,6 @@ PropManager::PropManager() :
 	
 	String localIp = NetworkHelpers::getLocalIP();
 
-	StringArray a;
-	a.addTokens(localIp, ".", "\"");
-	String broadcastIp = "192.168.1.255";
-	if (a.size() == 4) broadcastIp = a[0] + "." + a[1] + "." + a[2] + ".255";
-
-	localHost = addStringParameter("Local host", "Local IP to communicate with all clubs, should be automatically set but you can change it.", localIp);
-	localHost->isSavable = false;
-	remoteHost = addStringParameter("Broadcast host", "Broadcast IP to communicate with all clubs", broadcastIp);
-	remoteHost->isSavable = false;
-
 	addChildControllableContainer(&familiesCC);
 	families.add(new FlowtoysFamily());
 	families.add(new GarnavFamily());
@@ -155,10 +145,24 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	}
 	else if (t == detectProps)
 	{
-		OSCMessage m("/yo");
-		m.addArgument(localHost->stringValue());
-		sender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
-		LOG("Auto detecting props on " << remoteHost->stringValue() << "...");
+
+		StringArray ips = NetworkHelpers::getLocalIPs();
+
+		LOG("Auto detecting props");
+		for (auto& ip : ips)
+		{
+			StringArray a;
+			a.addTokens(ip, ".", "\"");
+			if (a.size() < 4) continue;
+			String broadcastIP = a[0] + "." + a[1] + "." + a[2] + ".255";
+
+
+			OSCMessage m("/yo");
+			m.addArgument(ip);
+			sender.sendToIPAddress(broadcastIP, 9000, m);
+			LOG(" > sending /yo on " << broadcastIP << " with local ip " << ip << "...");
+		}
+		
 
 		LighttoysFTProp::autoDetectRemotes();
 		((FlowtoysFamily *)getFamilyWithName("Flowtoys"))->checkSerialDevices();

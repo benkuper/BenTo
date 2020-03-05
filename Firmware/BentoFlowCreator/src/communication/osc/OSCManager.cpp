@@ -18,6 +18,14 @@ void OSCManager::init()
     prefs.end();
 
 #elif defined USE_SETTINGS_MANAGER
+//init once with a json if it doesn't exist yet
+    prefs.readSettings(String("/" + name + ".json").c_str());
+    remoteHost = prefs.getString("remoteHost", "");
+    prefs.loadJson(String("{\"remoteHost\":\""+remoteHost+"\"}").c_str());
+    prefs.writeSettings(String("/" + name + ".json").c_str());
+
+
+//actually read the settings
     prefs.readSettings(String("/" + name + ".json").c_str());
     remoteHost = prefs.getString("remoteHost", "");
 #endif

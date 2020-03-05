@@ -10,6 +10,16 @@ WifiManager::WifiManager() : Component("wifi"),
 void WifiManager::init()
 {
     NDBG("Init");
+
+#if defined USE_SETTINGS_MANAGER
+//init once with a json if it doesn't exist yet
+    prefs.readSettings(String("/" + name + ".json").c_str());
+    String ssid = prefs.getString("ssid");
+    String pass = prefs.getString("pass");
+    prefs.loadJson(String("{\"ssid\":\""+ssid+"\",\"pass\":\""+pass+"\"}").c_str());
+    prefs.writeSettings(String("/" + name + ".json").c_str());
+#endif
+
     connect();
 }
 
@@ -70,13 +80,13 @@ void WifiManager::connect()
 
 #ifdef USE_PREFERENCES
     prefs.begin(name.c_str(), true);
-    String ssid = prefs.getString("ssid", "jonglissimo");
-    String pass = prefs.getString("pass", "lightpainting");
+    String ssid = prefs.getString("ssid", "");
+    String pass = prefs.getString("pass", "");
     prefs.end();
 #elif defined USE_SETTINGS_MANAGER
     prefs.readSettings(String("/" + name + ".json").c_str());
-    String ssid = prefs.getString("ssid", "flowspace");
-    String pass = prefs.getString("pass", "flowarts");
+    String ssid = prefs.getString("ssid");
+    String pass = prefs.getString("pass");
 #endif
 
     NDBG("Connecting to " + ssid + " : " + pass + "...");
@@ -105,7 +115,6 @@ void WifiManager::saveWifiConfig(String ssid, String pass)
     prefs.putString("pass", pass);
     prefs.end();
 #elif defined USE_SETTINGS_MANAGER
-    prefs.readSettings(String("/" + name + ".json").c_str()); //Loading json from file config.json
     prefs.setString("ssid", ssid);
     prefs.setString("pass", pass);
     prefs.writeSettings(String("/" + name + ".json").c_str());

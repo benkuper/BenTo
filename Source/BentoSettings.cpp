@@ -16,9 +16,15 @@ juce_ImplementSingleton(BentoSettings)
 
 BentoSettings::BentoSettings() :
 	ControllableContainer("Bento Settings"),
-	flashCC("Flashing")
+	flashCC("Flashing"),
+	wifiCC("WiFi")
 {
 	saveAndLoadRecursiveData = true;
+
+	wifiSSID = wifiCC.addStringParameter("WiFi SSID", "The ssid to save in the prop for connecting", "");
+	wifiPass = wifiCC.addStringParameter("WiFi Password", "The password to save in the prop for connecting", "");
+	saveWifiTrigger = wifiCC.addTrigger("Save credentials", "Save the credentials into all connected props");
+	addChildControllableContainer(&wifiCC);
 
 	arduinoPath = flashCC.addFileParameter("ESP32 Path", "Path to the ESP32 folder that includes \"tools\" and \"hardware\" subfolders");
 	arduinoPath->directoryMode = true;
@@ -92,4 +98,17 @@ void BentoSettings::onControllableFeedbackUpdate(ControllableContainer* cc, Cont
 			}
 		}
 	}
+	else if (c == saveWifiTrigger)
+	{
+		for (auto& p : PropManager::getInstance()->items)
+		{
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+			{
+				if (bp->serialDevice == nullptr) continue;
+
+				bp->sendWiFiCredentials(wifiSSID->stringValue(), wifiPass->stringValue());
+			}
+		}
+	}
+
 }
