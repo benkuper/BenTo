@@ -11,7 +11,7 @@
 #pragma once
 
 #include "../OpenProp.h"
-#include "Common\Serial\SerialDeviceParameter.h"
+#include "Common/Serial/SerialDeviceParameter.h"
 
 class OpenSerialProp :
 	public OpenProp

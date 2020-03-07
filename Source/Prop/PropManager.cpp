@@ -23,7 +23,7 @@ juce_ImplementSingleton(PropManager)
 #include "props/lightrix/LightrixFamily.h"
 #include "props/lightrix/LightrixHoop.h"
 
-#include "Prop\props\open\serial\OpenSerialProp.h"
+#include "Prop/props/open/serial/OpenSerialProp.h"
 
 #include "BentoEngine.h"
 
