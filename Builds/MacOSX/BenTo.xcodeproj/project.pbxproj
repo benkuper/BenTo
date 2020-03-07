@@ -429,6 +429,14 @@
 			isa = PBXBuildFile;
 			fileRef = CEF3D190C2C5EEE09E38666A;
 		};
+		0810E02093C2716E0A823A44 = {
+			isa = PBXBuildFile;
+			fileRef = 74DBA15039C1879F00CC9745;
+		};
+		108BEC4EC89ADA1BCC8F46B4 = {
+			isa = PBXBuildFile;
+			fileRef = DE965786196CC6AFFBFD1F0D;
+		};
 		A42076C7C6E5BAF2DDBFC45F = {
 			isa = PBXBuildFile;
 			fileRef = 3CB40E424265CF9D5240523B;
@@ -1474,11 +1482,32 @@
 			path = ../../Source/Video/SpatializerEvent.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		710F6D107B0204D8B18A6917 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = OpenSerialProp.h;
+			path = ../../Source/Prop/props/open/serial/OpenSerialProp.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		72415574FA91DE513C1D6021 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = OpenProp.h;
+			path = ../../Source/Prop/props/open/OpenProp.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		746266F5EEE79F13E1F107C5 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
 			name = AudioManager.h;
 			path = ../../Source/Audio/AudioManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		74DBA15039C1879F00CC9745 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = OpenSerialProp.cpp;
+			path = ../../Source/Prop/props/open/serial/OpenSerialProp.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		75E55D038F692B1012611F23 = {
@@ -2354,6 +2383,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = ColorNodeViewUI.cpp;
 			path = ../../Source/Node/ui/ColorNodeViewUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		DE965786196CC6AFFBFD1F0D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = OpenProp.cpp;
+			path = ../../Source/Prop/props/open/OpenProp.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		DEB16B7DD07BB3E7A14131F0 = {
@@ -3237,6 +3273,25 @@
 			name = Cluster;
 			sourceTree = "<group>";
 		};
+		E6BABE8C0F16EA89073B74BD = {
+			isa = PBXGroup;
+			children = (
+				74DBA15039C1879F00CC9745,
+				710F6D107B0204D8B18A6917,
+			);
+			name = serial;
+			sourceTree = "<group>";
+		};
+		A3F3715A9678E7B8524B9457 = {
+			isa = PBXGroup;
+			children = (
+				E6BABE8C0F16EA89073B74BD,
+				DE965786196CC6AFFBFD1F0D,
+				72415574FA91DE513C1D6021,
+			);
+			name = open;
+			sourceTree = "<group>";
+		};
 		7138FD900572D9979BD4F782 = {
 			isa = PBXGroup;
 			children = (
@@ -3323,6 +3378,7 @@
 		5A92B1617AD663BB84A2778D = {
 			isa = PBXGroup;
 			children = (
+				A3F3715A9678E7B8524B9457,
 				7138FD900572D9979BD4F782,
 				3BA638F4EB9D3AB6736394F7,
 				B744CE432914FDBD840714D1,
@@ -3512,8 +3568,8 @@
 					"_DEBUG=1",
 					"DEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.1.1",
-					"JUCE_APP_VERSION_HEX=0x10101",
+					"JUCE_APP_VERSION=1.1.2",
+					"JUCE_APP_VERSION_HEX=0x10102",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3564,8 +3620,8 @@
 					"_NDEBUG=1",
 					"NDEBUG=1",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.1.1",
-					"JUCE_APP_VERSION_HEX=0x10101",
+					"JUCE_APP_VERSION=1.1.2",
+					"JUCE_APP_VERSION_HEX=0x10102",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
@@ -3822,6 +3878,8 @@
 				ACC6A484908650A5CA89F211,
 				47B128F62A48088C7DA09EAC,
 				05803BC9FCF4075036F57AEF,
+				0810E02093C2716E0A823A44,
+				108BEC4EC89ADA1BCC8F46B4,
 				A42076C7C6E5BAF2DDBFC45F,
 				C0671006D00090FF50EEBC69,
 				0BDEC6BC559575CD08C1754A,

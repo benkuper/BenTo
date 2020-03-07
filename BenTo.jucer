@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.7" headerPath="../../Source"
-              id="LP0of5" version="1.1.1" projectLineFeed="&#10;">
+              id="LP0of5" version="1.1.2" projectLineFeed="&#10;">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -432,6 +432,16 @@
                 file="Source/Prop/Cluster/PropClusterGroupManager.h"/>
         </GROUP>
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
+          <GROUP id="{309C087F-0F14-B657-6BFF-2AFF39BCDF86}" name="open">
+            <GROUP id="{509DA5A5-9442-4147-7587-108C8C73CBBE}" name="serial">
+              <FILE id="fFZe5E" name="OpenSerialProp.cpp" compile="1" resource="0"
+                    file="Source/Prop/props/open/serial/OpenSerialProp.cpp"/>
+              <FILE id="YH4yC0" name="OpenSerialProp.h" compile="0" resource="0"
+                    file="Source/Prop/props/open/serial/OpenSerialProp.h"/>
+            </GROUP>
+            <FILE id="Wrgcs8" name="OpenProp.cpp" compile="1" resource="0" file="Source/Prop/props/open/OpenProp.cpp"/>
+            <FILE id="e32CYi" name="OpenProp.h" compile="0" resource="0" file="Source/Prop/props/open/OpenProp.h"/>
+          </GROUP>
           <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
             <FILE id="e7lkEF" name="BentoProp.cpp" compile="1" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
             <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>

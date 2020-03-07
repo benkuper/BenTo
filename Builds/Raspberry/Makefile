@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.1.1 -DJUCE_APP_VERSION_HEX=0x10101 $(shell pkg-config --cflags alsa x11 xinerama xext freetype2 webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.1.2 -DJUCE_APP_VERSION_HEX=0x10102 $(shell pkg-config --cflags alsa x11 xinerama xext freetype2 webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0 -DJucePlugin_Build_Unity=0
   JUCE_TARGET_APP := BenTo
 
@@ -138,6 +138,8 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/PropCluster_70507f1f.o \
   $(JUCE_OBJDIR)/PropClusterGroup_98d0476a.o \
   $(JUCE_OBJDIR)/PropClusterGroupManager_2f9ae16d.o \
+  $(JUCE_OBJDIR)/OpenSerialProp_a6eec083.o \
+  $(JUCE_OBJDIR)/OpenProp_cbdccb10.o \
   $(JUCE_OBJDIR)/BentoProp_c5777cde.o \
   $(JUCE_OBJDIR)/LighttoysFamily_8dab28e9.o \
   $(JUCE_OBJDIR)/FTPropStatusEditor_d765ea7a.o \
@@ -644,6 +646,16 @@ $(JUCE_OBJDIR)/PropClusterGroup_98d0476a.o: ../../Source/Prop/Cluster/PropCluste
 $(JUCE_OBJDIR)/PropClusterGroupManager_2f9ae16d.o: ../../Source/Prop/Cluster/PropClusterGroupManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PropClusterGroupManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/OpenSerialProp_a6eec083.o: ../../Source/Prop/props/open/serial/OpenSerialProp.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling OpenSerialProp.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/OpenProp_cbdccb10.o: ../../Source/Prop/props/open/OpenProp.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling OpenProp.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/BentoProp_c5777cde.o: ../../Source/Prop/props/bento/BentoProp.cpp

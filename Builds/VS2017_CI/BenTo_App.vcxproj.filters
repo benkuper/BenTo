@@ -167,6 +167,12 @@
     <Filter Include="BenTo\Source\Prop\Cluster">
       <UniqueIdentifier>{F32AE84B-651D-BFC6-096C-2A59DD39A244}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Prop\props\open\serial">
+      <UniqueIdentifier>{99B7124D-CACF-E3F4-9678-C7325AC303E4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\props\open">
+      <UniqueIdentifier>{BED48F63-B326-B102-2A51-6CFBFB27A003}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Prop\props\bento">
       <UniqueIdentifier>{E839EA69-D9C2-6463-CF90-72329177C01B}</UniqueIdentifier>
     </Filter>
@@ -1101,6 +1107,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
       <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\open\serial\OpenSerialProp.cpp">
+      <Filter>BenTo\Source\Prop\props\open\serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\open\OpenProp.cpp">
+      <Filter>BenTo\Source\Prop\props\open</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
@@ -4037,6 +4049,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h">
       <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\open\serial\OpenSerialProp.h">
+      <Filter>BenTo\Source\Prop\props\open\serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\open\OpenProp.h">
+      <Filter>BenTo\Source\Prop\props\open</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>

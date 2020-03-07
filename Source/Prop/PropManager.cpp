@@ -23,6 +23,8 @@ juce_ImplementSingleton(PropManager)
 #include "props/lightrix/LightrixFamily.h"
 #include "props/lightrix/LightrixHoop.h"
 
+#include "Prop\props\open\serial\OpenSerialProp.h"
+
 #include "BentoEngine.h"
 
 PropManager::PropManager() :
@@ -65,6 +67,7 @@ PropManager::PropManager() :
 	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "SmartBall", SmartballProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys FT", LighttoysFTProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Lightrix", "Lightrix Hoop", LightrixHoopProp::create));
+	factory.defs.add(Factory<Prop>::Definition::createDef("Open", "Open Serial", OpenSerialProp::create));
 
 	receiver.addListener(this);
 
