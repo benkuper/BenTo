@@ -30,6 +30,8 @@ public:
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
 
+	String customType;
+
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);
@@ -61,4 +63,7 @@ public:
 	virtual void restartProp() override;
 	virtual void sendWiFiCredentials(String ssid, String pass);
 
+
+	virtual String getTypeString() const { return customType; }
+	static BentoProp* create(var params) { return new BentoProp(params.getProperty("type", "Unknown").toString(), params.getProperty("family", "").toString(), params); }
 };

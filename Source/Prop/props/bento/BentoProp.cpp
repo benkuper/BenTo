@@ -24,6 +24,8 @@ BentoProp::BentoProp(StringRef name, StringRef family, var params) :
 	ioCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
+
+	customType = params.getProperty("type", "");
 }
 
 BentoProp::~BentoProp()

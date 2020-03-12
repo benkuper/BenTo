@@ -2,6 +2,8 @@
 
 #define DEVICE_TYPE "Flowtoys Creator Club"
 
+#define ESP32
+
 // main leds config
 #define LED_COUNT 32
 #define LED_EN_PIN 27 // pin for enabling the LED power. HIGH for on and LOW for off. 

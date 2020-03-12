@@ -68,6 +68,7 @@ PropManager::PropManager() :
 	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys FT", LighttoysFTProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Lightrix", "Lightrix Hoop", LightrixHoopProp::create));
 	factory.defs.add(Factory<Prop>::Definition::createDef("Open", "Open Serial", OpenSerialProp::create));
+	factory.defs.add(Factory<Prop>::Definition::createDef("Music", "Clarinet", BentoProp::create)->addParam("type","Clarinet")->addParam("family","Music"));
 
 	receiver.addListener(this);
 

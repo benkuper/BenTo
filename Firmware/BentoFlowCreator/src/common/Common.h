@@ -8,15 +8,16 @@
 #include "events/EventBroadcaster.h"
 
 #ifdef ESP32
-#define USE_PREFRENCES
+#define USE_PREFERENCES
 #include <Preferences.h>
 #elif defined ESP8266
 //#define USE_SETTINGS_MANAGER
 //#include "settings/SettingsManager.h"
 #endif
 
-#define USE_SETTINGS_MANAGER
+#if defined USE_SETTINGS_MANAGER
 #include "settings/SettingsManager.h"
+#endif
 
 #include "Timer.h"
 

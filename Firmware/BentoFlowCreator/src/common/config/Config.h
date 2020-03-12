@@ -5,7 +5,8 @@
 // #define CREATOR_PROTO_V1
 // #define CREATOR_PROTO_V2
 // #define LT_BALL
- #define LT_HOOP
+ //#define LT_HOOP
+ #define CLARINET
 
 #if defined PROTO_V0
 #include "config_protov0.h"
@@ -17,6 +18,8 @@
 #include "config_lthoop.h"
 #elif defined LT_BALL
 #include "config_ltball.h"
+#elif defined CLARINET
+#include "config_clarinet.h"
 #endif
 
 

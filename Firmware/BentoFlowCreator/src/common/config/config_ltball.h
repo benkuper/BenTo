@@ -2,6 +2,8 @@
 
 #define DEVICE_TYPE "Lightrix Ball"
 
+#define ESP8266
+
 // main leds config
 #define LED_COUNT 5
 #define LED_DATA_PIN 13

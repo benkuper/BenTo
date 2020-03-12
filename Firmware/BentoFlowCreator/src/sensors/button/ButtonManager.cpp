@@ -13,15 +13,18 @@ ButtonManager::ButtonManager() : Component("button"),
 
 void ButtonManager::init()
 {
+#if defined BUTTON_PIN
     pinMode(BUTTON_PIN, INPUT);
     isPressed = digitalRead(BUTTON_PIN); //init here so it won't send an event at first update
  #ifdef BUTTON_INVERTED
     isPressed = !isPressed;
 #endif
+#endif // BUTTON_PIN
 }
 
 void ButtonManager::update()
 {
+#if defined BUTTON_PIN
     bool v = digitalRead(BUTTON_PIN);
 #ifdef BUTTON_INVERTED
     v = !v;
@@ -82,4 +85,5 @@ void ButtonManager::update()
         if (millis() > timeAtPress + multiPressTime)
             multiPressCount = 0;
     }
+#endif //BUTTON_PIN
 }

@@ -11,8 +11,19 @@ void RGBLedsManager::init()
     pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
     digitalWrite(LED_EN_PIN, HIGH);
 #endif
-
+#if defined LED_CLK_PIN
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+#else
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+#endif
+
+#if defined LED2_TYPE
+#if defined LED2_CLK_PIN
+    FastLED.addLeds<LED2_TYPE, LED2_DATA_PIN, LED2_CLK_PIN, LED2_COLOR_ORDER>(leds, LED2_COUNT).setCorrection(TypicalLEDStrip);
+#else
+    FastLED.addLeds<LED2_TYPE, LED2_DATA_PIN, LED2_COLOR_ORDER>(leds, LED2_COUNT).setCorrection(TypicalLEDStrip);
+#endif //LED2_CLK
+#endif //LED2
 
 #ifdef USE_PREFERENCES
     prefs.begin(name.c_str());
