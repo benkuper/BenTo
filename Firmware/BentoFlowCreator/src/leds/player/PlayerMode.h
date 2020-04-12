@@ -30,7 +30,7 @@ public:
   ~PlayerMode();
 
   //file
-#ifdef HAS_FILS
+#ifdef HAS_FILES
   File curFile;
   File metaDataFile;
 #endif

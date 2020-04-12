@@ -3,7 +3,7 @@
 const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", "freefall" };
 
 IMUManager::IMUManager() : Component("imu"),
-#if HAS_IMU
+#ifdef HAS_IMU
                            bno(55),
 #endif                          
                            isConnected(false),
@@ -12,7 +12,7 @@ IMUManager::IMUManager() : Component("imu"),
                            timeSinceOrientationLastSent(0)
 
 {
-#if HAS_IMU
+#ifdef HAS_IMU
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
   bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
   bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
@@ -55,7 +55,7 @@ void IMUManager::update()
 {
   if(!isEnabled || !isConnected) return;
 
-#if HAS_IMU
+#ifdef HAS_IMU
   imu::Quaternion q = bno.getQuat();
   q.normalize();
   

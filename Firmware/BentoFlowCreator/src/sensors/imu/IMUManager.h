@@ -19,7 +19,7 @@ public:
     IMUManager();
     ~IMUManager();
 
-#if HAS_IMU
+#ifdef HAS_IMU
     Adafruit_BNO055 bno;
 #endif
 

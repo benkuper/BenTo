@@ -3,16 +3,16 @@
 
 // #define CREATOR_PROTO_V0
 // #define CREATOR_PROTO_V1
-// #define CREATOR_PROTO_V2
+#define CREATOR_PROTO_V2
 // #define LT_BALL
  //#define LT_HOOP
- #define CLARINET
+ //#define CLARINET
 
-#if defined PROTO_V0
+#if defined CREATOR_PROTO_V0
 #include "config_protov0.h"
-#elif defined PROTO_V1
+#elif defined CREATOR_PROTO_V1
 #include "config_protov1.h"
-#elif defined PROTO_V2
+#elif defined CREATOR_PROTO_V2
 #include "config_protov2.h"
 #elif defined LT_HOOP
 #include "config_lthoop.h"

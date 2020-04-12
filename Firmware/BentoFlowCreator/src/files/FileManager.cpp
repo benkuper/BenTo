@@ -86,15 +86,16 @@ void FileManager::deleteFileIfExists(String path)
     }
 }
 
-{
 void FileManager::listDir(fs::FS &fs, const char *dirname, uint8_t levels)
-
+{
     File root = fs.open(dirname);
+
     if (!root)
     {
         DBG("Failed to open directory");
         return;
     }
+
     if (!root.isDirectory())
     {
         DBG("Not a directory");
