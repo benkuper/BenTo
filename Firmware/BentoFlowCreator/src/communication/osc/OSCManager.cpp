@@ -134,18 +134,18 @@ void OSCManager::sendMessage(OSCMessage &msg)
 {
     if (!enabled)
     {
-        NDBG("Send OSC message, osc not enabled");
+        //NDBG("Send OSC message, osc not enabled");
         return;
     }
 
     if (remoteHost.length() == 0)
     {
-        NDBG("Send OSC message, remoteHost not set");
+        //NDBG("Send OSC message, remoteHost not set");
         return;
     }
     char addr[32];
     msg.getAddress(addr);
-    NDBG("Send OSC message to "+ remoteHost + " : " + String(addr));
+    //NDBG("Send OSC message to "+ remoteHost + " : " + String(addr));
     udp.beginPacket((char *)remoteHost.c_str(), (uint16_t)remotePort);
     msg.send(udp);
     udp.endPacket();

@@ -2,8 +2,8 @@
 
 bool FileManager::sdIsDetected = false;
 
-#ifdef HAS_FILESSPIClass 
-FileManager::spiSD(HSPI);
+#ifdef HAS_FILES
+SPIClass FileManager::spiSD(HSPI);
 #endif
 
 FileManager::FileManager() : Component("files"),
