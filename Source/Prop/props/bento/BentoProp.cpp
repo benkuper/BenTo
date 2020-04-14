@@ -11,21 +11,28 @@
 #include "BentoProp.h"
 
 
-BentoProp::BentoProp(StringRef name, StringRef family, var params) :
-	Prop(name, family, params),
+BentoProp::BentoProp(var params) :
+	Prop(params),
 	serialDevice(nullptr)
 {
-	updateRate = 50;
-	remoteHost = ioCC.addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
-
+	updateRate = params.getProperty("updateRate", 50);
+	remoteHost = connectionCC.addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
 
 	serialParam = new SerialDeviceParameter("Serial Device", "For connecting props trhough USB", true);
 	serialParam->openBaudRate = 115200;
-	ioCC.addParameter(serialParam);
+	if (params.hasProperty("vid")) serialParam->vidFilter = (int)params.getProperty("vid", 0);
+	if (params.hasProperty("pid")) serialParam->pidFilter = (int)params.getProperty("pid", 0);
+
+	connectionCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
 
-	customType = params.getProperty("type", "");
+
+	if (params.getProperty("hasIR", true))
+	{
+		Parameter * irLevel = controlsCC.addFloatParameter("IR Level", "IR LED brightness level", 0, 0, 1);
+		controllableFeedbackMap.set(irLevel, "/ir/level");
+	}
 }
 
 BentoProp::~BentoProp()
@@ -57,18 +64,6 @@ void BentoProp::setSerialDevice(SerialDevice* d)
 	}
 }
 
-void BentoProp::onContainerParameterChangedInternal(Parameter* p)
-{
-	Prop::onContainerParameterChangedInternal(p);
-
-	if (p == globalID)
-	{
-		OSCMessage m("/config/propID");
-		m.addInt32(globalID->intValue());
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
-	}
-}
-
 void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Prop::onControllableFeedbackUpdateInternal(cc, c);
@@ -83,7 +78,7 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 		{
 			OSCMessage m("/leds/mode");
 			m.addString("stream");
-			oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+			sendMessageToProp(m);
 		}
 
 	}
@@ -95,11 +90,12 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		sendPing();
 	}
+	
 }
 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
 {
-
+	//todo : parse to set sensors values
 }
 
 void BentoProp::portRemoved(SerialDevice* d)
@@ -229,10 +225,10 @@ void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 	}
 	else
 	{
-		OSCMessage m2("/player/load");
-		m2.addString(fileName);
-		m2.addInt32(autoPlay ? 1 : 0);
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m2);
+		OSCMessage m("/player/load");
+		m.addString(fileName);
+		m.addInt32(autoPlay ? 1 : 0);
+		sendMessageToProp(m);
 	}
 
 	
@@ -250,7 +246,7 @@ void BentoProp::playBake(float time, bool loop)
 		OSCMessage m("/player/play");
 		m.addFloat32(time);
 		m.addInt32(loop ? 1 : 0);
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
 }
 
@@ -263,7 +259,7 @@ void BentoProp::pauseBakePlaying()
 	else
 	{
 		OSCMessage m("/player/pause");
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
 }
 
@@ -277,7 +273,7 @@ void BentoProp::seekBakePlaying(float time)
 	{
 		OSCMessage m("/player/seek");
 		m.addFloat32(time);
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
 }
 
@@ -290,7 +286,7 @@ void BentoProp::stopBakePlaying()
 	else
 	{
 		OSCMessage m("/player/stop");
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
 }
 
@@ -304,7 +300,7 @@ void BentoProp::sendShowPropID(bool value)
 	{
 		OSCMessage m("/player/id");
 		m.addInt32(value);
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
 }
 
@@ -337,7 +333,7 @@ bool BentoProp::uploadMetaDataProgressCallback(void* context, int bytesSent, int
 void BentoProp::sendPing()
 {
 	OSCMessage m("/ping");
-	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+	sendMessageToProp(m);
 }
 
 void BentoProp::powerOffProp()
@@ -350,7 +346,7 @@ void BentoProp::powerOffProp()
 	else
 	{
 		OSCMessage m("/root/sleep");
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
 }
 
@@ -364,7 +360,7 @@ void BentoProp::restartProp()
 	else
 	{
 		OSCMessage m("/root/restart");
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
 }
 
@@ -380,6 +376,30 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 		OSCMessage m("/wifi/setCredentials");
 		m.addString(ssid);
 		m.addString(pass);
-		oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+		sendMessageToProp(m);
 	}
+}
+
+void BentoProp::sendControllableFeedbackToProp(Controllable* c)
+{
+	OSCMessage m(controllableFeedbackMap[c]);
+	if (c->type != Controllable::TRIGGER)
+	{
+		m.addArgument(OSCHelpers::varToArgument(((Parameter*)c)->value));
+	}
+	sendMessageToProp(m);
+}
+
+void BentoProp::sendMessageToProp(const OSCMessage& m)
+{
+	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}
+
+void BentoProp::createControllablesForContainer(var data, ControllableContainer* cc)
+{
+}
+
+Controllable* BentoProp::getControllableForJSONDefinition(const String& name, var def)
+{
+	return nullptr;
 }

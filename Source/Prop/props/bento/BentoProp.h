@@ -19,7 +19,7 @@ class BentoProp :
 	public SerialDevice::SerialDeviceListener
 {
 public:
-	BentoProp(StringRef name = "Bento", StringRef family = "Family", var params = var());
+	BentoProp(var params);
 	virtual ~BentoProp();
 	StringParameter * remoteHost;
 
@@ -30,13 +30,11 @@ public:
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
 
-	String customType;
 
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 
 	virtual void serialDataReceived(SerialDevice * d, const var &) override;
@@ -63,7 +61,11 @@ public:
 	virtual void restartProp() override;
 	virtual void sendWiFiCredentials(String ssid, String pass);
 
+	virtual void sendControllableFeedbackToProp(Controllable* c) override;
+	virtual void sendMessageToProp(const OSCMessage& m);
 
-	virtual String getTypeString() const { return customType; }
-	static BentoProp* create(var params) { return new BentoProp(params.getProperty("type", "Unknown").toString(), params.getProperty("family", "").toString(), params); }
+	void  createControllablesForContainer(var data, ControllableContainer* cc);
+	Controllable* getControllableForJSONDefinition(const String& name, var def);
+
+	static BentoProp* create(var params) { return new BentoProp(params); }
 };

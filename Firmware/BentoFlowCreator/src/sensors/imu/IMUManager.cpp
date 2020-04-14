@@ -8,7 +8,7 @@ IMUManager::IMUManager() : Component("imu"),
 #endif                          
                            isConnected(false),
                            isEnabled(false),
-                           orientationSendTime(50),
+                           orientationSendTime(20), //50fps
                            timeSinceOrientationLastSent(0)
 
 {

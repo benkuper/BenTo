@@ -177,20 +177,7 @@
     <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\open\serial\OpenSerialProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\open\OpenProp.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\lightrix\LightrixFamily.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\lightrix\LightrixHoop.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\garnav\GarnavFamily.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\garnav\SmarballProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropUI.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropViz.cpp"/>
@@ -1943,6 +1930,39 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic_refit.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2324,6 +2344,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\script\ui\ScriptEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\script\ui\ScriptManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\script\Script.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2409,6 +2432,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui2.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui3.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCAddress.cpp">
@@ -2618,6 +2644,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
@@ -2710,20 +2737,7 @@
     <ClInclude Include="..\..\Source\Prop\Cluster\PropCluster.h"/>
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h"/>
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\open\serial\OpenSerialProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\open\OpenProp.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\lightrix\LightrixFamily.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\lightrix\LightrixHoop.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\garnav\GarnavFamily.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\garnav\SmarballProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropViz.h"/>
@@ -2779,6 +2793,7 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\audio_io\juce_SystemAudioVolume.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiDevices.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_android_HighPerformanceAudioHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_ios_Audio.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_MidiDataConcatenator.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\sources\juce_AudioSourcePlayer.h"/>
@@ -3412,6 +3427,18 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\CrashHandler.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicApplication.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_alloc_impl.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\curve_fit_nd.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\bezier.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\Easing.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\parameter\ui\ParameterAutomationEditor.h"/>
@@ -3547,6 +3574,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\JuceHeader.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\resources\BinaryData.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\script\ui\ScriptEditor.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\script\ui\ScriptManagerEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\script\ExpressionListener.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\script\Script.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\script\ScriptExpression.h"/>

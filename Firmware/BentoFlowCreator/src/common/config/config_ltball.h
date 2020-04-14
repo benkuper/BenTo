@@ -15,4 +15,6 @@
 #define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
 
 // button pin
-#define BUTTON_PIN 4 // pin for sensing the button press.
+#define BUTTON_COUNT 1
+#define BUTTON_INPUT_MODE INPUT
+const int buttonPins[BUTTON_COUNT]{ 4 };

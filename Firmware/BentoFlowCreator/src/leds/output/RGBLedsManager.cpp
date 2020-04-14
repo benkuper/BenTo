@@ -7,6 +7,26 @@ RGBLedsManager::RGBLedsManager() : Component("rgb"),
 
 void RGBLedsManager::init()
 {
+#ifdef LED_SEPARATE_CHANNELS
+  for(int i=0;i < LED_COUNT; i++)
+  {
+    const RGBLedPins l = rgbLedPins[i];
+    pinMode(l.rPin,OUTPUT);
+    pinMode(l.gPin,OUTPUT);
+    pinMode(l.bPin,OUTPUT);
+    
+    int startChannel = i*3;
+    ledcSetup(startChannel, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+    ledcSetup(startChannel+1, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+    ledcSetup(startChannel+2, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+    
+    // attach the channel to the GPIO2 to be controlled
+    ledcAttachPin(l.rPin, startChannel);
+    ledcAttachPin(l.gPin, startChannel+1);
+    ledcAttachPin(l.bPin, startChannel+2);
+  }
+#else
+
 #ifdef LED_EN_PIN
     pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
     digitalWrite(LED_EN_PIN, HIGH);
@@ -24,6 +44,8 @@ void RGBLedsManager::init()
     FastLED.addLeds<LED2_TYPE, LED2_DATA_PIN, LED2_COLOR_ORDER>(leds, LED2_COUNT).setCorrection(TypicalLEDStrip);
 #endif //LED2_CLK
 #endif //LED2
+
+#endif
 
 #ifdef USE_PREFERENCES
     prefs.begin(name.c_str());
@@ -44,15 +66,27 @@ void RGBLedsManager::init()
 
 void RGBLedsManager::update()
 {
+#ifdef LED_SEPARATE_CHANNELS
+    for(int i=0;i<LED_COUNT;i++)
+    {
+        int startChannel = i*3;
+        ledcWrite(startChannel, map(leds[i].r,0,255,1023,0));
+        ledcWrite(startChannel+1, map(leds[i].g,0,255,1023,0));
+        ledcWrite(startChannel+2, map(leds[i].b,0,255,1023,0));
+    }
+#else
     FastLED.show();
+#endif
 }
 
 void RGBLedsManager::setBrightness(float value, bool save)
 {
     globalBrightness = min(max(value, 0.f), 1.f);
+
+ #ifndef LED_SEPARATE_CHANNELS
     FastLED.setBrightness((int)(globalBrightness * 60));
     FastLED.show();
-
+#endif
     if (save)
     {
 #ifdef USE_PREFERENCES
@@ -110,7 +144,11 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 //Helpers
 void RGBLedsManager::clear()
 {
-    FastLED.clear();
+ #ifdef LED_SEPARATE_CHANNELS
+    for(int i=0;i<LED_COUNT;i++) leds[i] = CRGB::Black;
+ #else
+   FastLED.clear();
+#endif
 }
 
 void RGBLedsManager::fillAll(CRGB c)

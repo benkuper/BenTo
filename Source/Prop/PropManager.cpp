@@ -11,65 +11,77 @@
 #include "PropManager.h"
 juce_ImplementSingleton(PropManager)
 
-#include "props/flowtoys/FlowtoysFamily.h"
-#include "props/flowtoys/flowclub/FlowClubProp.h"
-
-#include "props/garnav/GarnavFamily.h"
-#include "props/garnav/SmarballProp.h"
-
-#include "props/lighttoys/LighttoysFamily.h"
-#include "props/lighttoys/ft/LighttoysFTProp.h"
-
-#include "props/lightrix/LightrixFamily.h"
-#include "props/lightrix/LightrixHoop.h"
-
-#include "Prop/props/open/serial/OpenSerialProp.h"
+#include "props/bento/BentoProp.h"
 
 #include "BentoEngine.h"
 
+const OrganicApplication & getApp();
+
 PropManager::PropManager() :
 	BaseManager("Props"),
-	familiesCC("Families")
+	familiesCC("Families"),
+	connectionCC("Connection"),
+	controlsCC("Controls"),
+	showCC("Show")
 {
 	saveAndLoadRecursiveData = true;
 
 	managerFactory = &factory;
 	selectItemWhenCreated = false;
 
-	detectProps = addTrigger("Detect Props", "Auto detect using the Yo protocol");
-	autoAssignIdTrigger = addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
-	sendFeedback = addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
-	bakeAll = addTrigger("Bake All", "Bake all props");
-	bakeMode = addBoolParameter("Bake Mode", "Bake Mode", false);
-	powerOffAll = addTrigger("Poweroff All", "");
-	resetAll = addTrigger("Reset All", "");
-	clearAll = addTrigger("Clear all props", "Remove all props from manager");
+	detectProps = connectionCC.addTrigger("Detect Props", "Auto detect using the Yo protocol");
+	addChildControllableContainer(&connectionCC);
 
-	fileName = addStringParameter("Show filename", "Filename of the show", "timeline");
-	loadAll = addTrigger("Load all", "Load show on all devices that can play");
-	playAll = addTrigger("Play all", "Play show on all devices that can play");
-	stopAll = addTrigger("Stop all", "Stop show on all devices that can stop");
-	loop = addBoolParameter("Loop show", "If checked, this will tell the player to loop the playing", false);
+	autoAssignIdTrigger = controlsCC.addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
+	sendFeedback = controlsCC.addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
+	addChildControllableContainer(&controlsCC);
 
+	bakeAll = showCC.addTrigger("Bake All", "Bake all props");
+	bakeMode = showCC.addBoolParameter("Bake Mode", "Bake Mode", false);
+	powerOffAll = showCC.addTrigger("Poweroff All", "");
+	resetAll = showCC.addTrigger("Reset All", "");
+	clearAll = showCC.addTrigger("Clear all props", "Remove all props from manager");
+	fileName = showCC.addStringParameter("Show filename", "Filename of the show", "timeline");
+	loadAll = showCC.addTrigger("Load all", "Load show on all devices that can play");
+	playAll = showCC.addTrigger("Play all", "Play show on all devices that can play");
+	stopAll = showCC.addTrigger("Stop all", "Stop show on all devices that can stop");
+	loop = showCC.addBoolParameter("Loop show", "If checked, this will tell the player to loop the playing", false);
+	addChildControllableContainer(&showCC);
 	
 	String localIp = NetworkHelpers::getLocalIP();
 
+	File familyFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props/families");
+	if (!familyFolder.exists()) familyFolder.createDirectory();
+
+	Array<File> familyFiles = familyFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
+	
+	for (auto& f : familyFiles)
+	{
+		var fData = JSON::parse(f);
+		if (fData.isObject())
+		{
+			PropFamily* fam = new PropFamily(fData);
+			families.add(fam);
+			familiesCC.addChildControllableContainer(fam);
+		}
+	}
 	addChildControllableContainer(&familiesCC);
-	families.add(new FlowtoysFamily());
-	families.add(new GarnavFamily());
-	families.add(new LighttoysFamily());
-	families.add(new LightrixFamily());
 
-	for (auto & f : families) familiesCC.addChildControllableContainer(f);
+	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props");
+	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
 
-	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", FlowClubProp::getTypeStringStatic(), FlowClubProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Flowtoys", "Flowtoys ESP8266 Proto", FlowClubProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Garnav", "SmartBall", SmartballProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Lighttoys", "Lighttoys FT", LighttoysFTProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Lightrix", "Lightrix Hoop", LightrixHoopProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Open", "Open Serial", OpenSerialProp::create));
-	factory.defs.add(Factory<Prop>::Definition::createDef("Music", "Clarinet", BentoProp::create)->addParam("type","Clarinet")->addParam("family","Music"));
+	for (auto& f : propFiles)
+	{
+		var pData = JSON::parse(f);
+		if (pData.isObject())
+		{
+			std::function<Prop*(var params)> createFunc = &Prop::create;
+			String propType = pData.getProperty("type", "");
+			if (propType == "Bento") createFunc = &BentoProp::create;
 
+			factory.defs.add(FactorySimpleParametricDefinition<Prop>::createDef(pData.getProperty("menu", "").toString(), pData.getProperty("name", "").toString(), createFunc, pData));
+		}
+	}
 	receiver.addListener(this);
 
 	setupReceiver();
@@ -149,7 +161,6 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 	}
 	else if (t == detectProps)
 	{
-
 		StringArray ips = NetworkHelpers::getLocalIPs();
 
 		LOG("Auto detecting props");
@@ -168,8 +179,8 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 		}
 		
 
-		LighttoysFTProp::autoDetectRemotes();
-		((FlowtoysFamily *)getFamilyWithName("Flowtoys"))->checkSerialDevices();
+		//LighttoysFTProp::autoDetectRemotes();
+		//((FlowtoysFamily *)getFamilyWithName("Flowtoys"))->checkSerialDevices();
 	}
 	else if (t == bakeAll)
 	{
@@ -295,7 +306,6 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 			else
 			{
 				DBG("Type does not exist " << pType);
-
 			}
 		}
 		else

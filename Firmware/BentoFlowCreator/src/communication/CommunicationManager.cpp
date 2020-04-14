@@ -40,10 +40,23 @@ void CommunicationManager::serialMessageEvent(const SerialEvent &e)
         while (pch != NULL && index < maxData)
         {
             String s = String(pch);
-            float f = s.toFloat();
-            int i = s.toInt();
-            if (f != 0 || s.indexOf('0') == 0)
+
+            bool isNumber = true;
+            for (byte i = 0; i < s.length(); i++)
             {
+                char c = s.charAt(i);
+                if (c != '.' && c != '-' && c != '+' && !isDigit(c))
+                {
+                    isNumber = false;
+                    break;
+                }
+            }
+
+            if (isNumber)
+            {
+                float f = s.toFloat();
+                int i = s.toInt();
+
                 if (f == i && s.indexOf('.') == -1)
                 {
                     data[index].value.i = i;
@@ -131,7 +144,7 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
     }
 }
 
-void CommunicationManager::sendMessage(String source, String command, var * data, int numData)
+void CommunicationManager::sendMessage(String source, String command, var *data, int numData)
 {
     serialManager.sendMessage(source, command, data, numData);
     oscManager.sendMessage(source, command, data, numData);

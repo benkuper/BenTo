@@ -33,23 +33,25 @@ public:
 	
 	const int localPort = 10000;
 
-	BoolParameter * sendFeedback;
-
-	Trigger * detectProps;
 	Trigger * autoAssignIdTrigger;
-	Trigger * bakeAll;
-	Trigger* powerOffAll;
-	Trigger* resetAll;
 	Trigger* clearAll;
 
+	ControllableContainer connectionCC;
+	Trigger* detectProps;
+
+	ControllableContainer controlsCC;
+	BoolParameter* sendFeedback;
+	Trigger* powerOffAll;
+	Trigger* resetAll;
+
+	ControllableContainer showCC;
+	Trigger* bakeAll;
+	BoolParameter* bakeMode;
 	StringParameter* fileName;
 	Trigger* loadAll;
 	Trigger* playAll;
 	Trigger* stopAll;
 	BoolParameter* loop;
-
-	BoolParameter * bakeMode;
-
 
 	void setupReceiver();
 

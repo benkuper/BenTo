@@ -1,6 +1,6 @@
 #pragma once
-#include "FastLED/FastLED.h"
 
+#include "FastLED/FastLED.h"
 
 class LedHelpers
 {

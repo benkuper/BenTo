@@ -6,6 +6,10 @@
 #include "OSC/OSCMessage.h"
 #include "OSC/OSCBoards.h"
 
+#ifdef ESP32
+#include <ESPmDNS.h>
+#endif
+
 class OSCEvent
 {
 public:

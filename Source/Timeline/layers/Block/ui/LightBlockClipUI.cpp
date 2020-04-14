@@ -144,7 +144,7 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation* a)
 	if (dynamic_cast<ParameterNumberAutomation*>(a) != nullptr)
 	{
 		AutomationUI* aui = new AutomationUI((Automation*)a->automationContainer);
-		aui->updateROI();
+		//aui->updateROI();
 		automationUI.reset(aui);
 	}
 	else if (dynamic_cast<ParameterColorAutomation*>(a) != nullptr)
@@ -217,7 +217,7 @@ void LightBlockClipUI::mouseDown(const MouseEvent& e)
 							a->clear();
 							AutomationKey * k = a->addItem(0, 0);
 							k->setEasing(Easing::BEZIER);
-							a->addItem(a->length->floatValue(), 1);
+							a->addKey(a->length->floatValue(), 1);
 						}
 					}
 

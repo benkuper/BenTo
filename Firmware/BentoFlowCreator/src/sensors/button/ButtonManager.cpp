@@ -1,89 +1,98 @@
 
 #include "ButtonManager.h"
 
-const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX] {"pressed","shortPress","longPress","multiPress" };
+const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX]{"pressed", "shortPress", "longPress", "multiPress"};
 
-ButtonManager::ButtonManager() : Component("button"),
-                                 isPressed(false),
-                                 debounceCount(0),
-                                 multiPressCount(0),
-                                 timeAtPress(0)
+ButtonManager::ButtonManager() : Component("button")
 {
+    for (int i = 0; i < BUTTON_COUNT; i++)
+    {
+        isPressed[i] = false;
+        debounceCount[i] = 0;
+        multiPressCount[i] = 0;
+        timeAtPress[i] = 0;
+    }
 }
 
 void ButtonManager::init()
 {
-#if defined BUTTON_PIN
-    pinMode(BUTTON_PIN, INPUT);
-    isPressed = digitalRead(BUTTON_PIN); //init here so it won't send an event at first update
- #ifdef BUTTON_INVERTED
-    isPressed = !isPressed;
+#if BUTTON_COUNT > 0
+    for (int i = 0; i < BUTTON_COUNT; i++)
+    {
+        pinMode(buttonPins[i], BUTTON_INPUT_MODE);
+        isPressed[i] = digitalRead(buttonPins[i]);
+#ifdef BUTTON_INVERTED
+        isPressed[i] = !isPressed[i];
 #endif
-#endif // BUTTON_PIN
+    }
+#endif //BUTTON_COUNT > 0
 }
 
 void ButtonManager::update()
 {
-#if defined BUTTON_PIN
-    bool v = digitalRead(BUTTON_PIN);
-#ifdef BUTTON_INVERTED
-    v = !v;
-#endif
-    if (v)
-        debounceCount = min(debounceCount + 1, buttonPressDebounce);
-    else
-        debounceCount = max(debounceCount - 1, 0);
-
-    bool newPressed = isPressed;
-    if (isPressed && debounceCount == 0)
-        newPressed = false;
-    if (!isPressed && debounceCount == buttonPressDebounce)
-        newPressed = true;
-
-    if (newPressed != isPressed) //button state changed
+#if BUTTON_COUNT > 0
+    for (int i = 0; i < BUTTON_COUNT; i++)
     {
-        isPressed = newPressed;
-        isLongPressed = false;
-        isVeryLongPressed = false;
+        bool v = digitalRead(buttonPins[i]);
+#ifdef BUTTON_INVERTED
+        v = !v;
+#endif
+        if (v)
+            debounceCount[i] = min(debounceCount[i] + 1, buttonPressDebounce);
+        else
+            debounceCount[i] = max(debounceCount[i] - 1, 0);
 
-        if (isPressed)
+        bool newPressed = isPressed[i];
+        if (isPressed[i] && debounceCount[i] == 0)
+            newPressed = false;
+        if (!isPressed[i] && debounceCount[i] == buttonPressDebounce)
+            newPressed = true;
+
+        if (newPressed != isPressed[i]) //button state changed
         {
-            timeAtPress = millis();
-            sendEvent(ButtonEvent(ButtonEvent::Pressed, 1));
+            isPressed[i] = newPressed;
+            isLongPressed[i] = false;
+            isVeryLongPressed[i] = false;
 
-            multiPressCount++;
-            if (multiPressCount > 1)
-                sendEvent(ButtonEvent(ButtonEvent::MultiPress, multiPressCount));
+            if (isPressed[i])
+            {
+                timeAtPress[i] = millis();
+                sendEvent(ButtonEvent(ButtonEvent::Pressed, i, 1));
+
+                multiPressCount[i]++;
+                if (multiPressCount[i] > 1)
+                    sendEvent(ButtonEvent(ButtonEvent::MultiPress, i, multiPressCount[i]));
+            }
+            else
+            {
+                if (millis() < timeAtPress[i] + shortPressTime)
+                {
+                    sendEvent(ButtonEvent(ButtonEvent::ShortPress, i));
+                }
+
+                sendEvent(ButtonEvent(ButtonEvent::Pressed, i, 0));
+            }
         }
         else
         {
-            if (millis() < timeAtPress + shortPressTime)
+            if (isPressed[i])
             {
-                sendEvent(ButtonEvent(ButtonEvent::ShortPress));
+                if (!isLongPressed[i] && millis() > timeAtPress[i] + longPressTime)
+                {
+                    isLongPressed[i] = true;
+                    sendEvent(ButtonEvent(ButtonEvent::LongPress, i));
+                }
+
+                if (!isVeryLongPressed[i] && millis() > timeAtPress[i] + veryLongPressTime)
+                {
+                    isVeryLongPressed[i] = true;
+                    sendEvent(ButtonEvent(ButtonEvent::VeryLongPress, i));
+                }
             }
 
-            sendEvent(ButtonEvent(ButtonEvent::Pressed, 0));
+            if (millis() > timeAtPress[i] + multiPressTime)
+                multiPressCount[i] = 0;
         }
     }
-    else
-    {
-        if (isPressed)
-        {
-            if (!isLongPressed && millis() > timeAtPress + longPressTime)
-            {
-                isLongPressed = true;
-                sendEvent(ButtonEvent(ButtonEvent::LongPress));
-            }
-
-            if (!isVeryLongPressed && millis() > timeAtPress + veryLongPressTime)
-            {
-                isVeryLongPressed = true;
-                sendEvent(ButtonEvent(ButtonEvent::VeryLongPress));
-            }
-        }
-
-        if (millis() > timeAtPress + multiPressTime)
-            multiPressCount = 0;
-    }
-#endif //BUTTON_PIN
+#endif //MULTI BUTTON
 }

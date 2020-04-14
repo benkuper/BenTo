@@ -12,7 +12,9 @@
 #define LED_COLOR_ORDER BGR
 
 // button pin
-#define BUTTON_PIN 5 // pin for sensing the button press.
+#define BUTTON_COUNT 1
+#define BUTTON_INPUT_MODE INPUT
+const int buttonPins[BUTTON_COUNT]{ 5 };
 #define BUTTON_INVERTED
 
 #define SLEEP_PIN 5

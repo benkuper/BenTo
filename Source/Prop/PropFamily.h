@@ -14,19 +14,23 @@
 #include "Prop.h"
 
 class PropFamily :
-	public EnablingControllableContainer
+	public ControllableContainer
 {
 public:
-	PropFamily(StringRef name, int updateRate = 50);
+	PropFamily(var params);
 	~PropFamily();
 
-	IntParameter * updateRate;
-
 	Array<Prop *> props;
+	HashMap<Controllable*, String> controllableItemTargetMap;
+
+	void  createControllablesForContainer(var data, ControllableContainer* cc);
+	Controllable* getControllableForJSONDefinition(const String& name, var def);
 
 	void registerProp(Prop * p);
 	void unregisterProp(Prop * p);
 
 	void onContainerParameterChanged(Parameter * p) override;
+	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
+	void setItemsFromControllable(Controllable* c);
 };

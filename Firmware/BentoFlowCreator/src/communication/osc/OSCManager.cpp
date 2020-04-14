@@ -29,6 +29,17 @@ void OSCManager::init()
     prefs.readSettings(String("/" + name + ".json").c_str());
     remoteHost = prefs.getString("remoteHost", "");
 #endif
+
+#ifdef ESP32
+if (MDNS.begin((String(DEVICE_TYPE)+" - "+getDeviceID()).c_str())) {
+     
+    Serial.println("OSC Zeroconf started");
+    MDNS.addService("osc", "udp", 9000);
+
+}else{
+    Serial.println("Error setting up MDNS responder!");
+}
+#endif
     NDBG("Init");
 }
 

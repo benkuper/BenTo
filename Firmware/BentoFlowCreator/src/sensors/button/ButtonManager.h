@@ -16,9 +16,10 @@ public:
 
     static const String eventNames[TYPES_MAX];
 
-    ButtonEvent(Type type, int value = 1) : type(type), value(value) {}
+    ButtonEvent(Type type, int id, int value = 1) : type(type), id(id), value(value) {}
 
     Type type;
+    int id;
     int value;
 };
 
@@ -30,9 +31,9 @@ public:
     ButtonManager();
     ~ButtonManager(){}
 
-    bool isPressed;
-    bool isLongPressed;
-    bool isVeryLongPressed;
+    bool isPressed[BUTTON_COUNT];
+    bool isLongPressed[BUTTON_COUNT];
+    bool isVeryLongPressed[BUTTON_COUNT];
 
     void init();
     void update();
@@ -44,9 +45,9 @@ private :
     const int multiPressTime = 300;       //each new press shorter than 500ms after the previous one will increase the multiclick
     
     const int buttonPressDebounce = 5;    //denoising, needs five reads to validate a change
-    int debounceCount;
+    int debounceCount[BUTTON_COUNT];
 
-    long timeAtPress;
-    int multiPressCount;
+    long timeAtPress[BUTTON_COUNT];
+    int multiPressCount[BUTTON_COUNT];
 
 };

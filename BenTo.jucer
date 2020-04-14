@@ -432,71 +432,9 @@
                 file="Source/Prop/Cluster/PropClusterGroupManager.h"/>
         </GROUP>
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
-          <GROUP id="{309C087F-0F14-B657-6BFF-2AFF39BCDF86}" name="open">
-            <GROUP id="{509DA5A5-9442-4147-7587-108C8C73CBBE}" name="serial">
-              <FILE id="fFZe5E" name="OpenSerialProp.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/open/serial/OpenSerialProp.cpp"/>
-              <FILE id="YH4yC0" name="OpenSerialProp.h" compile="0" resource="0"
-                    file="Source/Prop/props/open/serial/OpenSerialProp.h"/>
-            </GROUP>
-            <FILE id="Wrgcs8" name="OpenProp.cpp" compile="1" resource="0" file="Source/Prop/props/open/OpenProp.cpp"/>
-            <FILE id="e32CYi" name="OpenProp.h" compile="0" resource="0" file="Source/Prop/props/open/OpenProp.h"/>
-          </GROUP>
           <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
             <FILE id="e7lkEF" name="BentoProp.cpp" compile="1" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
             <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>
-          </GROUP>
-          <GROUP id="{C522011C-89AC-576D-FB1C-E685E5E8AE23}" name="lighttoys">
-            <FILE id="aI6kbb" name="LighttoysFamily.cpp" compile="1" resource="0"
-                  file="Source/Prop/props/lighttoys/LighttoysFamily.cpp"/>
-            <FILE id="wvDFg6" name="LighttoysFamily.h" compile="0" resource="0"
-                  file="Source/Prop/props/lighttoys/LighttoysFamily.h"/>
-            <GROUP id="{408647FB-37B9-7763-D9B7-284E1CBC7A97}" name="ft">
-              <GROUP id="{8B0658F2-8132-54E5-791D-2F9F1D89E4AE}" name="ui">
-                <FILE id="FAYOX1" name="FTPropStatusEditor.cpp" compile="1" resource="0"
-                      file="Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.cpp"/>
-                <FILE id="oa4Tv8" name="FTPropStatusEditor.h" compile="0" resource="0"
-                      file="Source/Prop/props/lighttoys/ft/ui/FTPropStatusEditor.h"/>
-              </GROUP>
-              <FILE id="VxUStB" name="FTPropStatus.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/lighttoys/ft/FTPropStatus.cpp"/>
-              <FILE id="l2JXQ5" name="FTPropStatus.h" compile="0" resource="0" file="Source/Prop/props/lighttoys/ft/FTPropStatus.h"/>
-              <FILE id="bbMd80" name="LighttoysFTProp.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/lighttoys/ft/LighttoysFTProp.cpp"/>
-              <FILE id="zTJcPB" name="LighttoysFTProp.h" compile="0" resource="0"
-                    file="Source/Prop/props/lighttoys/ft/LighttoysFTProp.h"/>
-            </GROUP>
-          </GROUP>
-          <GROUP id="{A3EE6158-7B58-5AE6-761D-3243872E8AFD}" name="lightrix">
-            <FILE id="EmIrtB" name="LightrixFamily.cpp" compile="1" resource="0"
-                  file="Source/Prop/props/lightrix/LightrixFamily.cpp"/>
-            <FILE id="Me4LHb" name="LightrixFamily.h" compile="0" resource="0"
-                  file="Source/Prop/props/lightrix/LightrixFamily.h"/>
-            <FILE id="FAouVQ" name="LightrixHoop.cpp" compile="1" resource="0"
-                  file="Source/Prop/props/lightrix/LightrixHoop.cpp"/>
-            <FILE id="Fw1acN" name="LightrixHoop.h" compile="0" resource="0" file="Source/Prop/props/lightrix/LightrixHoop.h"/>
-          </GROUP>
-          <GROUP id="{2ABCE6F1-98C0-E49C-51B2-9A06C1A77026}" name="garnav">
-            <FILE id="d8Vegd" name="GarnavFamily.cpp" compile="1" resource="0"
-                  file="Source/Prop/props/garnav/GarnavFamily.cpp"/>
-            <FILE id="sgzH5g" name="GarnavFamily.h" compile="0" resource="0" file="Source/Prop/props/garnav/GarnavFamily.h"/>
-            <FILE id="rROiLA" name="SmarballProp.cpp" compile="1" resource="0"
-                  file="Source/Prop/props/garnav/SmarballProp.cpp"/>
-            <FILE id="P9nYgO" name="SmarballProp.h" compile="0" resource="0" file="Source/Prop/props/garnav/SmarballProp.h"/>
-          </GROUP>
-          <GROUP id="{F8143F18-668C-9A7E-6413-ADBA39BD6BC6}" name="flowtoys">
-            <FILE id="PAGR4W" name="FlowtoysFamily.cpp" compile="1" resource="0"
-                  file="Source/Prop/props/flowtoys/FlowtoysFamily.cpp"/>
-            <FILE id="RArHlf" name="FlowtoysFamily.h" compile="0" resource="0"
-                  file="Source/Prop/props/flowtoys/FlowtoysFamily.h"/>
-            <FILE id="JqhwMB" name="FlowtoysProp.cpp" compile="1" resource="0"
-                  file="Source/Prop/props/flowtoys/FlowtoysProp.cpp"/>
-            <FILE id="e7gr10" name="FlowtoysProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/FlowtoysProp.h"/>
-            <GROUP id="{2C0E173A-9C6F-B342-9EA6-65ADF0209454}" name="flowclub">
-              <FILE id="L3ttpc" name="FlowClubProp.cpp" compile="1" resource="0"
-                    file="Source/Prop/props/flowtoys/flowclub/FlowClubProp.cpp"/>
-              <FILE id="qBroMp" name="FlowClubProp.h" compile="0" resource="0" file="Source/Prop/props/flowtoys/flowclub/FlowClubProp.h"/>
-            </GROUP>
           </GROUP>
         </GROUP>
         <GROUP id="{2D4445E7-66E2-A651-74EF-D1FC94C498A0}" name="ui">

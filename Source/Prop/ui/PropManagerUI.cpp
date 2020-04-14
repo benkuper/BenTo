@@ -14,6 +14,8 @@
 PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 	BaseManagerShapeShifterUI(name, m)
 {
+	headerSize = 100;
+
 	noItemText = "Start by adding props by right clicking here, or when the props are powered on and connected, left click here and hit auto detect on the Inspector";
 	setDefaultLayout(HORIZONTAL);
 	addExistingItems();
@@ -35,7 +37,8 @@ PropManagerUI::~PropManagerUI()
 
 void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	Rectangle<int> hr = r.removeFromRight(100).reduced(2);
+	BaseManagerUI::resizedInternalHeader(r.removeFromTop(24).removeFromRight(24));
+	Rectangle<int> hr = r.reduced(2);
 	autoAssignUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(2);
 	autoDetectUI->setBounds(hr.removeFromTop(20));

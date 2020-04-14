@@ -59,7 +59,7 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 
 			if (dynamic_cast<Automation*>(a->automationContainer) != nullptr)
 			{
-				float value = ((Automation *)a->automationContainer)->getValueForPosition(fmodf(time, a->lengthParamRef->floatValue()));
+				float value = ((Automation *)a->automationContainer)->getValueAtPosition(fmodf(time, a->lengthParamRef->floatValue()));
 				float normValue = jmap<float>(value, param->minimumValue, param->maximumValue);
 				localParams.getDynamicObject()->setProperty(param->shortName, normValue);
 			}else if (dynamic_cast<GradientColorManager *>(a->automationContainer) != nullptr)

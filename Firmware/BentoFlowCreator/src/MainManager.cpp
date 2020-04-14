@@ -126,7 +126,7 @@ void MainManager::sensorEvent(const SensorEvent &e)
         switch (btEventType)
         {
         case ButtonEvent::Pressed:
-            if (e.data[1].intValue() == 1)
+            if (e.data[2].intValue() == 1)
             {
                 if (comm.wifiManager.state == Connecting)
                     comm.wifiManager.disable();
@@ -147,7 +147,7 @@ void MainManager::sensorEvent(const SensorEvent &e)
 
         case ButtonEvent::MultiPress:
         {
-            int count = e.data[1].intValue();
+            int count = e.data[2].intValue();
         }
         break;
         }

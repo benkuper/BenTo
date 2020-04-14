@@ -12,12 +12,13 @@
 #include "LightBlock/model//LightBlockModelLibrary.h"
 #include "PropManager.h"
 
-Prop::Prop(StringRef name, StringRef familyName, var) :
-	BaseItem(name),
-	Thread("Prop " + name),
+Prop::Prop(var params) :
+	BaseItem(params.getProperty("name","Unknown").toString()),
+	Thread("Prop"),
 	family(nullptr),
 	generalCC("General"),
-	ioCC("Communication"),
+	connectionCC("Connection"),
+	controlsCC("Control"),
 	sensorsCC("SensorsCC"),
 	bakingCC("Bake and Upload"),
 	receivedPongSinceLastPingSent(false),
@@ -27,40 +28,35 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	updateRate(50),
 	propNotifier(50)
 {
-	registerFamily(familyName);
+	registerFamily(params.getProperty("family","Mistery Family").toString());
+
+	customType = params.getProperty("type", "");
 
 	showWarningInUI = true;
-
 	editorIsCollapsed = true;
-
 	saveAndLoadRecursiveData = true;
 
 	addChildControllableContainer(&generalCC);
 	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
+	controllableFeedbackMap.set(globalID, "/prop/id");
+
 	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1);
 	type = generalCC.addEnumParameter("Type", "The type of the prop");
 	fillTypeOptions(type);
 
 	colors.resize(resolution->intValue());
 
-	addChildControllableContainer(&ioCC);
-	
-	isConnected = ioCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
+	isConnected = connectionCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
 	isConnected->isSavable = false; 
 
-	findPropMode = ioCC.addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
+	findPropMode = connectionCC.addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
 	findPropMode->setControllableFeedbackOnly(true);
 	findPropMode->isSavable = false;
-	
-	powerOffTrigger = ioCC.addTrigger("Power off", "Power off the prop if possible");
-	restartTrigger = ioCC.addTrigger("Restart", "Restart the prop, if the prop allows it");
+	addChildControllableContainer(&connectionCC);
 
+	createControllablesForContainer(params.getProperty("parameters", var()), this);
 
-
-	addChildControllableContainer(&sensorsCC);
-	 
-	addChildControllableContainer(&bakingCC);
 	
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
 	bakeStartTime->defaultUI = FloatParameter::TIME;
@@ -102,7 +98,6 @@ Prop::Prop(StringRef name, StringRef familyName, var) :
 	activeProvider->hideInEditor = true;
 
 	startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
-
 }
 
 Prop::~Prop()
@@ -123,6 +118,8 @@ void Prop::clearItem()
 
 void Prop::registerFamily(StringRef familyName)
 {
+	if (familyName.isEmpty()) return;
+
 	PropFamily* f = PropManager::getInstance()->getFamilyWithName(familyName);
 	if (f != nullptr)
 	{
@@ -251,6 +248,10 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	else if (c == restartTrigger)
 	{
 		restartProp();
+	}
+	else if (controllableFeedbackMap.contains(c))
+	{
+		sendControllableFeedbackToProp(c);
 	}
 }
 
@@ -390,7 +391,7 @@ void Prop::handleOSCMessage(const OSCMessage &m)
 	if (m.getAddressPattern().toString() == "/pong") handlePong();
 	else
 	{
-		Controllable* c = OSCHelpers::findControllableAndHandleMessage(&sensorsCC, m, 1);
+		OSCHelpers::findControllableAndHandleMessage(&sensorsCC, m, 1);
 	}
 }
 
@@ -408,6 +409,113 @@ void Prop::timerCallback(int timerID)
 		sendPing();
 		break;
 	}
+}
+
+
+void Prop::createControllablesForContainer(var data, ControllableContainer* cc)
+{
+	if (data.isVoid()) return;
+
+	NamedValueSet valueProps = data.getDynamicObject()->getProperties();
+	for (auto& p : valueProps)
+	{
+		if (!p.value.isObject()) continue;
+
+		if (p.value.getProperty("type", "") == "Container")
+		{
+			ControllableContainer* childCC = cc->getControllableContainerByName(p.name.toString(), true);
+
+			if (childCC == nullptr)
+			{
+				int index = p.value.getProperty("index", -1);
+				if (p.value.getProperty("canBeDisabled", false))
+				{
+					childCC = new EnablingControllableContainer(p.name.toString());
+					((EnablingControllableContainer*)childCC)->enabled->setValue(p.value.getProperty("enabled", true));
+				}
+				else
+				{
+					childCC = new EnablingControllableContainer(p.name.toString());
+				}
+				cc->addChildControllableContainer(childCC, true, index);
+			}
+
+			childCC->editorIsCollapsed = p.value.getProperty("collapsed", false);
+			createControllablesForContainer(p.value, childCC);
+
+		}
+		else
+		{
+			Controllable* c = getControllableForJSONDefinition(p.name.toString(), p.value);
+			if (c == nullptr) continue;
+			cc->addControllable(c);
+		}
+	}
+}
+
+Controllable* Prop::getControllableForJSONDefinition(const String& name, var def)
+{
+	String valueType = def.getProperty("type", "").toString();
+	Controllable* c = ControllableFactory::createControllable(valueType);
+	if (c == nullptr) return nullptr;
+
+	c->setNiceName(name);
+
+	DynamicObject* d = def.getDynamicObject();
+
+	if (c->type != Controllable::TRIGGER)
+	{
+		if (def.hasProperty("min") || def.hasProperty("max")) ((Parameter*)c)->setRange(def.getProperty("min", INT32_MIN), def.getProperty("max", INT32_MAX));
+
+		if (d->hasProperty("default")) ((Parameter*)c)->setValue(d->getProperty("default"));
+
+		if (c->type == Controllable::ENUM)
+		{
+			EnumParameter* ep = dynamic_cast<EnumParameter*>(c);
+
+			if (d->hasProperty("options") && d->getProperty("options").isObject())
+			{
+				NamedValueSet options = d->getProperty("options").getDynamicObject()->getProperties();
+				for (auto& o : options)
+				{
+					ep->addOption(o.name.toString(), o.value);
+				}
+			}
+			else
+			{
+				LOG("Options property is not valid : " << d->getProperty("options").toString());
+			}
+		}
+		else if (c->type == Controllable::FLOAT)
+		{
+			FloatParameter* ep = dynamic_cast<FloatParameter*>(c);
+			if (d->hasProperty("ui"))
+			{
+				String ui = d->getProperty("ui");
+				if (ui == "slider") ep->defaultUI = FloatParameter::SLIDER;
+				else if (ui == "stepper") ep->defaultUI = FloatParameter::STEPPER;
+				else if (ui == "label") ep->defaultUI = FloatParameter::LABEL;
+				else if (ui == "time") ep->defaultUI = FloatParameter::TIME;
+			}
+		}
+
+		if (d->hasProperty("readOnly"))
+		{
+			c->setControllableFeedbackOnly(d->getProperty("readOnly"));
+		}
+
+		if (d->hasProperty("shortName"))
+		{
+			c->setCustomShortName(d->getProperty("shortName").toString());
+		}
+
+		if (d->hasProperty("description"))
+		{
+			c->description = d->getProperty("description").toString();
+		}
+	}
+
+	return c;
 }
 
 

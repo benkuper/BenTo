@@ -27,27 +27,31 @@ class Prop :
 public:
 	enum Shape { CLUB, BALL, POI, HOOP, RING, BUGGENG, BOX };
 
-	Prop(StringRef name = "", StringRef familyName = "", var params = var());
+	Prop(var params = var());
 	virtual ~Prop();
 
 	String deviceID;
 	PropFamily * family;
+	String customType;
 
 	ControllableContainer generalCC;
 	IntParameter * globalID;
 	IntParameter * resolution;
 	EnumParameter * type;
 	
-	ControllableContainer ioCC;
+	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
 	
 	bool receivedPongSinceLastPingSent;
 
 	BoolParameter * findPropMode;
+
+	ControllableContainer controlsCC;
 	Trigger* powerOffTrigger;
 	Trigger* restartTrigger;
 
 	ControllableContainer sensorsCC;
+	int numButtons;
 
 	ControllableContainer bakingCC;
 	FloatParameter * bakeStartTime;
@@ -82,8 +86,9 @@ public:
 	int previousID; //for swapping
 	int updateRate;
 
-	//ping
+	HashMap<Controllable*, String> controllableFeedbackMap;
 
+	//ping
 	virtual void clearItem() override;
 
 	void registerFamily(StringRef familyName);
@@ -117,6 +122,8 @@ public:
 
 	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 
+	virtual void sendControllableFeedbackToProp(Controllable* c) {} //to be overriden
+
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
 
@@ -125,6 +132,9 @@ public:
 	virtual void handlePong();
 	virtual void sendPing() {}
 	virtual void timerCallback(int timerID) override;
+
+	void  createControllablesForContainer(var data, ControllableContainer* cc);
+	Controllable* getControllableForJSONDefinition(const String& name, var def);
 	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -167,4 +177,8 @@ public:
 
 	// Inherited via Thread
 	virtual void run() override;
+
+
+	virtual String getTypeString() const { return customType; }
+	static Prop* create(var params) { return new Prop(params); }
 };

@@ -40,7 +40,7 @@
 #endif
 
 #ifndef JUCE_REPORT_APP_USAGE
- #define JUCE_REPORT_APP_USAGE 1
+ #define JUCE_REPORT_APP_USAGE 0
 #endif
 
 // END SECTION A
@@ -292,6 +292,14 @@
 
 #ifndef    JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS
  #define   JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS 1
+#endif
+
+#ifndef    JUCE_ENABLE_BROADCAST_BY_DEFAULT
+ //#define JUCE_ENABLE_BROADCAST_BY_DEFAULT 0
+#endif
+
+#ifndef    JUCE_EXCLUSIVE_BINDING_BY_DEFAULT
+ //#define JUCE_EXCLUSIVE_BINDING_BY_DEFAULT 0
 #endif
 
 //==============================================================================

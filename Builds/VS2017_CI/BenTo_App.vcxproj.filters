@@ -167,35 +167,8 @@
     <Filter Include="BenTo\Source\Prop\Cluster">
       <UniqueIdentifier>{F32AE84B-651D-BFC6-096C-2A59DD39A244}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Prop\props\open\serial">
-      <UniqueIdentifier>{99B7124D-CACF-E3F4-9678-C7325AC303E4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\open">
-      <UniqueIdentifier>{BED48F63-B326-B102-2A51-6CFBFB27A003}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Prop\props\bento">
       <UniqueIdentifier>{E839EA69-D9C2-6463-CF90-72329177C01B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\lighttoys\ft\ui">
-      <UniqueIdentifier>{5C052753-DAE7-C293-05FA-C7E9AC33F9A7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\lighttoys\ft">
-      <UniqueIdentifier>{2230364B-EF6B-2E40-ADD9-E5C8979ABC99}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\lighttoys">
-      <UniqueIdentifier>{9F30B32A-59CF-6038-D38A-EA6C62949032}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\lightrix">
-      <UniqueIdentifier>{49F89602-F0E2-0B20-B04B-FFD2F47E505D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\garnav">
-      <UniqueIdentifier>{7A6D1F25-927C-F908-3882-976D74D13D94}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\flowtoys\flowclub">
-      <UniqueIdentifier>{B2AA267F-3E2E-9BF9-9354-02B80DBCB43D}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\props\flowtoys">
-      <UniqueIdentifier>{435E10A5-430D-9EC6-702C-CCDFF2FEE7FE}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\props">
       <UniqueIdentifier>{ABEFE2FE-02B2-87E2-62A2-5CA00196BE46}</UniqueIdentifier>
@@ -601,6 +574,30 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\app">
       <UniqueIdentifier>{713F9F29-C2A1-3D8F-4394-6A948FA0175D}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\common\fitting\intern">
+      <UniqueIdentifier>{129F2071-932D-39D0-7756-2F0D13FA6835}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\common\fitting">
+      <UniqueIdentifier>{8AE703C8-A5A3-3D91-3F30-A248B4940027}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\common">
+      <UniqueIdentifier>{F764810A-E5C3-9E62-C008-A1937E9CED3B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui">
+      <UniqueIdentifier>{0E5F94A6-BF2F-3A2F-6F75-556FAA34FCF5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D\easing">
+      <UniqueIdentifier>{A64CBF4B-AADA-FA1F-5FDC-CFF7E8DF556B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D\ui">
+      <UniqueIdentifier>{720CB5A6-80A1-C355-9DC3-FFF3D6860B58}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve\curve2D">
+      <UniqueIdentifier>{7A9AC9C5-2D30-C866-66F4-ADFFFC8F654C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\automation\curve">
+      <UniqueIdentifier>{87824114-A534-681D-C5B1-F5DD42E13D60}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\automation\easing\ui">
       <UniqueIdentifier>{113BFDB2-6CD7-CBB1-E543-F27243786328}</UniqueIdentifier>
@@ -1108,47 +1105,8 @@
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
       <Filter>BenTo\Source\Prop\Cluster</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\open\serial\OpenSerialProp.cpp">
-      <Filter>BenTo\Source\Prop\props\open\serial</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\open\OpenProp.cpp">
-      <Filter>BenTo\Source\Prop\props\open</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.cpp">
-      <Filter>BenTo\Source\Prop\props\lighttoys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.cpp">
-      <Filter>BenTo\Source\Prop\props\lighttoys\ft\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.cpp">
-      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.cpp">
-      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\lightrix\LightrixFamily.cpp">
-      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\lightrix\LightrixHoop.cpp">
-      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\garnav\GarnavFamily.cpp">
-      <Filter>BenTo\Source\Prop\props\garnav</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\garnav\SmarballProp.cpp">
-      <Filter>BenTo\Source\Prop\props\garnav</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.cpp">
-      <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.cpp">
-      <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.cpp">
-      <Filter>BenTo\Source\Prop\props\flowtoys\flowclub</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp">
       <Filter>BenTo\Source\Prop\ui</Filter>
@@ -3034,6 +2992,39 @@
     <ClCompile Include="..\..\Modules\juce_organicui\app\OrganicMainComponentCommands.cpp">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_corners_detect.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_cubic_refit.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.c">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.cpp">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.cpp">
       <Filter>JUCE Modules\juce_organicui\automation\easing\ui</Filter>
     </ClCompile>
@@ -3454,6 +3445,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\script\ui\ScriptEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\script\ui\ScriptManagerEditor.cpp">
+      <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\script\Script.cpp">
       <Filter>JUCE Modules\juce_organicui\script</Filter>
     </ClCompile>
@@ -3539,6 +3533,9 @@
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui2.cpp">
+      <Filter>JUCE Modules\juce_organicui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui3.cpp">
       <Filter>JUCE Modules\juce_organicui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCAddress.cpp">
@@ -3776,6 +3773,9 @@
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp">
@@ -4050,47 +4050,8 @@
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h">
       <Filter>BenTo\Source\Prop\Cluster</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\open\serial\OpenSerialProp.h">
-      <Filter>BenTo\Source\Prop\props\open\serial</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\open\OpenProp.h">
-      <Filter>BenTo\Source\Prop\props\open</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\LighttoysFamily.h">
-      <Filter>BenTo\Source\Prop\props\lighttoys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\ui\FTPropStatusEditor.h">
-      <Filter>BenTo\Source\Prop\props\lighttoys\ft\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\FTPropStatus.h">
-      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\lighttoys\ft\LighttoysFTProp.h">
-      <Filter>BenTo\Source\Prop\props\lighttoys\ft</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\lightrix\LightrixFamily.h">
-      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\lightrix\LightrixHoop.h">
-      <Filter>BenTo\Source\Prop\props\lightrix</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\garnav\GarnavFamily.h">
-      <Filter>BenTo\Source\Prop\props\garnav</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\garnav\SmarballProp.h">
-      <Filter>BenTo\Source\Prop\props\garnav</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysFamily.h">
-      <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\FlowtoysProp.h">
-      <Filter>BenTo\Source\Prop\props\flowtoys</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\flowtoys\flowclub\FlowClubProp.h">
-      <Filter>BenTo\Source\Prop\props\flowtoys\flowclub</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h">
       <Filter>BenTo\Source\Prop\ui</Filter>
@@ -4256,6 +4217,9 @@
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\midi_io\juce_MidiMessageCollector.h">
       <Filter>JUCE Modules\juce_audio_devices\midi_io</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_android_HighPerformanceAudioHelpers.h">
+      <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\juce_ios_Audio.h">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
@@ -6156,6 +6120,42 @@
     <ClInclude Include="..\..\Modules\juce_organicui\app\OrganicMainComponent.h">
       <Filter>JUCE Modules\juce_organicui\app</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\curve_fit_inline.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_alloc_impl.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\intern\generic_heap.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting\intern</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\fitting\curve_fit_nd.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common\fitting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\common\bezier.h">
+      <Filter>JUCE Modules\juce_organicui\automation\common</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\ui\Easing2DUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\easing\Easing2D.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\easing</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DEditor.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DKeyUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\ui\Curve2DUI.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2D.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\automation\curve\curve2D\Curve2DKey.h">
+      <Filter>JUCE Modules\juce_organicui\automation\curve\curve2D</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\automation\easing\ui\EasingUI.h">
       <Filter>JUCE Modules\juce_organicui\automation\easing\ui</Filter>
     </ClInclude>
@@ -6559,6 +6559,9 @@
       <Filter>JUCE Modules\juce_organicui\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\script\ui\ScriptEditor.h">
+      <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\script\ui\ScriptManagerEditor.h">
       <Filter>JUCE Modules\juce_organicui\script\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\script\ExpressionListener.h">

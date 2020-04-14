@@ -20,7 +20,9 @@
 //setting low will colapse the power and the club will only turn on from USB or button press.
 
 // button pin
-#define BUTTON_PIN 32 // pin for sensing the button press.
+#define BUTTON_COUNT 1
+#define BUTTON_INPUT_MODE INPUT
+const int buttonPins[BUTTON_COUNT]{ 32 };
 
 //battery sence
 #define BATTERY_PIN 35 // takes the measurment from the battery sence. 
