@@ -88,7 +88,7 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	}
 	else if (c == remoteHost)
 	{
-		sendPing();
+		sendYo();
 	}
 	
 }
@@ -230,8 +230,6 @@ void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 		m.addInt32(autoPlay ? 1 : 0);
 		sendMessageToProp(m);
 	}
-
-	
 }
 
 void BentoProp::playBake(float time, bool loop)
@@ -328,6 +326,13 @@ bool BentoProp::uploadMetaDataProgressCallback(void* context, int bytesSent, int
 	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
 
 	return true;
+}
+
+void BentoProp::sendYo()
+{
+	OSCMessage m("/yo");
+	m.addString(NetworkHelpers::getLocalIP());
+	sendMessageToProp(m);
 }
 
 void BentoProp::sendPing()

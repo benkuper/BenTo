@@ -148,18 +148,20 @@ PropFamily * PropManager::getFamilyWithName(StringRef familyName)
 }
 
 
-void PropManager::onContainerTriggerTriggered(Trigger * t)
+void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
 {
-	if (t == autoAssignIdTrigger)
+	BaseManager::onControllableFeedbackUpdate(cc, c);
+
+	if (c == autoAssignIdTrigger)
 	{
 		int id = 0;
-		for (auto &p : items)
+		for (auto& p : items)
 		{
 			p->globalID->setValue(id);
 			id++;
 		}
 	}
-	else if (t == detectProps)
+	else if (c == detectProps)
 	{
 		StringArray ips = NetworkHelpers::getLocalIPs();
 
@@ -177,66 +179,60 @@ void PropManager::onContainerTriggerTriggered(Trigger * t)
 			sender.sendToIPAddress(broadcastIP, 9000, m);
 			LOG(" > sending /yo on " << broadcastIP << " with local ip " << ip << "...");
 		}
-		
+
 
 		//LighttoysFTProp::autoDetectRemotes();
 		//((FlowtoysFamily *)getFamilyWithName("Flowtoys"))->checkSerialDevices();
 	}
-	else if (t == bakeAll)
+	else if (c == bakeAll)
 	{
-		for (auto & p : items) p->bakeAndUploadTrigger->trigger();
+		for (auto& p : items) p->bakeAndUploadTrigger->trigger();
 	}
-	else if (t == powerOffAll)
+	else if (c == powerOffAll)
 	{
 		for (auto& p : items) p->powerOffTrigger->trigger();
 	}
-	else if (t == resetAll)
+	else if (c == resetAll)
 	{
 		for (auto& p : items) p->restartTrigger->trigger();
 	}
-	else if (t == clearAll)
+	else if (c == clearAll)
 	{
 		Array<Prop*> itemsToRemove;
 		itemsToRemove.addArray(items);
 		removeItems(itemsToRemove);
 	}
-	else if (t == loadAll || t == playAll || t == stopAll)
+	else if (c == loadAll || c == playAll || c == stopAll)
 	{
 		for (auto& p : items)
 		{
 			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 			{
-				if (t == loadAll) bp->loadBake(fileName->stringValue());
-				else if (t == playAll) bp->playBake(0, loop->boolValue());
-				else if (t == stopAll) bp->stopBakePlaying();
+				if (c == loadAll) bp->loadBake(fileName->stringValue());
+				else if (c == playAll) bp->playBake(0, loop->boolValue());
+				else if (c == stopAll) bp->stopBakePlaying();
 			}
 		}
-	}
-}
-
-void PropManager::onContainerParameterChanged(Parameter * p)
-{
-	BaseManager::onContainerParameterChanged(p);
-	if (p == bakeMode)
+	}else if (c == bakeMode)
 	{
-		for (auto &pr : items) pr->bakeMode->setValue(bakeMode->boolValue());
+		for (auto& pr : items) pr->bakeMode->setValue(bakeMode->boolValue());
 	}
-}
-
-void PropManager::onControllableFeedbackUpdate(ControllableContainer *, Controllable * c)
-{
-	Prop * p = ControllableUtil::findParentAs<Prop>(c);
-	if (p != nullptr)
+	else
 	{
-		bool shouldSend = sendFeedback->boolValue() && c->parentContainer == &p->sensorsCC && c->type != Controllable::TRIGGER;
+		Prop* p = ControllableUtil::findParentAs<Prop>(c);
 
-		if (shouldSend)
+		if (p != nullptr)
 		{
-			OSCMessage msg("/prop/" + String(p->globalID->intValue()) + "/" + c->shortName);
-			msg.addArgument(OSCHelpers::varToArgument(((Parameter *)c)->getValue()));
+			bool shouldSend = sendFeedback->boolValue() && c->parentContainer == &p->sensorsCC && c->type != Controllable::TRIGGER;
 
-			BentoEngine * be = (BentoEngine *)Engine::mainEngine;
-			be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
+			if (shouldSend)
+			{
+				OSCMessage msg("/prop/" + String(p->globalID->intValue()) + "/" + c->shortName);
+				msg.addArgument(OSCHelpers::varToArgument(((Parameter*)c)->getValue()));
+
+				BentoEngine* be = (BentoEngine*)Engine::mainEngine;
+				be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
+			}
 		}
 	}
 }

@@ -60,8 +60,6 @@ public:
 
 	PropFamily * getFamilyWithName(StringRef familyName);
 
-	void onContainerTriggerTriggered(Trigger * t) override;
-	void onContainerParameterChanged(Parameter * p) override;
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 
 	void addItemInternal(Prop * p, var) override;

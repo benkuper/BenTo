@@ -65,6 +65,8 @@ public:
     void receiveOSC();
     void processMessage(OSCMessage &m);
 
+    void saveRemoteHost(String ip);
+
     void sendMessage(OSCMessage &m);
     void sendMessage(String address);
     void sendMessage(String source, String command, var *data, int numData);

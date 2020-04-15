@@ -13,6 +13,7 @@
 
 //main power
 #define SLEEP_WAKEUP_BUTTON GPIO_NUM_13
+#define SLEEP_WAKEUP_STATE HIGH
 
 // button pin
 #define BUTTON_COUNT 1

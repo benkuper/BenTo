@@ -63,7 +63,7 @@ void MainManager::sleep()
 #endif //SLEEP_PIN
 
 #ifdef SLEEP_WAKEUP_BUTTON
-    esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, HIGH);
+    esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, SLEEP_WAKEUP_STATE);
     esp_deep_sleep_start();
 #endif
 
@@ -126,7 +126,7 @@ void MainManager::sensorEvent(const SensorEvent &e)
         switch (btEventType)
         {
         case ButtonEvent::Pressed:
-            if (e.data[2].intValue() == 1)
+            if (e.data[1].intValue() == 1)
             {
                 if (comm.wifiManager.state == Connecting)
                     comm.wifiManager.disable();
@@ -147,7 +147,7 @@ void MainManager::sensorEvent(const SensorEvent &e)
 
         case ButtonEvent::MultiPress:
         {
-            int count = e.data[2].intValue();
+            int count = e.data[1].intValue();
         }
         break;
         }
@@ -176,9 +176,10 @@ void MainManager::sensorEvent(const SensorEvent &e)
     }
     break;
     }
-
+    
+    //NDBG(" sensor event : "+e.source+" : "+command);
     if (command.length() > 0)
-        comm.sendMessage(e.source, command, e.data + 1, e.numData - 1); //data+1 and numData -1 to remove the subEventType data
+        comm.sendMessage(sensors.name+"/"+e.source, command, e.data + 1, e.numData - 1); //data+1 and numData -1 to remove the subEventType data
 }
 
 void MainManager::fileEvent(const FileEvent &e)

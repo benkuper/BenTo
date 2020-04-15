@@ -37,7 +37,8 @@ PropManagerUI::~PropManagerUI()
 
 void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	BaseManagerUI::resizedInternalHeader(r.removeFromTop(24).removeFromRight(24));
+	Rectangle<int> addR = r.removeFromTop(24).removeFromRight(24);
+	BaseManagerUI::resizedInternalHeader(addR);
 	Rectangle<int> hr = r.reduced(2);
 	autoAssignUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(2);

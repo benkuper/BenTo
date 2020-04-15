@@ -1,7 +1,7 @@
 
 #include "ButtonManager.h"
 
-const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX]{"pressed", "shortPress", "longPress", "multiPress"};
+const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX]{"pressed", "shortPress", "longPress", "veryLongPress", "multiPress"};
 
 ButtonManager::ButtonManager() : Component("button")
 {
@@ -23,6 +23,7 @@ void ButtonManager::init()
         isPressed[i] = digitalRead(buttonPins[i]);
 #ifdef BUTTON_INVERTED
         isPressed[i] = !isPressed[i];
+        NDBG("Button "+String(i)+" init : "+isPressed[i]);
 #endif
     }
 #endif //BUTTON_COUNT > 0
@@ -60,8 +61,7 @@ void ButtonManager::update()
                 sendEvent(ButtonEvent(ButtonEvent::Pressed, i, 1));
 
                 multiPressCount[i]++;
-                if (multiPressCount[i] > 1)
-                    sendEvent(ButtonEvent(ButtonEvent::MultiPress, i, multiPressCount[i]));
+                sendEvent(ButtonEvent(ButtonEvent::MultiPress, i, multiPressCount[i]));
             }
             else
             {
@@ -91,7 +91,13 @@ void ButtonManager::update()
             }
 
             if (millis() > timeAtPress[i] + multiPressTime)
-                multiPressCount[i] = 0;
+            {
+                if(multiPressCount[i] > 0)
+                {
+                    multiPressCount[i] = 0;
+                    sendEvent(ButtonEvent(ButtonEvent::MultiPress, i, multiPressCount[i]));
+                }
+            }
         }
     }
 #endif //MULTI BUTTON

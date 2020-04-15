@@ -18,8 +18,8 @@ Prop::Prop(var params) :
 	family(nullptr),
 	generalCC("General"),
 	connectionCC("Connection"),
-	controlsCC("Control"),
-	sensorsCC("SensorsCC"),
+	controlsCC("Controls"),
+	sensorsCC("Sensors"),
 	bakingCC("Bake and Upload"),
 	receivedPongSinceLastPingSent(false),
 	providerToBake(nullptr),
@@ -40,7 +40,7 @@ Prop::Prop(var params) :
 	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
 	controllableFeedbackMap.set(globalID, "/prop/id");
 
-	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", 1, 1);
+	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", params.getProperty("resolution",1), 1);
 	type = generalCC.addEnumParameter("Type", "The type of the prop");
 	fillTypeOptions(type);
 
@@ -55,7 +55,9 @@ Prop::Prop(var params) :
 	findPropMode->isSavable = false;
 	addChildControllableContainer(&connectionCC);
 
-	createControllablesForContainer(params.getProperty("parameters", var()), this);
+	addChildControllableContainer(&sensorsCC);
+
+
 
 	
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
@@ -96,6 +98,8 @@ Prop::Prop(var params) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 	activeProvider->hideInEditor = true;
+
+	createControllablesForContainer(params.getProperty("parameters", var()), this);
 
 	startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 }
@@ -391,7 +395,7 @@ void Prop::handleOSCMessage(const OSCMessage &m)
 	if (m.getAddressPattern().toString() == "/pong") handlePong();
 	else
 	{
-		OSCHelpers::findControllableAndHandleMessage(&sensorsCC, m, 1);
+		OSCHelpers::findControllableAndHandleMessage(this, m, 1);
 	}
 }
 

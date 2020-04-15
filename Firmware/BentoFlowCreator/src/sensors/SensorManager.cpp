@@ -35,20 +35,24 @@ void SensorManager::batteryEvent(const BatteryEvent &e)
 
 void SensorManager::buttonEvent(const ButtonEvent &e)
 {
-    int numBTData = (e.type == ButtonEvent::MultiPress || e.type == ButtonEvent::Pressed)  ? 2 : 1;
+    int numBTData = (e.type == ButtonEvent::MultiPress || e.type == ButtonEvent::Pressed)  ? 1 : 0;
     var *data = (var *)malloc((numBTData + 1) * sizeof(var));
     data[0].value.i = e.type;
     data[0].type = 'i';
-    data[1].value.i = e.id;
-    data[1].type = 'i';
 
     if (e.type == ButtonEvent::Pressed || e.type == ButtonEvent::MultiPress)
     {
-        data[2].value.i = e.value;
-        data[2].type = 'i';
+        data[1].value.i = e.value;
+        data[1].type = 'i';
     }
     
-    sendEvent(SensorEvent(SensorEvent::ButtonUpdate, btManager.name, data, numBTData + 1));
+#if BUTTON_COUNT > 1
+    String sourceName = btManager.name+String(e.id+1);
+#else
+    String sourceName = btManager.name;
+#endif
+
+    sendEvent(SensorEvent(SensorEvent::ButtonUpdate, sourceName, data, numBTData + 1));
 }
 
 void SensorManager::imuEvent(const IMUEvent &e)

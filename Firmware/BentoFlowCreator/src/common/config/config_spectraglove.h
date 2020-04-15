@@ -6,10 +6,10 @@
 
 #define BUTTON_COUNT 5
 #define BUTTON_INPUT_MODE INPUT_PULLUP
-const int buttonPins[BUTTON_COUNT]{ A2, A3, A4, A11, A7 };
+const int buttonPins[BUTTON_COUNT]{ A7, A11, A3, A2, A4};
 #define BUTTON_INVERTED
-#define SLEEP_WAKEUP_BUTTON GPIO_NUM_26
-
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_32
+#define SLEEP_WAKEUP_STATE LOW
 // main leds config
 #define LED_COUNT 5
 #define LED_SEPARATE_CHANNELS 1

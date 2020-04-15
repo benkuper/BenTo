@@ -70,9 +70,9 @@ void RGBLedsManager::update()
     for(int i=0;i<LED_COUNT;i++)
     {
         int startChannel = i*3;
-        ledcWrite(startChannel, map(leds[i].r,0,255,1023,0));
-        ledcWrite(startChannel+1, map(leds[i].g,0,255,1023,0));
-        ledcWrite(startChannel+2, map(leds[i].b,0,255,1023,0));
+        ledcWrite(startChannel, map(leds[i].r*globalBrightness,0,255,1024,0));
+        ledcWrite(startChannel+1, map(leds[i].g*globalBrightness,0,255,1024,0));
+        ledcWrite(startChannel+2, map(leds[i].b*globalBrightness,0,255,1024,0));
     }
 #else
     FastLED.show();

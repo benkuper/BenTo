@@ -56,6 +56,7 @@ public:
 	static bool uploadProgressCallback(void* prop, int bytesSent, int totalBytes);
 	static bool uploadMetaDataProgressCallback(void * prop, int bytesSent, int totalBytes);
 
+	virtual void sendYo();
 	virtual void sendPing() override;
 	virtual void powerOffProp() override;
 	virtual void restartProp() override;

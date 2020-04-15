@@ -106,17 +106,7 @@ void OSCManager::processMessage(OSCMessage &msg)
     {
         char hostData[32];
         msg.getString(0, hostData, 32);
-        remoteHost = String(hostData);
-        //NDBG("Got yo request from : " + remoteHost);
-
-#ifdef USE_PREFERENCES
-        prefs.begin(name.c_str());
-        prefs.putString("remoteHost", remoteHost);
-        prefs.end();
-#elif defined USE_SETTINGS_MANAGER
-        prefs.setString("remoteHost", remoteHost);
-        prefs.writeSettings(String("/" + name + ".json").c_str());
-#endif
+        saveRemoteHost(hostData);
 
         OSCMessage msg("/wassup");
 
@@ -131,6 +121,14 @@ void OSCManager::processMessage(OSCMessage &msg)
         setAlive(true);
         pingEnabled = true;
         timeSinceLastReceivedPing = millis();
+
+        if(msg.size() > 0)
+        {
+            char hostData[32];
+            msg.getString(0, hostData, 32);
+            saveRemoteHost(hostData);
+        }
+
         OSCMessage msg("/pong");
         msg.add(getDeviceID().c_str());
         sendMessage(msg);
@@ -139,6 +137,22 @@ void OSCManager::processMessage(OSCMessage &msg)
     {
         sendEvent(OSCEvent(OSCEvent::MessageReceived, &msg));
     }
+}
+
+void OSCManager::saveRemoteHost(String ip)
+{
+   
+    remoteHost = ip;
+    //NDBG("Got yo request from : " + remoteHost);
+
+#ifdef USE_PREFERENCES
+        prefs.begin(name.c_str());
+        prefs.putString("remoteHost", remoteHost);
+        prefs.end();
+#elif defined USE_SETTINGS_MANAGER
+        prefs.setString("remoteHost", remoteHost);
+        prefs.writeSettings(String("/" + name + ".json").c_str());
+#endif
 }
 
 void OSCManager::sendMessage(OSCMessage &msg)
