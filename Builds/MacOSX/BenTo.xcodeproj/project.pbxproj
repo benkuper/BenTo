@@ -113,6 +113,10 @@
 			isa = PBXBuildFile;
 			fileRef = A250B1035CA849FC5B073CCE;
 		};
+		D7D542C58C779D406253EADA = {
+			isa = PBXBuildFile;
+			fileRef = 8DF0810BFB35524FB54ECDE1;
+		};
 		6160C279B3285CE01D431A39 = {
 			isa = PBXBuildFile;
 			fileRef = F36ABE11C3B014EB8870CE8A;
@@ -1154,6 +1158,13 @@
 			path = ../../Source/Timeline/layers/Block/LightBlockClip.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		53D37D2D06EE1BEC2DD10572 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ZeroconfManager.h;
+			path = ../../Source/Common/Zeroconf/ZeroconfManager.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		53E6088511D5A958BF2D4897 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -1523,6 +1534,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = BentoSettings.cpp;
 			path = ../../Source/BentoSettings.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8DF0810BFB35524FB54ECDE1 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ZeroconfManager.cpp;
+			path = ../../Source/Common/Zeroconf/ZeroconfManager.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		8E2D9DF2881733CADA59D8E0 = {
@@ -2541,10 +2559,20 @@
 			name = Serial;
 			sourceTree = "<group>";
 		};
+		1627489111554751E6A9DE11 = {
+			isa = PBXGroup;
+			children = (
+				8DF0810BFB35524FB54ECDE1,
+				53D37D2D06EE1BEC2DD10572,
+			);
+			name = Zeroconf;
+			sourceTree = "<group>";
+		};
 		31E67B25124A445D58BC2A57 = {
 			isa = PBXGroup;
 			children = (
 				F854FEFAB9608733941E8617,
+				1627489111554751E6A9DE11,
 			);
 			name = Common;
 			sourceTree = "<group>";
@@ -3479,6 +3507,7 @@
 				47B629008D8514111CB11D29,
 				F13CA73C6582D698D6C1E86A,
 				111BE2C116F9D4D96982805A,
+				D7D542C58C779D406253EADA,
 				6160C279B3285CE01D431A39,
 				7D3C7886D439BAE2D3231BA2,
 				C0A859578655DEE96BCA7F40,

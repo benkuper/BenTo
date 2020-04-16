@@ -32,6 +32,9 @@
     <Filter Include="BenTo\Source\Common\Serial">
       <UniqueIdentifier>{8B705211-F502-BFB3-A0DE-C74EBA6F32B7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Common\Zeroconf">
+      <UniqueIdentifier>{2F03148D-4022-BAB0-B304-F9AADC120D87}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Common">
       <UniqueIdentifier>{8F33A61D-72B9-4BF3-B536-A8AEE0A70444}</UniqueIdentifier>
     </Filter>
@@ -867,6 +870,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp">
       <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
+      <Filter>BenTo\Source\Common\Zeroconf</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.cpp">
       <Filter>BenTo\Source\Audio\ui</Filter>
@@ -3806,6 +3812,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h">
       <Filter>BenTo\Source\Common\Serial</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
+      <Filter>BenTo\Source\Common\Zeroconf</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.h">
       <Filter>BenTo\Source\Audio\ui</Filter>

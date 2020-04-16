@@ -98,6 +98,7 @@
     <ClCompile Include="..\..\Source\Common\Serial\SerialDevice.cpp"/>
     <ClCompile Include="..\..\Source\Common\Serial\SerialDeviceParameter.cpp"/>
     <ClCompile Include="..\..\Source\Common\Serial\SerialManager.cpp"/>
+    <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp"/>
     <ClCompile Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.cpp"/>
     <ClCompile Include="..\..\Source\Audio\AudioManager.cpp"/>
     <ClCompile Include="..\..\Source\Video\ui\SpatializerPanel.cpp"/>
@@ -2656,6 +2657,7 @@
     <ClInclude Include="..\..\Source\Common\Serial\SerialDevice.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialDeviceParameter.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\SerialManager.h"/>
+    <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.h"/>
     <ClInclude Include="..\..\Source\Audio\AudioManager.h"/>
     <ClInclude Include="..\..\Source\Video\ui\SpatializerPanel.h"/>

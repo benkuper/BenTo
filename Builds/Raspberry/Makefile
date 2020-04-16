@@ -59,6 +59,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/SerialDevice_e404848a.o \
   $(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o \
   $(JUCE_OBJDIR)/SerialManager_fd829543.o \
+  $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
   $(JUCE_OBJDIR)/AudioManagerHardwareEditor_ce81cbaf.o \
   $(JUCE_OBJDIR)/AudioManager_d6082e39.o \
   $(JUCE_OBJDIR)/SpatializerPanel_f5827a0a.o \
@@ -239,6 +240,11 @@ $(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o: ../../Source/Common/Serial/Seri
 $(JUCE_OBJDIR)/SerialManager_fd829543.o: ../../Source/Common/Serial/SerialManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SerialManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ZeroconfManager_68129d03.o: ../../Source/Common/Zeroconf/ZeroconfManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ZeroconfManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AudioManagerHardwareEditor_ce81cbaf.o: ../../Source/Audio/ui/AudioManagerHardwareEditor.cpp

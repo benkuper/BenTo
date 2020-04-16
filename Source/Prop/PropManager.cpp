@@ -29,6 +29,7 @@ PropManager::PropManager() :
 	managerFactory = &factory;
 	selectItemWhenCreated = false;
 
+	autoAddProps = connectionCC.addBoolParameter("Auto Add", "If checked, this will automatically add detected props on the network", true);
 	detectProps = connectionCC.addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	addChildControllableContainer(&connectionCC);
 
@@ -47,6 +48,8 @@ PropManager::PropManager() :
 	stopAll = showCC.addTrigger("Stop all", "Stop show on all devices that can stop");
 	loop = showCC.addBoolParameter("Loop show", "If checked, this will tell the player to loop the playing", false);
 	addChildControllableContainer(&showCC);
+
+
 	
 	String localIp = NetworkHelpers::getLocalIP();
 
@@ -86,11 +89,15 @@ PropManager::PropManager() :
 
 	setupReceiver();
 	sender.connect("0.0.0.0", 9000);
+
+	zeroconfSearcher = ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp");
+	zeroconfSearcher->addSearcherListener(this);
 }
 
 
 PropManager::~PropManager()
 {
+	zeroconfSearcher->removeSearcherListener(this);
 }
 
 void PropManager::setupReceiver()
@@ -121,9 +128,45 @@ void PropManager::setupReceiver()
 	NLOG(niceName, s);
 }
 
+Prop* PropManager::createPropIfNotExist(const String& type, const String& host, const String& id)
+{
+	Prop* p = getPropWithHardwareId(id);
+	if (p == nullptr)
+	{
+		p = static_cast<Prop*>(managerFactory->create(type));
+		if (p != nullptr)
+		{
+			p->deviceID = id;
+
+			BentoProp* bp = dynamic_cast<BentoProp*>(p);
+			if (bp != nullptr) bp->remoteHost->setValue(host);
+
+			LOG("Found " << p->type->getValueKey() << " with ID : " << p->deviceID);
+
+			addItem(p);
+			autoAssignIdTrigger->trigger();
+		}
+		else
+		{
+			DBG("Type does not exist " << type);
+		}
+	}
+	else
+	{
+		LOG(p->deviceID << " already there, updating prop's remoteHost");
+		BentoProp* bp = dynamic_cast<BentoProp*>(p);
+		if (bp != nullptr) bp->remoteHost->setValue(host);
+	}
+
+	return p;
+}
+
 Prop * PropManager::getPropWithHardwareId(const String &hardwareId)
 {
-	for (auto & p : items) if (p->deviceID == hardwareId) return p;
+	for (auto& p : items)
+	{
+		if (p->deviceID == hardwareId) return p;
+	}
 	return nullptr;
 }
 
@@ -223,15 +266,18 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 
 		if (p != nullptr)
 		{
-			bool shouldSend = sendFeedback->boolValue() && c->parentContainer == &p->sensorsCC && c->type != Controllable::TRIGGER;
+			bool shouldSend = sendFeedback->boolValue();
 
 			if (shouldSend)
 			{
-				OSCMessage msg("/prop/" + String(p->globalID->intValue()) + "/" + c->shortName);
-				msg.addArgument(OSCHelpers::varToArgument(((Parameter*)c)->getValue()));
+				if (p->sensorsCC.containsControllable(c))
+				{
+					OSCMessage msg("/prop/" + String(p->globalID->intValue()) + c->getControlAddress(p));
+					if (c->type != Controllable::TRIGGER) msg.addArgument(OSCHelpers::varToArgument(((Parameter*)c)->getValue()));
 
-				BentoEngine* be = (BentoEngine*)Engine::mainEngine;
-				be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
+					BentoEngine* be = (BentoEngine*)Engine::mainEngine;
+					be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
+				}
 			}
 		}
 	}
@@ -282,40 +328,33 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		String pid = OSCHelpers::getStringArg(m[1]);
 		String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Flowtoys Creator Club";
 
-		DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
-		Prop * p = getPropWithHardwareId(pid);
-		if (p == nullptr)
-		{
-			p = static_cast<Prop *>(managerFactory->create(pType));
-			if (p != nullptr)
-			{
-				p->deviceID = pid;
-				
-				BentoProp* bp = dynamic_cast<BentoProp*>(p);
-				if(bp != nullptr) bp->remoteHost->setValue(pHost);
-				
-				LOG("Found " << p->type->getValueKey() << " with ID : " << p->deviceID);
-
-				addItem(p);
-				autoAssignIdTrigger->trigger();
-			}
-			else
-			{
-				DBG("Type does not exist " << pType);
-			}
-		}
-		else
-		{
-			LOG(p->deviceID << " already there, updating prop's remoteHost");
-			BentoProp* bp = dynamic_cast<BentoProp*>(p);
-			if (bp != nullptr) bp->remoteHost->setValue(pHost);
-		}
+		//DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
+		createPropIfNotExist(pType, pHost, pid);
 	}
 	else  if(m.size() > 0 && m[0].isString())
 	{
 		if (Prop* p = getPropWithHardwareId(OSCHelpers::getStringArg(m[0])))
 		{
 			p->handleOSCMessage(m);
+		}
+	}
+}
+
+void PropManager::serviceAdded(ZeroconfManager::ServiceInfo* s)
+{
+	if (!autoAddProps->boolValue()) return;
+
+	StringArray  nameSplit;
+	nameSplit.addTokens(s->name, "-", "\"");
+
+	String type = nameSplit[0].trim();
+	String mac = nameSplit[1].trim();
+
+	for (auto& d : factory.defs)
+	{
+		if (type == d->type)
+		{
+			createPropIfNotExist(type, s->ip, mac);
 		}
 	}
 }

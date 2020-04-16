@@ -73,6 +73,12 @@
                 file="Source/Common/Serial/SerialManager.cpp"/>
           <FILE id="qdT1yK" name="SerialManager.h" compile="0" resource="0" file="Source/Common/Serial/SerialManager.h"/>
         </GROUP>
+        <GROUP id="{9092AA3D-8F5A-A602-3561-F5C63DAAA4F2}" name="Zeroconf">
+          <FILE id="jgqNf2" name="ZeroconfManager.cpp" compile="1" resource="0"
+                file="Source/Common/Zeroconf/ZeroconfManager.cpp"/>
+          <FILE id="K1bCqn" name="ZeroconfManager.h" compile="0" resource="0"
+                file="Source/Common/Zeroconf/ZeroconfManager.h"/>
+        </GROUP>
       </GROUP>
       <GROUP id="{DD3F6708-4882-5DBB-AA47-902382837C77}" name="Audio">
         <GROUP id="{C26FBE46-2C24-03EF-A8C4-1682E596F5DF}" name="ui">

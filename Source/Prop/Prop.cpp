@@ -57,9 +57,6 @@ Prop::Prop(var params) :
 
 	addChildControllableContainer(&sensorsCC);
 
-
-
-	
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
 	bakeStartTime->defaultUI = FloatParameter::TIME;
 	bakeStartTime->canBeDisabledByUser = true;
@@ -257,6 +254,7 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		sendControllableFeedbackToProp(c);
 	}
+	
 }
 
 void Prop::inspectableDestroyed(Inspectable* i)
@@ -441,6 +439,7 @@ void Prop::createControllablesForContainer(var data, ControllableContainer* cc)
 				{
 					childCC = new EnablingControllableContainer(p.name.toString());
 				}
+
 				cc->addChildControllableContainer(childCC, true, index);
 			}
 
@@ -516,6 +515,11 @@ Controllable* Prop::getControllableForJSONDefinition(const String& name, var def
 		if (d->hasProperty("description"))
 		{
 			c->description = d->getProperty("description").toString();
+		}
+
+		if (d->hasProperty("feedbackAddress"))
+		{
+			controllableFeedbackMap.set(c, d->getProperty("feedbackAddress").toString());
 		}
 	}
 

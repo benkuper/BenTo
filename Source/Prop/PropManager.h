@@ -12,11 +12,13 @@
 
 #include "Prop.h"
 #include "PropFamily.h"
+#include "Common/Zeroconf/ZeroconfManager.h"
 
 class PropManager :
 	public BaseManager<Prop>,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
-	public Prop::PropListener
+	public Prop::PropListener,
+	public ZeroconfManager::ZeroconfSearcher::SearcherListener
 {
 public:
 	juce_DeclareSingleton(PropManager, true)
@@ -53,8 +55,13 @@ public:
 	Trigger* stopAll;
 	BoolParameter* loop;
 
+	BoolParameter* autoAddProps;
+	ZeroconfManager::ZeroconfSearcher* zeroconfSearcher;
+
 	void setupReceiver();
 
+
+	Prop* createPropIfNotExist(const String& type, const String& host, const String& id);
 	Prop * getPropWithHardwareId(const String &hardwareId);
 	Prop * getPropWithId(int id, Prop * excludeProp = nullptr);
 
@@ -73,4 +80,5 @@ public:
 	// Inherited via Listener
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 
+	void serviceAdded(ZeroconfManager::ServiceInfo * s) override;
 };

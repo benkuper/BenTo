@@ -65,6 +65,8 @@ BentoEngine::~BentoEngine()
 	//BentoWebServer::deleteInstance();
 
 	BentoSettings::deleteInstance();
+
+	ZeroconfManager::deleteInstance();
 }
 
 void BentoEngine::clearInternal()
