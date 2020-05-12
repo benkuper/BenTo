@@ -19,6 +19,4 @@ public:
 
 	PropClusterGroupManager();
 	~PropClusterGroupManager();
-
-	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c) override;
 };

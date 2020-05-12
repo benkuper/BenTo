@@ -31,6 +31,8 @@ public:
 	SerialDevice* serialDevice;
 
 
+
+
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);
@@ -62,11 +64,8 @@ public:
 	virtual void restartProp() override;
 	virtual void sendWiFiCredentials(String ssid, String pass);
 
-	virtual void sendControllableFeedbackToProp(Controllable* c) override;
+	virtual void sendControlToPropInternal(String control, var value = var()) override;
 	virtual void sendMessageToProp(const OSCMessage& m);
-
-	void  createControllablesForContainer(var data, ControllableContainer* cc);
-	Controllable* getControllableForJSONDefinition(const String& name, var def);
 
 	static BentoProp* create(var params) { return new BentoProp(params); }
 };

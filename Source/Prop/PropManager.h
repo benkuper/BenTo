@@ -18,7 +18,9 @@ class PropManager :
 	public BaseManager<Prop>,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
 	public Prop::PropListener,
-	public ZeroconfManager::ZeroconfSearcher::SearcherListener
+	public ZeroconfManager::ZeroconfSearcher::SearcherListener,
+	public Thread,
+	public URL::DownloadTask::Listener
 {
 public:
 	juce_DeclareSingleton(PropManager, true)
@@ -30,7 +32,7 @@ public:
 	OSCReceiver receiver;
 
 	ControllableContainer familiesCC;
-	OwnedArray<PropFamily> families;
+	Array<PropFamily *> families;
 	Factory<Prop> factory;
 	
 	const int localPort = 10000;
@@ -58,8 +60,9 @@ public:
 	BoolParameter* autoAddProps;
 	ZeroconfManager::ZeroconfSearcher* zeroconfSearcher;
 
-	void setupReceiver();
+	std::unique_ptr<URL::DownloadTask> propDownloadTask;
 
+	void setupReceiver();
 
 	Prop* createPropIfNotExist(const String& type, const String& host, const String& id);
 	Prop * getPropWithHardwareId(const String &hardwareId);
@@ -81,4 +84,11 @@ public:
 	virtual void oscMessageReceived(const OSCMessage & message) override;
 
 	void serviceAdded(ZeroconfManager::ServiceInfo * s) override;
+
+	void updatePropsAndFamiliesDefinitions();
+
+	void run() override;
+
+	// Inherited via Listener
+	virtual void finished(URL::DownloadTask* task, bool success) override;
 };

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.7" headerPath="../../Source"
-              id="LP0of5" version="1.1.2" projectLineFeed="&#10;">
+              id="LP0of5" version="1.2.0" projectLineFeed="&#10;">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -402,12 +402,6 @@
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <FILE id="WR3mnT" name="PropFamily.cpp" compile="1" resource="0" file="Source/Prop/PropFamily.cpp"/>
         <FILE id="p2GnSz" name="PropFamily.h" compile="0" resource="0" file="Source/Prop/PropFamily.h"/>
-        <GROUP id="{5466C7B8-1C99-28D1-C3DB-1BB048E99A84}" name="CustomParameters">
-          <FILE id="iidRVL" name="CustomParameterManager.cpp" compile="1" resource="0"
-                file="Source/Prop/CustomParameters/CustomParameterManager.cpp"/>
-          <FILE id="Kur52u" name="CustomParameterManager.h" compile="0" resource="0"
-                file="Source/Prop/CustomParameters/CustomParameterManager.h"/>
-        </GROUP>
         <GROUP id="{2C9EC421-B4F2-97F6-B5FC-EB3BC810C022}" name="TargetFilter">
           <GROUP id="{30C8E5B1-F574-BA99-E16B-80CDE5072A7A}" name="filters"/>
           <FILE id="y0NGDg" name="PropTargetFilterManager.cpp" compile="1" resource="0"
@@ -443,7 +437,50 @@
             <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>
           </GROUP>
         </GROUP>
+        <GROUP id="{8E4ED156-FAC3-B69B-D00B-42398B54E32F}" name="Component">
+          <GROUP id="{96B6B97F-243C-2E0E-1B3D-9482FBFB37B6}" name="components">
+            <GROUP id="{E7E01D5E-99F9-820C-D396-1D880223BFEE}" name="ir">
+              <FILE id="j8Lq3y" name="IRPropComponent.cpp" compile="1" resource="0"
+                    file="Source/Prop/Component/ir/IRPropComponent.cpp"/>
+              <FILE id="B5iWVm" name="IRPropComponent.h" compile="0" resource="0"
+                    file="Source/Prop/Component/ir/IRPropComponent.h"/>
+            </GROUP>
+            <GROUP id="{6C61C5FA-B783-C5C5-39CA-B1AB17F45C52}" name="battery">
+              <FILE id="RD2USN" name="BatteryComponent.cpp" compile="1" resource="0"
+                    file="Source/Prop/Component/battery/BatteryComponent.cpp"/>
+              <FILE id="CB9yZf" name="BatteryComponent.h" compile="0" resource="0"
+                    file="Source/Prop/Component/battery/BatteryComponent.h"/>
+            </GROUP>
+            <GROUP id="{84FB84DA-5AD5-97EF-6383-7D492E76900D}" name="buttons">
+              <FILE id="NhZPbo" name="ButtonsComponent.cpp" compile="1" resource="0"
+                    file="Source/Prop/Component/buttons/ButtonsComponent.cpp"/>
+              <FILE id="tMsmgE" name="ButtonsComponent.h" compile="0" resource="0"
+                    file="Source/Prop/Component/buttons/ButtonsComponent.h"/>
+            </GROUP>
+            <GROUP id="{44518473-18ED-63D9-31D4-55726C7D6B14}" name="files">
+              <FILE id="Tv3ZFE" name="FilesComponent.cpp" compile="1" resource="0"
+                    file="Source/Prop/Component/files/FilesComponent.cpp"/>
+              <FILE id="n6IqVO" name="FilesComponent.h" compile="0" resource="0"
+                    file="Source/Prop/Component/files/FilesComponent.h"/>
+            </GROUP>
+            <GROUP id="{D0797117-8561-FE57-3185-EBE36DDB8B7A}" name="imu">
+              <FILE id="dI2fBY" name="IMUComponent.cpp" compile="1" resource="0"
+                    file="Source/Prop/Component/imu/IMUComponent.cpp"/>
+              <FILE id="u5jusy" name="IMUComponent.h" compile="0" resource="0" file="Source/Prop/Component/imu/IMUComponent.h"/>
+            </GROUP>
+            <GROUP id="{CE3BD012-D672-F337-0C0E-C3726E1188BC}" name="rgb">
+              <FILE id="xgqzsY" name="RGBComponent.cpp" compile="1" resource="0"
+                    file="Source/Prop/Component/rgb/RGBComponent.cpp"/>
+              <FILE id="WXzhgz" name="RGBComponent.h" compile="0" resource="0" file="Source/Prop/Component/rgb/RGBComponent.h"/>
+            </GROUP>
+          </GROUP>
+          <FILE id="uwUmvQ" name="PropComponent.cpp" compile="1" resource="0"
+                file="Source/Prop/Component/PropComponent.cpp"/>
+          <FILE id="oD40jg" name="PropComponent.h" compile="0" resource="0" file="Source/Prop/Component/PropComponent.h"/>
+        </GROUP>
         <GROUP id="{2D4445E7-66E2-A651-74EF-D1FC94C498A0}" name="ui">
+          <FILE id="LK4Os9" name="PropEditor.cpp" compile="1" resource="0" file="Source/Prop/ui/PropEditor.cpp"/>
+          <FILE id="iHeBC5" name="PropEditor.h" compile="0" resource="0" file="Source/Prop/ui/PropEditor.h"/>
           <FILE id="VxuHVc" name="PropManagerUI.cpp" compile="1" resource="0"
                 file="Source/Prop/ui/PropManagerUI.cpp"/>
           <FILE id="RgPZml" name="PropManagerUI.h" compile="0" resource="0" file="Source/Prop/ui/PropManagerUI.h"/>
@@ -465,6 +502,8 @@
       <FILE id="NA8DkH" name="MainComponent.h" compile="0" resource="0" file="Source/MainComponent.h"/>
       <FILE id="L8PHCK" name="MainComponent.cpp" compile="1" resource="0"
             file="Source/MainComponent.cpp"/>
+      <FILE id="YlrObC" name="BentoComponentCommands.cpp" compile="1" resource="0"
+            file="Source/BentoComponentCommands.cpp"/>
       <FILE id="GLnIoj" name="Main.cpp" compile="1" resource="0" file="Source/Main.cpp"/>
     </GROUP>
   </MAINGROUP>

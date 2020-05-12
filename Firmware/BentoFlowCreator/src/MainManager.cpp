@@ -22,8 +22,13 @@ void MainManager::init()
 #endif
 #endif
 
-    sensors.addListener(std::bind(&MainManager::sensorEvent, this, std::placeholders::_1));
-    sensors.init();
+    battery.init();
+    battery.addListener(std::bind(&MainManager::batteryEvent, this, std::placeholders::_1));
+
+    buttons.init();
+    buttons.addListener(std::bind(&MainManager::buttonEvent, this, std::placeholders::_1));
+
+    imu.addListener(std::bind(&MainManager::imuEvent, this, std::placeholders::_1));
 
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
@@ -40,7 +45,10 @@ void MainManager::update()
 
     comm.update();
     leds.update();
-    sensors.update();
+
+    battery.update();
+    buttons.update();
+    imu.update();
 }
 
 void MainManager::sleep()
@@ -98,8 +106,6 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
 
 void MainManager::communicationEvent(const CommunicationEvent &e)
 {
-    NDBG(e.toString());
-
     Component *c = Component::getComponentForName(e.target);
 
     if (c != nullptr)
@@ -114,72 +120,64 @@ void MainManager::communicationEvent(const CommunicationEvent &e)
     }
 }
 
-void MainManager::sensorEvent(const SensorEvent &e)
+void MainManager::batteryEvent(const BatteryEvent &e)
 {
-    String command = "";
+    var data[1];
+    data[0].type = 'f';
+    data[0].value.f = e.value;
+    comm.sendMessage(battery.name, BatteryEvent::eventNames[(int)e.type], data, 1);
+
+    if(e.type == BatteryEvent::CriticalLevel) sleep();
+}
+
+void MainManager::buttonEvent(const ButtonEvent &e)
+{
+    int numBTData = (e.type == ButtonEvent::MultiPress || e.type == ButtonEvent::Pressed) ? 1 : 0;
+    var *data = (var *)malloc((numBTData) * sizeof(var));
+
+    if (numBTData > 0)
+    {
+        data[0].value.i = e.value;
+        data[0].type = 'i';
+    }
+
+    comm.sendMessage(buttons.name, ButtonEvent::eventNames[(int)e.type], data, numBTData);
+
     switch (e.type)
     {
-    case SensorEvent::ButtonUpdate:
-    {
-        ButtonEvent::Type btEventType = (ButtonEvent::Type)e.data[0].intValue();
-        command = ButtonEvent::eventNames[btEventType];
-        switch (btEventType)
+    case ButtonEvent::Pressed:
+        if (e.value == 1)
         {
-        case ButtonEvent::Pressed:
-            if (e.data[1].intValue() == 1)
-            {
-                if (comm.wifiManager.state == Connecting)
-                    comm.wifiManager.disable();
-            }
-            break;
-
-        case ButtonEvent::ShortPress:
-            break;
-
-        case ButtonEvent::LongPress:
-            break;
-
-        case ButtonEvent::VeryLongPress:
-        {
-            sleep();
+            if (comm.wifiManager.state == Connecting)
+                comm.wifiManager.disable();
         }
         break;
 
-        case ButtonEvent::MultiPress:
-        {
-            int count = e.data[1].intValue();
-        }
-        break;
-        }
-    }
-    break;
-
-    case SensorEvent::OrientationUpdate:
+    case ButtonEvent::VeryLongPress:
     {
-        IMUEvent::Type imuEventType = (IMUEvent::Type)e.data[0].intValue();
-        command = IMUEvent::eventNames[imuEventType];
-        switch (imuEventType)
-        {
-        case IMUEvent::OrientationUpdate:
-        {
-            //NDBG(String(event.orientation.x, 4) + " " + String(event.orientation.y, 4) + " " + String(event.orientation.z, 4));
-        }
-        break;
-        }
+        sleep();
     }
     break;
+    }
+}
 
-    case SensorEvent::BatteryUpdate:
+void MainManager::imuEvent(const IMUEvent &e)
+{
+    switch (e.type)
     {
-        BatteryEvent::Type batteryEventType = (BatteryEvent::Type)e.data[0].intValue();
-        command = BatteryEvent::eventNames[batteryEventType];
+    case IMUEvent::OrientationUpdate:
+    {
+        var data[3];
+        for (int i = 0; i < 3; i++)
+        {
+            data[i].type = 'f';
+            data[i].value.f = imu.orientation[i];
+        }
+
+        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 3);
     }
     break;
     }
-    
-    //NDBG(" sensor event : "+e.source+" : "+command);
-    if (command.length() > 0)
-        comm.sendMessage(sensors.name+"/"+e.source, command, e.data + 1, e.numData - 1); //data+1 and numData -1 to remove the subEventType data
 }
 
 void MainManager::fileEvent(const FileEvent &e)
@@ -208,7 +206,7 @@ void MainManager::timerEvent(const TimerEvent &e)
     NDBG("Timer Event, init fileSystem and IMU");
     files.init();
 
-    sensors.imuManager.init();
+    imu.init();
 }
 
 bool MainManager::handleCommand(String command, var *data, int numData)

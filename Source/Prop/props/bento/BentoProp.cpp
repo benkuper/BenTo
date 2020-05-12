@@ -26,13 +26,6 @@ BentoProp::BentoProp(var params) :
 	connectionCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
-
-
-	if (params.getProperty("hasIR", true))
-	{
-		Parameter * irLevel = controlsCC.addFloatParameter("IR Level", "IR LED brightness level", 0, 0, 1);
-		controllableFeedbackMap.set(irLevel, "/ir/level");
-	}
 }
 
 BentoProp::~BentoProp()
@@ -385,26 +378,22 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 	}
 }
 
-void BentoProp::sendControllableFeedbackToProp(Controllable* c)
+void BentoProp::sendControlToPropInternal(String control, var value)
 {
-	OSCMessage m(controllableFeedbackMap[c]);
-	if (c->type != Controllable::TRIGGER)
+	OSCMessage m("/"+control.replaceCharacter('.','/'));
+	if (value.isArray())
 	{
-		m.addArgument(OSCHelpers::varToArgument(((Parameter*)c)->value));
+		for (int i = 0; i < value.size(); i++) m.addArgument(OSCHelpers::varToArgument(value[i]));
 	}
+	else if(!value.isVoid())
+	{
+		m.addArgument(OSCHelpers::varToArgument(value));
+	}
+
 	sendMessageToProp(m);
 }
 
 void BentoProp::sendMessageToProp(const OSCMessage& m)
 {
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
-}
-
-void BentoProp::createControllablesForContainer(var data, ControllableContainer* cc)
-{
-}
-
-Controllable* BentoProp::getControllableForJSONDefinition(const String& name, var def)
-{
-	return nullptr;
 }

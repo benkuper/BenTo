@@ -5,7 +5,7 @@
 class BatteryEvent
 {
 public:
-    enum Type { Level, Voltage, RawValue, CriticalLevel, Charging, Discharging, TYPES_MAX};
+    enum Type { Level, Voltage, RawValue, CriticalLevel, Charging, TYPES_MAX};
 
     static const String eventNames[TYPES_MAX];
 
@@ -22,6 +22,8 @@ public:
     int rawValue;
     float value;
     float voltage;
+
+    bool isCharging;
 
     const int minVal = 864; //TESTED
     const int maxVal = 1460; //TO FIND

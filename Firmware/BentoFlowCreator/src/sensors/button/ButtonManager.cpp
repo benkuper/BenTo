@@ -3,7 +3,7 @@
 
 const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX]{"pressed", "shortPress", "longPress", "veryLongPress", "multiPress"};
 
-ButtonManager::ButtonManager() : Component("button")
+ButtonManager::ButtonManager() : Component("buttons")
 {
     for (int i = 0; i < BUTTON_COUNT; i++)
     {

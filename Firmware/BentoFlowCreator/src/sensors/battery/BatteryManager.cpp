@@ -1,11 +1,12 @@
 #include "BatteryManager.h"
 
-const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level", "voltage", "rawValue", "criticalLevel", "charging", "discharging"};
+const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level", "voltage", "rawValue", "criticalLevel", "charging"};
 
 BatteryManager::BatteryManager() : Component("battery"),
                                    voltage(4.1f),
                                    rawValue(0),
                                    value(1),
+                                   isCharging(false),
                                    timeSinceLastBatterySent(0),
                                    isCriticalBattery(false),
                                    timeAtCriticalBattery(0)

@@ -12,14 +12,22 @@
 #include "LightBlock/model//LightBlockModelLibrary.h"
 #include "PropManager.h"
 
+#include "Component/files/FilesComponent.h"
+#include "Component/battery/BatteryComponent.h"
+#include "Component/buttons/ButtonsComponent.h"
+#include "Component/imu/IMUComponent.h"
+#include "Component/ir/IRPropComponent.h"
+#include "Component/rgb/RGBComponent.h"
+
+#include "ui/PropEditor.h"
+
 Prop::Prop(var params) :
-	BaseItem(params.getProperty("name","Unknown").toString()),
+	BaseItem(params.getProperty("name", "Unknown").toString()),
 	Thread("Prop"),
 	family(nullptr),
 	generalCC("General"),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
-	sensorsCC("Sensors"),
 	bakingCC("Bake and Upload"),
 	receivedPongSinceLastPingSent(false),
 	providerToBake(nullptr),
@@ -28,9 +36,14 @@ Prop::Prop(var params) :
 	updateRate(50),
 	propNotifier(50)
 {
-	registerFamily(params.getProperty("family","Mistery Family").toString());
+	registerFamily(params.getProperty("family", "Mistery Family").toString());
 
 	customType = params.getProperty("type", "");
+
+	logIncoming = addBoolParameter("Log Incoming", "Log all incoming messages from the prop", false);
+	logOutgoing = addBoolParameter("Log Outgoing", "Log all outgoing messages to the prop", false);
+	logIncoming->hideInEditor = true;
+	logOutgoing->hideInEditor = true;
 
 	showWarningInUI = true;
 	editorIsCollapsed = true;
@@ -38,9 +51,8 @@ Prop::Prop(var params) :
 
 	addChildControllableContainer(&generalCC);
 	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
-	controllableFeedbackMap.set(globalID, "/prop/id");
 
-	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", params.getProperty("resolution",1), 1);
+	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", params.getProperty("resolution", 1), 1);
 	type = generalCC.addEnumParameter("Type", "The type of the prop");
 	fillTypeOptions(type);
 
@@ -48,24 +60,22 @@ Prop::Prop(var params) :
 
 	isConnected = connectionCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
-	isConnected->isSavable = false; 
+	isConnected->isSavable = false;
 
 	findPropMode = connectionCC.addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
 	findPropMode->setControllableFeedbackOnly(true);
 	findPropMode->isSavable = false;
 	addChildControllableContainer(&connectionCC);
 
-	addChildControllableContainer(&sensorsCC);
-
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
 	bakeStartTime->defaultUI = FloatParameter::TIME;
 	bakeStartTime->canBeDisabledByUser = true;
 	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1, 1, INT32_MAX, false);
 	bakeEndTime->defaultUI = FloatParameter::TIME;
-	bakeEndTime->canBeDisabledByUser = true; 
+	bakeEndTime->canBeDisabledByUser = true;
 	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 50000, false);
 	bakeFrequency->canBeDisabledByUser = true;
-	
+
 	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
 	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
 
@@ -96,7 +106,7 @@ Prop::Prop(var params) :
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 	activeProvider->hideInEditor = true;
 
-	createControllablesForContainer(params.getProperty("parameters", var()), this);
+	setupComponentsJSONDefinition(params.getProperty("components", var()));
 
 	startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 }
@@ -104,6 +114,7 @@ Prop::Prop(var params) :
 Prop::~Prop()
 {
 	clearItem();
+	masterReference.clear();
 }
 
 void Prop::clearItem()
@@ -233,7 +244,8 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		propListeners.call(&PropListener::propIDChanged, this, previousID);
 		previousID = globalID->intValue();
-	}else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
+	}
+	else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
 	{
 		initBaking(currentBlock.get(), c == bakeAndUploadTrigger ? UPLOAD : EXPORT);
 	}
@@ -250,11 +262,6 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		restartProp();
 	}
-	else if (controllableFeedbackMap.contains(c))
-	{
-		sendControllableFeedbackToProp(c);
-	}
-	
 }
 
 void Prop::inspectableDestroyed(Inspectable* i)
@@ -308,10 +315,10 @@ BakeData Prop::bakeBlock()
 
 
 	//overrides
-	if(bakeFileName->enabled && bakeFileName->stringValue().isNotEmpty()) result.name = bakeFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
-	if(bakeStartTime->enabled) result.startTime = bakeStartTime->floatValue();
-	if(bakeEndTime->enabled) result.endTime = bakeEndTime->floatValue();
-	if(bakeFrequency->enabled) result.fps = bakeFrequency->intValue();
+	if (bakeFileName->enabled && bakeFileName->stringValue().isNotEmpty()) result.name = bakeFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
+	if (bakeStartTime->enabled) result.startTime = bakeStartTime->floatValue();
+	if (bakeEndTime->enabled) result.endTime = bakeEndTime->floatValue();
+	if (bakeFrequency->enabled) result.fps = bakeFrequency->intValue();
 
 	if (!result.metaData.hasProperty("id"))
 	{
@@ -387,13 +394,35 @@ void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl contro
 	}
 }
 
+void Prop::sendControlToProp(String message, var value)
+{
+	if (!enabled->boolValue()) return;
+	if (logOutgoing->boolValue())
+	{
+		NLOG(niceName, "Sending " + message + " : " + value.toString());
+	}
+	sendControlToPropInternal(message, value);
+}
 
-void Prop::handleOSCMessage(const OSCMessage &m)
+
+void Prop::handleOSCMessage(const OSCMessage& m)
 {
 	if (m.getAddressPattern().toString() == "/pong") handlePong();
 	else
 	{
-		OSCHelpers::findControllableAndHandleMessage(this, m, 1);
+		if (logIncoming->boolValue())
+		{
+			String s = "Received " + m.getAddressPattern().toString() + (m.size() > 1 ? " : ":"");
+			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
+			NLOG(niceName, s);
+		}
+
+		StringArray mSplit;
+		mSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
+		PropComponent* pc = getComponent(mSplit[1]);
+		var value;
+		for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
+		if (pc != nullptr) pc->handleMessage(mSplit[2], value);
 	}
 }
 
@@ -413,119 +442,33 @@ void Prop::timerCallback(int timerID)
 	}
 }
 
-
-void Prop::createControllablesForContainer(var data, ControllableContainer* cc)
+void Prop::setupComponentsJSONDefinition(var def)
 {
-	if (data.isVoid()) return;
-
-	NamedValueSet valueProps = data.getDynamicObject()->getProperties();
-	for (auto& p : valueProps)
+	if (def.hasProperty("rgb"))
 	{
-		if (!p.value.isObject()) continue;
-
-		if (p.value.getProperty("type", "") == "Container")
-		{
-			ControllableContainer* childCC = cc->getControllableContainerByName(p.name.toString(), true);
-
-			if (childCC == nullptr)
-			{
-				int index = p.value.getProperty("index", -1);
-				if (p.value.getProperty("canBeDisabled", false))
-				{
-					childCC = new EnablingControllableContainer(p.name.toString());
-					((EnablingControllableContainer*)childCC)->enabled->setValue(p.value.getProperty("enabled", true));
-				}
-				else
-				{
-					childCC = new EnablingControllableContainer(p.name.toString());
-				}
-
-				cc->addChildControllableContainer(childCC, true, index);
-			}
-
-			childCC->editorIsCollapsed = p.value.getProperty("collapsed", false);
-			createControllablesForContainer(p.value, childCC);
-
-		}
-		else
-		{
-			Controllable* c = getControllableForJSONDefinition(p.name.toString(), p.value);
-			if (c == nullptr) continue;
-			cc->addControllable(c);
-		}
-	}
-}
-
-Controllable* Prop::getControllableForJSONDefinition(const String& name, var def)
-{
-	String valueType = def.getProperty("type", "").toString();
-	Controllable* c = ControllableFactory::createControllable(valueType);
-	if (c == nullptr) return nullptr;
-
-	c->setNiceName(name);
-
-	DynamicObject* d = def.getDynamicObject();
-
-	if (c->type != Controllable::TRIGGER)
-	{
-		if (def.hasProperty("min") || def.hasProperty("max")) ((Parameter*)c)->setRange(def.getProperty("min", INT32_MIN), def.getProperty("max", INT32_MAX));
-
-		if (d->hasProperty("default")) ((Parameter*)c)->setValue(d->getProperty("default"));
-
-		if (c->type == Controllable::ENUM)
-		{
-			EnumParameter* ep = dynamic_cast<EnumParameter*>(c);
-
-			if (d->hasProperty("options") && d->getProperty("options").isObject())
-			{
-				NamedValueSet options = d->getProperty("options").getDynamicObject()->getProperties();
-				for (auto& o : options)
-				{
-					ep->addOption(o.name.toString(), o.value);
-				}
-			}
-			else
-			{
-				LOG("Options property is not valid : " << d->getProperty("options").toString());
-			}
-		}
-		else if (c->type == Controllable::FLOAT)
-		{
-			FloatParameter* ep = dynamic_cast<FloatParameter*>(c);
-			if (d->hasProperty("ui"))
-			{
-				String ui = d->getProperty("ui");
-				if (ui == "slider") ep->defaultUI = FloatParameter::SLIDER;
-				else if (ui == "stepper") ep->defaultUI = FloatParameter::STEPPER;
-				else if (ui == "label") ep->defaultUI = FloatParameter::LABEL;
-				else if (ui == "time") ep->defaultUI = FloatParameter::TIME;
-			}
-		}
-
-		if (d->hasProperty("readOnly"))
-		{
-			c->setControllableFeedbackOnly(d->getProperty("readOnly"));
-		}
-
-		if (d->hasProperty("shortName"))
-		{
-			c->setCustomShortName(d->getProperty("shortName").toString());
-		}
-
-		if (d->hasProperty("description"))
-		{
-			c->description = d->getProperty("description").toString();
-		}
-
-		if (d->hasProperty("feedbackAddress"))
-		{
-			controllableFeedbackMap.set(c, d->getProperty("feedbackAddress").toString());
-		}
+		RGBPropComponent* rgb = new RGBPropComponent(this, def.getProperty("rgb", var()));
+		addComponent(rgb);
+		resolution->setValue(rgb->resolution);
+		updateRate = rgb->updateRate;
 	}
 
-	return c;
+	if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));
+	if (def.hasProperty("imu")) addComponent(new IMUPropComponent(this, def.getProperty("imu", var())));
+	if (def.hasProperty("ir")) addComponent(new IRPropComponent(this, def.getProperty("ir", var())));
+	if (def.hasProperty("battery")) addComponent(new BatteryPropComponent(this, def.getProperty("battery", var())));
+	if (def.hasProperty("files")) addComponent(new FilesPropComponent(this, def.getProperty("files", var())));
 }
 
+void Prop::addComponent(PropComponent* pc)
+{
+	addChildControllableContainer(pc, true);
+	components.set(pc->shortName, pc);
+}
+
+PropComponent* Prop::getComponent(const String& name)
+{
+	return components.contains(name) ? components[name] : nullptr;
+}
 
 var Prop::getJSONData()
 {
@@ -540,6 +483,11 @@ void Prop::loadJSONDataInternal(var data)
 	BaseItem::loadJSONDataInternal(data);
 	if (currentBlock != nullptr) currentBlock->loadJSONData(data.getProperty("block", var()));
 	deviceID = data.getProperty("deviceID", "");
+}
+
+InspectableEditor* Prop::getEditor(bool isRoot)
+{
+	return new PropEditor(this, isRoot);
 }
 
 void Prop::run()

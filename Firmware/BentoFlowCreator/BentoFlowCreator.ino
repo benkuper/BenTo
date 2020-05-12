@@ -1,6 +1,6 @@
 
 #include "src/MainManager.h"
-MainManager main("2.0");
+MainManager main("2.1");
 
 void setup()
 {

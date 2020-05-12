@@ -48,7 +48,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\Modules;../../External/asio;../../External/serial/include;../../External/servus/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.1.2;JUCE_APP_VERSION_HEX=0x10102;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.2.0;JUCE_APP_VERSION_HEX=0x10200;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader/>
@@ -171,7 +171,6 @@
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp"/>
     <ClCompile Include="..\..\Source\Prop\PropFamily.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.cpp"/>
     <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp"/>
     <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.cpp"/>
@@ -179,6 +178,14 @@
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\battery\BatteryComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\files\FilesComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\imu\IMUComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\rgb\RGBComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\ui\PropEditor.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropUI.cpp"/>
     <ClCompile Include="..\..\Source\Prop\ui\PropViz.cpp"/>
@@ -187,6 +194,7 @@
     <ClCompile Include="..\..\Source\BentoSettings.cpp"/>
     <ClCompile Include="..\..\Source\BentoEngine.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
+    <ClCompile Include="..\..\Source\BentoComponentCommands.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
@@ -2504,9 +2512,6 @@
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2732,7 +2737,6 @@
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
     <ClInclude Include="..\..\Source\Prop\PropFamily.h"/>
-    <ClInclude Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.h"/>
     <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h"/>
     <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h"/>
     <ClInclude Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.h"/>
@@ -2740,6 +2744,14 @@
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h"/>
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\ir\IRPropComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\battery\BatteryComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\files\FilesComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\imu\IMUComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\rgb\RGBComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\ui\PropEditor.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropViz.h"/>
@@ -3631,7 +3643,6 @@
     <ClInclude Include="..\..\Modules\juce_sharedtexture\SharedTexture.h"/>
     <ClInclude Include="..\..\Modules\juce_sharedtexture\juce_sharedtexture.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\resources\BinaryData.h"/>
-    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\TimeCue.h"/>

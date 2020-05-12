@@ -27,7 +27,6 @@ public:
 	
 	TargetParameter * activeProvider;
 
-	//BoolParameter * autoFade;
 	FloatParameter * fadeIn;
 	FloatParameter * fadeOut;
 
@@ -36,10 +35,7 @@ public:
 	
 	virtual void blockParamControlModeChanged(Parameter *p) override;
 
-	//void itemAdded(ParameterAutomation * p) override;
-
 	void setCoreLength(float value, bool stretch = false, bool stickToCoreEnd = false) override;
-
 
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void controllableStateChanged(Controllable* c) override;

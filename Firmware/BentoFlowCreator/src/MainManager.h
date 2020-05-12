@@ -4,8 +4,10 @@
 
 #include "communication/CommunicationManager.h"
 #include "leds/LedManager.h"
-#include "sensors/SensorManager.h"
 #include "files/FileManager.h"
+#include "sensors/battery/BatteryManager.h"
+#include "sensors/button/ButtonManager.h"
+#include "sensors/imu/IMUManager.h"
 
 
 class MainManager : public Component {
@@ -18,8 +20,11 @@ public:
 
     CommunicationManager comm;
     LedManager leds;
-    SensorManager sensors;
     FileManager files;
+
+    BatteryManager battery;
+    ButtonManager buttons;
+    IMUManager imu;
 
     Timer initTimer; //to init blocking stuff after connection
 
@@ -30,10 +35,13 @@ public:
 
     void connectionEvent(const ConnectionEvent &e);
     void communicationEvent(const CommunicationEvent &e);
-    void sensorEvent(const SensorEvent &e);
+    
+    void batteryEvent(const BatteryEvent &e);
+    void buttonEvent(const ButtonEvent &e);
+    void imuEvent(const IMUEvent &e);
+
     void fileEvent(const FileEvent &e);
     void timerEvent(const TimerEvent &e);
 
     bool handleCommand(String command, var *data, int numData) override;
-
  };

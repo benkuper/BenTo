@@ -20,6 +20,7 @@
 MainComponent::MainComponent() :
 	OrganicMainContentComponent()
 {
+	getCommandManager().registerAllCommandsForTarget(this);
 	SharedTextureManager::getInstance(); //create the main instance
 }
 

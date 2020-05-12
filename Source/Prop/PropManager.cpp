@@ -19,6 +19,7 @@ const OrganicApplication & getApp();
 
 PropManager::PropManager() :
 	BaseManager("Props"),
+	Thread("PropsDownload"),
 	familiesCC("Families"),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
@@ -48,43 +49,11 @@ PropManager::PropManager() :
 	stopAll = showCC.addTrigger("Stop all", "Stop show on all devices that can stop");
 	loop = showCC.addBoolParameter("Loop show", "If checked, this will tell the player to loop the playing", false);
 	addChildControllableContainer(&showCC);
-
-
 	
 	String localIp = NetworkHelpers::getLocalIP();
 
-	File familyFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props/families");
-	if (!familyFolder.exists()) familyFolder.createDirectory();
-
-	Array<File> familyFiles = familyFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
-	
-	for (auto& f : familyFiles)
-	{
-		var fData = JSON::parse(f);
-		if (fData.isObject())
-		{
-			PropFamily* fam = new PropFamily(fData);
-			families.add(fam);
-			familiesCC.addChildControllableContainer(fam);
-		}
-	}
 	addChildControllableContainer(&familiesCC);
-
-	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props");
-	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
-
-	for (auto& f : propFiles)
-	{
-		var pData = JSON::parse(f);
-		if (pData.isObject())
-		{
-			std::function<Prop*(var params)> createFunc = &Prop::create;
-			String propType = pData.getProperty("type", "");
-			if (propType == "Bento") createFunc = &BentoProp::create;
-
-			factory.defs.add(FactorySimpleParametricDefinition<Prop>::createDef(pData.getProperty("menu", "").toString(), pData.getProperty("name", "").toString(), createFunc, pData));
-		}
-	}
+	
 	receiver.addListener(this);
 
 	setupReceiver();
@@ -92,6 +61,9 @@ PropManager::PropManager() :
 
 	zeroconfSearcher = ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp");
 	zeroconfSearcher->addSearcherListener(this);
+
+	updatePropsAndFamiliesDefinitions();
+
 }
 
 
@@ -266,8 +238,9 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 
 		if (p != nullptr)
 		{
-			bool shouldSend = sendFeedback->boolValue();
+			//bool shouldSend = sendFeedback->boolValue();
 
+			/*
 			if (shouldSend)
 			{
 				if (p->sensorsCC.containsControllable(c))
@@ -279,6 +252,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 					be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
 				}
 			}
+			*/
 		}
 	}
 }
@@ -357,4 +331,66 @@ void PropManager::serviceAdded(ZeroconfManager::ServiceInfo* s)
 			createPropIfNotExist(type, s->ip, mac);
 		}
 	}
+}
+
+void PropManager::updatePropsAndFamiliesDefinitions()
+{
+	factory.defs.clear();
+
+	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props");
+	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
+
+	for (auto& f : propFiles)
+	{
+		var pData = JSON::parse(f);
+		if (pData.isObject())
+		{
+			std::function<Prop* (var params)> createFunc = &Prop::create;
+			String propType = pData.getProperty("type", "");
+			if (propType == "Bento") createFunc = &BentoProp::create;
+
+			factory.defs.add(FactorySimpleParametricDefinition<Prop>::createDef(pData.getProperty("menu", "").toString(), pData.getProperty("name", "").toString(), createFunc, pData));
+		}
+	}
+	
+	for (auto& f : families) familiesCC.removeChildControllableContainer(f);
+	families.clear();
+
+	File familyFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props/families");
+	if (!familyFolder.exists()) familyFolder.createDirectory();
+
+	Array<File> familyFiles = familyFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
+
+	for (auto& f : familyFiles)
+	{
+		var fData = JSON::parse(f);
+		if (fData.isObject())
+		{
+			PropFamily* fam = new PropFamily(fData);
+			families.add(fam);
+			familiesCC.addChildControllableContainer(fam, true);
+		}
+	}
+}
+
+void PropManager::run()
+{
+	LOG("Updating prop definitions...");
+	URL url("https://benjamin.kuperberg.fr/bento/getProps.php");
+	std::unique_ptr<URL::DownloadTask> t = url.downloadToFile(File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip"), "", this);
+	if (t != nullptr) propDownloadTask.reset(t.release());
+	else LOGERROR("Error downloading");
+}
+
+void PropManager::finished(URL::DownloadTask* task, bool success)
+{
+	File f = File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip");
+	ZipFile zip(f);
+	zip.uncompressTo(File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props"), true);
+
+	f.deleteFile();
+
+	updatePropsAndFamiliesDefinitions();
+
+	LOG("Prop definitions updated");
 }

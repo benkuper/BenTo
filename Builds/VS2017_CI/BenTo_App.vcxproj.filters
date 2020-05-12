@@ -158,9 +158,6 @@
     <Filter Include="BenTo\Source\LightBlock">
       <UniqueIdentifier>{07B6EB5A-7A48-BF26-A252-CEAA6633C65E}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Prop\CustomParameters">
-      <UniqueIdentifier>{EE010C4E-E2FE-656C-2733-66E4F47D42B7}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Prop\TargetFilter">
       <UniqueIdentifier>{A70E970E-2CC8-081F-AE46-444773171B53}</UniqueIdentifier>
     </Filter>
@@ -175,6 +172,30 @@
     </Filter>
     <Filter Include="BenTo\Source\Prop\props">
       <UniqueIdentifier>{ABEFE2FE-02B2-87E2-62A2-5CA00196BE46}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\ir">
+      <UniqueIdentifier>{F964A9A9-0332-EBCF-AAEC-23ED2F8F52C2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\battery">
+      <UniqueIdentifier>{09A72236-D00D-7B96-8310-ECFE27F1A41F}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\buttons">
+      <UniqueIdentifier>{AA5CA89B-9072-B31E-55E4-85ECF574442B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\files">
+      <UniqueIdentifier>{BD542B31-9340-1C14-DCEC-C0DF7D8E7982}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\imu">
+      <UniqueIdentifier>{37C00CAD-ED5C-B856-1BE2-ED6D7E97D5CB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\rgb">
+      <UniqueIdentifier>{5F104E96-7B64-3A9A-4183-E2E304971389}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components">
+      <UniqueIdentifier>{8FE0D59A-0774-371D-915B-3FDB9FD7B645}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Component">
+      <UniqueIdentifier>{6B745C7F-3143-9DC1-DC95-E328ECD6C137}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\ui">
       <UniqueIdentifier>{326CEE57-0676-79E2-34BA-CE6C84E59CA4}</UniqueIdentifier>
@@ -776,9 +797,6 @@
     <Filter Include="JUCE Modules\juce_timeline\resources">
       <UniqueIdentifier>{D391EFE7-9D9C-64D9-7CA8-C06DBE64F72C}</UniqueIdentifier>
     </Filter>
-    <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Common">
-      <UniqueIdentifier>{87993395-387D-3067-FA8B-D7C9311C4390}</UniqueIdentifier>
-    </Filter>
     <Filter Include="JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui">
       <UniqueIdentifier>{675B1DB0-7AEA-A463-6F13-A6C8D7C5D25A}</UniqueIdentifier>
     </Filter>
@@ -1090,9 +1108,6 @@
     <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
       <Filter>BenTo\Source\Prop</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.cpp">
-      <Filter>BenTo\Source\Prop\CustomParameters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp">
       <Filter>BenTo\Source\Prop\TargetFilter</Filter>
     </ClCompile>
@@ -1113,6 +1128,30 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\ir</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\battery\BatteryComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\battery</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\buttons</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\files\FilesComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\imu\IMUComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\imu</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\rgb\RGBComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\rgb</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\ui\PropEditor.cpp">
+      <Filter>BenTo\Source\Prop\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp">
       <Filter>BenTo\Source\Prop\ui</Filter>
@@ -1136,6 +1175,9 @@
       <Filter>BenTo\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\MainComponent.cpp">
+      <Filter>BenTo\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\BentoComponentCommands.cpp">
       <Filter>BenTo\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
@@ -3610,9 +3652,6 @@
     <ClCompile Include="..\..\Modules\juce_timeline\resources\BinaryData.cpp">
       <Filter>JUCE Modules\juce_timeline\resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.cpp">
-      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui</Filter>
     </ClCompile>
@@ -4038,9 +4077,6 @@
     <ClInclude Include="..\..\Source\Prop\PropFamily.h">
       <Filter>BenTo\Source\Prop</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\CustomParameters\CustomParameterManager.h">
-      <Filter>BenTo\Source\Prop\CustomParameters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h">
       <Filter>BenTo\Source\Prop\TargetFilter</Filter>
     </ClInclude>
@@ -4061,6 +4097,30 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\ir\IRPropComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\ir</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\battery\BatteryComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\battery</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\buttons</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\files\FilesComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\imu\IMUComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\imu</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\rgb\RGBComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\rgb</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h">
+      <Filter>BenTo\Source\Prop\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\ui\PropEditor.h">
+      <Filter>BenTo\Source\Prop\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h">
       <Filter>BenTo\Source\Prop\ui</Filter>
@@ -6734,9 +6794,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\resources\BinaryData.h">
       <Filter>JUCE Modules\juce_timeline\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Common\TimedLayerItem.h">
-      <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Cue\ui\TimeCueManagerUI.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\Cue\ui</Filter>

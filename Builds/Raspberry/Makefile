@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -march=native
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.1.2 -DJUCE_APP_VERSION_HEX=0x10102 $(shell pkg-config --cflags alsa x11 xinerama xext freetype2 webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) -DLINUX=1 -DNDEBUG=1 -DJUCER_LINUX_MAKE_9C1B7400=1 -DJUCE_APP_VERSION=1.2.0 -DJUCE_APP_VERSION_HEX=0x10200 $(shell pkg-config --cflags alsa x11 xinerama xext freetype2 webkit2gtk-4.0 gtk+-x11-3.0 libcurl) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP := -DJucePlugin_Build_VST=0 -DJucePlugin_Build_VST3=0 -DJucePlugin_Build_AU=0 -DJucePlugin_Build_AUv3=0 -DJucePlugin_Build_RTAS=0 -DJucePlugin_Build_AAX=0 -DJucePlugin_Build_Standalone=0 -DJucePlugin_Build_Unity=0
   JUCE_TARGET_APP := BenTo
 
@@ -132,7 +132,6 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o \
   $(JUCE_OBJDIR)/LightBlock_43a72d10.o \
   $(JUCE_OBJDIR)/PropFamily_1b08e5d4.o \
-  $(JUCE_OBJDIR)/CustomParameterManager_bfdc1d06.o \
   $(JUCE_OBJDIR)/PropTargetFilterManager_c46f408.o \
   $(JUCE_OBJDIR)/PropTargetFilter_a9a21d2f.o \
   $(JUCE_OBJDIR)/PropClusterGroupManagerUI_53e41580.o \
@@ -140,6 +139,14 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/PropClusterGroup_98d0476a.o \
   $(JUCE_OBJDIR)/PropClusterGroupManager_2f9ae16d.o \
   $(JUCE_OBJDIR)/BentoProp_c5777cde.o \
+  $(JUCE_OBJDIR)/IRPropComponent_fb70abca.o \
+  $(JUCE_OBJDIR)/BatteryComponent_e5130d1.o \
+  $(JUCE_OBJDIR)/ButtonsComponent_3f2f3ae9.o \
+  $(JUCE_OBJDIR)/FilesComponent_11c51d7d.o \
+  $(JUCE_OBJDIR)/IMUComponent_3e444b49.o \
+  $(JUCE_OBJDIR)/RGBComponent_9a91a51.o \
+  $(JUCE_OBJDIR)/PropComponent_28bd02e5.o \
+  $(JUCE_OBJDIR)/PropEditor_5217fd88.o \
   $(JUCE_OBJDIR)/PropManagerUI_843f2390.o \
   $(JUCE_OBJDIR)/PropUI_e53ff20f.o \
   $(JUCE_OBJDIR)/PropViz_32565136.o \
@@ -148,6 +155,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/BentoSettings_c196016a.o \
   $(JUCE_OBJDIR)/BentoEngine_f46ef489.o \
   $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o \
+  $(JUCE_OBJDIR)/BentoComponentCommands_28169f08.o \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
   $(JUCE_OBJDIR)/BinaryData_ce4232d4.o \
   $(JUCE_OBJDIR)/include_juce_audio_basics_8a4e984a.o \
@@ -607,11 +615,6 @@ $(JUCE_OBJDIR)/PropFamily_1b08e5d4.o: ../../Source/Prop/PropFamily.cpp
 	@echo "Compiling PropFamily.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/CustomParameterManager_bfdc1d06.o: ../../Source/Prop/CustomParameters/CustomParameterManager.cpp
-	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
-	@echo "Compiling CustomParameterManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
 $(JUCE_OBJDIR)/PropTargetFilterManager_c46f408.o: ../../Source/Prop/TargetFilter/PropTargetFilterManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PropTargetFilterManager.cpp"
@@ -645,6 +648,46 @@ $(JUCE_OBJDIR)/PropClusterGroupManager_2f9ae16d.o: ../../Source/Prop/Cluster/Pro
 $(JUCE_OBJDIR)/BentoProp_c5777cde.o: ../../Source/Prop/props/bento/BentoProp.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling BentoProp.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/IRPropComponent_fb70abca.o: ../../Source/Prop/Component/ir/IRPropComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IRPropComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BatteryComponent_e5130d1.o: ../../Source/Prop/Component/battery/BatteryComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BatteryComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ButtonsComponent_3f2f3ae9.o: ../../Source/Prop/Component/buttons/ButtonsComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ButtonsComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/FilesComponent_11c51d7d.o: ../../Source/Prop/Component/files/FilesComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling FilesComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/IMUComponent_3e444b49.o: ../../Source/Prop/Component/imu/IMUComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling IMUComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/RGBComponent_9a91a51.o: ../../Source/Prop/Component/rgb/RGBComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling RGBComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropComponent_28bd02e5.o: ../../Source/Prop/Component/PropComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropEditor_5217fd88.o: ../../Source/Prop/ui/PropEditor.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PropManagerUI_843f2390.o: ../../Source/Prop/ui/PropManagerUI.cpp
@@ -685,6 +728,11 @@ $(JUCE_OBJDIR)/BentoEngine_f46ef489.o: ../../Source/BentoEngine.cpp
 $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o: ../../Source/MainComponent.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling MainComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BentoComponentCommands_28169f08.o: ../../Source/BentoComponentCommands.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BentoComponentCommands.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/Main_90ebc5c2.o: ../../Source/Main.cpp

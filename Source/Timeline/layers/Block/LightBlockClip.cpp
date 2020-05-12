@@ -24,8 +24,6 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
 
-	//autoFade = addBoolParameter("Auto Fade", "If checked, when clips are overlapping, fade will be adjusted automatically", true);
-
 	fadeIn = addFloatParameter("Fade In", "Fade in time", 0, 0, getTotalLength(), false);
 	fadeIn->canBeDisabledByUser = true;
 	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength(), false);

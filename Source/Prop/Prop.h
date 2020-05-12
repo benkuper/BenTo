@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    Prop.h
-    Created: 10 Apr 2018 6:59:25pm
-    Author:  Ben
+	Prop.h
+	Created: 10 Apr 2018 6:59:25pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -12,6 +12,7 @@
 
 #include "JuceHeader.h"
 #include "LightBlock/LightBlock.h"
+#include "Component/PropComponent.h"
 
 class PropFamily;
 
@@ -30,44 +31,47 @@ public:
 	Prop(var params = var());
 	virtual ~Prop();
 
+
 	String deviceID;
-	PropFamily * family;
+	PropFamily* family;
 	String customType;
 
+	BoolParameter* logIncoming;
+	BoolParameter* logOutgoing;
+
 	ControllableContainer generalCC;
-	IntParameter * globalID;
-	IntParameter * resolution;
-	EnumParameter * type;
-	
+	IntParameter* globalID;
+	IntParameter* resolution;
+	EnumParameter* type;
+
 	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
-	
+
 	bool receivedPongSinceLastPingSent;
 
-	BoolParameter * findPropMode;
+	BoolParameter* findPropMode;
 
 	ControllableContainer controlsCC;
 	Trigger* powerOffTrigger;
 	Trigger* restartTrigger;
 
-	ControllableContainer sensorsCC;
-	int numButtons;
+	HashMap<String, PropComponent *> components;
 
 	ControllableContainer bakingCC;
-	FloatParameter * bakeStartTime;
-	FloatParameter * bakeEndTime;
-	IntParameter * bakeFrequency;
-	Trigger * bakeAndUploadTrigger;
-	Trigger * bakeAndExportTrigger;
-	StringParameter * bakeFileName;
-	BoolParameter * bakeMode;
+	FloatParameter* bakeStartTime;
+	FloatParameter* bakeEndTime;
+	IntParameter* bakeFrequency;
+	Trigger* bakeAndUploadTrigger;
+	Trigger* bakeAndExportTrigger;
+	StringParameter* bakeFileName;
+	BoolParameter* bakeMode;
 
-	BoolParameter * sendCompressedFile;
-	BoolParameter * isBaking;
-	
-	BoolParameter * isUploading;
-	FloatParameter * bakingProgress;
-	FloatParameter * uploadProgress;
+	BoolParameter* sendCompressedFile;
+	BoolParameter* isBaking;
+
+	BoolParameter* isUploading;
+	FloatParameter* bakingProgress;
+	FloatParameter* uploadProgress;
 
 	enum AfterBakeAction { UPLOAD, EXPORT, NOTHING };
 	AfterBakeAction afterBake;
@@ -77,35 +81,33 @@ public:
 	float seekBakeTime;
 
 	File exportFile;
-	
+
 	Array<Colour> colors;
 
 	std::unique_ptr<LightBlock> currentBlock;
-	TargetParameter * activeProvider; 
+	TargetParameter* activeProvider;
 
 	int previousID; //for swapping
 	int updateRate;
-
-	HashMap<Controllable*, String> controllableFeedbackMap;
 
 	//ping
 	virtual void clearItem() override;
 
 	void registerFamily(StringRef familyName);
 
-	void setBlockFromProvider(LightBlockColorProvider * model);
+	void setBlockFromProvider(LightBlockColorProvider* model);
 
 	void update();
 
-	void onContainerParameterChangedInternal(Parameter * p) override;
-	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
-	void inspectableDestroyed(Inspectable *) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+	void inspectableDestroyed(Inspectable*) override;
 
 	void sendColorsToProp(bool forceSend = false);
 	virtual void sendColorsToPropInternal() {}
 
-	static void fillTypeOptions(EnumParameter * p);
-	
+	static void fillTypeOptions(EnumParameter* p);
+
 	virtual void initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction);
 	virtual BakeData bakeBlock();
 
@@ -122,22 +124,28 @@ public:
 
 	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
 
-	virtual void sendControllableFeedbackToProp(Controllable* c) {} //to be overriden
+	void sendControlToProp(String message, var value = var());
+	virtual void sendControlToPropInternal(String message, var value = var()) {} //to be overriden
 
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
 
-	virtual void handleOSCMessage(const OSCMessage &m);
+	virtual void handleOSCMessage(const OSCMessage& m);
 
 	virtual void handlePong();
 	virtual void sendPing() {}
 	virtual void timerCallback(int timerID) override;
 
-	void  createControllablesForContainer(var data, ControllableContainer* cc);
-	Controllable* getControllableForJSONDefinition(const String& name, var def);
-	
+	void setupComponentsJSONDefinition(var def);
+	void addComponent(PropComponent* pc);
+
+	PropComponent* getComponent(const String &name);
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+
+
+	InspectableEditor* getEditor(bool isRoot) override;
 
 	//Listener
 	class  PropListener
@@ -145,26 +153,26 @@ public:
 	public:
 		/** Destructor. */
 		virtual ~PropListener() {}
-		virtual void propBlockChanged(Prop * /*prop*/) {}
-		virtual void propIDChanged(Prop *, int) {}
-		virtual void colorsUpdated(Prop *) {}
+		virtual void propBlockChanged(Prop* /*prop*/) {}
+		virtual void propIDChanged(Prop*, int) {}
+		virtual void colorsUpdated(Prop*) {}
 	};
 
 	ListenerList<PropListener> propListeners;
 	void addPropListener(PropListener* newListener) { propListeners.add(newListener); }
 	void removePropListener(PropListener* listener) { propListeners.remove(listener); }
-	
+
 	// ASYNC
 	class  PropEvent
 	{
 	public:
 		enum Type { BLOCK_CHANGED, COLORS_UPDATED };
 
-		PropEvent(Type t, Prop * p, var v = var()) :
+		PropEvent(Type t, Prop* p, var v = var()) :
 			type(t), prop(p), value(v) {}
 
 		Type type;
-		Prop * prop;
+		Prop* prop;
 		var value;
 	};
 
@@ -175,10 +183,12 @@ public:
 	void addAsyncCoalescedPropListener(AsyncListener* newListener) { propNotifier.addAsyncCoalescedListener(newListener); }
 	void removeAsyncPropListener(AsyncListener* listener) { propNotifier.removeListener(listener); }
 
-	// Inherited via Thread
 	virtual void run() override;
-
 
 	virtual String getTypeString() const { return customType; }
 	static Prop* create(var params) { return new Prop(params); }
+
+private:
+	WeakReference<Prop>::Master masterReference;
+	friend class WeakReference<Prop>;
 };
