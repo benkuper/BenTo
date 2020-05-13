@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" jucerVersion="5.4.7" headerPath="../../Source"
-              id="LP0of5" version="1.2.0" projectLineFeed="&#10;">
+              id="LP0of5" version="1.2.1b1" projectLineFeed="&#10;">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">

@@ -46,6 +46,7 @@ void ScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time,
 	args.add(resolution);
 	args.add(time);
 	args.add(params);
+	args.add(p->getScriptObject());
 
 	var scriptResult = script.callFunction(updateColorsFunc, args);
 

@@ -132,13 +132,16 @@ void MainManager::batteryEvent(const BatteryEvent &e)
 
 void MainManager::buttonEvent(const ButtonEvent &e)
 {
-    int numBTData = (e.type == ButtonEvent::MultiPress || e.type == ButtonEvent::Pressed) ? 1 : 0;
+    int numBTData = (e.type == ButtonEvent::MultiPress || e.type == ButtonEvent::Pressed) ? 2 : 1;
     var *data = (var *)malloc((numBTData) * sizeof(var));
 
-    if (numBTData > 0)
+    data[0].value.i = e.id;
+    data[0].type = 'i';
+
+    if (numBTData > 1)
     {
-        data[0].value.i = e.value;
-        data[0].type = 'i';
+        data[1].value.i = e.value;
+        data[1].type = 'i';
     }
 
     comm.sendMessage(buttons.name, ButtonEvent::eventNames[(int)e.type], data, numBTData);

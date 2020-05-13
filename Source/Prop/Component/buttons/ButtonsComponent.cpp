@@ -33,6 +33,11 @@ void ButtonsPropComponent::handleMessage(const String& msg, var value)
     PropButton * pb = buttons[value[0]];
     if (pb == nullptr) return;
     Controllable* c = pb->getControllableByName(msg);
+    if (c == nullptr)
+    {
+        DBG("Not found");
+        return;
+    }
     if (c->type == Controllable::TRIGGER) ((Trigger*)c)->trigger();
     else ((Parameter*)c)->setValue(value[1]);
 }
@@ -44,7 +49,7 @@ void ButtonsPropComponent::handleMessage(const String& msg, var value)
 ButtonsPropComponent::PropButton::PropButton(const String& name) :
     ControllableContainer(name)
 {
-    pressed = addBoolParameter("Press", "Press", false);
+    pressed = addBoolParameter("Pressed", "Pressed", false);
     shortPress = addTrigger("Short Press", "");
     longPress = addTrigger("Long Press", "");
     veryLongPress = addTrigger("Very Long Press", "");
