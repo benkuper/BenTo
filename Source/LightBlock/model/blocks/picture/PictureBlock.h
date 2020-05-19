@@ -19,7 +19,7 @@ public:
 	PictureBlock(var params = var());
 	~PictureBlock() {}
 
-	FloatParameter * speed;
+	FloatParameter* loopTime;
 	FloatParameter * offsetByID;
 	FloatParameter * brightness;
 	FloatParameter * saturation;

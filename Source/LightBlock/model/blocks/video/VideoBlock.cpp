@@ -36,10 +36,13 @@ VideoBlock::VideoBlock(var params) :
 
 VideoBlock::~VideoBlock()
 {
-	if (receiver != nullptr)
+	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr)
 	{
-		receiver->removeListener(this);
-		if(SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->removeReceiver(receiver);
+		if (receiver != nullptr)
+		{
+			receiver->removeListener(this);
+			SharedTextureManager::getInstance()->removeReceiver(receiver);
+		}
 	}
 
 	spat.removeBaseManagerListener(this);

@@ -17,7 +17,8 @@ PictureBlock::PictureBlock(var params) :
 	pictureFile = new FileParameter("Picture File", "The file, the picture, the thing", "");
 	addParameter(pictureFile);
 
-	speed = paramsContainer->addFloatParameter("Speed", "The speed", 1, 0, 50);
+	loopTime = paramsContainer->addFloatParameter("Loop Time", "The time to do one cycle loop", 1, .01f);
+	loopTime->defaultUI = FloatParameter::TIME;
 	offsetByID = paramsContainer->addFloatParameter("Offset by ID", "The offset", 0, 0, 1);
 	brightness = paramsContainer->addFloatParameter("Brightness", "The brightness", 1, 0, 1);
 	saturation = paramsContainer->addFloatParameter("Saturation", "The saturation", 1, 0, 3);
@@ -28,14 +29,14 @@ void PictureBlock::getColorsInternal(Array<Colour> * result, Prop * p, double ti
 {
 	if (picture.getWidth() == 0) return;
 
-	float bSpeed = getParamValue<float>(speed, params);
+	float bLoopTime = getParamValue<float>(loopTime, params);
 	float bOffsetByID = getParamValue<float>(offsetByID, params);
 	float bBrightness = getParamValue<float>(brightness, params);
 	float bSaturation = getParamValue<float>(saturation, params);
 	float bHue = getParamValue<float>(hue, params);
 	
 	int numPixelsH = picture.getHeight();
-	float txRel = fmodf(time * bSpeed + bOffsetByID * id, 1);
+	float txRel = fmodf(time / bLoopTime + bOffsetByID * id, 1);
 	int  tx = jmin<int>(txRel * picture.getWidth(), picture.getWidth() - 1);
 
 	for (int i = 0; i < resolution; i++)

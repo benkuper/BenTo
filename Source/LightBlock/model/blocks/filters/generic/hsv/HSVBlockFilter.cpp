@@ -44,8 +44,8 @@ void HSVBlockFilter::getColorsInternal(Array<Colour>* result, Prop* p, double ti
         float h = 0, s = 0, b = 0;
         c.getHSB(h, s, b);
         h += bHueOffset + (bHueSpeed * time);
-        s += jlimit<float>(0, 1, bSaturationOffset + (bSaturationSpeed * time));
-        b += jlimit<float>(0, 1, bBrightnessOffset + (bBrightnessSpeed * time));
+        s += jlimit<float>(0, 1, bSaturationOffset + sinf(bSaturationSpeed * time));
+        b += jlimit<float>(0, 1, bBrightnessOffset + sinf(bBrightnessSpeed * time));
         result->set(i, Colour::fromHSV(h, s, b, c.getFloatAlpha()));
     }
 }

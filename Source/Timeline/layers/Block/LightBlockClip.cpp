@@ -30,6 +30,7 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength(), false);
 	fadeOut->canBeDisabledByUser = true;
 	
+	filters.userCanAddItemsManually = false;
 	addChildControllableContainer(&filters);
 }
 
@@ -95,6 +96,7 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 
 	for (int i = 0; i < filters.items.size(); i++)
 	{
+		if (!filters.items[i]->enabled->boolValue()) continue;
 		filters.items[i]->filterColors(&colors, p, relTimeLooped, params);
 	}
 
@@ -108,7 +110,12 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 
 void LightBlockClip::addFilterFromProvider(LightBlockFilter * provider)
 {
-	filters.addItem(new LightBlock(provider));
+	LightBlock* lb = new LightBlock(provider);
+	lb->userCanRemove = true;
+	lb->userCanDuplicate = false;
+	lb->setCanBeDisabled(true);
+	filters.addItem(lb);
+
 }
 
 void LightBlockClip::blockParamControlModeChanged(Parameter * p) 
