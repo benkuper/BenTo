@@ -279,7 +279,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable* c)
 	{
 		generatePreview();
 	}
-	else if (c->parentContainer->parentContainer == &clip->filters) generatePreview();
+	else if (c->parentContainer->parentContainer->parentContainer == &clip->filters) generatePreview();
 
 	if (c == clip->fadeIn) fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength()) * getWidth(), fadeInHandle.getHeight() / 2);
 	else if (c == clip->fadeOut) fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength()) * getWidth(), fadeOutHandle.getHeight() / 2);
