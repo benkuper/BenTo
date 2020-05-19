@@ -21,7 +21,7 @@ ModelNode::ModelNode(var params) :
 {
 	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
 	activeProvider->targetType = TargetParameter::CONTAINER;
-	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
+	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showSourcesAndGet;
 }
 
 ModelNode::~ModelNode()

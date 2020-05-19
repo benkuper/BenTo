@@ -63,7 +63,7 @@ void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownP
 	menu.addItem(-1, "Auto assign IDs");
 
 	PopupMenu assignToAllMenu;
-	Array<LightBlockColorProvider *> mList =  LightBlockModelLibrary::fillProvidersMenu(assignToAllMenu, true, 10000);
+	Array<LightBlockColorProvider *> mList =  LightBlockModelLibrary::fillProvidersMenu(assignToAllMenu, true, true, false, 10000);
 
 	menu.addSubMenu("Assign to All", assignToAllMenu);
 	int result = menu.show();

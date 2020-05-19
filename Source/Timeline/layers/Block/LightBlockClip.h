@@ -11,6 +11,7 @@
 #pragma once
 
 #include "LightBlock/LightBlock.h"
+#include "LightBlock/model/blocks/filters/LightBlockFilter.h"
 
 class LightBlockLayer;
 
@@ -30,8 +31,12 @@ public:
 	FloatParameter * fadeIn;
 	FloatParameter * fadeOut;
 
+	BaseManager<LightBlock> filters;
+
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 	Array<Colour> getColors(Prop * p, double absoluteTime, var params);
+
+	void addFilterFromProvider(LightBlockFilter * provider);
 	
 	virtual void blockParamControlModeChanged(Parameter *p) override;
 

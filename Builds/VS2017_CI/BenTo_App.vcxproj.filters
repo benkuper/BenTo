@@ -116,6 +116,24 @@
     <Filter Include="BenTo\Source\LightBlock\model\ui">
       <UniqueIdentifier>{B383C455-EF1C-7AEC-66DF-D469CE5E13A6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\script">
+      <UniqueIdentifier>{C3943C21-6376-0C6F-3A53-A74B1559EC2B}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast">
+      <UniqueIdentifier>{A495B3B2-E31B-8762-DB71-1E7F741870E6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\generic\hsv">
+      <UniqueIdentifier>{CF0FFD9C-52AB-A892-8C53-51AFEFEFD926}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\generic\remap">
+      <UniqueIdentifier>{5F30ABEC-E105-ED56-F70A-994BE0A449C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\generic">
+      <UniqueIdentifier>{2645CDFB-146E-2288-FD74-445DA9C23985}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\filters">
+      <UniqueIdentifier>{6532AC9D-0846-E77C-1C54-8454436C7720}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\picture\ui">
       <UniqueIdentifier>{CC510EEE-DDEC-704C-A76A-2B84ED765010}</UniqueIdentifier>
     </Filter>
@@ -659,11 +677,23 @@
     <Filter Include="JUCE Modules\juce_organicui\controllable\dashboard">
       <UniqueIdentifier>{35082EBD-0C03-9FC7-51FE-10F9A70F1F5E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\detective\ui">
+      <UniqueIdentifier>{16E012BF-C71F-78C0-3115-36C57D781B20}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\detective">
+      <UniqueIdentifier>{30B6B3C5-1146-BAB5-0344-E4476D77330E}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui">
       <UniqueIdentifier>{300D3F70-B324-481C-2302-15089971B7C0}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\dashboard">
       <UniqueIdentifier>{E333732D-0D82-ED3D-963B-6E7FD764787E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\detective\ui">
+      <UniqueIdentifier>{E10327CB-2F25-43A6-1E65-F59DE08B9E61}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\detective">
+      <UniqueIdentifier>{25814E19-2B26-BC90-3B89-943EAAE4EE44}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_organicui\controllable\parameter\gradient\ui">
       <UniqueIdentifier>{59B19CB2-CF22-F681-38D2-5345DC070B6A}</UniqueIdentifier>
@@ -1053,6 +1083,21 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\script</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\hsv\HSVBlockFilter.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\hsv</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\remap\RemapBlockFilter.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\remap</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\picture\ui</Filter>
@@ -3139,11 +3184,29 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardTriggerItem.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\dashboard</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ui\ControllableDetectiveWatcherUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ui\DetectivePanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ControllableDetectiveWatcher.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\Detective.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ui\ParameterDetectiveWatcherUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ParameterDetectiveWatcher.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>
@@ -4019,6 +4082,21 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\script</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\hsv\HSVBlockFilter.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\hsv</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\remap\RemapBlockFilter.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\remap</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\picture\ui</Filter>
@@ -6291,11 +6369,29 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardTriggerItem.h">
       <Filter>JUCE Modules\juce_organicui\controllable\dashboard</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ui\ControllableDetectiveWatcherUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ui\DetectivePanel.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ControllableDetectiveWatcher.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\Detective.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\detective</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\dashboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ui\ParameterDetectiveWatcherUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ParameterDetectiveWatcher.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\detective</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\gradient\ui</Filter>

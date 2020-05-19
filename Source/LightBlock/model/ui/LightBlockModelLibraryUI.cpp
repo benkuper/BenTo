@@ -19,7 +19,8 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	pictureBlocksManagerUI("Pictures", &library->pictureBlocks),
 	nodeBlocksManagerUI("Nodes", &library->nodeBlocks),
 	scriptBlocksManagerUI("Scripts", &library->scriptBlocks),
-	timelineBlocksManagerUI("Timelines",&library->timelineBlocks)
+	timelineBlocksManagerUI("Timelines", &library->timelineBlocks),
+	genericFilterGroupUI(&library->genericFilterBlocks)
 {
 	iconSizeUI.reset(library->iconSize->createSlider());
 	addAndMakeVisible(iconSizeUI.get());
@@ -46,11 +47,13 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	container.addAndMakeVisible(&scriptBlocksManagerUI);
 	container.addAndMakeVisible(&timelineBlocksManagerUI);
 
+	container.addAndMakeVisible(&genericFilterGroupUI);
+
+
 	pictureBlocksManagerUI.addComponentListener(this);
 	nodeBlocksManagerUI.addComponentListener(this);
 	scriptBlocksManagerUI.addComponentListener(this);
 	timelineBlocksManagerUI.addComponentListener(this);
-
 
 	library->addAsyncCoalescedContainerListener(this);
 }
@@ -94,8 +97,13 @@ void LightBlockModelLibraryUI::resized()
 	scriptBlocksManagerUI.setBounds(r.withHeight(scriptBlocksManagerUI.getHeight()));
 	r.translate(0, scriptBlocksManagerUI.getHeight() + 10);
 
-	r.setHeight(timelineBlocksManagerUI.getHeight());
-	timelineBlocksManagerUI.setBounds(r);
+	timelineBlocksManagerUI.setBounds(r.withHeight(timelineBlocksManagerUI.getHeight()));
+	r.translate(0, timelineBlocksManagerUI.getHeight() + 10);
+
+	r.translate(0, 10);
+	if (genericFilterGroupUI.getWidth() == 0) genericFilterGroupUI.setBounds(r);
+	genericFilterGroupUI.setBounds(r.withHeight(genericFilterGroupUI.getHeight()));
+	r.translate(0, genericFilterGroupUI.getHeight() + 10);
 
 	container.setSize(getWidth(), r.getBottom());
 	viewport.setBounds(getLocalBounds().withTrimmedTop(cy));

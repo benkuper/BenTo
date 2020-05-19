@@ -114,6 +114,11 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameterEditor_fa2e916a.o \
   $(JUCE_OBJDIR)/LightBlockModelParameterManagerEditor_47e83067.o \
   $(JUCE_OBJDIR)/LightBlockModelUI_9ea7118a.o \
+  $(JUCE_OBJDIR)/LightBlockFilter_b3294d37.o \
+  $(JUCE_OBJDIR)/ScriptBlockFilter_2a4ec35e.o \
+  $(JUCE_OBJDIR)/BrightnessContrastBlockFilter_2ee8e776.o \
+  $(JUCE_OBJDIR)/HSVBlockFilter_d854981e.o \
+  $(JUCE_OBJDIR)/RemapBlockFilter_fcc569a2.o \
   $(JUCE_OBJDIR)/PictureBlockUI_8a35e63.o \
   $(JUCE_OBJDIR)/PictureBlock_4a597ad4.o \
   $(JUCE_OBJDIR)/DMXBlock_ca1094f2.o \
@@ -523,6 +528,31 @@ $(JUCE_OBJDIR)/LightBlockModelParameterManagerEditor_47e83067.o: ../../Source/Li
 $(JUCE_OBJDIR)/LightBlockModelUI_9ea7118a.o: ../../Source/LightBlock/model/ui/LightBlockModelUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LightBlockModelUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LightBlockFilter_b3294d37.o: ../../Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LightBlockFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ScriptBlockFilter_2a4ec35e.o: ../../Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling ScriptBlockFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/BrightnessContrastBlockFilter_2ee8e776.o: ../../Source/LightBlock/model/blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling BrightnessContrastBlockFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/HSVBlockFilter_d854981e.o: ../../Source/LightBlock/model/blocks/filters/generic/hsv/HSVBlockFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling HSVBlockFilter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/RemapBlockFilter_fcc569a2.o: ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling RemapBlockFilter.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PictureBlockUI_8a35e63.o: ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.cpp

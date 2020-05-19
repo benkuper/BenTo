@@ -21,7 +21,8 @@ class LightBlockModel :
 	public LightBlockColorProvider
 {
 public:
-	LightBlockModel(const String &name = "LightBlockModel", var params = var());
+	
+	LightBlockModel(const String &name = "LightBlockModel", var params = var(), ProviderType providerType = SOURCE);
 	~LightBlockModel();
 
 	//ui

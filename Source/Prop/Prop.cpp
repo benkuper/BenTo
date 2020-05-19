@@ -103,7 +103,7 @@ Prop::Prop(var params) :
 
 	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
 	activeProvider->targetType = TargetParameter::CONTAINER;
-	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
+	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showSourcesAndGet;
 	activeProvider->hideInEditor = true;
 
 	setupComponentsJSONDefinition(params.getProperty("components", var()));

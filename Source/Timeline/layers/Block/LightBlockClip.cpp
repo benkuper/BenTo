@@ -15,6 +15,7 @@
 
 LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 	LayerBlock("LightBlockClip", _time),
+	filters("Block Filters"),
 	layer(layer),
 	clipNotifier(10)
 {
@@ -22,12 +23,14 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
 
 	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
 	activeProvider->targetType = TargetParameter::CONTAINER;
-	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showProvidersAndGet;
+	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showSourcesAndGet;
 
 	fadeIn = addFloatParameter("Fade In", "Fade in time", 0, 0, getTotalLength(), false);
 	fadeIn->canBeDisabledByUser = true;
 	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength(), false);
 	fadeOut->canBeDisabledByUser = true;
+	
+	addChildControllableContainer(&filters);
 }
 
 LightBlockClip::~LightBlockClip()
@@ -55,7 +58,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 
 	if (currentBlock != nullptr)
 	{
-		addChildControllableContainer(currentBlock.get());
+		addChildControllableContainer(currentBlock.get(), false, 0);
 		currentBlock->addLightBlockListener(this);
 		currentBlock->loadJSONData(prevData);
 	}
@@ -89,11 +92,23 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 
 	double relTimeLooped = getRelativeTime(absoluteTime, true);
 	Array<Colour> colors = currentBlock->getColors(p, relTimeLooped, params);
+
+	for (int i = 0; i < filters.items.size(); i++)
+	{
+		filters.items[i]->filterColors(&colors, p, relTimeLooped, params);
+	}
+
 	for (int i = 0; i < resolution; i++)
 	{
 		colors.set(i,colors[i].withMultipliedAlpha(factor));
 	}
+
 	return colors;
+}
+
+void LightBlockClip::addFilterFromProvider(LightBlockFilter * provider)
+{
+	filters.addItem(new LightBlock(provider));
 }
 
 void LightBlockClip::blockParamControlModeChanged(Parameter * p) 
@@ -156,6 +171,7 @@ var LightBlockClip::getJSONData()
 {
 	var data = LayerBlock::getJSONData();
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("blockData", currentBlock->getJSONData());
+	data.getDynamicObject()->setProperty("filters", filters.getJSONData());
 	return data;
 }
 
@@ -174,6 +190,8 @@ void LightBlockClip::loadJSONDataInternal(var data)
 			pa->automation->setAllowKeysOutside(true);
 		}
 	}
+
+	filters.loadJSONData(data.getProperty("filters", var()));
 
 	//Retro compatibility, to remove after
 	var params = data.getProperty("parameters",var());

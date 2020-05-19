@@ -153,6 +153,11 @@
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\hsv\HSVBlockFilter.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\remap\RemapBlockFilter.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\PictureBlock.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp"/>
@@ -2038,10 +2043,28 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardTriggerItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ui\ControllableDetectiveWatcherUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ui\DetectivePanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\ControllableDetectiveWatcher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\detective\Detective.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ui\ParameterDetectiveWatcherUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ParameterDetectiveWatcher.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.cpp">
@@ -2718,6 +2741,11 @@
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\hsv\HSVBlockFilter.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\remap\RemapBlockFilter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\picture\PictureBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.h"/>
@@ -3475,8 +3503,14 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardCCItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardControllableItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\dashboard\DashboardTriggerItem.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ui\ControllableDetectiveWatcherUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ui\DetectivePanel.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\ControllableDetectiveWatcher.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\detective\Detective.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\ui\DashboardParameterItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\dashboard\DashboardParameterItem.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ui\ParameterDetectiveWatcherUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\detective\ParameterDetectiveWatcher.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerEditor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\ui\GradientColorUI.h"/>

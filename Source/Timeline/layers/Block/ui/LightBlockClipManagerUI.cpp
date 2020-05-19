@@ -85,5 +85,6 @@ void LightBlockClipManagerUI::itemDropped(const SourceDetails & source)
 		if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
 	}
 
-	clip->activeProvider->setValueFromTarget(provider);
+	if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addFilterFromProvider(f);
+	else clip->activeProvider->setValueFromTarget(provider);
 }

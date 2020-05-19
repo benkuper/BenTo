@@ -321,6 +321,38 @@
                   file="Source/LightBlock/model/ui/LightBlockModelUI.h"/>
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
+            <GROUP id="{01F6805A-9982-41D2-5AB2-FAE63271AFA3}" name="filters">
+              <FILE id="UsZSEz" name="LightBlockFilter.cpp" compile="1" resource="0"
+                    file="Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp"/>
+              <FILE id="CKtIqA" name="LightBlockFilter.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/filters/LightBlockFilter.h"/>
+              <GROUP id="{1E09FF80-0519-21FD-56A2-C7F7A294CF88}" name="script">
+                <FILE id="QMkX5k" name="ScriptBlockFilter.cpp" compile="1" resource="0"
+                      file="Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.cpp"/>
+                <FILE id="cqWnRz" name="ScriptBlockFilter.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.h"/>
+              </GROUP>
+              <GROUP id="{54983641-858F-4D3C-1698-66878E9EF55F}" name="generic">
+                <GROUP id="{6F459FB5-88B1-3AF9-62EA-A9BC94718E1C}" name="brightnesscontrast">
+                  <FILE id="cY9bTK" name="BrightnessContrastBlockFilter.cpp" compile="1"
+                        resource="0" file="Source/LightBlock/model/blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.cpp"/>
+                  <FILE id="WG8c7C" name="BrightnessContrastBlockFilter.h" compile="0"
+                        resource="0" file="Source/LightBlock/model/blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.h"/>
+                </GROUP>
+                <GROUP id="{2308B542-C26B-2260-15AE-D247C8F91DE3}" name="hsv">
+                  <FILE id="a2WDVI" name="HSVBlockFilter.cpp" compile="1" resource="0"
+                        file="Source/LightBlock/model/blocks/filters/generic/hsv/HSVBlockFilter.cpp"/>
+                  <FILE id="wvZyjF" name="HSVBlockFilter.h" compile="0" resource="0"
+                        file="Source/LightBlock/model/blocks/filters/generic/hsv/HSVBlockFilter.h"/>
+                </GROUP>
+                <GROUP id="{E5A0F4C6-7B33-27D5-1E96-66D0AF6A7566}" name="remap">
+                  <FILE id="E8g2Ti" name="RemapBlockFilter.cpp" compile="1" resource="0"
+                        file="Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.cpp"/>
+                  <FILE id="VcbGXy" name="RemapBlockFilter.h" compile="0" resource="0"
+                        file="Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.h"/>
+                </GROUP>
+              </GROUP>
+            </GROUP>
             <GROUP id="{D3CD9CB3-0B62-2E9D-C3BF-6362655D3705}" name="picture">
               <GROUP id="{60FD6633-7E41-1751-E0AB-87F74BF56FAA}" name="ui">
                 <FILE id="GjOSuT" name="PictureBlockUI.cpp" compile="1" resource="0"

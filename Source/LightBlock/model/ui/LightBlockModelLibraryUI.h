@@ -37,6 +37,7 @@ public:
 	LightBlockModelManagerUI scriptBlocksManagerUI;
 	LightBlockModelManagerUI timelineBlocksManagerUI;
 
+	LightBlockModelGroupUI genericFilterGroupUI;
 
 
 	void paint(Graphics &g) override;

@@ -11,8 +11,9 @@
 #include "LightBlockColorProvider.h"
 #include "Prop/PropManager.h"
 
-LightBlockColorProvider::LightBlockColorProvider(const String & name, bool canBeDisabled, bool canHaveScripts) :
-	BaseItem(name, canBeDisabled, canHaveScripts)
+LightBlockColorProvider::LightBlockColorProvider(const String & name, bool canBeDisabled, bool canHaveScripts, ProviderType providerType) :
+	BaseItem(name, canBeDisabled, canHaveScripts),
+	providerType(providerType)
 {
 	assignToAll = addTrigger("Assign To All", "Assign this Model or Preset to all props");
 	viewUISize->isSavable = false;

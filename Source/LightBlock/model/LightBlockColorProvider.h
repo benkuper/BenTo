@@ -46,11 +46,14 @@ class LightBlockColorProvider :
 	public BaseColorProvider
 {
 public:
-	LightBlockColorProvider(const String &name = "Provider", bool canBeDisabled = true, bool canHaveScripts = false);
+	enum ProviderType { SOURCE, FILTER };
+	
+	LightBlockColorProvider(const String &name = "Provider", bool canBeDisabled = true, bool canHaveScripts = false, ProviderType type = SOURCE);
 	virtual ~LightBlockColorProvider();
 	
-	Trigger * assignToAll;
+	ProviderType providerType;
 
+	Trigger * assignToAll;
 
 	//Bake info
 	enum BakeControl { PLAY, PAUSE, STOP, SEEK, SHOW_ID };

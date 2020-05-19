@@ -12,6 +12,7 @@
 
 #include "LightBlock.h"
 #include "Prop/Prop.h"
+#include "model/blocks/filters/LightBlockFilter.h"
 
 LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	BaseItem(provider->niceName, false),
@@ -37,52 +38,7 @@ LightBlock::~LightBlock()
 
 Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 {
-	var localParams = params.isVoid()?new DynamicObject():new DynamicObject(*params.getDynamicObject());
-	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
-	
-	paramsLock.enter();
-
-	if (localParams.getProperty("updateAutomation", true))
-	{
-		for (auto &param : paramList)
-		{
-			if (param.wasObjectDeleted()) continue;
-			if (param->controlMode != Parameter::AUTOMATION  || param->automation == nullptr) continue;
-			param->automation->timeParamRef->setValue(fmodf(time, param->automation->lengthParamRef->floatValue()));
-		}
-	} else
-	{
-		for (auto &param : paramList)
-		{
-			if (param->controlMode != Parameter::AUTOMATION) continue;
-			ParameterAutomation* a = param->automation.get();
-
-			if (dynamic_cast<Automation*>(a->automationContainer) != nullptr)
-			{
-				float value = ((Automation *)a->automationContainer)->getValueAtPosition(fmodf(time, a->lengthParamRef->floatValue()));
-				float normValue = jmap<float>(value, param->minimumValue, param->maximumValue);
-				localParams.getDynamicObject()->setProperty(param->shortName, normValue);
-			}else if (dynamic_cast<GradientColorManager *>(a->automationContainer) != nullptr)
-			{
-				Colour value = ((GradientColorManager*)a->automationContainer)->getColorForPosition(fmodf(time, a->lengthParamRef->floatValue()));
-				var colorParam;
-				colorParam.append(value.getFloatRed());
-				colorParam.append(value.getFloatGreen());
-				colorParam.append(value.getFloatBlue());
-				colorParam.append(value.getFloatAlpha());
-				localParams.getDynamicObject()->setProperty(param->shortName, colorParam);
-			}
-			
-		}
-	}
-
-	for (auto &param : paramList)
-	{
-		if (param.wasObjectDeleted() || param == nullptr) continue;
-		if(!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, param->getValue());
-	}
-
-	paramsLock.exit();
+	var localParams = getLocalParams(p, time, params);
 
 	if (provider.wasObjectDeleted())
 	{
@@ -94,6 +50,71 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 
 	return provider->getColors(p, time, localParams);
 }
+
+
+
+void LightBlock::filterColors(Array<Colour>* result, Prop* p, double time, var params)
+{
+	if (provider.wasObjectDeleted()) return;
+	
+	var localParams = getLocalParams(p, time, params);
+	((LightBlockFilter *)provider.get())->filterColors(result, p, time, localParams);
+}
+
+var LightBlock::getLocalParams(Prop* p, double time, var params)
+{
+	var localParams = params.isVoid() ? new DynamicObject() : new DynamicObject(*params.getDynamicObject());
+	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
+
+	paramsLock.enter();
+
+	if (localParams.getProperty("updateAutomation", true))
+	{
+		for (auto& param : paramList)
+		{
+			if (param.wasObjectDeleted()) continue;
+			if (param->controlMode != Parameter::AUTOMATION || param->automation == nullptr) continue;
+			param->automation->timeParamRef->setValue(fmodf(time, param->automation->lengthParamRef->floatValue()));
+		}
+	}
+	else
+	{
+		for (auto& param : paramList)
+		{
+			if (param->controlMode != Parameter::AUTOMATION) continue;
+			ParameterAutomation* a = param->automation.get();
+
+			if (dynamic_cast<Automation*>(a->automationContainer) != nullptr)
+			{
+				float value = ((Automation*)a->automationContainer)->getValueAtPosition(fmodf(time, a->lengthParamRef->floatValue()));
+				float normValue = jmap<float>(value, param->minimumValue, param->maximumValue);
+				localParams.getDynamicObject()->setProperty(param->shortName, normValue);
+			}
+			else if (dynamic_cast<GradientColorManager*>(a->automationContainer) != nullptr)
+			{
+				Colour value = ((GradientColorManager*)a->automationContainer)->getColorForPosition(fmodf(time, a->lengthParamRef->floatValue()));
+				var colorParam;
+				colorParam.append(value.getFloatRed());
+				colorParam.append(value.getFloatGreen());
+				colorParam.append(value.getFloatBlue());
+				colorParam.append(value.getFloatAlpha());
+				localParams.getDynamicObject()->setProperty(param->shortName, colorParam);
+			}
+
+		}
+	}
+
+	for (auto& param : paramList)
+	{
+		if (param.wasObjectDeleted() || param == nullptr) continue;
+		if (!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, param->getValue());
+	}
+
+	paramsLock.exit();
+	
+	return localParams;
+}
+
 
 void LightBlock::rebuildArgsFromModel()
 {

@@ -279,6 +279,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable* c)
 	{
 		generatePreview();
 	}
+	else if (c->parentContainer->parentContainer == &clip->filters) generatePreview();
 
 	if (c == clip->fadeIn) fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength()) * getWidth(), fadeInHandle.getHeight() / 2);
 	else if (c == clip->fadeOut) fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength()) * getWidth(), fadeOutHandle.getHeight() / 2);
@@ -320,7 +321,8 @@ void LightBlockClipUI::itemDropped(const SourceDetails& source)
 				if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
 			}
 
-			clip->activeProvider->setValueFromTarget(provider, true);
+			if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addFilterFromProvider(f);
+			else clip->activeProvider->setValueFromTarget(provider, true);
 		}
 	}
 

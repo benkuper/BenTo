@@ -333,6 +333,26 @@
 			isa = PBXBuildFile;
 			fileRef = EB4AA1D6441093528AA7DCFA;
 		};
+		92433CD942BEFDF3FC547861 = {
+			isa = PBXBuildFile;
+			fileRef = 3450717409F17AA0403ADEC9;
+		};
+		C1E9177A48CA75075E724768 = {
+			isa = PBXBuildFile;
+			fileRef = AE3B9B292DD3E471D7656B11;
+		};
+		6A540B36BD076F6824F5ED20 = {
+			isa = PBXBuildFile;
+			fileRef = CE0506DE4285CCA11EF3D0C3;
+		};
+		841692C94E00AF2604B36A10 = {
+			isa = PBXBuildFile;
+			fileRef = 7BDABA212B40713D234E3BEA;
+		};
+		B16CC5E7283D26D49F1B36FC = {
+			isa = PBXBuildFile;
+			fileRef = B8E9C2CC83E08C76BE5E9848;
+		};
 		38425447E1055A4E63691FAC = {
 			isa = PBXBuildFile;
 			fileRef = 170FE150BA66B4CADFA926C5;
@@ -875,6 +895,13 @@
 			path = ../../Resources/fadeIn.png;
 			sourceTree = "SOURCE_ROOT";
 		};
+		25945F3EEF80155623FA70D6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = HSVBlockFilter.h;
+			path = ../../Source/LightBlock/model/blocks/filters/generic/hsv/HSVBlockFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		25A86663AB1BCEB88DE5C5ED = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -987,6 +1014,13 @@
 			path = ../../Source/Prop/Prop.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		3450717409F17AA0403ADEC9 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = LightBlockFilter.cpp;
+			path = ../../Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		34FDD8C4811BA347FB82415F = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1055,6 +1089,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = UserLightBlockModelManager.cpp;
 			path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		414654DC5F2DB306F91226BA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = RemapBlockFilter.h;
+			path = ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4297491F00482662E47F3924 = {
@@ -1435,6 +1476,13 @@
 			path = ../../Source/BentoComponentCommands.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		6BFB0094C1DD3594A3445589 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = ScriptBlockFilter.h;
+			path = ../../Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		6CCC92E6A614482C1A9E4CDC = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1512,6 +1560,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		7BDABA212B40713D234E3BEA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = HSVBlockFilter.cpp;
+			path = ../../Source/LightBlock/model/blocks/filters/generic/hsv/HSVBlockFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7DF3DFB9A3990703455A075C = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1531,6 +1586,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = PropClusterGroupManagerUI.h;
 			path = ../../Source/Prop/Cluster/ui/PropClusterGroupManagerUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8318C167A34E881AD431C8F0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = LightBlockFilter.h;
+			path = ../../Source/LightBlock/model/blocks/filters/LightBlockFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		832926A951BB3C8E60899D6C = {
@@ -1897,6 +1959,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModel.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		AE3B9B292DD3E471D7656B11 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = ScriptBlockFilter.cpp;
+			path = ../../Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		AED1C1F9172B482D4CC281F2 = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -1993,6 +2062,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = SpatLayout.cpp;
 			path = ../../Source/Video/SpatLayout.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		B8E9C2CC83E08C76BE5E9848 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = RemapBlockFilter.cpp;
+			path = ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		B90E6FAC86CD2D932F3FB50E = {
@@ -2177,6 +2253,13 @@
 			path = "~/JUCE/modules/juce_gui_basics";
 			sourceTree = "<absolute>";
 		};
+		CE0506DE4285CCA11EF3D0C3 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = BrightnessContrastBlockFilter.cpp;
+			path = ../../Source/LightBlock/model/blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		CE89FAA8D3CC0620F5D5FF86 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2203,6 +2286,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = IdentificationRuleManager.cpp;
 			path = ../../Source/Identification/IdentificationRuleManager.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		D1B5777AD7B1B62BBCF72A06 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = BrightnessContrastBlockFilter.h;
+			path = ../../Source/LightBlock/model/blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		D1F2D02962D67BDCC3794AC9 = {
@@ -3020,6 +3110,63 @@
 			name = ui;
 			sourceTree = "<group>";
 		};
+		FFCDF54B88210FA3EE4A9CA6 = {
+			isa = PBXGroup;
+			children = (
+				AE3B9B292DD3E471D7656B11,
+				6BFB0094C1DD3594A3445589,
+			);
+			name = script;
+			sourceTree = "<group>";
+		};
+		C5059AFADB2A3E5F7AD83FF7 = {
+			isa = PBXGroup;
+			children = (
+				CE0506DE4285CCA11EF3D0C3,
+				D1B5777AD7B1B62BBCF72A06,
+			);
+			name = brightnesscontrast;
+			sourceTree = "<group>";
+		};
+		2C4CD53F823122544D4FB01C = {
+			isa = PBXGroup;
+			children = (
+				7BDABA212B40713D234E3BEA,
+				25945F3EEF80155623FA70D6,
+			);
+			name = hsv;
+			sourceTree = "<group>";
+		};
+		4B889AD9BD5F822548722B8C = {
+			isa = PBXGroup;
+			children = (
+				B8E9C2CC83E08C76BE5E9848,
+				414654DC5F2DB306F91226BA,
+			);
+			name = remap;
+			sourceTree = "<group>";
+		};
+		167F859DD72B02028DC331AF = {
+			isa = PBXGroup;
+			children = (
+				C5059AFADB2A3E5F7AD83FF7,
+				2C4CD53F823122544D4FB01C,
+				4B889AD9BD5F822548722B8C,
+			);
+			name = generic;
+			sourceTree = "<group>";
+		};
+		457BC62EF1B8C73372750500 = {
+			isa = PBXGroup;
+			children = (
+				3450717409F17AA0403ADEC9,
+				8318C167A34E881AD431C8F0,
+				FFCDF54B88210FA3EE4A9CA6,
+				167F859DD72B02028DC331AF,
+			);
+			name = filters;
+			sourceTree = "<group>";
+		};
 		1696BB520583BE3145308F6A = {
 			isa = PBXGroup;
 			children = (
@@ -3127,6 +3274,7 @@
 		64AE0BC7468CA8DD2D47ED08 = {
 			isa = PBXGroup;
 			children = (
+				457BC62EF1B8C73372750500,
 				AC5FEA16BBDEBE2E561C18FF,
 				8E5E61AF86F50880D0C1D042,
 				8CA0C89376557F9AE1C462A7,
@@ -3770,6 +3918,11 @@
 				D902594BC4B92F95C3317BE5,
 				CD089C9944B3DFBF4F71C771,
 				E3B33E153A87ED5EF8BAF23B,
+				92433CD942BEFDF3FC547861,
+				C1E9177A48CA75075E724768,
+				6A540B36BD076F6824F5ED20,
+				841692C94E00AF2604B36A10,
+				B16CC5E7283D26D49F1B36FC,
 				38425447E1055A4E63691FAC,
 				E221F31BE343F8EDF3A1A406,
 				28A1EF68F4CE2F2175FAB002,

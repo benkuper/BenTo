@@ -68,7 +68,7 @@ void PropUI::mouseDown(const MouseEvent & e)
 
 	if (e.mods.isRightButtonDown())
 	{
-		LightBlockColorProvider * p = LightBlockModelLibrary::showProvidersAndGet();
+		LightBlockColorProvider * p = LightBlockModelLibrary::showSourcesAndGet();
 		if (p != nullptr) item->activeProvider->setValueFromTarget(p);
 	} else if (e.mods.isLeftButtonDown())
 	{

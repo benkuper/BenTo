@@ -15,8 +15,8 @@
 #include "Prop/Prop.h"
 
 
-LightBlockModel::LightBlockModel(const String &name, var params) :
-	LightBlockColorProvider(name, false),
+LightBlockModel::LightBlockModel(const String &name, var params, ProviderType providerType) :
+	LightBlockColorProvider(name, false, false, providerType),
 	isBeingEdited(false),
 	presetManager(this),
 	modelNotifier(5)

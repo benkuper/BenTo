@@ -13,7 +13,7 @@
 #include "Prop/Cluster/PropClusterGroupManager.h"
 
 PropTargetFilterManager::PropTargetFilterManager(PropClusterGroupManager * clusterGroupManager) :
-	BaseManager<PropTargetFilter>("Filters"),
+	BaseManager<PropTargetFilter>("Prop Filters"),
 	clusterGroupManager(clusterGroupManager)
 {
 	selectItemWhenCreated = false;

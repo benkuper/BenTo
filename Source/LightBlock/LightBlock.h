@@ -20,7 +20,7 @@ class LightBlock :
 	public LightBlockColorProvider::ProviderListener
 {
 public:
-	LightBlock(LightBlockColorProvider * provider);
+	LightBlock(LightBlockColorProvider * provider = nullptr);
 	virtual ~LightBlock();
 
 	WeakReference<LightBlockColorProvider> provider;
@@ -30,6 +30,9 @@ public:
 	var paramsLoadData;
 
 	Array<Colour> getColors(Prop* p, double time, var params) override;
+	void filterColors(Array<Colour>* result, Prop* p, double time, var params);
+	var getLocalParams(Prop* p, double time, var params);
+
 	BakeData getBakeDataForProp(Prop* prop) override;
 
 	void rebuildArgsFromModel();

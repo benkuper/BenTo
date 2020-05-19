@@ -27,4 +27,7 @@ public:
     virtual void onContainerParameterChanged(Parameter* p) override;
 
     virtual void handleMessage(const String &msg, var value = var());
+
+    JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PropComponent)
+
 };
