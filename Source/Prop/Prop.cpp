@@ -91,6 +91,7 @@ Prop::Prop(var params) :
 	isBaking->setControllableFeedbackOnly(true);
 	isBaking->isSavable = false;
 
+
 	isUploading = bakingCC.addBoolParameter("Is Uploading", "Upload after bake", false);
 	isUploading->hideInEditor = true;
 	isUploading->setControllableFeedbackOnly(true);
@@ -100,6 +101,9 @@ Prop::Prop(var params) :
 	bakingProgress->setControllableFeedbackOnly(true);
 	uploadProgress = bakingCC.addFloatParameter("Upload progress", "", 0, 0, 1);
 	uploadProgress->setControllableFeedbackOnly(true);
+
+	addChildControllableContainer(&bakingCC);
+
 
 	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
 	activeProvider->targetType = TargetParameter::CONTAINER;

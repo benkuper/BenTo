@@ -87,6 +87,8 @@ public:
 
 	void updatePropsAndFamiliesDefinitions();
 
+	void afterLoadJSONDataInternal() override;
+
 	void run() override;
 
 	// Inherited via Listener

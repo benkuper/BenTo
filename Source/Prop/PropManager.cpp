@@ -373,6 +373,14 @@ void PropManager::updatePropsAndFamiliesDefinitions()
 	}
 }
 
+void PropManager::afterLoadJSONDataInternal()
+{
+	if (autoAddProps->boolValue())
+	{
+		for (auto& s : zeroconfSearcher->services) serviceAdded(s);
+	}
+}
+
 void PropManager::run()
 {
 	LOG("Updating prop definitions...");
