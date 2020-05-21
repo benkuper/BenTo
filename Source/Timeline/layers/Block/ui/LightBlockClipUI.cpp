@@ -218,6 +218,7 @@ void LightBlockClipUI::mouseDown(const MouseEvent& e)
 							AutomationKey * k = a->addItem(0, 0);
 							k->setEasing(Easing::BEZIER);
 							a->addKey(a->length->floatValue(), 1);
+							shouldUpdateImage = true;
 						}
 					}
 

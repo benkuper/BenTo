@@ -102,6 +102,7 @@ Prop::Prop(var params) :
 	uploadProgress = bakingCC.addFloatParameter("Upload progress", "", 0, 0, 1);
 	uploadProgress->setControllableFeedbackOnly(true);
 
+	bakingCC.editorIsCollapsed = true;
 	addChildControllableContainer(&bakingCC);
 
 
