@@ -52,7 +52,7 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	addChildControllableContainer(&genericBlocks);
 
 	liveFeedBlocks.addChildControllableContainer(videoBlock.get());
-	liveFeedBlocks.addChildControllableContainer(dmxBlock.get());
+	//liveFeedBlocks.addChildControllableContainer(dmxBlock.get());
 	addChildControllableContainer(&liveFeedBlocks);
 
 	addChildControllableContainer(&pictureBlocks);
