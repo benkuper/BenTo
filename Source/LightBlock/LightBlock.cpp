@@ -64,9 +64,9 @@ void LightBlock::filterColors(Array<Colour>* result, Prop* p, double time, var p
 var LightBlock::getLocalParams(Prop* p, double time, var params)
 {
 	var localParams = params.isVoid() ? new DynamicObject() : new DynamicObject(*params.getDynamicObject());
-	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
-
+	
 	paramsLock.enter();
+	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
 
 	if (localParams.getProperty("updateAutomation", true))
 	{
