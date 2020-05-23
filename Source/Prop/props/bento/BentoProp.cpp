@@ -148,12 +148,11 @@ void BentoProp::uploadBakedData(BakeData data)
 	if (mStream != nullptr)
 	{
 		String response = mStream->readEntireStreamAsString();
-		DBG("Got response : " << response);
-		NLOG(niceName, "Metadata upload complete");
+		NLOG(niceName, "Metadata upload complete  (id " << String(globalID->intValue()) << ")");
 	}
 	else
 	{
-		NLOGERROR(niceName, "Error uploading meta data to prop, stopping here.");
+		NLOGERROR(niceName, "Error uploading meta data to prop (id " << String(globalID->intValue()) << "), stopping here.");
 		return;
 	}
 
@@ -188,7 +187,7 @@ void BentoProp::uploadBakedData(BakeData data)
 	}
 	else
 	{
-		NLOGERROR(niceName, "Error uploading color data to prop");
+		NLOGERROR(niceName, "Error uploading color data to prop (id " << String(globalID->intValue()) << ")");
 		return;
 	}
 }

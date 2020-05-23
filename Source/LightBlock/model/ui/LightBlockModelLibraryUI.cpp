@@ -37,6 +37,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
 
 
 	container.addAndMakeVisible(&genericGroupUI);
@@ -123,6 +124,7 @@ void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent & e)
 			nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+			genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
 
 			resized();
 		}

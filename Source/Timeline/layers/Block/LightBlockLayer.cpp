@@ -47,13 +47,13 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 	int resolution = p->resolution->intValue();
 
 	Array<Colour> result;
+	result.resize(resolution);
 
 	if (blocks.size() == 0)
 	{
 		return result;
 	}
 
-	result.resize(resolution);
 	Array<Array<Colour>> clipColors;
 
 	for (auto &b : blocks)

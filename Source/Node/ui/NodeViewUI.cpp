@@ -18,7 +18,6 @@ NodeViewUI::NodeViewUI(Node * node, Direction direction) :
 	for (auto & s : node->outSlots) addConnector(false, s, false);
 	
 	node->addAsynNodeListener(this);
-	showEnableBT = false;
 }
 
 NodeViewUI::~NodeViewUI()

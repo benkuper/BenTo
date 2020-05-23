@@ -19,6 +19,14 @@ public:
 	ColorRemapNode(var params = var());
 	~ColorRemapNode();
 
+	ColorSlot* c1;
+	GradientColorManager colorManager;
+
+	enum InputMode { HUE, SATURATION, BRIGHTNESS};
+	EnumParameter* inputModeParam;
+
+	Array<Colour> getColorsInternal(Prop* p, double time, var params) override;
+
 	String getTypeString() const override { return "Color Remap"; }
-	static ColorRemapNode * create(var params) { return new ColorRemapNode(params); }
+	static ColorRemapNode* create(var params) { return new ColorRemapNode(params); }
 };

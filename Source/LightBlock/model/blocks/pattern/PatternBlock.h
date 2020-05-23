@@ -90,6 +90,7 @@ public:
 	StrobePattern(var params = var());
 	~StrobePattern() {}
 
+	FloatParameter* brightness;
 	ColorParameter* color;
 	ColorParameter * color2;
 	FloatParameter * frequency;
@@ -109,6 +110,7 @@ public:
 	PointPattern(var params = var());
 	~PointPattern() {}
 
+	FloatParameter* brightness;
 	FloatParameter* position;
 	FloatParameter* size;
 	FloatParameter* fade;
@@ -130,8 +132,10 @@ public:
 	MultiPointPattern(var params = var());
 	~MultiPointPattern() {}
 
-	IntParameter* numPoints;
-	FloatParameter* position;
+	FloatParameter* brightness;
+	FloatParameter* offset;
+	FloatParameter* speed;
+	FloatParameter * gap;
 	FloatParameter* size;
 	FloatParameter* fade;
 	ColorParameter* color;

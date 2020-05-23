@@ -157,6 +157,9 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation* a)
 	if (automationUI != nullptr)
 	{
 		canBeGrabbed = false;
+		coreGrabber.setVisible(false);
+		grabber.setVisible(false);
+		loopGrabber.setVisible(false);
 		automationUI->addMouseListener(this, true);
 		addAndMakeVisible(automationUI.get());
 		resized();
