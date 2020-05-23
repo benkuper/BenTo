@@ -55,7 +55,7 @@ void RainbowPattern::getColorsInternal(Array<Colour>* result, Prop* p, double ti
 NoisePattern::NoisePattern(var params) :
 	PatternBlock(getTypeString(), params)
 {
-	brightness = paramsContainer->addFloatParameter("Brightness", "", 0, 0, 1);
+	brightness = paramsContainer->addFloatParameter("Brightness", "", 1, 0, 1);
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
 	bgColor = paramsContainer->addColorParameter("Background Color", "", Colours::black);
 	balance = paramsContainer->addFloatParameter("Balance", "The balance between colors", 0, -1, 1);
@@ -83,7 +83,7 @@ void NoisePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 
 	for (int i = 0; i < resolution; i++)
 	{
-		float v = (perlin.noise0_1((i * bScale) / resolution, curTime, id * bIdOffset) - .5f) * bContrast + .5f + bBalance;
+		float v = (perlin.noise0_1((i * bScale) / resolution, curTime, id * bIdOffset) - .5f) * bContrast + .5f + bBalance*2;
 		result->set(i, bbgColor.interpolatedWith(bColor, v).withMultipliedBrightness(bBrightness));
 	}
 }
@@ -196,8 +196,8 @@ MultiPointPattern::MultiPointPattern(var params) :
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 1, 0, 1);
 	color = paramsContainer->addColorParameter("Color", "The color of the point", Colours::white);
 	bgColor = paramsContainer->addColorParameter("Background Color", "The color of the background", Colours::black);
-	speed = paramsContainer->addFloatParameter("SPeed", "The speed between lines per prop", .25f);
-	offset = paramsContainer->addFloatParameter("Offset", "Offset of the point", 0, 0);
+	speed = paramsContainer->addFloatParameter("Speed", "The speed between lines per prop", .25f);
+	offset = paramsContainer->addFloatParameter("Offset", "Offset of the point", 0);
 	gap = paramsContainer->addFloatParameter("Gap", "The gap between lines per prop", .25f, 0, 1);
 	size = paramsContainer->addFloatParameter("Size", "Size of the point, relative to the gap", .5f, 0, 1);
 	fade = paramsContainer->addFloatParameter("Fade", "The fading of the point", 1, 0, 1);
@@ -215,7 +215,6 @@ void MultiPointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double
 	float bOffset = getParamValue<float>(offset, params);
 	float bSpeed = getParamValue<float>(speed, params);
 	float targetPos = bSpeed * time + bOffset;
-	//if (targetPos < 0) targetPos += abs(floor(targetPos));
 	float bSize = getParamValue<float>(size, params);
 	float bFade = getParamValue<float>(fade, params);
 	float bGap = getParamValue<float>(gap, params);
@@ -223,10 +222,12 @@ void MultiPointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double
 
 	result->fill(bBGColor);
 	if (bGap == 0 || bSize == 0) return;
+
+	if (targetPos < 0) targetPos = fmodf(targetPos, -bGap) + bGap;
 	
 	for (int i = 0; i < resolution; i++)
 	{
-		float relTotal = fmodf((i*1.0f / resolution), 1);
+		float relTotal = fmodf((1-(i*1.0f / resolution)), 1);
 		float relGap = fmodf((relTotal+bGap + targetPos) / bGap, 1);
 		float relCentered = 1 - fabsf((relGap - .5f) * 2) * 1 / bSize;
 		
