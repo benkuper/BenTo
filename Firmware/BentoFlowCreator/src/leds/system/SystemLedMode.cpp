@@ -27,6 +27,11 @@ void SystemLedMode::update()
    //default behavior (connecting) on which we will add animation for connected behavior
    float t = millis() / 1000.0f - timeAtConnecting;
    float pos = cos((t + PI) * 5) * .5f + .5f;
+
+#ifdef LED_INVERT_DIRECTION
+   pos = 1-pos;
+#endif
+
    float radius = .3 - (cos(pos * PI * 2) * .5f + .5f) * .25f;
 
    color.nscale8(min(t, 1.f) * 255);
@@ -75,9 +80,9 @@ void SystemLedMode::showUploadProgress(float value)
    int curPage = floor(value*2);
    uploadFeedback = true;
    
-   if(curPage > 0) LedHelpers::fillRange(leds, numLeds, CHSV((curPage-1)*40,255,255), 0, 1 - uploadProgress);
+   if(curPage > 0) LedHelpers::fillRange(leds, numLeds, CHSV((curPage-1)*40,255,255), 0, uploadProgress);
    else LedHelpers::clear(leds, numLeds);
-   LedHelpers::fillRange(leds, numLeds, CHSV(curPage*40,255,255), 1 - uploadProgress, 1, false);
-   LedHelpers::point(leds, numLeds, CRGB::White, 1 - uploadProgress, .1f, false);
+   LedHelpers::fillRange(leds, numLeds, CHSV(curPage*40,255,255), uploadProgress, 1, false);
+   LedHelpers::point(leds, numLeds, CRGB::White, uploadProgress, .1f, false);
    FastLED.show(); //force here because no update in leds when uploading apparently
 }

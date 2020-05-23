@@ -47,7 +47,7 @@ void StreamMode::receiveUDP()
                 {
                     if (ledBufferIndex < numLeds)
                     {
-                        ledBuffer[ledBufferIndex] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
+                        ledBuffer[LEDMAP(ledBufferIndex)] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
                     }
                     else
                     {

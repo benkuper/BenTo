@@ -25,5 +25,11 @@
 #include "config_spectraglove.h"
 #endif
 
+#ifdef LED_INVERT_DIRECTION
+    #define LEDMAP(index) (LED_COUNT-1-index)
+#else
+    #define LEDMAP(index) index
+#endif
+
 #pragma message("Compiling for " __DEVICE_TYPE__)
 

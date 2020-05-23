@@ -1,5 +1,6 @@
 #include "LedHelpers.h"
 #include "../../common/DebugHelpers.h"
+#include "../../common/config/Config.h"
 
 void LedHelpers::clear(CRGB *leds, int numLeds)
 {
@@ -21,7 +22,7 @@ void LedHelpers::fillRange(CRGB *leds, int numLeds, CRGB c, float start, float e
 
     for (int i = s; i <= e; i++)
     {
-        leds[i] += c;
+        leds[LEDMAP(i)] += c;
     }
 }
 
@@ -37,6 +38,6 @@ void LedHelpers::point(CRGB *leds, int numLeds, CRGB c, float pos, float radius,
     {
         float rel = i * 1.0f / (numLeds - 1);
         float fac = max(1 - (std::abs((float)(pos - rel)) / radius), 0.f);
-        leds[i] += CRGB(c.r * fac, c.g * fac, c.b * fac);
+        leds[LEDMAP(i)] += CRGB(c.r * fac, c.g * fac, c.b * fac);
     }
 }

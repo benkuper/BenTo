@@ -11,6 +11,7 @@
 #define LED_CLK_PIN 26
 #define LED_TYPE    SK9822
 #define LED_COLOR_ORDER BGR
+#define LED_INVERT_DIRECTION
 
 //main power
 #define KEEP_SLEEP_PIN_HIGH

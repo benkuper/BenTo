@@ -119,7 +119,7 @@ void PlayerMode::showCurrentFrame()
 {
   for (int i = 0; i < numLeds; i++)
   {
-    ledBuffer[i] = CRGB(buffer[i * 4 + 2], buffer[i * 4 + 1], buffer[i * 4 + 0]);
+    ledBuffer[LEDMAP(i)] = CRGB(buffer[i * 4 + 2], buffer[i * 4 + 1], buffer[i * 4 + 0]);
   }
   updateLeds();
 }
