@@ -53,10 +53,11 @@ public:
 
 	siv::PerlinNoise perlin;
 
+	FloatParameter* brightness;
 	FloatParameter * scale;
 	FloatParameter * speed;
 	FloatParameter * contrast;
-	FloatParameter * brightness;
+	FloatParameter* balance;
 	ColorParameter * color;
 	ColorParameter* bgColor;
 	FloatParameter * idOffset;

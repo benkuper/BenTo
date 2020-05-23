@@ -21,6 +21,7 @@ public:
 
     float updateRate;
     int resolution;
+    bool invertDirection;
 
     FloatParameter* brightness;
 };

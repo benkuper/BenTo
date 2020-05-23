@@ -10,6 +10,7 @@
 
 #include "PropViz.h"
 #include "Prop/Prop.h"
+#include "Prop/Component/rgb/RGBComponent.h"
 
 PropViz::PropViz(Prop * prop) :
 	prop(prop),
@@ -35,6 +36,7 @@ void PropViz::paint(Graphics & g)
 	int numLeds = prop->resolution->intValue();
 
 	Prop::Shape shape = prop->type->getValueDataAsEnum<Prop::Shape>();
+
 	switch (shape)
 	{
 	case Prop::Shape::CLUB:
@@ -50,7 +52,7 @@ void PropViz::paint(Graphics & g)
 			Rectangle<float> ledR = lr.removeFromTop(ledSize).reduced(1).toFloat();
 			g.setColour(Colours::white.withAlpha(.2f));
 			g.drawEllipse(ledR, .5f);
-			g.setColour(prop->colors[i]);
+			g.setColour(prop->colors[numLeds - 1 - i]);
 			g.fillEllipse(ledR);
 		}
 	}

@@ -45,7 +45,7 @@ void RainbowPattern::getColorsInternal(Array<Colour>* result, Prop* p, double ti
 
 	for (int i = 0; i < resolution; i++)
 	{
-		float rel = fmodf((i * bDensity / resolution) + curOffset, 1);
+		float rel = fmodf((1 - (i*1.0f / resolution)) * bDensity + curOffset, 1);
 		result->set(i, Colour::fromHSV(rel, 1, bBrightness, 1));
 	}
 }
@@ -58,6 +58,7 @@ NoisePattern::NoisePattern(var params) :
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 0, 0, 1);
 	color = paramsContainer->addColorParameter("Color", "", Colours::white);
 	bgColor = paramsContainer->addColorParameter("Background Color", "", Colours::black);
+	balance = paramsContainer->addFloatParameter("Balance", "The balance between colors", 0, -1, 1);
 	contrast = paramsContainer->addFloatParameter("Contrast", "", 3);
 	scale = paramsContainer->addFloatParameter("Scale", "", 3);
 	speed = paramsContainer->addFloatParameter("Speed", "", 1);
@@ -71,6 +72,7 @@ void NoisePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 	float bSpeed = getParamValue<float>(speed, params);
 	float bContrast = getParamValue<float>(contrast, params);
 	float bBrightness = getParamValue<float>(brightness, params);
+	float bBalance = getParamValue<float>(balance, params);
 	float bIdOffset = getParamValue<float>(idOffset, params);
 
 	var colorVar = getParamValue<var>(color, params);
@@ -81,8 +83,8 @@ void NoisePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 
 	for (int i = 0; i < resolution; i++)
 	{
-		float v = (perlin.noise0_1((i * bScale) / resolution, curTime, id * bIdOffset) - .5f) * bContrast + .5f + bBrightness;
-		result->set(i, bbgColor.interpolatedWith(bColor, v));
+		float v = (perlin.noise0_1((i * bScale) / resolution, curTime, id * bIdOffset) - .5f) * bContrast + .5f + bBalance;
+		result->set(i, bbgColor.interpolatedWith(bColor, v).withMultipliedBrightness(bBrightness));
 	}
 }
 
@@ -146,7 +148,7 @@ PointPattern::PointPattern(var params) :
 	brightness = paramsContainer->addFloatParameter("Brightness", "", 1, 0, 1);
 	color = paramsContainer->addColorParameter("Color", "The color of the point", Colours::white);
 	bgColor = paramsContainer->addColorParameter("Background Color", "The color of the background", Colours::black);
-	position = paramsContainer->addFloatParameter("Position", "Position of the point", .5f, -1, 2);
+	position = paramsContainer->addFloatParameter("Position", "Position of the point", .5f);
 	size = paramsContainer->addFloatParameter("Size", "Size of the point", .25f, 0);
 	fade = paramsContainer->addFloatParameter("Fade", "The fading of the point", 1, 0, 1);
 	extendNum = paramsContainer->addIntParameter("Num Props", "The number of props the point is navigating through", 1, 1);

@@ -127,7 +127,7 @@ void Prop::clearItem()
 	colors.fill(Colours::black);
 	sendColorsToProp();
 	setBlockFromProvider(nullptr);
-	if (family != nullptr) family->unregisterProp(this);
+	if (!Engine::mainEngine->isClearing && family != nullptr) family->unregisterProp(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(1000);
 	setBlockFromProvider(nullptr);
