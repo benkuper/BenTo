@@ -116,6 +116,8 @@ void LightBlockClip::addFilterFromProvider(LightBlockFilter * provider)
 	lb->setCanBeDisabled(true);
 	filters.addItem(lb);
 
+	clipNotifier.addMessage(new ClipEvent(ClipEvent::REGENERATE_PREVIEW, this));
+
 }
 
 void LightBlockClip::blockParamControlModeChanged(Parameter * p) 

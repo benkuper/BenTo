@@ -69,7 +69,7 @@ public:
 	class  ClipEvent
 	{
 	public:
-		enum Type { FADES_CHANGED };
+		enum Type { FADES_CHANGED, REGENERATE_PREVIEW };
 
 		ClipEvent(Type t, LightBlockClip* p, var v = var()) :
 			type(t), clip(p), value(v) {}

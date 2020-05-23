@@ -297,7 +297,12 @@ void LightBlockClipUI::newMessage(const LightBlockClip::ClipEvent& e)
 		fadeInHandle.setVisible(clip->fadeIn->enabled);
 		fadeOutHandle.setVisible(clip->fadeOut->enabled);
 		shouldRepaint = true;
+		shouldUpdateImage = true;
 		resized();
+		break;
+
+	case LightBlockClip::ClipEvent::REGENERATE_PREVIEW:
+		shouldUpdateImage = true;
 		break;
 	}
 }
