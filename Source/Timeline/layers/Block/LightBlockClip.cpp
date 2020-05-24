@@ -116,7 +116,7 @@ void LightBlockClip::addFilterFromProvider(LightBlockFilter * provider)
 	lb->setCanBeDisabled(true);
 	filters.addItem(lb);
 
-	clipNotifier.addMessage(new ClipEvent(ClipEvent::REGENERATE_PREVIEW, this));
+	notifyUpdatePreview();
 
 }
 
@@ -143,6 +143,12 @@ void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEn
 			pa->automation->setLength(coreLength->floatValue(), stretch, stickToCoreEnd);
 		}
 	}
+}
+
+void LightBlockClip::notifyUpdatePreview()
+{
+	clipNotifier.addMessage(new ClipEvent(ClipEvent::REGENERATE_PREVIEW, this));
+
 }
 
 void LightBlockClip::onContainerParameterChangedInternal(Parameter * p)

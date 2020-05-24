@@ -42,6 +42,8 @@ public:
 
 	void setCoreLength(float value, bool stretch = false, bool stickToCoreEnd = false) override;
 
+	void notifyUpdatePreview();
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void controllableStateChanged(Controllable* c) override;
 

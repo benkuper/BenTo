@@ -133,6 +133,18 @@ void LightBlockLayer::endLoadFile()
 	Engine::mainEngine->removeEngineListener(this);
 }
 
+void LightBlockLayer::onContainerParameterChangedInternal(Parameter* p)
+{
+	SequenceLayer::onContainerParameterChangedInternal(p);
+	if (p == previewID)
+	{
+		for (auto& clip : blockClipManager.items)
+		{
+			((LightBlockClip *)clip)->notifyUpdatePreview();
+		}
+	}
+}
+
 SequenceLayerPanel * LightBlockLayer::getPanel()
 {
 	return new LightBlockLayerPanel(this);
