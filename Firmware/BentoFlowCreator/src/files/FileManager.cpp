@@ -98,8 +98,10 @@ void FileManager::deleteFileIfExists(String path)
         return;
 
 #ifdef FILES_USE_INTERNAL_MEMORY
+    DBG("Delete if exists : "+path);
     if (SPIFFS.exists(path))
     {
+        DBG("File exists, remove : "+path);
         SPIFFS.remove(path);
     }
 #else

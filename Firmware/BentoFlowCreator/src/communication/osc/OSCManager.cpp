@@ -18,28 +18,28 @@ void OSCManager::init()
     prefs.end();
 
 #elif defined USE_SETTINGS_MANAGER
-//init once with a json if it doesn't exist yet
+    //init once with a json if it doesn't exist yet
     prefs.readSettings(String("/" + name + ".json").c_str());
     remoteHost = prefs.getString("remoteHost", "");
-    prefs.loadJson(String("{\"remoteHost\":\""+remoteHost+"\"}").c_str());
+    prefs.loadJson(String("{\"remoteHost\":\"" + remoteHost + "\"}").c_str());
     prefs.writeSettings(String("/" + name + ".json").c_str());
 
-
-//actually read the settings
+    //actually read the settings
     prefs.readSettings(String("/" + name + ".json").c_str());
     remoteHost = prefs.getString("remoteHost", "");
 #endif
 
-#ifdef ESP32
-if (MDNS.begin((String(DEVICE_TYPE)+" - "+getDeviceID()).c_str())) {
-     
-    NDBG("OSC Zeroconf started");
-    MDNS.addService("osc", "udp", 9000);
+    if (MDNS.begin((String(DEVICE_TYPE) + " - " + getDeviceID()).c_str()))
+    {
 
-}else{
-    NDBG("Error setting up MDNS responder!");
-}
-#endif
+        NDBG("OSC Zeroconf started");
+        MDNS.addService("osc", "udp", 9000);
+    }
+    else
+    {
+        NDBG("Error setting up MDNS responder!");
+    }
+
     NDBG("Init");
 }
 
@@ -122,7 +122,7 @@ void OSCManager::processMessage(OSCMessage &msg)
         pingEnabled = true;
         timeSinceLastReceivedPing = millis();
 
-        if(msg.size() > 0)
+        if (msg.size() > 0)
         {
             char hostData[32];
             msg.getString(0, hostData, 32);
@@ -141,17 +141,17 @@ void OSCManager::processMessage(OSCMessage &msg)
 
 void OSCManager::saveRemoteHost(String ip)
 {
-   
+
     remoteHost = ip;
     //NDBG("Got yo request from : " + remoteHost);
 
 #ifdef USE_PREFERENCES
-        prefs.begin(name.c_str());
-        prefs.putString("remoteHost", remoteHost);
-        prefs.end();
+    prefs.begin(name.c_str());
+    prefs.putString("remoteHost", remoteHost);
+    prefs.end();
 #elif defined USE_SETTINGS_MANAGER
-        prefs.setString("remoteHost", remoteHost);
-        prefs.writeSettings(String("/" + name + ".json").c_str());
+    prefs.setString("remoteHost", remoteHost);
+    prefs.writeSettings(String("/" + name + ".json").c_str());
 #endif
 }
 

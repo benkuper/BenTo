@@ -8,6 +8,8 @@
 
 #ifdef ESP32
 #include <ESPmDNS.h>
+#elif defined ESP8266
+#include <ESP8266mDNS.h>
 #endif
 
 class OSCEvent
