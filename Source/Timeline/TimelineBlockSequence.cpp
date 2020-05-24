@@ -10,7 +10,6 @@
 
 #include "TimelineBlockSequence.h"
 #include "layers/Block/LightBlockLayer.h"
-#include "layers/Action/ActionLayer.h"
 #include "Audio/AudioManager.h"
 #include "Prop/Prop.h"
 
@@ -28,7 +27,6 @@ TimelineBlockSequence::TimelineBlockSequence() :
 	
 	//Timeline
 	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Blocks", &LightBlockLayer::create, this));
-	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Actions", &ActionLayer::create, this));
 	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &AudioLayer::create, this));
 
 	if (!Engine::mainEngine->isLoadingFile)

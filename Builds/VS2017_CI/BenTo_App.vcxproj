@@ -106,11 +106,6 @@
     <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatItem.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\GenericActionTrigger.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\IdentificationAction.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\Action.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\ActionLayer.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\ActionManager.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.cpp"/>
@@ -2694,11 +2689,6 @@
     <ClInclude Include="..\..\Source\Video\SpatializerEvent.h"/>
     <ClInclude Include="..\..\Source\Video\SpatItem.h"/>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\GenericActionTrigger.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\IdentificationAction.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\Action.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\ActionLayer.h"/>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\ActionManager.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.h"/>

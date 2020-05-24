@@ -50,18 +50,6 @@
     <Filter Include="BenTo\Source\Video">
       <UniqueIdentifier>{871EB0F9-7C2C-9AC7-2172-59ED2441BD4F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer\actions\generic">
-      <UniqueIdentifier>{FF4983B4-62A8-75BE-9008-0B5C2EF7290B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer\actions\identification">
-      <UniqueIdentifier>{17CDA66D-84B8-4458-F92A-518E4C292B15}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer\actions">
-      <UniqueIdentifier>{33127BF2-A178-2A12-16C1-F4E2187407AE}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\ActionLayer">
-      <UniqueIdentifier>{549072DD-AD9E-5304-0850-F2088CA58FDA}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Timeline\layers\BlockLayer\ui">
       <UniqueIdentifier>{0582B79D-D7E8-BFFC-6CC8-D525FCDA1785}</UniqueIdentifier>
     </Filter>
@@ -942,21 +930,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp">
       <Filter>BenTo\Source\Video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\GenericActionTrigger.cpp">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\generic</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\IdentificationAction.cpp">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\identification</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\Action.cpp">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\ActionLayer.cpp">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Action\ActionManager.cpp">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
@@ -3941,21 +3914,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h">
       <Filter>BenTo\Source\Video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\GenericActionTrigger.h">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\generic</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\IdentificationAction.h">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer\actions\identification</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\Action.h">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\ActionLayer.h">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Action\ActionManager.h">
-      <Filter>BenTo\Source\Timeline\layers\ActionLayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>

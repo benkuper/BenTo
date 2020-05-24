@@ -111,29 +111,6 @@
       </GROUP>
       <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Timeline">
         <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
-          <GROUP id="{23F1BF42-F3AE-5D51-2965-25B23F9D4FCF}" name="ActionLayer">
-            <GROUP id="{825E33E9-7E29-2C1F-89DC-A52ECDBF1248}" name="actions">
-              <GROUP id="{F206DCBD-4A10-89BB-4DE7-9B3B17FB2CEC}" name="generic">
-                <FILE id="JM8aQP" name="GenericActionTrigger.cpp" compile="1" resource="0"
-                      file="Source/Timeline/layers/Action/GenericActionTrigger.cpp"/>
-                <FILE id="VBx6cf" name="GenericActionTrigger.h" compile="0" resource="0"
-                      file="Source/Timeline/layers/Action/GenericActionTrigger.h"/>
-              </GROUP>
-              <GROUP id="{B5AEA5C3-86C9-E8E8-FDFE-D61B78EBCB4F}" name="identification">
-                <FILE id="sfMrjg" name="IdentificationAction.cpp" compile="1" resource="0"
-                      file="Source/Timeline/layers/Action/IdentificationAction.cpp"/>
-                <FILE id="ua9zNL" name="IdentificationAction.h" compile="0" resource="0"
-                      file="Source/Timeline/layers/Action/IdentificationAction.h"/>
-              </GROUP>
-            </GROUP>
-            <FILE id="j1PrrS" name="Action.cpp" compile="1" resource="0" file="Source/Timeline/layers/Action/Action.cpp"/>
-            <FILE id="k8iO2X" name="Action.h" compile="0" resource="0" file="Source/Timeline/layers/Action/Action.h"/>
-            <FILE id="qSi9FY" name="ActionLayer.cpp" compile="1" resource="0" file="Source/Timeline/layers/Action/ActionLayer.cpp"/>
-            <FILE id="jasx2J" name="ActionLayer.h" compile="0" resource="0" file="Source/Timeline/layers/Action/ActionLayer.h"/>
-            <FILE id="YwHuF7" name="ActionManager.cpp" compile="1" resource="0"
-                  file="Source/Timeline/layers/Action/ActionManager.cpp"/>
-            <FILE id="QBqDcY" name="ActionManager.h" compile="0" resource="0" file="Source/Timeline/layers/Action/ActionManager.h"/>
-          </GROUP>
           <GROUP id="{A00ED23C-4B48-75CB-7911-E2C659ADA7F6}" name="BlockLayer">
             <GROUP id="{8B8B8A4A-F021-600B-344E-0D211A44C9D8}" name="ui">
               <FILE id="YvFGK0" name="LightBlockClipManagerUI.cpp" compile="1" resource="0"

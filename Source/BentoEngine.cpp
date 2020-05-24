@@ -14,8 +14,6 @@
 #include "Prop/PropManager.h"
 #include "Video/Spatializer.h"
 #include "Audio/AudioManager.h"
-#include "Timeline/layers/Block/LightBlockLayer.h"
-#include "Timeline/layers/Action/ActionLayer.h"
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
 #include "Node/NodeManager.h"
