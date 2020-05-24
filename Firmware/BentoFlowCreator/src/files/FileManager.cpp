@@ -119,7 +119,7 @@ void FileManager::listDir(const char *dirname, uint8_t levels)
 #ifdef FILES_USE_INTERNAL_MEMORY
     File root = SPIFFS.open("/","r");
 #else
-    File root = spiSD.open(dirname);
+    File root = SD.open(dirname);
 #endif
 
     if (!root)

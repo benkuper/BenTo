@@ -3,12 +3,12 @@
 
 // #define CREATOR_PROTO_V0
 // #define CREATOR_PROTO_V1
-//#define CREATOR_PROTO_V2
+#define CREATOR_PROTO_V2
 // #define LT_BALL
  //#define LT_HOOP
  ///#define CLARINET
  //#define SPECTRA_GLOVE
- #define GENERIC_PWM
+ //#define GENERIC_PWM
 
 #if defined CREATOR_PROTO_V0
 #include "config_protov0.h"
