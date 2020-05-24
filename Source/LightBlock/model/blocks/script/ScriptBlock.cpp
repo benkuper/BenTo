@@ -309,7 +309,7 @@ var ColourScriptData::gradientRGBFromScript(const var::NativeFunctionArgs& args)
 	Colour c1 = getColorFromArgs(args.arguments, args.numArguments, 0, false);
 	Colour c2 = getColorFromArgs(args.arguments, args.numArguments, 1, false);
 
-	float start = args.numArguments > 3 ? (float)args.arguments[3] : 0;
+	float start = args.numArguments > 3 ? (float)args.arguments[2] : 0;
 	float end = args.numArguments > 3 ? (float)args.arguments[3] : 1;
 
 	int resolution = p->colorArray.size();
@@ -333,7 +333,7 @@ var ColourScriptData::gradientHSVFromScript(const var::NativeFunctionArgs& args)
 	Colour c1 = getColorFromArgs(args.arguments, args.numArguments, 0, true);
 	Colour c2 = getColorFromArgs(args.arguments, args.numArguments, 1, true);
 
-	float start = args.numArguments > 3 ? (float)args.arguments[3] : 0;
+	float start = args.numArguments > 3 ? (float)args.arguments[2] : 0;
 	float end = args.numArguments > 3 ? (float)args.arguments[3] : 1;
 
 	int resolution = p->colorArray.size();
