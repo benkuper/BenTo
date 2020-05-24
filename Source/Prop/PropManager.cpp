@@ -199,9 +199,8 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 			LOG(" > sending /yo on " << broadcastIP << " with local ip " << ip << "...");
 		}
 
+		checkSerialDevices();
 
-		//LighttoysFTProp::autoDetectRemotes();
-		//((FlowtoysFamily *)getFamilyWithName("Flowtoys"))->checkSerialDevices();
 	}
 	else if (c == bakeAll)
 	{
@@ -474,19 +473,14 @@ Prop* PropManager::addPropForHardwareID(SerialDevice* device, String hardwareId,
 		if (p != nullptr)
 		{
 			p->deviceID = hardwareId;
-
-			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
-			{
-				bp->serialParam->setValueForDevice(device);
-			}
-
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueForDevice(device);
 			PropManager::getInstance()->addItem(p);
 		}
 	}
 	else
 	{
 		LOG(p->deviceID << " already there, updating prop's remoteHost");
-		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->setSerialDevice(device);
+		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueForDevice(device);
 	}
 
 	return p;
