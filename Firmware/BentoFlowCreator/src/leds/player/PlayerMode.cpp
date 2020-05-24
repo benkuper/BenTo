@@ -109,9 +109,9 @@ void PlayerMode::showIdFrame()
 {
   if (groupID == -1 || localID == -1)
     return;
-  LedHelpers::fillRange(ledBuffer, numLeds, groupColor, 0, .1f);
+  LedHelpers::fillRange(ledBuffer, numLeds, groupColor, .9f, 1);
   CRGB c =  rgb2hsv_approximate(CHSV(localID * 255.0f / 12, 255, 255));
-  LedHelpers::fillRange(ledBuffer, numLeds, c, (numLeds - localID) * 1.f / numLeds, 1, false);
+  LedHelpers::fillRange(ledBuffer, numLeds, c, 0, localID * 1.f / numLeds, false);
   updateLeds();
 }
 
