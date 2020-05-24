@@ -434,6 +434,13 @@ void Prop::handleOSCMessage(const OSCMessage& m)
 void Prop::handlePong()
 {
 	receivedPongSinceLastPingSent = true;
+	isConnected->setValue(true);
+}
+
+void Prop::sendPing()
+{
+	receivedPongSinceLastPingSent = false;
+	sendPingInternal();
 }
 
 void Prop::timerCallback(int timerID)
@@ -441,7 +448,7 @@ void Prop::timerCallback(int timerID)
 	switch (timerID)
 	{
 	case PROP_PING_TIMERID:
-		isConnected->setValue(receivedPongSinceLastPingSent);
+		if(!receivedPongSinceLastPingSent) isConnected->setValue(false);
 		sendPing();
 		break;
 	}

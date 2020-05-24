@@ -327,7 +327,7 @@ void BentoProp::sendYo()
 	sendMessageToProp(m);
 }
 
-void BentoProp::sendPing()
+void BentoProp::sendPingInternal()
 {
 	OSCMessage m("/ping");
 	sendMessageToProp(m);

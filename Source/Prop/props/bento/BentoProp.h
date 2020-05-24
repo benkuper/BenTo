@@ -59,7 +59,7 @@ public:
 	static bool uploadMetaDataProgressCallback(void * prop, int bytesSent, int totalBytes);
 
 	virtual void sendYo();
-	virtual void sendPing() override;
+	virtual void sendPingInternal() override;
 	virtual void powerOffProp() override;
 	virtual void restartProp() override;
 	virtual void sendWiFiCredentials(String ssid, String pass);

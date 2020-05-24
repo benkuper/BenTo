@@ -133,7 +133,8 @@ public:
 	virtual void handleOSCMessage(const OSCMessage& m);
 
 	virtual void handlePong();
-	virtual void sendPing() {}
+	void sendPing();
+	virtual void sendPingInternal() {}
 	virtual void timerCallback(int timerID) override;
 
 	void setupComponentsJSONDefinition(var def);

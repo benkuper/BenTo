@@ -104,10 +104,14 @@ void OSCManager::processMessage(OSCMessage &msg)
 {
     if (msg.match("/yo"))
     {
-        char hostData[32];
+       char hostData[32];
         msg.getString(0, hostData, 32);
+        
+       // NDBG("Yo received : "+String(hostData));
+        
         saveRemoteHost(hostData);
-
+       
+        
         OSCMessage msg("/wassup");
 
         msg.add(wifi->getIP().c_str());
@@ -118,6 +122,7 @@ void OSCManager::processMessage(OSCMessage &msg)
     }
     else if (msg.match("/ping"))
     {
+       // NDBG("Received ping");
         setAlive(true);
         pingEnabled = true;
         timeSinceLastReceivedPing = millis();
