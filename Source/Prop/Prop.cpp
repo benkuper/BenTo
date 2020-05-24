@@ -67,6 +67,11 @@ Prop::Prop(var params) :
 	findPropMode->isSavable = false;
 	addChildControllableContainer(&connectionCC);
 
+
+	powerOffTrigger = controlsCC.addTrigger("Power Off", "Power Off the prop");
+	restartTrigger = controlsCC.addTrigger("Restart","Restart the prop");
+	addChildControllableContainer(&controlsCC);
+
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
 	bakeStartTime->defaultUI = FloatParameter::TIME;
 	bakeStartTime->canBeDisabledByUser = true;
