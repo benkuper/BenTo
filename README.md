@@ -11,7 +11,7 @@ You can find the bleeding edge version, compiled against latest commits here :
 
 - Linux (x64):  http://benjamin.kuperberg.fr/bento/download/BenTo-linux-x64-bleedingedge.AppImage
 - MacOS :  http://benjamin.kuperberg.fr/bento/download/BenTo-osx-bleedingedge.pkg
-- Windows (x64):  http://benjamin.kuperberg.fr/bento/download/BenTo-win-x64-bleedingedge.zip
+- Windows (x64):  http://benjamin.kuperberg.fr/bento/download/BenTo-win-x64-bleedingedge.exe
 
 Additionally, you can download a set of example scripts that you can then use as Script Blocks in the software : http://benjamin.kuperberg.fr/bento/download/BenTo-Example-Scripts.zip
 
