@@ -30,7 +30,8 @@ PropManager::PropManager() :
 	managerFactory = &factory;
 	selectItemWhenCreated = false;
 
-	autoAddProps = connectionCC.addBoolParameter("Auto Add", "If checked, this will automatically add detected props on the network", true);
+	autoAddNetworkProps = connectionCC.addBoolParameter("Auto Add Network", "If checked, this will automatically add detected props on the network", true);
+	autoAddUSBProps = connectionCC.addBoolParameter("Auto Add USB", "If checked, this will automatically add detected props connected through USB", true);
 	detectProps = connectionCC.addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	addChildControllableContainer(&connectionCC);
 
@@ -62,6 +63,8 @@ PropManager::PropManager() :
 	zeroconfSearcher = ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp");
 	zeroconfSearcher->addSearcherListener(this);
 
+	SerialManager::getInstance()->addSerialManagerListener(this);
+
 	updatePropsAndFamiliesDefinitions();
 
 }
@@ -69,6 +72,7 @@ PropManager::PropManager() :
 
 PropManager::~PropManager()
 {
+	SerialManager::getInstance()->removeSerialManagerListener(this);
 	zeroconfSearcher->removeSearcherListener(this);
 }
 
@@ -316,7 +320,7 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 
 void PropManager::serviceAdded(ZeroconfManager::ServiceInfo* s)
 {
-	if (!autoAddProps->boolValue()) return;
+	if (!autoAddNetworkProps->boolValue()) return;
 
 	StringArray  nameSplit;
 	nameSplit.addTokens(s->name, "-", "\"");
@@ -349,6 +353,10 @@ void PropManager::updatePropsAndFamiliesDefinitions()
 			String propType = pData.getProperty("type", "");
 			if (propType == "Bento") createFunc = &BentoProp::create;
 
+			if (pData.hasProperty("vid") && pData.hasProperty("pid"))
+			{
+				vidpids.add({ pData.getProperty("vid","").toString().getHexValue32(),pData.getProperty("pid","").toString().getHexValue32() });
+			}
 			factory.defs.add(FactorySimpleParametricDefinition<Prop>::createDef(pData.getProperty("menu", "").toString(), pData.getProperty("name", "").toString(), createFunc, pData));
 		}
 	}
@@ -375,7 +383,7 @@ void PropManager::updatePropsAndFamiliesDefinitions()
 
 void PropManager::afterLoadJSONDataInternal()
 {
-	if (autoAddProps->boolValue())
+	if (autoAddNetworkProps->boolValue())
 	{
 		for (auto& s : zeroconfSearcher->services) serviceAdded(s);
 	}
@@ -401,4 +409,127 @@ void PropManager::finished(URL::DownloadTask* task, bool success)
 	updatePropsAndFamiliesDefinitions();
 
 	LOG("Prop definitions updated");
+}
+
+
+
+
+// USB Detection
+void PropManager::portAdded(SerialDeviceInfo* info)
+{
+	if (autoAddUSBProps->boolValue())
+	{
+		for (auto& vp : vidpids)
+		{
+			if (info->vid == vp.vid && info->pid == vp.pid) checkDeviceHardwareID(info);
+		}
+	}
+}
+
+void PropManager::portRemoved(SerialDeviceInfo* info)
+{
+	pendingDevices.removeAllInstancesOf(SerialManager::getInstance()->getPort(info, false));
+}
+
+void PropManager::checkSerialDevices()
+{
+	for (auto& info : SerialManager::getInstance()->portInfos)
+	{
+		for (auto& vp : vidpids)
+		{
+			if (info->vid == vp.vid && info->pid == vp.pid) checkDeviceHardwareID(info);
+		}
+	}
+
+}
+
+void PropManager::checkDeviceHardwareID(SerialDeviceInfo* info)
+{
+	SerialDevice* d = SerialManager::getInstance()->getPort(info, true, 115200);
+	if (d == nullptr)
+	{
+		LOGWARNING("Port already opened : " << info->uniqueDescription);
+		return;
+	}
+
+	d->setMode(SerialDevice::LINES);
+
+	if (d->isOpen())
+	{
+		d->addSerialDeviceListener(this);
+
+		startTimer(1, 200);
+		startTimer(2, 1000);
+
+		pendingDevices.addIfNotAlreadyThere(d);
+	}
+}
+
+Prop* PropManager::addPropForHardwareID(SerialDevice* device, String hardwareId, String type)
+{
+	Prop* p = PropManager::getInstance()->getPropWithHardwareId(hardwareId);
+	if (p == nullptr)
+	{
+		p = static_cast<Prop*>(PropManager::getInstance()->managerFactory->create(type));
+		if (p != nullptr)
+		{
+			p->deviceID = hardwareId;
+
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+			{
+				bp->serialParam->setValueForDevice(device);
+			}
+
+			PropManager::getInstance()->addItem(p);
+		}
+	}
+	else
+	{
+		LOG(p->deviceID << " already there, updating prop's remoteHost");
+		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->setSerialDevice(device);
+	}
+
+	return p;
+}
+
+void PropManager::serialDataReceived(SerialDevice* d, const var& data)
+{
+
+	StringArray dataSplit;
+	dataSplit.addTokens(data.toString(), true);
+	if (dataSplit.size() == 0) return;
+	if (dataSplit[0] == "wassup")
+	{
+		String fw = dataSplit[1];
+		String type = dataSplit[2].removeCharacters("\"");
+		LOG("Got wassup from " << d->info->description << " : " << fw);
+		Prop* p = addPropForHardwareID(d, fw, type);
+		if (p != nullptr)
+		{
+			d->removeSerialDeviceListener(this); //only remove after so it's not deleted 
+			pendingDevices.removeAllInstancesOf(d);
+		}
+	}
+}
+
+void PropManager::timerCallback(int timerID)
+{
+	if (timerID == 1)
+	{
+		for (auto& d : pendingDevices)
+		{
+			d->writeString("yo\n");
+		}
+	}
+	else if (timerID == 2)
+	{
+		for (auto& d : pendingDevices)
+		{
+			d->removeSerialDeviceListener(this);
+		}
+		pendingDevices.clear();
+		stopTimer(1);
+		stopTimer(2);
+	}
+
 }

@@ -13,6 +13,7 @@
 #include "Prop.h"
 #include "PropFamily.h"
 #include "Common/Zeroconf/ZeroconfManager.h"
+#include "Common/Serial/SerialManager.h"
 
 class PropManager :
 	public BaseManager<Prop>,
@@ -20,13 +21,17 @@ class PropManager :
 	public Prop::PropListener,
 	public ZeroconfManager::ZeroconfSearcher::SearcherListener,
 	public Thread,
-	public URL::DownloadTask::Listener
+	public URL::DownloadTask::Listener,
+	public SerialManager::SerialManagerListener,
+	public SerialDevice::SerialDeviceListener,
+	public MultiTimer
 {
 public:
 	juce_DeclareSingleton(PropManager, true)
 	
 	PropManager();
 	~PropManager();
+
 
 	OSCSender sender;
 	OSCReceiver receiver;
@@ -57,10 +62,21 @@ public:
 	Trigger* stopAll;
 	BoolParameter* loop;
 
-	BoolParameter* autoAddProps;
+	BoolParameter* autoAddNetworkProps;
+	BoolParameter* autoAddUSBProps;
 	ZeroconfManager::ZeroconfSearcher* zeroconfSearcher;
 
 	std::unique_ptr<URL::DownloadTask> propDownloadTask;
+
+
+	//usb
+	struct VidPid
+	{
+		int vid;
+		int pid;
+	};
+	Array<VidPid> vidpids;
+	Array<SerialDevice*> pendingDevices;
 
 	void setupReceiver();
 
@@ -93,4 +109,15 @@ public:
 
 	// Inherited via Listener
 	virtual void finished(URL::DownloadTask* task, bool success) override;
+
+	//USB connection
+	void portAdded(SerialDeviceInfo* d) override;
+	void portRemoved(SerialDeviceInfo* d) override;
+
+	void checkSerialDevices();
+	void checkDeviceHardwareID(SerialDeviceInfo* d);
+	Prop* addPropForHardwareID(SerialDevice* d, String firmware, String type);
+
+	void serialDataReceived(SerialDevice* d, const var& data) override;
+	void timerCallback(int timerID) override;
 };
