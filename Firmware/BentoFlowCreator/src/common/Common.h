@@ -11,11 +11,7 @@
 #define USE_PREFERENCES
 #include <Preferences.h>
 #elif defined ESP8266
-//#define USE_SETTINGS_MANAGER
-//#include "settings/SettingsManager.h"
-#endif
-
-#if defined USE_SETTINGS_MANAGER
+#define USE_SETTINGS_MANAGER
 #include "settings/SettingsManager.h"
 #endif
 

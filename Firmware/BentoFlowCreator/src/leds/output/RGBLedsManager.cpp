@@ -8,23 +8,25 @@ RGBLedsManager::RGBLedsManager() : Component("rgb"),
 void RGBLedsManager::init()
 {
 #ifdef LED_SEPARATE_CHANNELS
-  for(int i=0;i < LED_COUNT; i++)
-  {
-    const RGBLedPins l = rgbLedPins[i];
-    pinMode(l.rPin,OUTPUT);
-    pinMode(l.gPin,OUTPUT);
-    pinMode(l.bPin,OUTPUT);
-    
-    int startChannel = i*3;
-    ledcSetup(startChannel, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
-    ledcSetup(startChannel+1, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
-    ledcSetup(startChannel+2, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
-    
-    // attach the channel to the GPIO2 to be controlled
-    ledcAttachPin(l.rPin, startChannel);
-    ledcAttachPin(l.gPin, startChannel+1);
-    ledcAttachPin(l.bPin, startChannel+2);
-  }
+    for (int i = 0; i < LED_COUNT; i++)
+    {
+        const RGBLedPins l = rgbLedPins[i];
+        pinMode(l.rPin, OUTPUT);
+        pinMode(l.gPin, OUTPUT);
+        pinMode(l.bPin, OUTPUT);
+
+#ifdef ESP32
+        int startChannel = i * 3;
+        ledcSetup(startChannel, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+        ledcSetup(startChannel + 1, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+        ledcSetup(startChannel + 2, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+
+        // attach the channel to the GPIO2 to be controlled
+        ledcAttachPin(l.rPin, startChannel);
+        ledcAttachPin(l.gPin, startChannel + 1);
+        ledcAttachPin(l.bPin, startChannel + 2);
+#endif
+    }
 #else
 
 #ifdef LED_EN_PIN
@@ -52,13 +54,13 @@ void RGBLedsManager::init()
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
     prefs.end();
 #elif defined USE_SETTINGS_MANAGER
-//init once with a json if it doesn't exist yet
+    //init once with a json if it doesn't exist yet
     prefs.readSettings(String("/" + name + ".json").c_str());
     float brightness = prefs.getFloat("brightness", globalBrightness);
-    prefs.loadJson(String("{\"brightness\":\""+String(brightness)+"\"}").c_str());
+    prefs.loadJson(String("{\"brightness\":\"" + String(brightness) + "\"}").c_str());
     prefs.writeSettings(String("/" + name + ".json").c_str());
 
-//actually read the data
+    //actually read the data
     prefs.readSettings(String("/" + name + ".json").c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
 #endif
@@ -67,12 +69,19 @@ void RGBLedsManager::init()
 void RGBLedsManager::update()
 {
 #ifdef LED_SEPARATE_CHANNELS
-    for(int i=0;i<LED_COUNT;i++)
+    for (int i = 0; i < LED_COUNT; i++)
     {
-        int startChannel = i*3;
-        ledcWrite(startChannel, map(leds[i].r*globalBrightness,0,255,1024,0));
-        ledcWrite(startChannel+1, map(leds[i].g*globalBrightness,0,255,1024,0));
-        ledcWrite(startChannel+2, map(leds[i].b*globalBrightness,0,255,1024,0));
+#ifdef ESP32
+        int startChannel = i * 3;
+        ledcWrite(startChannel, map(leds[i].r * globalBrightness, 0, 255, 1024, 0));
+        ledcWrite(startChannel + 1, map(leds[i].g * globalBrightness, 0, 255, 1024, 0));
+        ledcWrite(startChannel + 2, map(leds[i].b * globalBrightness, 0, 255, 1024, 0));
+#else
+        const RGBLedPins l = rgbLedPins[i];
+        analogWrite(l.rPin, map(leds[i].r * globalBrightness, 0, 255, 0, 1023));
+        analogWrite(l.gPin, map(leds[i].g * globalBrightness, 0, 255, 0, 1023));
+        analogWrite(l.bPin, map(leds[i].b * globalBrightness, 0, 255, 0, 1023));
+#endif
     }
 #else
     FastLED.show();
@@ -83,7 +92,7 @@ void RGBLedsManager::setBrightness(float value, bool save)
 {
     globalBrightness = min(max(value, 0.f), 1.f);
 
- #ifndef LED_SEPARATE_CHANNELS
+#ifndef LED_SEPARATE_CHANNELS
     FastLED.setBrightness((int)(globalBrightness * 60));
     FastLED.show();
 #endif
@@ -144,10 +153,11 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 //Helpers
 void RGBLedsManager::clear()
 {
- #ifdef LED_SEPARATE_CHANNELS
-    for(int i=0;i<LED_COUNT;i++) leds[i] = CRGB::Black;
- #else
-   FastLED.clear();
+#ifdef LED_SEPARATE_CHANNELS
+    for (int i = 0; i < LED_COUNT; i++)
+        leds[i] = CRGB::Black;
+#else
+    FastLED.clear();
 #endif
 }
 

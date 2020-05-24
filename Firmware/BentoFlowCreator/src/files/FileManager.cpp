@@ -3,14 +3,17 @@
 bool FileManager::sdIsDetected = false;
 
 #ifdef HAS_FILES
+#ifndef FILES_USE_INTERNAL_MEMORY
 SPIClass FileManager::spiSD(HSPI);
+#endif
 #endif
 
 FileManager::FileManager() : Component("files"),
                              isUploading(false),
                              serverIsEnabled(false)
 #ifdef HAS_FILES
-                             ,server(80)
+                             ,
+                             server(80)
 #endif
 {
 #ifdef HAS_FILES
@@ -23,9 +26,15 @@ void FileManager::init()
 {
     if (sdIsDetected)
         return;
+
 #ifdef HAS_FILES
     NDBG("Init");
 
+#ifdef FILES_USE_INTERNAL_MEMORY
+    SPIFFS.begin(); // Start the SPI Flash Files System
+    sdIsDetected = true;
+    NDBG("SPIFFS initialized.");
+#else
     pinMode(SD_EN, OUTPUT);
     digitalWrite(SD_EN, LOW);
 
@@ -39,15 +48,18 @@ void FileManager::init()
     if (SD.begin(SD_CS, spiSD, SDSPEED))
     {
         NDBG("SD Card initialized.");
-        listDir(SD, "/", 0);
+        listDir("/", 0);
         sdIsDetected = true;
     }
     else
     {
         NDBG("SD Card Initialization failed.");
     }
+#endif //FILES_USE_INTERNAL_MEMORY
+
     initServer();
-#endif
+
+#endif //HAS_FILES
 }
 
 void FileManager::update()
@@ -68,7 +80,13 @@ File FileManager::openFile(String fileName, bool forWriting, bool deleteIfExists
 
     if (!fileName.startsWith("/"))
         fileName = "/" + fileName;
+
+#ifdef FILES_USE_INTERNAL_MEMORY
+    File f = SPIFFS.open(fileName, forWriting ? "w" : "r"); // Open it
+#else
     File f = SD.open(fileName.c_str(), forWriting ? FILE_WRITE : FILE_READ);
+#endif
+
     DBG("Open file : " + String(f.name()));
     return f;
     return File();
@@ -79,16 +97,28 @@ void FileManager::deleteFileIfExists(String path)
     if (!sdIsDetected)
         return;
 
+#ifdef FILES_USE_INTERNAL_MEMORY
+    if (SPIFFS.exists(path))
+    {
+        SPIFFS.remove(path);
+    }
+#else
     if (SD.exists(path.c_str()))
     {
         SD.remove(path.c_str());
         DBG("Removed file " + path);
     }
+#endif
 }
 
-void FileManager::listDir(fs::FS &fs, const char *dirname, uint8_t levels)
+void FileManager::listDir(const char *dirname, uint8_t levels)
 {
-    File root = fs.open(dirname);
+
+#ifdef FILES_USE_INTERNAL_MEMORY
+    File root = SPIFFS.open("/","r");
+#else
+    File root = spiSD.open(dirname);
+#endif
 
     if (!root)
     {
@@ -110,7 +140,7 @@ void FileManager::listDir(fs::FS &fs, const char *dirname, uint8_t levels)
             DBG("  DIR : " + String(file.name()));
             if (levels)
             {
-                listDir(fs, file.name(), levels - 1);
+                listDir(file.name(), levels - 1);
             }
         }
         else
@@ -121,7 +151,7 @@ void FileManager::listDir(fs::FS &fs, const char *dirname, uint8_t levels)
         file = root.openNextFile();
     }
 }
-#endif
+#endif //HAS_FILES
 
 //SERVER
 void FileManager::initServer()
@@ -252,6 +282,7 @@ void FileManager::handleNotFound()
 bool FileManager::handleCommand(String command, var *data, int numData)
 {
 #ifdef HAS_FILES
+
     if (checkCommand(command, "delete", numData, 1))
     {
         deleteFileIfExists(data[0].stringValue());
@@ -262,16 +293,25 @@ bool FileManager::handleCommand(String command, var *data, int numData)
         if (numData > 0)
         {
             DBG("Deleting folder " + data[0].stringValue());
+#ifdef FILES_USE_INTERNAL_MEMORY
+            SPIFFS.rmdir(data[0].stringValue());
+#else
             SD.rmdir(data[0].stringValue());
+#endif
         }
         else
         {
             DBG("Deleting all files");
+#ifdef FILES_USE_INTERNAL_MEMORY
+            SPIFFS.rmdir("/");
+#else
             SD.rmdir("/");
+#endif
         }
 
         return true;
     }
-#endif
+#endif //HAS_FILES
+
     return false;
 }
