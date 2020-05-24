@@ -17,9 +17,10 @@ class NodeBlockEditorToolItem :
 	public DragAndDropContainer
 {
 public:
-	NodeBlockEditorToolItem(StringRef type);
+	NodeBlockEditorToolItem(bool isParam, StringRef type);
 	~NodeBlockEditorToolItem();
 
+	bool isParam;
 	String type;
 
 	void paint(Graphics &g) override;

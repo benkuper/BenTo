@@ -16,7 +16,9 @@ NodeBlockEditorToolbox::NodeBlockEditorToolbox() :
 {
 	for (auto &d : NodeFactory::getInstance()->defs)
 	{
-		NodeBlockEditorToolItem * i = new NodeBlockEditorToolItem(d->type);
+		Factory<Node>::Definition* def = dynamic_cast<Factory<Node>::Definition*>(d);
+		String t = def->params.getProperty("nodeType","");
+		NodeBlockEditorToolItem * i = new NodeBlockEditorToolItem(t == "param", d->type);
 		addAndMakeVisible(i);
 		items.add(i);
 	}

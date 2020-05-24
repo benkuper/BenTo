@@ -82,14 +82,14 @@ void NodeManager::loadJSONDataManagerInternal(var data)
 
 NodeFactory::NodeFactory()
 {
-	defs.add(Factory<Node>::Definition::createDef("Color", "Position Remap", &PositionRemapNode::create));
-	defs.add(Factory<Node>::Definition::createDef("Color", "Composite", &CompositeNode::create));
-	defs.add(Factory<Node>::Definition::createDef("Color", "Model", &ModelNode::create));
-	defs.add(Factory<Node>::Definition::createDef("Color", "Color Remap", &ColorRemapNode::create));
+	defs.add(Factory<Node>::Definition::createDef("Color", "Model", &ModelNode::create)->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef("Color", "Composite", &CompositeNode::create)->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef("Color", "Position Remap", &PositionRemapNode::create)->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef("Color", "Color Remap", &ColorRemapNode::create)->addParam("nodeType", "color"));
 
-	defs.add(Factory<Node>::Definition::createDef("Parameter", "Integer", &ParameterNode::create)->addParam("type", IntParameter::getTypeStringStatic()));
-	defs.add(Factory<Node>::Definition::createDef("Parameter", "Float", &ParameterNode::create)->addParam("type", FloatParameter::getTypeStringStatic()));
-	defs.add(Factory<Node>::Definition::createDef("Parameter", "Color", &ParameterNode::create)->addParam("type", ColorParameter::getTypeStringStatic()));
-	defs.add(Factory<Node>::Definition::createDef("Parameter", "Boolean", &ParameterNode::create)->addParam("type", BoolParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Integer", &ParameterNode::create)->addParam("nodeType","param")->addParam("type", IntParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Float", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", FloatParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Color", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", ColorParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Boolean", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", BoolParameter::getTypeStringStatic()));
 
 }

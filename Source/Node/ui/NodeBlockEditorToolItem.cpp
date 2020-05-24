@@ -10,10 +10,9 @@
 
 #include "NodeBlockEditorToolItem.h"
 
-NodeBlockEditorToolItem::NodeBlockEditorToolItem(StringRef type) :
-	type(type)
+NodeBlockEditorToolItem::NodeBlockEditorToolItem(bool isParam, StringRef type) :
+	isParam(isParam),type(type)
 {
-
 }
 
 NodeBlockEditorToolItem::~NodeBlockEditorToolItem()
@@ -22,7 +21,8 @@ NodeBlockEditorToolItem::~NodeBlockEditorToolItem()
 
 void NodeBlockEditorToolItem::paint(Graphics & g)
 {
-	g.setColour(BG_COLOR.brighter(isMouseOverOrDragging()?.5f:.2f));
+	Colour c = (isParam ? RED_COLOR : BLUE_COLOR).darker();
+	g.setColour(c.brighter(isMouseOverOrDragging()?.5f:0));
 	g.fillRoundedRectangle(getLocalBounds().toFloat(), 2);
 	g.setColour(TEXT_COLOR);
 	g.setFont(getHeight() - 4);
@@ -46,5 +46,5 @@ void NodeBlockEditorToolItem::mouseDrag(const MouseEvent &e)
 
 int NodeBlockEditorToolItem::getWidthForHeight(int h)
 {
-	return Font(h - 4).getStringWidth(type) + 4;
+	return Font(h - 2).getStringWidth(type) + 8;
 }
