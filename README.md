@@ -3,6 +3,10 @@ Official BenTo Light Props Show Authoring Tool
 
 **This software is under heavy development and is subject to frequent changes !**
 
+## Documentation
+
+The documentation can be found at: https://bkuperberg.gitbook.io/bento-docs/
+
 ## The Download Zone
 
 Releases are on the release page : https://github.com/benkuper/BenTo/releases
