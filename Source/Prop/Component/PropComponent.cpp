@@ -45,6 +45,6 @@ void PropComponent::handleMessage(const String &msg, var value)
     else
     {
         var val = value.size() > 1?value:value[0];
-        ((Parameter*)c)->setValue(value);
+        ((Parameter*)c)->setValue(val);
     }
 }
