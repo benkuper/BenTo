@@ -181,7 +181,7 @@ void BentoProp::uploadBakedData(BakeData data)
 	sleep(500);
 
 	url = URL(target).withDataToUpload("uploadData", data.name + ".colors", dataToSend, sendCompressedFile->boolValue() ? "application/zip" : "text/plain");
-	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this,"Content-Length:"+String(dataToSend.getSize()), 3000));// , "Content-Type: Text/plain");
+	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this,"Content-Length:"+String(dataToSend.getSize()), 10000));// , "Content-Type: Text/plain");
 
 	if (stream != nullptr)
 	{
