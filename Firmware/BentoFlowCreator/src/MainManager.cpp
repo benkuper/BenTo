@@ -51,10 +51,10 @@ void MainManager::update()
     imu.update();
 }
 
-void MainManager::sleep()
+void MainManager::sleep(CRGB color)
 {
     NDBG("Sleep now ! ");
-    leds.shutdown(CRGB::Orange); //to replace with battery color
+    leds.shutdown(color); //to replace with battery color
 
     delay(500);
 
@@ -127,7 +127,11 @@ void MainManager::batteryEvent(const BatteryEvent &e)
     data[0].value.f = e.value;
     comm.sendMessage(battery.name, BatteryEvent::eventNames[(int)e.type], data, 1);
 
-    if(e.type == BatteryEvent::CriticalLevel) sleep();
+    if(e.type == BatteryEvent::CriticalLevel) 
+    {
+
+        sleep(CRGB::Red);
+    }
 }
 
 void MainManager::buttonEvent(const ButtonEvent &e)

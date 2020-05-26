@@ -37,7 +37,7 @@ void PropComponent::handleMessage(const String &msg, var value)
     Controllable * c = getControllableByName(msg);
     if (c == nullptr)
     {
-        DBG("Nothing found for  message " + msg);
+        DBG("Nothing found for property " + msg);
         return;
     }
 

@@ -20,4 +20,6 @@ public:
     ~BatteryPropComponent();
 
     FloatParameter* level;
+    FloatParameter* voltage;
+    FloatParameter* rawValue;
 };

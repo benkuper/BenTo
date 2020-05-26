@@ -31,7 +31,7 @@ public:
     void init();
     void update();
 
-    void sleep();
+    void sleep(CRGB color = CRGB::Cyan);
 
     void connectionEvent(const ConnectionEvent &e);
     void communicationEvent(const CommunicationEvent &e);

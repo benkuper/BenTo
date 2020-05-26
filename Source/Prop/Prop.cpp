@@ -431,7 +431,9 @@ void Prop::handleOSCMessage(const OSCMessage& m)
 		mSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
 		PropComponent* pc = getComponent(mSplit[1]);
 		var value;
-		for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
+		if (m.size() == 2) value = OSCHelpers::argumentToVar(m[1]);
+		else for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
+
 		if (pc != nullptr) pc->handleMessage(mSplit[2], value);
 	}
 }

@@ -89,6 +89,10 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
 {
 	//todo : parse to set sensors values
+	if (logIncoming->boolValue())
+	{
+		NLOG(niceName + "(id " + globalID->stringValue() + ")", "Serial data received : " + data.toString());
+	}
 }
 
 void BentoProp::portRemoved(SerialDevice* d)
@@ -394,5 +398,13 @@ void BentoProp::sendControlToPropInternal(String control, var value)
 
 void BentoProp::sendMessageToProp(const OSCMessage& m)
 {
+	if (logOutgoing->boolValue())
+	{
+		String s = "Sending " + m.getAddressPattern().toString() + " : ";
+		for (auto& a : m) s += "\n" + OSCHelpers::getStringArg(a);
+
+		NLOG(niceName + " (id " + globalID->stringValue() + ")", s);
+	}
+
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
 }

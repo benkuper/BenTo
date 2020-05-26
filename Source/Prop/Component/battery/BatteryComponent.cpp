@@ -15,6 +15,12 @@ BatteryPropComponent::BatteryPropComponent(Prop* prop, var params) :
 {
     level = addFloatParameter("Level", "Level of the battery", 1, 0, 1);
     level->setControllableFeedbackOnly(true);
+
+    voltage = addFloatParameter("Voltage", "Voltage of the battery", 0);
+    voltage->setControllableFeedbackOnly(true);
+
+    rawValue = addFloatParameter("Raw Value", "Raw value of the battery", 0);
+    rawValue->setControllableFeedbackOnly(true);
 }
 
 BatteryPropComponent::~BatteryPropComponent()

@@ -67,6 +67,10 @@ PropManager::PropManager() :
 
 	updatePropsAndFamiliesDefinitions();
 
+	if (factory.defs.size() == 0)
+	{
+		startThread(); // if no props detected, check online
+	}
 }
 
 
