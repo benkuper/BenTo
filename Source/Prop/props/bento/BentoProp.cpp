@@ -327,7 +327,7 @@ bool BentoProp::uploadMetaDataProgressCallback(void* context, int bytesSent, int
 void BentoProp::sendYo()
 {
 	OSCMessage m("/yo");
-	m.addString(NetworkHelpers::getLocalIP());
+	m.addString(NetworkHelpers::getLocalIPForRemoteIP(remoteHost->stringValue()));
 	sendMessageToProp(m);
 }
 

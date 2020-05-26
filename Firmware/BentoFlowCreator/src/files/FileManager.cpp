@@ -253,6 +253,7 @@ void FileManager::handleFileUpload()
     else if (upload.status == UPLOAD_FILE_ABORTED)
     {
         NDBG("ABOORT !!!!!!!!!!");
+        uploadingFile.close();
         isUploading = false;
     }
 #endif
