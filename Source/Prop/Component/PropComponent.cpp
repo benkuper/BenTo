@@ -42,5 +42,9 @@ void PropComponent::handleMessage(const String &msg, var value)
     }
 
     if (c->type == Controllable::TRIGGER) ((Trigger*)c)->trigger();
-    else ((Parameter*)c)->setValue(value);
+    else
+    {
+        var val = value.size() > 1?value:value[0];
+        ((Parameter*)c)->setValue(value);
+    }
 }
