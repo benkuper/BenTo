@@ -78,8 +78,6 @@ void StreamMode::processBuffer()
 void StreamMode::start()
 {
     LedMode::start();
-
-    DBG("Start receiving on port 8888");
     udp.begin(8888);
     udp.flush();
 }
@@ -87,8 +85,6 @@ void StreamMode::start()
 void StreamMode::stop()
 {
     LedMode::stop();
-
-    DBG("Stop receiving");
     udp.flush();
     udp.stop();
 }

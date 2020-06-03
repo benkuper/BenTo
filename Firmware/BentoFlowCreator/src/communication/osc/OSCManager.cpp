@@ -29,17 +29,7 @@ void OSCManager::init()
     remoteHost = prefs.getString("remoteHost", "");
 #endif
 
-    if (MDNS.begin((String(DEVICE_TYPE) + " - " + getDeviceID()).c_str()))
-    {
-
-        NDBG("OSC Zeroconf started");
-        MDNS.addService("osc", "udp", 9000);
-    }
-    else
-    {
-        NDBG("Error setting up MDNS responder!");
-    }
-
+ 
     NDBG("Init");
 }
 
@@ -69,12 +59,25 @@ void OSCManager::setEnabled(bool value)
         udp.flush();
         setAlive(true);
         timeSinceLastReceivedPing = millis();
+
+        if (MDNS.begin((String(DEVICE_TYPE) + " - " + getDeviceID()).c_str()))
+        {
+            NDBG("OSC Zeroconf started");
+            MDNS.addService("osc", "udp", 9000);
+        }
+        else
+        {
+            NDBG("Error setting up MDNS responder!");
+        }
+
     }
     else
     {
         udp.flush();
         udp.stop();
         setAlive(false);
+
+        MDNS.end();
     }
 }
 

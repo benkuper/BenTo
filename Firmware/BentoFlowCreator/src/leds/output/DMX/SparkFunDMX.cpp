@@ -115,8 +115,6 @@ void DMXESPSerial::write(int Channel, uint8_t value) {
   dmxData[Channel] = value; //add one to account for start byte
 }
 
-
-
 void DMXESPSerial::update() {
   if (_READWRITE == _WRITE)
   {

@@ -7,6 +7,9 @@
 #include <SPI.h>
 #include <SD.h>
 #include <WebServer.h>
+#ifdef FILES_USE_INTERNAL_MEMORY
+#include <SPIFFS.h>
+#endif
 #elif defined ESP8266
 #include <ESP8266WebServer.h>
 #endif

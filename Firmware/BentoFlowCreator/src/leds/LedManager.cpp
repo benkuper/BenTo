@@ -33,8 +33,7 @@ void LedManager::init()
 void LedManager::update()
 {
 #ifdef LED_COUNT
-    if (mode == System)
-        rgbManager.clear();
+    //if (mode == System) rgbManager.clear();
 
     if (connectionIsAlive || playerMode.isPlaying)
     {

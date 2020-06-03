@@ -24,6 +24,8 @@ public:
 
     #ifdef LED_USE_DMX
         DMXESPSerial dmx;
+        const int updateBreakTime = 20; //40ms break time
+        long timeSinceLastSend;
     #endif
 #endif
 

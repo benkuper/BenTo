@@ -2,6 +2,10 @@
 
 RGBLedsManager::RGBLedsManager() : Component("rgb"),
                                    globalBrightness(1)
+#ifdef LED_USE_DMX
+                                   ,
+                                   timeSinceLastSend(0)
+#endif
 {
 }
 
@@ -28,7 +32,8 @@ void RGBLedsManager::init()
 #endif
     }
 #elif defined LED_USE_DMX
-    dmx.init(LED_COUNT);
+
+    dmx.init();
 #else
 #ifdef LED_EN_PIN
     pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
@@ -88,12 +93,21 @@ void RGBLedsManager::update()
 #endif
     }
 #elif defined LED_USE_DMX
-    for (int i = 0; i < LED_COUNT; i++)
+
+    long t = millis();
+    if (t > timeSinceLastSend + updateBreakTime)
     {
-        dmx.write(dmxStartChannels[i], leds[i].r * globalBrightness);
-        dmx.write(dmxStartChannels[i]+1, leds[i].g * globalBrightness);
-        dmx.write(dmxStartChannels[i]+2, leds[i].b * globalBrightness);
+        for (int i = 0; i < LED_COUNT; i++)
+        {
+            dmx.write(dmxStartChannels[i], leds[i].r * globalBrightness);
+            dmx.write(dmxStartChannels[i] + 1, leds[i].g * globalBrightness);
+            dmx.write(dmxStartChannels[i] + 2, leds[i].b * globalBrightness);
+        }
+
+        dmx.update();
+        timeSinceLastSend = t;
     }
+
 #else
     FastLED.show();
 #endif
@@ -123,7 +137,6 @@ void RGBLedsManager::setBrightness(float value, bool save)
 #endif
     }
 #endif //LED_COUNT
-
 }
 
 bool RGBLedsManager::handleCommand(String command, var *data, int numData)

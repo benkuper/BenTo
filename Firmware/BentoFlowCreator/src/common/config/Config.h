@@ -2,13 +2,13 @@
 
 //  #define CREATOR_PROTO_V0
 //  #define CREATOR_PROTO_V1
-  #define CREATOR_PROTO_V2
+// #define CREATOR_PROTO_V2
 //  #define LT_BALL
 //  #define LT_HOOP
 //  #define CLARINET
 //  #define GLOVE
 //  #define GENERIC_PWM
-//#define DMX
+   #define DMX
 
 #if defined CREATOR_PROTO_V0
 #include "config_protov0.h"

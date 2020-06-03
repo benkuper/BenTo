@@ -53,8 +53,6 @@ void MainManager::update()
     buttons.update();
     imu.update();
 
-    NDBG("update");
-    
 }
 
 void MainManager::sleep(CRGB color)
