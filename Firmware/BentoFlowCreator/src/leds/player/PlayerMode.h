@@ -1,8 +1,11 @@
 #pragma once
 
+
 #include "../LedMode.h"
 #include "../../files/FileManager.h"
 #include "../../common/ArduinoJson/ArduinoJson.h"
+
+#ifdef LED_COUNT
 
 #define FRAME_SIZE (LED_COUNT * 4)
 
@@ -55,8 +58,9 @@ public:
   long prevTimeMs;
   long timeSinceLastSeek;
   float timeToSeek; //used to limit seeking
-  byte buffer[FRAME_SIZE];
 
+  byte buffer[FRAME_SIZE];
+  
   //data
   CRGB *ledBuffer;
 
@@ -84,6 +88,7 @@ public:
   bool handleCommand(String command, var *data, int numData) override;
 
   //Time computation helpers
+  #ifdef LED_COUNT
   long msToBytePos(long t) const { return msToFrame(t) * FRAME_SIZE; } //rgba
   long msToFrame(long timeMs) const { return timeMs * fps / 1000; }
   long frameToMs(long frame) const { return frame * 1000 / fps; }
@@ -94,5 +99,7 @@ public:
   long bytePosToFrame(long pos) const { return pos / FRAME_SIZE; }
   long bytePosToMs(long pos) const { return frameToMs(bytePosToFrame(pos)); }
   long bytePosToSeconds(long pos) const { return frameToSeconds(bytePosToFrame(pos)); }
-  
+  #endif
 };
+
+#endif //LED_COUNT

@@ -1,7 +1,10 @@
 #pragma once
 
+
 #include "../LedMode.h"
 #include <WiFiUdp.h>
+
+#ifdef LED_COUNT
 
 class StreamMode : public LedMode {
     
@@ -32,3 +35,5 @@ public:
 
     bool handleCommand(String command, var *data, int numData) override;
 };
+
+#endif

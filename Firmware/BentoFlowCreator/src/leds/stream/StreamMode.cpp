@@ -1,5 +1,8 @@
 #include "StreamMode.h"
 
+
+#ifdef LED_COUNT
+
 StreamMode::StreamMode(CRGB *leds, int numLeds) : 
 LedMode("stream", leds, numLeds),
     ledBufferIndex(0),
@@ -96,3 +99,4 @@ bool StreamMode::handleCommand(String command, var *data, int numData)
     return false;
 }
 
+#endif

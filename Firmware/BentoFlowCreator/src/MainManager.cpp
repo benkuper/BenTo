@@ -8,6 +8,9 @@ MainManager::MainManager(String fwVersion) : Component("root"),
 
 void MainManager::init()
 {
+#ifdef HAS_DISPLAY
+    display.init();
+#endif
 
     leds.init();
 
@@ -49,11 +52,15 @@ void MainManager::update()
     battery.update();
     buttons.update();
     imu.update();
+
+    NDBG("update");
+    
 }
 
 void MainManager::sleep(CRGB color)
 {
-    NDBG("Sleep now ! ");
+    //NDBG("Sleep now ! ");
+    comm.sendMessage(name, "sleep", nullptr, 0);
     leds.shutdown(color); //to replace with battery color
 
     delay(500);
@@ -127,7 +134,7 @@ void MainManager::batteryEvent(const BatteryEvent &e)
     data[0].value.f = e.value;
     comm.sendMessage(battery.name, BatteryEvent::eventNames[(int)e.type], data, 1);
 
-    if(e.type == BatteryEvent::CriticalLevel) 
+    if (e.type == BatteryEvent::CriticalLevel)
     {
 
         sleep(CRGB::Red);
@@ -162,7 +169,7 @@ void MainManager::buttonEvent(const ButtonEvent &e)
 
     case ButtonEvent::VeryLongPress:
     {
-        sleep();
+        if(e.id == 0) sleep(); //only first button can sleep
     }
     break;
     }
@@ -189,23 +196,30 @@ void MainManager::imuEvent(const IMUEvent &e)
 
 void MainManager::fileEvent(const FileEvent &e)
 {
-
+#ifdef HAS_FILES
     if (e.type == FileEvent::UploadStart)
     {
+#ifdef LED_COUNT
         leds.setMode(LedManager::System);
         leds.sysLedMode.uploadFeedback = true;
+#endif
         comm.oscManager.setEnabled(false);
     }
     else if (e.type == FileEvent::UploadProgress)
     {
+#ifdef LED_COUNT
         leds.sysLedMode.showUploadProgress(e.data.floatValue());
+#endif
     }
     else if (e.type == FileEvent::UploadComplete)
     {
+#ifdef LED_COUNT
         leds.sysLedMode.uploadFeedback = false;
         leds.setMode(LedManager::Stream);
+#endif
         comm.oscManager.setEnabled(true);
     }
+#endif
 }
 
 void MainManager::timerEvent(const TimerEvent &e)

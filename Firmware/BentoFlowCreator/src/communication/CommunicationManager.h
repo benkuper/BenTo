@@ -1,5 +1,6 @@
 #pragma once
 
+#include "display/DisplayManager.h"
 #include "wifi/WifiManager.h"
 #include "serial/SerialManager.h"
 #include "osc/OSCManager.h"
@@ -52,6 +53,10 @@ class CommunicationManager : public Component,
 public:
     CommunicationManager();
     ~CommunicationManager() {}
+
+#ifdef HAS_DISPLAY
+    DisplayManager displayManager;
+#endif
 
     WifiManager wifiManager;
     SerialManager serialManager;

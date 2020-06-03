@@ -1,6 +1,8 @@
 #pragma once
 #include "../LedMode.h"
 
+#ifdef LED_COUNT
+
 class SystemLedMode : public LedMode {
 public:
     SystemLedMode(CRGB * leds, int numLeds);
@@ -23,3 +25,5 @@ public:
     void setConnectionState(ConnectionState state);
     void showUploadProgress(float value);
 };
+
+#endif //LED_COUNT

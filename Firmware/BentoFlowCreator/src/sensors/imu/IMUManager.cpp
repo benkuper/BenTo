@@ -27,28 +27,31 @@ IMUManager::~IMUManager()
 
 void IMUManager::init()
 {
+#ifdef HAS_IMU
+
   NDBG("Init");
   if(isConnected) return;
 
-#ifdef HAS_IMU
   Wire.begin(SDA_PIN, SCL_PIN);
 
   if (!bno.begin())
   {
     NDBG("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
     isConnected = false;
+    return;
   }
 
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
-  bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
-  bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
+  bno.setAxisRemap(IMU_REMAP_CONFIG);
+  bno.setAxisSign(IMU_REMAP_SIGN);
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 
   bno.setExtCrystalUse(true);
-#endif
 
   isConnected = true;
   NDBG("Imu is connected.");
+#endif
+
 }
 
 void IMUManager::update()

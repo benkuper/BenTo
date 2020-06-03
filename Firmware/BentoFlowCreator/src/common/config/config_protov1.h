@@ -1,8 +1,7 @@
 #pragma once
 
 #define DEVICE_TYPE "Flowtoys Creator Club"
-
-#define ESP32
+#define ESP8266
 
 // main leds config
 #define LED_COUNT 32

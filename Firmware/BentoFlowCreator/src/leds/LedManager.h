@@ -16,13 +16,15 @@ public:
     Mode mode;
 
     //source
+#ifdef LED_COUNT
     LedMode * currentMode;
     SystemLedMode sysLedMode;
     StreamMode streamMode;
     PlayerMode playerMode;
-
     //out
     RGBLedsManager rgbManager;
+#endif
+
     IRLedsManager irManager;
 
     //timers
@@ -40,9 +42,11 @@ public:
 
     void setConnectionState(ConnectionState state);
 
+#ifdef LED_COUNT
     void rgbLedsEvent(const RGBLedsEvent &e);
     void playerEvent(const PlayerEvent &e);
-    
+#endif
+
     bool handleCommand(String command, var *data, int numData) override;
     void timerEvent(const TimerEvent &e);
 };

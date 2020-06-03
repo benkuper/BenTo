@@ -7,4 +7,5 @@
 #define NDBG(msg) Serial.println("["+name+"] "+msg)
 #else
 #define DBG(msg)
+#define NDBG(msg)
 #endif

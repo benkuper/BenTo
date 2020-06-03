@@ -17,6 +17,9 @@ public:
 
     String hardwareID;
     String fwVersion;
+#ifdef HAS_DISPLAY
+    DisplayManager display;
+#endif
 
     CommunicationManager comm;
     LedManager leds;

@@ -6,24 +6,34 @@
 class RGBLedsEvent
 {
 public:
-    enum Type { ASK_FOCUS };
+    enum Type
+    {
+        ASK_FOCUS
+    };
     RGBLedsEvent(Type type) : type(type) {}
     Type type;
 };
 
-class RGBLedsManager : public Component, public EventBroadcaster<RGBLedsEvent> {
+class RGBLedsManager : public Component, public EventBroadcaster<RGBLedsEvent>
+{
 public:
     RGBLedsManager();
 
+#ifdef LED_COUNT
     CRGB leds[LED_COUNT];
+
+    #ifdef LED_USE_DMX
+        DMXESPSerial dmx;
+    #endif
+#endif
+
     float globalBrightness;
 
     void init();
     void update();
 
-
     void setBrightness(float value, bool save = false);
-    bool handleCommand(String command, var * data, int numData) override;
+    bool handleCommand(String command, var *data, int numData) override;
 
     //Helpers
     void clear();
@@ -32,12 +42,11 @@ public:
     void point(CRGB c, float pos, float radius, bool clear = true);
 
     void setLed(int index, CRGB c);
-        
+
 private:
 #ifdef USE_PREFERENCES
-   Preferences prefs;
+    Preferences prefs;
 #elif defined USE_SETTINGS_MANAGER
     SettingsManager prefs;
 #endif
 };
-    

@@ -1,5 +1,14 @@
 #pragma once
 
+#ifdef LED_SEPARATE_CHANNELS
+#elif defined LED_USE_DMX
+#ifdef ESP8266
+#include "DMX/ESPDMX.h"
+#elif defined ESP32
+#include "DMX/SparkfunDMX.h"
+#endif // 8266/32
+#else
+#endif
 #include "FastLED/FastLED.h"
 
 class LedHelpers

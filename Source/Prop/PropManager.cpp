@@ -186,11 +186,13 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 	}
 	else if (c == detectProps)
 	{
-		StringArray ips = NetworkHelpers::getLocalIPs();
+		Array<IPAddress> addresses;
+		IPAddress::findAllAddresses(addresses);
 
 		LOG("Auto detecting props");
-		for (auto& ip : ips)
+		for (auto& ad : addresses)
 		{
+			String ip = ad.toString();
 			StringArray a;
 			a.addTokens(ip, ".", "\"");
 			if (a.size() < 4) continue;
@@ -202,6 +204,8 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 			sender.sendToIPAddress(broadcastIP, 9000, m);
 			LOG(" > sending /yo on " << broadcastIP << " with local ip " << ip << "...");
 		}
+
+		for (auto& s : zeroconfSearcher->services) serviceAdded(s);
 
 		checkSerialDevices();
 
@@ -415,8 +419,6 @@ void PropManager::finished(URL::DownloadTask* task, bool success)
 }
 
 
-
-
 // USB Detection
 void PropManager::portAdded(SerialDeviceInfo* info)
 {
@@ -483,7 +485,7 @@ Prop* PropManager::addPropForHardwareID(SerialDevice* device, String hardwareId,
 	}
 	else
 	{
-		LOG(p->deviceID << " already there, updating prop's remoteHost");
+		LOG(p->deviceID << " already there, updating prop's serial device");
 		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueForDevice(device);
 	}
 

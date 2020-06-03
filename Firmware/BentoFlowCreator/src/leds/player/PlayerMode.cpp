@@ -1,6 +1,8 @@
 
 #include "PlayerMode.h"
 
+#ifdef LED_COUNT
+
 PlayerMode::PlayerMode(CRGB *leds, int numLeds) : LedMode("player", leds, numLeds),
                                                   fps(0),
                                                   totalTime(0),
@@ -63,7 +65,8 @@ void PlayerMode::playFrame()
       DBG("Loop");
       sendEvent(PlayerEvent(PlayerEvent::Loop));
       play(0);
-    }else
+    }
+    else
     {
       isPlaying = false;
       return;
@@ -96,7 +99,7 @@ void PlayerMode::playFrame()
   curFile.read(buffer, FRAME_SIZE);
 
   showCurrentFrame();
-#endif  
+#endif
 }
 
 void PlayerMode::showBlackFrame()
@@ -110,7 +113,7 @@ void PlayerMode::showIdFrame()
   if (groupID == -1 || localID == -1)
     return;
   LedHelpers::fillRange(ledBuffer, numLeds, groupColor, .9f, 1);
-  CRGB c =  rgb2hsv_approximate(CHSV(localID * 255.0f / 12, 255, 255));
+  CRGB c = rgb2hsv_approximate(CHSV(localID * 255.0f / 12, 255, 255));
   LedHelpers::fillRange(ledBuffer, numLeds, c, 0, localID * 1.f / numLeds, false);
   updateLeds();
 }
@@ -128,9 +131,8 @@ void PlayerMode::updateLeds()
 {
   if (!isActive)
     return;
-  
-  memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
 
+  memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
 }
 
 void PlayerMode::start()
@@ -240,7 +242,7 @@ void PlayerMode::seek(float t, bool doSendEvent)
 
   if (doSendEvent)
     sendEvent(PlayerEvent(PlayerEvent::Play));
-#endif    
+#endif
 }
 
 void PlayerMode::pause()
@@ -249,7 +251,7 @@ void PlayerMode::pause()
   DBG("Pause");
   isPlaying = false;
   sendEvent(PlayerEvent(PlayerEvent::Pause));
-#endif    
+#endif
 }
 
 void PlayerMode::stopPlaying()
@@ -278,7 +280,7 @@ bool PlayerMode::handleCommand(String command, var *data, int numData)
     idMode = numData > 1 ? data[1].intValue() : false;
     return true;
   }
-  
+
   if (checkCommand(command, "play", numData, 0))
   {
     if (numData > 0 && data[0].type == 's')
@@ -291,11 +293,11 @@ bool PlayerMode::handleCommand(String command, var *data, int numData)
       play(numData > 0 ? data[0].floatValue() : 0);
     }
 
-    if(numData > 1)
+    if (numData > 1)
     {
       loopShow = data[1].intValue() == 1;
     }
-    
+
     idMode = false;
     return true;
   }
@@ -305,29 +307,29 @@ bool PlayerMode::handleCommand(String command, var *data, int numData)
     pause();
     return true;
   }
-  
+
   if (checkCommand(command, "resume", numData, 0))
   {
     play();
     return true;
   }
-  
+
   if (checkCommand(command, "stop", numData, 0))
   {
     stopPlaying();
     return true;
   }
-  
+
   if (checkCommand(command, "seek", numData, 1))
   {
     timeToSeek = data[0].floatValue();
     return true;
   }
-  
+
   if (checkCommand(command, "id", numData, 1))
   {
     idMode = data[0].intValue();
-    NDBG("ID Mode "+String(idMode));
+    NDBG("ID Mode " + String(idMode));
 
     if (idMode)
     {
@@ -340,15 +342,17 @@ bool PlayerMode::handleCommand(String command, var *data, int numData)
     }
     return true;
   }
-  
+
   if (checkCommand(command, "delete", numData, 1))
   {
-  #ifdef HAS_FILES
+#ifdef HAS_FILES
     FileManager::deleteFileIfExists(String(data[0].stringValue()) + ".colors");
     FileManager::deleteFileIfExists(String(data[0].stringValue()) + ".meta");
-  #endif
+#endif
     return true;
   }
 
   return true;
 }
+
+#endif

@@ -1,37 +1,45 @@
 #include "LedManager.h"
 
-
 LedManager::LedManager() : Component("leds"),
                            mode(Mode::Direct),
-                           currentMode(nullptr),
                            connectionIsAlive(false),
+#ifdef LED_COUNT
+                           currentMode(nullptr),
                            sysLedMode(rgbManager.leds, LED_COUNT),
                            streamMode(rgbManager.leds, LED_COUNT),
                            playerMode(rgbManager.leds, LED_COUNT),
+#endif
                            connectedTimer(2000)
 {
+
+#ifdef LED_COUNT
     playerMode.addListener(std::bind(&LedManager::playerEvent, this, std::placeholders::_1));
     connectedTimer.addListener(std::bind(&LedManager::timerEvent, this, std::placeholders::_1));
+#endif
 }
 
 void LedManager::init()
 {
+#ifdef LED_COUNT
     rgbManager.init();
     rgbManager.addListener(std::bind(&LedManager::rgbLedsEvent, this, std::placeholders::_1));
     sysLedMode.init();
     irManager.init();
+#endif
 
     setMode(System);
 }
 
 void LedManager::update()
 {
+#ifdef LED_COUNT
     if (mode == System)
         rgbManager.clear();
 
     if (connectionIsAlive || playerMode.isPlaying)
     {
-        if(currentMode != nullptr) currentMode->update();
+        if (currentMode != nullptr)
+            currentMode->update();
     }
     else
     {
@@ -42,10 +50,12 @@ void LedManager::update()
     irManager.update();
 
     connectedTimer.update();
+#endif
 }
 
 void LedManager::setMode(Mode m)
 {
+#ifdef LED_COUNT
     if (m == mode)
         return;
 
@@ -83,10 +93,12 @@ void LedManager::setMode(Mode m)
     {
         currentMode->start();
     }
+#endif
 }
 
 void LedManager::shutdown(CRGB color)
 {
+#ifdef LED_COUNT
     CRGB initLeds[LED_COUNT];
     memcpy(initLeds, rgbManager.leds, LED_COUNT * sizeof(CRGB));
 
@@ -108,19 +120,19 @@ void LedManager::shutdown(CRGB color)
 
     rgbManager.clear();
     rgbManager.update();
-
+#endif //LED_COUNT
     delay(100);
 }
 
 void LedManager::setConnectionState(ConnectionState state)
 {
-    NDBG("Set connectionState : " + connectionStateNames[state]);
-
+#ifdef LED_COUNT
     if (state == PingDead || state == PingAlive || state == Connected || state == Connecting)
     {
         connectionIsAlive = state == PingAlive || state == Connected || state == Connecting;
         rgbManager.clear();
-        if(state == PingAlive || state == PingDead) return;
+        if (state == PingAlive || state == PingDead)
+            return;
     }
 
     setMode(System);
@@ -130,12 +142,14 @@ void LedManager::setConnectionState(ConnectionState state)
         connectedTimer.start();
     else
         connectedTimer.stop();
+#endif
 }
 
+#ifdef LED_COUNT
 void LedManager::rgbLedsEvent(const RGBLedsEvent &e)
 {
-    NDBG("RGB Leds event");
-    if(e.type == RGBLedsEvent::ASK_FOCUS) setMode(Direct);
+    if (e.type == RGBLedsEvent::ASK_FOCUS)
+        setMode(Direct);
 }
 
 void LedManager::playerEvent(const PlayerEvent &e)
@@ -145,8 +159,7 @@ void LedManager::playerEvent(const PlayerEvent &e)
         setMode(Player);
     }
 }
-
-
+#endif
 
 void LedManager::timerEvent(const TimerEvent &e)
 {
@@ -154,10 +167,9 @@ void LedManager::timerEvent(const TimerEvent &e)
         setMode(Stream);
 }
 
-
-
 bool LedManager::handleCommand(String command, var *data, int numData)
 {
+#ifdef LED_COUNT
     if (checkCommand(command, "mode", numData, 1))
     {
         if (data[0].type == 's')
@@ -176,4 +188,5 @@ bool LedManager::handleCommand(String command, var *data, int numData)
             setMode((Mode)data[0].intValue());
         }
     }
+#endif
 }

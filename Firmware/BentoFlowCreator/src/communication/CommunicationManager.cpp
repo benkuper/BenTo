@@ -8,6 +8,10 @@ CommunicationManager::CommunicationManager() : Component("comm"),
 
 void CommunicationManager::init()
 {
+#ifdef HAS_DISPLAY
+    displayManager.init();
+#endif
+
     serialManager.addListener(std::bind(&CommunicationManager::serialMessageEvent, this, std::placeholders::_1));
     serialManager.init();
 
@@ -19,7 +23,11 @@ void CommunicationManager::init()
 }
 
 void CommunicationManager::update()
-{
+{    
+#ifdef HAS_DISPLAY
+    displayManager.update();
+#endif
+
     serialManager.update();
     wifiManager.update();
     oscManager.update();

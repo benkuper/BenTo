@@ -1,7 +1,6 @@
 #pragma once
 
 #define DEVICE_TYPE "Flowtoys Creator Club"
-
 #define ESP32
 
 // main leds config
@@ -34,9 +33,12 @@ const int buttonPins[BUTTON_COUNT]{ 32 };
 //#define I2C_CLOCK 10000 // not sure what this is for.
 #define SDA_PIN 23 // i2c lines
 #define SCL_PIN 22 // i2c lines
+#define IMU_REMAP_CONFIG Adafruit_BNO055::REMAP_CONFIG_P0
+#define IMU_REMAP_SIGN Adafruit_BNO055::REMAP_SIGN_P0
 
 #define INT_PIN 33 // the interupt pin for the IMU MPU prosessor.
 #define IMU_RESET 21 // toggl this pin to reset the IMU before connectiong to it after a reset.
+#define IMU_ADDR 0x28
 #define BNO055_SAMPLERATE_DELAY_MS (100)
 
 // ir config

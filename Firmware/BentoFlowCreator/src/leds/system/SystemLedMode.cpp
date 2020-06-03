@@ -1,6 +1,8 @@
 
 #include "SystemLedMode.h"
 
+#ifdef LED_COUNT
+
 SystemLedMode::SystemLedMode(CRGB *leds, int numLeds) : LedMode("systemLedMode", leds, numLeds),
                                                         connectionState(Off),
                                                         timeAtStateChange(millis()),
@@ -86,3 +88,5 @@ void SystemLedMode::showUploadProgress(float value)
    LedHelpers::point(leds, numLeds, CRGB::White, uploadProgress, .1f, false);
    FastLED.show(); //force here because no update in leds when uploading apparently
 }
+
+#endif

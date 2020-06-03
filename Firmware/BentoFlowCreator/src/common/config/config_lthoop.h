@@ -1,7 +1,6 @@
 #pragma once
 
 #define DEVICE_TYPE "Lightrix Hoop"
-
 #define ESP8266
 
 // main leds config

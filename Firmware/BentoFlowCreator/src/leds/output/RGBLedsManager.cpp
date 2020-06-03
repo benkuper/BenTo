@@ -7,6 +7,7 @@ RGBLedsManager::RGBLedsManager() : Component("rgb"),
 
 void RGBLedsManager::init()
 {
+#ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
     for (int i = 0; i < LED_COUNT; i++)
     {
@@ -14,7 +15,6 @@ void RGBLedsManager::init()
         pinMode(l.rPin, OUTPUT);
         pinMode(l.gPin, OUTPUT);
         pinMode(l.bPin, OUTPUT);
-
 #ifdef ESP32
         int startChannel = i * 3;
         ledcSetup(startChannel, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
@@ -27,8 +27,9 @@ void RGBLedsManager::init()
         ledcAttachPin(l.bPin, startChannel + 2);
 #endif
     }
+#elif defined LED_USE_DMX
+    dmx.init(LED_COUNT);
 #else
-
 #ifdef LED_EN_PIN
     pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
     digitalWrite(LED_EN_PIN, HIGH);
@@ -64,10 +65,13 @@ void RGBLedsManager::init()
     prefs.readSettings(String("/" + name + ".json").c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
 #endif
+
+#endif //LED_COUNT
 }
 
 void RGBLedsManager::update()
 {
+#ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
     for (int i = 0; i < LED_COUNT; i++)
     {
@@ -83,16 +87,27 @@ void RGBLedsManager::update()
         analogWrite(l.bPin, map(leds[i].b * globalBrightness, 0, 255, 0, 1023));
 #endif
     }
+#elif defined LED_USE_DMX
+    for (int i = 0; i < LED_COUNT; i++)
+    {
+        dmx.write(dmxStartChannels[i], leds[i].r * globalBrightness);
+        dmx.write(dmxStartChannels[i]+1, leds[i].g * globalBrightness);
+        dmx.write(dmxStartChannels[i]+2, leds[i].b * globalBrightness);
+    }
 #else
     FastLED.show();
 #endif
+#endif //LED_COUNT
 }
 
 void RGBLedsManager::setBrightness(float value, bool save)
 {
     globalBrightness = min(max(value, 0.f), 1.f);
 
-#ifndef LED_SEPARATE_CHANNELS
+#ifdef LED_COUNT
+#ifdef LED_SEPARATE_CHANNELS
+#elif defined LED_USE_DMX
+#else
     FastLED.setBrightness((int)(globalBrightness * 60));
     FastLED.show();
 #endif
@@ -107,11 +122,13 @@ void RGBLedsManager::setBrightness(float value, bool save)
         prefs.setFloat("brightness", globalBrightness);
 #endif
     }
+#endif //LED_COUNT
+
 }
 
 bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 {
-    NDBG("Handle command : " + command);
+#ifdef LED_COUNT
     if (checkCommand(command, "brightness", numData, 1))
     {
         setBrightness(data[0].floatValue());
@@ -146,6 +163,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         return true;
     }
+#endif
 
     return false;
 }
@@ -153,12 +171,14 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 //Helpers
 void RGBLedsManager::clear()
 {
-#ifdef LED_SEPARATE_CHANNELS
+#ifdef LED_COUNT
+#if defined LED_SEPARATE_CHANNELS || defined LED_USE_DMX
     for (int i = 0; i < LED_COUNT; i++)
         leds[i] = CRGB::Black;
 #else
     FastLED.clear();
 #endif
+#endif //LED_COUNT
 }
 
 void RGBLedsManager::fillAll(CRGB c)
@@ -168,21 +188,28 @@ void RGBLedsManager::fillAll(CRGB c)
 
 void RGBLedsManager::fillRange(CRGB c, float start, float end, bool doClear)
 {
+#ifdef LED_COUNT
     if (doClear)
         clear();
     LedHelpers::fillRange(leds, LED_COUNT, c, start, end);
+#endif
 }
 
 void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear)
 {
+#ifdef LED_COUNT
     if (doClear)
         clear();
     LedHelpers::point(leds, LED_COUNT, c, pos, fade);
+#endif
 }
 
 void RGBLedsManager::setLed(int index, CRGB c)
 {
+#ifdef LED_COUNT
+
     if (index < 0 || index >= LED_COUNT)
         return;
     leds[index] = c;
+#endif
 }

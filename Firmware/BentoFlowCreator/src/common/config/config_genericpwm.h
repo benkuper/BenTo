@@ -1,7 +1,6 @@
 #pragma once
 
 #define DEVICE_TYPE "Generic PWM"
-
 #define ESP8266
 
 #define BUTTON_COUNT 0

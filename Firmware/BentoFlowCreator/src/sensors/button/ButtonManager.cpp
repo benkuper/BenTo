@@ -16,6 +16,11 @@ ButtonManager::ButtonManager() : Component("buttons")
 
 void ButtonManager::init()
 {
+#ifdef BUTTON_REF_PULLDOWN
+    pinMode(BUTTON_REF_PULLDOWN, OUTPUT);
+    digitalWrite(BUTTON_REF_PULLDOWN, LOW);
+#endif
+
 #if BUTTON_COUNT > 0
     for (int i = 0; i < BUTTON_COUNT; i++)
     {
