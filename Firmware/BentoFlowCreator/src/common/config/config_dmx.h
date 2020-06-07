@@ -1,7 +1,9 @@
 #pragma once
 
 #define DEVICE_TYPE "DMX"
-#define ESP8266
+
+//#define ESP8266
+#define ESP32
 
 #define BUTTON_COUNT 0
 
