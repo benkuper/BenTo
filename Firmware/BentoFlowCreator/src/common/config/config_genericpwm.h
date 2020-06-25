@@ -21,7 +21,7 @@ struct RGBLedPins
 
 const RGBLedPins rgbLedPins[LED_COUNT]
 {
-    {D5,D6,D7},
-    {D1,D2,D3},
+    {5,2,4},
+    {14,12,13},
 };
 
