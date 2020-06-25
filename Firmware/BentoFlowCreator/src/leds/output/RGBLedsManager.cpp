@@ -42,7 +42,31 @@ void RGBLedsManager::init()
 #if defined LED_CLK_PIN
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #else
+#ifdef LED_NUM_STRIPS
+    #if LED_NUM_STRIPS >= 1 
+    FastLED.addLeds<LED_TYPE, LED_PIN1, LED_COLOR_ORDER>(leds+LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
+    
+    #if LED_NUM_STRIPS >= 2 
+    FastLED.addLeds<LED_TYPE, LED_PIN2, LED_COLOR_ORDER>(leds+LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
+    
+    #if LED_NUM_STRIPS >= 3 
+    FastLED.addLeds<LED_TYPE, LED_PIN3, LED_COLOR_ORDER>(leds+LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
+   
+    #if LED_NUM_STRIPS >= 4 
+    FastLED.addLeds<LED_TYPE, LED_PIN4, LED_COLOR_ORDER>(leds+LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
+   
+    #if LED_NUM_STRIPS >= 5 
+    FastLED.addLeds<LED_TYPE, LED_PIN5, LED_COLOR_ORDER>(leds+LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
+    
+
+    #endif //5
+    #endif //4
+    #endif //3
+    #endif //2
+    #endif //1
+#else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+#endif
 #endif
 
 #if defined LED2_TYPE

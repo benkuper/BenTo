@@ -287,6 +287,10 @@
  //#define ORGANICUI_DEFAULT_REMOTECONTROL_PORT 0
 #endif
 
+#ifndef    ORGANICUI_USE_WEBSERVER
+ //#define ORGANICUI_USE_WEBSERVER 0
+#endif
+
 //==============================================================================
 // juce_osc flags:
 

@@ -104,31 +104,42 @@ void BentoProp::portRemoved(SerialDevice* d)
 void BentoProp::sendColorsToPropInternal()
 {
 	const int numLeds = resolution->intValue();
-	const int maxLedsPerPacket = 320;
-
+	
 	Array<uint8> data;
 
-	int numPackets = 0;
 	for (int i = 0; i < numLeds; i++)
 	{
 		float a = colors[i].getFloatAlpha();
 		data.add(jmin<int>(colors[i].getRed() * a, 254));
 		data.add(jmin<int>(colors[i].getGreen() * a, 254));
 		data.add(jmin<int>(colors[i].getBlue() * a, 254));
-
-		if (i % maxLedsPerPacket == 0) numPackets++;
 	}
 
 	data.add(255);
 
-	int dataSize = numLeds * 3 + 1;
+	const int maxPacketSize = 1000; //1500 bytes on ESP32
+	const int dataSize = data.size();
+	int offset = 0;
+	int numPacketSent = 0;
 
-	for (int i = 0; i < numPackets; i++)
+	DBG("Sending total bytes " << dataSize);
+	while (offset < dataSize)
 	{
-		int offset = i * maxLedsPerPacket * 3;
-		int length = i < numPackets - 1 ? maxLedsPerPacket * 3 : dataSize - offset;
-		sender.write(remoteHost->stringValue(), remotePort, data.getRawDataPointer() + offset, length);
+		int length = jmin(maxPacketSize, dataSize - offset);
+
+		DBG("Sending packet " << numPacketSent << " with offset " << offset << ", length " << length);
+		int dataSent = sender.write(remoteHost->stringValue(), remotePort, data.getRawDataPointer() + offset, length);
+		
+		if (dataSent == -1)
+		{
+			LOGWARNING("Error sending data");
+			break;
+		}
+
+		numPacketSent++;
+		offset += dataSent;
 		sleep(1);
+
 	}
 }
 

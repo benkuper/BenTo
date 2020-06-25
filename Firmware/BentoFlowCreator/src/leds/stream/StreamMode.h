@@ -18,10 +18,11 @@ public:
     const int receiveRate = 60; //receive at 60fps max
     long lastReceiveTime;
 
-    CRGB * ledBuffer;
-    uint8_t colorBuffer[3];
-    int colorBufferIndex;
-    int ledBufferIndex;
+    uint8_t * streamBuffer;
+    int byteIndex;
+    //uint8_t colorBuffer[3];
+    //int colorBufferIndex;
+    //int ledBufferIndex;
 
     void init() override;
     void update() override;

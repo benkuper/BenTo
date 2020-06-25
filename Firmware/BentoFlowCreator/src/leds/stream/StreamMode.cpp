@@ -1,18 +1,18 @@
 #include "StreamMode.h"
 
-
 #ifdef LED_COUNT
 
-StreamMode::StreamMode(CRGB *leds, int numLeds) : 
-LedMode("stream", leds, numLeds),
-    ledBufferIndex(0),
-    colorBufferIndex(0)
+StreamMode::StreamMode(CRGB *leds, int numLeds) : LedMode("stream", leds, numLeds),
+                                                  //ledBufferIndex(0),
+                                                  //colorBufferIndex(0)
+                                                  byteIndex(0)
 {
-    ledBuffer = (CRGB *)malloc(numLeds * sizeof(CRGB));
+    streamBuffer = (uint8_t *)malloc(numLeds * 3 + 1);
 }
 
-StreamMode::~StreamMode() {
-    free(ledBuffer);
+StreamMode::~StreamMode()
+{
+    free(streamBuffer);
 }
 
 void StreamMode::init()
@@ -31,48 +31,66 @@ void StreamMode::update()
 
 void StreamMode::receiveUDP()
 {
-    if (udp.parsePacket())
+    while (int packetSize = udp.parsePacket())
     {
-        while (udp.available() > 0)
-        {
-            byte b = udp.read();
+        int numRead = udp.read(streamBuffer, numLeds * 3 + 1);
+       
+       // DBG("Packet size : " + String(packetSize) + ", numRead : "+String(numRead));
+       
+       if(numRead == 0) return;
+        bool isFinal = streamBuffer[numRead - 1] == 255;
+        if(isFinal) numRead--;
 
-            if (b == 255)
+        if(byteIndex+numRead > numLeds * 3)
+        {
+            DBG("Stream OVERFLOW, end index would reach " +String(byteIndex+numRead));
+        }else
+        {
+           // DBG(" > Copying at "+String(byteIndex));
+            memcpy((uint8_t *)leds+byteIndex, streamBuffer, numRead);
+        }
+        
+        byteIndex += numRead;
+        if (isFinal)
+        {
+           // DBG(" > isFinal : " +String((int)isFinal));
+            byteIndex = 0;
+            //processBuffer();
+        }
+        else
+        {
+            /*
+            for (int i = 0; i < numRead - 1; i++)
             {
-                processBuffer();
-                udp.flush();
-            }
-            else
-            {
-                colorBuffer[colorBufferIndex] = (uint8_t)b;
+                colorBuffer[colorBufferIndex] = streamBuffer[i];
                 colorBufferIndex++;
                 if (colorBufferIndex == 3)
                 {
                     if (ledBufferIndex < numLeds)
                     {
-                        ledBuffer[LEDMAP(ledBufferIndex)] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
+                        leds[LEDMAP(ledBufferIndex)] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
                     }
                     else
                     {
-                        DBG("Overflow ! " + String(ledBufferIndex));
+                        DBG("Overflow ! " + String(ledBufferIndex) + ", max leds is " + String(numLeds));
                     }
 
-                    //Serial.print(leds[ledBufferIndex],DEC);
-                    //Serial.print(" ");
                     colorBufferIndex = 0;
                     ledBufferIndex++;
                 }
             }
+            */
         }
     }
 }
 
-
 void StreamMode::processBuffer()
 {
-    if(isActive) memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
-    colorBufferIndex = 0;
-    ledBufferIndex = 0;
+    //if (isActive)
+    //    memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
+    //memset()
+    //colorBufferIndex = 0;
+    //ledBufferIndex = 0;
 }
 
 void StreamMode::start()
@@ -88,7 +106,6 @@ void StreamMode::stop()
     udp.flush();
     udp.stop();
 }
-
 
 bool StreamMode::handleCommand(String command, var *data, int numData)
 {

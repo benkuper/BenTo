@@ -18,4 +18,6 @@ public:
     static void fillAll(CRGB * leds, int numLeds, CRGB c);
     static void fillRange(CRGB * leds, int numLeds, CRGB c, float start, float end, bool clear = true);
     static void point(CRGB * leds, int numLeds, CRGB c, float pos, float radius, bool clear = true);
+    static void setLed(CRGB * leds, int index, CRGB c);
+    static void show();
 };

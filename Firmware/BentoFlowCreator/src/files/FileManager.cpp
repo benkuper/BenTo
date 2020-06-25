@@ -31,9 +31,15 @@ void FileManager::init()
     NDBG("Init");
 
 #ifdef FILES_USE_INTERNAL_MEMORY
-    SPIFFS.begin(); // Start the SPI Flash Files System
-    sdIsDetected = true;
-    NDBG("SPIFFS initialized.");
+    if(SPIFFS.begin())// Start the SPI Flash Files System
+    {
+        sdIsDetected = true;
+        NDBG("SPIFFS initialized.");
+    } else
+    {
+        NDBG("Error initializing SPIFFS");
+    }
+   
 #else
     pinMode(SD_EN, OUTPUT);
     digitalWrite(SD_EN, LOW);

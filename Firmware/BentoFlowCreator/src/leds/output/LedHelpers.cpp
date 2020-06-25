@@ -48,3 +48,11 @@ void LedHelpers::point(CRGB *leds, int numLeds, CRGB c, float pos, float radius,
     }
 #endif
 }
+
+
+void LedHelpers::setLed(CRGB *leds, int index, CRGB c)
+{
+#ifdef LED_COUNT
+    leds[LEDMAP(index)] = c;
+#endif
+}
