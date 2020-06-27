@@ -16,14 +16,14 @@ void SystemLedMode::init()
 {
 }
 
-void SystemLedMode::update()
+bool SystemLedMode::update()
 {
    LedHelpers::clear(leds, numLeds);
    float relT = millis() / 1000.0f - timeAtStateChange;
    const float animTime = 2.0f; //2 second anim time
 
    if (connectionState == Off || connectionState != Connecting && relT > animTime)
-      return;
+      return true;
 
    CRGB color = CRGB::Cyan;
 
@@ -68,6 +68,7 @@ void SystemLedMode::update()
 
    LedHelpers::point(leds, numLeds, color, pos, radius, true);
 
+   return true;
 }
 
 void SystemLedMode::setConnectionState(ConnectionState state)

@@ -5,6 +5,7 @@
 #include <WiFiUdp.h>
 
 #ifdef LED_COUNT
+#define MAX_PACKET_SIZE 1000
 
 class StreamMode : public LedMode {
     
@@ -18,17 +19,17 @@ public:
     const int receiveRate = 60; //receive at 60fps max
     long lastReceiveTime;
 
-    uint8_t * streamBuffer;
+    uint8_t streamBuffer[MAX_PACKET_SIZE];
     int byteIndex;
+    bool hasOverflowed;
     //uint8_t colorBuffer[3];
     //int colorBufferIndex;
     //int ledBufferIndex;
 
     void init() override;
-    void update() override;
+    bool update() override;
 
-    void receiveUDP();
-    void processBuffer();
+    bool receiveUDP();
 
     void start() override;
     void stop() override;

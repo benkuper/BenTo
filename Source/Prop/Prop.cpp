@@ -353,7 +353,12 @@ BakeData Prop::bakeBlock()
 
 		if (providerToBake == nullptr) return result;
 		Array<Colour> cols = providerToBake->getColors(this, curTime, params);
-		for (auto& c : cols) os.writeInt(c.getARGB());
+		for (auto& c : cols)
+		{
+			os.writeByte(c.getRed());
+			os.writeByte(c.getGreen());
+			os.writeByte(c.getBlue());
+		}
 		result.numFrames++;
 
 		bakingProgress->setValue(jmap<float>(curTime, result.startTime, result.endTime, 0, 1));

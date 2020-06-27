@@ -14,7 +14,7 @@ public:
     int numLeds;
 
     virtual void init() {}
-    virtual void update() {}
+    virtual bool update() { return false; }
 
     virtual void start() { NDBG("Start"); isActive = true; }
     virtual void stop() { NDBG("Stop"); isActive = false; }

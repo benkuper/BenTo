@@ -15,7 +15,7 @@
 #include "Timeline/TimelineEditor.h"
 #include "Video/ui/SpatializerPanel.h"
 #include "Prop/Cluster/ui/PropClusterGroupManagerUI.h"
-
+#include "Prop/Shape/ui/PropShapePanel.h"
 //==============================================================================
 MainComponent::MainComponent() :
 	OrganicMainContentComponent()
@@ -37,6 +37,7 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(NodeBlockEditor::getTypeStringStatic(), &NodeBlockEditor::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(TimelineEditor::getTypeStringStatic(), &TimelineEditor::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(SpatializerPanel::getTypeStringStatic(), &SpatializerPanel::create));
+	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(PropShapePanel::getTypeStringStatic(), &PropShapePanel::create));
 	//ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Clusters", &PropClusterGroupManagerUI::create));
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);

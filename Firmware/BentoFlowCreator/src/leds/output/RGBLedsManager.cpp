@@ -111,9 +111,9 @@ void RGBLedsManager::update()
         ledcWrite(startChannel + 2, map(leds[i].b * globalBrightness, 0, 255, 1024, 0));
 #else
         const RGBLedPins l = rgbLedPins[i];
-        analogWrite(l.rPin, map(leds[i].r * globalBrightness, 0, 255, 0, 1023));
-        analogWrite(l.gPin, map(leds[i].g * globalBrightness, 0, 255, 0, 1023));
-        analogWrite(l.bPin, map(leds[i].b * globalBrightness, 0, 255, 0, 1023));
+        analogWrite(l.rPin, PWMVAL(leds[i].r * globalBrightness));
+        analogWrite(l.gPin, PWMVAL(leds[i].g * globalBrightness));
+        analogWrite(l.bPin, PWMVAL(leds[i].b * globalBrightness));
 #endif
     }
 #elif defined LED_USE_DMX

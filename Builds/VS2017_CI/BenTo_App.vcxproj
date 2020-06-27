@@ -148,6 +148,7 @@
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.cpp"/>
@@ -170,6 +171,13 @@
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameter.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp"/>
     <ClCompile Include="..\..\Source\Prop\PropFamily.cpp"/>
     <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp"/>
     <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp"/>
@@ -2731,6 +2739,7 @@
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.h"/>
@@ -2754,6 +2763,13 @@
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShape.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurve.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeGroup.h"/>
     <ClInclude Include="..\..\Source\Prop\PropFamily.h"/>
     <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h"/>
     <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h"/>

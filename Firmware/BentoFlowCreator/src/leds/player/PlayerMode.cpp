@@ -17,28 +17,27 @@ PlayerMode::PlayerMode(CRGB *leds, int numLeds) : LedMode("player", leds, numLed
                                                   timeSinceLastSeek(0),
                                                   timeToSeek(0)
 {
-  ledBuffer = (CRGB *)malloc(numLeds * sizeof(CRGB));
 }
 
 PlayerMode::~PlayerMode()
 {
-  free(ledBuffer);
+  //free(ledBuffer);
 }
 
 void PlayerMode::init()
 {
 }
 
-void PlayerMode::update()
+bool PlayerMode::update()
 {
 #ifdef HAS_FILES
   if (!curFile)
-    return;
+    return false;
 
   if (idMode)
   {
     showIdFrame();
-    return;
+    return true;
   }
 
   if (timeToSeek != -1 && millis() > timeSinceLastSeek + 20)
@@ -49,12 +48,19 @@ void PlayerMode::update()
   }
 
   if (!isPlaying)
-    return;
-  playFrame();
+  {
+    showBlackFrame();
+    return true;
+  }
+
+  return playFrame();
+#else
+  showBlackFrame();
+  return true;
 #endif
 }
 
-void PlayerMode::playFrame()
+bool PlayerMode::playFrame()
 {
 #ifdef HAS_FILES
   if (curFile.available() < FRAME_SIZE)
@@ -69,7 +75,7 @@ void PlayerMode::playFrame()
     else
     {
       isPlaying = false;
-      return;
+      return false;
     }
   }
 
@@ -81,59 +87,66 @@ void PlayerMode::playFrame()
   long pos = msToBytePos(curTimeMs);
 
   if (pos < 0)
-    return;
+    return false;
   if (pos < fPos)
-    return; //waiting for frame
+    return false; //waiting for frame
 
-  while (fPos > pos)
+  int skippedFrames = 0;
+  while (fPos < pos)
   {
-    curFile.read(buffer, FRAME_SIZE);
-    DBG("Skipped frame");
+    skippedFrames++;
+    curFile.read((uint8_t *)leds, FRAME_SIZE);
+    fPos = curFile.position();
+    if (curFile.available() < FRAME_SIZE)
+    {
+      DBG("Player overflowed, should not be here");
+      return false;
+    } 
+  }
+
+  if(skippedFrames > 0)
+  {
+    DBG("Skipped frame " + String(skippedFrames));
   }
 
   if (fPos != pos)
   {
-    DBG("Error, position is " + String(curFile.position()) + ", expected " + String(pos));
+    DBG("Error, position is " + String(fPos) + ", expected " + String(pos));
   }
 
-  curFile.read(buffer, FRAME_SIZE);
+  curFile.read((uint8_t *)leds, FRAME_SIZE);
 
-  showCurrentFrame();
+  //showCurrentFrame();
 #endif
+
+  return true;
 }
 
 void PlayerMode::showBlackFrame()
 {
-  LedHelpers::clear(ledBuffer, numLeds);
-  updateLeds();
+  LedHelpers::clear(leds, numLeds);
 }
 
 void PlayerMode::showIdFrame()
 {
   if (groupID == -1 || localID == -1)
     return;
-  LedHelpers::fillRange(ledBuffer, numLeds, groupColor, .9f, 1);
+  LedHelpers::fillRange(leds, numLeds, groupColor, .9f, 1);
   CRGB c = rgb2hsv_approximate(CHSV(localID * 255.0f / 12, 255, 255));
-  LedHelpers::fillRange(ledBuffer, numLeds, c, 0, localID * 1.f / numLeds, false);
-  updateLeds();
+  LedHelpers::fillRange(leds, numLeds, c, 0, localID * 1.f / numLeds, false);
+  //updateLeds();
 }
 
+/*
 void PlayerMode::showCurrentFrame()
 {
   for (int i = 0; i < numLeds; i++)
   {
-    ledBuffer[LEDMAP(i)] = CRGB(buffer[i * 4 + 2], buffer[i * 4 + 1], buffer[i * 4 + 0]);
+    leds[LEDMAP(i)] = CRGB(buffer[i * COLOR_SIZE + 2], buffer[i * COLOR_SIZE + 1], buffer[i * COLOR_SIZE + 0]);
   }
   updateLeds();
 }
-
-void PlayerMode::updateLeds()
-{
-  if (!isActive)
-    return;
-
-  memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
-}
+*/
 
 void PlayerMode::start()
 {
@@ -236,8 +249,8 @@ void PlayerMode::seek(float t, bool doSendEvent)
   }
   else if (!isPlaying)
   {
-    curFile.read(buffer, FRAME_SIZE);
-    showCurrentFrame();
+    curFile.read((uint8_t*)leds, FRAME_SIZE);
+    //showCurrentFrame();
   }
 
   if (doSendEvent)

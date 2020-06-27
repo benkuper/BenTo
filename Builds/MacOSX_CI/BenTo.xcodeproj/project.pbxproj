@@ -313,6 +313,10 @@
 			isa = PBXBuildFile;
 			fileRef = EB4AA1D6441093528AA7DCFA;
 		};
+		482E415AE21D427A10B646A0 = {
+			isa = PBXBuildFile;
+			fileRef = 8824BA9ECB99ED7E5CCEA5B0;
+		};
 		92433CD942BEFDF3FC547861 = {
 			isa = PBXBuildFile;
 			fileRef = 3450717409F17AA0403ADEC9;
@@ -400,6 +404,34 @@
 		5EA0388E20427326CD2D0595 = {
 			isa = PBXBuildFile;
 			fileRef = C234266775E1DCF799735A03;
+		};
+		42ACBDF0A3547B7F2460F137 = {
+			isa = PBXBuildFile;
+			fileRef = EB59EAFD39B3709C539742B0;
+		};
+		11F8E5C25F665E7AE98E817E = {
+			isa = PBXBuildFile;
+			fileRef = EF45DD3120E830FFD3242CF6;
+		};
+		79156195422AF4824A57630F = {
+			isa = PBXBuildFile;
+			fileRef = 34121B13DB5C634CE0F976DB;
+		};
+		8D9E9726A059990B37C8CF0C = {
+			isa = PBXBuildFile;
+			fileRef = A5410F5F7AE2D39A1F7DA314;
+		};
+		D73FF74F0873A8EE0F5450D7 = {
+			isa = PBXBuildFile;
+			fileRef = 8C1917A8C35B23B2520F0304;
+		};
+		ACE645878AB640D449DBE554 = {
+			isa = PBXBuildFile;
+			fileRef = 254191C212D3FA4801711E2B;
+		};
+		083CF9BBC285E3B9EC54FAA9 = {
+			isa = PBXBuildFile;
+			fileRef = 8040E4F47B673E635CB8D091;
 		};
 		619CB516C81A815F1A0AD31E = {
 			isa = PBXBuildFile;
@@ -644,6 +676,13 @@
 			path = ../../Source/LightBlock/model/LightBlockModelGroup.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		065D76D004AAB806998DB62B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShapeCurveEasing.h;
+			path = ../../Source/Prop/Shape/PropShapeCurveEasing.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		08267B354088F7784795787B = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -740,6 +779,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = IRPropComponent.h;
 			path = ../../Source/Prop/Component/ir/IRPropComponent.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		122C1F40FF95FEF3D7914296 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShapePanel.h;
+			path = ../../Source/Prop/Shape/ui/PropShapePanel.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		12F71DCA702CF35EA57E31B7 = {
@@ -840,11 +886,25 @@
 			path = ../../Source/Video/SpatItem.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		21A4C58D48757E498A3FC8BA = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShapeBlock.h;
+			path = ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		220E2A77499D10F5F6DA62AE = {
 			isa = PBXFileReference;
 			lastKnownFileType = image.png;
 			name = fadeIn.png;
 			path = ../../Resources/fadeIn.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		254191C212D3FA4801711E2B = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShapeCurveEasing.cpp;
+			path = ../../Source/Prop/Shape/PropShapeCurveEasing.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		25945F3EEF80155623FA70D6 = {
@@ -957,6 +1017,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = Prop.h;
 			path = ../../Source/Prop/Prop.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		34121B13DB5C634CE0F976DB = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShapeView.cpp;
+			path = ../../Source/Prop/Shape/ui/PropShapeView.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3450717409F17AA0403ADEC9 = {
@@ -1118,6 +1185,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = SpatLayout.h;
 			path = ../../Source/Video/SpatLayout.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		4B06BDC0D466DCF5D90D819A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShape.h;
+			path = ../../Source/Prop/Shape/PropShape.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		4C0FFBAFE2436814115FE752 = {
@@ -1484,6 +1558,13 @@
 			path = System/Library/Frameworks/CoreAudio.framework;
 			sourceTree = SDKROOT;
 		};
+		79A7EF9C1CA342EE11CA905D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShapeCurve.h;
+			path = ../../Source/Prop/Shape/PropShapeCurve.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		7A2751B7F4F12A0715616973 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1517,6 +1598,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = NodeConnectionSlot.cpp;
 			path = ../../Source/Node/NodeConnectionSlot.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8040E4F47B673E635CB8D091 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShapeGroup.cpp;
+			path = ../../Source/Prop/Shape/PropShapeGroup.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		808AAC0DA10E0C307350A7F1 = {
@@ -1582,6 +1670,13 @@
 			path = "../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc";
 			sourceTree = "SOURCE_ROOT";
 		};
+		8824BA9ECB99ED7E5CCEA5B0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShapeBlock.cpp;
+			path = ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		892550DDAEA7C386E6C3F006 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1601,6 +1696,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = NodeBlockEditor.h;
 			path = ../../Source/Node/ui/NodeBlockEditor.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8C1917A8C35B23B2520F0304 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShapeCurve.cpp;
+			path = ../../Source/Prop/Shape/PropShapeCurve.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		8C9A74CAA1876AEF13C0DB3D = {
@@ -1848,6 +1950,13 @@
 			path = "~/JUCE/modules/juce_audio_devices";
 			sourceTree = "<absolute>";
 		};
+		A5410F5F7AE2D39A1F7DA314 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShape.cpp;
+			path = ../../Source/Prop/Shape/PropShape.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		A5805AB2DDD240DDB8159591 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -1867,6 +1976,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = PositionRemapNode.h;
 			path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		A82A92FDBAE79C90064D08B4 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShapeGroup.h;
+			path = ../../Source/Prop/Shape/PropShapeGroup.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		A93764D22B731890A5D10F75 = {
@@ -2156,6 +2272,13 @@
 			path = ../../Source/Prop/Component/buttons/ButtonsComponent.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		CCADDEF3ED250C54D5D40570 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShapeCurveEasingUI.h;
+			path = ../../Source/Prop/Shape/ui/PropShapeCurveEasingUI.h;
+			sourceTree = "SOURCE_ROOT";
+		};
 		CD67962FD72F93DC288712DE = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -2408,6 +2531,13 @@
 			path = ../../Source/LightBlock/model/ui/LightBlockModelUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		EB59EAFD39B3709C539742B0 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShapeCurveEasingUI.cpp;
+			path = ../../Source/Prop/Shape/ui/PropShapeCurveEasingUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		EBFE82D98BAD390E587C3B13 = {
 			isa = PBXFileReference;
 			lastKnownFileType = wrapper.framework;
@@ -2436,6 +2566,13 @@
 			path = System/Library/Frameworks/CoreMIDI.framework;
 			sourceTree = SDKROOT;
 		};
+		EF45DD3120E830FFD3242CF6 = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = PropShapePanel.cpp;
+			path = ../../Source/Prop/Shape/ui/PropShapePanel.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		F152C7D673C5EFB640BA0633 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -2455,6 +2592,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = AudioManagerHardwareEditor.cpp;
 			path = ../../Source/Audio/ui/AudioManagerHardwareEditor.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
+		F6613236CF1EA0CB6F14B9CE = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = PropShapeView.h;
+			path = ../../Source/Prop/Shape/ui/PropShapeView.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		F678A261407C5753DFC900B2 = {
@@ -2978,6 +3122,15 @@
 			name = ui;
 			sourceTree = "<group>";
 		};
+		6DB432CE13F57CE2E8D54378 = {
+			isa = PBXGroup;
+			children = (
+				8824BA9ECB99ED7E5CCEA5B0,
+				21A4C58D48757E498A3FC8BA,
+			);
+			name = shape;
+			sourceTree = "<group>";
+		};
 		FFCDF54B88210FA3EE4A9CA6 = {
 			isa = PBXGroup;
 			children = (
@@ -3142,6 +3295,7 @@
 		64AE0BC7468CA8DD2D47ED08 = {
 			isa = PBXGroup;
 			children = (
+				6DB432CE13F57CE2E8D54378,
 				457BC62EF1B8C73372750500,
 				AC5FEA16BBDEBE2E561C18FF,
 				8E5E61AF86F50880D0C1D042,
@@ -3186,6 +3340,35 @@
 				AEF39637DB6CA28A00644DE6,
 			);
 			name = LightBlock;
+			sourceTree = "<group>";
+		};
+		AB4BB0B19B6F5C2D1DAF4434 = {
+			isa = PBXGroup;
+			children = (
+				EB59EAFD39B3709C539742B0,
+				CCADDEF3ED250C54D5D40570,
+				EF45DD3120E830FFD3242CF6,
+				122C1F40FF95FEF3D7914296,
+				34121B13DB5C634CE0F976DB,
+				F6613236CF1EA0CB6F14B9CE,
+			);
+			name = ui;
+			sourceTree = "<group>";
+		};
+		2E6328A8B7259A5B519919FD = {
+			isa = PBXGroup;
+			children = (
+				AB4BB0B19B6F5C2D1DAF4434,
+				A5410F5F7AE2D39A1F7DA314,
+				4B06BDC0D466DCF5D90D819A,
+				8C1917A8C35B23B2520F0304,
+				79A7EF9C1CA342EE11CA905D,
+				254191C212D3FA4801711E2B,
+				065D76D004AAB806998DB62B,
+				8040E4F47B673E635CB8D091,
+				A82A92FDBAE79C90064D08B4,
+			);
+			name = Shape;
 			sourceTree = "<group>";
 		};
 		549EAD63C2FB698E832FD1B8 = {
@@ -3334,6 +3517,7 @@
 		30EF0AFF39DD5583EAB05618 = {
 			isa = PBXGroup;
 			children = (
+				2E6328A8B7259A5B519919FD,
 				0582EB179BF4CB791ADEB5D4,
 				C4EC554278A9200BE3EFEE50,
 				549EAD63C2FB698E832FD1B8,
@@ -3781,6 +3965,7 @@
 				D902594BC4B92F95C3317BE5,
 				CD089C9944B3DFBF4F71C771,
 				E3B33E153A87ED5EF8BAF23B,
+				482E415AE21D427A10B646A0,
 				92433CD942BEFDF3FC547861,
 				C1E9177A48CA75075E724768,
 				6A540B36BD076F6824F5ED20,
@@ -3803,6 +3988,13 @@
 				1FF430B764F5C52D6E8F58B3,
 				C7CCFEB3BC0D5709CE33EE86,
 				5EA0388E20427326CD2D0595,
+				42ACBDF0A3547B7F2460F137,
+				11F8E5C25F665E7AE98E817E,
+				79156195422AF4824A57630F,
+				8D9E9726A059990B37C8CF0C,
+				D73FF74F0873A8EE0F5450D7,
+				ACE645878AB640D449DBE554,
+				083CF9BBC285E3B9EC54FAA9,
 				619CB516C81A815F1A0AD31E,
 				90F45255DBDDE79909BC5AE3,
 				73A7928FA75A5316A6FDA46C,

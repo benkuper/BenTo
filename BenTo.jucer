@@ -298,6 +298,12 @@
                   file="Source/LightBlock/model/ui/LightBlockModelUI.h"/>
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
+            <GROUP id="{D937E358-C3AF-2A4E-107D-7B9701E30F09}" name="shape">
+              <FILE id="hcPBFD" name="PropShapeBlock.cpp" compile="1" resource="0"
+                    file="Source/LightBlock/model/blocks/shape/PropShapeBlock.cpp"/>
+              <FILE id="FO2Ik9" name="PropShapeBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/shape/PropShapeBlock.h"/>
+            </GROUP>
             <GROUP id="{01F6805A-9982-41D2-5AB2-FAE63271AFA3}" name="filters">
               <FILE id="UsZSEz" name="LightBlockFilter.cpp" compile="1" resource="0"
                     file="Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp"/>
@@ -409,6 +415,35 @@
         <FILE id="tXTVXG" name="LightBlock.h" compile="0" resource="0" file="Source/LightBlock/LightBlock.h"/>
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
+        <GROUP id="{D40B9824-1B5B-6FA5-B249-175979B439C7}" name="Shape">
+          <GROUP id="{8334483F-C7CD-CCBB-F1CF-4555459226ED}" name="ui">
+            <FILE id="ZTyQbn" name="PropShapeCurveEasingUI.cpp" compile="1" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapeCurveEasingUI.cpp"/>
+            <FILE id="A48bQa" name="PropShapeCurveEasingUI.h" compile="0" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapeCurveEasingUI.h"/>
+            <FILE id="JWQL1Z" name="PropShapePanel.cpp" compile="1" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapePanel.cpp"/>
+            <FILE id="alR6ag" name="PropShapePanel.h" compile="0" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapePanel.h"/>
+            <FILE id="TqECKE" name="PropShapeView.cpp" compile="1" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapeView.cpp"/>
+            <FILE id="A6ThJI" name="PropShapeView.h" compile="0" resource="0" file="Source/Prop/Shape/ui/PropShapeView.h"/>
+          </GROUP>
+          <FILE id="DGBGhk" name="PropShape.cpp" compile="1" resource="0" file="Source/Prop/Shape/PropShape.cpp"/>
+          <FILE id="hq1Byn" name="PropShape.h" compile="0" resource="0" file="Source/Prop/Shape/PropShape.h"/>
+          <FILE id="PmEfOn" name="PropShapeCurve.cpp" compile="1" resource="0"
+                file="Source/Prop/Shape/PropShapeCurve.cpp"/>
+          <FILE id="dDfLFa" name="PropShapeCurve.h" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeCurve.h"/>
+          <FILE id="KMeMRs" name="PropShapeCurveEasing.cpp" compile="1" resource="0"
+                file="Source/Prop/Shape/PropShapeCurveEasing.cpp"/>
+          <FILE id="svKZLE" name="PropShapeCurveEasing.h" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeCurveEasing.h"/>
+          <FILE id="ZAvWlh" name="PropShapeGroup.cpp" compile="1" resource="0"
+                file="Source/Prop/Shape/PropShapeGroup.cpp"/>
+          <FILE id="loKohm" name="PropShapeGroup.h" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeGroup.h"/>
+        </GROUP>
         <FILE id="WR3mnT" name="PropFamily.cpp" compile="1" resource="0" file="Source/Prop/PropFamily.cpp"/>
         <FILE id="p2GnSz" name="PropFamily.h" compile="0" resource="0" file="Source/Prop/PropFamily.h"/>
         <GROUP id="{2C9EC421-B4F2-97F6-B5FC-EB3BC810C022}" name="TargetFilter">

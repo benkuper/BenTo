@@ -109,6 +109,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameterEditor_fa2e916a.o \
   $(JUCE_OBJDIR)/LightBlockModelParameterManagerEditor_47e83067.o \
   $(JUCE_OBJDIR)/LightBlockModelUI_9ea7118a.o \
+  $(JUCE_OBJDIR)/PropShapeBlock_19846211.o \
   $(JUCE_OBJDIR)/LightBlockFilter_b3294d37.o \
   $(JUCE_OBJDIR)/ScriptBlockFilter_2a4ec35e.o \
   $(JUCE_OBJDIR)/BrightnessContrastBlockFilter_2ee8e776.o \
@@ -131,6 +132,13 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameter_4dedce96.o \
   $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o \
   $(JUCE_OBJDIR)/LightBlock_43a72d10.o \
+  $(JUCE_OBJDIR)/PropShapeCurveEasingUI_6031bbfa.o \
+  $(JUCE_OBJDIR)/PropShapePanel_5cefd2f0.o \
+  $(JUCE_OBJDIR)/PropShapeView_3c8b67c3.o \
+  $(JUCE_OBJDIR)/PropShape_99b69cad.o \
+  $(JUCE_OBJDIR)/PropShapeCurve_5462c50c.o \
+  $(JUCE_OBJDIR)/PropShapeCurveEasing_fa24f397.o \
+  $(JUCE_OBJDIR)/PropShapeGroup_ce04729c.o \
   $(JUCE_OBJDIR)/PropFamily_1b08e5d4.o \
   $(JUCE_OBJDIR)/PropTargetFilterManager_c46f408.o \
   $(JUCE_OBJDIR)/PropTargetFilter_a9a21d2f.o \
@@ -500,6 +508,11 @@ $(JUCE_OBJDIR)/LightBlockModelUI_9ea7118a.o: ../../Source/LightBlock/model/ui/Li
 	@echo "Compiling LightBlockModelUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/PropShapeBlock_19846211.o: ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShapeBlock.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/LightBlockFilter_b3294d37.o: ../../Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LightBlockFilter.cpp"
@@ -608,6 +621,41 @@ $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o: ../../Source/LightBlo
 $(JUCE_OBJDIR)/LightBlock_43a72d10.o: ../../Source/LightBlock/LightBlock.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LightBlock.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropShapeCurveEasingUI_6031bbfa.o: ../../Source/Prop/Shape/ui/PropShapeCurveEasingUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShapeCurveEasingUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropShapePanel_5cefd2f0.o: ../../Source/Prop/Shape/ui/PropShapePanel.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShapePanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropShapeView_3c8b67c3.o: ../../Source/Prop/Shape/ui/PropShapeView.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShapeView.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropShape_99b69cad.o: ../../Source/Prop/Shape/PropShape.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShape.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropShapeCurve_5462c50c.o: ../../Source/Prop/Shape/PropShapeCurve.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShapeCurve.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropShapeCurveEasing_fa24f397.o: ../../Source/Prop/Shape/PropShapeCurveEasing.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShapeCurveEasing.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/PropShapeGroup_ce04729c.o: ../../Source/Prop/Shape/PropShapeGroup.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling PropShapeGroup.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/PropFamily_1b08e5d4.o: ../../Source/Prop/PropFamily.cpp

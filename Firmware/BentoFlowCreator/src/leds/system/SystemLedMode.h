@@ -19,7 +19,7 @@ public:
     float uploadProgress;
 
     void init() override;
-    void update() override;
+    bool update() override;
 
     void setBatteryColor(CRGB color);
     void setConnectionState(ConnectionState state);

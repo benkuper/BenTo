@@ -12,12 +12,12 @@
 
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "Prop/PropManager.h"
+#include "Prop/Shape/PropShape.h"
 #include "Video/Spatializer.h"
 #include "Audio/AudioManager.h"
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
 #include "Node/NodeManager.h"
-
 #include "BentoSettings.h"
 
 BentoEngine::BentoEngine() :
@@ -52,6 +52,7 @@ BentoEngine::BentoEngine() :
 BentoEngine::~BentoEngine()
 {
 	PropManager::deleteInstance();
+	PropShapeLibrary::deleteInstance();
 
 	SerialManager::deleteInstance();
 

@@ -35,17 +35,20 @@ void LedManager::update()
 #ifdef LED_COUNT
     //if (mode == System) rgbManager.clear();
 
+    bool shouldUpdateLeds = false;
+
     if (connectionIsAlive || playerMode.isPlaying)
     {
         if (currentMode != nullptr)
-            currentMode->update();
+            shouldUpdateLeds = currentMode->update();
     }
     else
     {
-        rgbManager.point(CHSV(0, 255, cos(millis() / 100.0f) * 127 + 127), .5f, .1f);
+        rgbManager.point(CHSV(0, 255, cos(millis() / 200.0f) * 127 + 127), .5f, .05f);
+        shouldUpdateLeds = true;
     }
 
-    rgbManager.update();
+    if(shouldUpdateLeds) rgbManager.update();
     irManager.update();
 
     connectedTimer.update();

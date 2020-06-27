@@ -45,6 +45,7 @@ public:
 
 	//Live Feed
 	std::unique_ptr<LightBlockModel> videoBlock;
+	std::unique_ptr<LightBlockModel> shapeBlock;
 	std::unique_ptr<LightBlockModel> dmxBlock;
 
 	//Interface

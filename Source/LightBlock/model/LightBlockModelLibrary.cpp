@@ -12,6 +12,7 @@
 #include "blocks/timeline/TimelineBlock.h"
 #include "blocks/pattern/PatternBlock.h"
 #include "blocks/video/VideoBlock.h"
+#include "blocks/shape/PropShapeBlock.h"
 #include "blocks/dmx/DMXBlock.h"
 #include "blocks/picture/PictureBlock.h"
 #include "blocks/filters/generic/remap/RemapBlockFilter.h"
@@ -39,7 +40,8 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	pointBlock.reset(new PointPattern());
 	multiPointBlock.reset(new MultiPointPattern());
 
-	videoBlock.reset(new VideoBlock());
+	videoBlock.reset(new VideoBlock());;
+	shapeBlock.reset(new ShapeEditorBlock());;
 	dmxBlock.reset(new DMXBlock());
 
 	genericBlocks.addChildControllableContainer(solidColorBlock.get());
@@ -52,6 +54,7 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	addChildControllableContainer(&genericBlocks);
 
 	liveFeedBlocks.addChildControllableContainer(videoBlock.get());
+	liveFeedBlocks.addChildControllableContainer(shapeBlock.get());
 	//liveFeedBlocks.addChildControllableContainer(dmxBlock.get());
 	addChildControllableContainer(&liveFeedBlocks);
 

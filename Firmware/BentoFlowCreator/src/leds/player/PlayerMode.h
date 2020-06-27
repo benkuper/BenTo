@@ -7,7 +7,8 @@
 
 #ifdef LED_COUNT
 
-#define FRAME_SIZE (LED_COUNT * 4)
+#define COLOR_SIZE 3
+#define FRAME_SIZE (LED_COUNT * COLOR_SIZE)
 
 class PlayerEvent
 {
@@ -59,20 +60,17 @@ public:
   long timeSinceLastSeek;
   float timeToSeek; //used to limit seeking
 
-  byte buffer[FRAME_SIZE];
-  
-  //data
-  CRGB *ledBuffer;
+  //byte buffer[FRAME_SIZE];
 
   void init() override;
-  void update() override;
+  bool update() override;
 
-  void playFrame();
+  bool playFrame();
   void showBlackFrame();
   void showIdFrame();
   void showCurrentFrame();
 
-  void updateLeds();
+  //void updateLeds();
 
   void start() override;
   void stop() override;

@@ -12,7 +12,7 @@
 
 #define LED_PIN1 12 //purple
 #define LED_PIN2 32 //blue
-#define LED_PIN3 15 //green
+#define LED_PIN3 19 //green
 #define LED_PIN4 27 //grey
 #define LED_PIN5 33 //white
 
@@ -35,4 +35,8 @@
 #define BUTTON_COUNT 0
 
 #define HAS_FILES
-#define FILES_USE_INTERNAL_MEMORY
+#define SDSPEED 10000000
+#define SD_MISO 21
+#define SD_MOSI 13
+#define SD_SCK 14
+#define SD_CS 15

@@ -41,8 +41,11 @@ void FileManager::init()
     }
    
 #else
+
+#ifdef SD_EN
     pinMode(SD_EN, OUTPUT);
     digitalWrite(SD_EN, LOW);
+#endif
 
     pinMode(SD_SCK, INPUT_PULLUP);
     pinMode(SD_MISO, INPUT_PULLUP);

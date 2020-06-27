@@ -122,12 +122,10 @@ void BentoProp::sendColorsToPropInternal()
 	int offset = 0;
 	int numPacketSent = 0;
 
-	DBG("Sending total bytes " << dataSize);
 	while (offset < dataSize)
 	{
 		int length = jmin(maxPacketSize, dataSize - offset);
 
-		DBG("Sending packet " << numPacketSent << " with offset " << offset << ", length " << length);
 		int dataSent = sender.write(remoteHost->stringValue(), remotePort, data.getRawDataPointer() + offset, length);
 		
 		if (dataSent == -1)
@@ -138,7 +136,7 @@ void BentoProp::sendColorsToPropInternal()
 
 		numPacketSent++;
 		offset += dataSent;
-		sleep(1);
+		sleep(2);
 
 	}
 }

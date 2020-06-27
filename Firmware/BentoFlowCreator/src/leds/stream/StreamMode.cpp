@@ -5,92 +5,75 @@
 StreamMode::StreamMode(CRGB *leds, int numLeds) : LedMode("stream", leds, numLeds),
                                                   //ledBufferIndex(0),
                                                   //colorBufferIndex(0)
-                                                  byteIndex(0)
+                                                  byteIndex(0),
+                                                  hasOverflowed(false)
 {
-    streamBuffer = (uint8_t *)malloc(numLeds * 3 + 1);
+    //streamBuffer = (uint8_t *)malloc(MAX_PACKET_SIZE);
 }
 
 StreamMode::~StreamMode()
 {
-    free(streamBuffer);
+   // free(streamBuffer);
 }
 
 void StreamMode::init()
 {
 }
 
-void StreamMode::update()
+bool StreamMode::update()
 {
     long curTime = millis();
     if (curTime > lastReceiveTime + (1000 / receiveRate))
     {
-        receiveUDP();
         lastReceiveTime = curTime;
+        return receiveUDP();
     }
+    return false;
 }
 
-void StreamMode::receiveUDP()
+bool StreamMode::receiveUDP()
 {
     while (int packetSize = udp.parsePacket())
     {
-        int numRead = udp.read(streamBuffer, numLeds * 3 + 1);
+        int numRead = udp.read(streamBuffer, MAX_PACKET_SIZE);
        
-       // DBG("Packet size : " + String(packetSize) + ", numRead : "+String(numRead));
+        //DBG("Packet size : " + String(packetSize) + ", numRead : "+String(numRead));
        
-       if(numRead == 0) return;
+        if(numRead == 0) return false;
         bool isFinal = streamBuffer[numRead - 1] == 255;
-        if(isFinal) numRead--;
+
+        if(isFinal)
+        {
+            if(hasOverflowed) //if had overflowed, discard current packet and reset for next one
+            {
+                DBG("Discard overflowed packet, reset for next one");
+                byteIndex = 0;
+                hasOverflowed = false;
+                return false;
+            }
+
+            numRead--;
+        } 
 
         if(byteIndex+numRead > numLeds * 3)
         {
             DBG("Stream OVERFLOW, end index would reach " +String(byteIndex+numRead));
+            hasOverflowed = true;
         }else
         {
-           // DBG(" > Copying at "+String(byteIndex));
+            //DBG(" > Copying at "+String(byteIndex));
             memcpy((uint8_t *)leds+byteIndex, streamBuffer, numRead);
         }
         
         byteIndex += numRead;
         if (isFinal)
         {
-           // DBG(" > isFinal : " +String((int)isFinal));
             byteIndex = 0;
-            //processBuffer();
-        }
-        else
-        {
-            /*
-            for (int i = 0; i < numRead - 1; i++)
-            {
-                colorBuffer[colorBufferIndex] = streamBuffer[i];
-                colorBufferIndex++;
-                if (colorBufferIndex == 3)
-                {
-                    if (ledBufferIndex < numLeds)
-                    {
-                        leds[LEDMAP(ledBufferIndex)] = CRGB(colorBuffer[0], colorBuffer[1], colorBuffer[2]);
-                    }
-                    else
-                    {
-                        DBG("Overflow ! " + String(ledBufferIndex) + ", max leds is " + String(numLeds));
-                    }
-
-                    colorBufferIndex = 0;
-                    ledBufferIndex++;
-                }
-            }
-            */
+            return true;
         }
     }
-}
 
-void StreamMode::processBuffer()
-{
-    //if (isActive)
-    //    memcpy(leds, ledBuffer, numLeds * sizeof(CRGB));
-    //memset()
-    //colorBufferIndex = 0;
-    //ledBufferIndex = 0;
+    return false;
 }
 
 void StreamMode::start()

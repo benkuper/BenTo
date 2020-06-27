@@ -104,6 +104,9 @@
     <Filter Include="BenTo\Source\LightBlock\model\ui">
       <UniqueIdentifier>{B383C455-EF1C-7AEC-66DF-D469CE5E13A6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\shape">
+      <UniqueIdentifier>{E5517CF7-7EE0-BCAE-B9D5-0AB2C64316EA}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\script">
       <UniqueIdentifier>{C3943C21-6376-0C6F-3A53-A74B1559EC2B}</UniqueIdentifier>
     </Filter>
@@ -163,6 +166,12 @@
     </Filter>
     <Filter Include="BenTo\Source\LightBlock">
       <UniqueIdentifier>{07B6EB5A-7A48-BF26-A252-CEAA6633C65E}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Shape\ui">
+      <UniqueIdentifier>{92FA12E6-6A6E-84CD-1C95-9572ACEFA3C7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Shape">
+      <UniqueIdentifier>{161BE3AF-5FB1-716F-5DB3-CF6938320196}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\TargetFilter">
       <UniqueIdentifier>{A70E970E-2CC8-081F-AE46-444773171B53}</UniqueIdentifier>
@@ -1057,6 +1066,9 @@
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
     </ClCompile>
@@ -1122,6 +1134,27 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp">
       <Filter>BenTo\Source\LightBlock</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
       <Filter>BenTo\Source\Prop</Filter>
@@ -4041,6 +4074,9 @@
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
     </ClInclude>
@@ -4109,6 +4145,27 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h">
       <Filter>BenTo\Source\LightBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShape.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurve.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeGroup.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\PropFamily.h">
       <Filter>BenTo\Source\Prop</Filter>
