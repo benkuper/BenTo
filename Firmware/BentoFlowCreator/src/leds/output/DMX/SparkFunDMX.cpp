@@ -89,6 +89,7 @@ void DMXESPSerial::initRead(int chanQuant) {
 // Set up the DMX-Protocol
 void DMXESPSerial::initWrite (int chanQuant) {
 
+  DBG("DMXESPSerial init");
   _READWRITE = _WRITE;
   if (chanQuant > dmxMaxChannel || chanQuant <= 0) {
     chanQuant = defaultMax;
@@ -99,6 +100,8 @@ void DMXESPSerial::initWrite (int chanQuant) {
   DMXSerial.begin(DMXSPEED, DMXFORMAT, rxPin, txPin);
   pinMode(enablePin, OUTPUT);
   digitalWrite(enablePin, HIGH);
+
+  DBG("DMXESPSerial is initialized");
 }
 
 // Function to read DMX data
