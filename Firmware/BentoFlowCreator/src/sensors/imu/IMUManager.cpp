@@ -14,8 +14,8 @@ IMUManager::IMUManager() : Component("imu"),
 {
 #ifdef HAS_IMU
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
-  bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
-  bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
+  bno.setAxisRemap(Adafruit_BNO055::IMU_REMAP_CONFIG);
+  bno.setAxisSign(Adafruit_BNO055::IMU_REMAP_SIGN);
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 #endif
 

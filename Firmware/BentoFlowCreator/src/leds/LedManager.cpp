@@ -100,6 +100,8 @@ void LedManager::setMode(Mode m)
 
 void LedManager::shutdown(CRGB color)
 {
+#ifndef NO_ANIMATIONS
+
 #ifdef LED_COUNT
     CRGB initLeds[LED_COUNT];
     memcpy(initLeds, rgbManager.leds, LED_COUNT * sizeof(CRGB));
@@ -123,7 +125,10 @@ void LedManager::shutdown(CRGB color)
     rgbManager.clear();
     rgbManager.update();
 #endif //LED_COUNT
-    delay(100);
+
+#endif
+
+delay(100);
 }
 
 void LedManager::setConnectionState(ConnectionState state)

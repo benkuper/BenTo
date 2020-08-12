@@ -9,6 +9,7 @@
 #define LED_COUNT 2
 #define LED_SEPARATE_CHANNELS 1
 #define PWMVAL(i) map(i, 0, 255, 1023, 0)
+#define NO_ANIMATIONS
 
 #define HAS_FILES
 #define FILES_USE_INTERNAL_MEMORY

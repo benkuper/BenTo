@@ -19,6 +19,9 @@ void SystemLedMode::init()
 bool SystemLedMode::update()
 {
    LedHelpers::clear(leds, numLeds);
+
+#ifndef NO_ANIMATIONS
+
    float relT = millis() / 1000.0f - timeAtStateChange;
    const float animTime = 2.0f; //2 second anim time
 
@@ -68,6 +71,8 @@ bool SystemLedMode::update()
 
    LedHelpers::point(leds, numLeds, color, pos, radius, true);
 
+#endif
+
    return true;
 }
 
@@ -81,6 +86,8 @@ void SystemLedMode::setConnectionState(ConnectionState state)
 
 void SystemLedMode::showUploadProgress(float value)
 {
+
+#ifndef NO_ANIMATIONS
    uploadProgress = fmodf(value*2,1);
    int curPage = floor(value*2);
    uploadFeedback = true;
@@ -92,6 +99,8 @@ void SystemLedMode::showUploadProgress(float value)
 
 #if !defined LEDS_SEPARATE_CHANNELS && !defined LED_USE_DMX
    FastLED.show(); //force here because no update in leds when uploading apparently
+#endif
+
 #endif
 
 }
