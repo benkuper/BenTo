@@ -137,8 +137,9 @@ void BentoProp::sendColorsToPropInternal()
 		numPacketSent++;
 		offset += dataSent;
 		sleep(2);
-
 	}
+
+	if (numPacketSent > 1) sleep(10);
 }
 
 void BentoProp::uploadBakedData(BakeData data)

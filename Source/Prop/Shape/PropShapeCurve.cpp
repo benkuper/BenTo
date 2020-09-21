@@ -25,12 +25,12 @@ Array<Colour> PropShapeCurve::getTestColors(int maxCount)
 {
     float hue = 0;
     Array<Colour> result;
-    for (auto& section : items)
+    for (int i=0;i<items.size()-1;i++)
     {
-        if (PropShapeCurveEasing* pe = dynamic_cast<PropShapeCurveEasing*>(section->easing.get()))
+        if (PropShapeCurveEasing* pe = dynamic_cast<PropShapeCurveEasing*>(items[i]->easing.get()))
         {
-            int numPixels = pe->numPixels->intValue();;
-            for (int i = 0; i < numPixels; i++)
+            int numPixels = pe->numPixels->intValue();
+            for (int pix = 0; pix < numPixels; pix++)
             {
                 if (maxCount >= 0 && result.size() >= maxCount) return result;
                 result.add(Colour::fromHSV(hue, 1, 1, 1));

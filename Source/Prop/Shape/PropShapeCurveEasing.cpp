@@ -15,7 +15,7 @@ PropShapeCurveEasing::PropShapeCurveEasing(Easing2D* easing2D) :
     easing2D(easing2D)
 {
     easing2D->showInspectorOnSelect = true;
-    numPixels = easing2D->addIntParameter("Num Pixels", "Number of pixels on this strip", 10, 0, 1000);
+    numPixels = easing2D->addIntParameter("Num Pixels", "Number of pixels on this strip", 0, 0, 1000);
 }
 
 PropShapeCurveEasing::~PropShapeCurveEasing()

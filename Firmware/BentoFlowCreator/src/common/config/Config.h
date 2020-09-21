@@ -7,8 +7,8 @@
 //  #define LT_HOOP
 //  #define CLARINET
 //  #define GLOVE
-  #define GENERIC_PWM
-//  #define DMX
+//  #define GENERIC_PWM
+  #define DMX
 //    #define DRESS
 //#define FLAIR
 
