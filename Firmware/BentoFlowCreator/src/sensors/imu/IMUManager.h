@@ -6,7 +6,7 @@
 class IMUEvent
 {
 public:
-    enum Type { OrientationUpdate, Shock, FreeFall, TYPES_MAX };
+    enum Type { OrientationUpdate, Shock, FreeFall, CalibrationStatus, TYPES_MAX };
     static const String eventNames[TYPES_MAX];
 
     IMUEvent(Type t) : type(t) {}
@@ -30,6 +30,7 @@ public:
     long timeSinceOrientationLastSent;
 
     float orientation[4];
+    float calibration[4];
     
     void init();
     void update();
