@@ -189,6 +189,19 @@ void MainManager::imuEvent(const IMUEvent &e)
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 3);
     }
     break;
+
+    case IMUEvent::CalibrationStatus:
+    {
+        var data[4];
+        for (int i = 0; i < 4; i++)
+        {
+            data[i].type = 'f';
+            data[i].value.f = imu.calibration[i];
+        }
+
+        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 4);
+    }
+    break;
     }
 }
 

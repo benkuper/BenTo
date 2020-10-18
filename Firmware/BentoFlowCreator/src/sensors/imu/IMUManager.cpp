@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", "freefall" };
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", "freefall", "calibration"};
 
 IMUManager::IMUManager() : Component("imu"),
 #ifdef HAS_IMU
@@ -91,9 +91,22 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
   {
     setEnabled(data[0].intValue());
     return true;
-  }else if(checkCommand(command, "updateRate", numData, 1))
+  } else if(checkCommand(command, "updateRate", numData, 1))
   {
     orientationSendTime = 1000/data[0].intValue();
+    return true;
+  } else if (checkCommand(command, "calibrationStatus", numData, 0))
+  {
+    uint8_t system, gyro, accel, mag;
+    system = gyro = accel = mag = 0;
+    bno.getCalibration(&system, &gyro, &accel, &mag);
+
+    calibration[0] = (float) system;
+    calibration[1] = (float) gyro;
+    calibration[2] = (float) accel;
+    calibration[3] = (float) mag;
+
+    sendEvent(IMUEvent(IMUEvent::CalibrationStatus));
     return true;
   }
 
