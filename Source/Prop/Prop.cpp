@@ -276,9 +276,7 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		if (PropManager::getInstance()->sendFeedback->boolValue())
 		{
-			OSCMessage m(c->getControlAddress(PropManager::getInstance()));
-			if (c->type != c->TRIGGER) m.addArgument(OSCHelpers::varToArgument(((Parameter*)c)->getValue()));
-
+			OSCMessage m = OSCHelpers::getOSCMessageForControllable(c, PropManager::getInstance());
 			BentoEngine* be = (BentoEngine*)Engine::mainEngine;
 			PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
 		}
