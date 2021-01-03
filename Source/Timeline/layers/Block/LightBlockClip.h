@@ -20,7 +20,7 @@ class LightBlockClip :
 	public LightBlock::LightBlockListener
 {
 public:
-	LightBlockClip(LightBlockLayer * layer = nullptr, float time = 0);
+	LightBlockClip(LightBlockLayer * layer = nullptr);
 	~LightBlockClip();
 
 	LightBlockLayer * layer;

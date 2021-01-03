@@ -2257,9 +2257,6 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BetterStepper.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolImageToggleUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolToggleUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2644,6 +2641,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui3.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui4.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_osc\osc\juce_OSCAddress.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2849,6 +2849,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui4.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
@@ -3762,7 +3763,6 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\GradientColor.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\gradient\GradientColorManager.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BetterStepper.h"/>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolImageToggleUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\BoolToggleUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorParameterUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\DoubleSliderUI.h"/>

@@ -605,6 +605,10 @@
 			isa = PBXBuildFile;
 			fileRef = 63160219D84DDCF42728B2E5;
 		};
+		751ED75F4438D941D4B18A83 = {
+			isa = PBXBuildFile;
+			fileRef = CDBA5C4AC23371015C00FE6E;
+		};
 		B08670E180B436DAF208B572 = {
 			isa = PBXBuildFile;
 			fileRef = 878A4313101E6FF0D57EE3CD;
@@ -2290,6 +2294,13 @@
 			path = ../../Source/Common/Serial/SerialDevice.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		CDBA5C4AC23371015C00FE6E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = "include_juce_organicui4.cpp";
+			path = "../../JuceLibraryCode/include_juce_organicui4.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
 		CDF46B099D8A37106496ED1F = {
 			isa = PBXFileReference;
 			lastKnownFileType = file;
@@ -3621,6 +3632,7 @@
 				D6B4CB4780E26B5B19D4768A,
 				38F811D5159ADC42396F5517,
 				63160219D84DDCF42728B2E5,
+				CDBA5C4AC23371015C00FE6E,
 				878A4313101E6FF0D57EE3CD,
 				F8CC2AA9A461022D52BD9030,
 				B3F00A16D10651397C0D1BAE,
@@ -4065,6 +4077,7 @@
 				C81B7CA2C8D2947850A2243A,
 				EB901348F68195A64875526D,
 				176069FBF6F64CDF5ECF21E2,
+				751ED75F4438D941D4B18A83,
 				B08670E180B436DAF208B572,
 				F1F282CEE91073ADD267F058,
 				A198394E001844380ACD129F,

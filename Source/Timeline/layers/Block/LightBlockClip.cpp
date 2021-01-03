@@ -13,8 +13,8 @@
 #include "LightBlock/model/blocks/timeline/TimelineBlock.h"
 #include "Prop/Prop.h"
 
-LightBlockClip::LightBlockClip(LightBlockLayer * layer, float _time) :
-	LayerBlock("LightBlockClip", _time),
+LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
+	LayerBlock(getTypeString()),
 	filters("Block Filters"),
 	layer(layer),
 	clipNotifier(10)
