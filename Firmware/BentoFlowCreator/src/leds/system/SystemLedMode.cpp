@@ -73,6 +73,10 @@ bool SystemLedMode::update()
 
 #endif
 
+   #ifdef FASTLED_FORCE_LOOPDELAY
+      FastLED.delay(1);
+   #endif
+   
    return true;
 }
 
@@ -99,6 +103,7 @@ void SystemLedMode::showUploadProgress(float value)
 
 #if !defined LEDS_SEPARATE_CHANNELS && !defined LED_USE_DMX
    FastLED.show(); //force here because no update in leds when uploading apparently
+   FastLED.delay(1);
 #endif
 
 #endif

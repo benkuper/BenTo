@@ -44,7 +44,7 @@ private :
     const int shortPressTime = 500;       //less than 500ms is short press
     const int multiPressTime = 300;       //each new press shorter than 500ms after the previous one will increase the multiclick
     
-    const int buttonPressDebounce = 5;    //denoising, needs five reads to validate a change
+    const int buttonPressDebounce = 100;    //denoising, needs five reads to validate a change
     int debounceCount[BUTTON_COUNT];
 
     long timeAtPress[BUTTON_COUNT];

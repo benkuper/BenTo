@@ -25,7 +25,7 @@ NodeConnectionManagerUI::~NodeConnectionManagerUI()
 
 void NodeConnectionManagerUI::resized()
 {
-	for (auto &i : itemsUI) i->updateBounds();
+	
 }
 
 void NodeConnectionManagerUI::paint(Graphics & g)

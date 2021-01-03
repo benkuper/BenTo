@@ -3,15 +3,15 @@
 #ifndef CONFIG_FILE
 #define CONFIG_FILE
 
-#define DEVICE_TYPE "Clarinet"
+#define DEVICE_TYPE "Guitar"
 
 #ifndef ESP32
 #define ESP32
 #endif
 
 // main leds config
-#define LED_COUNT 75
-#define LED_DATA_PIN 27
+#define LED_COUNT 324
+#define LED_DATA_PIN 15
 #define LED_TYPE WS2812B
 #define LED_COLOR_ORDER GRB
 

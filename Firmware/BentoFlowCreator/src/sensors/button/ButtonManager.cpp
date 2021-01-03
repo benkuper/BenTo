@@ -16,10 +16,6 @@ ButtonManager::ButtonManager() : Component("buttons")
 
 void ButtonManager::init()
 {
-#ifdef BUTTON_REF_PULLDOWN
-    pinMode(BUTTON_REF_PULLDOWN, OUTPUT);
-    digitalWrite(BUTTON_REF_PULLDOWN, LOW);
-#endif
 
 #if BUTTON_COUNT > 0
     for (int i = 0; i < BUTTON_COUNT; i++)
@@ -51,6 +47,7 @@ void ButtonManager::update()
         bool newPressed = isPressed[i];
         if (isPressed[i] && debounceCount[i] == 0)
             newPressed = false;
+
         if (!isPressed[i] && debounceCount[i] == buttonPressDebounce)
             newPressed = true;
 

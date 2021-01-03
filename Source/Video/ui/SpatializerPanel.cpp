@@ -105,6 +105,7 @@ SpatLayoutView::SpatLayoutView(Spatializer * spat, SpatLayout * layout) :
 	spat(spat),
 	layout(layout)
 {
+	
 	transparentBG = true;
 	addExistingItems();
 }

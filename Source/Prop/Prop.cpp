@@ -18,7 +18,7 @@
 #include "Component/imu/IMUComponent.h"
 #include "Component/ir/IRPropComponent.h"
 #include "Component/rgb/RGBComponent.h"
-
+#include "BentoEngine.h"
 #include "ui/PropEditor.h"
 
 Prop::Prop(var params) :
@@ -271,6 +271,17 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	else if (c == restartTrigger)
 	{
 		restartProp();
+	}
+	else if (PropComponent* pc = dynamic_cast<PropComponent*>(cc))
+	{
+		if (PropManager::getInstance()->sendFeedback->boolValue())
+		{
+			OSCMessage m(c->getControlAddress(PropManager::getInstance()));
+			if (c->type != c->TRIGGER) m.addArgument(OSCHelpers::varToArgument(((Parameter*)c)->getValue()));
+
+			BentoEngine* be = (BentoEngine*)Engine::mainEngine;
+			PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
+		}
 	}
 }
 

@@ -12,6 +12,23 @@ void MainManager::init()
     display.init();
 #endif
 
+#ifdef GROUND_PIN_COUNT
+    for (int i = 0; i < GROUND_PIN_COUNT; i++)
+    {
+        pinMode(groundPins[i], OUTPUT);
+        digitalWrite(groundPins[i], LOW);
+    }
+#endif
+
+
+#ifdef HIGH_PIN_COUNT
+    for (int i = 0; i < HIGH_PIN_COUNT; i++)
+    {
+        pinMode(highPins[i], OUTPUT);
+        digitalWrite(highPins[i], HIGH);
+    }
+#endif
+
     leds.init();
 
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
@@ -52,12 +69,11 @@ void MainManager::update()
     battery.update();
     buttons.update();
     imu.update();
-
 }
 
 void MainManager::sleep(CRGB color)
 {
-    //NDBG("Sleep now ! ");
+    NDBG("Sleep now ! ");
     comm.sendMessage(name, "sleep", nullptr, 0);
     leds.shutdown(color); //to replace with battery color
 
@@ -147,6 +163,7 @@ void MainManager::buttonEvent(const ButtonEvent &e)
     data[0].value.i = e.id;
     data[0].type = 'i';
 
+
     if (numBTData > 1)
     {
         data[1].value.i = e.value;
@@ -163,11 +180,22 @@ void MainManager::buttonEvent(const ButtonEvent &e)
             if (comm.wifiManager.state == Connecting)
                 comm.wifiManager.disable();
         }
+        NDBG("Button " + String(e.id) + " " + String(e.value));
         break;
 
     case ButtonEvent::VeryLongPress:
     {
-        if(e.id == 0) sleep(); //only first button can sleep
+
+#ifndef NO_SLEEP_BUTTON
+#ifdef SLEEP_BUTTON_ID
+        int sleepBTID = SLEEP_BUTTON_ID;
+#else
+        int sleepBTID = 0;
+#endif
+
+        if (e.id == sleepBTID)
+            sleep(); //only first button can sleep
+#endif
     }
     break;
     }

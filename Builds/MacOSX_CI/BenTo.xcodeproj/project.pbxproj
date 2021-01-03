@@ -41,6 +41,10 @@
 			isa = PBXBuildFile;
 			fileRef = 6806B401C505FE83595D0AD9;
 		};
+		C31CA8A45C48E993EECFB5DC = {
+			isa = PBXBuildFile;
+			fileRef = F876A9DBCE6840C04178B047;
+		};
 		709F5FFB5DB8CB297E21AEB7 = {
 			isa = PBXBuildFile;
 			fileRef = 500D85928B2B8F7C8E885687;
@@ -2629,6 +2633,13 @@
 			path = ../../Source/Node/nodes/composite/CompositeNode.h;
 			sourceTree = "SOURCE_ROOT";
 		};
+		F876A9DBCE6840C04178B047 = {
+			isa = PBXFileReference;
+			lastKnownFileType = wrapper.framework;
+			name = Foundation.framework;
+			path = System/Library/Frameworks/Foundation.framework;
+			sourceTree = SDKROOT;
+		};
 		F88C4125CBD0921490CDCD49 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.cpp.cpp;
@@ -3639,6 +3650,7 @@
 				05147B0EFDCDAF5F831D2723,
 				EE53B220A439D01A313C291E,
 				6806B401C505FE83595D0AD9,
+				F876A9DBCE6840C04178B047,
 				500D85928B2B8F7C8E885687,
 				BD281F63F59F33DAAC163F85,
 				364CB31C87000456A9F0353F,
@@ -3713,10 +3725,19 @@
 					"\"../../External/servus/lib/osx/debug\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_HEADER_SEARCH_PATHS = (
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../Modules",
+					"../../External/serial/include",
+					"../../External/servus/include",
+					"../../Source",
+				);
 				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
 			};
 			name = Debug;
 		};
@@ -3766,10 +3787,19 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				MTL_HEADER_SEARCH_PATHS = (
+					"../../JuceLibraryCode",
+					"$(HOME)/JUCE/modules",
+					"../../Modules",
+					"../../External/serial/include",
+					"../../External/servus/include",
+					"../../Source",
+				);
 				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
+				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
 			};
 			name = Release;
 		};
@@ -4053,6 +4083,7 @@
 				BD752E66BA8677849E5469C2,
 				67FAA799A12BF5BAC1541E25,
 				D1F17863F7C6BC0F87933636,
+				C31CA8A45C48E993EECFB5DC,
 				709F5FFB5DB8CB297E21AEB7,
 				FD63D2EE9C5301FAD6429F69,
 				AA276303915643D9EC996713,
@@ -4078,7 +4109,7 @@
 		6A50FB53C4AC2437E07541F9 = {
 			isa = PBXProject;
 			buildConfigurationList = 4ABBAA74D0C6E8AEFE38E070;
-			attributes = { LastUpgradeCheck = 1100; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
+			attributes = { LastUpgradeCheck = 1200; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
 			mainGroup = FD3BED1C20E9C5CB1E29BC58;

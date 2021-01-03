@@ -6,11 +6,16 @@
 //  #define LT_BALL
 //  #define LT_HOOP
 //  #define CLARINET
+  #define SAX
+//  #define GUITAR
 //  #define GLOVE
 //  #define GENERIC_PWM
-  #define DMX
-//    #define DRESS
-//#define FLAIR
+//  #define DMX
+//  #define DRESS
+//  #define FLAIR
+
+//#define BOX
+//#define MAKEY
 
 #if defined CREATOR_PROTO_V0
 #include "config_protov0.h"
@@ -24,6 +29,14 @@
 #include "config_ltball.h"
 #elif defined CLARINET
 #include "config_clarinet.h"
+#elif defined SAX
+#include "config_sax.h"
+#elif defined GUITAR
+#include "config_guitar.h"
+#elif defined BOX
+#include "config_box.h"
+#elif defined MAKEY
+#include "config_makey.h"
 #elif defined GLOVE
 #include "config_glove.h"
 #elif defined GENERIC_PWM
