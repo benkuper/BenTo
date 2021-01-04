@@ -16,7 +16,7 @@ public:
     WiFiUDP udp;
 
     //tempo
-    const int receiveRate = 60; //receive at 60fps max
+    const int receiveRate = 50; //receive at 60fps max
     long lastReceiveTime;
 
     uint8_t streamBuffer[MAX_PACKET_SIZE];
