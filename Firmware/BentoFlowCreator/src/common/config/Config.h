@@ -2,11 +2,11 @@
 
 //  #define CREATOR_PROTO_V0
 //  #define CREATOR_PROTO_V1
-// #define CREATOR_PROTO_V2
+ #define CREATOR_PROTO_V2
 //  #define LT_BALL
 //  #define LT_HOOP
 //  #define CLARINET
-  #define SAX
+//  #define SAX
 //  #define GUITAR
 //  #define GLOVE
 //  #define GENERIC_PWM
