@@ -695,10 +695,10 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
-            externalLibraries="Setupapi.lib&#10;Servus.lib">
+            externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/win/x64/release"/>
+        <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
+                       libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
