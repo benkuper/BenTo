@@ -50,6 +50,12 @@
     <Filter Include="BenTo\Source\Video">
       <UniqueIdentifier>{871EB0F9-7C2C-9AC7-2172-59ED2441BD4F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\VideoLayer\ui">
+      <UniqueIdentifier>{280DBE22-3D3A-8E2F-1226-D4BF788EA185}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Timeline\layers\VideoLayer">
+      <UniqueIdentifier>{36AE759B-781F-165F-EF49-00CA96D4049F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Timeline\layers\BlockLayer\ui">
       <UniqueIdentifier>{0582B79D-D7E8-BFFC-6CC8-D525FCDA1785}</UniqueIdentifier>
     </Filter>
@@ -167,6 +173,9 @@
     <Filter Include="BenTo\Source\LightBlock">
       <UniqueIdentifier>{07B6EB5A-7A48-BF26-A252-CEAA6633C65E}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\VideoPreview">
+      <UniqueIdentifier>{CF096546-AF93-6C52-E6F0-B104402458D9}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Prop\Shape\ui">
       <UniqueIdentifier>{92FA12E6-6A6E-84CD-1C95-9572ACEFA3C7}</UniqueIdentifier>
     </Filter>
@@ -223,6 +232,12 @@
     </Filter>
     <Filter Include="BenTo">
       <UniqueIdentifier>{1960194A-6B94-0090-B7B4-2B4F6F5E3458}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\filmstro_audiohelpers">
+      <UniqueIdentifier>{BB5638B3-AF4A-CD07-3D29-B4FB902364CA}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\filmstro_ffmpeg">
+      <UniqueIdentifier>{630F4A78-9A43-E936-BFD0-9BDA240BEB22}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_audio_basics\audio_play_head">
       <UniqueIdentifier>{EB58F05A-A968-CEBE-40C4-107CDD8F240F}</UniqueIdentifier>
@@ -905,6 +920,18 @@
     <Filter Include="JUCE Modules\juce_timeline">
       <UniqueIdentifier>{31374781-50DF-1D59-72CC-734A4B423CBB}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_video\capture">
+      <UniqueIdentifier>{CB8DF3B2-0409-6D59-C5D4-A034EBB7F973}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_video\native">
+      <UniqueIdentifier>{7774F72F-C951-B8AB-E927-E34AD23C52C8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_video\playback">
+      <UniqueIdentifier>{658BADF8-7095-C722-F9EC-9F36E8818187}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_video">
+      <UniqueIdentifier>{2C58F450-CD01-0231-2F16-0D4D68565164}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules">
       <UniqueIdentifier>{FE955B6B-68AC-AA07-70D8-2413F6DB65C8}</UniqueIdentifier>
     </Filter>
@@ -972,6 +999,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp">
       <Filter>BenTo\Source\Video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.cpp">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoClip.cpp">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoLayer.cpp">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
@@ -1168,6 +1204,9 @@
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp">
+      <Filter>BenTo\Source\VideoPreview</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
       <Filter>BenTo\Source\Prop\Shape\ui</Filter>
     </ClCompile>
@@ -1266,6 +1305,15 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Main.cpp">
       <Filter>BenTo\Source</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoComponent.cpp">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoReader.cpp">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoWriter.cpp">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <Filter>JUCE Modules\juce_audio_basics\buffers</Filter>
@@ -4048,7 +4096,28 @@
     <ClCompile Include="..\..\Modules\juce_timeline\TimelineAppCommands.cpp">
       <Filter>JUCE Modules\juce_timeline</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\capture\juce_CameraDevice.cpp">
+      <Filter>JUCE Modules\juce_video\capture</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\playback\juce_VideoComponent.cpp">
+      <Filter>JUCE Modules\juce_video\playback</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\juce_video.cpp">
+      <Filter>JUCE Modules\juce_video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\juce_video.mm">
+      <Filter>JUCE Modules\juce_video</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_filmstro_ffmpeg_FFmpegVideoComponent.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_filmstro_ffmpeg_FFmpegVideoReader.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_filmstro_ffmpeg_FFmpegVideoWriter.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp">
@@ -4108,6 +4177,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp">
       <Filter>JUCE Library Code</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp">
+      <Filter>JUCE Library Code</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Identification\IdentificationRule.h">
@@ -4154,6 +4226,15 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h">
       <Filter>BenTo\Source\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.h">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoClip.h">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoLayer.h">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
@@ -4353,6 +4434,9 @@
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h">
+      <Filter>BenTo\Source\VideoPreview</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h">
       <Filter>BenTo\Source\Prop\Shape\ui</Filter>
     </ClInclude>
@@ -4445,6 +4529,39 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\MainComponent.h">
       <Filter>BenTo\Source</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_AudioBufferFIFO.h">
+      <Filter>JUCE Modules\filmstro_audiohelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_AudioProcessorPlayerSource.h">
+      <Filter>JUCE Modules\filmstro_audiohelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_OutputSourcePlayer.h">
+      <Filter>JUCE Modules\filmstro_audiohelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_SharedFormatManager.h">
+      <Filter>JUCE Modules\filmstro_audiohelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers.h">
+      <Filter>JUCE Modules\filmstro_audiohelpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoComponent.h">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoListener.h">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoReader.h">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoScaler.h">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoWriter.h">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg.h">
+      <Filter>JUCE Modules\filmstro_ffmpeg</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h">
       <Filter>JUCE Modules\juce_audio_basics\audio_play_head</Filter>
@@ -7433,6 +7550,36 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\juce_timeline.h">
       <Filter>JUCE Modules\juce_timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\capture\juce_CameraDevice.h">
+      <Filter>JUCE Modules\juce_video\capture</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_android_CameraDevice.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_android_Video.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_ios_CameraDevice.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_mac_CameraDevice.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_mac_Video.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_win32_CameraDevice.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_win32_Video.h">
+      <Filter>JUCE Modules\juce_video\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\playback\juce_VideoComponent.h">
+      <Filter>JUCE Modules\juce_video\playback</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\juce_video.h">
+      <Filter>JUCE Modules\juce_video</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h">
       <Filter>JUCE Library Code</Filter>

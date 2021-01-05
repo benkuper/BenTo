@@ -111,6 +111,18 @@
       </GROUP>
       <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Timeline">
         <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
+          <GROUP id="{23F1BF42-F3AE-5D51-2965-25B23F9D4FCF}" name="VideoLayer">
+            <GROUP id="{E5D80CDA-116E-3B37-6E0B-8F191EC18795}" name="ui">
+              <FILE id="wCPplq" name="VideoLayerTimeline.cpp" compile="1" resource="0"
+                    file="Source/Timeline/layers/Video/ui/VideoLayerTimeline.cpp"/>
+              <FILE id="y8N0W4" name="VideoLayerTimeline.h" compile="0" resource="0"
+                    file="Source/Timeline/layers/Video/ui/VideoLayerTimeline.h"/>
+            </GROUP>
+            <FILE id="MbTp6E" name="VideoClip.cpp" compile="1" resource="0" file="Source/Timeline/layers/Video/VideoClip.cpp"/>
+            <FILE id="FjLOAO" name="VideoClip.h" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoClip.h"/>
+            <FILE id="gZZ9wM" name="VideoLayer.cpp" compile="1" resource="0" file="Source/Timeline/layers/Video/VideoLayer.cpp"/>
+            <FILE id="prYSX4" name="VideoLayer.h" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoLayer.h"/>
+          </GROUP>
           <GROUP id="{A00ED23C-4B48-75CB-7911-E2C659ADA7F6}" name="BlockLayer">
             <GROUP id="{8B8B8A4A-F021-600B-344E-0D211A44C9D8}" name="ui">
               <FILE id="YvFGK0" name="LightBlockClipManagerUI.cpp" compile="1" resource="0"
@@ -414,6 +426,12 @@
         <FILE id="EzNjt1" name="LightBlock.cpp" compile="1" resource="0" file="Source/LightBlock/LightBlock.cpp"/>
         <FILE id="tXTVXG" name="LightBlock.h" compile="0" resource="0" file="Source/LightBlock/LightBlock.h"/>
       </GROUP>
+      <GROUP id="{453B0709-B960-1EAC-382F-030B651EDC9C}" name="VideoPreview">
+        <FILE id="X6E6c8" name="VideoPreviewPanel.cpp" compile="1" resource="0"
+              file="Source/VideoPreview/VideoPreviewPanel.cpp"/>
+        <FILE id="ka0wtA" name="VideoPreviewPanel.h" compile="0" resource="0"
+              file="Source/VideoPreview/VideoPreviewPanel.h"/>
+      </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <GROUP id="{D40B9824-1B5B-6FA5-B249-175979B439C7}" name="Shape">
           <GROUP id="{8334483F-C7CD-CCBB-F1CF-4555459226ED}" name="ui">
@@ -556,13 +574,13 @@
     <OSX/>
   </LIVE_SETTINGS>
   <EXPORTFORMATS>
-    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="Setupapi.lib&#10;Servus.lib"
+    <VS2019 targetFolder="Builds/VisualStudio2019" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
             smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include"
-                       binaryPath="Binaries/Debug" libraryPath="../../External/servus/lib/win/x64/debug"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include"
-                       binaryPath="Binaries/Release" libraryPath="../../External/servus/lib/win/x64/release"/>
+        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
+                       binaryPath="Binaries/Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
+                       binaryPath="Binaries/Release" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
@@ -581,6 +599,9 @@
         <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -609,6 +630,9 @@
         <MODULEPATH id="juce_audio_devices" path="../chataigne/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../chataigne/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
+        <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl&#10;Servus"
@@ -636,6 +660,9 @@
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
+        <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
@@ -662,6 +689,9 @@
         <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -687,6 +717,9 @@
         <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
+        <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
       </MODULEPATHS>
     </VS2017>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -715,10 +748,15 @@
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
   <MODULES>
+    <MODULE id="filmstro_audiohelpers" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="filmstro_ffmpeg" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -735,6 +773,7 @@
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" JUCE_USE_MP3AUDIOFORMAT="1"

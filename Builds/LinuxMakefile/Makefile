@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.2.3b2" "-DJUCE_APP_VERSION_HEX=0x10203" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.2.3b2" "-DJUCE_APP_VERSION_HEX=0x10203" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := BenTo
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.2.3b2" "-DJUCE_APP_VERSION_HEX=0x10203" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I$(HOME)/JUCE/modules -I../../Modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.2.3b2" "-DJUCE_APP_VERSION_HEX=0x10203" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := BenTo
 
@@ -88,6 +88,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Spatializer_263d474f.o \
   $(JUCE_OBJDIR)/SpatItem_684aa1c0.o \
   $(JUCE_OBJDIR)/SpatLayout_5d4ec057.o \
+  $(JUCE_OBJDIR)/VideoLayerTimeline_8ef6f4e0.o \
+  $(JUCE_OBJDIR)/VideoClip_b6070cb9.o \
+  $(JUCE_OBJDIR)/VideoLayer_9d9df52.o \
   $(JUCE_OBJDIR)/LightBlockClipManagerUI_8be8afe9.o \
   $(JUCE_OBJDIR)/LightBlockClipUI_a91aa7d6.o \
   $(JUCE_OBJDIR)/LightBlockLayerPanel_2eb25725.o \
@@ -153,6 +156,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockModelParameter_4dedce96.o \
   $(JUCE_OBJDIR)/LightBlockModelParameterManager_893b30c1.o \
   $(JUCE_OBJDIR)/LightBlock_43a72d10.o \
+  $(JUCE_OBJDIR)/VideoPreviewPanel_e2748d5e.o \
   $(JUCE_OBJDIR)/PropShapeCurveEasingUI_6031bbfa.o \
   $(JUCE_OBJDIR)/PropShapePanel_5cefd2f0.o \
   $(JUCE_OBJDIR)/PropShapeView_3c8b67c3.o \
@@ -187,6 +191,9 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/BentoComponentCommands_28169f08.o \
   $(JUCE_OBJDIR)/Main_90ebc5c2.o \
   $(JUCE_OBJDIR)/BinaryData_ce4232d4.o \
+  $(JUCE_OBJDIR)/include_filmstro_ffmpeg_FFmpegVideoComponent_c6ded2e4.o \
+  $(JUCE_OBJDIR)/include_filmstro_ffmpeg_FFmpegVideoReader_94a84586.o \
+  $(JUCE_OBJDIR)/include_filmstro_ffmpeg_FFmpegVideoWriter_6efe3936.o \
   $(JUCE_OBJDIR)/include_juce_audio_basics_8a4e984a.o \
   $(JUCE_OBJDIR)/include_juce_audio_devices_63111d02.o \
   $(JUCE_OBJDIR)/include_juce_audio_formats_15f82001.o \
@@ -206,6 +213,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o \
   $(JUCE_OBJDIR)/include_juce_sharedtexture_e491fa4.o \
   $(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o \
+  $(JUCE_OBJDIR)/include_juce_video_be78589.o \
 
 .PHONY: clean all strip
 
@@ -318,6 +326,21 @@ $(JUCE_OBJDIR)/SpatItem_684aa1c0.o: ../../Source/Video/SpatItem.cpp
 $(JUCE_OBJDIR)/SpatLayout_5d4ec057.o: ../../Source/Video/SpatLayout.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SpatLayout.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/VideoLayerTimeline_8ef6f4e0.o: ../../Source/Timeline/layers/Video/ui/VideoLayerTimeline.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling VideoLayerTimeline.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/VideoClip_b6070cb9.o: ../../Source/Timeline/layers/Video/VideoClip.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling VideoClip.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/VideoLayer_9d9df52.o: ../../Source/Timeline/layers/Video/VideoLayer.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling VideoLayer.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LightBlockClipManagerUI_8be8afe9.o: ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp
@@ -645,6 +668,11 @@ $(JUCE_OBJDIR)/LightBlock_43a72d10.o: ../../Source/LightBlock/LightBlock.cpp
 	@echo "Compiling LightBlock.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/VideoPreviewPanel_e2748d5e.o: ../../Source/VideoPreview/VideoPreviewPanel.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling VideoPreviewPanel.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/PropShapeCurveEasingUI_6031bbfa.o: ../../Source/Prop/Shape/ui/PropShapeCurveEasingUI.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling PropShapeCurveEasingUI.cpp"
@@ -815,6 +843,21 @@ $(JUCE_OBJDIR)/BinaryData_ce4232d4.o: ../../JuceLibraryCode/BinaryData.cpp
 	@echo "Compiling BinaryData.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/include_filmstro_ffmpeg_FFmpegVideoComponent_c6ded2e4.o: ../../JuceLibraryCode/include_filmstro_ffmpeg_FFmpegVideoComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_filmstro_ffmpeg_FFmpegVideoComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_filmstro_ffmpeg_FFmpegVideoReader_94a84586.o: ../../JuceLibraryCode/include_filmstro_ffmpeg_FFmpegVideoReader.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_filmstro_ffmpeg_FFmpegVideoReader.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_filmstro_ffmpeg_FFmpegVideoWriter_6efe3936.o: ../../JuceLibraryCode/include_filmstro_ffmpeg_FFmpegVideoWriter.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_filmstro_ffmpeg_FFmpegVideoWriter.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/include_juce_audio_basics_8a4e984a.o: ../../JuceLibraryCode/include_juce_audio_basics.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling include_juce_audio_basics.cpp"
@@ -908,6 +951,11 @@ $(JUCE_OBJDIR)/include_juce_sharedtexture_e491fa4.o: ../../JuceLibraryCode/inclu
 $(JUCE_OBJDIR)/include_juce_timeline_e6183ffd.o: ../../JuceLibraryCode/include_juce_timeline.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling include_juce_timeline.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_video_be78589.o: ../../JuceLibraryCode/include_juce_video.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_juce_video.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 clean:

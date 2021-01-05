@@ -20,6 +20,7 @@
 #include "Node/NodeManager.h"
 #include "BentoSettings.h"
 
+
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento"),
 	ioCC("Input - Output")
@@ -44,7 +45,10 @@ BentoEngine::BentoEngine() :
 	OSCRemoteControl::getInstance()->addRemoteControlListener(this);
 	SerialManager::getInstance(); // init
 
+
 	GlobalSettings::getInstance()->addChildControllableContainer(BentoSettings::getInstance());
+
+
 	//BentoWebServer::getInstance(); //init
 
 }
@@ -158,7 +162,7 @@ var BentoEngine::getJSONData()
 	
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
-	
+
 	return data;
 }
 
@@ -179,4 +183,6 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTas
 	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));
 	propTask->setProgress(1);
 	propTask->end();	
+
+
 }

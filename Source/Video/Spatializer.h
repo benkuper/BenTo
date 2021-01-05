@@ -31,10 +31,10 @@ public:
 	bool isInit;
 
 	//gl
-	std::unique_ptr<LowLevelGraphicsContext> context;
-	OpenGLFrameBuffer fbo;
-	OpenGLImageType fboImage;
-	OpenGLGraphicsContextCustomShader shader;
+	//std::unique_ptr<LowLevelGraphicsContext> context;
+	//OpenGLFrameBuffer fbo;
+	//OpenGLImageType fboImage;
+	//OpenGLGraphicsContextCustomShader shader;
 	
 	void init();
 	void computeSpat(Image tex, SpatLayout * forceLayout = nullptr);

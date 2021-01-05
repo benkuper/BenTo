@@ -32,7 +32,7 @@ Spatializer::Spatializer() :
 	BaseManager("Spatializer"),
 	currentLayout(nullptr),
 	isInit(false),
-	shader(frag),
+	//shader(frag),
 	spatNotifier(10)
 {
 	saveAndLoadRecursiveData = true;
@@ -45,6 +45,8 @@ Spatializer::Spatializer() :
 
 Spatializer::~Spatializer()
 {
+	//fbo.release();
+	setCurrentLayout(nullptr);
 }
 
 void Spatializer::setCurrentLayout(SpatLayout * newLayout)
@@ -57,15 +59,17 @@ void Spatializer::setCurrentLayout(SpatLayout * newLayout)
 
 void Spatializer::init()
 {
-	fbo.initialise(*OpenGLContext::getCurrentContext(), 256, 256);
+	//fbo.initialise(*OpenGLContext::getCurrentContext(), 256, 256);
 
-	context = createOpenGLGraphicsContext(*OpenGLContext::getCurrentContext(), fbo);
+	//context = createOpenGLGraphicsContext(*OpenGLContext::getCurrentContext(), fbo);
 	
 	isInit = true;
 }
 
 void Spatializer::computeSpat(Image tex, SpatLayout * forceLayout)
 {
+	if (Engine::mainEngine->isClearing) return;
+
 	SpatLayout * targetLayout = forceLayout != nullptr ? forceLayout : currentLayout;
 	if (targetLayout == nullptr) return;
 

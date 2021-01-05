@@ -47,7 +47,7 @@
     </Midl>
     <ClCompile>
       <Optimization>Full</Optimization>
-      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\..\JUCE\modules;..\..\Modules;../../External/asio;../../External/serial/include;../../External/servus/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\Modules;..\..\..\JUCE\modules;..\..\..\..\..\..\Softwares\JUCE\modules;../../External/asio;../../External/serial/include;../../External/servus/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.2.3b2;JUCE_APP_VERSION_HEX=0x10203;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
@@ -107,6 +107,9 @@
     <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatItem.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp"/>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.cpp"/>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoClip.cpp"/>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoLayer.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.cpp"/>
@@ -172,6 +175,7 @@
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameter.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.cpp"/>
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp"/>
+    <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp"/>
@@ -205,6 +209,15 @@
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
     <ClCompile Include="..\..\Source\BentoComponentCommands.cpp"/>
     <ClCompile Include="..\..\Source\Main.cpp"/>
+    <ClCompile Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoReader.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoWriter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2833,7 +2846,19 @@
     <ClCompile Include="..\..\Modules\juce_timeline\TimelineAppCommands.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\capture\juce_CameraDevice.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\playback\juce_VideoComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\juce_video.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JuceLibraryCode\BinaryData.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_filmstro_ffmpeg_FFmpegVideoComponent.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_filmstro_ffmpeg_FFmpegVideoReader.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_filmstro_ffmpeg_FFmpegVideoWriter.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_basics.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_devices.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_audio_formats.cpp"/>
@@ -2853,6 +2878,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_sharedtexture.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_timeline.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Source\Identification\IdentificationRule.h"/>
@@ -2870,6 +2896,9 @@
     <ClInclude Include="..\..\Source\Video\SpatializerEvent.h"/>
     <ClInclude Include="..\..\Source\Video\SpatItem.h"/>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h"/>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.h"/>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoClip.h"/>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoLayer.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.h"/>
@@ -2936,6 +2965,7 @@
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
+    <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h"/>
@@ -2967,6 +2997,17 @@
     <ClInclude Include="..\..\Source\BentoSettings.h"/>
     <ClInclude Include="..\..\Source\BentoEngine.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_AudioBufferFIFO.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_AudioProcessorPlayerSource.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_OutputSourcePlayer.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers_SharedFormatManager.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_audiohelpers\filmstro_audiohelpers.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoComponent.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoListener.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoReader.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoScaler.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg_FFmpegVideoWriter.h"/>
+    <ClInclude Include="..\..\Modules\filmstro_ffmpeg\filmstro_ffmpeg.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\audio_play_head\juce_AudioPlayHead.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioChannelSet.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_basics\buffers\juce_AudioDataConverters.h"/>
@@ -3963,6 +4004,16 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\SequenceManager.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\TimelineAppCommands.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\juce_timeline.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\capture\juce_CameraDevice.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_android_CameraDevice.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_android_Video.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_ios_CameraDevice.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_mac_CameraDevice.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_mac_Video.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_win32_CameraDevice.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\native\juce_win32_Video.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\playback\juce_VideoComponent.h"/>
+    <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_video\juce_video.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\BinaryData.h"/>
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>

@@ -14,6 +14,8 @@
 
 #include "AppConfig.h"
 
+#include <filmstro_audiohelpers/filmstro_audiohelpers.h>
+#include <filmstro_ffmpeg/filmstro_ffmpeg.h>
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_audio_devices/juce_audio_devices.h>
 #include <juce_audio_formats/juce_audio_formats.h>
@@ -30,6 +32,7 @@
 #include <juce_osc/juce_osc.h>
 #include <juce_sharedtexture/juce_sharedtexture.h>
 #include <juce_timeline/juce_timeline.h>
+#include <juce_video/juce_video.h>
 
 #include "BinaryData.h"
 

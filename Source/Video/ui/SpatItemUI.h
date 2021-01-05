@@ -41,16 +41,17 @@ public:
 		public Component
 	{
 	public:
-		Handle(bool isStart);
+		Handle(int index, bool showLabel);
 		~Handle() {}
 
 		Point<float> posAtDown;
 
-		bool isStart;
+		bool showLabel;
+		int index;
 		void paint(Graphics &g) override;
 	};
 
-	Handle startHandle;
-	Handle endHandle;
+	OwnedArray<Handle> handles;
 
+	void updateHandles();
 };

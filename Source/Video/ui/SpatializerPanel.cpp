@@ -50,6 +50,8 @@ void SpatializerPanel::setCurrentLayoutView(SpatLayout * layout)
 
 void SpatializerPanel::paint(Graphics & g)
 {
+	if (Engine::mainEngine->isClearing) return;
+
 	if (OpenGLContext::getCurrentContext() == nullptr)
 	{
 		g.setColour(HIGHLIGHT_COLOR);

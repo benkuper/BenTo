@@ -36,6 +36,7 @@ VideoBlock::VideoBlock(var params) :
 
 VideoBlock::~VideoBlock()
 {
+
 	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr)
 	{
 		if (receiver != nullptr)
@@ -153,6 +154,7 @@ void VideoBlock::loadJSONDataInternal(var data)
 {
 	LightBlockModel::loadJSONDataInternal(data);
 	spat.loadJSONData(data.getProperty("spat", var()));
+	spat.setCurrentLayout(spat.getItemWithName(currentLayout->getValueData().toString()));
 }
 
 

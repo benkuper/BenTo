@@ -89,3 +89,5 @@ Package/BenTo\.pkg
 site/
 
 BenTo-win-x64-bleedingedge.exe
+
+*.bin

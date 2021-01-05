@@ -12,7 +12,9 @@
 #include "Prop/Prop.h"
 
 SpatItem::SpatItem() :
-	BaseItem("Spat Item")
+	BaseItem("Spat Item"),
+	handlesCC("Handles"),
+	isUpdatingHandles(false)
 {
 
 	isDefault = addBoolParameter("Default", "If checked and no item with the requested id is found, will fall back to this one", false);
@@ -20,15 +22,14 @@ SpatItem::SpatItem() :
 	addChildControllableContainer(&filterManager);
 
 	shape = addEnumParameter("Shape", "The shape of the prop");
-	shape->addOption("Club", Prop::Shape::CLUB)->addOption("Ball", Prop::Shape::BALL)->addOption("Poi", Prop::Shape::POI)->addOption("Hoop", Prop::Shape::HOOP);
+	shape->addOption("Club", Prop::Shape::CLUB)->addOption("Ball", Prop::Shape::BALL)->addOption("Poi", Prop::Shape::POI)->addOption("Hoop", Prop::Shape::HOOP)->addOption("Custom", Prop::Shape::CUSTOM);
 
 	resolution = addIntParameter("Resolution", "Number of controllable colors in the prop", 32, 1, INT32_MAX);
-	startPos = addPoint2DParameter("Start", "Start Position");
-	endPos = addPoint2DParameter("End", "End Position");
-
-	startPos->setPoint(.4f, .5f);
-	endPos->setPoint(.6f, .5f);
 	
+
+	updateHandles();
+	
+	addChildControllableContainer(&handlesCC);
 }
 
 SpatItem::~SpatItem()
@@ -37,11 +38,78 @@ SpatItem::~SpatItem()
 }
 
 
+void SpatItem::updateHandles()
+{
+	isUpdatingHandles = true;
+	handlesCC.clear();
+	handles.clear();
+
+	Prop::Shape s = shape->getValueDataAsEnum<Prop::Shape>();
+
+	switch (s)
+	{
+	case Prop::Shape::CLUB:
+	{
+		handles.add(handlesCC.addPoint2DParameter("Start", "Position"));
+		handles.add(handlesCC.addPoint2DParameter("End", "Position"));
+		handles[0]->setPoint(.4f, .5f);
+		handles[1]->setPoint(.6f, .5f);
+	}
+	break;
+
+	case Prop::Shape::BALL:
+	case Prop::Shape::POI:
+		handles.add(handlesCC.addPoint2DParameter("Position", "Position"));
+		handles[0]->setPoint(.5f, .5f);
+		break;
+
+	case Prop::Shape::HOOP:
+	{
+		handles.add(handlesCC.addPoint2DParameter("Center", "Position"));
+		handles.add(handlesCC.addPoint2DParameter("Radius", "Position"));
+		handles[0]->setPoint(.5f, .5f);
+		handles[1]->setPoint(.6f, .5f);
+	}
+	break;
+
+	case Prop::Shape::CUSTOM:
+		updateCustomHandles();
+		break;
+
+	default:
+		break;
+	}
+
+	isUpdatingHandles = false;
+
+	updatePoints();
+
+}
+
+void SpatItem::updateCustomHandles()
+{
+	isUpdatingHandles = true;
+
+	while (handles.size() > resolution->intValue())
+	{
+		handlesCC.removeControllable(handles[handles.size() - 1]);
+		handles.removeLast();
+	}
+
+	while (handles.size() < resolution->intValue())
+	{
+		handles.add(handlesCC.addPoint2DParameter("Position " + String(handles.size() + 1), "Position"));
+		handles[handles.size() - 1]->setPoint(Random().nextFloat() * .5f + .25f, Random().nextFloat() * .5f + .25f);
+	}
+
+	isUpdatingHandles = false;
+}
+
 void SpatItem::updatePoints()
 {
+	if (isUpdatingHandles) return;
+
 	points.clear();
-	Point<float> startPoint = startPos->getPoint();
-	Point<float> endPoint = endPos->getPoint();
 
 	int numPoints = resolution->intValue();
 
@@ -50,6 +118,8 @@ void SpatItem::updatePoints()
 	case Prop::Shape::CLUB:
 	{
 
+		Point<float> startPoint = handles[0]->getPoint();
+		Point<float> endPoint = handles[1]->getPoint();
 		for (int i = 0; i < numPoints; i++)
 		{
 			points.add(startPoint + (endPoint - startPoint) * (i * 1.0f / jmax(numPoints - 1, 1)));
@@ -57,33 +127,52 @@ void SpatItem::updatePoints()
 	}
 	break;
 
+	case Prop::Shape::POI:
 	case Prop::Shape::BALL:
 	{
+
+		Point<float> center = handles[0]->getPoint();
 		for (int i = 0; i < numPoints; i++)
 		{
-			points.add(startPoint);
+			points.add(center);
 		}
 	}
 	break;
 
-	case Prop::Shape::POI:
-		break;
+	case Prop::Shape::BOX:
+	{
 
+	}
+	break;
+	
 	case Prop::Shape::HOOP:
 	{
+		Point<float> centerP = handles[0]->getPoint();
+		Point<float> radiusP = handles[1]->getPoint();
+		
 		float angle = float_Pi * 2 / numPoints;
-		float startAngle = startPoint.getAngleToPoint(endPoint);
-		float radius = startPoint.getDistanceFrom(endPoint);
+		float startAngle = centerP.getAngleToPoint(radiusP);
+		float radius = centerP.getDistanceFrom(radiusP);
 		for (int i = 0; i < numPoints; i++)
 		{
 			float tAngle = startAngle + angle * i;
-			points.add(startPoint + Point<float>(cosf(tAngle) * radius, sinf(tAngle) * radius));
+			points.add(centerP + Point<float>(cosf(tAngle) * radius, sinf(tAngle) * radius));
 		}
 	}
 	break;
+
+	case Prop::Shape::CUSTOM:
+	{
+		for (int i = 0; i < numPoints; i++)
+		{
+			points.add(handles[i]->getPoint());
+		}
+	}
+	break;
+
             
-        default:
-            break;
+    default:
+        break;
 
 	
 	}
@@ -93,13 +182,31 @@ void SpatItem::updatePoints()
 
 void SpatItem::onContainerParameterChangedInternal(Parameter * p)
 {
-	if (p == startPos || p == endPos || p == shape) updatePoints();
+	if (p == shape)
+	{
+		updateHandles();
+	}
+	else if (p == resolution)
+	{
+		if (shape->getValueDataAsEnum<Prop::Shape>() == Prop::CUSTOM)
+		{
+			updateCustomHandles();
+			updatePoints();
+		}
+	}
+}
+
+void SpatItem::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	if (cc == &handlesCC) updatePoints();
+
 }
 
 var SpatItem::getJSONData()
 {
 	var data = BaseItem::getJSONData();
 	data.getDynamicObject()->setProperty("filters", filterManager.getJSONData());
+	data.getDynamicObject()->setProperty("handles", handlesCC.getJSONData());
 	return data;
 }
 
@@ -107,4 +214,5 @@ void SpatItem::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
 	filterManager.loadJSONData(data.getProperty("filters", var()));
+	handlesCC.loadJSONData(data.getProperty("handles", var()));
 }

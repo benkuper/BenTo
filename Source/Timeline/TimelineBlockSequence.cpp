@@ -12,6 +12,8 @@
 #include "layers/Block/LightBlockLayer.h"
 #include "Audio/AudioManager.h"
 #include "Prop/Prop.h"
+#include "layers/Video/VideoLayer.h"
+
 
 TimelineBlockSequence::TimelineBlockSequence() :
 	Sequence(),
@@ -28,6 +30,7 @@ TimelineBlockSequence::TimelineBlockSequence() :
 	//Timeline
 	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Blocks", &LightBlockLayer::create, this));
 	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &AudioLayer::create, this));
+	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Video", &VideoLayer::create, this));
 
 	if (!Engine::mainEngine->isLoadingFile)
 	{

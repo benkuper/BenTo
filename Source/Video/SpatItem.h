@@ -30,12 +30,18 @@ public:
 	EnumParameter * shape;
 	IntParameter * resolution;
 
-	Point2DParameter * startPos;
-	Point2DParameter * endPos;
+	ControllableContainer handlesCC;
+	Array<Point2DParameter*> handles;
 
+	bool isUpdatingHandles;
+
+	void updateHandles();
+
+	void updateCustomHandles();
 
 	void updatePoints();
 	void onContainerParameterChangedInternal(Parameter *) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
