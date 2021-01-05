@@ -32,6 +32,9 @@ LightBlockLayer::LightBlockLayer(Sequence * s, var params) :
 
 	updateLinkedProps();
 
+	addChildControllableContainer(&blockClipManager);
+
+
 	Engine::mainEngine->addEngineListener(this);
 }
 
