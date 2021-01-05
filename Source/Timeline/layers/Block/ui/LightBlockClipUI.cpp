@@ -145,6 +145,7 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation* a)
 	{
 		AutomationUI* aui = new AutomationUI((Automation*)a->automationContainer);
 		//aui->updateROI();
+		aui->showMenuOnRightClick = false;
 		automationUI.reset(aui);
 	}
 	else if (dynamic_cast<ParameterColorAutomation*>(a) != nullptr)
