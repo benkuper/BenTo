@@ -113,6 +113,8 @@
         <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
           <GROUP id="{23F1BF42-F3AE-5D51-2965-25B23F9D4FCF}" name="VideoLayer">
             <GROUP id="{E5D80CDA-116E-3B37-6E0B-8F191EC18795}" name="ui">
+              <FILE id="tqI7dU" name="VideoClipUI.cpp" compile="1" resource="0" file="Source/Timeline/layers/Video/ui/VideoClipUI.cpp"/>
+              <FILE id="OSLf4P" name="VideoClipUI.h" compile="0" resource="0" file="Source/Timeline/layers/Video/ui/VideoClipUI.h"/>
               <FILE id="wCPplq" name="VideoLayerTimeline.cpp" compile="1" resource="0"
                     file="Source/Timeline/layers/Video/ui/VideoLayerTimeline.cpp"/>
               <FILE id="y8N0W4" name="VideoLayerTimeline.h" compile="0" resource="0"

@@ -28,6 +28,7 @@ Prop::Prop(var params) :
 	generalCC("General"),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
+	rgbComponent(nullptr),
 	bakingCC("Bake and Upload"),
 	receivedPongSinceLastPingSent(false),
 	providerToBake(nullptr),
@@ -355,6 +356,12 @@ BakeData Prop::bakeBlock()
 
 	MemoryOutputStream os(result.data, false);
 
+	const int numLeds = resolution->intValue();
+	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection);
+	int startIndex = invert ? numLeds - 1 : 0;
+	int endIndex = invert ? -1 : numLeds;
+	int step = invert ? -1 : 1;
+
 	double stepTime = 1.0 / result.fps;
 	for (double curTime = result.startTime; curTime <= result.endTime; curTime += stepTime)
 	{
@@ -362,11 +369,12 @@ BakeData Prop::bakeBlock()
 
 		if (providerToBake == nullptr) return result;
 		Array<Colour> cols = providerToBake->getColors(this, curTime, params);
-		for (auto& c : cols)
+		
+		for (int i = startIndex; i != endIndex; i += step)
 		{
-			os.writeByte(c.getRed());
-			os.writeByte(c.getGreen());
-			os.writeByte(c.getBlue());
+			os.writeByte(cols[i].getRed());
+			os.writeByte(cols[i].getGreen());
+			os.writeByte(cols[i].getBlue());
 		}
 		result.numFrames++;
 
@@ -477,10 +485,10 @@ void Prop::setupComponentsJSONDefinition(var def)
 {
 	if (def.hasProperty("rgb"))
 	{
-		RGBPropComponent* rgb = new RGBPropComponent(this, def.getProperty("rgb", var()));
-		addComponent(rgb);
-		resolution->setValue(rgb->resolution);
-		updateRate = rgb->updateRate;
+		rgbComponent = new RGBPropComponent(this, def.getProperty("rgb", var()));
+		addComponent(rgbComponent);
+		resolution->setValue(rgbComponent->resolution);
+		updateRate = rgbComponent->updateRate;
 	}
 
 	if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));

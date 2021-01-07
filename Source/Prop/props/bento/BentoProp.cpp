@@ -9,6 +9,7 @@
 */
 
 #include "BentoProp.h"
+#include "../../Component/rgb/RGBComponent.h"
 
 
 BentoProp::BentoProp(var params) :
@@ -107,7 +108,12 @@ void BentoProp::sendColorsToPropInternal()
 	
 	Array<uint8> data;
 
-	for (int i = 0; i < numLeds; i++)
+	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection);
+	int startIndex =  invert ? numLeds - 1 : 0;
+	int endIndex = invert ? -1 : numLeds;
+	int step = invert ? -1 : 1;
+
+	for (int i = startIndex; i != endIndex; i+=step)
 	{
 		float a = colors[i].getFloatAlpha();
 		data.add(jmin<int>(colors[i].getRed() * a, 254));

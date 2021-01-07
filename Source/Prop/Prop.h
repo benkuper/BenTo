@@ -15,6 +15,7 @@
 #include "Component/PropComponent.h"
 
 class PropFamily;
+class RGBPropComponent;
 
 #define PROP_PING_TIMERID 0
 
@@ -56,6 +57,7 @@ public:
 	Trigger* restartTrigger;
 
 	HashMap<String, PropComponent *> components;
+	RGBPropComponent* rgbComponent;
 
 	ControllableContainer bakingCC;
 	FloatParameter* bakeStartTime;

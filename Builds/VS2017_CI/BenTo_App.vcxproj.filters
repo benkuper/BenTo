@@ -1000,6 +1000,9 @@
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp">
       <Filter>BenTo\Source\Video</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.cpp">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.cpp">
       <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
     </ClCompile>
@@ -4226,6 +4229,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h">
       <Filter>BenTo\Source\Video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.h">
+      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.h">
       <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>

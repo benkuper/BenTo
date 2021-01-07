@@ -206,28 +206,20 @@ void MainManager::imuEvent(const IMUEvent &e)
     switch (e.type)
     {
     case IMUEvent::OrientationUpdate:
+    case IMUEvent::LinearAccelUpdate:
+    case IMUEvent::AccelUpdate:
+    case IMUEvent::GyroUpdate:
+    case IMUEvent::Gravity:
+    case IMUEvent::CalibrationStatus:
     {
         var data[3];
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < e.numData; i++)
         {
             data[i].type = 'f';
-            data[i].value.f = imu.orientation[i];
+            data[i].value.f = e.data[i];
         }
 
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 3);
-    }
-    break;
-
-    case IMUEvent::CalibrationStatus:
-    {
-        var data[4];
-        for (int i = 0; i < 4; i++)
-        {
-            data[i].type = 'f';
-            data[i].value.f = imu.calibration[i];
-        }
-
-        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 4);
     }
     break;
     }

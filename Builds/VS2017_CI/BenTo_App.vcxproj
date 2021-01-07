@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatItem.cpp"/>
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp"/>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoClip.cpp"/>
     <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoLayer.cpp"/>
@@ -2896,6 +2897,7 @@
     <ClInclude Include="..\..\Source\Video\SpatializerEvent.h"/>
     <ClInclude Include="..\..\Source\Video\SpatItem.h"/>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h"/>
+    <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoClip.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoLayer.h"/>

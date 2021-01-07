@@ -161,6 +161,10 @@
 			isa = PBXBuildFile;
 			fileRef = B894D9041081220C3E2DBF4F;
 		};
+		E9C06572DFF89AB50C9059E1 = {
+			isa = PBXBuildFile;
+			fileRef = FA71262AAE374D53D92C602D;
+		};
 		94EC003740D249A4993776C1 = {
 			isa = PBXBuildFile;
 			fileRef = 0D68A2EECFA9105743C39627;
@@ -1195,6 +1199,13 @@
 			lastKnownFileType = sourcecode.cpp.cpp;
 			name = "include_juce_organicui2.cpp";
 			path = "../../JuceLibraryCode/include_juce_organicui2.cpp";
+			sourceTree = "SOURCE_ROOT";
+		};
+		3BEBF31619D18578E365D11C = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = VideoClipUI.h;
+			path = ../../Source/Timeline/layers/Video/ui/VideoClipUI.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		3C1C74A4E168E2E3DAF9F651 = {
@@ -2849,6 +2860,13 @@
 			path = ../../Source/LightBlock/model/ui/LightBlockModelLibraryUI.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
+		FA71262AAE374D53D92C602D = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = VideoClipUI.cpp;
+			path = ../../Source/Timeline/layers/Video/ui/VideoClipUI.cpp;
+			sourceTree = "SOURCE_ROOT";
+		};
 		FAE9C932E7731B1B8A1F7459 = {
 			isa = PBXFileReference;
 			lastKnownFileType = sourcecode.c.h;
@@ -3098,6 +3116,8 @@
 		B302D478226B483ABACDFECD = {
 			isa = PBXGroup;
 			children = (
+				FA71262AAE374D53D92C602D,
+				3BEBF31619D18578E365D11C,
 				0D68A2EECFA9105743C39627,
 				2E768894F80E9270C8A2A68E,
 			);
@@ -4179,6 +4199,7 @@
 				29B7CA04117974E9913C7B88,
 				4B4B3D6FF4934760887A7A66,
 				94D82A1F7A884FB53B21CECD,
+				E9C06572DFF89AB50C9059E1,
 				94EC003740D249A4993776C1,
 				0AD4CD078DBC9F1692691E7B,
 				12BCC3F01F388BCEB1EB9222,

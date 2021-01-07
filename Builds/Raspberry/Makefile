@@ -67,6 +67,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/Spatializer_263d474f.o \
   $(JUCE_OBJDIR)/SpatItem_684aa1c0.o \
   $(JUCE_OBJDIR)/SpatLayout_5d4ec057.o \
+  $(JUCE_OBJDIR)/VideoClipUI_7af85240.o \
   $(JUCE_OBJDIR)/VideoLayerTimeline_8ef6f4e0.o \
   $(JUCE_OBJDIR)/VideoClip_b6070cb9.o \
   $(JUCE_OBJDIR)/VideoLayer_9d9df52.o \
@@ -305,6 +306,11 @@ $(JUCE_OBJDIR)/SpatItem_684aa1c0.o: ../../Source/Video/SpatItem.cpp
 $(JUCE_OBJDIR)/SpatLayout_5d4ec057.o: ../../Source/Video/SpatLayout.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling SpatLayout.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/VideoClipUI_7af85240.o: ../../Source/Timeline/layers/Video/ui/VideoClipUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling VideoClipUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/VideoLayerTimeline_8ef6f4e0.o: ../../Source/Timeline/layers/Video/ui/VideoLayerTimeline.cpp

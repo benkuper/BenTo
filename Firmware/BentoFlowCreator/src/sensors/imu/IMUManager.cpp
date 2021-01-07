@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation","shock", "freefall", "calibration"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation", "linearAccel", "accel", "gyro", "gravity", "shock", "flatfall", "calibration"};
 
 IMUManager::IMUManager() : Component("imu"),
 #ifdef HAS_IMU
@@ -69,10 +69,34 @@ void IMUManager::update()
   orientation[1] = euler.y() * 180/PI;  //Pitch
   orientation[2] = euler.z() * 180/PI;  //Roll
   
+  imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+  linearAccel[0] = laccel.x();
+  linearAccel[1] = laccel.y();
+  linearAccel[2] = laccel.z();
+
+  imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+  accel[0] = acc.x();
+  accel[1] = acc.y();
+  accel[2] = acc.z();
+
+  imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+  gyro[0] = gyr.x();
+  gyro[1] = gyr.y();
+  gyro[2] = gyr.z();
+
+  imu::Vector<3> grav = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
+  gravity[0] = grav.x();
+  gravity[1] = grav.y();
+  gravity[2] = grav.z();
+
   long curTime = millis();
   if (curTime > timeSinceOrientationLastSent + orientationSendTime)
   {
-    sendEvent(IMUEvent(IMUEvent::OrientationUpdate));
+    sendEvent(IMUEvent(IMUEvent::OrientationUpdate, orientation, 3));
+    sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
+    sendEvent(IMUEvent(IMUEvent::AccelUpdate, accel, 3));
+    sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
+    sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
     timeSinceOrientationLastSent = curTime;
   }
 #endif
@@ -106,7 +130,7 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     calibration[2] = (float) accel;
     calibration[3] = (float) mag;
 
-    sendEvent(IMUEvent(IMUEvent::CalibrationStatus));
+    sendEvent(IMUEvent(IMUEvent::CalibrationStatus, calibration, 4));
     return true;
   }
 

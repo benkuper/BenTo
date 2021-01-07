@@ -6,11 +6,13 @@
 class IMUEvent
 {
 public:
-    enum Type { OrientationUpdate, Shock, FreeFall, CalibrationStatus, TYPES_MAX };
+    enum Type { OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, Shock, FlatFall, CalibrationStatus, TYPES_MAX };
     static const String eventNames[TYPES_MAX];
 
-    IMUEvent(Type t) : type(t) {}
+    IMUEvent(Type t, float * data = nullptr, int numData = 0) : type(t), data(data), numData(numData) {}
     Type type;
+    float * data;
+    int numData;
 };
 
 
@@ -29,8 +31,13 @@ public:
     long orientationSendTime;
     long timeSinceOrientationLastSent;
 
-    float orientation[4];
     float calibration[4];
+    
+    float orientation[3];
+    float accel[3];
+    float gyro[3];
+    float linearAccel[3];
+    float gravity[3];
     
     void init();
     void update();

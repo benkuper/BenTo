@@ -20,4 +20,8 @@ public:
     ~IMUPropComponent();
 
     Point3DParameter* orientation;
+    Point3DParameter* accel;
+    Point3DParameter* linearAccel;
+    Point3DParameter* gyro;
+    Point3DParameter* gravity;
 };
