@@ -9,7 +9,7 @@
 */
 
 #include "VideoLayerTimeline.h"
-#include "../VideoClip.h"
+#include "VideoClipUI.h"
 
 VideoLayerTimeline::VideoLayerTimeline(VideoLayer* layer) :
 	SequenceLayerTimeline(layer),
@@ -53,9 +53,6 @@ void VideoLayerTimeline::addSelectableComponentsAndInspectables(Array<Component*
 }
 
 
-
-
-
 VideoLayerClipManagerUI::VideoLayerClipManagerUI(VideoLayerTimeline* _timeline, AudioLayerClipManager* manager) :
 	LayerBlockManagerUI(_timeline, manager)
 {
@@ -65,6 +62,13 @@ VideoLayerClipManagerUI::VideoLayerClipManagerUI(VideoLayerTimeline* _timeline, 
 
 VideoLayerClipManagerUI::~VideoLayerClipManagerUI()
 {
+}
+
+LayerBlockUI* VideoLayerClipManagerUI::createUIForItem(LayerBlock* item)
+{
+	VideoClipUI * ui = new VideoClipUI((VideoClip *)item);
+	ui->setupThumbnail();
+	return ui;
 }
 
 void VideoLayerClipManagerUI::mouseDoubleClick(const MouseEvent& e)

@@ -16,6 +16,7 @@ LightBlockLayerPanel::LightBlockLayerPanel(LightBlockLayer * layer) :
 {
 	previewIDUI.reset(layer->previewID->createStepper());
 	previewIDUI->showLabel = true;
+	contentComponents.add(previewIDUI.get());
 
 	addAndMakeVisible(previewIDUI.get());
 	minContentHeight = 80;

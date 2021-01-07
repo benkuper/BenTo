@@ -399,7 +399,7 @@ void LightBlockClipUI::run()
 			for (int ty = 0; ty < resY; ty++)
 			{
 				int py = resY - 1 - ty;
-				if (relTotal > coreLength) c.set(py, c[ty].darker());// c[ty].darker();
+				if (relTotal > coreLength) c.set(ty, c[ty].darker());// c[ty].darker();
 				tmpImg.setPixelAt(i, py, c[ty]);
 			}
 

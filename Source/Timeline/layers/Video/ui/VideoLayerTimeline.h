@@ -20,6 +20,7 @@ public:
 	VideoLayerClipManagerUI(VideoLayerTimeline* timeline, AudioLayerClipManager* manager);
 	~VideoLayerClipManagerUI();
 
+	LayerBlockUI * createUIForItem(LayerBlock * item) override;
 	void mouseDoubleClick(const MouseEvent& e) override;
 	void addClipWithFileChooserAt(float position);
 };
