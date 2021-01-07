@@ -48,7 +48,7 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 // enable this to print a DBG statement for each packet containing stream ID and timestamp
-#define DEBUG_LOG_PACKETS
+//#define DEBUG_LOG_PACKETS
 
 
 FFmpegVideoReader::FFmpegVideoReader (const int audioFifoSize, const int videoFifoSize)
