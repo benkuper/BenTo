@@ -24,6 +24,8 @@ BentoProp::BentoProp(var params) :
 	if (params.hasProperty("vid")) serialParam->vidFilter = (int)params.getProperty("vid", 0);
 	if (params.hasProperty("pid")) serialParam->pidFilter = (int)params.getProperty("pid", 0);
 
+	scriptObject.setMethod("send", &BentoProp::sendMessageToPropFromScript);
+
 	connectionCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
@@ -423,4 +425,21 @@ void BentoProp::sendMessageToProp(const OSCMessage& m)
 	}
 
 	oscSender.sendToIPAddress(remoteHost->stringValue(), 9000, m);
+}
+
+var BentoProp::sendMessageToPropFromScript(const var::NativeFunctionArgs& a)
+{
+	BentoProp * p = getObjectFromJS<BentoProp>(a);
+
+	if (!checkNumArgs(p->niceName, a, 1)) return false;
+
+	OSCMessage m(a.arguments[0].toString());
+	for (int i = 1; i < a.numArguments; i++)
+	{
+		m.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
+	}
+
+	p->sendMessageToProp(m);
+
+	return true;
 }
