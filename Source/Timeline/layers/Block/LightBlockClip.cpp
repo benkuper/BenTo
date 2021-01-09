@@ -186,7 +186,7 @@ var LightBlockClip::getJSONData()
 {
 	var data = LayerBlock::getJSONData();
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("blockData", currentBlock->getJSONData());
-	data.getDynamicObject()->setProperty("filters", filters.getJSONData());
+	//data.getDynamicObject()->setProperty("filters", filters.getJSONData());
 	return data;
 }
 
@@ -206,7 +206,8 @@ void LightBlockClip::loadJSONDataInternal(var data)
 		}
 	}
 
-	filters.loadJSONData(data.getProperty("filters", var()));
+	//Filters need a way to provide the LightBlockProvider when creating lightblock, otherwise crashes
+	//filters.loadJSONData(data.getProperty("filters", var()));
 
 	//Retro compatibility, to remove after
 	var params = data.getProperty("parameters",var());

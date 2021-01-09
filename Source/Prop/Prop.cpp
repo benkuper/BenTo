@@ -22,7 +22,7 @@
 #include "ui/PropEditor.h"
 
 Prop::Prop(var params) :
-	BaseItem(params.getProperty("name", "Unknown").toString()),
+	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
 	Thread("Prop"),
 	family(nullptr),
 	generalCC("General"),
@@ -118,6 +118,24 @@ Prop::Prop(var params) :
 	activeProvider->hideInEditor = true;
 
 	setupComponentsJSONDefinition(params.getProperty("components", var()));
+
+	var scriptsData = params.getProperty("scripts", var());
+	for (int i = 0; i < scriptsData.size(); i++)
+	{
+		File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props");
+
+		Script* script = scriptManager->addItem(nullptr, var(), false);
+		scriptManager->setItemIndex(script, i);
+		script->filePath->customBasePath = propFolder.getFullPathName();
+		script->filePath->setControllableFeedbackOnly(true);
+		script->filePath->setValue(scriptsData[i].toString());
+		script->updateRate->setControllableFeedbackOnly(true);
+		script->isSavable = false;
+		script->userCanDuplicate = false;
+		script->userCanRemove = false;
+	}
+
+	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
 	startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 }
