@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation", "linearAccel", "accel", "gyro", "gravity", "shock", "flatfall", "calibration"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX] { "orientation", "accel", "gyro", "linearAccel", "gravity", "shock", "flatfall", "calibration"};
 
 IMUManager::IMUManager() : Component("imu"),
 #ifdef HAS_IMU
@@ -84,10 +84,10 @@ void IMUManager::update()
   gyro[1] = gyr.y();
   gyro[2] = gyr.z();
 
-  imu::Vector<3> grav = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
-  gravity[0] = grav.x();
-  gravity[1] = grav.y();
-  gravity[2] = grav.z();
+  // imu::Vector<3> grav = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
+  // gravity[0] = grav.x();
+  // gravity[1] = grav.y();
+  // gravity[2] = grav.z();
 
   long curTime = millis();
   if (curTime > timeSinceOrientationLastSent + orientationSendTime)
@@ -96,7 +96,7 @@ void IMUManager::update()
     sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
     sendEvent(IMUEvent(IMUEvent::AccelUpdate, accel, 3));
     sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
-    sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
+    // sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
     timeSinceOrientationLastSent = curTime;
   }
 #endif
