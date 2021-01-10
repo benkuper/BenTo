@@ -177,6 +177,9 @@ PropFilterScript::PropFilterScript() :
 	PropTargetFilter("Script")
 {
 	addChildControllableContainer(&script);
+	script.userCanRemove = false;
+	script.userCanDuplicate = false;
+	script.canBeReorderedInEditor = false;
 }
 
 PropFilterScript::~PropFilterScript()
@@ -186,6 +189,19 @@ PropFilterScript::~PropFilterScript()
 int PropFilterScript::getTargetIDForProp(Prop * p)
 {
 	Array<var> args;
-	args.add(p->getScriptObject());
+	args.add(p->getScriptObject(), p->globalID->intValue());
 	return script.callFunction("getID", args);
+}
+
+var PropFilterScript::getJSONData()
+{
+	var data = PropTargetFilter::getJSONData();
+	data.getDynamicObject()->setProperty("script", script.getJSONData());
+	return data;
+}
+
+void PropFilterScript::loadJSONDataItemInternal(var data)
+{
+	PropTargetFilter::loadJSONDataItemInternal(data);
+	script.loadJSONData(data.getProperty("script", var()));
 }

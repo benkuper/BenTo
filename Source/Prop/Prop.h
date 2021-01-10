@@ -92,6 +92,7 @@ public:
 	int previousID; //for swapping
 	int updateRate;
 
+
 	//ping
 	virtual void clearItem() override;
 

@@ -123,6 +123,9 @@ public:
 
 	int getTargetIDForProp(Prop * p) override;
 
+	var getJSONData() override;
+	void loadJSONDataItemInternal(var data) override;
+
 	String getTypeString() const override { return "Script"; }
 	static PropTargetFilter * create(var) { return new PropFilterScript(); }
 };

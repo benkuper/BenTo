@@ -22,9 +22,12 @@ public:
     virtual ~PropComponent();
 
     WeakReference<Prop> prop;
+    bool feedbackEnabled;
 
     void sendControl(String control, var value = var());
     virtual void onContainerParameterChanged(Parameter* p) override;
+
+    virtual void handePropConnected() {}
 
     virtual void handleMessage(const String &msg, var value = var());
 

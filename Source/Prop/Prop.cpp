@@ -291,13 +291,23 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		restartProp();
 	}
-	else if (PropComponent* pc = dynamic_cast<PropComponent*>(cc))
+	else if (PropComponent* pc = c->getParentAs<PropComponent>()) //just do 1 level dynamic_cast<PropComponent*>(cc))
 	{
-		if (PropManager::getInstance()->sendFeedback->boolValue())
+		if (PropManager::getInstance()->sendFeedback->boolValue() && pc->feedbackEnabled)
 		{
-			OSCMessage m = OSCHelpers::getOSCMessageForControllable(c, PropManager::getInstance());
+			OSCMessage m("/prop/"+globalID->stringValue() + c->getControlAddress(this));
+			if(c->type != Controllable::TRIGGER) OSCHelpers::addArgumentsForParameter(m, (Parameter *)c);//PropManager::getInstance());
+
 			BentoEngine* be = (BentoEngine*)Engine::mainEngine;
 			PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
+		}
+	}
+	else if (c == isConnected)
+	{
+		if (isConnected->boolValue())
+		{
+			HashMap<String, PropComponent*>::Iterator it(components);
+			while (it.next()) it.getValue()->handePropConnected();
 		}
 	}
 }

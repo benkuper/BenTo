@@ -125,28 +125,21 @@ void BentoEngine::processMessage(const OSCMessage & m)
 
 	} else if (aList[1] == "prop")
 	{
-		if (m.size() < 2)
+		int id = aList[2] == "all" ? -1 : aList[2].getIntValue();
+		
+		String localAddress = "/" + aList.joinIntoString("/", 3);
+		OSCMessage lm(localAddress);
+		lm.addString(""); //fake ID
+		for (auto& a : m) lm.addArgument(a);
+		lm.setAddressPattern(localAddress);
+
+		if (id == -1)
 		{
-			LOGWARNING("Prop message should have at least 2 arguments, current num : " << m.size());
+			for (auto & p : PropManager::getInstance()->items)  p->handleOSCMessage(lm);
 		}
-		int id = OSCHelpers::getIntArg(m[0]);
-		//Prop * p = PropManager::getInstance()->getPropWithId(id);
-
-		if (aList[2] == "enable")
+		else
 		{
-			if (m.size() < 2) return;
-			bool active = OSCHelpers::getIntArg(m[1]) > 0;
-
-			if (id == -1)
-			{
-				for (auto & p : PropManager::getInstance()->items)  p->enabled->setValue(active);
-			}
-			else
-			{
-				Prop * p = PropManager::getInstance()->getPropWithId(id);
-				if (p != nullptr) p->enabled->setValue(active);
-			}
-			
+			if(Prop * p = PropManager::getInstance()->getPropWithId(id)) p->handleOSCMessage(lm);
 		}
 	}
 }

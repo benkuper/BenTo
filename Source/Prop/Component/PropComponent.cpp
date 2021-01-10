@@ -13,7 +13,8 @@
 
 PropComponent::PropComponent(Prop * prop, const String& name, bool canBeDisabled) :
     EnablingControllableContainer(name, canBeDisabled),
-    prop(prop)
+    prop(prop),
+    feedbackEnabled(false)
 {
 }
 
@@ -42,9 +43,8 @@ void PropComponent::handleMessage(const String &msg, var value)
     }
 
     if (c->type == Controllable::TRIGGER) ((Trigger*)c)->trigger();
-    else
+    else if(Parameter * p = (Parameter *)c)
     {
-        var val = value.size() > 1?value:value[0];
-        ((Parameter*)c)->setValue(val);
+        p->setValue(p->isComplex() ? value : value[0]);
     }
 }
