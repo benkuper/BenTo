@@ -64,9 +64,24 @@ void LightBlockClipManager::clipFadesChanged(LightBlockClip* clip)
 void LightBlockClipManager::computeFadesForClip(LightBlockClip * clip, bool propagate)
 {
 	int bIndex = items.indexOf(clip);
+	
+	int prevIndex = bIndex - 1;
+	LightBlockClip* prevBlock = nullptr;
+	while (prevBlock == nullptr && prevIndex >= 0)
+	{
+		LightBlockClip* b = (LightBlockClip*)items[prevIndex];
+		if (b->enabled->boolValue()) prevBlock = b;
+		prevIndex--;
+	}
 
-	LightBlockClip * prevBlock = bIndex > 0 ? (LightBlockClip *)items[bIndex - 1] : nullptr;
-	LightBlockClip * nextBlock = bIndex < items.size() - 1 ? (LightBlockClip *)items[bIndex + 1] : nullptr;
+	int nextIndex = bIndex + 1;;
+	LightBlockClip* nextBlock = nullptr; 
+	while (nextBlock == nullptr && nextIndex < items.size())
+	{
+		LightBlockClip * b = (LightBlockClip*)items[nextIndex];
+		if (b->enabled->boolValue()) nextBlock = b;
+		nextIndex++;
+	}
 
 	if (prevBlock != nullptr && prevBlock->time->floatValue() > clip->time->floatValue())
 	{

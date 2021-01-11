@@ -26,6 +26,8 @@ LightBlockLayer::LightBlockLayer(Sequence * s, var params) :
 	blendMode = addEnumParameter("Blend Mode", "The Blend mode of this layer");
 	blendMode->addOption("Add", ADD)->addOption("Alpha", ALPHA)->addOption("Mask", MASK);
 
+
+
 	filterManager.reset(new PropTargetFilterManager(&((TimelineBlockSequence*)sequence)->clusterGroupManager));
 	addChildControllableContainer(filterManager.get());
 	filterManager->addFilterManagerListener(this);
@@ -33,6 +35,7 @@ LightBlockLayer::LightBlockLayer(Sequence * s, var params) :
 	updateLinkedProps();
 
 	addChildControllableContainer(&blockClipManager);
+
 
 
 	Engine::mainEngine->addEngineListener(this);
@@ -59,9 +62,16 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 
 	Array<Array<Colour>> clipColors;
 
+	int layerPropID = params.getProperty("forceID", -1);
+
 	for (auto &b : blocks)
 	{
 		LightBlockClip * clip = (LightBlockClip *)b;
+
+		int localID = ((LightBlockClip*)b)->filterManager->getTargetIDForProp(p);
+		if (localID == -1) continue;
+		params.getDynamicObject()->setProperty("forceID", localID != p->globalID->intValue() ? localID : layerPropID);
+
 		clipColors.add(clip->getColors(p, time, params));
 	}
 

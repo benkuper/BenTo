@@ -22,7 +22,7 @@ public:
     Point3DParameter* orientation;
     Point3DParameter* accel;
     Point3DParameter* linearAccel;
-    //Point3DParameter* gyro;
+    Point3DParameter* gyro;
     //Point3DParameter* gravity;
 
 
@@ -43,12 +43,19 @@ public:
     FloatParameter* semiFlatThreshold;
     FloatParameter* loftieThreshold;
     FloatParameter* singleThreshold;
+    FloatParameter* weightSmoothing;
+    FloatParameter* weightSmoothing2;
+
+    FloatParameter* throwWeight;
+    FloatParameter* throwTime;
 
     int trailIndex;
     Array<Vector3D<float>> trail;
     bool inSpeed;
     Vector3D<float> smoothAccel;
     Vector3D<float> accelSpeed;
+    float timeAtThrow;
+
 
     void handePropConnected() override;
 

@@ -15,6 +15,8 @@ ScriptBlock::ScriptBlock(var params) :
 	LightBlockModel(getTypeString(), params),
 	script(this)
 {
+	itemDataType = getTypeString();
+
 	removeChildControllableContainer(paramsContainer.get());
 	removeChildControllableContainer(&presetManager);
 	addChildControllableContainer(&script);

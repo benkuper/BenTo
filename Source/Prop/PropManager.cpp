@@ -30,8 +30,8 @@ PropManager::PropManager() :
 	managerFactory = &factory;
 	selectItemWhenCreated = false;
 
-	autoAddNetworkProps = connectionCC.addBoolParameter("Auto Add Network", "If checked, this will automatically add detected props on the network", true);
-	autoAddUSBProps = connectionCC.addBoolParameter("Auto Add USB", "If checked, this will automatically add detected props connected through USB", true);
+	autoAddNetworkProps = connectionCC.addBoolParameter("Auto Add Network", "If checked, this will automatically add detected props on the network", false);
+	autoAddUSBProps = connectionCC.addBoolParameter("Auto Add USB", "If checked, this will automatically add detected props connected through USB", false);
 	detectProps = connectionCC.addTrigger("Detect Props", "Auto detect using the Yo protocol");
 	addChildControllableContainer(&connectionCC);
 

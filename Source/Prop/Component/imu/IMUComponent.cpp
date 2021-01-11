@@ -17,6 +17,8 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     trailIndex(0),
     inSpeed(false)
 {
+    saveAndLoadRecursiveData = true;
+
     feedbackEnabled = true;
     enabled->setValue(false);
     
@@ -33,11 +35,11 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     linearAccel->setControllableFeedbackOnly(true);
 
 
-    //gyro = addPoint3DParameter("Gyro", "Linear Acceleration of the prop");
-//gyro->setControllableFeedbackOnly(true);
+    gyro = addPoint3DParameter("Gyro", "Linear Acceleration of the prop");
+    gyro->setControllableFeedbackOnly(true);
 
-//gravity = addPoint3DParameter("Gravity", "Linear Acceleration of the prop");
-//gravity->setControllableFeedbackOnly(true);
+    //gravity = addPoint3DParameter("Gravity", "Linear Acceleration of the prop");
+    //gravity->setControllableFeedbackOnly(true);
 
     projectedAngle = addFloatParameter("Projected Angle", "Normalized projected angle for ease of use", 0, 0, 1);
     projectedAngle->setControllableFeedbackOnly(true);
@@ -45,6 +47,9 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     throwState = addEnumParameter("Throw State", "The current detected state of throw");
     throwState->addOption("None", 0)->addOption("Flat", 1)->addOption("Single", 2)->addOption("Double", 3)->addOption("Semi-flat", 4)->addOption("Loftie", 5);
     //throwState->setControllableFeedbackOnly(true);
+
+    throwWeight = addFloatParameter("Throw Weight", "Weight of throw", 0, 0, 1);
+    throwTime = addFloatParameter("Throw Time", "Time of throw", 0, 0, 5);
 
     angleConfigCC.editorIsCollapsed = true;
     addChildControllableContainer(&angleConfigCC);
@@ -59,25 +64,27 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
 
     var curAccel;
 
-    maxTrail = throwConfigCC.addIntParameter("Trail Count", "Number of values to keep to average the accel data", 5, 1, 100);
+    maxTrail = throwConfigCC.addIntParameter("Trail Count", "Number of values to keep to average the accel data", 1, 1, 100);
     throwThresholds = throwConfigCC.addPoint2DParameter("Throw Thresholds", "");
     speedThresholds = throwConfigCC.addPoint2DParameter("Speed Thresholds", "");
     flatThresholds = throwConfigCC.addPoint2DParameter("Flat Thresholds", "");
-    throwThresholds->setPoint(.5f, 2);
+    throwThresholds->setPoint(.7f, 2);
     speedThresholds->setPoint(.2f, 1);
-    flatThresholds->setPoint(.5f, 2);
+    flatThresholds->setPoint(.8f, 2);
 
     semiFlatThreshold = throwConfigCC.addFloatParameter("Semi-flat Threshold", "Throws below this value will be detected as semi-flat", 2);
     loftieThreshold = throwConfigCC.addFloatParameter("Loftie Threshold", "Throws below this value will be detected as loftie", 12);
     singleThreshold = throwConfigCC.addFloatParameter("Single Threshold", "Throws below this value will be detected as single", 25);
 
+    weightSmoothing = throwConfigCC.addFloatParameter("Weight Smoothing", "Smoothing of weight", .2f, 0, 1);
+    weightSmoothing2 = throwConfigCC.addFloatParameter("Weight Smoothing 2", "Smoothing of weight", .6f, 0, 1);
+
     trail.resize(maxTrail->intValue());
 
     //set at end to avoid bad init
-    linearAccel->setBounds(-100, -100, -100, 100, 100, 100);
-    accel->setBounds(-100, -100, -100, 100, 100, 100);
+    linearAccel->setBounds(-50, -50, -50, 50, 50, 50);
+    accel->setBounds(-50, -50, -50, 50, 50, 50);
 }
-
 
 
 IMUPropComponent::~IMUPropComponent()
@@ -91,12 +98,10 @@ void IMUPropComponent::handePropConnected()
 
 void IMUPropComponent::onContainerParameterChanged(Parameter* p)
 {
-    if (p == accel)
-    {
-        computeAngle();
-        computeThrows();
-
-    }if (p == maxTrail)
+    PropComponent::onContainerParameterChanged(p);
+    if (p == orientation) computeAngle();
+    else if(p == accel) computeThrows();
+    else if (p == maxTrail)
     {
         trail.resize(maxTrail->intValue());
     }
@@ -105,20 +110,25 @@ void IMUPropComponent::onContainerParameterChanged(Parameter* p)
 void IMUPropComponent::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
     PropComponent::onControllableFeedbackUpdate(cc, c);
-    offset->setValue(orientation->x);
+    if (c == calibrate)
+    {
+        float tVal = orientation->x - 180;
+        if (tVal < -180) tVal += 360;
+        offset->setValue(tVal);
+    }
 }
 
 void IMUPropComponent::computeAngle()
 {
     if (!enabled->boolValue()) return;
 
-    Vector3D<float> euler = accel->getVector();
+    Vector3D<float> euler = orientation->getVector();
     euler.x += offset->floatValue();
     Vector3D<float> eulerRadians = euler * float_Pi / 180;
-
-    Vector3D<float> lookAt(cos(euler.y) * sinf(euler.x), sinf(euler.y), cosf(euler.y) * cosf(euler.x));
+    Vector3D<float> lookAt(cosf(eulerRadians.y) * sinf(eulerRadians.x), sinf(eulerRadians.y), cosf(eulerRadians.y) * cosf(eulerRadians.x));
 
     float result = atanf(lookAt.y / lookAt.z) - float_Pi / 2;
+
     if (lookAt.z > 0) result += float_Pi;
 
     result = (result / float_Pi) * .5 + .5;
@@ -131,22 +141,23 @@ void IMUPropComponent::computeThrows()
 {
     if (!enabled->boolValue()) return;
    
-    trail.set(trailIndex, accel->getVector());
-    trailIndex = (trailIndex + 1) % trail.size();
+    Vector3D<float> curAccel = accel->getVector();
+
+    int trailCount = maxTrail->intValue();
+    trail.set(trailIndex, curAccel);
+    trailIndex = (trailIndex + 1) % trailCount;
 
     Vector3D<float> sa;
-    for (auto& ti : trail) sa += ti;
-   
-    Vector3D<float> prevSA = smoothAccel;
-    Vector3D<float> aSpeed;
-    float maxYZSpeed = 0;
-
+    for (int i = 0; i < trailCount;i++) sa += trail[i];
     sa /= maxTrail->intValue();
-    
-    float maxLinear = jmax(fabsf(sa.x), fabsf(sa.y), fabsf(sa.z));
 
-    aSpeed = sa - prevSA;
-    maxYZSpeed = jmax(aSpeed.y, aSpeed.y);
+    Vector3D<float> prevSA = smoothAccel;
+    Vector3D<float> aSpeed = sa - prevSA;
+    float maxYZSpeed = jmax(fabsf(aSpeed.y), fabsf(aSpeed.y));
+    float maxSmoothed = jmax(fabsf(sa.x), fabsf(sa.y), fabsf(sa.z));
+    //float maxRaw = jmax(fabsf(curAccel.x), fabsf(curAccel.y), fabsf(curAccel.z));
+
+    smoothAccel = sa;
 
     int curThrowState = (int)throwState->getValueData();
     
@@ -157,25 +168,40 @@ void IMUPropComponent::computeThrows()
     float speedThresh = inSpeed ? speedThresholds->y : speedThresholds->x;
     float flatThresh = curIsFlat ? flatThresholds->y : flatThresholds->x;
 
-    bool throwPotential = sa.y < throwThresh;
+    bool throwPotential = fabsf(sa.y) < throwThresh;
 
     inSpeed = maxYZSpeed < speedThresh;
 
     bool isThrowing = throwPotential && inSpeed;
-    bool isFlatting = maxLinear < flatThresh;
+    bool isFlatting = maxSmoothed < flatThresh;
 
     if (isThrowing != curIsThrowing || isFlatting != curIsFlat)
     {
         int result = 0;
         if (isThrowing)
         {
+            timeAtThrow = Time::getMillisecondCounter() / 1000.0f;
             if (isFlatting) result = 1;
             else if (sa.x < semiFlatThreshold->floatValue()) result = 4;
-            else if (sa.y < loftieThreshold->floatValue()) result = 5;
-            else if (sa.z < singleThreshold->floatValue()) result = 2;
+            else if (sa.x < loftieThreshold->floatValue()) result = 5;
+            else if (sa.x < singleThreshold->floatValue()) result = 2;
             else result = 3;
+        }
+        else
+        {
+            throwTime->setValue(0);
         }
 
         throwState->setValueWithData(result);
     }
+
+    if (isThrowing)
+    {
+        throwTime->setValue(Time::getMillisecondCounter() / 1000.0f - timeAtThrow);
+    }
+
+    float targetWeight = isThrowing ? 1 : 0;
+    float curVal = throwWeight->floatValue();
+    float smooth = targetWeight > curVal ? weightSmoothing->floatValue() : weightSmoothing2->floatValue();
+    throwWeight->setValue(curVal + (targetWeight - curVal) * smooth);
 }

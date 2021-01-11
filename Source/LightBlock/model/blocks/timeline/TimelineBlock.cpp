@@ -17,6 +17,8 @@
 TimelineBlock::TimelineBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {
+	itemDataType = getTypeString();
+
 	bakeToProps = addTrigger("Bake to props", "");
 
 	sequence.addSequenceListener(this);

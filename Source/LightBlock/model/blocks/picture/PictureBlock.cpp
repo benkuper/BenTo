@@ -14,6 +14,8 @@
 PictureBlock::PictureBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {
+	itemDataType = getTypeString();
+
 	pictureFile = new FileParameter("Picture File", "The file, the picture, the thing", "");
 	addParameter(pictureFile);
 

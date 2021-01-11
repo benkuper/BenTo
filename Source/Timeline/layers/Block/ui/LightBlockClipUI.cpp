@@ -32,6 +32,9 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	generatePreview();
 
 	acceptedDropTypes.add("LightBlockModel");
+	acceptedDropTypes.add("Timeline");
+	acceptedDropTypes.add("Script");
+	acceptedDropTypes.add("Picture");
 
 	addChildComponent(&fadeInHandle, 0);
 	addChildComponent(&fadeOutHandle, 0);
@@ -284,7 +287,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable* c)
 	{
 		generatePreview();
 	}
-	else if (c->parentContainer->parentContainer == &clip->filters || c->parentContainer->parentContainer->parentContainer == &clip->filters) generatePreview();
+	else if (c->parentContainer->parentContainer == &clip->effects || c->parentContainer->parentContainer->parentContainer == &clip->effects) generatePreview();
 
 	if (c == clip->fadeIn) fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength()) * getWidth(), fadeInHandle.getHeight() / 2);
 	else if (c == clip->fadeOut) fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength()) * getWidth(), fadeOutHandle.getHeight() / 2);
@@ -311,10 +314,8 @@ void LightBlockClipUI::newMessage(const LightBlockClip::ClipEvent& e)
 void LightBlockClipUI::itemDropped(const SourceDetails& source)
 {
 
-	if (source.description.getProperty("dataType", "") == "LightBlockModel")
+	if (LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get()))
 	{
-		LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get());
-
 		if (modelUI != nullptr)
 		{
 			LightBlockColorProvider* provider = modelUI->item;

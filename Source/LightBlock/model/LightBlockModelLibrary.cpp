@@ -32,6 +32,10 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	timelineBlocks("Timeline", UserLightBlockModelManager::TIMELINE),
 	genericFilterBlocks("Generic Filters")
 {
+
+	scriptBlocks.itemDataType = "Script";
+	pictureBlocks.itemDataType = "Picture";
+
 	//patterns
 	solidColorBlock.reset(new SolidColorPattern());
 	rainbowBlock.reset(new RainbowPattern());

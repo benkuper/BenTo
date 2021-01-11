@@ -14,6 +14,7 @@
 #include "LightBlock/model/blocks/filters/LightBlockFilter.h"
 
 class LightBlockLayer;
+class PropTargetFilterManager;
 
 class LightBlockClip :
 	public LayerBlock,
@@ -31,7 +32,8 @@ public:
 	FloatParameter * fadeIn;
 	FloatParameter * fadeOut;
 
-	BaseManager<LightBlock> filters;
+	std::unique_ptr<PropTargetFilterManager> filterManager;
+	BaseManager<LightBlock> effects;
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 	Array<Colour> getColors(Prop * p, double absoluteTime, var params);

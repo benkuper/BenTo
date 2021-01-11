@@ -22,6 +22,8 @@ public:
 	Factory<PropTargetFilter> factory;
 
 	PropClusterGroupManager* clusterGroupManager;
+	
+	EnumParameter* operationMode;
 
 	int getTargetIDForProp(Prop *);
 

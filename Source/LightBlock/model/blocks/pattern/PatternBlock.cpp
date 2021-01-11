@@ -76,6 +76,8 @@ void NoisePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 	float bIdOffset = getParamValue<float>(idOffset, params);
 
 	var colorVar = getParamValue<var>(color, params);
+	if (colorVar.size() < 4) return;
+
 	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
 	var bgColorVar = getParamValue<var>(bgColor, params);
 	Colour bbgColor = Colour::fromFloatRGBA(bgColorVar[0], bgColorVar[1], bgColorVar[2], bgColorVar[3]);

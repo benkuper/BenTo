@@ -12,10 +12,13 @@
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "LightBlock/model/blocks/timeline/TimelineBlock.h"
 #include "Prop/Prop.h"
+#include "Timeline/layers/Block/LightBlockLayer.h"
+#include "Prop/TargetFilter/PropTargetFilterManager.h"
+
 
 LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
 	LayerBlock(getTypeString()),
-	filters("Block Filters"),
+	effects("Block Effects"),
 	layer(layer),
 	clipNotifier(10)
 {
@@ -29,9 +32,12 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
 	fadeIn->canBeDisabledByUser = true;
 	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength(), false);
 	fadeOut->canBeDisabledByUser = true;
-	
-	filters.userCanAddItemsManually = false;
-	addChildControllableContainer(&filters);
+
+	effects.userCanAddItemsManually = false;
+	addChildControllableContainer(&effects);
+
+	filterManager.reset(new PropTargetFilterManager(&((TimelineBlockSequence*)layer->sequence)->clusterGroupManager));
+	addChildControllableContainer(filterManager.get());
 }
 
 LightBlockClip::~LightBlockClip()
@@ -62,6 +68,13 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 		addChildControllableContainer(currentBlock.get(), false, 0);
 		currentBlock->addLightBlockListener(this);
 		currentBlock->loadJSONData(prevData);
+
+		LightBlockModelPreset* preset = dynamic_cast<LightBlockModelPreset*>(provider);
+		if (preset == nullptr)
+		{
+			Array<WeakReference<Parameter>> blockParams = currentBlock->getAllParameters(true);
+			for (auto& p : blockParams) p->isOverriden = true;
+		}
 	}
 }
 Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var params)
@@ -94,10 +107,10 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 	double relTimeLooped = getRelativeTime(absoluteTime, true);
 	Array<Colour> colors = currentBlock->getColors(p, relTimeLooped, params);
 
-	for (int i = 0; i < filters.items.size(); i++)
+	for (int i = 0; i < effects.items.size(); i++)
 	{
-		if (!filters.items[i]->enabled->boolValue()) continue;
-		filters.items[i]->filterColors(&colors, p, relTimeLooped, params);
+		if (!effects.items[i]->enabled->boolValue()) continue;
+		effects.items[i]->filterColors(&colors, p, relTimeLooped, params);
 	}
 
 	for (int i = 0; i < resolution; i++)
@@ -114,7 +127,7 @@ void LightBlockClip::addFilterFromProvider(LightBlockFilter * provider)
 	lb->userCanRemove = true;
 	lb->userCanDuplicate = false;
 	lb->setCanBeDisabled(true);
-	filters.addItem(lb);
+	effects.addItem(lb);
 
 	notifyUpdatePreview();
 
@@ -186,7 +199,8 @@ var LightBlockClip::getJSONData()
 {
 	var data = LayerBlock::getJSONData();
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("blockData", currentBlock->getJSONData());
-	//data.getDynamicObject()->setProperty("filters", filters.getJSONData());
+	data.getDynamicObject()->setProperty("filters", filterManager->getJSONData());
+	//data.getDynamicObject()->setProperty("effects", effects.getJSONData());
 	return data;
 }
 
@@ -206,8 +220,10 @@ void LightBlockClip::loadJSONDataInternal(var data)
 		}
 	}
 
-	//Filters need a way to provide the LightBlockProvider when creating lightblock, otherwise crashes
-	//filters.loadJSONData(data.getProperty("filters", var()));
+	filterManager->loadJSONData(data.getProperty("filters", var()));
+
+	//Effects need a way to provide the LightBlockProvider when creating lightblock, otherwise crashes
+	//effects.loadJSONData(data.getProperty("effects", var()));
 
 	//Retro compatibility, to remove after
 	var params = data.getProperty("parameters",var());
