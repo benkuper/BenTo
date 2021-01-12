@@ -50,7 +50,7 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     throwState->addOption("None", 0)->addOption("Flat", 1)->addOption("Single", 2)->addOption("Double", 3)->addOption("Semi-flat", 4)->addOption("Loftie", 5);
 
     weightSmoothing = addFloatParameter("Throw Smoothing", "Smoothing of weight when throwing", .2f, 0, 1);
-    weightSmoothing2 = addFloatParameter("Catch Smoothing", "Smoothing of weight when catching", .6f, 0, 1);
+    weightSmoothing2 = addFloatParameter("Catch Smoothing", "Smoothing of weight when catching", .2f, 0, 1);
     
     flatWeight = addFloatParameter("Flat Weight", "Weight of flat", 0, 0, 1);
     flatWeight->setControllableFeedbackOnly(true);
@@ -71,7 +71,7 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     invert = angleConfigCC.addBoolParameter("Invert Direction", "", false);
 
     accelThresholds = throwConfigCC.addPoint2DParameter("Accel Thresholds", "");
-    diffThreshold = throwConfigCC.addFloatParameter("Diff Threshold", "", 10, 0);
+    diffThreshold = throwConfigCC.addFloatParameter("Diff Threshold", "", 8, 0);
     flatThresholds = throwConfigCC.addPoint2DParameter("Flat Thresholds", "");
     accelThresholds->setPoint(.8f, 2);
     flatThresholds->setPoint(.8f, 2);

@@ -20,10 +20,10 @@ IMUManager::IMUManager() : Component("imu"),
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 #endif
 
-  accelThresholds[0] = .9f;
+  accelThresholds[0] = .8f;
   accelThresholds[1] = 2;
 
-  diffThreshold = 10;
+  diffThreshold = 8;
 
   flatThresholds[0] = .8f;
   flatThresholds[1] = 2;
