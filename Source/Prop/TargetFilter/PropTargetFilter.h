@@ -80,6 +80,8 @@ public:
 	 
 	PropClusterGroupManager* manager;
 
+	BoolParameter* useLocalID;
+
 	BoolParameter * specificClusterGroup;
 	TargetParameter * clusterGroup;
 	BoolParameter * specificCluster;

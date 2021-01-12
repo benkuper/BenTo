@@ -90,6 +90,7 @@ PropFilterCluster::PropFilterCluster(PropClusterGroupManager * manager) :
 {
 	jassert(manager != nullptr);
 
+	useLocalID = addBoolParameter("Use Local ID", "If checked and applicable, will return local cluster ID instead of global", true);
 	specificClusterGroup = addBoolParameter("Specific Group", "Search in specific cluster Group", false);
 	clusterGroup = addTargetParameter("Family", "Family to filter", manager);
 	clusterGroup->targetType = TargetParameter::CONTAINER;
@@ -142,7 +143,9 @@ int PropFilterCluster::getTargetIDForProp(Prop * p)
 		}
 	}
 
-	if (specificID->boolValue()) return targetID == id->intValue() ? targetID : -1;
+	if (specificID->boolValue() && targetID != id->intValue()) targetID = -1;
+
+	if (targetID >= 0 && !useLocalID->boolValue()) targetID = p->globalID->intValue();
 	return targetID;
 }
 
