@@ -21,7 +21,7 @@ public:
 
     Point3DParameter* orientation;
     
-    BoolParameter* sendRawData;
+    EnumParameter * sendLevel;
 
     Point3DParameter* accel;
     Point3DParameter* linearAccel;
@@ -39,25 +39,19 @@ public:
     BoolParameter* invert;
 
     ControllableContainer throwConfigCC;
-    BoolParameter* computeLocally;
-    IntParameter* maxTrail;
-    Point2DParameter* throwThresholds;
-    Point2DParameter * speedThresholds;
-    Point2DParameter * flatThresholds;
+    Point2DParameter* flatThresholds;
+    Point2DParameter* accelThresholds;
+    FloatParameter  * diffThreshold;
     FloatParameter* semiFlatThreshold;
     FloatParameter* loftieThreshold;
     FloatParameter* singleThreshold;
     FloatParameter* weightSmoothing;
     FloatParameter* weightSmoothing2;
 
+    FloatParameter* flatWeight;
     FloatParameter* throwWeight;
     FloatParameter* throwTime;
 
-    int trailIndex;
-    Array<Vector3D<float>> trail;
-    bool inSpeed;
-    Vector3D<float> smoothAccel;
-    Vector3D<float> accelSpeed;
     float timeAtThrow;
 
 
@@ -67,7 +61,6 @@ public:
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
     void computeAngle();
-    void computeThrows();
 
     void update() override;
 };

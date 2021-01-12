@@ -225,7 +225,9 @@ void MainManager::imuEvent(const IMUEvent &e)
     
     case IMUEvent::ThrowState:
     {
-        var data[1] {imu.throwState};
+        var data[1];
+        data[0].type = 'i';
+        data[0].value.i = imu.throwState;
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 1);
     }
     break;

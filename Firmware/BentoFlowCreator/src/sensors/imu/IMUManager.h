@@ -30,7 +30,7 @@ public:
 
     bool isConnected;
     bool isEnabled;
-    bool sendRawData;
+    int sendLevel; //0 = throws / 1 = +orientation / 2 = + other stuff
     
     long orientationSendTime;
     long timeSinceOrientationLastSent;
@@ -43,21 +43,16 @@ public:
     float linearAccel[3];
     float gravity[3];
     
-    float throwState; //0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
+    int throwState; //0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
     
     //IMU Compute
-    int trailIndex;
-    int trailCount;
-    float trail[TRAIL_MAX][3];
-    float smoothAccel[3];
-    bool inSpeed;
-
-    float throwThresholds[2];
-    float speedThresholds[2];
     float flatThresholds[2];
+    float accelThresholds[2];
+    float diffThreshold;
     float semiFlatThreshold;
     float loftieThreshold;
     float singleThreshold;
+
     
     void init();
     void update();

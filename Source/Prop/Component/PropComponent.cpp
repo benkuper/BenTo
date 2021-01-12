@@ -45,6 +45,7 @@ void PropComponent::handleMessage(const String &msg, var value)
     if (c->type == Controllable::TRIGGER) ((Trigger*)c)->trigger();
     else if(Parameter * p = (Parameter *)c)
     {
-        p->setValue(p->isComplex() ? value : value[0]);
+        if (p->type == p->ENUM) ((EnumParameter*)p)->setValueWithData(value[0]);
+        else p->setValue(p->isComplex() ? value : value[0]);
     }
 }

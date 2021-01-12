@@ -8,12 +8,10 @@ IMUManager::IMUManager() : Component("imu"),
 #endif
                            isConnected(false),
                            isEnabled(false),
-                           sendRawData(false),
+                           sendLevel(1),
                            orientationSendTime(20), //50fps
                            timeSinceOrientationLastSent(0),
-                           throwState(0),
-                           trailIndex(0),
-                           inSpeed(false)
+                           throwState(0)
 {
 #ifdef HAS_IMU
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
@@ -22,12 +20,10 @@ IMUManager::IMUManager() : Component("imu"),
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 #endif
 
-  trailCount = 5;
-  throwThresholds[0] = .7f;
-  throwThresholds[1] = 2;
+  accelThresholds[0] = .9f;
+  accelThresholds[1] = 2;
 
-  speedThresholds[0] = .2f;
-  speedThresholds[1] = 1;
+  diffThreshold = 10;
 
   flatThresholds[0] = .8f;
   flatThresholds[1] = 2;
@@ -35,9 +31,6 @@ IMUManager::IMUManager() : Component("imu"),
   semiFlatThreshold = 2;
   loftieThreshold = 12;
   singleThreshold = 25;
-
-  memset(trail, 0, TRAIL_MAX * 3 * sizeof(float));
-  memset(smoothAccel, 0, 3 * sizeof(float));
 }
 
 IMUManager::~IMUManager()
@@ -73,11 +66,9 @@ void IMUManager::init()
 
 #ifdef USE_PREFERENCES
   prefs.begin(name.c_str());
-  int trailCount = prefs.getFloat("trailCount", trailCount);
-  throwThresholds[0] = prefs.getFloat("throwMin", throwThresholds[0]);
-  throwThresholds[1] = prefs.getFloat("throwMax", throwThresholds[1]);
-  speedThresholds[0] = prefs.getFloat("speedMin", speedThresholds[0]);
-  speedThresholds[1] = prefs.getFloat("speedMax", speedThresholds[1]);
+  accelThresholds[0] = prefs.getFloat("throwMin", accelThresholds[0]);
+  accelThresholds[1] = prefs.getFloat("throwMax", accelThresholds[1]);
+  diffThreshold = prefs.getFloat("diff", diffThreshold);
   flatThresholds[0] = prefs.getFloat("flatMin", flatThresholds[0]);
   flatThresholds[1] = prefs.getFloat("flatMax", flatThresholds[1]);
 
@@ -106,42 +97,42 @@ void IMUManager::update()
   orientation[1] = euler.y() * 180 / PI; //Pitch
   orientation[2] = euler.z() * 180 / PI; //Roll
 
-  if (sendRawData)
-  {
-    imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-    accel[0] = acc.x();
-    accel[1] = acc.y();
-    accel[2] = acc.z();
+  imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+  accel[0] = acc.x();
+  accel[1] = acc.y();
+  accel[2] = acc.z();
 
-    imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-    linearAccel[0] = laccel.x();
-    linearAccel[1] = laccel.y();
-    linearAccel[2] = laccel.z();
+  imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+  linearAccel[0] = laccel.x();
+  linearAccel[1] = laccel.y();
+  linearAccel[2] = laccel.z();
 
-    imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-    gyro[0] = gyr.x();
-    gyro[1] = gyr.y();
-    gyro[2] = gyr.z();
+  imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+  gyro[0] = gyr.x();
+  gyro[1] = gyr.y();
+  gyro[2] = gyr.z();
 
-    // imu::Vector<3> grav = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
-    // gravity[0] = grav.x();
-    // gravity[1] = grav.y();
-    // gravity[2] = grav.z();
-  }
+  // imu::Vector<3> grav = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
+  // gravity[0] = grav.x();
+  // gravity[1] = grav.y();
+  // gravity[2] = grav.z();
 
   computeThrow();
 
   long curTime = millis();
   if (curTime > timeSinceOrientationLastSent + orientationSendTime)
   {
-    sendEvent(IMUEvent(IMUEvent::OrientationUpdate, orientation, 3));
-
-    if (sendRawData)
+    if (sendLevel >= 1)
     {
-      sendEvent(IMUEvent(IMUEvent::AccelUpdate, accel, 3));
-      sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
-      sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
-      //sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
+
+      sendEvent(IMUEvent(IMUEvent::OrientationUpdate, orientation, 3));
+      if (sendLevel >= 2)
+      {
+        sendEvent(IMUEvent(IMUEvent::AccelUpdate, accel, 3));
+        sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
+        sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
+        //sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
+      }
     }
 
     timeSinceOrientationLastSent = curTime;
@@ -151,59 +142,58 @@ void IMUManager::update()
 
 void IMUManager::computeThrow()
 {
-  trail[trailIndex][0] = accel[0];
-  trail[trailIndex][1] = accel[1];
-  trail[trailIndex][2] = accel[2];
 
-  trailIndex = (trailIndex + 1) % trailCount;
+  float maxAccelYZ = max(abs(accel[1]), abs(accel[2]));
+  float maxAccel = max(maxAccelYZ, abs(accel[0]));
+  float maxLinearAccel = max(max(abs(linearAccel[0]), abs(linearAccel[1])), abs(linearAccel[2]));
+  float accLinearDiff = abs(maxAccelYZ - maxLinearAccel);
 
-  float sa[3]{0, 0, 0};
-  for (int i = 0; i < trailCount; i++)
-    for (int j = 0; j < 3; j++)
-      sa[i] += trail[i][j] / trailCount;
-
-  float aSpeed[3]{0, 0, 0};
-  for (int i = 0; i < 3; i++)
-    aSpeed[i] = sa[i] - smoothAccel[i];
-
-  float maxYZSpeed = max(abs(aSpeed[1]), abs(aSpeed[1]));
-  float maxSmoothed = max(max(abs(sa[0]), abs(sa[1])), abs(sa[2]));
-
-  for (int i = 0; i < 3; i++)
-    smoothAccel[i] = sa[i];
-
-  bool curIsThrowing = throwState > 0;
   bool curIsFlat = throwState == 1;
-
-  float throwThresh = curIsThrowing ? throwThresholds[1] : throwThresholds[0];
-  float speedThresh = inSpeed ? speedThresholds[1] : speedThresholds[0];
   float flatThresh = curIsFlat ? flatThresholds[1] : flatThresholds[0];
+  bool isFlatting = maxAccel < flatThresh;
 
-  bool throwPotential = fabsf(sa[1]) < throwThresh;
-
-  inSpeed = maxYZSpeed < speedThresh;
-
-  bool isThrowing = throwPotential && inSpeed;
-  bool isFlatting = maxSmoothed < flatThresh;
-
-  int result = 0;
-  if (isThrowing)
+  int newState = 0;
+  if (isFlatting)
   {
-    if (isFlatting)
-      result = 1;
-    else if (sa[0] < semiFlatThreshold)
-      result = 4;
-    else if (sa[0] < loftieThreshold)
-      result = 5;
-    else if (sa[0] < singleThreshold)
-      result = 2;
+    newState = 1; //flat
+  }
+  else
+  {
+    bool curIsThrowing = throwState > 1;
+    float throwThresh = curIsThrowing ? accelThresholds[1] : accelThresholds[0];
+
+    bool accelCheck = maxAccelYZ < throwThresh;
+
+    bool isThrowing = false;
+    if (curIsThrowing)
+    {
+      isThrowing = accelCheck;
+    }
     else
-      result = 3;
+    {
+      bool diffCheck = accLinearDiff > diffThreshold;
+      isThrowing = accelCheck && diffCheck;
+    }
+
+    float throwPower = abs(accel[0]);
+    if (isThrowing)
+    {
+      if (throwPower < semiFlatThreshold)
+        newState = 4;
+      else if (throwPower < loftieThreshold)
+        newState = 5;
+      else if (throwPower < singleThreshold)
+        newState = 2;
+      else
+        newState = 3; //double
+    }
   }
 
-  if(result != throwState)
+  //NDBG(String(throwState));
+
+  if (newState != throwState)
   {
-    throwState = result;
+    throwState = newState;
     sendEvent(IMUEvent(IMUEvent::ThrowState));
   }
 }
@@ -222,9 +212,9 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     setEnabled(data[0].intValue());
     return true;
   }
-  if (checkCommand(command, "sendRawData", numData, 1))
+  if (checkCommand(command, "sendLevel", numData, 1))
   {
-    sendRawData = data[0].intValue();
+    sendLevel = data[0].intValue();
     return true;
   }
   else if (checkCommand(command, "updateRate", numData, 1))
@@ -246,30 +236,23 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     sendEvent(IMUEvent(IMUEvent::CalibrationStatus, calibration, 4));
     return true;
   }
-  else if (checkCommand(command, "trailCount", numData, 1))
+  else if (checkCommand(command, "accelThresholds", numData, 2))
   {
-    trailCount = min(data[0].intValue(), TRAIL_MAX);
+    accelThresholds[0] = data[0].floatValue();
+    accelThresholds[1] = data[1].floatValue();
     prefs.begin(name.c_str());
-    prefs.putFloat("trailCount", trailCount);
+    prefs.putFloat("throwMin", accelThresholds[0]);
+    prefs.putFloat("throwMax", accelThresholds[1]);
     prefs.end();
+    return true;
   }
-  else if (checkCommand(command, "throwThresholds", numData, 2))
+  else if (checkCommand(command, "diffThreshold", numData, 1))
   {
-    throwThresholds[0] = data[0].floatValue();
-    throwThresholds[1] = data[1].floatValue();
+    diffThreshold = data[0].floatValue();
     prefs.begin(name.c_str());
-    prefs.putFloat("throwMin", throwThresholds[0]);
-    prefs.putFloat("throwMax", throwThresholds[1]);
+    prefs.putFloat("diff", diffThreshold);
     prefs.end();
-  }
-  else if (checkCommand(command, "speedThresholds", numData, 2))
-  {
-    speedThresholds[0] = data[0].floatValue();
-    speedThresholds[1] = data[1].floatValue();
-    prefs.begin(name.c_str());
-    prefs.putFloat("speedMin", speedThresholds[0]);
-    prefs.putFloat("speedMax", speedThresholds[1]);
-    prefs.end();
+    return true;
   }
   else if (checkCommand(command, "flatThresholds", numData, 2))
   {
@@ -279,6 +262,7 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     prefs.putFloat("flatMin", flatThresholds[0]);
     prefs.putFloat("flatMax", flatThresholds[1]);
     prefs.end();
+    return true;
   }
   else if (checkCommand(command, "semiFlatThreshold", numData, 1))
   {
@@ -286,6 +270,7 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     prefs.begin(name.c_str());
     prefs.putFloat("semiFlat", semiFlatThreshold);
     prefs.end();
+    return true;
   }
   else if (checkCommand(command, "loftieThreshold", numData, 1))
   {
@@ -293,6 +278,7 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     prefs.begin(name.c_str());
     prefs.putFloat("loftie", loftieThreshold);
     prefs.end();
+    return true;
   }
   else if (checkCommand(command, "singleThreshold", numData, 1))
   {
@@ -300,6 +286,7 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     prefs.begin(name.c_str());
     prefs.putFloat("single", singleThreshold);
     prefs.end();
+    return true;
   }
 
   return false;
