@@ -21,7 +21,8 @@ public:
 	~PropUI();
 
 	PropViz viz;
-	std::unique_ptr<IntStepperUI> idUI;
+	std::unique_ptr<IntParameterLabelUI> idUI;
+	BoolParameter* imuRef;
 
 	void paintOverChildren(Graphics &g) override;
 	void mouseDown(const MouseEvent &e) override;

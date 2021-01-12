@@ -30,6 +30,7 @@ Prop::Prop(var params) :
 	controlsCC("Controls"),
 	rgbComponent(nullptr),
 	bakingCC("Bake and Upload"),
+	pingEnabled(true),
 	receivedPongSinceLastPingSent(false),
 	providerToBake(nullptr),
 	currentBlock(nullptr),
@@ -137,7 +138,8 @@ Prop::Prop(var params) :
 
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
-	startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
+	pingEnabled = params.getProperty("ping", pingEnabled);
+	if(pingEnabled) startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 }
 
 Prop::~Prop()
@@ -217,6 +219,9 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 
 void Prop::update()
 {
+	HashMap<String, PropComponent*>::Iterator it(components);
+	while (it.next()) it.getValue()->update();
+
 	if (findPropMode->boolValue())
 	{
 		colors.fill(Colours::white.withBrightness(.5f));
@@ -488,12 +493,14 @@ void Prop::handleOSCMessage(const OSCMessage& m)
 
 void Prop::handlePong()
 {
+	if (!pingEnabled) return;
 	receivedPongSinceLastPingSent = true;
 	isConnected->setValue(true);
 }
 
 void Prop::sendPing()
 {
+	if (!pingEnabled) return;
 	receivedPongSinceLastPingSent = false;
 	sendPingInternal();
 }
@@ -503,6 +510,7 @@ void Prop::timerCallback(int timerID)
 	switch (timerID)
 	{
 	case PROP_PING_TIMERID:
+		if (!pingEnabled) return;
 		if(!receivedPongSinceLastPingSent) isConnected->setValue(false);
 		sendPing();
 		break;

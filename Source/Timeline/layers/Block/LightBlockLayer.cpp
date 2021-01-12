@@ -127,23 +127,17 @@ void LightBlockLayer::filtersChanged()
 	updateLinkedProps();
 }
 
-bool LightBlockLayer::paste()
+void LightBlockLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool)
 {
-	Array<LayerBlock *> p = blockClipManager.addItemsFromClipboard(false);
-	if (p.isEmpty()) return SequenceLayer::paste();
-	return true;
-}
+	if (!enabled->boolValue()) return;
+	if (Engine::mainEngine->isClearing) return;
 
-void LightBlockLayer::selectAll(bool addToSelection)
-{
-	deselectThis(false);
-	blockClipManager.askForSelectAllItems(addToSelection);
-}
-
-void LightBlockLayer::endLoadFile()
-{
-	updateLinkedProps();
-	Engine::mainEngine->removeEngineListener(this);
+	for (auto& c : blockClipManager.items)
+	{
+		Array<Prop *> props;
+		for (auto& p : PropManager::getInstance()->items) if (filterManager->getTargetIDForProp(p) >= 0) props.add(p);
+		((LightBlockClip *)c)->handleEnterExit(c->isInRange(s->currentTime->floatValue()), props);
+	}
 }
 
 void LightBlockLayer::onContainerParameterChangedInternal(Parameter* p)
@@ -158,15 +152,20 @@ void LightBlockLayer::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
-SequenceLayerPanel * LightBlockLayer::getPanel()
+bool LightBlockLayer::paste()
 {
-	return new LightBlockLayerPanel(this);
+	Array<LayerBlock*> p = blockClipManager.addItemsFromClipboard(false);
+	if (p.isEmpty()) return SequenceLayer::paste();
+	return true;
 }
 
-SequenceLayerTimeline * LightBlockLayer::getTimelineUI()
+void LightBlockLayer::selectAll(bool addToSelection)
 {
-	return new LightBlockLayerTimeline(this);
+	deselectThis(false);
+	blockClipManager.askForSelectAllItems(addToSelection);
 }
+
+
 
 var LightBlockLayer::getJSONData()
 {
@@ -181,4 +180,21 @@ void LightBlockLayer::loadJSONDataInternal(var data)
 	SequenceLayer::loadJSONDataInternal(data);
 	blockClipManager.loadJSONData(data.getProperty("blocks", var()));
 	filterManager->loadJSONData(data.getProperty("filters", var()));
+}
+
+void LightBlockLayer::endLoadFile()
+{
+	updateLinkedProps();
+	Engine::mainEngine->removeEngineListener(this);
+}
+
+
+SequenceLayerPanel* LightBlockLayer::getPanel()
+{
+	return new LightBlockLayerPanel(this);
+}
+
+SequenceLayerTimeline* LightBlockLayer::getTimelineUI()
+{
+	return new LightBlockLayerTimeline(this);
 }

@@ -46,6 +46,8 @@ public:
 
 	void notifyUpdatePreview();
 
+	void handleEnterExit(bool enter, Array<Prop*> filteredProps);
+
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void controllableStateChanged(Controllable* c) override;
 

@@ -23,6 +23,7 @@ public:
 
 	Prop * prop;
 	WeakReference<Inspectable> propRef;
+	BoolParameter* imuRef;
 
 	void paint(Graphics &g) override;
 	void newMessage(const Prop::PropEvent &e) override;

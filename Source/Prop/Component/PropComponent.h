@@ -24,8 +24,12 @@ public:
     WeakReference<Prop> prop;
     bool feedbackEnabled;
 
+    Array<Controllable *> excludeControlControllables;
+
     void sendControl(String control, var value = var());
     virtual void onContainerParameterChanged(Parameter* p) override;
+
+    virtual void update() {}
 
     virtual void handePropConnected() {}
 

@@ -11,23 +11,31 @@
 #include "PropUI.h"
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "LightBlock/model/ui/LightBlockModelUI.h"
+#include "../Component/imu/IMUComponent.h"
 
 PropUI::PropUI(Prop * p) :
 	BaseItemUI(p),
-	viz(p)
+	viz(p),
+	imuRef(nullptr)
 {
+	itemLabel.setVisible(false);
 
 	acceptedDropTypes.add("LightBlockModel");
+	acceptedDropTypes.add("Timeline");
+	acceptedDropTypes.add("Script");
+	acceptedDropTypes.add("Picture");
 
-	idUI.reset(p->globalID->createStepper());
+	idUI.reset(p->globalID->createLabelUI());
 	idUI->showLabel = true;
 
 	addAndMakeVisible(idUI.get());
 	addAndMakeVisible(&viz);
 
+	if(IMUPropComponent * imu = dynamic_cast<IMUPropComponent *>(p->getComponent("imu"))) imuRef = imu->enabled;
+
 	viz.setInterceptsMouseClicks(false, false);
 
-	setSize(80, 100);
+	setSize(50, 100);
 	
 }
 
@@ -53,8 +61,15 @@ void PropUI::paintOverChildren(Graphics & g)
 	}
 
 	g.setColour(item->isConnected->boolValue() ? GREEN_COLOR : BG_COLOR);
-	Rectangle<int> r = getMainBounds().translated(0, headerHeight + headerGap).removeFromRight(20);
-	g.fillEllipse(r.removeFromTop(20).toFloat().reduced(4));
+	Rectangle<int> r = getMainBounds().translated(0, headerHeight + headerGap).removeFromRight(20).removeFromTop(20).reduced(1);
+	g.fillEllipse(r.toFloat().reduced(4));
+
+	if (imuRef != nullptr && imuRef->boolValue())
+	{
+		g.setColour(YELLOW_COLOR);
+		g.drawEllipse(r.toFloat().reduced(2), 1);
+	}
+	
 
 	if (isDraggingOver)
 	{
@@ -92,14 +107,14 @@ void PropUI::resizedInternalHeader(Rectangle<int>& r)
 
 void PropUI::resizedInternalContent(Rectangle<int> &r)
 {
-	idUI->setBounds(r.removeFromTop(16).removeFromLeft(60));
+	idUI->setBounds(r.removeFromTop(16).removeFromLeft(30));
 	r.removeFromTop(2);
 	viz.setBounds(r.reduced(2));
 }
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
-	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected) repaint();
+	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef) repaint();
 }
 
 void PropUI::itemDropped(const SourceDetails & source)

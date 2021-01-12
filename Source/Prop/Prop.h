@@ -48,6 +48,7 @@ public:
 	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
 
+	bool pingEnabled;
 	bool receivedPongSinceLastPingSent;
 
 	BoolParameter* findPropMode;

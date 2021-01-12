@@ -164,6 +164,21 @@ void LightBlockClip::notifyUpdatePreview()
 
 }
 
+void LightBlockClip::handleEnterExit(bool enter, Array<Prop*> filteredProps)
+{
+	if(currentBlock == nullptr) return;
+	if (enter == isActive->boolValue()) return;
+	isActive->setValue(enter);
+
+	if(filterManager->items.isEmpty()) currentBlock->handleEnterExit(isActive->boolValue(), filteredProps);
+	else
+	{
+		Array<Prop*> clipProps;
+		for (auto& p : filteredProps) if (filterManager->getTargetIDForProp(p) >= 0) clipProps.add(p);
+		currentBlock->handleEnterExit(isActive->boolValue(), clipProps);
+	}
+}
+
 void LightBlockClip::onContainerParameterChangedInternal(Parameter * p)
 {
 	LayerBlock::onContainerParameterChangedInternal(p);

@@ -20,6 +20,9 @@ public:
     ~IMUPropComponent();
 
     Point3DParameter* orientation;
+    
+    BoolParameter* sendRawData;
+
     Point3DParameter* accel;
     Point3DParameter* linearAccel;
     Point3DParameter* gyro;
@@ -36,6 +39,7 @@ public:
     BoolParameter* invert;
 
     ControllableContainer throwConfigCC;
+    BoolParameter* computeLocally;
     IntParameter* maxTrail;
     Point2DParameter* throwThresholds;
     Point2DParameter * speedThresholds;
@@ -62,7 +66,8 @@ public:
     void onContainerParameterChanged(Parameter* p) override;
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
-
     void computeAngle();
     void computeThrows();
+
+    void update() override;
 };

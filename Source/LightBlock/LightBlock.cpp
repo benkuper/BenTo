@@ -13,6 +13,7 @@
 #include "LightBlock.h"
 #include "Prop/Prop.h"
 #include "model/blocks/filters/LightBlockFilter.h"
+#include "model/blocks/script/ScriptBlock.h"
 
 LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	BaseItem(provider->niceName, false),
@@ -182,6 +183,11 @@ void LightBlock::parameterControlModeChanged(Parameter * p)
 	}
 
 	blockListeners.call(&LightBlockListener::blockParamControlModeChanged, p);
+}
+
+void LightBlock::handleEnterExit(bool enter, Array<Prop*> props)
+{
+	if (provider != nullptr && !provider.wasObjectDeleted()) provider->handleEnterExit(enter, props);
 }
 
 BakeData LightBlock::getBakeDataForProp(Prop * p)

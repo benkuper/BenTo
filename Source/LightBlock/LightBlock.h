@@ -41,6 +41,8 @@ public:
 	void providerParameterValueUpdated(LightBlockColorProvider *, Parameter * p) override;
 	virtual void parameterControlModeChanged(Parameter * p) override;
 
+	void handleEnterExit(bool enter, Array<Prop *> props); //for timeline stuff
+
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

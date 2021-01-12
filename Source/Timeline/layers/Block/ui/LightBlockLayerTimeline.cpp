@@ -30,3 +30,11 @@ void LightBlockLayerTimeline::updateContent()
 {
 	managerUI.updateContent();
 }
+
+void LightBlockLayerTimeline::setSeekManipulationMode(bool isManipulating)
+{
+	if (!isManipulating) for (auto& b : managerUI.itemsUI)
+	{
+		((LightBlockClipUI*)b)->generatePreview();
+	}
+}

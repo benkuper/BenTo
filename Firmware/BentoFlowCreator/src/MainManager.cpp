@@ -222,6 +222,13 @@ void MainManager::imuEvent(const IMUEvent &e)
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 3);
     }
     break;
+    
+    case IMUEvent::ThrowState:
+    {
+        var data[1] {imu.throwState};
+        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 1);
+    }
+    break;
     }
 }
 

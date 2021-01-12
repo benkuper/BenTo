@@ -28,6 +28,8 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     orientation->setControllableFeedbackOnly(true);
     orientation->setBounds(-180, -90, -180, 180, 90, 180);
 
+    sendRawData = addBoolParameter("Send Raw Data", "Send raw data from sensor", false);
+
     accel = addPoint3DParameter("Accel", "Linear Acceleration of the prop");
     accel->setControllableFeedbackOnly(true);
 
@@ -46,24 +48,27 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
 
     throwState = addEnumParameter("Throw State", "The current detected state of throw");
     throwState->addOption("None", 0)->addOption("Flat", 1)->addOption("Single", 2)->addOption("Double", 3)->addOption("Semi-flat", 4)->addOption("Loftie", 5);
-    //throwState->setControllableFeedbackOnly(true);
 
+    weightSmoothing = addFloatParameter("Throw Smoothing", "Smoothing of weight when throwing", .2f, 0, 1);
+    weightSmoothing2 = addFloatParameter("Catch Smoothing", "Smoothing of weight when catching", .6f, 0, 1);
+    
     throwWeight = addFloatParameter("Throw Weight", "Weight of throw", 0, 0, 1);
+    throwWeight->setControllableFeedbackOnly(true);
     throwTime = addFloatParameter("Throw Time", "Time of throw", 0, 0, 5);
+    throwTime->setControllableFeedbackOnly(true);
 
+    
     angleConfigCC.editorIsCollapsed = true;
     addChildControllableContainer(&angleConfigCC);
     throwConfigCC.editorIsCollapsed = true;
     addChildControllableContainer(&throwConfigCC);
-
 
     calibrate = angleConfigCC.addTrigger("Calibrate Yaw", "");
     offset = angleConfigCC.addFloatParameter("Yaw Offset", "", 0, -180, 180);
     angleOffset = angleConfigCC.addFloatParameter("Angle Offset", "", 0, 0, 1);
     invert = angleConfigCC.addBoolParameter("Invert Direction", "", false);
 
-    var curAccel;
-
+    computeLocally = throwConfigCC.addBoolParameter("Compute Locally", "If enabled, this will compute throws locally instead of on board", false);
     maxTrail = throwConfigCC.addIntParameter("Trail Count", "Number of values to keep to average the accel data", 1, 1, 100);
     throwThresholds = throwConfigCC.addPoint2DParameter("Throw Thresholds", "");
     speedThresholds = throwConfigCC.addPoint2DParameter("Speed Thresholds", "");
@@ -72,18 +77,20 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     speedThresholds->setPoint(.2f, 1);
     flatThresholds->setPoint(.8f, 2);
 
-    semiFlatThreshold = throwConfigCC.addFloatParameter("Semi-flat Threshold", "Throws below this value will be detected as semi-flat", 2);
+    semiFlatThreshold = throwConfigCC.addFloatParameter("Semi Flat Threshold", "Throws below this value will be detected as semi-flat", 2);
     loftieThreshold = throwConfigCC.addFloatParameter("Loftie Threshold", "Throws below this value will be detected as loftie", 12);
     singleThreshold = throwConfigCC.addFloatParameter("Single Threshold", "Throws below this value will be detected as single", 25);
-
-    weightSmoothing = throwConfigCC.addFloatParameter("Weight Smoothing", "Smoothing of weight", .2f, 0, 1);
-    weightSmoothing2 = throwConfigCC.addFloatParameter("Weight Smoothing 2", "Smoothing of weight", .6f, 0, 1);
 
     trail.resize(maxTrail->intValue());
 
     //set at end to avoid bad init
     linearAccel->setBounds(-50, -50, -50, 50, 50, 50);
     accel->setBounds(-50, -50, -50, 50, 50, 50);
+
+
+    excludeControlControllables.add(throwState);
+    excludeControlControllables.add(weightSmoothing);
+    excludeControlControllables.add(weightSmoothing2);
 }
 
 
@@ -93,7 +100,8 @@ IMUPropComponent::~IMUPropComponent()
 
 void IMUPropComponent::handePropConnected()
 {
-    sendControl("enabled", enabled->boolValue());
+    sendControl(enabled->shortName, enabled->boolValue());
+    sendControl(sendRawData->shortName, sendRawData->boolValue());
 }
 
 void IMUPropComponent::onContainerParameterChanged(Parameter* p)
@@ -105,6 +113,18 @@ void IMUPropComponent::onContainerParameterChanged(Parameter* p)
     {
         trail.resize(maxTrail->intValue());
     }
+    else if (p == sendRawData)
+    {
+        sendControl(p->shortName, p->boolValue());
+    }
+    else if (p == throwState)
+    {
+        bool isThrowing = (int)throwState->getValueData() > 0;
+        if (isThrowing)
+        {
+            timeAtThrow = Time::getMillisecondCounter() / 1000.0f;
+        }
+    }
 }
 
 void IMUPropComponent::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
@@ -115,6 +135,12 @@ void IMUPropComponent::onControllableFeedbackUpdate(ControllableContainer* cc, C
         float tVal = orientation->x - 180;
         if (tVal < -180) tVal += 360;
         offset->setValue(tVal);
+    }if (cc == &throwConfigCC)
+    {
+        if (c != computeLocally)
+        {
+            if (c->type != c->TRIGGER) sendControl(c->shortName, ((Parameter*)c)->value);
+        }
     }
 }
 
@@ -140,7 +166,8 @@ void IMUPropComponent::computeAngle()
 void IMUPropComponent::computeThrows()
 {
     if (!enabled->boolValue()) return;
-   
+    if (!computeLocally->boolValue()) return;
+
     Vector3D<float> curAccel = accel->getVector();
 
     int trailCount = maxTrail->intValue();
@@ -180,7 +207,6 @@ void IMUPropComponent::computeThrows()
         int result = 0;
         if (isThrowing)
         {
-            timeAtThrow = Time::getMillisecondCounter() / 1000.0f;
             if (isFlatting) result = 1;
             else if (sa.x < semiFlatThreshold->floatValue()) result = 4;
             else if (sa.x < loftieThreshold->floatValue()) result = 5;
@@ -194,12 +220,12 @@ void IMUPropComponent::computeThrows()
 
         throwState->setValueWithData(result);
     }
+}
 
-    if (isThrowing)
-    {
-        throwTime->setValue(Time::getMillisecondCounter() / 1000.0f - timeAtThrow);
-    }
-
+void IMUPropComponent::update()
+{
+    bool isThrowing = (int)throwState->getValueData() > 0;
+    throwTime->setValue(Time::getMillisecondCounter() / 1000.0f - timeAtThrow);
     float targetWeight = isThrowing ? 1 : 0;
     float curVal = throwWeight->floatValue();
     float smooth = targetWeight > curVal ? weightSmoothing->floatValue() : weightSmoothing2->floatValue();

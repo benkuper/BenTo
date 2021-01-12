@@ -67,7 +67,12 @@ void LightBlockClipUI::paint(Graphics& g)
 
 	imgLock.enter();
 	g.setColour(Colours::white.withAlpha(automationUI != nullptr ? .3f : .6f));
-	g.drawImage(previewImage, getLocalBounds().toFloat(), RectanglePlacement::stretchToFit);
+	g.drawImage(previewImage, getCoreBounds().toFloat(), RectanglePlacement::stretchToFit);
+	if (item->loopLength->floatValue() > 0)
+	{
+		g.setTiledImageFill(previewImage, getCoreWidth(), 0, .5f);
+		g.fillRect(getLocalBounds().withLeft(getCoreWidth()));
+	}
 	imgLock.exit();
 
 	if (!imageIsReady)
@@ -128,6 +133,7 @@ void LightBlockClipUI::resizedBlockInternal()
 void LightBlockClipUI::generatePreview()
 {
 	if (isMouseButtonDown()) return;
+	if (!isVisible()) return;
 	shouldUpdateImage = true;
 }
 
@@ -365,7 +371,7 @@ void LightBlockClipUI::run()
 		shouldUpdateImage = false;
 		imageIsReady = false;
 
-		const int resX = jmin(getWidth(), 600);
+		const int resX = jmin(getCoreWidth(), 600);
 		const int resY = 32; //to make dynamic
 
 		if (resX == 0)
@@ -386,13 +392,13 @@ void LightBlockClipUI::run()
 		params.getDynamicObject()->setProperty("updateAutomation", false);
 
 		float start = clip->time->floatValue();
-		float length = clip->getTotalLength();
+		//float length = clip->getTotalLength();
 		float coreLength = clip->coreLength->floatValue();
 
 		for (int i = 0; i < resX; i++)
 		{
 			if (threadShouldExit()) return;
-			float relTotal = i * length / resX;
+			float relTotal = i * coreLength / resX;
 			float absT = start + relTotal;
 
 			Array<Colour> c = clip->getColors(previewProp.get(), absT, params);

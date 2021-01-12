@@ -83,6 +83,15 @@ void ScriptBlock::childStructureChanged(ControllableContainer* cc)
 	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
 }
 
+void ScriptBlock::handleEnterExit(bool enter, Array<Prop *> props)
+{
+	Array<var> args;
+	var propArgs;
+	for (auto& p : props) propArgs.append(p->getScriptObject());
+	args.add(propArgs);
+	script.callFunction(enter ? "onEnter" : "onExit", args);
+}
+
 var ScriptBlock::getJSONData()
 {
 	var data = LightBlockModel::getJSONData();

@@ -26,4 +26,6 @@ public:
 	void resized() override;
 	void updateContent() override;
 
+	virtual void setSeekManipulationMode(bool isManipulating) override;
+
 };

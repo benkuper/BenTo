@@ -98,8 +98,9 @@ void SpatItem::updateCustomHandles()
 
 	while (handles.size() < resolution->intValue())
 	{
+		float p = handles.size() *1.0f / resolution->intValue();
 		handles.add(handlesCC.addPoint2DParameter("Position " + String(handles.size() + 1), "Position"));
-		handles[handles.size() - 1]->setPoint(Random().nextFloat() * .5f + .25f, Random().nextFloat() * .5f + .25f);
+		handles[handles.size() - 1]->setPoint(.1f+.9f*p, .5f);
 	}
 
 	isUpdatingHandles = false;

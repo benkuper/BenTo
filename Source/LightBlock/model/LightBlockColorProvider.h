@@ -65,6 +65,8 @@ public:
 
 	void onContainerTriggerTriggered(Trigger *) override;
 
+	virtual void handleEnterExit(bool enter, Array<Prop *> props) {}
+
 	class ProviderListener
 	{
 	public:

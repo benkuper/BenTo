@@ -3,15 +3,18 @@
 #include <Wire.h>
 #include "Adafruit_BNO055/Adafruit_BNO055.h"
 
+#define TRAIL_MAX 20
+
 class IMUEvent
 {
 public:
-    enum Type { OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, Shock, FlatFall, CalibrationStatus, TYPES_MAX };
+    enum Type { OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, ThrowState, CalibrationStatus, TYPES_MAX };
     static const String eventNames[TYPES_MAX];
 
     IMUEvent(Type t, float * data = nullptr, int numData = 0) : type(t), data(data), numData(numData) {}
     Type type;
     float * data;
+    int intData;
     int numData;
 };
 
@@ -27,6 +30,7 @@ public:
 
     bool isConnected;
     bool isEnabled;
+    bool sendRawData;
     
     long orientationSendTime;
     long timeSinceOrientationLastSent;
@@ -39,11 +43,33 @@ public:
     float linearAccel[3];
     float gravity[3];
     
+    float throwState; //0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
+    
+    //IMU Compute
+    int trailIndex;
+    int trailCount;
+    float trail[TRAIL_MAX][3];
+    float smoothAccel[3];
+    bool inSpeed;
+
+    float throwThresholds[2];
+    float speedThresholds[2];
+    float flatThresholds[2];
+    float semiFlatThreshold;
+    float loftieThreshold;
+    float singleThreshold;
+    
     void init();
     void update();
+
+    void computeThrow();
 
     void setEnabled(bool value);
 
 
     bool handleCommand(String command, var * data, int numData) override;
+
+    #ifdef USE_PREFERENCES
+    Preferences prefs;
+    #endif
 };

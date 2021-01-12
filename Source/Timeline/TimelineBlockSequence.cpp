@@ -97,29 +97,30 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 		float r = 0, g = 0, b = 0, a = 0;
 		for (int j = numActiveLayers - 1; j >= 0; j--)
 		{
+			Colour c = colors.getUnchecked(j).getUnchecked(i);
 			switch (blendModes[j])
 			{
 			case LightBlockLayer::ADD:
-				r += colors[j][i].getFloatRed();
-				g += colors[j][i].getFloatGreen();
-				b += colors[j][i].getFloatBlue();
-				a += colors[j][i].getFloatAlpha();
+				r += c.getFloatRed();
+				g += c.getFloatGreen();
+				b += c.getFloatBlue();
+				a += c.getFloatAlpha();
 				break;
 
 			case LightBlockLayer::ALPHA:
 			{
-				float ca = colors[j][i].getFloatAlpha();
-				r = r + (colors[j][i].getFloatRed() - r) * ca;
-				g = g + (colors[j][i].getFloatGreen() - g) * ca;
-				b = b + (colors[j][i].getFloatBlue() - b) * ca;
+				float ca = c.getFloatAlpha();
+				r = r + (c.getFloatRed() - r) * ca;
+				g = g + (c.getFloatGreen() - g) * ca;
+				b = b + (c.getFloatBlue() - b) * ca;
 				a += ca;
 			}
 			break;
 
 			case LightBlockLayer::MASK:
 			{
-				float br = colors[j][i].getBrightness();
-				float ma = colors[j][i].getFloatAlpha();
+				float br = c.getBrightness();
+				float ma = c.getFloatAlpha();
 				float fac = jmap<float>(ma, 1, br);
 				r *=  fac;// jmin(r, colors[j][i].getFloatRed())* a;
 				g *= fac;// jmin(g, colors[j][i].getFloatGreen())* a;

@@ -30,7 +30,7 @@ void PropComponent::sendControl(String control, var value)
 void PropComponent::onContainerParameterChanged(Parameter* p)
 {
     EnablingControllableContainer::onContainerParameterChanged(p);
-    if(!p->isControllableFeedbackOnly) sendControl(p->shortName, p->value);
+    if(!p->isControllableFeedbackOnly && !excludeControlControllables.contains(p)) sendControl(p->shortName, p->value);
 }
 
 void PropComponent::handleMessage(const String &msg, var value)

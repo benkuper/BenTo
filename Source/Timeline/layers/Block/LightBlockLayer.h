@@ -35,18 +35,18 @@ public:
 	Array<Colour> getColors(Prop * p, double time, var params);
 
 	void updateLinkedProps();
-
 	void filtersChanged() override;
 
+	void sequenceCurrentTimeChanged(Sequence* s, float prevTime, bool) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	
 	bool paste() override;
 	void selectAll(bool addToSelection = false) override;
 
-	void endLoadFile() override;
-
-	void onContainerParameterChangedInternal(Parameter* p) override;
-	
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
+	void endLoadFile() override;
+
 
 	SequenceLayerPanel * getPanel() override;
 	SequenceLayerTimeline * getTimelineUI() override;
