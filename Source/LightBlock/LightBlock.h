@@ -15,7 +15,7 @@
 
 
 class LightBlock :
-	public BaseItem,
+	public ControllableContainer,
 	public BaseColorProvider,
 	public LightBlockColorProvider::ProviderListener
 {

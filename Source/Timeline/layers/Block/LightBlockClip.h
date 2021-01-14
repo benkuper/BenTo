@@ -11,7 +11,9 @@
 #pragma once
 
 #include "LightBlock/LightBlock.h"
+#include "LightBlockEffect.h"
 #include "LightBlock/model/blocks/filters/LightBlockFilter.h"
+
 
 class LightBlockLayer;
 class PropTargetFilterManager;
@@ -33,12 +35,12 @@ public:
 	FloatParameter * fadeOut;
 
 	std::unique_ptr<PropTargetFilterManager> filterManager;
-	BaseManager<LightBlock> effects;
+	BaseManager<LightBlockEffect> effects;
 
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 	Array<Colour> getColors(Prop * p, double absoluteTime, var params);
 
-	void addFilterFromProvider(LightBlockFilter * provider);
+	void addEffectFromProvider(LightBlockColorProvider* provider);
 	
 	virtual void blockParamControlModeChanged(Parameter *p) override;
 

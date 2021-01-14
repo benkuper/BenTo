@@ -35,8 +35,9 @@ PropUI::PropUI(Prop * p) :
 
 	viz.setInterceptsMouseClicks(false, false);
 
-	setSize(50, 100);
-	
+	Prop::Shape shape = p->type->getValueDataAsEnum<Prop::Shape>();
+
+	setSize(shape == Prop::HOOP ? 100 : 50, 100);
 }
 
 PropUI::~PropUI()
@@ -115,6 +116,11 @@ void PropUI::resizedInternalContent(Rectangle<int> &r)
 void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 {
 	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef) repaint();
+	else if (c == item->type)
+	{
+		Prop::Shape shape = item->type->getValueDataAsEnum<Prop::Shape>();
+		setSize(shape == Prop::HOOP ? 100 : 50, 100);
+	}
 }
 
 void PropUI::itemDropped(const SourceDetails & source)

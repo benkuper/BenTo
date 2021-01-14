@@ -7,6 +7,9 @@ RGBLedsManager::RGBLedsManager() : Component("rgb"),
                                    timeSinceLastSend(0)
 #endif
 {
+#ifdef LED_DEFAULT_BRIGHTNESS
+    globalBrightness = LED_DEFAULT_BRIGHTNESS;
+#endif
 }
 
 void RGBLedsManager::init()
@@ -16,18 +19,27 @@ void RGBLedsManager::init()
     for (int i = 0; i < LED_COUNT; i++)
     {
         const RGBLedPins l = rgbLedPins[i];
-        if(l.rPin >= 0) pinMode(l.rPin, OUTPUT);
-        if(l.gPin >= 0) pinMode(l.gPin, OUTPUT);
-        if(l.bPin >= 0) pinMode(l.bPin, OUTPUT);
+        if (l.rPin >= 0)
+            pinMode(l.rPin, OUTPUT);
+        if (l.gPin >= 0)
+            pinMode(l.gPin, OUTPUT);
+        if (l.bPin >= 0)
+            pinMode(l.bPin, OUTPUT);
 #ifdef ESP32
         int startChannel = i * 3;
-        if(l.rPin >= 0) ledcSetup(startChannel, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
-        if(l.gPin >= 0) ledcSetup(startChannel + 1, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
-        if(l.bPin >= 0) ledcSetup(startChannel + 2, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+        if (l.rPin >= 0)
+            ledcSetup(startChannel, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+        if (l.gPin >= 0)
+            ledcSetup(startChannel + 1, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
+        if (l.bPin >= 0)
+            ledcSetup(startChannel + 2, LED_PWM_FREQUENCY, LED_PWM_RESOLUTION);
 
-        if(l.rPin >= 0) ledcAttachPin(l.rPin, startChannel);
-        if(l.gPin >= 0) ledcAttachPin(l.gPin, startChannel + 1);
-        if(l.bPin >= 0) ledcAttachPin(l.bPin, startChannel + 2);
+        if (l.rPin >= 0)
+            ledcAttachPin(l.rPin, startChannel);
+        if (l.gPin >= 0)
+            ledcAttachPin(l.gPin, startChannel + 1);
+        if (l.bPin >= 0)
+            ledcAttachPin(l.bPin, startChannel + 2);
 #endif
     }
 #elif defined LED_USE_DMX
@@ -42,27 +54,26 @@ void RGBLedsManager::init()
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #else
 #ifdef LED_NUM_STRIPS
-    #if LED_NUM_STRIPS >= 1 
-    FastLED.addLeds<LED_TYPE, LED_PIN1, LED_COLOR_ORDER>(leds+LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
-    
-    #if LED_NUM_STRIPS >= 2 
-    FastLED.addLeds<LED_TYPE, LED_PIN2, LED_COLOR_ORDER>(leds+LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
-    
-    #if LED_NUM_STRIPS >= 3 
-    FastLED.addLeds<LED_TYPE, LED_PIN3, LED_COLOR_ORDER>(leds+LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
-   
-    #if LED_NUM_STRIPS >= 4 
-    FastLED.addLeds<LED_TYPE, LED_PIN4, LED_COLOR_ORDER>(leds+LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
-   
-    #if LED_NUM_STRIPS >= 5 
-    FastLED.addLeds<LED_TYPE, LED_PIN5, LED_COLOR_ORDER>(leds+LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
-    
+#if LED_NUM_STRIPS >= 1
+    FastLED.addLeds<LED_TYPE, LED_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
 
-    #endif //5
-    #endif //4
-    #endif //3
-    #endif //2
-    #endif //1
+#if LED_NUM_STRIPS >= 2
+    FastLED.addLeds<LED_TYPE, LED_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
+
+#if LED_NUM_STRIPS >= 3
+    FastLED.addLeds<LED_TYPE, LED_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
+
+#if LED_NUM_STRIPS >= 4
+    FastLED.addLeds<LED_TYPE, LED_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
+
+#if LED_NUM_STRIPS >= 5
+    FastLED.addLeds<LED_TYPE, LED_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
+
+#endif //5
+#endif //4
+#endif //3
+#endif //2
+#endif //1
 #else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #endif
@@ -133,7 +144,7 @@ void RGBLedsManager::update()
 
 #else
 
-FastLED.show();
+    FastLED.show();
 
 #endif
 #endif //LED_COUNT
@@ -147,7 +158,7 @@ void RGBLedsManager::setBrightness(float value, bool save)
 #ifdef LED_SEPARATE_CHANNELS
 #elif defined LED_USE_DMX
 #else
-    FastLED.setBrightness((int)(globalBrightness * 60));
+    FastLED.setBrightness((int)(globalBrightness * LED_MAX_BRIGHTNESS));
     FastLED.show();
 #endif
     if (save)

@@ -152,6 +152,10 @@
                   file="Source/Timeline/layers/Block/LightBlockClipManager.cpp"/>
             <FILE id="c5NS7j" name="LightBlockClipManager.h" compile="0" resource="0"
                   file="Source/Timeline/layers/Block/LightBlockClipManager.h"/>
+            <FILE id="ihqs03" name="LightBlockEffect.cpp" compile="1" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockEffect.cpp"/>
+            <FILE id="Wouh1m" name="LightBlockEffect.h" compile="0" resource="0"
+                  file="Source/Timeline/layers/Block/LightBlockEffect.h"/>
             <FILE id="t8NxFM" name="LightBlockLayer.cpp" compile="1" resource="0"
                   file="Source/Timeline/layers/Block/LightBlockLayer.cpp"/>
             <FILE id="lOb1Wl" name="LightBlockLayer.h" compile="0" resource="0"

@@ -57,6 +57,7 @@ Prop::Prop(var params) :
 	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", params.getProperty("resolution", 1), 1);
 	type = generalCC.addEnumParameter("Type", "The type of the prop");
 	fillTypeOptions(type);
+	type->setValueWithKey(params.getProperty("shape", type->getValueKey()));
 
 	colors.resize(resolution->intValue());
 

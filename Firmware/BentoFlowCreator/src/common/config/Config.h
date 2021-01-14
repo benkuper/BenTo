@@ -2,7 +2,8 @@
 
 //  #define CREATOR_PROTO_V0
 //  #define CREATOR_PROTO_V1
- #define CREATOR_PROTO_V2
+ //#define CREATOR_PROTO_V2
+ #define CREATOR_TAB_HOOP
 //  #define LT_BALL
 //  #define LT_HOOP
 //  #define CLARINET
@@ -23,6 +24,8 @@
 #include "config_protov1.h"
 #elif defined CREATOR_PROTO_V2
 #include "config_protov2.h"
+#elif defined CREATOR_TAB_HOOP
+#include "config_tab_hoop.h"
 #elif defined LT_HOOP
 #include "config_lthoop.h"
 #elif defined LT_BALL

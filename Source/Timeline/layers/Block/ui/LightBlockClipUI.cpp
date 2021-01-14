@@ -12,6 +12,7 @@
 #include "../LightBlockLayer.h"
 #include "LightBlock/model/ui/LightBlockModelUI.h"
 #include "Prop/Prop.h"
+#include "LightBlock/model/blocks/script/ScriptBlock.h"
 
 LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	LayerBlockUI(_clip),
@@ -121,7 +122,7 @@ void LightBlockClipUI::resizedBlockInternal()
 		if (automationUI != nullptr)
 		{
 			if (dynamic_cast<GradientColorManagerUI*>(automationUI.get()) != nullptr) automationUI->setBounds(r.removeFromBottom(20));
-			else automationUI->setBounds(r); 
+			else automationUI->setBounds(r);
 		}
 	}
 
@@ -228,7 +229,7 @@ void LightBlockClipUI::mouseDown(const MouseEvent& e)
 						if (a != nullptr)
 						{
 							a->clear();
-							AutomationKey * k = a->addItem(0, 0);
+							AutomationKey* k = a->addItem(0, 0);
 							k->setEasing(Easing::BEZIER);
 							a->addKey(a->length->floatValue(), 1);
 							shouldUpdateImage = true;
@@ -338,8 +339,29 @@ void LightBlockClipUI::itemDropped(const SourceDetails& source)
 				if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
 			}
 
-			if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addFilterFromProvider(f);
-			else clip->activeProvider->setValueFromTarget(provider, true);
+			if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
+			else
+			{
+				if (ScriptBlock* sb = dynamic_cast<ScriptBlock*>(provider))
+				{
+					PopupMenu m;
+					m.addItem(1, "Replace source");
+					m.addItem(2, "Add as effect");
+
+					if (m.show() == 2)
+					{
+						clip->addEffectFromProvider(provider);
+					}
+					else
+					{
+						clip->activeProvider->setValueFromTarget(provider, true);
+					}
+				}
+				else
+				{
+					clip->activeProvider->setValueFromTarget(provider, true);
+				}
+			}
 		}
 	}
 

@@ -110,6 +110,8 @@ void LedManager::shutdown(CRGB color)
     {
         for (int led = 0; led < LED_COUNT; led++)
             rgbManager.setLed(led, blend(initLeds[led], color, i));
+            
+        rgbManager.update();
         FastLED.delay(2);
     }
 

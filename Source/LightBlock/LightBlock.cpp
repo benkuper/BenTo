@@ -16,15 +16,13 @@
 #include "model/blocks/script/ScriptBlock.h"
 
 LightBlock::LightBlock(LightBlockColorProvider * provider) :
-	BaseItem(provider->niceName, false),
+	ControllableContainer(provider->niceName),
 	provider(provider),
 	paramsContainer("Parameters"),
 	paramsLoadData(var())
     //automationsManager(&paramsContainer)
 {
 	addChildControllableContainer(&paramsContainer);
-
-	userCanRemove = false;
 
 	rebuildArgsFromModel();
 	provider->addColorProviderListener(this);
@@ -52,14 +50,13 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 	return provider->getColors(p, time, localParams);
 }
 
-
-
 void LightBlock::filterColors(Array<Colour>* result, Prop* p, double time, var params)
 {
 	if (provider.wasObjectDeleted()) return;
 	
 	var localParams = getLocalParams(p, time, params);
-	((LightBlockFilter *)provider.get())->filterColors(result, p, time, localParams);
+	int id = params.getProperty("forceID", p->globalID->intValue());
+	((LightBlockModel *)provider.get())->getColorsInternal(result, p, time, id, p->resolution->intValue(), localParams);
 }
 
 var LightBlock::getLocalParams(Prop* p, double time, var params)
@@ -200,7 +197,7 @@ BakeData LightBlock::getBakeDataForProp(Prop * p)
 
 var LightBlock::getJSONData()
 {
-	var data = BaseItem::getJSONData();
+	var data = ControllableContainer::getJSONData();
 	data.getDynamicObject()->setProperty("params", paramsContainer.getJSONData());
 	//data.getDynamicObject()->setProperty("automations", automationsManager.getJSONData());
 	
@@ -211,7 +208,7 @@ var LightBlock::getJSONData()
 void LightBlock::loadJSONDataInternal(var data)
 {
 	
-	BaseItem::loadJSONDataInternal(data);
+	ControllableContainer::loadJSONDataInternal(data);
 
 	var pData = data.getProperty("params", var());
 	paramsContainer.loadJSONData(pData);

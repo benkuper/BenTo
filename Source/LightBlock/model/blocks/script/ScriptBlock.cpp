@@ -39,7 +39,7 @@ Array<WeakReference<Controllable>> ScriptBlock::getModelParameters()
 void ScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
 {
 
-	ColourScriptData cData;
+	ColourScriptData cData(result);
 	cData.colorArray.resize(resolution);
 
 	Array<var> args;
@@ -52,20 +52,20 @@ void ScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time,
 
 	var scriptResult = script.callFunction(updateColorsFunc, args);
 
-	Array<Colour> colors;
-
+//	Array<Colour> colors;
 	if (scriptResult.isArray())
 	{
 
-		colors.resize(resolution);
+		//colors.resize(resolution);
 		int numColors = jmin<int>(resolution, scriptResult.size());
 		for (int i = 0; i < numColors; i++)
 		{
-			colors.set(i, Colour::fromFloatRGBA((float)scriptResult[i][0],
+			result->set(i, Colour::fromFloatRGBA((float)scriptResult[i][0],
 				(float)scriptResult[i][1],
 				(float)scriptResult[i][2],
 				scriptResult[i].size() > 3 ? (float)scriptResult[i][3] : 1));
 		}
+
 	}
 	else
 	{
@@ -120,9 +120,13 @@ void ScriptBlock::newMessage(const Script::ScriptEvent& e)
 	}
 }
 
-ColourScriptData::ColourScriptData() :
-	ScriptTarget("colours", this)
+//COLOUR SCRIPT DATA
+ColourScriptData::ColourScriptData(Array<Colour>* sourceColors) :
+	ScriptTarget("colours", this),
+	sourceColors(sourceColors)
 {
+	scriptObject.setMethod("getArray", &ColourScriptData::getArrayFromScript);
+	scriptObject.setMethod("get", &ColourScriptData::getColorFromScript);
 	scriptObject.setMethod("set", &ColourScriptData::updateColorRGBFromScript);
 	scriptObject.setMethod("setHSV", &ColourScriptData::updateColorHSVFromScript);
 	scriptObject.setMethod("setColors", &ColourScriptData::updateColorsRGBFromScript);
@@ -138,7 +142,6 @@ ColourScriptData::ColourScriptData() :
 }
 
 
-//COLOUR SCRIPT DATA
 
 var ColourScriptData::updateColorRGBFromScript(const var::NativeFunctionArgs& args)
 {
@@ -412,4 +415,45 @@ Colour ColourScriptData::getColorFromArgs(const var* a, int numArgs, int offset,
 		else  c = Colour::fromFloatRGBA((float)a[offset], (float)a[offset + 1], (float)a[offset + 2], numArgs > offset + 3 ? (float)a[offset + 3] : 1);
 	}
 	return c;
+}
+
+var ColourScriptData::getColorFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (args.numArguments == 0) return var();
+
+	
+	int index = args.arguments[0];
+	if (p->sourceColors == nullptr || index < 0 || index >= p->sourceColors->size()) return var();
+
+	Colour col = p->sourceColors->getUnchecked(index);
+	
+	var c;
+	c.append(col.getFloatRed());
+	c.append(col.getFloatGreen());
+	c.append(col.getFloatBlue());
+	c.append(col.getFloatAlpha());
+	return c;
+}
+
+var ColourScriptData::getArrayFromScript(const var::NativeFunctionArgs& args)
+{
+	ColourScriptData* p = getObjectFromJS<ColourScriptData>(args);
+	if (p == nullptr) return var();
+	if (p->sourceColors == nullptr) return var();
+
+	var result;
+	for (auto& col : *p->sourceColors)
+	{
+		var c;
+		c.append(col.getFloatRed());
+		c.append(col.getFloatGreen());
+		c.append(col.getFloatBlue());
+		c.append(col.getFloatAlpha());
+
+		result.append(c);
+	}
+	
+	return result;
 }

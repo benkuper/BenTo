@@ -1030,6 +1030,9 @@
     <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockEffect.cpp">
+      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.cpp">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
     </ClCompile>
@@ -4258,6 +4261,9 @@
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.h">
+      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockEffect.h">
       <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.h">

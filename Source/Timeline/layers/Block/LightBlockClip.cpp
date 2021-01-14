@@ -110,7 +110,8 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 	for (int i = 0; i < effects.items.size(); i++)
 	{
 		if (!effects.items[i]->enabled->boolValue()) continue;
-		effects.items[i]->filterColors(&colors, p, relTimeLooped, params);
+		if (effects.items[i]->lightBlock == nullptr) continue;
+		effects.items[i]->lightBlock->filterColors(&colors, p, relTimeLooped, params);
 	}
 
 	for (int i = 0; i < resolution; i++)
@@ -121,13 +122,10 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 	return colors;
 }
 
-void LightBlockClip::addFilterFromProvider(LightBlockFilter * provider)
+void LightBlockClip::addEffectFromProvider(LightBlockColorProvider * provider)
 {
-	LightBlock* lb = new LightBlock(provider);
-	lb->userCanRemove = true;
-	lb->userCanDuplicate = false;
-	lb->setCanBeDisabled(true);
-	effects.addItem(lb);
+	LightBlockEffect * e = effects.addItem();
+	e->setProvider(provider);
 
 	notifyUpdatePreview();
 
@@ -215,7 +213,7 @@ var LightBlockClip::getJSONData()
 	var data = LayerBlock::getJSONData();
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("blockData", currentBlock->getJSONData());
 	data.getDynamicObject()->setProperty("filters", filterManager->getJSONData());
-	//data.getDynamicObject()->setProperty("effects", effects.getJSONData());
+	data.getDynamicObject()->setProperty("effects", effects.getJSONData());
 	return data;
 }
 
@@ -238,7 +236,7 @@ void LightBlockClip::loadJSONDataInternal(var data)
 	filterManager->loadJSONData(data.getProperty("filters", var()));
 
 	//Effects need a way to provide the LightBlockProvider when creating lightblock, otherwise crashes
-	//effects.loadJSONData(data.getProperty("effects", var()));
+	effects.loadJSONData(data.getProperty("effects", var()));
 
 	//Retro compatibility, to remove after
 	var params = data.getProperty("parameters",var());

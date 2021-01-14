@@ -15,6 +15,8 @@ ColorRemapNode::ColorRemapNode(var params) :
 	ColorNode(getTypeString(), params),
     colorManager(1)
 {
+    saveAndLoadRecursiveData = true;
+
     c1 = addColorSlot(true, "Colors 1");
 
     inputModeParam = addEnumParameter("Input Mode", "Input channel to map the colors to");

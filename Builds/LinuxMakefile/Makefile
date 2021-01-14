@@ -98,6 +98,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/LightBlockLayerTimeline_386b4a8a.o \
   $(JUCE_OBJDIR)/LightBlockClip_fe937171.o \
   $(JUCE_OBJDIR)/LightBlockClipManager_20fcb186.o \
+  $(JUCE_OBJDIR)/LightBlockEffect_f42f5432.o \
   $(JUCE_OBJDIR)/LightBlockLayer_d2da119a.o \
   $(JUCE_OBJDIR)/TimelineBlockSequence_b60f4d48.o \
   $(JUCE_OBJDIR)/TimelineEditor_4cddf71d.o \
@@ -377,6 +378,11 @@ $(JUCE_OBJDIR)/LightBlockClip_fe937171.o: ../../Source/Timeline/layers/Block/Lig
 $(JUCE_OBJDIR)/LightBlockClipManager_20fcb186.o: ../../Source/Timeline/layers/Block/LightBlockClipManager.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling LightBlockClipManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/LightBlockEffect_f42f5432.o: ../../Source/Timeline/layers/Block/LightBlockEffect.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling LightBlockEffect.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LightBlockLayer_d2da119a.o: ../../Source/Timeline/layers/Block/LightBlockLayer.cpp

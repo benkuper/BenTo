@@ -73,7 +73,7 @@ Array<Colour> PositionRemapNode::getColorsInternal(Prop * p, double time, var pa
 		}
 
 		bool invert = id % 2 == 0 ? bInvertEvens : bInvertOdds;
-		result.set(invert ? resolution - i : i, col);
+		result.set(invert ? resolution -1- i : i, col);
 	}
 	return result;
 }

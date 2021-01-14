@@ -179,7 +179,7 @@ void PointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 	float relPos = (extendPos - id % bExtend) * resolution;
 	float relStart = jmax<int>(relPos - (bSize * resolution / 2.f), 0);
 	float relEnd = jmin<int>(relPos + (bSize * resolution / 2.f), resolution);
-	float relSize = bSize * resolution * bExtend;
+	float relSize = bSize * resolution;
 
 	result->fill(bBGColor);
 
@@ -200,7 +200,7 @@ MultiPointPattern::MultiPointPattern(var params) :
 	bgColor = paramsContainer->addColorParameter("Background Color", "The color of the background", Colours::black);
 	speed = paramsContainer->addFloatParameter("Speed", "The speed between lines per prop", .25f);
 	offset = paramsContainer->addFloatParameter("Offset", "Offset of the point", 0);
-	gap = paramsContainer->addFloatParameter("Gap", "The gap between lines per prop", .25f, 0, 1);
+	gap = paramsContainer->addFloatParameter("Gap", "The gap between lines per prop", .25f, 0);
 	size = paramsContainer->addFloatParameter("Size", "Size of the point, relative to the gap", .5f, 0, 1);
 	fade = paramsContainer->addFloatParameter("Fade", "The fading of the point", 1, 0, 1);
 }

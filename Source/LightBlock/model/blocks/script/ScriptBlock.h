@@ -16,9 +16,10 @@ class ColourScriptData :
 	public ScriptTarget
 {
 public:
-	ColourScriptData();
+	ColourScriptData(Array<Colour> * sourceColors);
 
 	Array<Colour> colorArray;
+	Array<Colour>* sourceColors;
 
 	static var updateColorRGBFromScript(const var::NativeFunctionArgs &args);
 	static var updateColorHSVFromScript(const var::NativeFunctionArgs &args);
@@ -35,6 +36,10 @@ public:
 	static var getHSVColorFromScript(const var::NativeFunctionArgs& args);
 
 	static Colour getColorFromArgs(const var * a, int numArgs, int offset, bool useHSV = false);
+
+	static var getColorFromScript(const var::NativeFunctionArgs& args);
+	static var getArrayFromScript(const var::NativeFunctionArgs& args);
+
 };
 
 class ScriptBlock :

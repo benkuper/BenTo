@@ -201,6 +201,10 @@
 			isa = PBXBuildFile;
 			fileRef = D4BD78E7D29A00E8713FAB97;
 		};
+		F1BD6C746E8DC8360594171B = {
+			isa = PBXBuildFile;
+			fileRef = 25D33B23C3E1D2DD2CA4C55E;
+		};
 		ADEF3C9F7BA88DEF8D7A057E = {
 			isa = PBXBuildFile;
 			fileRef = AA5294A14826CB5BBF76F43E;
@@ -1024,6 +1028,13 @@
 			lastKnownFileType = sourcecode.c.h;
 			name = JuceHeader.h;
 			path = ../../JuceLibraryCode/JuceHeader.h;
+			sourceTree = "SOURCE_ROOT";
+		};
+		25D33B23C3E1D2DD2CA4C55E = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.cpp.cpp;
+			name = LightBlockEffect.cpp;
+			path = ../../Source/Timeline/layers/Block/LightBlockEffect.cpp;
 			sourceTree = "SOURCE_ROOT";
 		};
 		27E52FAF0E1B45CBE00E5FEA = {
@@ -1906,6 +1917,13 @@
 			lastKnownFileType = image.png;
 			name = rainbow.png;
 			path = ../../Resources/models/patterns/rainbow.png;
+			sourceTree = "SOURCE_ROOT";
+		};
+		8FBC25BCC5AB6696DCD2A91A = {
+			isa = PBXFileReference;
+			lastKnownFileType = sourcecode.c.h;
+			name = LightBlockEffect.h;
+			path = ../../Source/Timeline/layers/Block/LightBlockEffect.h;
 			sourceTree = "SOURCE_ROOT";
 		};
 		901361EA11E7E0741880CFBD = {
@@ -3159,6 +3177,8 @@
 				51EE6EF6BDBA47ACC2A99B44,
 				D4BD78E7D29A00E8713FAB97,
 				A5F64DEB041D66EBF645B749,
+				25D33B23C3E1D2DD2CA4C55E,
+				8FBC25BCC5AB6696DCD2A91A,
 				AA5294A14826CB5BBF76F43E,
 				832926A951BB3C8E60899D6C,
 			);
@@ -4209,6 +4229,7 @@
 				C0123C85C47491FE5943A696,
 				FBD5D779D6E17704E749FBAD,
 				7EC0509183A6F3BC1A488432,
+				F1BD6C746E8DC8360594171B,
 				ADEF3C9F7BA88DEF8D7A057E,
 				1084B14B03C4C2C73719A7EC,
 				0086A64E7B42EF6D21508383,

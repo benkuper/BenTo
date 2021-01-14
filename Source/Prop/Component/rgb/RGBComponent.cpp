@@ -16,7 +16,7 @@ RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
     resolution(params.getProperty("resolution",32)),
     invertDirection(params.getProperty("invertDirection", false))
 {
-    brightness = addFloatParameter("Brightness", "Brightness", 1, 0, 1);
+    brightness = addFloatParameter("Brightness", "Brightness", params.getProperty("defaultBrightness",.5f), 0, 1);
 }
 
 RGBPropComponent::~RGBPropComponent()
