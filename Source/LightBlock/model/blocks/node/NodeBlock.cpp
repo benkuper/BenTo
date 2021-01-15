@@ -16,6 +16,8 @@
 NodeBlock::NodeBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {
+	itemDataType = "Node";
+
 	addChildControllableContainer(&manager);
 	manager.addBaseManagerListener(this);
 	manager.hideInEditor = true;

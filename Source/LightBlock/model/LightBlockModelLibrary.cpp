@@ -35,6 +35,7 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 
 	scriptBlocks.itemDataType = "Script";
 	pictureBlocks.itemDataType = "Picture";
+	nodeBlocks.itemDataType = "Node";
 
 	//patterns
 	solidColorBlock.reset(new SolidColorPattern());

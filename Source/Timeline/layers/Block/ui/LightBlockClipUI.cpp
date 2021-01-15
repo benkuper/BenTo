@@ -36,6 +36,7 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	acceptedDropTypes.add("Timeline");
 	acceptedDropTypes.add("Script");
 	acceptedDropTypes.add("Picture");
+	acceptedDropTypes.add("Node");
 
 	addChildComponent(&fadeInHandle, 0);
 	addChildComponent(&fadeOutHandle, 0);

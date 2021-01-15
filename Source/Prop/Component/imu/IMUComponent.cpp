@@ -23,6 +23,8 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     
     editorIsCollapsed = true;
 
+    updateRate = addIntParameter("Update Rate", "Frequency of IMU update", 60, 1, 200);
+
     orientation = addPoint3DParameter("Orientation", "Orientation of the prop");
     orientation->setControllableFeedbackOnly(true);
     orientation->setBounds(-180, -90, -180, 180, 90, 180);

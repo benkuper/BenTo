@@ -19,6 +19,8 @@ public:
     IMUPropComponent(Prop* prop, var params);
     ~IMUPropComponent();
 
+    IntParameter* updateRate;
+
     Point3DParameter* orientation;
     
     EnumParameter * sendLevel;

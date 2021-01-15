@@ -12,6 +12,7 @@
 #include "LightBlock/model/LightBlockModelLibrary.h"
 #include "LightBlock/model/ui/LightBlockModelUI.h"
 #include "../Component/imu/IMUComponent.h"
+#include "../Component/battery/BatteryComponent.h"
 
 PropUI::PropUI(Prop * p) :
 	BaseItemUI(p),
@@ -24,9 +25,16 @@ PropUI::PropUI(Prop * p) :
 	acceptedDropTypes.add("Timeline");
 	acceptedDropTypes.add("Script");
 	acceptedDropTypes.add("Picture");
+	acceptedDropTypes.add("Node");
 
 	idUI.reset(p->globalID->createLabelUI());
 	idUI->showLabel = true;
+
+	if (BatteryPropComponent * bat = dynamic_cast<BatteryPropComponent*>(p->getComponent("battery")))
+	{
+		batteryUI.reset(bat->level->createSlider());
+		addAndMakeVisible(batteryUI.get());
+	}
 
 	addAndMakeVisible(idUI.get());
 	addAndMakeVisible(&viz);
@@ -108,8 +116,15 @@ void PropUI::resizedInternalHeader(Rectangle<int>& r)
 
 void PropUI::resizedInternalContent(Rectangle<int> &r)
 {
+
 	idUI->setBounds(r.removeFromTop(16).removeFromLeft(30));
 	r.removeFromTop(2);
+
+	if (batteryUI != nullptr)
+	{
+		batteryUI->setBounds(r.removeFromTop(14).reduced(2));
+	}
+
 	viz.setBounds(r.reduced(2));
 }
 

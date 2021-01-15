@@ -23,6 +23,7 @@ LightBlockClipManagerUI::LightBlockClipManagerUI(LightBlockLayerTimeline * _time
 	acceptedDropTypes.add("Script");
 	acceptedDropTypes.add("Timeline");
 	acceptedDropTypes.add("Picture");
+	acceptedDropTypes.add("Node");
 
 	addExistingItems();
 }
