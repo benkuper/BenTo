@@ -141,6 +141,7 @@ public:
 	FloatParameter* fade;
 	ColorParameter* color;
 	ColorParameter* bgColor;
+	IntParameter * extendNum;
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 

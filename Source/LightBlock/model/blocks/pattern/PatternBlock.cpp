@@ -85,7 +85,7 @@ void NoisePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 
 	for (int i = 0; i < resolution; i++)
 	{
-		float v = (perlin.noise0_1((i * bScale) / resolution, curTime, id * bIdOffset) - .5f) * bContrast + .5f + bBalance*2;
+		float v = (perlin.noise0_1((i * bScale) / resolution + id * bIdOffset, curTime) - .5f) * bContrast + .5f + bBalance * 2;
 		result->set(i, bbgColor.interpolatedWith(bColor, v).withMultipliedBrightness(bBrightness));
 	}
 }
@@ -203,6 +203,7 @@ MultiPointPattern::MultiPointPattern(var params) :
 	gap = paramsContainer->addFloatParameter("Gap", "The gap between lines per prop", .25f, 0);
 	size = paramsContainer->addFloatParameter("Size", "Size of the point, relative to the gap", .5f, 0, 1);
 	fade = paramsContainer->addFloatParameter("Fade", "The fading of the point", 1, 0, 1);
+	extendNum = paramsContainer->addIntParameter("Num Props", "The number of props the point is navigating through", 1, 1);
 }
 
 void MultiPointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
@@ -216,11 +217,13 @@ void MultiPointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double
 	float bBrightness = getParamValue<float>(brightness, params);
 	float bOffset = getParamValue<float>(offset, params);
 	float bSpeed = getParamValue<float>(speed, params);
-	float targetPos = bSpeed * time + bOffset;
+	int bExtend = getParamValue<int>(extendNum, params);
+
+	float targetPos = bSpeed * time + bOffset + id * bExtend;
 	float bSize = getParamValue<float>(size, params);
 	float bFade = getParamValue<float>(fade, params);
 	float bGap = getParamValue<float>(gap, params);
-	
+
 
 	result->fill(bBGColor);
 	if (bGap == 0 || bSize == 0) return;
