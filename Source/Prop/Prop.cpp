@@ -297,7 +297,7 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		restartProp();
 	}
-	else if (PropComponent* pc = c->getParentAs<PropComponent>()) //just do 1 level dynamic_cast<PropComponent*>(cc))
+	else if (PropComponent* pc = dynamic_cast<PropComponent *>(cc)) //just do 1 level dynamic_cast<PropComponent*>(cc))
 	{
 		if (PropManager::getInstance()->sendFeedback->boolValue() && pc->feedbackEnabled)
 		{

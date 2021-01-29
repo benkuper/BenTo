@@ -13,6 +13,7 @@
 ButtonsPropComponent::ButtonsPropComponent(Prop* prop, var params) :
     PropComponent(prop, "Buttons")
 {
+    feedbackEnabled = true;
     int numButtons = params.getProperty("count", 1);
     
     for (int i = 0; i < numButtons; i++)

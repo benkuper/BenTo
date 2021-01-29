@@ -3,7 +3,7 @@
 //  #define CREATOR_PROTO_V0
 //  #define CREATOR_PROTO_V1
  //#define CREATOR_PROTO_V2
- #define CREATOR_TAB_HOOP
+ //#define CREATOR_TAB_HOOP
 //  #define LT_BALL
 //  #define LT_HOOP
 //  #define CLARINET
@@ -14,6 +14,7 @@
 //  #define DMX
 //  #define DRESS
 //  #define FLAIR
+#define SIMPLE_ESP8266
 
 //#define BOX
 //#define MAKEY
@@ -50,6 +51,8 @@
 #include "config_dress.h"
 #elif defined FLAIR
 #include "config_flair.h"
+#elif defined SIMPLE_ESP8266
+#include "config_simpleESP8266.h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION

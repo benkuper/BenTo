@@ -35,6 +35,7 @@ void FileManager::init()
     {
         sdIsDetected = true;
         NDBG("SPIFFS initialized.");
+        listDir("/", 0);
     } else
     {
         NDBG("Error initializing SPIFFS");
