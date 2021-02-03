@@ -3973,13 +3973,13 @@
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../Modules",
-					"$(HOME)/JUCE/modules",
-					"../../../../../../Softwares/JUCE/modules",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/~/JUCE/modules",
+					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../Source",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-App.plist;
@@ -3991,18 +3991,19 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../Modules",
-					"$(HOME)/JUCE/modules",
-					"../../../../../../Softwares/JUCE/modules",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/~/JUCE/modules",
+					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../Source",
 				);
 				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
+				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
 				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
 			};
 			name = Debug;
@@ -4036,13 +4037,13 @@
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../Modules",
-					"$(HOME)/JUCE/modules",
-					"../../../../../../Softwares/JUCE/modules",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/~/JUCE/modules",
+					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../Source",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-App.plist;
@@ -4055,18 +4056,19 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = (
-					"../../JuceLibraryCode",
-					"../../Modules",
-					"$(HOME)/JUCE/modules",
-					"../../../../../../Softwares/JUCE/modules",
-					"../../External/serial/include",
-					"../../External/servus/include",
-					"../../Source",
+					"$(SRCROOT)/../../JuceLibraryCode",
+					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/~/JUCE/modules",
+					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
+					"$(SRCROOT)/../../External/serial/include",
+					"$(SRCROOT)/../../External/servus/include",
+					"$(SRCROOT)/../../Source",
 				);
 				OTHER_LDFLAGS = "-lServus";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
+				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
 				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
 			};
 			name = Release;
@@ -4391,7 +4393,7 @@
 		6A50FB53C4AC2437E07541F9 = {
 			isa = PBXProject;
 			buildConfigurationList = 4ABBAA74D0C6E8AEFE38E070;
-			attributes = { LastUpgradeCheck = 1200; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
+			attributes = { LastUpgradeCheck = 1230; ORGANIZATIONNAME = ""; TargetAttributes = { 5FD64B0FD59767DFD945EE30 = { SystemCapabilities = {com.apple.ApplicationGroups.iOS = { enabled = 0; }; com.apple.InAppPurchase = { enabled = 0; }; com.apple.InterAppAudio = { enabled = 0; }; com.apple.Push = { enabled = 0; }; com.apple.Sandbox = { enabled = 0; }; com.apple.HardenedRuntime = { enabled = 0; }; }; }; }; };
 			compatibilityVersion = "Xcode 3.2";
 			hasScannedForEncodings = 0;
 			mainGroup = FD3BED1C20E9C5CB1E29BC58;
