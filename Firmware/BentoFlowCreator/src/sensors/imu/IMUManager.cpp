@@ -143,7 +143,7 @@ void IMUManager::update()
 void IMUManager::computeThrow()
 {
 
-#if HAS_IMU
+#ifdef HAS_IMU
   float maxAccelYZ = max(abs(accel[1]), abs(accel[2]));
   float maxAccel = max(maxAccelYZ, abs(accel[0]));
   float maxLinearAccel = max(max(abs(linearAccel[0]), abs(linearAccel[1])), abs(linearAccel[2]));
@@ -210,7 +210,7 @@ void IMUManager::setEnabled(bool value)
 
 bool IMUManager::handleCommand(String command, var *data, int numData)
 {
-#if HAS_IMU
+#ifdef HAS_IMU
   if (checkCommand(command, "enabled", numData, 1))
   {
     setEnabled(data[0].intValue());
