@@ -197,6 +197,9 @@
     <Filter Include="BenTo\Source\Prop\props">
       <UniqueIdentifier>{ABEFE2FE-02B2-87E2-62A2-5CA00196BE46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\capacitive">
+      <UniqueIdentifier>{BEA263EE-B662-3DEE-EB58-AFF77E2BCD78}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Prop\Component\components\ir">
       <UniqueIdentifier>{F964A9A9-0332-EBCF-AAEC-23ED2F8F52C2}</UniqueIdentifier>
     </Filter>
@@ -1261,6 +1264,9 @@
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\capacitive\CapacitiveComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\capacitive</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp">
       <Filter>BenTo\Source\Prop\Component\components\ir</Filter>
     </ClCompile>
@@ -2207,6 +2213,9 @@
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
+      <Filter>JUCE Modules\juce_core\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE\modules\juce_core\native\juce_wasm_SystemStats.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\native\juce_win32_Files.cpp">
@@ -4517,6 +4526,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\capacitive\CapacitiveComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\capacitive</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Component\ir\IRPropComponent.h">
       <Filter>BenTo\Source\Prop\Component\components\ir</Filter>

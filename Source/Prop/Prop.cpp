@@ -18,6 +18,8 @@
 #include "Component/imu/IMUComponent.h"
 #include "Component/ir/IRPropComponent.h"
 #include "Component/rgb/RGBComponent.h"
+#include "Component/capacitive/CapacitiveComponent.h"
+
 #include "BentoEngine.h"
 #include "ui/PropEditor.h"
 
@@ -533,6 +535,7 @@ void Prop::setupComponentsJSONDefinition(var def)
 	if (def.hasProperty("ir")) addComponent(new IRPropComponent(this, def.getProperty("ir", var())));
 	if (def.hasProperty("battery")) addComponent(new BatteryPropComponent(this, def.getProperty("battery", var())));
 	if (def.hasProperty("files")) addComponent(new FilesPropComponent(this, def.getProperty("files", var())));
+	if (def.hasProperty("capacitive")) addComponent(new CapacitivePropComponent(this, def.getProperty("capacitive", var())));
 }
 
 void Prop::addComponent(PropComponent* pc)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source" id="LP0of5"
-              version="1.3.0b6" projectLineFeed="&#10;" jucerFormatVersion="1">
+              version="1.3.0b7" projectLineFeed="&#10;" jucerFormatVersion="1">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -507,6 +507,12 @@
         </GROUP>
         <GROUP id="{8E4ED156-FAC3-B69B-D00B-42398B54E32F}" name="Component">
           <GROUP id="{96B6B97F-243C-2E0E-1B3D-9482FBFB37B6}" name="components">
+            <GROUP id="{4393D381-241C-E5DB-874A-9F8C40AA3899}" name="capacitive">
+              <FILE id="w2qFTZ" name="CapacitiveComponent.cpp" compile="1" resource="0"
+                    file="Source/Prop/Component/capacitive/CapacitiveComponent.cpp"/>
+              <FILE id="sLLhx4" name="CapacitiveComponent.h" compile="0" resource="0"
+                    file="Source/Prop/Component/capacitive/CapacitiveComponent.h"/>
+            </GROUP>
             <GROUP id="{E7E01D5E-99F9-820C-D396-1D880223BFEE}" name="ir">
               <FILE id="j8Lq3y" name="IRPropComponent.cpp" compile="1" resource="0"
                     file="Source/Prop/Component/ir/IRPropComponent.cpp"/>

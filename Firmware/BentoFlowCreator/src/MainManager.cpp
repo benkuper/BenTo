@@ -50,6 +50,9 @@ void MainManager::init()
 
     imu.addListener(std::bind(&MainManager::imuEvent, this, std::placeholders::_1));
 
+    cap.init();
+    cap.addListener(std::bind(&MainManager::capacitiveEvent, this, std::placeholders::_1));
+
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
@@ -69,6 +72,8 @@ void MainManager::update()
     battery.update();
     buttons.update();
     imu.update();
+
+    cap.update();
 }
 
 void MainManager::sleep(CRGB color)
@@ -118,7 +123,7 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
             comm.oscManager.setEnabled(false);
         }
 
-        if (e.type == Connected || e.type == ConnectionError || e.type == Hotspot)
+        if (e.type == Connected || e.type == ConnectionError || e.type == Disabled || e.type == Hotspot)
         {
             initTimer.start();
         }
@@ -197,6 +202,20 @@ void MainManager::buttonEvent(const ButtonEvent &e)
             sleep(); //only first button can sleep
 #endif
     }
+
+    case ButtonEvent::MultiPress:
+        if(comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
+        {
+            if(e.value == 2)
+            {
+                leds.playerMode.stop();
+            }else if(e.value >= 3)
+            {
+                leds.playerMode.load("demo"+String(e.value-3));
+                leds.playerMode.loopShow = true;
+                leds.playerMode.play();
+            }
+        }
     break;
     }
 }
@@ -229,6 +248,37 @@ void MainManager::imuEvent(const IMUEvent &e)
         data[0].type = 'i';
         data[0].value.i = imu.throwState;
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 1);
+    }
+    break;
+    }
+}
+
+void MainManager::capacitiveEvent(const CapacitiveEvent &e)
+{
+    switch (e.type)
+    {
+    case CapacitiveEvent::ValuesUpdate:
+    {
+        var data[CAPACITIVE_COUNT];
+        for (int i = 0; i < e.numData; i++)
+        {
+            data[i].type = 'f';
+            data[i].value.f = e.data[i];
+        }
+
+        comm.sendMessage(cap.name, CapacitiveEvent::eventNames[(int)e.type], data, CAPACITIVE_COUNT);
+    }
+    break;
+    
+    case CapacitiveEvent::TouchUpdate:
+    {
+        var data[2];
+        data[0].type = 'i';
+        data[0].value.i = e.index;
+        data[1].type = 'i';
+        data[1].value.i = (int)e.value;
+
+        comm.sendMessage(cap.name, CapacitiveEvent::eventNames[(int)e.type], data, 2);
     }
     break;
     }
