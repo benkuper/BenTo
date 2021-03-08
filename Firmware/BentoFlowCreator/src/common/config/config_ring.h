@@ -18,14 +18,18 @@
 #define LED_DEFAULT_BRIGHTNESS .5
 
 //SLEEP
-#define BUTTON_INVERTED
-#define SLEEP_WAKEUP_BUTTON GPIO_NUM_4
-#define SLEEP_WAKEUP_STATE LOW
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_27
+#define SLEEP_WAKEUP_STATE HIGH
 
 // button pin
-#define BUTTON_COUNT 0
-//#define BUTTON_INPUT_MODE INPUT_PULLUP
-//const int buttonPins[BUTTON_COUNT]{ 4, 14 };
+#define BUTTON_INVERTED
+#define BUTTON_COUNT 1
+#define BUTTON_INPUT_MODE INPUT_PULLDOWN
+const int buttonPins[BUTTON_COUNT]{ 27 };
+
+
+#define HIGH_PIN_COUNT 1
+const int highPins[HIGH_PIN_COUNT] { 26 };
 
 //apparently helps having stable fastLED with TinyPICO and WS2812C
 #define FASTLED_FORCE_LOOPDELAY

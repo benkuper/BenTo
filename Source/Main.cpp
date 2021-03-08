@@ -19,7 +19,7 @@ class BenToApplication  :
 {
 public:
     //==============================================================================
-    BenToApplication() : OrganicApplication("BenTo") {}
+    BenToApplication() : OrganicApplication("BenTo", true, ImageCache::getFromMemory(BinaryData::icon_png, BinaryData::icon_pngSize)) {}
 
     //==============================================================================
     void initialiseInternal (const String& commandLine) override
