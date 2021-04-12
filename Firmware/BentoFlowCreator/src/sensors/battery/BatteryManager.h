@@ -1,11 +1,12 @@
 #pragma once
 #include "../../common/Common.h"
 
+#define PREV_VALUES_SIZE 10
 
 class BatteryEvent
 {
 public:
-    enum Type { Level, Voltage, RawValue, CriticalLevel, Charging, TYPES_MAX};
+    enum Type { Level, Voltage, RawValue, CriticalLevel, Charging, Reset, TYPES_MAX};
 
     static const String eventNames[TYPES_MAX];
 
@@ -23,14 +24,20 @@ public:
     float value;
     float voltage;
 
+    int prevRawValues[PREV_VALUES_SIZE];
+    int curPos = 0;
+
     bool isCharging;
 
-    const int minVal = 864; //TESTED
-    const int maxVal = 1460; //TO FIND
+    const int defaultMinVal = 222; //TESTED: 3.2V
+    const int defaultMaxVal = 335; // TESTED: 3.8V
+
+    int minVal = defaultMinVal;
+    int maxVal = defaultMaxVal;
 
     bool isCriticalBattery;
 
-    const float criticalBatteryThreshold = 0.3f;
+    const float criticalBatteryThreshold = 0.0f;
     const long criticalBatteryTimethreshold = 5000; // 5s
     long timeAtCriticalBattery;
 
@@ -39,4 +46,19 @@ public:
 
     void init();
     void update();
+
+    bool handleCommand(String command, var *data, int numData) override;
+
+    void updateValue(int currentValue);
+    void updateMax(int currentValue);
+    void setMax(int value, bool save = false);
+    void resetMax();
+
+
+private:
+#ifdef USE_PREFERENCES
+    Preferences prefs;
+#elif defined USE_SETTINGS_MANAGER
+    SettingsManager prefs;
+#endif
 };
