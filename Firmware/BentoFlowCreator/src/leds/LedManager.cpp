@@ -117,9 +117,9 @@ void LedManager::shutdown(CRGB color)
 
     FastLED.delay(50);
 
-    for (float i = 1; i >= 0; i -= .01f)
+    for (float i = 0; i <= 1; i += .01f)
     {
-        rgbManager.fillRange(color, 0, i, true);
+        rgbManager.fillRange(color, i, 1, true);
         rgbManager.update();
         FastLED.delay(3);
     }

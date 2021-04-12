@@ -95,10 +95,10 @@ void SystemLedMode::showUploadProgress(float value)
    uploadProgress = fmodf(value*2,1);
    int curPage = floor(value*2);
    uploadFeedback = true;
-   
-   if(curPage > 0) LedHelpers::fillRange(leds, numLeds, CHSV((curPage-1)*40,255,255), 0, uploadProgress);
+
+   if(curPage > 0) LedHelpers::fillRange(leds, numLeds, CHSV((curPage-1)*40,255,255), uploadProgress, 1);
    else LedHelpers::clear(leds, numLeds);
-   LedHelpers::fillRange(leds, numLeds, CHSV(curPage*40,255,255), uploadProgress, 1, false);
+   LedHelpers::fillRange(leds, numLeds, CHSV(curPage*40,255,255), 0, uploadProgress, false);
    LedHelpers::point(leds, numLeds, CRGB::White, uploadProgress, .1f, false);
 
 #if !defined LEDS_SEPARATE_CHANNELS && !defined LED_USE_DMX
