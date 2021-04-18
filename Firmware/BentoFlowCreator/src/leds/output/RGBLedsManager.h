@@ -30,12 +30,16 @@ public:
 #endif
 
     float globalBrightness;
+    bool ledEnabled;
 
     void init();
     void update();
+    void shutdown();
 
     void setBrightness(float value, bool save = false);
     bool handleCommand(String command, var *data, int numData) override;
+
+    void setLedEnabled(bool val);
 
     //Helpers
     void clear();

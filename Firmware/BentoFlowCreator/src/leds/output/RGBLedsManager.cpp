@@ -1,7 +1,8 @@
 #include "RGBLedsManager.h"
 
 RGBLedsManager::RGBLedsManager() : Component("rgb"),
-                                   globalBrightness(1)
+                                   globalBrightness(1),
+                                   ledEnabled(false)
 #ifdef LED_USE_DMX
                                    ,
                                    timeSinceLastSend(0)
@@ -46,10 +47,13 @@ void RGBLedsManager::init()
 
     dmx.init();
 #else
-#ifdef LED_EN_PIN
-    pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
-    digitalWrite(LED_EN_PIN, HIGH);
-#endif
+
+    #ifdef LED_FET_PIN
+    pinMode(LED_FET_PIN, OUTPUT);
+    #endif
+
+    setLedEnabled(true);
+
 #if defined LED_CLK_PIN
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #else
@@ -144,10 +148,15 @@ void RGBLedsManager::update()
 
 #else
 
-    FastLED.show();
+    if(ledEnabled) FastLED.show();
 
 #endif
 #endif //LED_COUNT
+}
+
+void RGBLedsManager::shutdown()
+{
+    setLedEnabled(false);
 }
 
 void RGBLedsManager::setBrightness(float value, bool save)
@@ -175,10 +184,31 @@ void RGBLedsManager::setBrightness(float value, bool save)
 #endif //LED_COUNT
 }
 
+void RGBLedsManager::setLedEnabled(bool val)
+{
+    ledEnabled = val;
+#ifdef LED_EN_PIN
+    NDBG("Set Led Enabled : "+String(val));
+    pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
+    digitalWrite(LED_EN_PIN, val);
+#endif
+
+#ifdef LED_USE_FET
+    NDBG("Set Led Enabled (FET) : "+String(val));
+    digitalWrite(LED_FET_PIN, val);
+    pinMode(LED_DATA_PIN, val ? OUTPUT : INPUT);
+#endif
+}
+
 bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 {
 #ifdef LED_COUNT
-    if (checkCommand(command, "brightness", numData, 1))
+    if (checkCommand(command, "enabled", numData, 1))
+    {
+        setLedEnabled(data[0].intValue());
+        return true;
+    }
+    else if (checkCommand(command, "brightness", numData, 1))
     {
         setBrightness(data[0].floatValue());
         return true;

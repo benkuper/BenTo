@@ -1,7 +1,7 @@
 #pragma once
 #include "../../common/Common.h"
 
-class ButtonEvent
+class TouchEvent
 {
 public:
     enum Type
@@ -16,27 +16,35 @@ public:
 
     static const String eventNames[TYPES_MAX];
 
-    ButtonEvent(Type type, int id, int value = 1) : type(type), id(id), value(value) {}
+    TouchEvent(Type type, int id, int value = 1) : type(type), id(id), value(value) {}
 
     Type type;
     int id;
     int value;
 };
 
-class ButtonManager :
+class TouchManager :
     public Component,
-    public EventBroadcaster<ButtonEvent>
+    public EventBroadcaster<TouchEvent>
 {
 public:
-    ButtonManager();
-    ~ButtonManager(){}
+    TouchManager();
+    ~TouchManager(){}
 
-    bool isPressed[BUTTON_COUNT];
-    bool isLongPressed[BUTTON_COUNT];
-    bool isVeryLongPressed[BUTTON_COUNT];
+    int touchThreshold;
+
+    bool isPressed[TOUCH_COUNT];
+    bool isLongPressed[TOUCH_COUNT];
+    bool isVeryLongPressed[TOUCH_COUNT];
 
     void init();
     void update();
+
+    void setTouchThreshold(int value);
+
+    static void touchCallback();
+
+    bool handleCommand(String command, var *data, int numData) override;
 
 private :
     const int longPressTime = 500;        //more than 500ms is long press
@@ -44,10 +52,9 @@ private :
     const int shortPressTime = 500;       //less than 500ms is short press
     const int multiPressTime = 300;       //each new press shorter than 500ms after the previous one will increase the multiclick
     
-    const int buttonPressDebounce = 5;    //denoising, needs five reads to validate a change
-    int debounceCount[BUTTON_COUNT];
+    const int touchPressDebounce = 5;    //denoising, needs five reads to validate a change
+    int debounceCount[TOUCH_COUNT];
 
-    long timeAtPress[BUTTON_COUNT];
-    int multiPressCount[BUTTON_COUNT];
-
+    long timeAtPress[TOUCH_COUNT];
+    int multiPressCount[TOUCH_COUNT];
 };

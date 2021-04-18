@@ -31,7 +31,7 @@ void FileManager::init()
     NDBG("Init");
 
 #ifdef FILES_USE_INTERNAL_MEMORY
-    if(SPIFFS.begin())// Start the SPI Flash Files System
+    if(SPIFFS.begin(true))// Start the SPI Flash Files System
     {
         sdIsDetected = true;
         NDBG("SPIFFS initialized.");

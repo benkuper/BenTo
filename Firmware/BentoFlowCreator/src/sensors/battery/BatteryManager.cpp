@@ -16,6 +16,10 @@ BatteryManager::BatteryManager() : Component("battery"),
 void BatteryManager::init()
 {
 
+#ifdef BATTERY_CHARGE_PIN
+    pinMode(BATTERY_CHARGE_PIN, INPUT);
+#endif
+
 #ifdef BATTERY_PIN
     analogSetPinAttenuation(BATTERY_PIN, ADC_0db);
 
@@ -44,27 +48,33 @@ void BatteryManager::update()
     long curTime = millis();
     rawValue = analogRead(BATTERY_PIN);
 
-    updateValue(rawValue); 
-    updateMax(rawValue); 
+    updateValue(rawValue);
+    updateMax(rawValue);
+    updateCharge();
     voltage = (rawValue - defaultMinVal) * (3.8 - 3.2) / (defaultMaxVal - defaultMinVal) + 3.2;
-        
-    if(curTime > timeSinceLastBatterySent + batterySendTime)
+
+    if (curTime > timeSinceLastBatterySent + batterySendTime)
     {
         sendEvent(BatteryEvent(BatteryEvent::Level, value));
         sendEvent(BatteryEvent(BatteryEvent::Voltage, voltage));
         sendEvent(BatteryEvent(BatteryEvent::RawValue, rawValue));
+#ifdef BATTERY_CHARGE_PIN
+        sendEvent(BatteryEvent(BatteryEvent::Charging, isCharging));
+#endif
         timeSinceLastBatterySent = curTime;
     }
 
     bool batteryIsOK = value > criticalBatteryThreshold;
-    if(batteryIsOK) 
+    if (batteryIsOK)
     {
         timeAtCriticalBattery = 0;
         isCriticalBattery = false;
     }
-    else{
-        if(timeAtCriticalBattery == 0) timeAtCriticalBattery = curTime;
-        else if(curTime > timeAtCriticalBattery + criticalBatteryTimethreshold)
+    else
+    {
+        if (timeAtCriticalBattery == 0)
+            timeAtCriticalBattery = curTime;
+        else if (curTime > timeAtCriticalBattery + criticalBatteryTimethreshold)
         {
             isCriticalBattery = true;
             sendEvent(BatteryEvent(BatteryEvent::CriticalLevel, value));
@@ -73,14 +83,13 @@ void BatteryManager::update()
 #endif
 }
 
-
-void BatteryManager::updateMax(int currentValue) 
+void BatteryManager::updateMax(int currentValue)
 {
-    if (currentValue - 10 > maxVal) {
+    if (currentValue - 10 > maxVal)
+    {
         setMax(currentValue - 10, true);
-    } 
+    }
 }
-
 
 void BatteryManager::setMax(int newMax, bool save)
 {
@@ -99,8 +108,7 @@ void BatteryManager::setMax(int newMax, bool save)
     }
 }
 
-
-void BatteryManager::resetMax() 
+void BatteryManager::resetMax()
 {
     maxVal = defaultMaxVal;
     setMax(defaultMaxVal, true);
@@ -108,23 +116,35 @@ void BatteryManager::resetMax()
     sendEvent(BatteryEvent(BatteryEvent::Reset, maxVal));
 }
 
-
-void BatteryManager::updateValue(int newValue) 
+void BatteryManager::updateValue(int newValue)
 {
     long sum = 0L;
     prevRawValues[curPos] = newValue;
 
-    for (int i = 0 ; i < PREV_VALUES_SIZE; i++) 
+    for (int i = 0; i < PREV_VALUES_SIZE; i++)
     {
         sum += prevRawValues[i];
     }
 
-    int avgRawValue = (int) (((float) sum) / PREV_VALUES_SIZE);
-    value = (avgRawValue - minVal)*1.0f / (maxVal-minVal);
+    int avgRawValue = (int)(((float)sum) / PREV_VALUES_SIZE);
+    value = (avgRawValue - minVal) * 1.0f / (maxVal - minVal);
 
-    curPos = (curPos+1) % PREV_VALUES_SIZE;
+    curPos = (curPos + 1) % PREV_VALUES_SIZE;
 }
 
+void BatteryManager::updateCharge()
+{
+#ifdef BATTERY_CHARGE_PIN
+    int measuredVal = 0;
+    for (int i = 0; i < 10; i++)
+    {
+        int v = digitalRead(BATTERY_CHARGE_PIN);
+        measuredVal += v;
+    }
+
+    isCharging = measuredVal == 0;
+#endif
+}
 
 bool BatteryManager::handleCommand(String command, var *data, int numData)
 {

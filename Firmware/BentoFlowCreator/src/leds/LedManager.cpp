@@ -127,10 +127,11 @@ void LedManager::shutdown(CRGB color)
     rgbManager.clear();
     delay(30);
     rgbManager.update();
-    
+    rgbManager.shutdown();
+
 #endif //LED_COUNT
 
-#endif
+#endif //NO_ANIMATIONS
 
 delay(100);
 }

@@ -29,11 +29,12 @@ void MainManager::init()
     }
 #endif
 
-    leds.init();
-
+   
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
     comm.init();
+
+    leds.init();
 
 #ifdef SLEEP_PIN
 #ifdef KEEP_SLEEP_PIN_HIGH
@@ -48,7 +49,13 @@ void MainManager::init()
     buttons.init();
     buttons.addListener(std::bind(&MainManager::buttonEvent, this, std::placeholders::_1));
 
+    touch.init();
+    touch.addListener(std::bind(&MainManager::touchEvent, this, std::placeholders::_1));
+
     imu.addListener(std::bind(&MainManager::imuEvent, this, std::placeholders::_1));
+
+    cap.init();
+    cap.addListener(std::bind(&MainManager::capacitiveEvent, this, std::placeholders::_1));
 
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
@@ -68,8 +75,13 @@ void MainManager::update()
 
     battery.update();
     buttons.update();
+    touch.update();
     imu.update();
+
+    cap.update();
 }
+
+void touchCallback(){}
 
 void MainManager::sleep(CRGB color)
 {
@@ -93,12 +105,19 @@ void MainManager::sleep(CRGB color)
 
 #ifdef SLEEP_WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, SLEEP_WAKEUP_STATE);
-    esp_deep_sleep_start();
+
+#else if defined TOUCH_WAKEUP_PIN
+ //Configure Touchpad as wakeup source
+  touchAttachInterrupt(TOUCH_WAKEUP_PIN, touchCallback, 110);
+  esp_sleep_enable_touchpad_wakeup();
 #endif
 
 #ifdef ESP8266
     ESP.deepSleep(5e6);
+#else
+    esp_deep_sleep_start();
 #endif
+
 }
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
@@ -118,7 +137,7 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
             comm.oscManager.setEnabled(false);
         }
 
-        if (e.type == Connected || e.type == ConnectionError || e.type == Hotspot)
+        if (e.type == Connected || e.type == ConnectionError || e.type == Disabled || e.type == Hotspot)
         {
             initTimer.start();
         }
@@ -197,6 +216,80 @@ void MainManager::buttonEvent(const ButtonEvent &e)
             sleep(); //only first button can sleep
 #endif
     }
+
+    case ButtonEvent::MultiPress:
+        if(comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
+        {
+            if(e.value == 2)
+            {
+                leds.playerMode.stop();
+            }else if(e.value >= 3)
+            {
+                leds.playerMode.load("demo"+String(e.value-3));
+                leds.playerMode.loopShow = true;
+                leds.playerMode.play();
+            }
+        }
+    break;
+    }
+}
+
+void MainManager::touchEvent(const TouchEvent &e)
+{
+    int numBTData = (e.type == TouchEvent::MultiPress || e.type == TouchEvent::Pressed) ? 2 : 1;
+    var *data = (var *)malloc((numBTData) * sizeof(var));
+
+    data[0].value.i = e.id;
+    data[0].type = 'i';
+
+
+    if (numBTData > 1)
+    {
+        data[1].value.i = e.value;
+        data[1].type = 'i';
+    }
+
+    comm.sendMessage(touch.name, TouchEvent::eventNames[(int)e.type], data, numBTData);
+
+    switch (e.type)
+    {
+    case TouchEvent::Pressed:
+        if (e.value == 1)
+        {
+            if (comm.wifiManager.state == Connecting)
+                comm.wifiManager.disable();
+        }
+        NDBG("Touch " + String(e.id) + " " + String(e.value));
+        break;
+
+    case TouchEvent::VeryLongPress:
+    {
+
+#ifndef NO_SLEEP_TOUCH
+#ifdef SLEEP_TOUCH_ID
+        int sleepBTID = SLEEP_BUTTON_ID;
+#else
+        int sleepBTID = 0;
+#endif
+
+        if (e.id == sleepBTID)
+            sleep(); //only first button can sleep
+#endif
+    }
+
+    case TouchEvent::MultiPress:
+        if(comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
+        {
+            if(e.value == 2)
+            {
+                leds.playerMode.stop();
+            }else if(e.value >= 3)
+            {
+                leds.playerMode.load("demo"+String(e.value-3));
+                leds.playerMode.loopShow = true;
+                leds.playerMode.play();
+            }
+        }
     break;
     }
 }
@@ -232,6 +325,39 @@ void MainManager::imuEvent(const IMUEvent &e)
     }
     break;
     }
+}
+
+void MainManager::capacitiveEvent(const CapacitiveEvent &e)
+{
+#ifdef CAPACITIVE_COUNT
+    switch (e.type)
+    {
+    case CapacitiveEvent::ValuesUpdate:
+    {
+        var data[CAPACITIVE_COUNT];
+        for (int i = 0; i < e.numData; i++)
+        {
+            data[i].type = 'f';
+            data[i].value.f = e.data[i];
+        }
+
+        comm.sendMessage(cap.name, CapacitiveEvent::eventNames[(int)e.type], data, CAPACITIVE_COUNT);
+    }
+    break;
+    
+    case CapacitiveEvent::TouchUpdate:
+    {
+        var data[2];
+        data[0].type = 'i';
+        data[0].value.i = e.index;
+        data[1].type = 'i';
+        data[1].value.i = (int)e.value;
+
+        comm.sendMessage(cap.name, CapacitiveEvent::eventNames[(int)e.type], data, 2);
+    }
+    break;
+    }
+#endif
 }
 
 void MainManager::fileEvent(const FileEvent &e)

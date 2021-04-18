@@ -29,8 +29,16 @@ public:
 
     bool isCharging;
 
-    const int defaultMinVal = 222; //TESTED: 3.2V
-    const int defaultMaxVal = 335; // TESTED: 3.8V
+#ifndef BATTERY_DEFAULT_MIN
+#define BATTERY_DEFAULT_MIN 222 //TESTED: 3.2V
+#endif
+
+#ifndef BATTERY_DEFAULT_MAX
+#define BATTERY_DEFAULT_MAX 335 // TESTED: 3.8V
+#endif
+
+    const int defaultMinVal = BATTERY_DEFAULT_MIN; 
+    const int defaultMaxVal = BATTERY_DEFAULT_MAX; 
 
     int minVal = defaultMinVal;
     int maxVal = defaultMaxVal;
@@ -51,6 +59,7 @@ public:
 
     void updateValue(int currentValue);
     void updateMax(int currentValue);
+    void updateCharge();
     void setMax(int value, bool save = false);
     void resetMax();
 
