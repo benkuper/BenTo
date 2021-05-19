@@ -378,6 +378,7 @@
 		9990B1F8459DA7EDCEB16AAA /* ../../Source/Node/NodeConnection.cpp */ /* NodeConnection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnection.cpp; path = ../../Source/Node/NodeConnection.cpp; sourceTree = SOURCE_ROOT; };
 		99ED218AAF56CF315A0D41F2 /* ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp */ /* LightBlockClipManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipManagerUI.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		9A1C190C37DF4F6FB1EC82A4 /* ../../Source/Node/nodes/model/ui/ModelNodeUI.h */ /* ModelNodeUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelNodeUI.h; path = ../../Source/Node/nodes/model/ui/ModelNodeUI.h; sourceTree = SOURCE_ROOT; };
+		9AC7DEA441ABE8CB83272626 /* ../../../chataigne/JUCE/modules/juce_video */ /* juce_video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_video; path = ../../../chataigne/JUCE/modules/juce_video; sourceTree = SOURCE_ROOT; };
 		9ACCA4ED4FB2CD06C460811E /* ../../Source/Prop/Cluster/PropCluster.h */ /* PropCluster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropCluster.h; path = ../../Source/Prop/Cluster/PropCluster.h; sourceTree = SOURCE_ROOT; };
 		9B5EE640C3A975CCE738B19D /* ../../Source/Node/nodes/model/ModelNode.cpp */ /* ModelNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModelNode.cpp; path = ../../Source/Node/nodes/model/ModelNode.cpp; sourceTree = SOURCE_ROOT; };
 		9C2E10A82F6CAE3899CE2394 /* ../../Source/Node/ui/NodeViewUI.h */ /* NodeViewUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeViewUI.h; path = ../../Source/Node/ui/NodeViewUI.h; sourceTree = SOURCE_ROOT; };
@@ -472,7 +473,6 @@
 		DFA51D593425BE8EBE4D212B /* ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.cpp */ /* LightBlockModelPresetManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelPresetManager.cpp; path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.cpp; sourceTree = SOURCE_ROOT; };
 		E082A45CFF68EB4AF84C1BD0 /* ../../JuceLibraryCode/include_juce_video.mm */ /* include_juce_video.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_video.mm; path = ../../JuceLibraryCode/include_juce_video.mm; sourceTree = SOURCE_ROOT; };
 		E1DCEBF74D7267366D54037F /* ../../Source/LightBlock/model/LightBlockColorProvider.cpp */ /* LightBlockColorProvider.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockColorProvider.cpp; path = ../../Source/LightBlock/model/LightBlockColorProvider.cpp; sourceTree = SOURCE_ROOT; };
-		E348CBF8F4DAAC01A3E1EFB0 /* ../../../../../../Softwares/JUCE/modules/juce_video */ /* juce_video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_video; path = ../../../../../../Softwares/JUCE/modules/juce_video; sourceTree = SOURCE_ROOT; };
 		E4A91BA5D644FF624EC87973 /* ../../Source/LightBlock/model/blocks/node/ui/NodeBlockUI.cpp */ /* NodeBlockUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/node/ui/NodeBlockUI.cpp; sourceTree = SOURCE_ROOT; };
 		E617183C2E67EE23AD77B610 /* ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp */ /* TimelineBlockUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp; sourceTree = SOURCE_ROOT; };
 		E6EB053174BDC08E6602B21F /* ../../Source/VideoPreview/VideoPreviewPanel.h */ /* VideoPreviewPanel.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoPreviewPanel.h; path = ../../Source/VideoPreview/VideoPreviewPanel.h; sourceTree = SOURCE_ROOT; };
@@ -1397,7 +1397,7 @@
 				90358C616892A9E4A0BAE0E0,
 				0A12257D17F15623FD75C5AC,
 				AED1C1F9172B482D4CC281F2,
-				E348CBF8F4DAAC01A3E1EFB0,
+				9AC7DEA441ABE8CB83272626,
 			);
 			name = "JUCE Modules";
 			sourceTree = "<group>";
@@ -1870,7 +1870,6 @@
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../../chataigne/JUCE/modules",
-					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
 					"$(SRCROOT)/../../External/serial/include",
 					"$(SRCROOT)/../../External/servus/include",
 					"$(SRCROOT)/../../Source",
@@ -1885,7 +1884,7 @@
 					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../../../../../Softwares/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
 				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
@@ -1975,7 +1974,6 @@
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../Modules",
 					"$(SRCROOT)/../../../chataigne/JUCE/modules",
-					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
 					"$(SRCROOT)/../../External/serial/include",
 					"$(SRCROOT)/../../External/servus/include",
 					"$(SRCROOT)/../../Source",
@@ -1991,7 +1989,7 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../../../../../Softwares/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
 				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
