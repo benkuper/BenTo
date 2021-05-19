@@ -718,7 +718,8 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2019 targetFolder="Builds/VisualStudio2019_CI" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
-            smallIcon="YlXmhK" bigIcon="YlXmhK" extraDefs="FILMSTRO_USE_FFMPEG=0">
+            smallIcon="YlXmhK" bigIcon="YlXmhK" extraLinkerFlags="/HEAP:0x400000,0x10000"
+            extraCompilerFlags="/Zm1000">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" winArchitecture="x64"
                        headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
