@@ -45,7 +45,10 @@
  */
 
 
+
 #include "../JuceLibraryCode/JuceHeader.h"
+
+#if FILMSTRO_USE_FFMPEG
 
 // enable this to print a DBG statement for each packet containing stream ID and timestamp
 //#define DEBUG_LOG_PACKETS
@@ -775,3 +778,4 @@ AVCodecContext* FFmpegVideoReader::DecoderThread::getSubtitleContext () const
     return subtitleContext;
 }
 
+#endif

@@ -47,6 +47,8 @@
 
 #include "../JuceLibraryCode/JuceHeader.h"
 
+#if FILMSTRO_USE_FFMPEG
+
 // ==============================================================================
 // FFmpegVideoComponent
 // ==============================================================================
@@ -143,3 +145,6 @@ FFmpegVideoReader* FFmpegVideoComponent::getVideoReader () const
 {
     return videoSource;
 }
+
+
+#endif

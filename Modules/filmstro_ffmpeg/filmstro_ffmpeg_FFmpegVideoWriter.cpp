@@ -38,8 +38,11 @@
  */
 
 
+
 #pragma warning(disable:4100 4244 4458)
 #include "../JuceLibraryCode/JuceHeader.h"
+
+#if FILMSTRO_USE_FFMPEG
 
 FFmpegVideoWriter::FFmpegVideoWriter (const juce::String& format)
  :  audioWritePosition (0),
@@ -560,4 +563,4 @@ void FFmpegVideoWriter::displayNewFrame (const AVFrame* frame)
     writeNextVideoFrame (picture, frame->pts);
 }
 
-
+#endif
