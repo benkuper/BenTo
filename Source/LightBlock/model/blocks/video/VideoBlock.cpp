@@ -91,17 +91,25 @@ Array<Colour> VideoBlock::getColors(Prop * p, double time, var params)
 {
 	if (!inputIsLive->boolValue()) return LightBlockModel::getColors(p, time, params);
 	SpatLayout * layout = spat.getItemWithName(getParamValue<var>(currentLayout, params).toString());
-	SpatItem * spatItem = spat.getItemForProp(p, layout);
+	Array<SpatItem *> spatItems = spat.getItemsForProp(p, layout);
 
-	if(spatItem == nullptr)  return LightBlockModel::getColors(p, time, params);
+	if(spatItems.isEmpty())  return LightBlockModel::getColors(p, time, params);
 
-	int numSpatColors = spatItem->resolution->intValue();
+
 	int resolution = p->resolution->intValue();
-
-	Array<Colour> result(spatItem->colors);
+	Array<Colour> result;
 	result.resize(resolution);
-	for (int i = resolution; i < numSpatColors; i++) result.set(i, Colours::black);
+	result.fill(Colours::black);
 
+	for (auto& si : spatItems)
+	{
+		int firstSpatIndex = si->startIndex->intValue() -1 ;//to zero based
+		int numSpatColors = si->resolution->intValue();
+
+		for (int i = firstSpatIndex; (i < firstSpatIndex + numSpatColors) && i < resolution; i++) result.setUnchecked(i, si->colors[i-firstSpatIndex]);
+
+	}
+	
 	return result;
 }
 

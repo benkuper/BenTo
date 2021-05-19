@@ -93,19 +93,23 @@ void Spatializer::computeSpat(Image tex, SpatLayout * forceLayout)
 	}
 }
 
-SpatItem * Spatializer::getItemForProp(Prop * p, SpatLayout * forceLayout)
+Array<SpatItem *> Spatializer::getItemsForProp(Prop * p, SpatLayout * forceLayout)
 {
+	Array<SpatItem*> result;
+
 	SpatLayout * targetLayout = forceLayout != nullptr ? forceLayout : currentLayout;
-	if (targetLayout == nullptr) return nullptr; 
+	if (targetLayout == nullptr) return result; 
 
 	SpatItem * defaultSI = nullptr;
 	for (auto &si : targetLayout->spatItemManager.items)
 	{
-		int id = si->filterManager.getTargetIDForProp(p);
-		if(id >= 0) return si;
-
-		if (si->isDefault->boolValue() && defaultSI != nullptr) defaultSI = si;
+		if (si->isDefault->boolValue() && defaultSI != nullptr) result.insert(0, si);
+		else
+		{
+			int id = si->filterManager.getTargetIDForProp(p);
+			if (id >= 0) result.add(si);
+		}
 	}
 
-	return defaultSI;
+	return result;
 }

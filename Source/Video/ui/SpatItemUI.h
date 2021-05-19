@@ -24,16 +24,24 @@ public:
 	Spatializer * spat;
 	SpatLayoutView * panel; //for handle positionning in reference
 
+	Path path;
+	Path hitPath;
+
 	bool lockBounds;
 
 	void paint(Graphics &g) override;
 	void resized() override;
+
+	void buildHitPath();
+
 
 	void updateBounds();
 	
 
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDrag(const MouseEvent &e) override;
+
+	bool hitTest(int x, int y) override;
 
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 

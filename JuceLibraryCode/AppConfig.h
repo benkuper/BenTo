@@ -63,6 +63,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_organicui             1
 #define JUCE_MODULE_AVAILABLE_juce_osc                   1
 #define JUCE_MODULE_AVAILABLE_juce_sharedtexture         1
+#define JUCE_MODULE_AVAILABLE_juce_simpleweb             1
 #define JUCE_MODULE_AVAILABLE_juce_timeline              1
 #define JUCE_MODULE_AVAILABLE_juce_video                 1
 
@@ -299,7 +300,7 @@
 #endif
 
 #ifndef    ORGANICUI_USE_WEBSERVER
- //#define ORGANICUI_USE_WEBSERVER 0
+ #define   ORGANICUI_USE_WEBSERVER 1
 #endif
 
 //==============================================================================
@@ -318,7 +319,7 @@
 #endif
 
 #ifndef    JUCE_IP_AND_PORT_DETECTION
- //#define JUCE_IP_AND_PORT_DETECTION 0
+ #define   JUCE_IP_AND_PORT_DETECTION 1
 #endif
 
 //==============================================================================

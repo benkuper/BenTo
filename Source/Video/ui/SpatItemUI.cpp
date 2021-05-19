@@ -33,44 +33,56 @@ SpatItemUI::~SpatItemUI()
 	if (spat != nullptr) spat->removeAsyncContainerListener(this);
 }
 
-void SpatItemUI::paint(Graphics & g)
+void SpatItemUI::paint(Graphics& g)
 {
 	if (Engine::mainEngine->isClearing) return;
-	
+
 	Colour c = item->isSelected ? Colours::yellow : (isMouseOver() ? HIGHLIGHT_COLOR : Colours::white);
 	g.setColour(c.withAlpha(.4f));
-	
+
+	path.clear();
+
 	if (spat->showHandles->boolValue())
 	{
 		Prop::Shape s = item->shape->getValueDataAsEnum<Prop::Shape>();
 		switch (s)
 		{
 		case Prop::Shape::CLUB:
-			g.drawLine(Line<float>(handles[0]->getBounds().getCentre().toFloat(), handles[1]->getBounds().getCentre().toFloat()), item->isSelected ? 2 : 1);
-			break;
+		{
+			Line<float> line(handles[0]->getBounds().getCentre().toFloat(), handles[1]->getBounds().getCentre().toFloat());
+			g.drawLine(line, item->isSelected ? 2 : 1);
+			path.addLineSegment(line, 1);
+		}
+		break;
 
 		case Prop::Shape::BALL:
 			break;
 		case Prop::Shape::POI:
 			break;
+
 		case Prop::Shape::HOOP:
 		{
 			Rectangle<float> hr;
 
-			Point<float> startPos = item->handles[0]->getPoint();
-			Point<float> endPos = item->handles[0]->getPoint(); 
+			Point<float> startPos = item->handles[0]->getPoint();// handles[0]->it();// getBounds().getCentre().toFloat();
+			Point<float> endPos = item->handles[1]->getPoint();// handles[1]->getPoint(); getBounds().getCentre().toFloat();
 			float distP = endPos.getDistanceFrom(startPos);
-			Point<float> relDistP = panel->getPositionForRelative(Point<float>(distP, distP)) *2;
-			hr.setSize(relDistP.x, relDistP.y);
+			Point<float> relDistP = panel->getPositionForRelative(Point<float>(distP, distP)) * 2;
+			hr.setSize(relDistP.x, relDistP.y);// fabsf(endPos.x - startPos.x) * 2, fabsf(endPos.y - startPos.y) * 2);
 			hr.setCentre(handles[0]->getBounds().getCentre().toFloat());
 			g.drawEllipse(hr, item->isSelected ? 2 : 1);
+
+			path.addEllipse(hr);
+
 		}
 		break;
-                
-            default:
-                break;
+
+		default:
+			break;
 		}
 	}
+	
+	buildHitPath();
 
 	if (spat->showPixels->boolValue())
 	{
@@ -82,13 +94,71 @@ void SpatItemUI::paint(Graphics & g)
 			g.fillEllipse(pr.withCentre(panel->getPositionForRelative(item->points[i]) - getBoundsInParent().getTopLeft().toFloat()));
 		}
 	}
-	
+
 }
 
 void SpatItemUI::resized()
 {
 	if (item->isUpdatingHandles || handles.size() != item->handles.size()) return;
-	for(auto & h : handles) h->setBounds(h->getLocalBounds().withCentre(getLocalPoint(panel, panel->getPositionForRelative(item->handles[h->index]->getPoint())).toInt()));
+	for (auto& h : handles) h->setBounds(h->getLocalBounds().withCentre(getLocalPoint(panel, panel->getPositionForRelative(item->handles[h->index]->getPoint())).toInt()));
+}
+
+void SpatItemUI::buildHitPath()
+{
+
+	hitPath.clear();
+	Array<Point<float>> firstPoints;
+	Array<Point<float>> secondPoints;
+
+	const int numPoints = 10;
+	const int margin = 5;
+
+	Array<Point<float>> points;
+	for (int i = 0; i < numPoints; i++)
+	{
+		points.add(path.getPointAlongPath(path.getLength() * i / numPoints));
+	}
+
+	for (int i = 0; i < numPoints; i++)
+	{
+		Point<float> tp;
+		Point<float> sp;
+
+		if (i == 0 || i == numPoints - 1)
+		{
+			tp = points[i].translated(0, -margin);
+			sp = points[i].translated(0, margin);
+		}
+		else
+		{
+			float angle1 = points[i].getAngleToPoint(points[i - 1]);
+			float angle2 = points[i].getAngleToPoint(points[i + 1]);
+
+			if (angle1 < 0) angle1 += float_Pi * 2;
+
+			if (angle2 < 0) angle2 += float_Pi * 2;
+
+			float angle = (angle1 + angle2) / 2.f;
+
+			if (angle1 < angle2) angle += float_Pi;
+
+			//            DBG("Point " << i << ", angle : " << angle << " >>  " << String(angle1>angle2));
+
+			tp = points[i].getPointOnCircumference(margin, angle + float_Pi);
+			sp = points[i].getPointOnCircumference(margin, angle);
+		}
+
+		firstPoints.add(tp);
+		secondPoints.insert(0, sp);
+	}
+
+	hitPath.startNewSubPath(firstPoints[0]);
+
+	for (int i = 1; i < firstPoints.size(); i++) hitPath.lineTo(firstPoints[i]);
+
+	for (int i = 0; i < secondPoints.size(); i++) hitPath.lineTo(secondPoints[i]);
+
+	hitPath.closeSubPath();
 }
 
 void SpatItemUI::updateBounds()
@@ -97,8 +167,8 @@ void SpatItemUI::updateBounds()
 
 	Prop::Shape s = item->shape->getValueDataAsEnum<Prop::Shape>();
 	Rectangle<int> r;
-		
-	
+
+
 	switch (s)
 	{
 
@@ -106,7 +176,7 @@ void SpatItemUI::updateBounds()
 	{
 		Point<float> p1 = panel->getPositionForRelative(item->handles[0]->getPoint());
 		Point<float> p2 = panel->getPositionForRelative(item->handles[1]->getPoint());
-		
+
 		float margin = 8;
 		Point<float> startPos = item->handles[0]->getPoint();
 		Point<float> endPos = item->handles[1]->getPoint();
@@ -130,7 +200,7 @@ void SpatItemUI::updateBounds()
 	setBounds(r);
 }
 
-void SpatItemUI::mouseDown(const MouseEvent & e)
+void SpatItemUI::mouseDown(const MouseEvent& e)
 {
 	BaseItemMinimalUI::mouseDown(e);
 	if (e.eventComponent == this)
@@ -139,7 +209,7 @@ void SpatItemUI::mouseDown(const MouseEvent & e)
 	}
 }
 
-void SpatItemUI::mouseDrag(const MouseEvent & e)
+void SpatItemUI::mouseDrag(const MouseEvent& e)
 {
 	if (Handle* th = dynamic_cast<Handle*>(e.eventComponent))
 	{
@@ -156,7 +226,24 @@ void SpatItemUI::mouseDrag(const MouseEvent & e)
 	}
 }
 
-void SpatItemUI::controllableFeedbackUpdateInternal(Controllable * c)
+bool SpatItemUI::hitTest(int x, int y)
+{
+	Point<int> p(x, y);
+	for (auto& h : handles)
+	{
+		//Point<int> hp = p - h->getPosition();
+		if (h->getBounds().contains(p))
+		{
+			return true;
+		}
+	}
+
+	if (hitPath.contains(p.toFloat())) return true;
+
+	return false;
+}
+
+void SpatItemUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	if (c == item->shape)
 	{
@@ -166,7 +253,7 @@ void SpatItemUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 	else if (c == item->resolution)
 	{
-		if(item->shape->getValueDataAsEnum<Prop::Shape>() == Prop::Shape::CUSTOM) updateHandles();
+		if (item->shape->getValueDataAsEnum<Prop::Shape>() == Prop::Shape::CUSTOM) updateHandles();
 	}
 	else if (c->parentContainer == &item->handlesCC)
 	{
@@ -174,7 +261,7 @@ void SpatItemUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 	else if (c == spat->showHandles)
 	{
-		for(auto & h : handles) h->setVisible(spat->showHandles->boolValue());
+		for (auto& h : handles) h->setVisible(spat->showHandles->boolValue());
 		repaint();
 	}
 }
@@ -204,7 +291,7 @@ SpatItemUI::Handle::Handle(int index, bool showLabel) :
 	setSize(20, 20);
 }
 
-void SpatItemUI::Handle::paint(Graphics & g)
+void SpatItemUI::Handle::paint(Graphics& g)
 {
 	int size = showLabel ? 16 : 10;
 	Colour c = isMouseOver() ? HIGHLIGHT_COLOR : (index == 0 ? GREEN_COLOR : BLUE_COLOR);
@@ -217,6 +304,6 @@ void SpatItemUI::Handle::paint(Graphics & g)
 	{
 		g.setColour(c.darker(.7f));
 		g.setFont(r.getHeight() - 2);
-		g.drawFittedText(String(index+1), r, Justification::centred, 1);
+		g.drawFittedText(String(index + 1), r, Justification::centred, 1);
 	}
 }

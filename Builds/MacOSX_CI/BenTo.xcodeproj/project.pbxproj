@@ -128,6 +128,7 @@
 		B31597CD80327EFFF3C15E48 /* ../../JuceLibraryCode/include_juce_video.mm */ = {isa = PBXBuildFile; fileRef = E082A45CFF68EB4AF84C1BD0; };
 		B3674CFCE9FD26F15126504E /* ../../JuceLibraryCode/include_juce_graphics.mm */ = {isa = PBXBuildFile; fileRef = 94E7764783E99087B327A706; };
 		B7B88925EC68F64566BA283B /* ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp */ = {isa = PBXBuildFile; fileRef = 031FBAA943FD37732EE42EEA; };
+		B991E79A3AD2A65F32A2E148 /* ../../JuceLibraryCode/include_juce_simpleweb2.cpp */ = {isa = PBXBuildFile; fileRef = 8982AF698A695C3FEF7A7F56; };
 		BD752E66BA8677849E5469C2 /* System/Library/Frameworks/CoreAudioKit.framework */ = {isa = PBXBuildFile; fileRef = 05147B0EFDCDAF5F831D2723; };
 		BD9D84CC3669178686FDEF02 /* ../../Source/Node/NodeConnectionManager.cpp */ = {isa = PBXBuildFile; fileRef = 354537732913E1FE7C19CD65; };
 		BE8F0AAD47C22247588CFD90 /* ../../Source/Prop/Component/imu/IMUComponent.cpp */ = {isa = PBXBuildFile; fileRef = F152C7D673C5EFB640BA0633; };
@@ -173,6 +174,7 @@
 		FBD5D779D6E17704E749FBAD /* ../../Source/Timeline/layers/Block/LightBlockClip.cpp */ = {isa = PBXBuildFile; fileRef = 6574FD828DA272FB0DB96106; };
 		FBE9E4099E59B1924FD3515D /* ../../Source/Node/nodes/parameter/ParameterNode.cpp */ = {isa = PBXBuildFile; fileRef = E715980DB4D9A95F8F6E2B8F; };
 		FD63D2EE9C5301FAD6429F69 /* System/Library/Frameworks/OpenGL.framework */ = {isa = PBXBuildFile; fileRef = BD281F63F59F33DAAC163F85; };
+		FD72E12D48DC13DD45E5B58B /* ../../JuceLibraryCode/include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = 3CF751812457867DE7EF346A; };
 		FE9858FFE9101F13D4904A3B /* ../../Source/Prop/Component/battery/BatteryComponent.cpp */ = {isa = PBXBuildFile; fileRef = A93764D22B731890A5D10F75; };
 		FEEFC6FD2DE226C7E4F1D758 /* ../../Source/Node/ColorNode.cpp */ = {isa = PBXBuildFile; fileRef = 2D3172F2AB9617F960DCE79F; };
 		FF10731485D882C3776D00DE /* ../../Source/LightBlock/model/LightBlockModel.cpp */ = {isa = PBXBuildFile; fileRef = AD55A210C5F1845A82921903; };
@@ -181,6 +183,7 @@
 /* Begin PBXFileReference section */
 		003661861512974059D9E83E /* ../../Resources/models/multipoint.png */ /* multipoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = multipoint.png; path = ../../Resources/models/multipoint.png; sourceTree = SOURCE_ROOT; };
 		01CDEF946B6BB684FF5A12DF /* ../../Source/VideoPreview/VideoPreviewPanel.cpp */ /* VideoPreviewPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoPreviewPanel.cpp; path = ../../Source/VideoPreview/VideoPreviewPanel.cpp; sourceTree = SOURCE_ROOT; };
+		023A0A4D7EC47144FB8D27A0 /* ../../JUCE/modules/juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = ../../JUCE/modules/juce_audio_basics; sourceTree = SOURCE_ROOT; };
 		02981ECE5EE4EDB834E85FB3 /* ../../Source/Common/Serial/lib/serial/impl/win.cc */ /* win.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = win.cc; path = ../../Source/Common/Serial/lib/serial/impl/win.cc; sourceTree = SOURCE_ROOT; };
 		0303CC144B95181567ECBA90 /* ../../Source/Timeline/layers/Video/VideoLayer.h */ /* VideoLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoLayer.h; path = ../../Source/Timeline/layers/Video/VideoLayer.h; sourceTree = SOURCE_ROOT; };
 		031FBAA943FD37732EE42EEA /* ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp */ /* LightBlockLayerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerPanel.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp; sourceTree = SOURCE_ROOT; };
@@ -197,6 +200,7 @@
 		089FDE5F833C3E3D27190338 /* ../../Source/Timeline/layers/Block/ui/LightBlockClipUI.cpp */ /* LightBlockClipUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipUI.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipUI.cpp; sourceTree = SOURCE_ROOT; };
 		091DCFB72171D73649C6465B /* ../../JuceLibraryCode/include_juce_gui_extra.mm */ /* include_juce_gui_extra.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_extra.mm; path = ../../JuceLibraryCode/include_juce_gui_extra.mm; sourceTree = SOURCE_ROOT; };
 		098445787E7409E6EACFA133 /* ../../Source/LightBlock/model/LightBlockModelParameterManager.h */ /* LightBlockModelParameterManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameterManager.h; path = ../../Source/LightBlock/model/LightBlockModelParameterManager.h; sourceTree = SOURCE_ROOT; };
+		0A12257D17F15623FD75C5AC /* ../../Modules/juce_simpleweb */ /* juce_simpleweb */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_simpleweb; path = ../../Modules/juce_simpleweb; sourceTree = SOURCE_ROOT; };
 		0B5DA9EBE09A71951976A8E6 /* ../../Source/Node/ui/NodeBlockEditorToolbox.h */ /* NodeBlockEditorToolbox.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlockEditorToolbox.h; path = ../../Source/Node/ui/NodeBlockEditorToolbox.h; sourceTree = SOURCE_ROOT; };
 		0B96E2EDC9B7E9CE7E1733CD /* ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h */ /* TimelineBlockUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TimelineBlockUI.h; path = ../../Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h; sourceTree = SOURCE_ROOT; };
 		0CDDE2CF576B339D7586EFEA /* ../../Source/Common/Serial/SerialDeviceParameter.cpp */ /* SerialDeviceParameter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialDeviceParameter.cpp; path = ../../Source/Common/Serial/SerialDeviceParameter.cpp; sourceTree = SOURCE_ROOT; };
@@ -260,6 +264,7 @@
 		3BEBF31619D18578E365D11C /* ../../Source/Timeline/layers/Video/ui/VideoClipUI.h */ /* VideoClipUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoClipUI.h; path = ../../Source/Timeline/layers/Video/ui/VideoClipUI.h; sourceTree = SOURCE_ROOT; };
 		3C1C74A4E168E2E3DAF9F651 /* ../../Source/LightBlock/model/ui/LightBlockModelUI.h */ /* LightBlockModelUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelUI.h; sourceTree = SOURCE_ROOT; };
 		3CB40E424265CF9D5240523B /* ../../Source/Prop/props/bento/BentoProp.cpp */ /* BentoProp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoProp.cpp; path = ../../Source/Prop/props/bento/BentoProp.cpp; sourceTree = SOURCE_ROOT; };
+		3CF751812457867DE7EF346A /* ../../JuceLibraryCode/include_juce_simpleweb.cpp */ /* include_juce_simpleweb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb.cpp; sourceTree = SOURCE_ROOT; };
 		3EA271EE23512DABADB0DB9A /* ../../Source/LightBlock/model/UserLightBlockModelManager.cpp */ /* UserLightBlockModelManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = SOURCE_ROOT; };
 		414654DC5F2DB306F91226BA /* ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.h */ /* RemapBlockFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RemapBlockFilter.h; path = ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.h; sourceTree = SOURCE_ROOT; };
 		4297491F00482662E47F3924 /* ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp */ /* PatternBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatternBlock.cpp; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp; sourceTree = SOURCE_ROOT; };
@@ -347,6 +352,7 @@
 		87CFC58F1D51FFE44508FB15 /* ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc */ /* list_ports_osx.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = list_ports_osx.cc; path = ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc; sourceTree = SOURCE_ROOT; };
 		8824BA9ECB99ED7E5CCEA5B0 /* ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.cpp */ /* PropShapeBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropShapeBlock.cpp; path = ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.cpp; sourceTree = SOURCE_ROOT; };
 		892550DDAEA7C386E6C3F006 /* ../../Source/Video/Spatializer.cpp */ /* Spatializer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Spatializer.cpp; path = ../../Source/Video/Spatializer.cpp; sourceTree = SOURCE_ROOT; };
+		8982AF698A695C3FEF7A7F56 /* ../../JuceLibraryCode/include_juce_simpleweb2.cpp */ /* include_juce_simpleweb2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb2.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb2.cpp; sourceTree = SOURCE_ROOT; };
 		8A84BEFE27ADF6507544EADE /* ../../Source/Video/ui/SpatializerPanel.cpp */ /* SpatializerPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpatializerPanel.cpp; path = ../../Source/Video/ui/SpatializerPanel.cpp; sourceTree = SOURCE_ROOT; };
 		8AF40397D4D6DD666BE80531 /* System/Library/Frameworks/CoreMedia.framework */ /* CoreMedia.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMedia.framework; path = System/Library/Frameworks/CoreMedia.framework; sourceTree = SDKROOT; };
 		8B4758C79215D4F73F137686 /* ../../Source/Node/ui/NodeBlockEditor.h */ /* NodeBlockEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlockEditor.h; path = ../../Source/Node/ui/NodeBlockEditor.h; sourceTree = SOURCE_ROOT; };
@@ -458,7 +464,6 @@
 		D6B4CB4780E26B5B19D4768A /* ../../JuceLibraryCode/include_juce_organicui.cpp */ /* include_juce_organicui.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_organicui.cpp; path = ../../JuceLibraryCode/include_juce_organicui.cpp; sourceTree = SOURCE_ROOT; };
 		D721774C83C3D5512A0D8746 /* ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc */ /* list_ports_linux.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = list_ports_linux.cc; path = ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc; sourceTree = SOURCE_ROOT; };
 		D7E6B27DC9E84D0C58F7EDF2 /* ../../Source/Video/SpatItem.h */ /* SpatItem.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpatItem.h; path = ../../Source/Video/SpatItem.h; sourceTree = SOURCE_ROOT; };
-		D9359804A59F6EE0154771F1 /* ~/JUCE/modules/juce_audio_basics */ /* juce_audio_basics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_basics; path = "~/JUCE/modules/juce_audio_basics"; sourceTree = "<absolute>"; };
 		D9825732C3218C86F328A56B /* ../../Source/LightBlock/model/ui/LightBlockModelManagerUI.h */ /* LightBlockModelManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelManagerUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelManagerUI.h; sourceTree = SOURCE_ROOT; };
 		DBA989260613068266B6AFD0 /* ../../Source/Prop/TargetFilter/PropTargetFilter.h */ /* PropTargetFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropTargetFilter.h; path = ../../Source/Prop/TargetFilter/PropTargetFilter.h; sourceTree = SOURCE_ROOT; };
 		DC0E4526347D243F83F2E814 /* ../../Source/Prop/PropManager.h */ /* PropManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropManager.h; path = ../../Source/Prop/PropManager.h; sourceTree = SOURCE_ROOT; };
@@ -779,6 +784,8 @@
 				CDBA5C4AC23371015C00FE6E,
 				878A4313101E6FF0D57EE3CD,
 				F8CC2AA9A461022D52BD9030,
+				3CF751812457867DE7EF346A,
+				8982AF698A695C3FEF7A7F56,
 				B3F00A16D10651397C0D1BAE,
 				E082A45CFF68EB4AF84C1BD0,
 				25A86663AB1BCEB88DE5C5ED,
@@ -1373,7 +1380,7 @@
 			children = (
 				077362864D3E95704F2D0558,
 				2A0C477D5ED3CDD9953752E6,
-				D9359804A59F6EE0154771F1,
+				023A0A4D7EC47144FB8D27A0,
 				A43FB19216C50E48675B9544,
 				924D010AD8CF0957616DA5CE,
 				D1F2D02962D67BDCC3794AC9,
@@ -1388,6 +1395,7 @@
 				BAEFF9889C95827D6D0A3AFE,
 				5DBFCFF756AD9AF779C27EC0,
 				90358C616892A9E4A0BAE0E0,
+				0A12257D17F15623FD75C5AC,
 				AED1C1F9172B482D4CC281F2,
 				E348CBF8F4DAAC01A3E1EFB0,
 			);
@@ -1771,6 +1779,8 @@
 				751ED75F4438D941D4B18A83,
 				B08670E180B436DAF208B572,
 				F1F282CEE91073ADD267F058,
+				FD72E12D48DC13DD45E5B58B,
+				B991E79A3AD2A65F32A2E148,
 				A198394E001844380ACD129F,
 				B31597CD80327EFFF3C15E48,
 			);
@@ -1831,7 +1841,7 @@
 		15721827C7A786D9277C7DB1 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -1859,6 +1869,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/~/JUCE/modules",
 					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
 					"$(SRCROOT)/../../External/serial/include",
@@ -1872,10 +1883,11 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/~/JUCE/modules $(SRCROOT)/../../../../../../Softwares/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../JUCE/modules $(SRCROOT)/~/JUCE/modules $(SRCROOT)/../../../../../../Softwares/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
@@ -1935,7 +1947,7 @@
 		A7AE63CE79504FB7184CB95A /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CLANG_CXX_LANGUAGE_STANDARD = "c++14";
+				CLANG_CXX_LANGUAGE_STANDARD = "c++17";
 				CLANG_CXX_LIBRARY = "libc++";
 				CLANG_LINK_OBJC_RUNTIME = NO;
 				CODE_SIGN_IDENTITY = "";
@@ -1963,6 +1975,7 @@
 				HEADER_SEARCH_PATHS = (
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../Modules",
+					"$(SRCROOT)/../../JUCE/modules",
 					"$(SRCROOT)/~/JUCE/modules",
 					"$(SRCROOT)/../../../../../../Softwares/JUCE/modules",
 					"$(SRCROOT)/../../External/serial/include",
@@ -1976,11 +1989,12 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
+					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/~/JUCE/modules $(SRCROOT)/../../../../../../Softwares/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../JUCE/modules $(SRCROOT)/~/JUCE/modules $(SRCROOT)/../../../../../../Softwares/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;

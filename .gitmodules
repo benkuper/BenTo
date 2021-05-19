@@ -25,3 +25,6 @@
 [submodule "Firmware/BentoFlowCreator/src/common/ArduinoJson"]
 	path = Firmware/BentoFlowCreator/src/common/ArduinoJson
 	url = http://github.com/benkuper/ArduinoJson
+[submodule "Modules/juce_simpleweb"]
+	path = Modules/juce_simpleweb
+	url = https://github.com/benkuper/juce_simpleweb

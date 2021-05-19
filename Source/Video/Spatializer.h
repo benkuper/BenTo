@@ -39,7 +39,7 @@ public:
 	void init();
 	void computeSpat(Image tex, SpatLayout * forceLayout = nullptr);
 
-	SpatItem * getItemForProp(Prop * p, SpatLayout * forceLayout = nullptr);
+	Array<SpatItem *> getItemsForProp(Prop * p, SpatLayout * forceLayout = nullptr);
 
 	// ASYNC
 	QueuedNotifier<SpatializerEvent> spatNotifier;

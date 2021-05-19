@@ -24,7 +24,8 @@ SpatItem::SpatItem() :
 	shape = addEnumParameter("Shape", "The shape of the prop");
 	shape->addOption("Club", Prop::Shape::CLUB)->addOption("Ball", Prop::Shape::BALL)->addOption("Poi", Prop::Shape::POI)->addOption("Hoop", Prop::Shape::HOOP)->addOption("Custom", Prop::Shape::CUSTOM);
 
-	resolution = addIntParameter("Resolution", "Number of controllable colors in the prop", 32, 1, INT32_MAX);
+	startIndex = addIntParameter("Start Index", "Index of the first pixel to use for this item", 1, 1);
+	resolution = addIntParameter("Resolution", "Number of controllable colors in the prop", 32, 1);
 	
 
 	updateHandles();

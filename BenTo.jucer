@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source" id="LP0of5"
-              version="1.3.0b10" projectLineFeed="&#10;" jucerFormatVersion="1">
+              version="1.3.0b10" projectLineFeed="&#10;" jucerFormatVersion="1"
+              cppLanguageStandard="17">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
@@ -614,6 +615,7 @@
         <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
         <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -645,6 +647,7 @@
         <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
         <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl&#10;Servus"
@@ -670,11 +673,12 @@
         <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
         <MODULEPATH id="juce_sharedtexture" path="Modules"/>
         <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
         <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
@@ -700,40 +704,46 @@
         <MODULEPATH id="juce_audio_processors"/>
         <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_audio_devices"/>
-        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
         <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
         <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2017 targetFolder="Builds/VS2017_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
-            externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib">
+    <VS2019 targetFolder="Builds/VisualStudio2019_CI" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
+            smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
-        <CONFIGURATION name="Release" binaryPath="Binaries/CI" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
+        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" winArchitecture="x64"
+                       headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
+                       libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"/>
+        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" winArchitecture="x64"
+                       headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
                        libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_osc" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="../JUCE/modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
-        <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
-        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
-        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="juce_video"/>
+        <MODULEPATH id="juce_timeline"/>
+        <MODULEPATH id="juce_simpleweb"/>
+        <MODULEPATH id="juce_sharedtexture"/>
+        <MODULEPATH id="juce_osc"/>
+        <MODULEPATH id="juce_organicui"/>
+        <MODULEPATH id="juce_opengl"/>
+        <MODULEPATH id="juce_gui_extra"/>
+        <MODULEPATH id="juce_gui_basics"/>
+        <MODULEPATH id="juce_graphics"/>
+        <MODULEPATH id="juce_events"/>
+        <MODULEPATH id="juce_data_structures"/>
+        <MODULEPATH id="juce_core"/>
+        <MODULEPATH id="juce_audio_utils"/>
+        <MODULEPATH id="juce_audio_processors"/>
+        <MODULEPATH id="juce_audio_formats"/>
+        <MODULEPATH id="juce_audio_devices"/>
+        <MODULEPATH id="juce_audio_basics"/>
+        <MODULEPATH id="filmstro_ffmpeg"/>
+        <MODULEPATH id="filmstro_audiohelpers"/>
       </MODULEPATHS>
-    </VS2017>
+    </VS2019>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus">
@@ -759,10 +769,11 @@
         <MODULEPATH id="juce_audio_processors" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="~/JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="~/JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="~/JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
         <MODULEPATH id="juce_video" path="../../../../Softwares/JUCE/modules"/>
         <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
   </EXPORTFORMATS>
@@ -784,10 +795,12 @@
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_simpleweb" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_video" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
   </MODULES>
   <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" JUCE_USE_MP3AUDIOFORMAT="1"
-               JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"/>
+               JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
+               ORGANICUI_USE_WEBSERVER="1" JUCE_IP_AND_PORT_DETECTION="1"/>
 </JUCERPROJECT>

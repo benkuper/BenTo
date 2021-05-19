@@ -15,6 +15,7 @@
 VideoLayer::VideoLayer(Sequence* sequence, var params) :
     AudioLayer(sequence, params)
 {
+    setNiceName("Video");
 }
 
 VideoLayer::~VideoLayer()

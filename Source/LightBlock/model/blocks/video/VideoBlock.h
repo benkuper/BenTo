@@ -71,7 +71,7 @@ public:
 
 	LightBlockModelUI * createUI() override;
 
-	String getTypeString() const override { return "Video"; }
+	String getTypeString() const override { return "Spout"; }
 
 	static VideoBlock * create(var params) { return new VideoBlock(params); }
 };

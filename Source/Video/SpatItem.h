@@ -28,6 +28,7 @@ public:
 
 
 	EnumParameter * shape;
+	IntParameter* startIndex;
 	IntParameter * resolution;
 
 	ControllableContainer handlesCC;
