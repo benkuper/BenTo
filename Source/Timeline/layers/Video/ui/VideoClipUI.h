@@ -12,8 +12,10 @@
 #include "../VideoClip.h"
 
 class VideoClipUI :
-    public AudioLayerClipUI,
-    public FFmpegVideoListener
+    public AudioLayerClipUI
+#if FILMSTRO_USE_FFMPEG
+    ,public FFmpegVideoListener
+#endif
 {
 public:
     VideoClipUI(VideoClip* clip);
@@ -23,6 +25,8 @@ public:
 
     void setupThumbnail() override;
 
+#if FILMSTRO_USE_FFMPEG
     void videoFileChanged(const File& f) override;
     void videoSizeChanged(int w, int h, AVPixelFormat) override;
+#endif
 };
