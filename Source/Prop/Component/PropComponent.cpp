@@ -33,6 +33,13 @@ void PropComponent::onContainerParameterChanged(Parameter* p)
     if(!p->isControllableFeedbackOnly && !excludeControlControllables.contains(p)) sendControl(p->shortName, p->value);
 }
 
+void PropComponent::onContainerTriggerTriggered(Trigger* t)
+{
+    EnablingControllableContainer::onContainerTriggerTriggered(t);
+    if (!t->isControllableFeedbackOnly && !excludeControlControllables.contains(t)) sendControl(t->shortName);
+
+}
+
 void PropComponent::handleMessage(const String &msg, var value)
 {
     Controllable * c = getControllableByName(msg);
@@ -42,7 +49,10 @@ void PropComponent::handleMessage(const String &msg, var value)
         return;
     }
 
-    if (c->type == Controllable::TRIGGER) ((Trigger*)c)->trigger();
+    if (c->type == Controllable::TRIGGER)
+    {
+        if (c->isControllableFeedbackOnly) ((Trigger*)c)->trigger();
+    }
     else if(Parameter * p = (Parameter *)c)
     {
         if (p->type == p->ENUM) ((EnumParameter*)p)->setValueWithData(value[0]);

@@ -33,9 +33,11 @@ public:
 
     int touchThreshold;
 
+#ifdef TOUCH_COUNT
     bool isPressed[TOUCH_COUNT];
     bool isLongPressed[TOUCH_COUNT];
     bool isVeryLongPressed[TOUCH_COUNT];
+#endif
 
     void init();
     void update();
@@ -53,8 +55,11 @@ private :
     const int multiPressTime = 300;       //each new press shorter than 500ms after the previous one will increase the multiclick
     
     const int touchPressDebounce = 5;    //denoising, needs five reads to validate a change
-    int debounceCount[TOUCH_COUNT];
 
+#ifdef TOUCH_COUNT
+    int debounceCount[TOUCH_COUNT];
+    
     long timeAtPress[TOUCH_COUNT];
     int multiPressCount[TOUCH_COUNT];
+    #endif
 };

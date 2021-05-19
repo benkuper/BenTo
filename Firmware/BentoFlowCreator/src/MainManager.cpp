@@ -105,11 +105,12 @@ void MainManager::sleep(CRGB color)
 
 #ifdef SLEEP_WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, SLEEP_WAKEUP_STATE);
-
-#else if defined TOUCH_WAKEUP_PIN
+#else
+#if defined TOUCH_WAKEUP_PIN
  //Configure Touchpad as wakeup source
   touchAttachInterrupt(TOUCH_WAKEUP_PIN, touchCallback, 110);
   esp_sleep_enable_touchpad_wakeup();
+#endif
 #endif
 
 #ifdef ESP8266

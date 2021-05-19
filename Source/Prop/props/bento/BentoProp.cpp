@@ -60,6 +60,16 @@ void BentoProp::setSerialDevice(SerialDevice* d)
 	}
 }
 
+void BentoProp::onContainerParameterChangedInternal(Parameter* p)
+{
+	Prop::onContainerParameterChangedInternal(p);
+
+	if (p == enabled)
+	{
+		sendMessageToProp(OSCMessage("/rgb/enabled", enabled->boolValue() ? 1 : 0));
+	}
+}
+
 void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Prop::onControllableFeedbackUpdateInternal(cc, c);

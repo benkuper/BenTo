@@ -18,6 +18,7 @@
 #include "Component/imu/IMUComponent.h"
 #include "Component/ir/IRPropComponent.h"
 #include "Component/rgb/RGBComponent.h"
+#include "Component/touch/TouchComponent.h"
 #include "BentoEngine.h"
 #include "ui/PropEditor.h"
 
@@ -72,7 +73,7 @@ Prop::Prop(var params) :
 
 
 	powerOffTrigger = controlsCC.addTrigger("Power Off", "Power Off the prop");
-	restartTrigger = controlsCC.addTrigger("Restart","Restart the prop");
+	restartTrigger = controlsCC.addTrigger("Restart", "Restart the prop");
 	addChildControllableContainer(&controlsCC);
 
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
@@ -140,7 +141,7 @@ Prop::Prop(var params) :
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
 	pingEnabled = params.getProperty("ping", pingEnabled);
-	if(pingEnabled) startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
+	if (pingEnabled) startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 }
 
 Prop::~Prop()
@@ -297,12 +298,12 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		restartProp();
 	}
-	else if (PropComponent* pc = dynamic_cast<PropComponent *>(cc)) //just do 1 level dynamic_cast<PropComponent*>(cc))
+	else if (PropComponent* pc = dynamic_cast<PropComponent*>(cc)) //just do 1 level dynamic_cast<PropComponent*>(cc))
 	{
 		if (PropManager::getInstance()->sendFeedback->boolValue() && pc->feedbackEnabled)
 		{
-			OSCMessage m("/prop/"+globalID->stringValue() + c->getControlAddress(this));
-			if(c->type != Controllable::TRIGGER) OSCHelpers::addArgumentsForParameter(m, (Parameter *)c);//PropManager::getInstance());
+			OSCMessage m("/prop/" + globalID->stringValue() + c->getControlAddress(this));
+			if (c->type != Controllable::TRIGGER) OSCHelpers::addArgumentsForParameter(m, (Parameter*)c);//PropManager::getInstance());
 
 			BentoEngine* be = (BentoEngine*)Engine::mainEngine;
 			PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
@@ -403,7 +404,7 @@ BakeData Prop::bakeBlock()
 
 		if (providerToBake == nullptr) return result;
 		Array<Colour> cols = providerToBake->getColors(this, curTime, params);
-		
+
 		for (int i = startIndex; i != endIndex; i += step)
 		{
 			os.writeByte(cols[i].getRed());
@@ -474,21 +475,40 @@ void Prop::sendControlToProp(String message, var value)
 void Prop::handleOSCMessage(const OSCMessage& m)
 {
 	if (m.getAddressPattern().toString() == "/pong") handlePong();
+	else if (m.getAddressPattern().toString() == "/enabled") 
+	{
+		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
+	}
 	else
 	{
 		if (logIncoming->boolValue())
 		{
-			String s = "Received " + m.getAddressPattern().toString() + (m.size() > 1 ? " : ":"");
+			String s = "Received " + m.getAddressPattern().toString() + (m.size() > 1 ? " : " : "");
 			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
 			NLOG(niceName, s);
 		}
 
 		StringArray mSplit;
 		mSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
-		PropComponent* pc = getComponent(mSplit[1]);
-		var value;
-		for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
-		if (pc != nullptr) pc->handleMessage(mSplit[2], value);
+
+		if (mSplit[1] == "block")
+		{
+			if (currentBlock != nullptr && mSplit.size() > 2)
+			{
+				if (Controllable* c = currentBlock->paramsContainer.getControllableByName(mSplit[2]))
+				{
+					OSCHelpers::handleControllableForOSCMessage(c, m, 1);
+				}
+			}
+		}
+		else
+		{
+			PropComponent* pc = getComponent(mSplit[1]);
+			var value;
+			for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
+			if (pc != nullptr) pc->handleMessage(mSplit[2], value);
+		}
+		
 	}
 }
 
@@ -512,7 +532,7 @@ void Prop::timerCallback(int timerID)
 	{
 	case PROP_PING_TIMERID:
 		if (!pingEnabled) return;
-		if(!receivedPongSinceLastPingSent) isConnected->setValue(false);
+		if (!receivedPongSinceLastPingSent) isConnected->setValue(false);
 		sendPing();
 		break;
 	}
@@ -529,6 +549,7 @@ void Prop::setupComponentsJSONDefinition(var def)
 	}
 
 	if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));
+	if (def.hasProperty("touch")) addComponent(new TouchPropComponent(this, def.getProperty("touch", var())));
 	if (def.hasProperty("imu")) addComponent(new IMUPropComponent(this, def.getProperty("imu", var())));
 	if (def.hasProperty("ir")) addComponent(new IRPropComponent(this, def.getProperty("ir", var())));
 	if (def.hasProperty("battery")) addComponent(new BatteryPropComponent(this, def.getProperty("battery", var())));

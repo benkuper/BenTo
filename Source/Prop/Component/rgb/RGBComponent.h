@@ -24,4 +24,6 @@ public:
     bool invertDirection;
 
     FloatParameter* brightness;
+
+    void handePropConnected() override;
 };

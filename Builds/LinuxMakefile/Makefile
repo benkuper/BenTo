@@ -35,7 +35,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.3.0b6" "-DJUCE_APP_VERSION_HEX=0x10300" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.3.0b10" "-DJUCE_APP_VERSION_HEX=0x10300" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := BenTo
 
@@ -56,7 +56,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.3.0b6" "-DJUCE_APP_VERSION_HEX=0x10300" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.3.0b10" "-DJUCE_APP_VERSION_HEX=0x10300" $(shell pkg-config --cflags alsa freetype2 libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I$(HOME)/JUCE/modules -I../../../../../../Softwares/JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_RTAS=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0"
   JUCE_TARGET_APP := BenTo
 
@@ -174,6 +174,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/PropClusterGroup_98d0476a.o \
   $(JUCE_OBJDIR)/PropClusterGroupManager_2f9ae16d.o \
   $(JUCE_OBJDIR)/BentoProp_c5777cde.o \
+  $(JUCE_OBJDIR)/TouchComponent_6e69d3ed.o \
   $(JUCE_OBJDIR)/IRPropComponent_fb70abca.o \
   $(JUCE_OBJDIR)/BatteryComponent_e5130d1.o \
   $(JUCE_OBJDIR)/ButtonsComponent_3f2f3ae9.o \
@@ -210,6 +211,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_opengl_a8a032b.o \
   $(JUCE_OBJDIR)/include_juce_organicui_2c36794d.o \
   $(JUCE_OBJDIR)/include_juce_organicui2_5ab8c64f.o \
+  $(JUCE_OBJDIR)/include_juce_organicui2b_ff2481bd.o \
   $(JUCE_OBJDIR)/include_juce_organicui3_5ac6ddd0.o \
   $(JUCE_OBJDIR)/include_juce_organicui4_5ad4f551.o \
   $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o \
@@ -760,6 +762,11 @@ $(JUCE_OBJDIR)/BentoProp_c5777cde.o: ../../Source/Prop/props/bento/BentoProp.cpp
 	@echo "Compiling BentoProp.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/TouchComponent_6e69d3ed.o: ../../Source/Prop/Component/touch/TouchComponent.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling TouchComponent.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/IRPropComponent_fb70abca.o: ../../Source/Prop/Component/ir/IRPropComponent.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling IRPropComponent.cpp"
@@ -938,6 +945,11 @@ $(JUCE_OBJDIR)/include_juce_organicui_2c36794d.o: ../../JuceLibraryCode/include_
 $(JUCE_OBJDIR)/include_juce_organicui2_5ab8c64f.o: ../../JuceLibraryCode/include_juce_organicui2.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
 	@echo "Compiling include_juce_organicui2.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/include_juce_organicui2b_ff2481bd.o: ../../JuceLibraryCode/include_juce_organicui2b.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling include_juce_organicui2b.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/include_juce_organicui3_5ac6ddd0.o: ../../JuceLibraryCode/include_juce_organicui3.cpp

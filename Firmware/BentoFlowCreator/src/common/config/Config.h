@@ -11,14 +11,14 @@
 //  #define GUITAR
 //  #define GLOVE
 //  #define GENERIC_PWM
-//  #define DMX
+  #define DMX
 //  #define DRESS
 //  #define FLAIR
 //#define SIMPLE_ESP8266
 
 //#define RING
 //#define SUPERSTAFF
-#define LAMP
+//#define LAMP
 
 //#define BOX
 //#define MAKEY

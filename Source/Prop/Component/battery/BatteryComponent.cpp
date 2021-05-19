@@ -13,6 +13,8 @@
 BatteryPropComponent::BatteryPropComponent(Prop* prop, var params) :
     PropComponent(prop, "Battery")
 {
+    resetBattery = addTrigger("Reset", "Reset Battery Max value calibration");
+
     level = addFloatParameter("Level", "Level of the battery", 1, 0, 1);
     level->setControllableFeedbackOnly(true);
 

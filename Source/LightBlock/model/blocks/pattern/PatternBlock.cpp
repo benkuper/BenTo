@@ -123,7 +123,11 @@ StrobePattern::StrobePattern(var params) :
 	color2 = paramsContainer->addColorParameter("Color 2", "", Colours::black);
 	frequency = paramsContainer->addFloatParameter("Frequency", "", 1);
 	onOffBalance = paramsContainer->addFloatParameter("On-Off Balance", "The balance between on and off time. 0.5s means equals on and off time. .8 means 80% on time, 20% off time.", .5f, 0, 1);
+	fadeIn = paramsContainer->addFloatParameter("Fade In", "Fade in", 0, 0, 1);
+	fadeOut = paramsContainer->addFloatParameter("Fade Out", "Fade out", 0, 0, 1); 
+	offset = paramsContainer->addFloatParameter("Offset", "Offset the timing", 0);
 	idOffset = paramsContainer->addFloatParameter("ID Offset", "Offset the timing depending on id of the prop", 0);
+	
 }
 
 void StrobePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
@@ -136,11 +140,24 @@ void StrobePattern::getColorsInternal(Array<Colour>* result, Prop* p, double tim
 	float bBrightness = getParamValue<float>(brightness, params);
 	float bFrequency = getParamValue<float>(frequency, params);
 	float bOnOffBalance = getParamValue<float>(onOffBalance, params);
+	float fin = getParamValue<float>(fadeIn, params);
+	float fout = getParamValue<float>(fadeOut, params); 
+	float bOffset = getParamValue<float>(offset, params);
 	float bIdOffset = getParamValue<float>(idOffset, params);
+	
+	float finTime = fin * (1 - bOnOffBalance);
+	float foutTime = fout * (1 - bOnOffBalance);
 
-	float curTime = time * bFrequency + id * bIdOffset;
+	float curTime = time * bFrequency - id * bIdOffset - bOffset;
+	float relTime = fmodf(curTime, 1);
+	if (relTime < 0) relTime += 1;
 
-	Colour c = fmodf(curTime, 1) < bOnOffBalance ? bColor : bColor2;
+	float offRelIn = finTime == 0 ? 0 : jlimit<float>(0, 1, jmap<float>(relTime, 1 - finTime, 1, 0, 1));
+	float offRelOut = foutTime == 0 ? 0 : jlimit<float>(0, 1, jmap<float>(relTime, bOnOffBalance, bOnOffBalance + foutTime, 1, 0));
+
+	float weight = jmax(offRelIn, offRelOut);
+	Colour c = relTime < bOnOffBalance ? bColor:bColor2.interpolatedWith(bColor, weight);
+
 	result->fill(c.withMultipliedBrightness(bBrightness));
 }
 

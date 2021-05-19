@@ -24,7 +24,6 @@ public:
 
     void setupFromSource() override;
     
-    void setIsCurrent(bool value) override;
 
     virtual void prepareToPlay(int blockSize, int sampleRate) override;
     

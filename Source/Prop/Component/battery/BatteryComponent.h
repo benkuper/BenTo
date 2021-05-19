@@ -22,4 +22,5 @@ public:
     FloatParameter* level;
     FloatParameter* voltage;
     FloatParameter* rawValue;
+    Trigger* resetBattery;
 };

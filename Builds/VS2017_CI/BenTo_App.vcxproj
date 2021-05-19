@@ -13,6 +13,9 @@
     <ProjectGuid>{AE9B8387-A2F6-0A55-0659-DFF253727185}</ProjectGuid>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props"/>
+  <PropertyGroup Label="PreferredToolArchitecture">
+    <PreferredToolArchitecture>x64</PreferredToolArchitecture>
+  </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'"
                  Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -48,7 +51,7 @@
     <ClCompile>
       <Optimization>Full</Optimization>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\Modules;..\..\..\JUCE\modules;..\..\..\..\..\..\Softwares\JUCE\modules;../../External/asio;../../External/serial/include;../../External/servus/include;../../External/ffmpeg/include;../../Source;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.3.0b6;JUCE_APP_VERSION_HEX=0x10300;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2017_6069D29A=1;JUCE_APP_VERSION=1.3.0b10;JUCE_APP_VERSION_HEX=0x10300;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_RTAS=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -193,6 +196,7 @@
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp"/>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Component\touch\TouchComponent.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Component\battery\BatteryComponent.cpp"/>
     <ClCompile Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.cpp"/>
@@ -302,6 +306,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\synthesisers\juce_Synthesiser.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\utilities\juce_ADSR_test.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_basics\utilities\juce_IIRFilter.cpp">
@@ -865,6 +872,9 @@
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_ParameterAttachments.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_PluginHostType.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_RangedAudioParameter.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -1055,6 +1065,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\..\JUCE\modules\juce_core\native\juce_wasm_SystemStats.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\..\JUCE\modules\juce_core\native\juce_win32_Files.cpp">
@@ -2410,6 +2423,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\Trigger.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardCommentItemUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardGroupItemUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2429,6 +2445,9 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\Dashboard.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardCommentItem.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardGroupItem.cpp">
@@ -2671,6 +2690,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui2.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui2b.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\juce_organicui3.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2788,6 +2810,27 @@
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2893,6 +2936,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_opengl.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2.cpp"/>
+    <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui2b.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui3.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_organicui4.cpp"/>
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_osc.cpp"/>
@@ -3003,6 +3047,7 @@
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h"/>
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\touch\TouchComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\ir\IRPropComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\battery\BatteryComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.h"/>
@@ -3104,6 +3149,7 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\include\oboe\StabilizedCallback.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\include\oboe\Utilities.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\include\oboe\Version.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\aaudio\AAudioExtensions.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\aaudio\AAudioLoader.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\aaudio\AudioStreamAAudio.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_devices\native\oboe\src\common\AudioClock.h"/>
@@ -3353,6 +3399,7 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorParameterWithID.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_AudioProcessorValueTreeState.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_ParameterAttachments.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_PluginHostType.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_processors\utilities\juce_RangedAudioParameter.h"/>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_audio_processors\juce_audio_processors.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_audio_utils\audio_cd\juce_AudioCDBurner.h"/>
@@ -3428,8 +3475,10 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\misc\juce_WindowsRegistry.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_android_JNIHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_BasicNativeHeaders.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_intel_SharedCode.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_mac_CFHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_mac_ClangBugWorkaround.h"/>
-    <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_osx_ObjCHelpers.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_mac_ObjCHelpers.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_posix_IPAddress.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_posix_SharedCode.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_core\native\juce_win32_ComSmartPtr.h"/>
@@ -3702,6 +3751,7 @@
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_X11_Symbols.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_XWindowSystem.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h"/>
+    <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\native\juce_win32_ScopedThreadDPIAwarenessSetter.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\positioning\juce_MarkerList.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\positioning\juce_RelativeCoordinate.h"/>
     <ClInclude Include="..\..\..\JUCE\modules\juce_gui_basics\positioning\juce_RelativeCoordinatePositioner.h"/>
@@ -3886,6 +3936,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\ControllableHelpers.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\ControllableUtil.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\Trigger.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardCommentItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardGroupItemUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardItemUI.h"/>
@@ -3893,6 +3944,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardManagerView.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardUI.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\Dashboard.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardCommentItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardGroupItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItem.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItemFactory.h"/>
@@ -3942,6 +3994,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\progress\ui\ProgressWindow.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\progress\ProgressNotifier.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\remotecontrol\OSCPacketHelper.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\remotecontrol\OSCRemoteControl.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\AppConfig.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\BinaryData.h"/>
@@ -4018,6 +4071,13 @@
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\ui\LayerBlockUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlock.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Block\LayerBlockManager.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerPanel.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockLayerTimeline.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockManagerUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\ui\SequenceBlockUI.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlock.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockLayer.h"/>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\SequenceBlock\SequenceBlockManager.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerManagerUI.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerMultiTransformer.h"/>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Layer\layers\Trigger\ui\TimeTriggerUI.h"/>
@@ -4088,6 +4148,7 @@
     <None Include="..\..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\README.md"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\LICENSE.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\README.md"/>
+    <None Include="..\..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\JUCE_README.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\LICENSE.txt"/>
     <None Include="..\..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\README.md"/>
     <None Include="..\..\..\JUCE\modules\juce_core\native\java\README.txt"/>

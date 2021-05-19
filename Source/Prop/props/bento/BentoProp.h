@@ -34,6 +34,7 @@ public:
 
 	virtual void setSerialDevice(SerialDevice* d);
 
+	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *c) override;
 
 	virtual void serialDataReceived(SerialDevice * d, const var &) override;

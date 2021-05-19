@@ -28,6 +28,7 @@ public:
 
     void sendControl(String control, var value = var());
     virtual void onContainerParameterChanged(Parameter* p) override;
+    virtual void onContainerTriggerTriggered(Trigger* t) override;
 
     virtual void update() {}
 

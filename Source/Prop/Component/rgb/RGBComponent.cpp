@@ -9,6 +9,7 @@
 */
 
 #include "RGBComponent.h"
+#include "../../Prop.h"
 
 RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
     PropComponent(prop, "RGB"),
@@ -21,4 +22,10 @@ RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
 
 RGBPropComponent::~RGBPropComponent()
 {
+}
+
+void RGBPropComponent::handePropConnected()
+{
+    PropComponent::handePropConnected();
+    sendControl("enabled", prop->enabled->boolValue());
 }

@@ -7,6 +7,7 @@ TouchManager::TouchManager() :
  Component("touch"),
  touchThreshold(90)
 {
+    #ifdef TOUCH_COUNT
     for (int i = 0; i < TOUCH_COUNT; i++)
     {
         isPressed[i] = false;
@@ -14,12 +15,13 @@ TouchManager::TouchManager() :
         multiPressCount[i] = 0;
         timeAtPress[i] = 0;
     }
+     #endif
 }
 
 void TouchManager::init()
 {
 
-#if TOUCH_COUNT > 0
+#ifdef TOUCH_COUNT
     for (int i = 0; i < TOUCH_COUNT; i++)
     {
         
@@ -37,7 +39,7 @@ void TouchManager::init()
 
 void TouchManager::update()
 {
-#if TOUCH_COUNT > 0
+#ifdef TOUCH_COUNT
     for (int i = 0; i < TOUCH_COUNT; i++)
     {
         bool v = touchRead(touchPins[i]) < touchThreshold;

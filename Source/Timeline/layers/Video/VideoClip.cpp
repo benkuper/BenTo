@@ -33,16 +33,6 @@ void VideoClip::setupFromSource()
 
 }
 
-void VideoClip::setIsCurrent(bool value)
-{
-	AudioLayerClip::setIsCurrent(value);
-
-	if (VideoPreviewPanel* panel = ShapeShifterManager::getInstance()->getContentForType<VideoPreviewPanel>())
-	{
-		panel->setVideoClip(isCurrent ? this : nullptr);
-	}
-}
-
 void VideoClip::prepareToPlay(int blockSize, int sampleRate)
 {
 	AudioLayerClip::prepareToPlay(blockSize, sampleRate);
@@ -73,4 +63,11 @@ void VideoClip::videoSizeChanged(int w, int h, AVPixelFormat)
 void VideoClip::onContainerParameterChangedInternal(Parameter* p)
 {
 	AudioLayerClip::onContainerParameterChangedInternal(p);
+	if (p == isActive)
+	{
+		if (VideoPreviewPanel* panel = ShapeShifterManager::getInstance()->getContentForType<VideoPreviewPanel>())
+		{
+			panel->setVideoClip(isActive->boolValue() ? this : nullptr);
+		}
+	}
 }
