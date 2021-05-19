@@ -1891,7 +1891,7 @@
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
-				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Debug;
 		};
@@ -1997,7 +1997,7 @@
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
 				VALIDATE_WORKSPACE_SKIPPED_SDK_FRAMEWORKS = OpenGL;
-				VALID_ARCHS = "i386 x86_64 arm64 arm64e";
+				VALID_ARCHS = "x86_64";
 			};
 			name = Release;
 		};
