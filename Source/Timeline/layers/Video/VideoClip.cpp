@@ -11,25 +11,33 @@
 #include "VideoClip.h"
 #include "VideoPreview/VideoPreviewPanel.h"
 
-VideoClip::VideoClip() :
-	videoReader(192000, 50)
+VideoClip::VideoClip() 
+#if FILMSTRO_USE_FFMPEG
+	: videoReader(192000, 50)
+#endif
 {
+#if FILMSTRO_USE_FFMPEG
 	videoReader.addVideoListener(this);
+#endif
 }
 
 VideoClip::~VideoClip()
 {
+#if FILMSTRO_USE_FFMPEG
 	videoReader.releaseResources();
+#endif
 }
 
 void VideoClip::setupFromSource()
 {
+#if FILMSTRO_USE_FFMPEG
 	bool result = videoReader.loadMovieFile(filePath->getFile());
 
 	if (!result)
 	{
 		LOGERROR("FUck.");
 	}
+#endif
 
 }
 
@@ -38,6 +46,7 @@ void VideoClip::prepareToPlay(int blockSize, int sampleRate)
 	AudioLayerClip::prepareToPlay(blockSize, sampleRate);
 }
 
+#if FILMSTRO_USE_FFMPEG
 void VideoClip::videoFileChanged(const File& f)
 {
 	transportSource.setSource(&videoReader, 0, nullptr, videoReader.getVideoSamplingRate(), videoReader.getVideoChannels());
@@ -59,6 +68,7 @@ void VideoClip::videoSizeChanged(int w, int h, AVPixelFormat)
 {
 	LOG("Video size changed : " << w << ", " << h);
 }
+#endif
 
 void VideoClip::onContainerParameterChangedInternal(Parameter* p)
 {

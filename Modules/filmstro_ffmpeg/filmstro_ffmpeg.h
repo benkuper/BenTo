@@ -52,6 +52,11 @@
 #ifndef FSPRO_FFMPEG_INCLUDED_H
 #define FSPRO_FFMPEG_INCLUDED_H
 
+#ifndef FILMSTRO_USE_FFMPEG
+#define FILMSTRO_USE_FFMPEG 1
+#endif
+
+#if FILMSTRO_USE_FFMPEG
 
 #include <juce_audio_basics/juce_audio_basics.h>
 #include <juce_audio_formats/juce_audio_formats.h>
@@ -59,9 +64,6 @@
 #include <juce_gui_basics/juce_gui_basics.h>
 #include "filmstro_audiohelpers/filmstro_audiohelpers_AudioBufferFIFO.h"
 
-#ifndef FILMSTRO_USE_FFMPEG
-#define FILMSTRO_USE_FFMPEG 1
-#endif
 
 #pragma warning(disable:4100 4244 4458)
 
@@ -87,5 +89,7 @@ extern "C" {
 #include "filmstro_ffmpeg_FFmpegVideoWriter.h"
 #include "filmstro_ffmpeg_FFmpegVideoComponent.h"
 
+
+#endif
 
 #endif /* FSPRO_FFMPEG_INCLUDED_H */

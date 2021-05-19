@@ -21,7 +21,9 @@ public:
     VideoPreviewPanel(const String &name);
     ~VideoPreviewPanel();
 
+#if FILMSTRO_USE_FFMPEG
     FFmpegVideoComponent videoComponent;
+#endif
 
     void setVideoClip(VideoClip * clip);
     void resized() override;

@@ -16,7 +16,9 @@
 VideoPreviewPanel::VideoPreviewPanel(const String& name) :
     ShapeShifterContentComponent(name)
 {
+#if FILMSTRO_USE_FFMPEG
     addAndMakeVisible(&videoComponent);
+#endif
 }
 
 VideoPreviewPanel::~VideoPreviewPanel()
@@ -24,17 +26,20 @@ VideoPreviewPanel::~VideoPreviewPanel()
     setVideoClip(nullptr);
 }
 
-void VideoPreviewPanel::setVideoClip(VideoClip * clip)
+void VideoPreviewPanel::setVideoClip(VideoClip* clip)
 {
+#if FILMSTRO_USE_FFMPEG
     videoComponent.setVideoReader(clip != nullptr ? &clip->videoReader : nullptr);
-    
     MessageManagerLock mmLock;
     resized();
     videoComponent.repaint();
+#endif
 }
 
 void VideoPreviewPanel::resized()
 {
+#if FILMSTRO_USE_FFMPEG
     videoComponent.setBounds(getLocalBounds());
     videoComponent.resized();
+#endif
 }
