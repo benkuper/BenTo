@@ -653,9 +653,9 @@
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl&#10;Servus"
                 smallIcon="YlXmhK" bigIcon="YlXmhK" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include"
+        <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
                        libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
-        <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include"
+        <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
                        libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -684,9 +684,12 @@
     <LINUX_MAKE targetFolder="Builds/Raspberry" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="curl&#10;Servus" smallIcon="YlXmhK" bigIcon="YlXmhK">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/serial/include&#10;../../External/servus/include"
+        <CONFIGURATION isDebug="0" name="Debug" libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
+                       headerPath="../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
+                       linuxArchitecture="-march=armv7"/>
+        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
                        libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
-                       linuxArchitecture="-march=native"/>
+                       linuxArchitecture="-march=armv7"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
