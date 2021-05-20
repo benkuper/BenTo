@@ -48,9 +48,10 @@ public:
 		public Component
 	{
 	public:
-		Handle(int index, bool showLabel);
+		Handle(int index, bool showLabel, Colour color);
 		~Handle() {}
 
+		Colour color;
 		Point<float> posAtDown;
 
 		bool showLabel;

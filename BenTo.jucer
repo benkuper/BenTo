@@ -747,7 +747,8 @@
                        libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"/>
         <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" winArchitecture="x64"
                        headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-                       libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"/>
+                       libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"
+                       alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_video" path="JUCE/modules"/>

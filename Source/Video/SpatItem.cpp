@@ -15,7 +15,8 @@ SpatItem::SpatItem() :
 {
 
 	isDefault = addBoolParameter("Default", "If checked and no item with the requested id is found, will fall back to this one", false);
-	
+	uiColor = addColorParameter("UI Color", "Color to differentiate in UI", NORMAL_COLOR);
+
 	filterManager.reset(new PropTargetFilterManager());
 	addChildControllableContainer(filterManager.get());
 

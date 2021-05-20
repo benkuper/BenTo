@@ -19,6 +19,8 @@ public:
 	SpatItem();
 	~SpatItem();
 
+	ColorParameter* uiColor;
+
 	Array<Point<float>> points;
 	Array<Colour> colors;
 

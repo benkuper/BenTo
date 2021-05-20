@@ -32,7 +32,7 @@ void SpatItemUI::paint(Graphics& g)
 {
 	if (Engine::mainEngine->isClearing) return;
 
-	Colour c = item->isSelected ? Colours::yellow : (isMouseOver() ? HIGHLIGHT_COLOR : Colours::white);
+	Colour c = item->isSelected ? Colours::yellow : (isMouseOver() ? HIGHLIGHT_COLOR : item->uiColor->getColor().brighter(.4f));
 	g.setColour(c.withAlpha(.4f));
 
 	path.clear();
@@ -40,13 +40,26 @@ void SpatItemUI::paint(Graphics& g)
 	if (spat->showHandles->boolValue())
 	{
 		Prop::Shape s = item->shape->getValueDataAsEnum<Prop::Shape>();
+
+		if (handles.size() > 1)
+		{
+			Point<float> prevP = handles[0]->getBounds().getCentre().toFloat();
+			path.startNewSubPath(prevP);
+			for (int i = 1; i < handles.size(); i++)
+			{
+				Point<float> p = handles[i]->getBounds().getCentre().toFloat();
+				g.drawLine(Line<float>(prevP, p), item->isSelected ? 2 : 1);
+				path.lineTo(p);
+				prevP = p;
+			}
+		}
+		
+
 		switch (s)
 		{
 		case Prop::Shape::CLUB:
 		{
-			Line<float> line(handles[0]->getBounds().getCentre().toFloat(), handles[1]->getBounds().getCentre().toFloat());
-			g.drawLine(line, item->isSelected ? 2 : 1);
-			path.addLineSegment(line, 1);
+			
 		}
 		break;
 
@@ -240,7 +253,7 @@ bool SpatItemUI::hitTest(int x, int y)
 
 void SpatItemUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (c == item->shape)
+	if (c == item->shape || c == item->uiColor)
 	{
 		updateHandles();
 		setPaintingIsUnclipped(item->shape->getValueDataAsEnum<Prop::Shape>() == Prop::Shape::HOOP);
@@ -253,6 +266,7 @@ void SpatItemUI::controllableFeedbackUpdateInternal(Controllable* c)
 	else if (c->parentContainer == &item->handlesCC)
 	{
 		updateBounds();
+		repaint();
 	}
 	else if (c == spat->showHandles)
 	{
@@ -269,19 +283,22 @@ void SpatItemUI::updateHandles()
 	bool showLabel = item->shape->getValueDataAsEnum<Prop::Shape>() == Prop::CUSTOM;
 	for (int i = 0; i < item->handles.size(); i++)
 	{
-		Handle* h = new Handle(i, showLabel);
+		Handle* h = new Handle(i, showLabel, item->uiColor->getColor());
 		addAndMakeVisible(h);
 		handles.add(h);
 	}
+
+	resized();
 }
 
 
 
 // SPAT
 
-SpatItemUI::Handle::Handle(int index, bool showLabel) :
+SpatItemUI::Handle::Handle(int index, bool showLabel, Colour color) :
 	index(index),
-	showLabel(showLabel)
+	showLabel(showLabel),
+	color(color)
 {
 	setSize(20, 20);
 }
@@ -289,7 +306,7 @@ SpatItemUI::Handle::Handle(int index, bool showLabel) :
 void SpatItemUI::Handle::paint(Graphics& g)
 {
 	int size = showLabel ? 16 : 10;
-	Colour c = isMouseOver() ? HIGHLIGHT_COLOR : (index == 0 ? GREEN_COLOR : BLUE_COLOR);
+	Colour c = isMouseOver() ? HIGHLIGHT_COLOR : (index == 0 ? color.brighter() : color);
 	g.setColour(c);
 	Rectangle<int> r = getLocalBounds().withSizeKeepingCentre(size, size);
 	if (index == 0) g.fillRect(r);
