@@ -8,13 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlock.h"
-
-#include "LightBlock.h"
-#include "Prop/Prop.h"
-#include "model/blocks/filters/LightBlockFilter.h"
-#include "model/blocks/script/ScriptBlock.h"
-
 LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	ControllableContainer(provider->niceName),
 	provider(provider),

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeBlockEditorToolbox.h"
-#include "Node/NodeManager.h"
-
 NodeBlockEditorToolbox::NodeBlockEditorToolbox() :
 	Component("Toolbox")
 {

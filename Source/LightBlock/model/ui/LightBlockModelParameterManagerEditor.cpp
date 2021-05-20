@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelParameterManagerEditor.h"
-
 LightBlockModelParameterManagerEditor::LightBlockModelParameterManagerEditor(LightBlockModelParameterManager * manager, bool isRoot) :
 	GenericManagerEditor(manager, isRoot),
 	pManager(manager)

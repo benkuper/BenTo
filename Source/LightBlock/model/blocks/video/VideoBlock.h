@@ -10,9 +10,7 @@
 
 #pragma once
 
-
-#include "../../LightBlockModel.h"
-#include "Video/Spatializer.h"
+class Spatializer;
 
 class VideoBlock :
 	public LightBlockModel,
@@ -26,7 +24,7 @@ public:
 	StringParameter * textureName;
 	SharedTextureReceiver * receiver;
 
-	Spatializer spat;
+	std::unique_ptr<Spatializer> spat;
 
 	EnumParameter * currentLayout;
 	BoolParameter * inputIsLive;

@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PropClusterGroup.h"
-
 PropClusterGroup::PropClusterGroup() :
 	BaseItem("Cluster Group"),
 	clusterManager("Clusters")

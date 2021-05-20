@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../Prop.h"
-#include "PropViz.h"
-
 class PropUI :
 	public BaseItemUI<Prop>
 {

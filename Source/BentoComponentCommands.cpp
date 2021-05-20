@@ -10,7 +10,7 @@
 
 
 #include "MainComponent.h"
-#include "Prop/PropManager.h"
+#include "Prop/PropIncludes.h"
 
 namespace BentoCommandIDs
 {

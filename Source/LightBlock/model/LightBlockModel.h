@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "LightBlockModelParameterManager.h"
-#include "preset/LightBlockModelPresetManager.h"
-#include "LightBlockColorProvider.h"
-
 class LightBlock;
 class LightBlockModelUI;
 

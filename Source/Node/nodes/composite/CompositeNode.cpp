@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "CompositeNode.h"
-#include "Prop/Prop.h"
-
-
 CompositeNode::CompositeNode(var params) :
 	ColorNode(getTypeString(), params),
 	mix(nullptr)

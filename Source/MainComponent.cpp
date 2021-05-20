@@ -8,14 +8,13 @@
 
 #include "MainComponent.h"
 
-#include "LightBlock/model/ui/LightBlockModelLibraryUI.h"
-#include "Prop/ui/PropManagerUI.h"
+#include "LightBlock/LightBlockIncludes.h"
+#include "Prop/PropIncludes.h"
+#include "Video/VideoIncludes.h"
+#include "Node/NodeIncludes.h"
+#include "Timeline/TimelineIncludes.h"
+
 #include "BlockViz/BlockVizPanel.h"
-#include "Node/ui/NodeBlockEditor.h"
-#include "Timeline/TimelineEditor.h"
-#include "Video/ui/SpatializerPanel.h"
-#include "Prop/Cluster/ui/PropClusterGroupManagerUI.h"
-#include "Prop/Shape/ui/PropShapePanel.h"
 #include "VideoPreview/VideoPreviewPanel.h"
 
 //==============================================================================

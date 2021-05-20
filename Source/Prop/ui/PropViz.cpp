@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "PropViz.h"
-#include "Prop/Prop.h"
-#include "Prop/Component/rgb/RGBComponent.h"
-
 PropViz::PropViz(Prop * prop) :
 	prop(prop),
 	propRef(prop)

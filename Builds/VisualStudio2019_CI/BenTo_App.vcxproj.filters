@@ -1135,6 +1135,9 @@
     <ClCompile Include="..\..\Source\Video\SpatLayout.cpp">
       <Filter>BenTo\Source\Video</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Video\VideoIncludes.cpp">
+      <Filter>BenTo\Source\Video</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.cpp">
       <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
     </ClCompile>
@@ -1176,6 +1179,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Timeline\TimelineEditor.cpp">
       <Filter>BenTo\Source\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\TimelineIncludes.cpp">
+      <Filter>BenTo\Source\Timeline</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\NodeIncludes.cpp">
+      <Filter>BenTo\Source\Node</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.cpp">
       <Filter>BenTo\Source\Node\nodes\colorRemap</Filter>
@@ -1345,6 +1354,9 @@
     <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\LightBlockIncludes.cpp">
+      <Filter>BenTo\Source\LightBlock</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClCompile>
@@ -1434,6 +1446,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\PropManager.cpp">
       <Filter>BenTo\Source\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropIncludes.cpp">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\CommonIncludes.cpp">
+      <Filter>BenTo\Source</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\BentoSettings.cpp">
       <Filter>BenTo\Source</Filter>
@@ -4464,6 +4482,9 @@
     <ClInclude Include="..\..\Source\Video\SpatLayout.h">
       <Filter>BenTo\Source\Video</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Video\VideoIncludes.h">
+      <Filter>BenTo\Source\Video</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.h">
       <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
     </ClInclude>
@@ -4505,6 +4526,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Timeline\TimelineEditor.h">
       <Filter>BenTo\Source\Timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Timeline\TimelineIncludes.h">
+      <Filter>BenTo\Source\Timeline</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Node\NodeIncludes.h">
+      <Filter>BenTo\Source\Node</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.h">
       <Filter>BenTo\Source\Node\nodes\colorRemap</Filter>
@@ -4606,7 +4633,7 @@
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>
+      <Filter>BenTo\Source\LightBlock\model\blocks</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
@@ -4675,6 +4702,9 @@
       <Filter>BenTo\Source\LightBlock\model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h">
+      <Filter>BenTo\Source\LightBlock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\LightBlockIncludes.h">
       <Filter>BenTo\Source\LightBlock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h">
@@ -4766,6 +4796,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\PropManager.h">
       <Filter>BenTo\Source\Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\PropIncludes.h">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\CommonIncludes.h">
+      <Filter>BenTo\Source</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\BentoSettings.h">
       <Filter>BenTo\Source</Filter>

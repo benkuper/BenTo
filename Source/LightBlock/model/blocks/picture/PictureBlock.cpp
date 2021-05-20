@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PictureBlock.h"
-#include "ui/PictureBlockUI.h"
-
 PictureBlock::PictureBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {

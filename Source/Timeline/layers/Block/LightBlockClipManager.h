@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "LightBlockClip.h"
-
 class LightBlockLayer;
 
 class LightBlockClipManager :

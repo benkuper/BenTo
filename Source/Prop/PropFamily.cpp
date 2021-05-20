@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PropFamily.h"
-
 PropFamily::PropFamily(var params) :
 	ControllableContainer(params.getProperty("name", "Mistery Family"))
 {

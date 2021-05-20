@@ -10,9 +10,7 @@
 
 #pragma once
 
-#include "LightBlock/model/blocks/node/NodeBlock.h"
-#include "NodeManagerUI.h"
-#include "NodeBlockEditorToolbox.h"
+class NodeBlock;
 
 class NodeBlockEditor :
 	public ShapeShifterContentComponent,

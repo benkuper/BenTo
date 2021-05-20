@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../Node.h"
-#include "../NodeConnection.h"
-
 class NodeViewUI :
 	public BaseItemUI<Node>,
 	public Node::AsyncListener

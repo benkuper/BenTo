@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 class NodeBlockEditorToolItem :
 	public Component,
 	public DragAndDropContainer

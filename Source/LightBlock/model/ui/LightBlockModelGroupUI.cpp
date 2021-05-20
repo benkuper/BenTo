@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelGroupUI.h"
-
 LightBlockModelGroupUI::LightBlockModelGroupUI(ControllableContainer * group) :
 	group(group)
 {

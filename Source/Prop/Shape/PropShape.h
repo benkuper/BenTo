@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "PropShapeCurve.h"
-
+class PropShapeCurve;
 
 class PropShape :
     public BaseItem
@@ -20,7 +19,7 @@ public:
     PropShape();
     ~PropShape();
 
-    PropShapeCurve curve;
+    std::unique_ptr<PropShapeCurve> curve;
 };
 
 

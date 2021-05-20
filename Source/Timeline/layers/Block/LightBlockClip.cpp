@@ -8,14 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockClip.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-#include "LightBlock/model/blocks/timeline/TimelineBlock.h"
-#include "Prop/Prop.h"
-#include "Timeline/layers/Block/LightBlockLayer.h"
-#include "Prop/TargetFilter/PropTargetFilterManager.h"
-
-
 LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
 	LayerBlock(getTypeString()),
 	effects("Block Effects"),

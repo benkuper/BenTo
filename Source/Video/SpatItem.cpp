@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "SpatItem.h"
-#include "Prop/Prop.h"
-
 SpatItem::SpatItem() :
 	BaseItem("Spat Item"),
 	handlesCC("Handles"),
@@ -19,7 +16,8 @@ SpatItem::SpatItem() :
 
 	isDefault = addBoolParameter("Default", "If checked and no item with the requested id is found, will fall back to this one", false);
 	
-	addChildControllableContainer(&filterManager);
+	filterManager.reset(new PropTargetFilterManager());
+	addChildControllableContainer(filterManager.get());
 
 	shape = addEnumParameter("Shape", "The shape of the prop");
 	shape->addOption("Club", Prop::Shape::CLUB)->addOption("Ball", Prop::Shape::BALL)->addOption("Poi", Prop::Shape::POI)->addOption("Hoop", Prop::Shape::HOOP)->addOption("Custom", Prop::Shape::CUSTOM);
@@ -207,7 +205,7 @@ void SpatItem::onControllableFeedbackUpdateInternal(ControllableContainer* cc, C
 var SpatItem::getJSONData()
 {
 	var data = BaseItem::getJSONData();
-	data.getDynamicObject()->setProperty("filters", filterManager.getJSONData());
+	data.getDynamicObject()->setProperty("filters", filterManager->getJSONData());
 	data.getDynamicObject()->setProperty("handles", handlesCC.getJSONData());
 	return data;
 }
@@ -215,6 +213,6 @@ var SpatItem::getJSONData()
 void SpatItem::loadJSONDataInternal(var data)
 {
 	BaseItem::loadJSONDataInternal(data);
-	filterManager.loadJSONData(data.getProperty("filters", var()));
+	filterManager->loadJSONData(data.getProperty("filters", var()));
 	handlesCC.loadJSONData(data.getProperty("handles", var()));
 }

@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "VideoLayerTimeline.h"
-#include "VideoClipUI.h"
-
 VideoLayerTimeline::VideoLayerTimeline(VideoLayer* layer) :
 	SequenceLayerTimeline(layer),
 	videoLayer(layer)

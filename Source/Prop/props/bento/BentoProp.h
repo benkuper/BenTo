@@ -10,9 +10,7 @@
 
 #pragma once
 
-#include "../../Prop.h"
 #include "Common/Serial/SerialDeviceParameter.h"
-
 
 class BentoProp :
 	public Prop,

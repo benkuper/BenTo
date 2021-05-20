@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeBlockEditor.h" 
-#include "LightBlock/model/LightBlockModelLibrary.h"
-
 NodeBlockEditor::NodeBlockEditor(const String & contentName) :
 	ShapeShifterContentComponent(contentName),
 	nodeBlock(nullptr),

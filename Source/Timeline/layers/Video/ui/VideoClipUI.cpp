@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "VideoClipUI.h"
-
 VideoClipUI::VideoClipUI(VideoClip* clip) :
     AudioLayerClipUI(clip),
     videoClip(clip)

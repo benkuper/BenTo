@@ -8,13 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModel.h"
-#include "../LightBlock.h"
-#include "Prop/Prop.h"
-#include "ui/LightBlockModelUI.h"
-#include "Prop/Prop.h"
-
-
 LightBlockModel::LightBlockModel(const String &name, var params, ProviderType providerType) :
 	LightBlockColorProvider(name, false, false, providerType),
 	isBeingEdited(false),

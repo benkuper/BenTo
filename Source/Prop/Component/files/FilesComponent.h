@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../PropComponent.h"
-
 class FilesPropComponent :
     public PropComponent
 {

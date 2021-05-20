@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "SpatLayout.h"
-
 SpatLayout::SpatLayout() :
 	BaseItem(getTypeString(), false),
 	spatItemManager("Items")

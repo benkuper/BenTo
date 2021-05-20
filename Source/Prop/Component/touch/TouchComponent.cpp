@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "TouchComponent.h"
-
 TouchPropComponent::TouchPropComponent(Prop* prop, var params) :
     PropComponent(prop, "Touch")
 {

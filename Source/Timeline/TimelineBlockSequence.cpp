@@ -8,12 +8,7 @@
   ==============================================================================
 */
 
-#include "TimelineBlockSequence.h"
-#include "layers/Block/LightBlockLayer.h"
 #include "Audio/AudioManager.h"
-#include "Prop/Prop.h"
-#include "layers/Video/VideoLayer.h"
-
 
 TimelineBlockSequence::TimelineBlockSequence() :
 	Sequence(),

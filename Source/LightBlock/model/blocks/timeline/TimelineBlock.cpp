@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "TimelineBlock.h"
-#include "Timeline/layers/Block/LightBlockLayer.h"
-#include "ui/TimelineBlockUI.h"
-#include "Prop/PropManager.h"
 #include "BentoEngine.h"
 
 TimelineBlock::TimelineBlock(var params) :
@@ -21,8 +17,9 @@ TimelineBlock::TimelineBlock(var params) :
 
 	bakeToProps = addTrigger("Bake to props", "");
 
-	sequence.addSequenceListener(this);
-	addChildControllableContainer(&sequence);
+	sequence.reset(new TimelineBlockSequence());
+	sequence->addSequenceListener(this);
+	addChildControllableContainer(sequence.get());
 }
 
 TimelineBlock::~TimelineBlock()
@@ -32,14 +29,14 @@ TimelineBlock::~TimelineBlock()
 var TimelineBlock::getJSONData()
 {
 	var data = LightBlockModel::getJSONData();
-	data.getDynamicObject()->setProperty("sequence", sequence.getJSONData());
+	data.getDynamicObject()->setProperty("sequence", sequence->getJSONData());
 	return data;
 }
 
 void TimelineBlock::loadJSONDataInternal(var data)
 {
 	LightBlockModel::loadJSONDataInternal(data);
-	sequence.loadJSONData(data.getProperty("sequence", var()));
+	sequence->loadJSONData(data.getProperty("sequence", var()));
 }
 
 LightBlockModelUI * TimelineBlock::createUI()
@@ -50,7 +47,7 @@ LightBlockModelUI * TimelineBlock::createUI()
 
 Array<Colour> TimelineBlock::getColors(Prop * p, double time, var params)
 {
-	return sequence.getColors(p, time, params);
+	return sequence->getColors(p, time, params);
 
 }
 
@@ -61,10 +58,10 @@ BakeData TimelineBlock::getBakeDataForProp(Prop* p)
 	int groupID = -1;
 	int localID = -1;
 	
-	if (sequence.currentIdentityGroup != nullptr)
+	if (sequence->currentIdentityGroup != nullptr)
 	{
-		groupID = sequence.currentIdentityGroup->getClusterIDForProp(p);
-		PropCluster* c = sequence.currentIdentityGroup->getClusterForProp(p, localID);
+		groupID = sequence->currentIdentityGroup->getClusterIDForProp(p);
+		PropCluster* c = sequence->currentIdentityGroup->getClusterForProp(p, localID);
 		if (c != nullptr)
 		{
 			metaData.getDynamicObject()->setProperty("groupColor", c->color->value);
@@ -74,18 +71,18 @@ BakeData TimelineBlock::getBakeDataForProp(Prop* p)
 	metaData.getDynamicObject()->setProperty("id", localID);
 	metaData.getDynamicObject()->setProperty("group", groupID);
 
-	return BakeData(shortName, 0, sequence.totalTime->floatValue(), sequence.fps->intValue(), metaData);
+	return BakeData(shortName, 0, sequence->totalTime->floatValue(), sequence->fps->intValue(), metaData);
 }
 
 void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 {
-	if (sequence.isSeeking)
+	if (sequence->isSeeking)
 	{
-		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SEEK, sequence.currentTime->floatValue());
+		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SEEK, sequence->currentTime->floatValue());
 	}
 
 	OSCMessage msg("/" + shortName + "/currentTime");
-	msg.addFloat32(sequence.currentTime->floatValue());
+	msg.addFloat32(sequence->currentTime->floatValue());
 	BentoEngine* be = (BentoEngine*)Engine::mainEngine;
 	be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
 	//updateColorsForBlock(block);
@@ -93,12 +90,12 @@ void TimelineBlock::sequenceCurrentTimeChanged(Sequence *, float prevTime, bool)
 
 void TimelineBlock::sequencePlayStateChanged(Sequence * s)
 {
-	providerListeners.call(&ProviderListener::providerBakeControlUpdate, sequence.isPlaying->boolValue() ? PLAY : PAUSE, sequence.currentTime->floatValue());
+	providerListeners.call(&ProviderListener::providerBakeControlUpdate, sequence->isPlaying->boolValue() ? PLAY : PAUSE, sequence->currentTime->floatValue());
 }
 
 void TimelineBlock::sequenceEditingStateChanged(Sequence * s)
 {
-	setBeingEdited(sequence.isBeingEdited);
+	setBeingEdited(sequence->isBeingEdited);
 }
 
 void TimelineBlock::sequenceLooped(Sequence * s)
@@ -119,9 +116,9 @@ void TimelineBlock::onContainerTriggerTriggered(Trigger* t)
 void TimelineBlock::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	LightBlockModel::onControllableFeedbackUpdateInternal(cc, c);
-	if (c == sequence.identityMode)
+	if (c == sequence->identityMode)
 	{
-		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SHOW_ID, sequence.identityMode->boolValue());
+		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
 	} 
 }
 

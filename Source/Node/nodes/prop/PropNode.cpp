@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "PropNode.h"
 
 PropNode::PropNode(var params) :
 	ColorNode(getTypeString(), params)

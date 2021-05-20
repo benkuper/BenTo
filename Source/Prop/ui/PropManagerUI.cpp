@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PropManagerUI.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-
 PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 	BaseManagerShapeShifterUI(name, m)
 {

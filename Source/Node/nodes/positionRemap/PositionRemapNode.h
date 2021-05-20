@@ -10,7 +10,6 @@
 
 
 #pragma once
-#include "../../ColorNode.h"
 
 class PositionRemapNode :
 	public ColorNode

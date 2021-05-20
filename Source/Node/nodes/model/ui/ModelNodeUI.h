@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../../ui/ColorNodeViewUI.h"
-#include "../ModelNode.h"
-
 class ModelNodeUI :
 	public ColorNodeViewUI
 {

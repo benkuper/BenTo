@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "Node.h"
-#include "ui/NodeViewUI.h"
-#include "nodes/parameter/ParameterNode.h"
-#include "ColorNode.h"
-
 Node::Node(const String & name, var) :
 	BaseItem(name),
 	nodeNotifier(10)

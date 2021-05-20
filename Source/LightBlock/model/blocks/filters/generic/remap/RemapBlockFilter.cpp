@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "RemapBlockFilter.h"
-
 RemapBlockFilter::RemapBlockFilter(var params) :
     LightBlockFilter(getTypeString(), params)
 {

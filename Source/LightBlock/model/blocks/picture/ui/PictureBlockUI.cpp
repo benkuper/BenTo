@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PictureBlockUI.h"
-
 PictureBlockUI::PictureBlockUI(PictureBlock * block) :
 	LightBlockModelUI(block),
 	pb(block)

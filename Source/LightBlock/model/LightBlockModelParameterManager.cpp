@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelParameterManager.h"
-#include "ui/LightBlockModelParameterManagerEditor.h"
-
 LightBlockModelParameterManager::LightBlockModelParameterManager() :
 	BaseManager("arguments")
 {

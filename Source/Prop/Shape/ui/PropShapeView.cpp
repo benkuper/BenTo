@@ -8,10 +8,8 @@
   ==============================================================================
 */
 
-#include "PropShapeView.h"
-
 PropShapeView::PropShapeView(PropShape * shape) :
-    Curve2DUI(&shape->curve),
+    Curve2DUI(shape->curve.get()),
     shape(shape)
 {
     addExistingItems();

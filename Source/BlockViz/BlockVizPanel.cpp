@@ -9,17 +9,18 @@
 */
 
 #include "BlockVizPanel.h"
-
+#include "Prop/PropIncludes.h"
 
 BlockViz::BlockViz(const String & contentName) :
 	ShapeShifterContentComponent(contentName)
 {
-	vizProp.resolution->setValue(32);
-	vizProp.type->setValueWithData(Prop::CLUB);
+	vizProp.reset(new Prop());
+	vizProp->resolution->setValue(32);
+	vizProp->type->setValueWithData(Prop::CLUB);
 
-	idUI.reset(vizProp.globalID->createStepper());
-	resolutionUI.reset(vizProp.resolution->createStepper());
-	shapeUI.reset(vizProp.type->createUI());
+	idUI.reset(vizProp->globalID->createStepper());
+	resolutionUI.reset(vizProp->resolution->createStepper());
+	shapeUI.reset(vizProp->type->createUI());
 
 	addAndMakeVisible(idUI.get());
 	addAndMakeVisible(resolutionUI.get());
@@ -60,9 +61,9 @@ void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 			idUI->setVisible(true);
 			resolutionUI->setVisible(true);
 			shapeUI->setVisible(true);
-			vizProp.setBlockFromProvider(m);
+			vizProp->setBlockFromProvider(m);
 			if (propViz != nullptr) removeChildComponent(propViz.get());
-			propViz.reset(new PropViz(&vizProp));
+			propViz.reset(new PropViz(vizProp.get()));
 			addAndMakeVisible(propViz.get());
 			resized();
 			return;
@@ -74,7 +75,7 @@ void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 			idUI->setVisible(false);
 			resolutionUI->setVisible(false);
 			shapeUI->setVisible(false);
-			vizProp.setBlockFromProvider(m);
+			vizProp->setBlockFromProvider(m);
 			if (propViz != nullptr) removeChildComponent(propViz.get());
 			propViz.reset(new PropViz(p));
 			addAndMakeVisible(propViz.get());

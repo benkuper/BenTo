@@ -8,15 +8,12 @@
   ==============================================================================
 */
 
-#include "TimelineEditor.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-
 TimelineEditor::TimelineEditor(const String &contentName) :
 	TimeMachineView(contentName)
 {
 	Engine::mainEngine->addEngineListener(this);
 	TimelineBlock * b = InspectableSelectionManager::mainSelectionManager->getInspectableAs<TimelineBlock>();
-	if (b != nullptr) setSequence(&b->sequence);
+	if (b != nullptr) setSequence(b->sequence.get());
 }
 
 TimelineEditor::~TimelineEditor()
@@ -30,7 +27,7 @@ void TimelineEditor::endLoadFile()
 	{
 		if (i->isBeingEdited)
 		{
-			setSequence(&((TimelineBlock *)i)->sequence);
+			setSequence(((TimelineBlock *)i)->sequence.get());
 			break;
 		}
 	}

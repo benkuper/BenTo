@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ParameterNodeViewUI.h"
-
 ParameterNodeViewUI::ParameterNodeViewUI(ParameterNode * pn) :
 	NodeViewUI(pn, Direction::NONE),
 	pn(pn)

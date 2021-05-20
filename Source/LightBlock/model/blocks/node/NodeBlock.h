@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../../LightBlockModel.h"
-#include "Node/NodeManager.h"
 class ParameterNode;
 
 class NodeBlock :

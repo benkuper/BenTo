@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "NodeBlockEditorToolItem.h"
 
 class NodeBlockEditorToolbox :
 	public Component

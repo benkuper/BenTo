@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../LightBlockModel.h"
-#include "LightBlockModelUI.h"
-
 class LightBlockModelGroupUI :
 	public Component
 {

@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../LightBlockClipManager.h"
-#include "LightBlockClipUI.h"
-
 class LightBlockLayerTimeline;
 
 class LightBlockClipManagerUI :

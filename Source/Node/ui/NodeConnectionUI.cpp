@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeConnectionUI.h"
-#include "LightBlock/model/ui/LightBlockModelUI.h"
-#include "Node/nodes/model/ModelNode.h"
-
 NodeConnectionUI::NodeConnectionUI(NodeConnection * nc) :
 	BaseItemMinimalUI(nc),
 	sourceConnector(nullptr),

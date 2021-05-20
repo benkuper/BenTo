@@ -9,9 +9,11 @@
 */
 
 #include "VideoPreviewPanel.h"
-#include "LightBlock/model/blocks/timeline/TimelineBlock.h"
+
+#include "LightBlock/LightBlockIncludes.h"
+#include "Timeline/TimelineIncludes.h"
+
 #include "Audio/AudioManager.h"
-#include "Timeline/layers/Video/VideoClip.h"
 
 VideoPreviewPanel::VideoPreviewPanel(const String& name) :
     ShapeShifterContentComponent(name)

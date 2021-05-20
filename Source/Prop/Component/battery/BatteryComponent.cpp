@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "BatteryComponent.h"
-
 BatteryPropComponent::BatteryPropComponent(Prop* prop, var params) :
     PropComponent(prop, "Battery")
 {

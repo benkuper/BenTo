@@ -8,13 +8,6 @@
   ==============================================================================
 */
 
-#include "ModelNode.h"
-#include "ui/ModelNodeUI.h"
-#include "LightBlock/LightBlock.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-#include "Prop/Prop.h"
-#include "Node/nodes/parameter/ParameterNode.h"
-
 ModelNode::ModelNode(var params) :
 	ColorNode(getTypeString(), params),
 	currentBlock(nullptr)

@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelParameter.h"
-#include "ui/LightBlockModelParameterEditor.h"
-
-
 LightBlockModelParameter::LightBlockModelParameter(const String &name, Parameter * _p) :
 	BaseItem(name, false),
 	param(_p)

@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../NodeManager.h"
-#include "NodeViewUI.h"
-#include "NodeConnectionManagerUI.h"
-
 class NodeManagerUI :
 	public BaseManagerViewUI<NodeManager, Node, NodeViewUI>,
 	public Timer

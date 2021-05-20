@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "LightBlockModel.h"
-
 class UserLightBlockModelManager :
 	public BaseManager<LightBlockModel>
 {

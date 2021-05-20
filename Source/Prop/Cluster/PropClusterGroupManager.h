@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "PropClusterGroup.h"
-
 class PropClusterGroupManager :
 	public BaseManager<PropClusterGroup>
 {

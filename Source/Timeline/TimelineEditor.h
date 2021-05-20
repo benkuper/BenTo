@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "LightBlock/model/blocks/timeline/TimelineBlock.h"
-
 class TimelineEditor :
 	public TimeMachineView,
 	public EngineListener

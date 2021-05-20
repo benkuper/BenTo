@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockLayerTimeline.h"
-
 LightBlockLayerTimeline::LightBlockLayerTimeline(LightBlockLayer * layer) :
 	SequenceLayerTimeline(layer),
 	managerUI(this, &layer->blockClipManager)

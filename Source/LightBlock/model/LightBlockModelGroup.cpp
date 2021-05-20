@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelGroup.h"
-
 var LightBlockModelGroup::getJSONData()
 {
 	var data = ControllableContainer::getJSONData();

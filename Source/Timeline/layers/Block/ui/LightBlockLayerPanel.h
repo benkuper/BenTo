@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../LightBlockLayer.h"
-
 class LightBlockLayerPanel :
 	public SequenceLayerPanel
 {

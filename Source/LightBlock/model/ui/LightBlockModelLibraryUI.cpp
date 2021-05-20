@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelLibraryUI.h"
-
-
 LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, LightBlockModelLibrary * library) :
 	ShapeShifterContentComponent(contentName),
 	library(library),

@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "../SpatItem.h"
 class Spatializer;
 class SpatLayoutView;
 

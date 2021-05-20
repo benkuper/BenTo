@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "Node/ui/NodeViewUI.h"
-#include "ParameterNode.h"
-
 class ParameterNodeViewUI :
 	public NodeViewUI
 {

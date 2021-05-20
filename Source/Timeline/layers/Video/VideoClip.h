@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 class VideoClip :
     public AudioLayerClip
 #if FILMSTRO_USE_FFMPEG

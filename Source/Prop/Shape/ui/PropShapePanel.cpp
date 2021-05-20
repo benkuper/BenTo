@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PropShapePanel.h"
-
 PropShapePanel::PropShapePanel(const String &name) :
     ShapeShifterContentComponent(name)
 {

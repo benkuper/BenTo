@@ -8,17 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelLibrary.h"
-#include "blocks/timeline/TimelineBlock.h"
-#include "blocks/pattern/PatternBlock.h"
-#include "blocks/video/VideoBlock.h"
-#include "blocks/shape/PropShapeBlock.h"
-#include "blocks/dmx/DMXBlock.h"
-#include "blocks/picture/PictureBlock.h"
-#include "blocks/filters/generic/remap/RemapBlockFilter.h"
-#include "blocks/filters/generic/hsv/HSVBlockFilter.h"
-#include "blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.h"
-
 juce_ImplementSingleton(LightBlockModelLibrary)
 
 

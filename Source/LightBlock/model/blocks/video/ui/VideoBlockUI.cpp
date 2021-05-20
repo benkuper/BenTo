@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "VideoBlockUI.h"
-#include "Video/ui/SpatializerPanel.h"
 
 VideoBlockUI::VideoBlockUI(VideoBlock * block) :
 	LightBlockModelUI(block),

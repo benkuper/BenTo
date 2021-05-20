@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockEffect.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-#include "LightBlock/LightBlock.h"
-
 LightBlockEffect::LightBlockEffect() :
     BaseItem("Effect"),
     lightBlock(nullptr)

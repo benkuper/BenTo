@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "LightBlockClipManager.h"
-#include "Prop/TargetFilter/PropTargetFilterManager.h"
-
 class LightBlockLayer :
 	public SequenceLayer,
 	public PropTargetFilterManager::FilterManagerListener,

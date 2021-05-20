@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockClipManager.h"
-#include "LightBlockLayer.h"
-
 LightBlockClipManager::LightBlockClipManager(LightBlockLayer * layer) :
 	LayerBlockManager(layer),
 	lightBlockLayer(layer)

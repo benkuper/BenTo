@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelManagerUI.h"
-
 LightBlockModelManagerUI::LightBlockModelManagerUI(const String &name, UserLightBlockModelManager * m) :
 	BaseManagerUI(name, m,false)
 {

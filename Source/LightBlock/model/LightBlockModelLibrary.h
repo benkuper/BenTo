@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "UserLightBlockModelManager.h"
-#include "LightBlockModelGroup.h"
-
 class LightBlockModelLibrary :
 	public ControllableContainer
 {

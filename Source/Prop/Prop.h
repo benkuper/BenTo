@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "LightBlock/LightBlock.h"
-#include "Component/PropComponent.h"
-
 class PropFamily;
 class RGBPropComponent;
 

@@ -8,14 +8,7 @@
   ==============================================================================
 */
 
-#include "UserLightBlockModelManager.h"
-#include "blocks/node/NodeBlock.h"
-#include "blocks/script/ScriptBlock.h"
-#include "blocks/timeline/TimelineBlock.h"
-#include "blocks/picture/PictureBlock.h"
-
-#include "Timeline/TimelineEditor.h"
-#include "Node/ui/NodeBlockEditor.h"
+#include "JuceHeader.h"
 
 UserLightBlockModelManager::UserLightBlockModelManager(const String &name, BlockType type) :
 	BaseManager(name),
@@ -62,7 +55,7 @@ LightBlockModel * UserLightBlockModelManager::createItem()
 		{
 			ShapeShifterManager::getInstance()->showContent(TimelineEditor::getTypeStringStatic());
 			TimelineEditor * te = (TimelineEditor *)ShapeShifterManager::getInstance()->getContentForName(TimelineEditor::getTypeStringStatic());
-			if (te != nullptr) te->setSequence(&t->sequence);
+			if (te != nullptr) te->setSequence(t->sequence.get());
 		}
 		
 		return t;

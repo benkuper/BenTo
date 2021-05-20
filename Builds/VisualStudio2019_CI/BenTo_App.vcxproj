@@ -173,111 +173,323 @@
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp"/>
     <ClCompile Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.cpp"/>
     <ClCompile Include="..\..\Source\Audio\AudioManager.cpp"/>
-    <ClCompile Include="..\..\Source\Video\ui\SpatializerPanel.cpp"/>
-    <ClCompile Include="..\..\Source\Video\ui\SpatItemUI.cpp"/>
-    <ClCompile Include="..\..\Source\Video\Spatializer.cpp"/>
-    <ClCompile Include="..\..\Source\Video\SpatItem.cpp"/>
-    <ClCompile Include="..\..\Source\Video\SpatLayout.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoClip.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoLayer.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerTimeline.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClip.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockEffect.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\TimelineBlockSequence.cpp"/>
-    <ClCompile Include="..\..\Source\Timeline\TimelineEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\composite\CompositeNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\model\ModelNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\parameter\ParameterNodeViewUI.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\parameter\ParameterNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\positionRemap\PositionRemapNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\nodes\prop\PropNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\ColorNodeViewUI.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\NodeConnectionManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\NodeConnectionUI.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolItem.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\NodeManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ui\NodeViewUI.cpp"/>
-    <ClCompile Include="..\..\Source\Node\Node.cpp"/>
-    <ClCompile Include="..\..\Source\Node\ColorNode.cpp"/>
-    <ClCompile Include="..\..\Source\Node\NodeConnection.cpp"/>
-    <ClCompile Include="..\..\Source\Node\NodeConnectionSlot.cpp"/>
-    <ClCompile Include="..\..\Source\Node\NodeConnectionManager.cpp"/>
-    <ClCompile Include="..\..\Source\Node\NodeManager.cpp"/>
+    <ClCompile Include="..\..\Source\Video\ui\SpatializerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\ui\SpatItemUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\Spatializer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\SpatItem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\SpatLayout.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Video\VideoIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoClip.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerTimeline.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClip.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockEffect.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\TimelineBlockSequence.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\TimelineEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Timeline\TimelineIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Node\NodeIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\composite\CompositeNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\model\ModelNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\parameter\ParameterNodeViewUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\parameter\ParameterNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\positionRemap\PositionRemapNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\prop\PropNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\ColorNodeViewUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolbox.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeConnectionManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeConnectionUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeBlockEditorToolItem.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ui\NodeViewUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\Node.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\ColorNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\NodeConnection.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\NodeConnectionSlot.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\NodeConnectionManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\NodeManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\BlockViz\BlockVizPanel.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelGroup.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockColorProvider.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\preset\LightBlockModelPreset.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\preset\LightBlockModelPresetManager.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelGroupUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelLibraryUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\hsv\HSVBlockFilter.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\remap\RemapBlockFilter.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\PictureBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\timeline\ui\TimelineBlockUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\timeline\TimelineBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\node\ui\NodeBlockUI.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\node\NodeBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\script\ScriptBlock.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModel.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelLibrary.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\UserLightBlockModelManager.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameter.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.cpp"/>
-    <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockColorProvider.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\preset\LightBlockModelPreset.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\preset\LightBlockModelPresetManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelGroupUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelLibraryUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\hsv\HSVBlockFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\remap\RemapBlockFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\picture\PictureBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\timeline\ui\TimelineBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\timeline\TimelineBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\node\ui\NodeBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\node\NodeBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\script\ScriptBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelLibrary.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\UserLightBlockModelManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\LightBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\LightBlockIncludes.cpp"/>
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\touch\TouchComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\battery\BatteryComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\files\FilesComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\imu\IMUComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\rgb\RGBComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\ui\PropEditor.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\ui\PropUI.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\ui\PropViz.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\Prop.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\PropManager.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\touch\TouchComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\battery\BatteryComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\files\FilesComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\imu\IMUComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\rgb\RGBComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\ui\PropEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\ui\PropUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\ui\PropViz.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Prop.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\CommonIncludes.cpp"/>
     <ClCompile Include="..\..\Source\BentoSettings.cpp"/>
     <ClCompile Include="..\..\Source\BentoEngine.cpp"/>
     <ClCompile Include="..\..\Source\MainComponent.cpp"/>
@@ -3054,6 +3266,7 @@
     <ClInclude Include="..\..\Source\Video\SpatializerEvent.h"/>
     <ClInclude Include="..\..\Source\Video\SpatItem.h"/>
     <ClInclude Include="..\..\Source\Video\SpatLayout.h"/>
+    <ClInclude Include="..\..\Source\Video\VideoIncludes.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.h"/>
     <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoClip.h"/>
@@ -3068,6 +3281,8 @@
     <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.h"/>
     <ClInclude Include="..\..\Source\Timeline\TimelineBlockSequence.h"/>
     <ClInclude Include="..\..\Source\Timeline\TimelineEditor.h"/>
+    <ClInclude Include="..\..\Source\Timeline\TimelineIncludes.h"/>
+    <ClInclude Include="..\..\Source\Node\NodeIncludes.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\composite\CompositeNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.h"/>
@@ -3125,6 +3340,7 @@
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelParameterManager.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\LightBlockIncludes.h"/>
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h"/>
@@ -3155,6 +3371,8 @@
     <ClInclude Include="..\..\Source\Prop\ui\PropViz.h"/>
     <ClInclude Include="..\..\Source\Prop\Prop.h"/>
     <ClInclude Include="..\..\Source\Prop\PropManager.h"/>
+    <ClInclude Include="..\..\Source\Prop\PropIncludes.h"/>
+    <ClInclude Include="..\..\Source\CommonIncludes.h"/>
     <ClInclude Include="..\..\Source\BentoSettings.h"/>
     <ClInclude Include="..\..\Source\BentoEngine.h"/>
     <ClInclude Include="..\..\Source\MainComponent.h"/>

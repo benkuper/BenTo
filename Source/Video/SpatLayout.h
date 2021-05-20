@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "SpatItem.h"
-
 class SpatLayout :
 	public BaseItem
 {

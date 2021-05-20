@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Prop/TargetFilter/PropTargetFilterManager.h"
+class PropTargetFilterManager;
 
 class SpatItem :
 	public BaseItem
@@ -24,7 +23,7 @@ public:
 	Array<Colour> colors;
 
 	BoolParameter * isDefault;
-	PropTargetFilterManager filterManager;
+	std::unique_ptr<PropTargetFilterManager> filterManager;
 
 
 	EnumParameter * shape;

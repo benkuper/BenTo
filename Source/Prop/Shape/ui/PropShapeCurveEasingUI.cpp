@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PropShapeCurveEasingUI.h"
-
-
 PropShapeEasingUIDrawer::PropShapeEasingUIDrawer(Easing2DUI* eui, PropShapeCurveEasing* ce) :
     eui(eui),
     ce(ce)

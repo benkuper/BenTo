@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeConnectionManagerUI.h"
-#include "NodeManagerUI.h"
-
 NodeConnectionManagerUI::NodeConnectionManagerUI(NodeConnectionManager * manager, NodeManagerUI * nmui) :
 	BaseManagerUI("Connections",manager,false),
 	nmui(nmui)

@@ -10,8 +10,7 @@
 
 #pragma once
 
-#include "SpatLayout.h"
-#include "SpatializerEvent.h"
+class Prop;
 
 class Spatializer :
 	public BaseManager<SpatLayout>

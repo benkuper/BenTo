@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ModelNodeUI.h"
-#include "LightBlock/model/ui/LightBlockModelUI.h"
-
 ModelNodeUI::ModelNodeUI(ModelNode * mn) :
 	ColorNodeViewUI(mn),
 	modelNode(mn),

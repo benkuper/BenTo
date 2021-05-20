@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Prop.h"
-
 class PropFamily :
 	public ControllableContainer
 {

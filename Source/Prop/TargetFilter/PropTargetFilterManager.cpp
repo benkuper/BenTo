@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "PropTargetFilterManager.h"
-#include "PropTargetFilter.h"
-#include "Prop/Cluster/PropClusterGroupManager.h"
-
 PropTargetFilterManager::PropTargetFilterManager(PropClusterGroupManager* clusterGroupManager) :
 	BaseManager<PropTargetFilter>("Prop Filters"),
 	clusterGroupManager(clusterGroupManager)

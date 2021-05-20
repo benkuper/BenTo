@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PropShape.h"
-
 juce_ImplementSingleton(PropShapeLibrary)
 
 PropShapeLibrary::PropShapeLibrary() :
@@ -29,7 +27,8 @@ void PropShapeLibrary::loadShapes()
 PropShape::PropShape() :
     BaseItem("New shape")
 {
-    addChildControllableContainer(&curve);
+    curve.reset(new PropShapeCurve());
+    addChildControllableContainer(curve.get());
 
 }
 

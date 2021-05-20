@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "VideoClip.h"
 #include "VideoPreview/VideoPreviewPanel.h"
 
 VideoClip::VideoClip() 

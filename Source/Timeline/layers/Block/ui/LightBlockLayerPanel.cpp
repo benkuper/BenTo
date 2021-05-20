@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockLayerPanel.h"
-
 LightBlockLayerPanel::LightBlockLayerPanel(LightBlockLayer * layer) :
 	SequenceLayerPanel(layer),
 	blockLayer(layer)

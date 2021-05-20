@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "PropUI.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-#include "LightBlock/model/ui/LightBlockModelUI.h"
-#include "../Component/imu/IMUComponent.h"
-#include "../Component/battery/BatteryComponent.h"
-
 PropUI::PropUI(Prop * p) :
 	BaseItemUI(p),
 	viz(p),

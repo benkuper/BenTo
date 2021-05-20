@@ -10,7 +10,6 @@ Author:  Ben
 
 #pragma once
 
-#include "JuceHeader.h"
 class Prop;
 class Node;
 class NodeConnection;

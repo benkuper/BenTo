@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PropShapeBlock.h"
-
 ShapeEditorBlock::ShapeEditorBlock(var params) :
     LightBlockModel(getTypeString(), params)
 {
@@ -28,7 +26,7 @@ void ShapeEditorBlock::getColorsInternal(Array<Colour>* result, Prop* p, double 
 
     if (PropShape* s = dynamic_cast<PropShape*>(targetShape->targetContainer.get()))
     {
-       Array<Colour> colors = s->curve.getTestColors(resolution);
+       Array<Colour> colors = s->curve->getTestColors(resolution);
        result->swapWith(colors);
        result->resize(resolution);
     }

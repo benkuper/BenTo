@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "../PropComponent.h"
 
 class ButtonsPropComponent :
     public PropComponent

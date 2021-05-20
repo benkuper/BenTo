@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "IRPropComponent.h"
-
 IRPropComponent::IRPropComponent(Prop* prop, var params) :
     PropComponent(prop, "IR")
 {

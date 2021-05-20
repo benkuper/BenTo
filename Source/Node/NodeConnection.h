@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "NodeConnectionSlot.h"
 class NodeManager;
 
 class NodeConnection :

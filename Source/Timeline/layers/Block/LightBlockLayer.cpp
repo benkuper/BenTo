@@ -8,13 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockLayer.h"
-#include "ui/LightBlockLayerPanel.h"
-#include "ui/LightBlockLayerTimeline.h"
-#include "Prop/PropManager.h"
-#include "Prop/Cluster/PropClusterGroupManager.h"
-#include "Timeline/TimelineBlockSequence.h"
-
 LightBlockLayer::LightBlockLayer(Sequence * s, var params) :
 	SequenceLayer(s, "Block Layer"),
 	blockClipManager(this)

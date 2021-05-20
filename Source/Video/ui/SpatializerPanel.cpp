@@ -8,26 +8,22 @@
   ==============================================================================
 */
 
-#include "SpatializerPanel.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-#include "LightBlock/model/blocks/video/VideoBlock.h"
-
 SpatializerPanel::SpatializerPanel(const String & name) :
 	ShapeShifterContentComponent(name),
 	needsRepaint(true)
 {
 	videoBlock = dynamic_cast<VideoBlock *>(LightBlockModelLibrary::getInstance()->videoBlock.get());
 
-	setCurrentLayoutView(videoBlock->spat.currentLayout);
+	setCurrentLayoutView(videoBlock->spat->currentLayout);
 	startTimerHz(30); //repaint at 30hz
 
-	videoBlock->spat.addAsyncSpatListener(this);
+	videoBlock->spat->addAsyncSpatListener(this);
 }
 
 
 SpatializerPanel::~SpatializerPanel()
 {
-	if (videoBlock != nullptr) videoBlock->spat.removeAsyncSpatListener(this);
+	if (videoBlock != nullptr) videoBlock->spat->removeAsyncSpatListener(this);
 }
 
 
@@ -42,7 +38,7 @@ void SpatializerPanel::setCurrentLayoutView(SpatLayout * layout)
 	
 	if(layout != nullptr)
 	{
-		currentLayoutView.reset(new SpatLayoutView(&videoBlock->spat, layout));
+		currentLayoutView.reset(new SpatLayoutView(videoBlock->spat.get(), layout));
 		addAndMakeVisible(currentLayoutView.get());
 		resized();
 	}
@@ -62,7 +58,7 @@ void SpatializerPanel::paint(Graphics & g)
 
 	if (videoBlock != nullptr && videoBlock->inputIsLive->boolValue())
 	{
-		g.setColour(Colours::white.withAlpha(videoBlock->spat.textureOpacity->floatValue()));
+		g.setColour(Colours::white.withAlpha(videoBlock->spat->textureOpacity->floatValue()));
 		g.drawImage(videoBlock->receiver->getImage(), getLocalBounds().toFloat());
 	}
 }
@@ -79,7 +75,7 @@ void SpatializerPanel::newMessage(const ContainerAsyncEvent & e)
 {
 	if (e.type == ContainerAsyncEvent::ControllableFeedbackUpdate)
 	{
-		if (e.targetControllable == videoBlock->spat.textureOpacity) needsRepaint = true;
+		if (e.targetControllable == videoBlock->spat->textureOpacity) needsRepaint = true;
 	}
 }
 
@@ -87,7 +83,7 @@ void SpatializerPanel::newMessage(const SpatializerEvent & e)
 {
 	if (e.type == SpatializerEvent::LAYOUT_CHANGED)
 	{
-		setCurrentLayoutView(videoBlock->spat.currentLayout);
+		setCurrentLayoutView(videoBlock->spat->currentLayout);
 	}
 }
 

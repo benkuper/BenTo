@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../LightBlockModelParameter.h"
-
 class LightBlockModelParameterEditor :
 	public BaseItemEditor
 {

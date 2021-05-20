@@ -10,14 +10,14 @@
 
 #include "BentoEngine.h"
 
-#include "LightBlock/model/LightBlockModelLibrary.h"
-#include "Prop/PropManager.h"
-#include "Prop/Shape/PropShape.h"
-#include "Video/Spatializer.h"
+#include "LightBlock/LightBlockIncludes.h"
+#include "Prop/PropIncludes.h"
+#include "Video/VideoIncludes.h"
+#include "Node/NodeIncludes.h"
+
 #include "Audio/AudioManager.h"
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
-#include "Node/NodeManager.h"
 #include "BentoSettings.h"
 
 

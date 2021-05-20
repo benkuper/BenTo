@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "BentoProp.h"
-#include "../../Component/rgb/RGBComponent.h"
-
-
 BentoProp::BentoProp(var params) :
 	Prop(params),
 	serialDevice(nullptr)

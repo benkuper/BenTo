@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "../VideoClip.h"
-
 class VideoClipUI :
     public AudioLayerClipUI
 #if FILMSTRO_USE_FFMPEG

@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../NodeConnectionManager.h"
-#include "NodeConnectionUI.h"
-
 class NodeManagerUI;
 
 class NodeConnectionManagerUI :

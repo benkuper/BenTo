@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "JuceHeader.h"
-
 
 class LightBlock;
 class Prop;

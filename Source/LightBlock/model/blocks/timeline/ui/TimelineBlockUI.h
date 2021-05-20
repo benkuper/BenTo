@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../../ui/LightBlockModelUI.h"
-#include "../TimelineBlock.h"
-
 class TimelineBlockUI :
 	public LightBlockModelUI
 {

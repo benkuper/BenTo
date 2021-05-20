@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "VideoLayer.h"
-#include "VideoClip.h"
-#include "ui/VideoLayerTimeline.h"
-
 VideoLayer::VideoLayer(Sequence* sequence, var params) :
     AudioLayer(sequence, params)
 {

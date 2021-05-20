@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PropEditor.h"
-
 PropEditor::PropEditor(Prop* p, bool isRoot) :
     BaseItemEditor(p, isRoot),
     prop(p)

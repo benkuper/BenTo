@@ -10,9 +10,7 @@
 
 #pragma once
 
-#include "../../LightBlockModel.h"
-#include "Timeline/TimelineBlockSequence.h"
-
+class TimelineBlockSequence;
 class LightBlock;
 
 class TimelineBlock :
@@ -25,7 +23,7 @@ public:
 
 	Trigger* bakeToProps;
 
-	TimelineBlockSequence sequence;
+	std::unique_ptr<TimelineBlockSequence> sequence;
 
 	Array<Colour> getColors(Prop * p, double time, var params) override;
 

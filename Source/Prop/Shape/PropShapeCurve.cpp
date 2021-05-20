@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PropShapeCurve.h"
-#include "PropShapeCurveEasing.h"
-
 PropShapeCurve::PropShapeCurve() :
     Curve2D("Curve")
 {

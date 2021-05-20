@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../../LightBlockModel.h"
-
 class ColourScriptData :
 	public ScriptTarget
 {

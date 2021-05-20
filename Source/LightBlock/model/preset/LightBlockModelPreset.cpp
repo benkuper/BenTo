@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelPreset.h"
-#include "../LightBlockModel.h"
-
 LightBlockModelPreset::LightBlockModelPreset(LightBlockModel * model, var) :
 	LightBlockColorProvider("Preset", false),
 	model(model),

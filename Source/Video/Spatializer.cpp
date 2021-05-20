@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "Spatializer.h"
-#include "LightBlock/model/LightBlockModelLibrary.h"
-#include "LightBlock/model/blocks/video/VideoBlock.h"
-
-
 String frag =
 "uniform int inverse; \
 uniform int sourceSize; \
@@ -106,7 +101,7 @@ Array<SpatItem *> Spatializer::getItemsForProp(Prop * p, SpatLayout * forceLayou
 		if (si->isDefault->boolValue() && defaultSI != nullptr) result.insert(0, si);
 		else
 		{
-			int id = si->filterManager.getTargetIDForProp(p);
+			int id = si->filterManager->getTargetIDForProp(p);
 			if (id >= 0) result.add(si);
 		}
 	}

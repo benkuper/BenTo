@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ParameterNode.h"
-#include "ParameterNodeViewUI.h"
-
 ParameterNode::ParameterNode(var params) :
 	Node(params.getProperty("type", "Parameter"), params),
 	paramType(params.getProperty("type", "Parameter").toString())

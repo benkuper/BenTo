@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Prop/Cluster/PropClusterGroupManager.h"
-
 class LightBlock;
 class LightBlockLayer;
 class Prop;

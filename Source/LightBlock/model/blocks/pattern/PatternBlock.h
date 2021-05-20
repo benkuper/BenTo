@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../../LightBlockModel.h"
-#include "PerlinNoise.hpp"
-
 class PatternBlock :
 	public LightBlockModel
 {

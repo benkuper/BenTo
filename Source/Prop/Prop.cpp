@@ -8,19 +8,7 @@
   ==============================================================================
 */
 
-#include "Prop.h"
-#include "LightBlock/model//LightBlockModelLibrary.h"
-#include "PropManager.h"
-
-#include "Component/files/FilesComponent.h"
-#include "Component/battery/BatteryComponent.h"
-#include "Component/buttons/ButtonsComponent.h"
-#include "Component/imu/IMUComponent.h"
-#include "Component/ir/IRPropComponent.h"
-#include "Component/rgb/RGBComponent.h"
-#include "Component/touch/TouchComponent.h"
 #include "BentoEngine.h"
-#include "ui/PropEditor.h"
 
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),

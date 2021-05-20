@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "JuceHeader.h"
 
 class PropShapeCurveKey :
     public Curve2DKey

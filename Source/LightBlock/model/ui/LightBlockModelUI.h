@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../LightBlockModel.h"
-
 class LightBlockModelUI :
 	public BaseItemMinimalUI<LightBlockModel>,
 	public LightBlockModel::AsyncListener

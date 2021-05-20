@@ -10,11 +10,6 @@
 
 #pragma once
 
-#include "LightBlock/LightBlock.h"
-#include "LightBlockEffect.h"
-#include "LightBlock/model/blocks/filters/LightBlockFilter.h"
-
-
 class LightBlockLayer;
 class PropTargetFilterManager;
 

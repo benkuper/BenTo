@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "model/LightBlockModel.h"
-
-
 class LightBlock :
 	public ControllableContainer,
 	public BaseColorProvider,

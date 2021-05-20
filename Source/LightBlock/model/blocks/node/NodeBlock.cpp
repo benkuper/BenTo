@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeBlock.h"
-#include "Node/nodes/prop/PropNode.h"
-#include "ui/NodeBlockUI.h"
-#include "Node/nodes/parameter/ParameterNode.h"
 
 NodeBlock::NodeBlock(var params) :
 	LightBlockModel(getTypeString(), params)

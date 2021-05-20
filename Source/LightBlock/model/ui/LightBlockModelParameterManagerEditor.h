@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../LightBlockModelParameterManager.h"
-
 class LightBlockModelParameterManagerEditor :
 	public GenericManagerEditor<LightBlockModelParameter>
 {

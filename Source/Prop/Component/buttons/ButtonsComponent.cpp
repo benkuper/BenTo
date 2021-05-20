@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "ButtonsComponent.h"
-
 ButtonsPropComponent::ButtonsPropComponent(Prop* prop, var params) :
     PropComponent(prop, "Buttons")
 {

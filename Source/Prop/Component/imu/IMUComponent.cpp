@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "IMUComponent.h"
-
 IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     PropComponent(prop, "IMU", true),
     angleConfigCC("Angle Config"),

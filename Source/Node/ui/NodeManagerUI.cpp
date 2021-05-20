@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeManagerUI.h"
-#include "../nodes/model/ModelNode.h"
-#include "LightBlock/model/ui/LightBlockModelUI.h"
-#include "ColorNodeViewUI.h"
-#include "LightBlock/model/blocks/node/NodeBlock.h"
-
 NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 	BaseManagerViewUI("Nodes", manager),
 	startConnector(nullptr),

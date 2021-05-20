@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "FilesComponent.h"
-
 FilesPropComponent::FilesPropComponent(Prop* prop, var params) :
     PropComponent(prop, "Files")
 {

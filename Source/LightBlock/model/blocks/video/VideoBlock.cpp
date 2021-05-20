@@ -8,15 +8,14 @@
   ==============================================================================
 */
 
-#include "VideoBlock.h"
-#include "ui/VideoBlockUI.h"
-#include "Video/Spatializer.h"
-#include "Prop/Prop.h"
-
 VideoBlock::VideoBlock(var params) :
 	LightBlockModel(getTypeString(), params),
 	receiver(nullptr)
 {
+
+	spat.reset(new Spatializer());
+	addChildControllableContainer(spat.get());
+	spat->addBaseManagerListener(this);
 
 	textureName = addStringParameter("Texture Name", "The Spout / Syphon name of the texture","");
 	inputIsLive = addBoolParameter("Input is Live", "If there is something coming, you'll know it here", false);
@@ -30,8 +29,7 @@ VideoBlock::VideoBlock(var params) :
 	
 	setupReceiver();
 	
-	addChildControllableContainer(&spat);
-	spat.addBaseManagerListener(this);
+	
 }
 
 VideoBlock::~VideoBlock()
@@ -46,7 +44,7 @@ VideoBlock::~VideoBlock()
 		}
 	}
 
-	spat.removeBaseManagerListener(this);
+	spat->removeBaseManagerListener(this);
 }
 
 void VideoBlock::setupReceiver()
@@ -79,7 +77,7 @@ void VideoBlock::updateLayoutOptions()
 {
 	String layoutName = currentLayout->getValueData().toString();
 	currentLayout->clearOptions();
-	for (auto &layout : spat.items)
+	for (auto &layout : spat->items)
 	{
 		currentLayout->addOption(layout->niceName, layout->shortName, false);
 	}
@@ -90,8 +88,8 @@ void VideoBlock::updateLayoutOptions()
 Array<Colour> VideoBlock::getColors(Prop * p, double time, var params)
 {
 	if (!inputIsLive->boolValue()) return LightBlockModel::getColors(p, time, params);
-	SpatLayout * layout = spat.getItemWithName(getParamValue<var>(currentLayout, params).toString());
-	Array<SpatItem *> spatItems = spat.getItemsForProp(p, layout);
+	SpatLayout * layout = spat->getItemWithName(getParamValue<var>(currentLayout, params).toString());
+	Array<SpatItem *> spatItems = spat->getItemsForProp(p, layout);
 
 	if(spatItems.isEmpty())  return LightBlockModel::getColors(p, time, params);
 
@@ -119,13 +117,13 @@ void VideoBlock::onControllableFeedbackUpdateInternal(ControllableContainer * cc
 
 	if (c == currentLayout)
 	{
-		spat.setCurrentLayout(spat.getItemWithName(currentLayout->getValueData().toString()));
+		spat->setCurrentLayout(spat->getItemWithName(currentLayout->getValueData().toString()));
 	}
 }
 
 void VideoBlock::textureUpdated(SharedTextureReceiver *)
 {
-	spat.computeSpat(receiver->getImage());
+	spat->computeSpat(receiver->getImage());
 	videoListeners.call(&VideoListener::textureUpdated, this);
 }
 
@@ -137,7 +135,7 @@ void VideoBlock::connectionChanged(SharedTextureReceiver *)
 void VideoBlock::itemAdded(SpatLayout *)
 {
 	updateLayoutOptions();
-	if (spat.items.size() == 1) currentLayout->setValueWithData(spat.items[0]->shortName);
+	if (spat->items.size() == 1) currentLayout->setValueWithData(spat->items[0]->shortName);
 }
 
 void VideoBlock::itemRemoved(SpatLayout *)
@@ -148,21 +146,21 @@ void VideoBlock::itemRemoved(SpatLayout *)
 void VideoBlock::clear()
 {
 	LightBlockModel::clear();
-	spat.clear();
+	spat->clear();
 }
 
 var VideoBlock::getJSONData()
 {
 	var data = LightBlockModel::getJSONData();
-	data.getDynamicObject()->setProperty("spat", spat.getJSONData());
+	data.getDynamicObject()->setProperty("spat", spat->getJSONData());
 	return data;
 }
 
 void VideoBlock::loadJSONDataInternal(var data)
 {
 	LightBlockModel::loadJSONDataInternal(data);
-	spat.loadJSONData(data.getProperty("spat", var()));
-	spat.setCurrentLayout(spat.getItemWithName(currentLayout->getValueData().toString()));
+	spat->loadJSONData(data.getProperty("spat", var()));
+	spat->setCurrentLayout(spat->getItemWithName(currentLayout->getValueData().toString()));
 }
 
 

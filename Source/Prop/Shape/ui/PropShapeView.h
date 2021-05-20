@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../PropShape.h"
-
 class PropShapeView :
     public Curve2DUI
 {

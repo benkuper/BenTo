@@ -8,7 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeBlockEditorToolItem.h"
 
 NodeBlockEditorToolItem::NodeBlockEditorToolItem(bool isParam, StringRef type) :
 	isParam(isParam),type(type)

@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "PropShapeView.h"
-
 class PropShapePanel :
     public ShapeShifterContentComponent,
     public Inspectable::InspectableListener,

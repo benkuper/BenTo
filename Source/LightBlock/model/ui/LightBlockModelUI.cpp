@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelUI.h"
-#include "Prop/PropManager.h"
-
 LightBlockModelUI::LightBlockModelUI(LightBlockModel * model) :
 	 BaseItemMinimalUI(model)
 {

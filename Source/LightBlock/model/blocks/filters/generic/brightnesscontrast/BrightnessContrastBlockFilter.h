@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../../LightBlockFilter.h"
-
 class BrightnessContrastBlockFilter :
     public LightBlockFilter
 {

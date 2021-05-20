@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "LightBlock/model/LightBlockModel.h"
-
 class PictureBlock :
 	public LightBlockModel
 {

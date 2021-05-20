@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PropCluster.h"
-#include "../PropManager.h"
-
 PropCluster::PropCluster() :
 	BaseItem("Cluster", false, false),
 	color(nullptr)

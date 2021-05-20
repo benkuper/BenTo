@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "../Prop.h"
-
 class PropEditor :
     public BaseItemEditor
 {

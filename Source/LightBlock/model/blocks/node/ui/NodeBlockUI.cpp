@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeBlockUI.h"
-#include "Node/ui/NodeBlockEditor.h"
-
 NodeBlockUI::NodeBlockUI(NodeBlock * block) :
 	LightBlockModelUI(block),
 	nb(block)

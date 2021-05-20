@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "BrightnessContrastBlockFilter.h"
-
 BrightnessContrastBlockFilter::BrightnessContrastBlockFilter(var params) :
     LightBlockFilter(getTypeString(), params)
 {

@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../Spatializer.h"
-#include "../SpatLayout.h"
-#include "SpatItemUI.h"
-
 class VideoBlock;
 
 class SpatLayoutView :

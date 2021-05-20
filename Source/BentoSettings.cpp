@@ -9,8 +9,8 @@
 */
 
 #include "BentoSettings.h"
-#include "Prop/PropManager.h"
-#include "Prop/props/bento/BentoProp.h"
+#include "Prop/PropIncludes.h"
+
 
 juce_ImplementSingleton(BentoSettings)
 

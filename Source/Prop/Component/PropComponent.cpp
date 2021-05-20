@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "PropComponent.h"
-#include "../Prop.h"
-
 PropComponent::PropComponent(Prop * prop, const String& name, bool canBeDisabled) :
     EnablingControllableContainer(name, canBeDisabled),
     prop(prop),

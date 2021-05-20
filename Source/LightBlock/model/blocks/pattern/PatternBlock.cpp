@@ -8,10 +8,6 @@
   ==============================================================================
 */
 
-#include "PatternBlock.h"
-#include "LightBlock/LightBlock.h"
-#include "Prop/Prop.h"
-
 PatternBlock::PatternBlock(const String& name, var params) :
 	LightBlockModel(name == "" ? getTypeString() : name, params)
 {

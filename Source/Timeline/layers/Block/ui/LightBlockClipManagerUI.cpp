@@ -8,11 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockClipManagerUI.h"
-#include "LightBlockLayerTimeline.h"
-#include "LightBlock/model/ui/LightBlockModelUI.h"
-
-
 LightBlockClipManagerUI::LightBlockClipManagerUI(LightBlockLayerTimeline * _timeline, LightBlockClipManager * manager) :
 	LayerBlockManagerUI(_timeline, manager),
 	clipManager(manager),

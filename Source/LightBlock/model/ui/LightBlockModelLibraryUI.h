@@ -10,10 +10,6 @@
 
 #pragma once
 
-#include "../LightBlockModelLibrary.h"
-#include "LightBlockModelManagerUI.h"
-#include "LightBlockModelGroupUI.h"
-
 class LightBlockModelLibraryUI :
 	public ShapeShifterContentComponent,
 	public ComponentListener,

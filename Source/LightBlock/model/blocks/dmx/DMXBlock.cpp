@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "DMXBlock.h"
-
 DMXBlock::DMXBlock(var params) :
 	LightBlockModel(getTypeString(), params)
 {

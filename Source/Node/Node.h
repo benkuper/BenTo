@@ -10,10 +10,10 @@
 
 #pragma once
 
-#include "NodeConnectionSlot.h"
-
 class NodeViewUI;
 class NodeConnection;
+class ParameterSlot;
+class ColorSlot;
 
 class Node :
 	public BaseItem,

@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeConnectionSlot.h"
-#include "NodeConnection.h"
-#include "nodes/parameter/ParameterNode.h"
-#include "ColorNode.h"
-#include "Prop/Prop.h"
-
 var ParameterSlot::getValue()
 {
 	if (isInput)

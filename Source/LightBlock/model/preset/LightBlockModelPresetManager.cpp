@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelPresetManager.h"
-
 LightBlockModelPresetManager::LightBlockModelPresetManager(LightBlockModel * model) :
 	BaseManager("Presets"),
 	model(model)

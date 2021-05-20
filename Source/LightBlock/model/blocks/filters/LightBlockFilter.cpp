@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockFilter.h"
-#include "Prop/Prop.h"
-
 LightBlockFilter::LightBlockFilter(const String& name, var params) :
     LightBlockModel(name, params, ProviderType::FILTER)
 {

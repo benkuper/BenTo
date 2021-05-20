@@ -9,8 +9,6 @@
 */
 
 #pragma once
-#include "NodeViewUI.h"
-#include "../ColorNode.h"
 
 class Prop;
 

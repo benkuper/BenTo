@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "PropTargetFilter.h"
-
 class PropTargetFilterManager :
 	public BaseManager<PropTargetFilter>
 {

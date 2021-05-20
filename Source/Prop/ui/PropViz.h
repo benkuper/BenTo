@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-#include "Prop/Prop.h"
-
 class PropViz :
 	public Component,
 	public Prop::AsyncListener

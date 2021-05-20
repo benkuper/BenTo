@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockModelParameterEditor.h"
-
 LightBlockModelParameterEditor::LightBlockModelParameterEditor(LightBlockModelParameter * a, bool isRoot) :
 	BaseItemEditor(a, isRoot),
 	arg(a)

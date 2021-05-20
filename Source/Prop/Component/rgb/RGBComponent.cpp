@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "RGBComponent.h"
-#include "../../Prop.h"
-
 RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
     PropComponent(prop, "RGB"),
     updateRate(params.getProperty("updateRate", 50)),

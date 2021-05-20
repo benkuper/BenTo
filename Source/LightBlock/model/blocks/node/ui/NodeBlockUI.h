@@ -11,9 +11,6 @@
 #pragma once
 
 
-#include "../../../ui/LightBlockModelUI.h"
-#include "../NodeBlock.h"
-
 class NodeBlockUI :
 	public LightBlockModelUI
 {

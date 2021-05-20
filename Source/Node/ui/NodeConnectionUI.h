@@ -10,9 +10,6 @@
 
 #pragma once
 
-#include "../NodeConnection.h"
-#include "NodeViewUI.h"
-
 class NodeConnectionUI :
 	public BaseItemMinimalUI<NodeConnection>,
 	public ComponentListener

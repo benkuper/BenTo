@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "HSVBlockFilter.h"
-
 HSVBlockFilter::HSVBlockFilter(var params) :
     LightBlockFilter(getTypeString(), params)
 {

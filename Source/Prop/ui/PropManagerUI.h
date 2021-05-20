@@ -11,9 +11,6 @@
 #pragma once
 
 
-#include "../PropManager.h"
-#include "PropUI.h"
-
 class PropManagerUI :
 	public BaseManagerShapeShifterUI<PropManager, Prop, PropUI>
 {

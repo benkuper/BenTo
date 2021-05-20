@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ScriptBlock.h"
-#include "Prop/Prop.h"
-
 ScriptBlock::ScriptBlock(var params) :
 	LightBlockModel(getTypeString(), params),
 	script(this)

@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "../VideoLayer.h"
 
 class VideoLayerTimeline;
 

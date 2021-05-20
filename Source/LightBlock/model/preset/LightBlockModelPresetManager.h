@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "LightBlockModelPreset.h"
 class LightBlockModel;
 
 class LightBlockModelPresetManager :

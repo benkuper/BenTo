@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "ColorRemapNode.h"
-#include "Prop/Prop.h"
-
 ColorRemapNode::ColorRemapNode(var params) :
 	ColorNode(getTypeString(), params),
     colorManager(1)

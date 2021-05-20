@@ -8,8 +8,6 @@
   ==============================================================================
 */
 
-#include "PropClusterGroupManager.h"
-#include "Prop/PropManager.h"
 #include "BentoEngine.h"
 
 PropClusterGroupManager::PropClusterGroupManager() :

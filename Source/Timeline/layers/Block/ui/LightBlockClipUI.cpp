@@ -8,12 +8,6 @@
   ==============================================================================
 */
 
-#include "LightBlockClipUI.h"
-#include "../LightBlockLayer.h"
-#include "LightBlock/model/ui/LightBlockModelUI.h"
-#include "Prop/Prop.h"
-#include "LightBlock/model/blocks/script/ScriptBlock.h"
-
 LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	LayerBlockUI(_clip),
 	Thread(_clip->niceName + "_preview"),

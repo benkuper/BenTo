@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
-
 class LightBlockModelParameter :
 	public BaseItem
 {

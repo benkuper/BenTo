@@ -9,7 +9,6 @@
 */
 
 #pragma once
-#include "../../ColorNode.h"
 
 class ParameterNode :
 	public Node

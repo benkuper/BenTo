@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "TimelineBlockUI.h"
-#include "Timeline/TimelineEditor.h"
-
 TimelineBlockUI::TimelineBlockUI(TimelineBlock * block) :
 	LightBlockModelUI(block),
 	tb(block)
@@ -24,5 +21,5 @@ TimelineBlockUI::~TimelineBlockUI()
 void TimelineBlockUI::editBlock()
 {
 	TimeMachineView* view = dynamic_cast<TimeMachineView*>(ShapeShifterManager::getInstance()->showContent(TimelineEditor::getTypeStringStatic()));
-	if (view != nullptr) view->setSequence(&tb->sequence);
+	if (view != nullptr) view->setSequence(tb->sequence.get());
 }

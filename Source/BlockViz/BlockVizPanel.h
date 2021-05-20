@@ -11,9 +11,10 @@
 #pragma once
 
 #include "JuceHeader.h"
-#include "Prop/Prop.h"
-#include "Prop/ui/PropViz.h"
 
+class Prop;
+class PropViz;
+class LightBlock;
 
 class BlockViz :
 	public ShapeShifterContentComponent,
@@ -25,7 +26,7 @@ public:
 	BlockViz(const String &contentName = "Block Visualizer");
 	~BlockViz();
 
-	Prop vizProp;
+	std::unique_ptr<Prop> vizProp;
 	LightBlock * vizBlock;
 
 	std::unique_ptr<PropViz> propViz;

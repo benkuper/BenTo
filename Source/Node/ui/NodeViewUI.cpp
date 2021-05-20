@@ -8,9 +8,6 @@
   ==============================================================================
 */
 
-#include "NodeViewUI.h"
-#include "NodeConnectionUI.h"
-
 NodeViewUI::NodeViewUI(Node * node, Direction direction) :
 	BaseItemUI(node, direction)
 {
