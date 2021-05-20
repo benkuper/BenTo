@@ -77,7 +77,8 @@ jobs:
         working-directory: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App
 
       - name: Upload PDB
-        if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
+        if: false #force no upload for Bento right now
+        #if: ${{ steps.set_variables.outputs.config == 'Release' && matrix.arch == 'win-x64' }}
         uses: ./.github/actions/upload
         with:
           pkg-name: ./Builds/${{ matrix.buildFolder }}/x64/${{ steps.set_variables.outputs.config }}/App/${{ steps.create_package.outputs.pdb-name }}
