@@ -51,6 +51,8 @@
 
 #include "model/blocks/timeline/TimelineBlock.h"
 
+#include "model/blocks/video/TextureBlock.h"
+#include "model/blocks/video/LiveFeedBlock.h"
 #include "model/blocks/video/VideoBlock.h"
 
 
@@ -60,7 +62,7 @@
 #include "model/ui/LightBlockModelUI.h"
 #include "model/ui/LightBlockModelManagerUI.h"
 
-#include "model/blocks/video/ui/VideoBlockUI.h"
+#include "model/blocks/video/ui/LiveFeedBlockUI.h"
 #include "model/blocks/timeline/ui/TimelineBlockUI.h"
 #include "model/blocks/node/ui/NodeBlockUI.h"
 #include "model/blocks/picture/ui/PictureBlockUI.h"

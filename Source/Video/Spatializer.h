@@ -16,6 +16,8 @@ class Spatializer :
 	public BaseManager<SpatLayout>
 {
 public:
+	juce_DeclareSingleton(Spatializer, true)
+
 	Spatializer();
 	~Spatializer();
 
@@ -39,6 +41,7 @@ public:
 	void computeSpat(Image tex, SpatLayout * forceLayout = nullptr);
 
 	Array<SpatItem *> getItemsForProp(Prop * p, SpatLayout * forceLayout = nullptr);
+	Array<Colour> getColors(Image tex, Prop* p, SpatLayout* forceLayout = nullptr);
 
 	// ASYNC
 	QueuedNotifier<SpatializerEvent> spatNotifier;

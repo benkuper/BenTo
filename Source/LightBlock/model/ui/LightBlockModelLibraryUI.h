@@ -26,8 +26,9 @@ public:
 
 	LightBlockModelLibrary * library;
 	LightBlockModelGroupUI genericGroupUI;
-	LightBlockModelGroupUI liveFeedGroupUI;
 
+	LightBlockModelManagerUI liveFeedManagerUI;
+	LightBlockModelManagerUI videoManagerUI;
 	LightBlockModelManagerUI pictureBlocksManagerUI;
 	LightBlockModelManagerUI nodeBlocksManagerUI;
 	LightBlockModelManagerUI scriptBlocksManagerUI;

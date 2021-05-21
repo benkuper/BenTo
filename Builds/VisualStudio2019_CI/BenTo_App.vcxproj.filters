@@ -1312,8 +1312,14 @@
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\dmx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.cpp">
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\LiveFeedBlockUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\video\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\LiveFeedBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\TextureBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
@@ -4633,7 +4639,7 @@
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks</Filter>
+      <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
@@ -4659,8 +4665,14 @@
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\dmx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.h">
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\LiveFeedBlockUI.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\video\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\LiveFeedBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\TextureBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>

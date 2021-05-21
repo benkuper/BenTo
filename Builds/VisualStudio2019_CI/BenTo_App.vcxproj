@@ -358,7 +358,13 @@
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.cpp">
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\LiveFeedBlockUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\LiveFeedBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\TextureBlock.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.cpp">
@@ -3326,7 +3332,9 @@
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\picture\ui\PictureBlockUI.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\picture\PictureBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.h"/>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\VideoBlockUI.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\LiveFeedBlockUI.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\LiveFeedBlock.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\TextureBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PerlinNoise.hpp"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.h"/>

@@ -10,20 +10,20 @@
 
 SpatializerPanel::SpatializerPanel(const String & name) :
 	ShapeShifterContentComponent(name),
-	needsRepaint(true)
+	needsRepaint(true),
+	textureBlock(nullptr)
 {
-	videoBlock = dynamic_cast<VideoBlock *>(LightBlockModelLibrary::getInstance()->videoBlock.get());
 
-	setCurrentLayoutView(videoBlock->spat->currentLayout);
+	setCurrentLayoutView(Spatializer::getInstance()->currentLayout);
 	startTimerHz(30); //repaint at 30hz
 
-	videoBlock->spat->addAsyncSpatListener(this);
+	Spatializer::getInstance()->addAsyncSpatListener(this);
 }
 
 
 SpatializerPanel::~SpatializerPanel()
 {
-	if (videoBlock != nullptr) videoBlock->spat->removeAsyncSpatListener(this);
+	if (textureBlock != nullptr) Spatializer::getInstance()->removeAsyncSpatListener(this);
 }
 
 
@@ -38,10 +38,15 @@ void SpatializerPanel::setCurrentLayoutView(SpatLayout * layout)
 	
 	if(layout != nullptr)
 	{
-		currentLayoutView.reset(new SpatLayoutView(videoBlock->spat.get(), layout));
+		currentLayoutView.reset(new SpatLayoutView(Spatializer::getInstance(), layout));
 		addAndMakeVisible(currentLayoutView.get());
 		resized();
 	}
+}
+
+void SpatializerPanel::setTextureBlock(TextureBlock* b)
+{
+	textureBlock = b;
 }
 
 void SpatializerPanel::paint(Graphics & g)
@@ -56,10 +61,10 @@ void SpatializerPanel::paint(Graphics & g)
 		return;
 	}
 
-	if (videoBlock != nullptr && videoBlock->inputIsLive->boolValue())
+	if (textureBlock != nullptr && textureBlock->inputIsLive->boolValue())
 	{
-		g.setColour(Colours::white.withAlpha(videoBlock->spat->textureOpacity->floatValue()));
-		g.drawImage(videoBlock->receiver->getImage(), getLocalBounds().toFloat());
+		g.setColour(Colours::white.withAlpha(Spatializer::getInstance()->textureOpacity->floatValue()));
+		g.drawImage(textureBlock->getImage(), getLocalBounds().toFloat());
 	}
 }
 
@@ -75,7 +80,7 @@ void SpatializerPanel::newMessage(const ContainerAsyncEvent & e)
 {
 	if (e.type == ContainerAsyncEvent::ControllableFeedbackUpdate)
 	{
-		if (e.targetControllable == videoBlock->spat->textureOpacity) needsRepaint = true;
+		if (e.targetControllable == Spatializer::getInstance()->textureOpacity) needsRepaint = true;
 	}
 }
 
@@ -83,13 +88,13 @@ void SpatializerPanel::newMessage(const SpatializerEvent & e)
 {
 	if (e.type == SpatializerEvent::LAYOUT_CHANGED)
 	{
-		setCurrentLayoutView(videoBlock->spat->currentLayout);
+		setCurrentLayoutView(Spatializer::getInstance()->currentLayout);
 	}
 }
 
 void SpatializerPanel::timerCallback()
 {
-	if (videoBlock == nullptr || !videoBlock->inputIsLive->boolValue()) return;
+	if (textureBlock == nullptr || !textureBlock->inputIsLive->boolValue()) return;
 	if (needsRepaint) repaint();
 }
 

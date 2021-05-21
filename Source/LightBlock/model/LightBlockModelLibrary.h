@@ -19,7 +19,8 @@ public:
 	~LightBlockModelLibrary();
 	
 	LightBlockModelGroup genericBlocks;
-	LightBlockModelGroup liveFeedBlocks;
+	UserLightBlockModelManager liveFeedBlocks;
+	UserLightBlockModelManager videoBlocks;
 	UserLightBlockModelManager pictureBlocks;	
 	UserLightBlockModelManager nodeBlocks;
 	UserLightBlockModelManager scriptBlocks;
@@ -41,9 +42,9 @@ public:
 	std::unique_ptr<LightBlockModel> brightContrastBlock;
 
 	//Live Feed
-	std::unique_ptr<LightBlockModel> videoBlock;
-	std::unique_ptr<LightBlockModel> shapeBlock;
-	std::unique_ptr<LightBlockModel> dmxBlock;
+	//std::unique_ptr<LightBlockModel> videoBlock;
+	//std::unique_ptr<LightBlockModel> shapeBlock;
+	//std::unique_ptr<LightBlockModel> dmxBlock;
 
 	//Interface
 	IntParameter * iconSize;

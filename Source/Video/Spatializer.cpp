@@ -22,6 +22,7 @@ void main() \
 }";
 
 
+juce_ImplementSingleton(Spatializer)
 
 Spatializer::Spatializer() :
 	BaseManager("Spatializer"),
@@ -104,6 +105,32 @@ Array<SpatItem *> Spatializer::getItemsForProp(Prop * p, SpatLayout * forceLayou
 			int id = si->filterManager->getTargetIDForProp(p);
 			if (id >= 0) result.add(si);
 		}
+	}
+
+	return result;
+}
+
+Array<Colour> Spatializer::getColors(Image tex, Prop* p, SpatLayout* forceLayout)
+{
+	if (tex.isNull()) return Array<Colour>();
+
+	Array<SpatItem*> spatItems = getItemsForProp(p, forceLayout);
+	if (spatItems.isEmpty())  return Array<Colour>();
+
+	computeSpat(tex, forceLayout); //to optimize
+
+	int resolution = p->resolution->intValue();
+	Array<Colour> result;
+	result.resize(resolution);
+	result.fill(Colours::black);
+
+	for (auto& si : spatItems)
+	{
+		int firstSpatIndex = si->startIndex->intValue() - 1;//to zero based
+		int numSpatColors = si->resolution->intValue();
+
+		for (int i = firstSpatIndex; (i < firstSpatIndex + numSpatColors) && i < resolution; i++) result.setUnchecked(i, si->colors[i - firstSpatIndex]);
+
 	}
 
 	return result;

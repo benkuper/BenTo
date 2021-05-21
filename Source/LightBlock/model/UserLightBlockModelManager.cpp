@@ -61,6 +61,9 @@ LightBlockModel * UserLightBlockModelManager::createItem()
 		return t;
 	}
 
+	case LIVE_FEED: return new LiveFeedBlock();
+	case VIDEO: return new VideoBlock();
+
 	default:
 		break;
 	}

@@ -29,6 +29,7 @@ BentoEngine::BentoEngine() :
 
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
+	addChildControllableContainer(Spatializer::getInstance());
 
 	remoteHost = ioCC.addStringParameter("Remote Host", "Global remote host to send OSC to", "127.0.0.1");
 	remotePort = ioCC.addIntParameter("Remote port", "Remote port to send OSC to", 43001, 1024, 65535); 
@@ -57,7 +58,6 @@ BentoEngine::~BentoEngine()
 {
 	PropManager::deleteInstance();
 	PropShapeLibrary::deleteInstance();
-
 	SerialManager::deleteInstance();
 
 	NodeFactory::deleteInstance();
@@ -68,6 +68,8 @@ BentoEngine::~BentoEngine()
 	//BentoWebServer::deleteInstance();
 
 	BentoSettings::deleteInstance();
+	
+	Spatializer::deleteInstance();
 
 	ZeroconfManager::deleteInstance();
 }
@@ -76,6 +78,7 @@ void BentoEngine::clearInternal()
 {
 	PropManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
+	Spatializer::getInstance()->clear();
 }
 
 

@@ -1,15 +1,14 @@
 /*
   ==============================================================================
 
-    VideoBlockUI.cpp
+    LiveFeedBlockUI.cpp
     Created: 23 Apr 2018 9:45:30pm
     Author:  Ben
 
   ==============================================================================
 */
 
-
-VideoBlockUI::VideoBlockUI(VideoBlock * block) :
+LiveFeedBlockUI::LiveFeedBlockUI(LiveFeedBlock * block) :
 	LightBlockModelUI(block),
 	vb(block)
 {
@@ -18,21 +17,21 @@ VideoBlockUI::VideoBlockUI(VideoBlock * block) :
 	resized();
 }
 
-VideoBlockUI::~VideoBlockUI()
+LiveFeedBlockUI::~LiveFeedBlockUI()
 {
 }
 
-void VideoBlockUI::paint(Graphics & g)
+void LiveFeedBlockUI::paint(Graphics & g)
 {
 	LightBlockModelUI::paint(g);
 }
 
-void VideoBlockUI::resized()
+void LiveFeedBlockUI::resized()
 {
 	liveUI->setBounds(getLocalBounds().withSize(10, 10).withCentre(Point<int>(getWidth()-10, 10)));
 }
 
-void VideoBlockUI::editBlock()
+void LiveFeedBlockUI::editBlock()
 {
 	ShapeShifterManager::getInstance()->showContent(SpatializerPanel::getTypeStringStatic());
 }

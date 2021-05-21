@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    VideoBlockUI.h
+    LiveFeedBlockUI.h
     Created: 23 Apr 2018 9:45:30pm
     Author:  Ben
 
@@ -10,15 +10,15 @@
 
 #pragma once
 
-class VideoBlockUI :
+class LiveFeedBlockUI :
 	public LightBlockModelUI
 {
 public:
-	VideoBlockUI(VideoBlock * block);
-	~VideoBlockUI();
+	LiveFeedBlockUI(LiveFeedBlock * block);
+	~LiveFeedBlockUI();
 
 	std::unique_ptr<BoolToggleUI> liveUI;
-	VideoBlock * vb;
+	LiveFeedBlock * vb;
 
 	void paint(Graphics &g) override;
 	void resized() override;

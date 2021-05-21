@@ -12,7 +12,8 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	ShapeShifterContentComponent(contentName),
 	library(library),
 	genericGroupUI(&library->genericBlocks),
-	liveFeedGroupUI(&library->liveFeedBlocks),
+	liveFeedManagerUI("Live Feed", &library->liveFeedBlocks),
+	videoManagerUI("Video", &library->videoBlocks),
 	pictureBlocksManagerUI("Pictures", &library->pictureBlocks),
 	nodeBlocksManagerUI("Nodes", &library->nodeBlocks),
 	scriptBlocksManagerUI("Scripts", &library->scriptBlocks),
@@ -29,7 +30,8 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	addAndMakeVisible(viewport);
 
 	genericGroupUI.setThumbSize(library->iconSize->intValue());
-	liveFeedGroupUI.setThumbSize(library->iconSize->intValue());
+	liveFeedManagerUI.setThumbSize(library->iconSize->intValue());
+	videoManagerUI.setThumbSize(library->iconSize->intValue());
 	pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
@@ -38,8 +40,9 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 
 
 	container.addAndMakeVisible(&genericGroupUI);
-	container.addAndMakeVisible(&liveFeedGroupUI);
 
+	container.addAndMakeVisible(&liveFeedManagerUI);
+	container.addAndMakeVisible(&videoManagerUI);
 	container.addAndMakeVisible(&pictureBlocksManagerUI);
 	container.addAndMakeVisible(&nodeBlocksManagerUI);
 	container.addAndMakeVisible(&scriptBlocksManagerUI);
@@ -48,6 +51,8 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	container.addAndMakeVisible(&genericFilterGroupUI);
 
 
+	liveFeedManagerUI.addComponentListener(this);
+	videoManagerUI.addComponentListener(this);
 	pictureBlocksManagerUI.addComponentListener(this);
 	nodeBlocksManagerUI.addComponentListener(this);
 	scriptBlocksManagerUI.addComponentListener(this);
@@ -82,10 +87,12 @@ void LightBlockModelLibraryUI::resized()
 	genericGroupUI.setBounds(r.withHeight(genericGroupUI.getHeight()));
 	r.translate(0, genericGroupUI.getHeight() + 10);
 
-	if (liveFeedGroupUI.getWidth() == 0) liveFeedGroupUI.setBounds(r);
-	liveFeedGroupUI.setBounds(r.withHeight(liveFeedGroupUI.getHeight()));
-	r.translate(0, liveFeedGroupUI.getHeight() + 10);
-
+	liveFeedManagerUI.setBounds(r.withHeight(liveFeedManagerUI.getHeight()));
+	r.translate(0, liveFeedManagerUI.getHeight() + 10);
+	
+	videoManagerUI.setBounds(r.withHeight(videoManagerUI.getHeight()));
+	r.translate(0, videoManagerUI.getHeight() + 10);
+	
 	pictureBlocksManagerUI.setBounds(r.withHeight(pictureBlocksManagerUI.getHeight()));
 	r.translate(0, pictureBlocksManagerUI.getHeight() + 10);
 
@@ -116,7 +123,8 @@ void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent & e)
 		if (e.targetControllable == library->iconSize)
 		{
 			genericGroupUI.setThumbSize(library->iconSize->intValue());
-			liveFeedGroupUI.setThumbSize(library->iconSize->intValue());
+			liveFeedManagerUI.setThumbSize(library->iconSize->intValue());
+			videoManagerUI.setThumbSize(library->iconSize->intValue());
 			pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());

@@ -14,7 +14,7 @@ class UserLightBlockModelManager :
 	public BaseManager<LightBlockModel>
 {
 public:
-	enum BlockType { PICTURE, NODE, SCRIPT, TIMELINE };
+	enum BlockType { PICTURE, NODE, SCRIPT, TIMELINE, LIVE_FEED, VIDEO };
 
 	UserLightBlockModelManager(const String &name, BlockType type);
 	~UserLightBlockModelManager();

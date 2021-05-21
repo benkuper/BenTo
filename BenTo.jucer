@@ -328,11 +328,11 @@
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
             <GROUP id="{D937E358-C3AF-2A4E-107D-7B9701E30F09}" name="shape">
+              <FILE id="FO2Ik9" name="PropShapeBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/shape/PropShapeBlock.h"/>
               <FILE id="hcPBFD" name="PropShapeBlock.cpp" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/shape/PropShapeBlock.cpp"/>
             </GROUP>
-            <FILE id="FO2Ik9" name="PropShapeBlock.h" compile="0" resource="0"
-                  file="Source/LightBlock/model/blocks/shape/PropShapeBlock.h"/>
             <GROUP id="{01F6805A-9982-41D2-5AB2-FAE63271AFA3}" name="filters">
               <FILE id="UsZSEz" name="LightBlockFilter.cpp" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp"/>
@@ -382,12 +382,19 @@
             </GROUP>
             <GROUP id="{40CD7123-FB3D-52B3-808A-2429C88F4ADF}" name="video">
               <GROUP id="{9264E4A8-3C60-EAC1-E633-8E38B9D6AC31}" name="ui">
-                <FILE id="mshIlg" name="VideoBlockUI.cpp" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/video/ui/VideoBlockUI.cpp"/>
-                <FILE id="mT29s6" name="VideoBlockUI.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/ui/VideoBlockUI.h"/>
+                <FILE id="Zle69A" name="LiveFeedBlockUI.cpp" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/video/ui/LiveFeedBlockUI.cpp"/>
+                <FILE id="sFzGot" name="LiveFeedBlockUI.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/video/ui/LiveFeedBlockUI.h"/>
               </GROUP>
-              <FILE id="fNmZwX" name="VideoBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
-              <FILE id="FSizg9" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
+              <FILE id="fNmZwX" name="LiveFeedBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/LiveFeedBlock.cpp"/>
+              <FILE id="FSizg9" name="LiveFeedBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/LiveFeedBlock.h"/>
+              <FILE id="Dqo2jj" name="TextureBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/TextureBlock.cpp"/>
+              <FILE id="DlbLE0" name="TextureBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/TextureBlock.h"/>
+              <FILE id="ntFSJH" name="VideoBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
+              <FILE id="eocegK" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
             </GROUP>
             <GROUP id="{C3E304E5-69B5-CD46-F35F-67763032BEA6}" name="pattern">
               <FILE id="VKxV3L" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PerlinNoise.hpp"/>
