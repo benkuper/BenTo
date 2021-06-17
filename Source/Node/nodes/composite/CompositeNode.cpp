@@ -23,12 +23,12 @@ CompositeNode::~CompositeNode()
 {
 }
 
-Array<Colour> CompositeNode::getColorsInternal(Prop * p, double time, var params)
+Array<Colour> CompositeNode::getColorsInternal(Prop * p, double time, var params, var localParams)
 {
 	Array<Colour> col1 = c1->getColors(p, time, params);
 	Array<Colour> col2 = c2->getColors(p, time, params);
 	
-	BlendMode b = (BlendMode)(int)getParameterValue(blendMode, params);
+	BlendMode b = (BlendMode)(int)getParameterValue(blendMode, localParams);
 
 	Array<Colour> result;
 	int resolution = p->resolution->intValue();

@@ -37,7 +37,7 @@ public:
 
 	var getParameterValue(Parameter * p, var params);
 
-	void fillWithLocalParams(var params);
+	var getLocalParams(var params);
 	
 	virtual NodeViewUI * createUI();
 

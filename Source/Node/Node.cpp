@@ -1,3 +1,4 @@
+#include "Node.h"
 /*
   ==============================================================================
 
@@ -145,8 +146,11 @@ var Node::getParameterValue(Parameter * p, var params)
 	return params.getProperty(n->shortName, p->getValue());
 }
 
-void Node::fillWithLocalParams(var params)
+var Node::getLocalParams(var params)
 {
+	var result = new DynamicObject();
+	if (params.isVoid()) return result;
+	
 	inSlots.getLock().enter();
 	for (auto &s : inSlots)
 	{
@@ -157,19 +161,20 @@ void Node::fillWithLocalParams(var params)
 			if (s->connections[0]->sourceSlot == nullptr) continue;
 			ParameterNode * pn = dynamic_cast<ParameterNode *>(s->connections[0]->sourceSlot->node);
 			if (pn == nullptr) continue;
-			if (params.isVoid()) params = new DynamicObject();
 
 			NamedValueSet set = params.getDynamicObject()->getProperties();
 			
 			if (params.hasProperty(pn->shortName))
 			{
 				var value = params.getProperty(pn->shortName, pn->parameter->getValue());
-				params.getDynamicObject()->setProperty(s->id, value);
+				result.getDynamicObject()->setProperty(s->id, value);
 			}
 		}
 		
 	}
 	inSlots.getLock().exit();
+
+	return result;
 }
 
 NodeViewUI * Node::createUI()

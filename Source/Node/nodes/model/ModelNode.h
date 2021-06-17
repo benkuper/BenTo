@@ -27,7 +27,7 @@ public:
 
 	void buildSlots();
 
-	Array<Colour> getColors(Prop * p, double time, var params) override;
+	Array<Colour> getColorsInternal(Prop * p, double time, var params, var localParams) override;
 
 	void onContainerParameterChanged(Parameter * p) override;
 

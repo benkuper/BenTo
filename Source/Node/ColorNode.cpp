@@ -20,11 +20,11 @@ ColorNode::~ColorNode()
 
 Array<Colour> ColorNode::getColors(Prop * p, double time, var params)
 {
-	fillWithLocalParams(params);
-	return getColorsInternal(p, time, params);
+	var localParams = getLocalParams(params);
+	return getColorsInternal(p, time, params, localParams);
 }
 
-Array<Colour> ColorNode::getColorsInternal(Prop * p, double time, var params)
+Array<Colour> ColorNode::getColorsInternal(Prop * p, double time, var params, var localParams)
 {
 	Array<Colour> result;
 	result.resize(p->resolution->intValue());

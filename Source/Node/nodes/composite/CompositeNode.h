@@ -25,7 +25,7 @@ public:
 	EnumParameter * blendMode;
 	FloatParameter* mix;
 
-	Array<Colour> getColorsInternal(Prop * p, double time, var params) override;
+	Array<Colour> getColorsInternal(Prop * p, double time, var params, var localParams) override;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 

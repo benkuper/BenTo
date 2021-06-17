@@ -23,7 +23,7 @@ public:
 	enum InputMode { HUE, SATURATION, BRIGHTNESS};
 	EnumParameter* inputModeParam;
 
-	Array<Colour> getColorsInternal(Prop* p, double time, var params) override;
+	Array<Colour> getColorsInternal(Prop* p, double time, var params, var localParams) override;
 
 	String getTypeString() const override { return "Color Remap"; }
 	static ColorRemapNode* create(var params) { return new ColorRemapNode(params); }

@@ -36,7 +36,7 @@ public:
 	ParameterSlot* invertEvensSlot;
 	ParameterSlot* bgColorSlot;
 
-	Array<Colour> getColorsInternal(Prop * p, double time, var params) override;
+	Array<Colour> getColorsInternal(Prop * p, double time, var params, var localParams) override;
 
 	String getTypeString() const override { return "Position Remap"; }
 	static PositionRemapNode * create(var params) { return new PositionRemapNode(params); }

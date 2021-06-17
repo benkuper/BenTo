@@ -22,7 +22,7 @@ public:
 	ColorSlot * mainColorsSlot;
 
 	virtual Array<Colour> getColors(Prop * p, double time, var params);
-	virtual Array<Colour> getColorsInternal(Prop * p, double time, var params);
+	virtual Array<Colour> getColorsInternal(Prop * p, double time, var params, var localParams);
 
 	virtual NodeViewUI * createUI() override;
 };

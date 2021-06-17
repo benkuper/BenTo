@@ -58,12 +58,10 @@ void ModelNode::buildSlots()
 		addParameterSlot(true, p);
 	}
 } 
-Array<Colour> ModelNode::getColors(Prop * p, double time, var params)
+Array<Colour> ModelNode::getColorsInternal(Prop * p, double time, var params, var localParams)
 {
-	if (currentBlock == nullptr) return ColorNode::getColorsInternal(p, time, params);
-
-	fillWithLocalParams(params);
-	return currentBlock->getColors(p, time, params);
+	if (currentBlock == nullptr) return ColorNode::getColorsInternal(p, time, params, localParams);
+	return currentBlock->getColors(p, time, localParams);
 }
 
 void ModelNode::onContainerParameterChanged(Parameter * p)

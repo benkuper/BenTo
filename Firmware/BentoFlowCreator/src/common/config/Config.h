@@ -6,12 +6,12 @@
 // #define CREATOR_TAB_HOOP
 //  #define LT_BALL
 //  #define LT_HOOP
-//  #define CLARINET
+  #define CLARINET
 // #define SAX
 //  #define GUITAR
 //  #define GLOVE
 //  #define GENERIC_PWM
-  #define DMX
+//  #define DMX
 //  #define DRESS
 //  #define FLAIR
 //#define SIMPLE_ESP8266

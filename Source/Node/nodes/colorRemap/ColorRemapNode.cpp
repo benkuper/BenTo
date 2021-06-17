@@ -30,11 +30,11 @@ ColorRemapNode::~ColorRemapNode()
 {
 }
 
-Array<Colour> ColorRemapNode::getColorsInternal(Prop* p, double time, var params)
+Array<Colour> ColorRemapNode::getColorsInternal(Prop* p, double time, var params, var localParams)
 {
 
     Array<Colour> col1 = c1->getColors(p, time, params);
-    InputMode im = (InputMode)(int)getParameterValue(inputModeParam, params);
+    InputMode im = (InputMode)(int)getParameterValue(inputModeParam, localParams);
     
 	Array<Colour> result;
 	int resolution = p->resolution->intValue();

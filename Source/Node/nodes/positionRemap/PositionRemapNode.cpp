@@ -34,21 +34,21 @@ PositionRemapNode::~PositionRemapNode()
 {
 }
 
-Array<Colour> PositionRemapNode::getColorsInternal(Prop * p, double time, var params)
+Array<Colour> PositionRemapNode::getColorsInternal(Prop * p, double time, var params, var localParams)
 {
 	int id = params.getProperty("forceID", p->globalID->intValue());
 	int resolution = p->resolution->intValue();
-	float bPosition = (float)getParameterValue(position, params);
-	float bSize = (float)getParameterValue(size, params);
-	int bExtend = jmax((int)getParameterValue(extendNum, params), 1);
-	float bInvertEvens = (bool)getParameterValue(invertEvens, params);
-	float bInvertOdds = (bool)getParameterValue(invertOdds, params);
+	float bPosition = (float)getParameterValue(position, localParams);
+	float bSize = (float)getParameterValue(size, localParams);
+	int bExtend = jmax((int)getParameterValue(extendNum, localParams), 1);
+	float bInvertEvens = (bool)getParameterValue(invertEvens, localParams);
+	float bInvertOdds = (bool)getParameterValue(invertOdds, localParams);
 
-	var bgColorVar = getParameterValue(bgColor, params);
+	var bgColorVar = getParameterValue(bgColor, localParams);
 	Colour bBGColor = Colour::fromFloatRGBA(bgColorVar[0], bgColorVar[1], bgColorVar[2], bgColorVar[3]);
 
 	
-	Array<Colour> result = ColorNode::getColorsInternal(p, time, params);
+	Array<Colour> result = ColorNode::getColorsInternal(p, time, params, localParams);
 	Array<Colour> c = inColors->getColors(p, time, params);
 
 	RemapMode m = mode->getValueDataAsEnum<RemapMode>();
