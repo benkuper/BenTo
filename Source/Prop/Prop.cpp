@@ -395,9 +395,10 @@ BakeData Prop::bakeBlock()
 
 		for (int i = startIndex; i != endIndex; i += step)
 		{
-			os.writeByte(cols[i].getRed());
-			os.writeByte(cols[i].getGreen());
-			os.writeByte(cols[i].getBlue());
+			int index = (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
+			os.writeByte(cols[index].getRed());
+			os.writeByte(cols[index].getGreen());
+			os.writeByte(cols[index].getBlue());
 		}
 		result.numFrames++;
 

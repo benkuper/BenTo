@@ -151,7 +151,7 @@ var ColourScriptData::updateColorRGBFromScript(const var::NativeFunctionArgs& ar
 	}
 	int index = args.arguments[0];
 	Colour c = getColorFromArgs(args.arguments, args.numArguments, 1, false);
-	p->colorArray.set(index, c);
+	if(index >= 0 && index <= p->colorArray.size()) p->colorArray.set(index, c);
 	return var();
 }
 

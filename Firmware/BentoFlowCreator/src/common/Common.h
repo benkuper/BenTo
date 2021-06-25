@@ -1,6 +1,8 @@
 //This file includes all common classes and definitions so it's the only one to include from other files
 
 #pragma once
+#ifndef COMMON_H
+#define COMMON_H
 
 #include "config/Config.h"
 
@@ -21,3 +23,5 @@ enum ConnectionState { Off, Connecting, Connected, ConnectionError, Disabled, Ho
 const String connectionStateNames[CONNECTION_STATES_MAX] {"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot", "PingAlive","PingDead" };
 
 String getDeviceID();
+
+#endif

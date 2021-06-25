@@ -21,6 +21,11 @@ LedManager::LedManager() : Component("leds"),
 void LedManager::init()
 {
 #ifdef LED_COUNT
+
+#ifdef GENERATE_LED_INDEX_MAP
+    generateLedIndexMap();
+#endif
+
     rgbManager.init();
     rgbManager.addListener(std::bind(&LedManager::rgbLedsEvent, this, std::placeholders::_1));
     sysLedMode.init();

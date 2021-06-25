@@ -123,10 +123,11 @@ void BentoProp::sendColorsToPropInternal()
 
 	for (int i = startIndex; i != endIndex; i+=step)
 	{
-		float a = colors[i].getFloatAlpha();
-		data.add(jmin<int>(colors[i].getRed() * a, 254));
-		data.add(jmin<int>(colors[i].getGreen() * a, 254));
-		data.add(jmin<int>(colors[i].getBlue() * a, 254));
+		int index = (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
+		float a = colors[index].getFloatAlpha();
+		data.add(jmin<int>(colors[index].getRed() * a, 254));
+		data.add(jmin<int>(colors[index].getGreen() * a, 254));
+		data.add(jmin<int>(colors[index].getBlue() * a, 254));
 	}
 
 	data.add(255);

@@ -1,12 +1,15 @@
 #pragma once
 
+#ifndef CONFIG_H
+#define CONFIG_H
+
 //  #define CREATOR_PROTO_V0
 //  #define CREATOR_PROTO_V1
  //#define CREATOR_PROTO_V2
 // #define CREATOR_TAB_HOOP
 //  #define LT_BALL
 //  #define LT_HOOP
-  #define CLARINET
+//  #define CLARINET
 // #define SAX
 //  #define GUITAR
 //  #define GLOVE
@@ -19,6 +22,7 @@
 //#define RING
 //#define SUPERSTAFF
 //#define LAMP
+#define ASPI
 
 //#define BOX
 //#define MAKEY
@@ -63,13 +67,17 @@
 #include "config_tab_superstaff.h"
 #elif defined LAMP
 #include "config_lamp.h"
+#elif defined ASPI
+#include "config_aspi.h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION
     #define LEDMAP(index) (LED_COUNT-1-index)
-#else
+#elif !defined LEDMAP
     #define LEDMAP(index) index
 #endif
 
 //#pragma message("Compiling for " __DEVICE_TYPE__)
 
+
+#endif

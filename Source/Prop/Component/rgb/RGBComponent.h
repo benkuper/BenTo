@@ -21,6 +21,9 @@ public:
     int resolution;
     bool invertDirection;
 
+    bool useLayout;
+    Array<int> ledIndexMap;
+
     FloatParameter* brightness;
 
     void handePropConnected() override;
