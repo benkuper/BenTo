@@ -23,6 +23,8 @@ public:
     {
     }
 
+    bool moreThanOneInstanceAllowed() { return false; }
+
     //==============================================================================
     void initialiseInternal (const String& commandLine) override
     {

@@ -468,11 +468,31 @@ void Prop::handleOSCMessage(const OSCMessage& m)
 	{
 		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
 	}
+	else if (m.getAddressPattern().toString() == "/model")
+	{
+		if (m.size() > 1)
+		{
+			if (LightBlockModel* p = dynamic_cast<LightBlockModel*>(LightBlockModelLibrary::getInstance()->getControllableContainerForAddress(OSCHelpers::getStringArg(m[1]))))
+			{
+				if (m.size() > 2)
+				{
+					if (LightBlockModelPreset* pr = p->presetManager.getItemWithName(OSCHelpers::getStringArg(m[2])))
+					{
+						activeProvider->setValueFromTarget(pr);
+					}
+				}
+				else
+				{
+					activeProvider->setValueFromTarget(p);
+				}
+			}
+		}
+	}
 	else
 	{
 		if (logIncoming->boolValue())
 		{
-			String s = "Received " + m.getAddressPattern().toString() + (m.size() > 1 ? " : " : "");
+			String s = "Received : ";
 			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
 			NLOG(niceName, s);
 		}
