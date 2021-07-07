@@ -21,8 +21,8 @@
 
 //#define RING
 //#define SUPERSTAFF
-//#define LAMP
-#define ASPI
+#define LAMP
+//#define ASPI
 
 //#define BOX
 //#define MAKEY

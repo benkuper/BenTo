@@ -1,8 +1,8 @@
 {
-    "board": "esp32:esp32:m5stick-c",
-    "configuration": "PartitionScheme=no_ota,UploadSpeed=1500000,DebugLevel=none",
+    "board": "esp32:esp32:tinypico",
+    "configuration": "PartitionScheme=default,UploadSpeed=921600,FlashMode=qio,FlashFreq=80,PSRAM=enabled,DebugLevel=none",
     "sketch": "BentoFlowCreator.ino",
     "output": "../ArduinoOutput",
     "programmer": "AVRISP mkII",
-    "port": "COM14"
+    "port": "COM9"
 }
