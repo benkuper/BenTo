@@ -11,7 +11,7 @@
 //  #define LT_HOOP
 //  #define CLARINET
 // #define SAX
-//  #define GUITAR
+// #define GUITAR
 //  #define GLOVE
 //  #define GENERIC_PWM
 //  #define DMX
@@ -21,8 +21,11 @@
 
 //#define RING
 //#define SUPERSTAFF
-#define LAMP
+//#define LAMP
 //#define ASPI
+
+#define CYRWHEEL
+
 
 //#define BOX
 //#define MAKEY
@@ -65,6 +68,8 @@
 #include "config_ring.h"
 #elif defined SUPERSTAFF
 #include "config_tab_superstaff.h"
+#elif defined CYRWHEEL
+#include "config_tab_cyrwheel.h"
 #elif defined LAMP
 #include "config_lamp.h"
 #elif defined ASPI
