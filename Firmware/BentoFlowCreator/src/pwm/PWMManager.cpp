@@ -31,8 +31,7 @@ void PWMManager::update()
 void PWMManager::setPWM(int index, float value)
 {
 #ifdef PWM_COUNT
-    uint8_t val = PWMVAL(value);
-    ledcWrite(index, val);
+    ledcWrite(index, PWMVAL(value));
 #endif
 }
 
@@ -50,6 +49,9 @@ bool PWMManager::handleCommand(String command, var *data, int numData)
     if (checkCommand(command, "set", numData, 2))
     {
         setPWM(data[0].intValue(), data[1].floatValue());
+        return true;
     }
 #endif
+
+    return false;
 }

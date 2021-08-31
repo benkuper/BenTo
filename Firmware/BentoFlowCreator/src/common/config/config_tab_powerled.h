@@ -19,7 +19,7 @@
 #define LED_DEFAULT_BRIGHTNESS .5
 
 //out of 255
-#define LED_MAX_BRIGHTNESS 230
+#define LED_MAX_BRIGHTNESS 255
 
 //main power
 #define KEEP_SLEEP_PIN_HIGH
@@ -55,7 +55,7 @@ const int buttonPins[BUTTON_COUNT]{36};
 const int pwmPins[PWM_COUNT]{32, 9, 10, 4};
 #define PWM_FREQUENCY 5000
 #define PWM_RESOLUTION 10
-#define PWMVAL(i) (uint8_t)(i*1023);
+#define PWMVAL(i) i*1023
 
 // ir config
 //#define HAS_IR
