@@ -52,6 +52,8 @@ void MainManager::init()
     touch.init();
     touch.addListener(std::bind(&MainManager::touchEvent, this, std::placeholders::_1));
 
+    pwm.init();
+
     imu.addListener(std::bind(&MainManager::imuEvent, this, std::placeholders::_1));
 
     cap.init();
@@ -60,6 +62,7 @@ void MainManager::init()
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
+
 }
 
 void MainManager::update()
@@ -72,6 +75,7 @@ void MainManager::update()
 
     comm.update();
     leds.update();
+    pwm.update();
 
     battery.update();
     buttons.update();
@@ -88,7 +92,8 @@ void MainManager::sleep(CRGB color)
     NDBG("Sleep now ! ");
     comm.sendMessage(name, "sleep", nullptr, 0);
     leds.shutdown(color); //to replace with battery color
-
+    pwm.shutdown();
+    
     delay(500);
 
 #ifdef SLEEP_PIN

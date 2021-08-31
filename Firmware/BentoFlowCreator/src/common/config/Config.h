@@ -23,8 +23,9 @@
 //#define SUPERSTAFF
 //#define LAMP
 //#define ASPI
+#define POWERLED
 
-#define CYRWHEEL
+//#define CYRWHEEL
 
 
 //#define BOX
@@ -68,6 +69,8 @@
 #include "config_ring.h"
 #elif defined SUPERSTAFF
 #include "config_tab_superstaff.h"
+#elif defined POWERLED
+#include "config_tab_powerled.h"
 #elif defined CYRWHEEL
 #include "config_tab_cyrwheel.h"
 #elif defined LAMP

@@ -10,6 +10,7 @@
 #include "sensors/touch/TouchManager.h"
 #include "sensors/imu/IMUManager.h"
 #include "sensors/capacitive/CapacitiveManager.h"
+#include "pwm/PWMManager.h"
 
 class MainManager : public Component {
 public:
@@ -25,6 +26,7 @@ public:
 
     CommunicationManager comm;
     LedManager leds;
+    PWMManager pwm;
     FileManager files;
 
     BatteryManager battery;

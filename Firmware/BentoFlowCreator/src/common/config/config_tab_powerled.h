@@ -1,25 +1,25 @@
 #pragma once
 
-#define DEVICE_TYPE "Creator SuperStaff"
+#define DEVICE_TYPE "Creator PowerLed"
 
 #ifndef ESP32
 #define ESP32
 #endif
 
 // main leds config
-#define LED_COUNT 144
+#define LED_COUNT 60
 #define LED_EN_PIN 27 // pin for enabling the LED power. HIGH for on and LOW for off.
 #define LED_DATA_PIN 25
 //#define LED_CLK_PIN 26
 #define LED_TYPE WS2812B
-#define LED_COLOR_ORDER GRB
+#define LED_COLOR_ORDER RGB
 //#define LED_INVERT_DIRECTION
 
 //out of 1
-#define LED_DEFAULT_BRIGHTNESS .2
+#define LED_DEFAULT_BRIGHTNESS .5
 
 //out of 255
-#define LED_MAX_BRIGHTNESS 200
+#define LED_MAX_BRIGHTNESS 230
 
 //main power
 #define KEEP_SLEEP_PIN_HIGH
@@ -49,6 +49,13 @@ const int buttonPins[BUTTON_COUNT]{36};
 #define IMU_RESET 21 // toggl this pin to reset the IMU before connectiong to it after a reset.
 #define IMU_ADDR 0x28
 #define BNO055_SAMPLERATE_DELAY_MS (100)
+
+//PWM config
+#define PWM_COUNT 4
+const int pwmPins[PWM_COUNT]{32, 9, 10, 4};
+#define PWM_FREQUENCY 5000
+#define PWM_RESOLUTION 10
+#define PWMVAL(i) (uint8_t)(i*1023);
 
 // ir config
 //#define HAS_IR
