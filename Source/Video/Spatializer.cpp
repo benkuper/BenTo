@@ -37,6 +37,9 @@ Spatializer::Spatializer() :
 	showHandles = addBoolParameter("Show Handles", "", true);
 	showPixels = addBoolParameter("Show Pixels", "", true);
 	selectItemWhenCreated = false;
+
+
+	addItem();
 }
 
 Spatializer::~Spatializer()
@@ -117,7 +120,7 @@ Array<Colour> Spatializer::getColors(Image tex, Prop* p, SpatLayout* forceLayout
 	Array<SpatItem*> spatItems = getItemsForProp(p, forceLayout);
 	if (spatItems.isEmpty())  return Array<Colour>();
 
-	computeSpat(tex, forceLayout); //to optimize
+	//computeSpat(tex, forceLayout); //to optimize
 
 	int resolution = p->resolution->intValue();
 	Array<Colour> result;

@@ -12,7 +12,8 @@
 
 class LiveFeedBlock :
 	public TextureBlock,
-	public SharedTextureReceiver::Listener
+	public SharedTextureReceiver::Listener,
+	public SharedTextureManager::Listener
 {
 public:
 	LiveFeedBlock(var params = var());
@@ -20,6 +21,8 @@ public:
 
 	StringParameter * textureName;
 	SharedTextureReceiver * receiver;
+
+	Image tmpImage;
 
 	void setupReceiver();
 	Image getImage() override;
@@ -29,7 +32,7 @@ public:
 	// Inherited via Listener
 	virtual void textureUpdated(SharedTextureReceiver *) override;
 	virtual void connectionChanged(SharedTextureReceiver *) override;
-
+	virtual void receiverRemoved(SharedTextureReceiver* r) override;
 
 	LightBlockModelUI * createUI() override;
 	String getTypeString() const override { return "LiveFeed"; }

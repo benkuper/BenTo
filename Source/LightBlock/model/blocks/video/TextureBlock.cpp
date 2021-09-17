@@ -22,6 +22,7 @@ TextureBlock::TextureBlock(const String &name, var params) :
 	saveAndLoadName = false;
 	saveType = false;
 
+
 	updateLayoutOptions();
 }
 
@@ -44,7 +45,7 @@ void TextureBlock::setSelectedInternal(bool value)
 	if (SpatializerPanel* p = ShapeShifterManager::getInstance()->getContentForType<SpatializerPanel>())
 	{
 		if (value) p->setTextureBlock(this);
-		else if (p->textureBlock == this) p->setTextureBlock(nullptr);
+		//else if (p->textureBlock == this) p->setTextureBlock(nullptr);
 	}
 }
 

@@ -52,6 +52,8 @@ public:
 	void paint(Graphics &g) override;
 	void resized() override;
 	
+	void mouseDown(const MouseEvent& e) override;
+
 	void newMessage(const ContainerAsyncEvent &e) override;
 	void newMessage(const SpatializerEvent &e) override;
 

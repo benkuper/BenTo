@@ -13,14 +13,11 @@ LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	provider(provider),
 	paramsContainer("Parameters"),
 	paramsLoadData(var())
-    //automationsManager(&paramsContainer)
 {
 	addChildControllableContainer(&paramsContainer);
 
 	rebuildArgsFromModel();
 	provider->addColorProviderListener(this);
-
-	//addChildControllableContainer(&automationsManager);
 }
 
 LightBlock::~LightBlock()

@@ -1,3 +1,4 @@
+#include "LiveFeedBlock.h"
 /*
   ==============================================================================
 
@@ -12,12 +13,10 @@ LiveFeedBlock::LiveFeedBlock(var params) :
 	TextureBlock(getTypeString(), params),
 	receiver(nullptr)
 {
-
-
 	textureName = addStringParameter("Texture Name", "The Spout / Syphon name of the texture","");
-
-
 	setupReceiver();
+
+	SharedTextureManager::getInstance()->addListener(this);
 }
 
 LiveFeedBlock::~LiveFeedBlock()
@@ -29,8 +28,12 @@ LiveFeedBlock::~LiveFeedBlock()
 		{
 			receiver->removeListener(this);
 			SharedTextureManager::getInstance()->removeReceiver(receiver);
+			receiver = nullptr;
 		}
+
+		SharedTextureManager::getInstance()->removeListener(this);
 	}
+
 }
 
 void LiveFeedBlock::setupReceiver()
@@ -48,25 +51,32 @@ void LiveFeedBlock::setupReceiver()
 	if (receiver != nullptr)
 	{
 		receiver->addListener(this);
-		receiver->createReceiver();
+		//receiver->setUseCPUImage(true);
+		//receiver->createReceiver();
 	}
 	
 }
 
 Image LiveFeedBlock::getImage()
 {
-	if (receiver == nullptr) return Image();
+	if (receiver == nullptr || isClearing) return Image();
 	else  return receiver->getImage();
 }
 
 void LiveFeedBlock::textureUpdated(SharedTextureReceiver*)
 {
+	Spatializer::getInstance()->computeSpat(getImage());
 	//updateColorsFromImage();
 }
 
 void LiveFeedBlock::connectionChanged(SharedTextureReceiver*)
 {
 	inputIsLive->setValue(receiver->isConnected);
+}
+
+void LiveFeedBlock::receiverRemoved(SharedTextureReceiver* r)
+{
+	if(r == receiver) receiver = nullptr;
 }
 
 void LiveFeedBlock::onContainerParameterChangedInternal(Parameter * p)

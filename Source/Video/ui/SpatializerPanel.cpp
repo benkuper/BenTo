@@ -1,3 +1,4 @@
+#include "SpatializerPanel.h"
 /*
   ==============================================================================
 
@@ -13,7 +14,7 @@ SpatializerPanel::SpatializerPanel(const String & name) :
 	needsRepaint(true),
 	textureBlock(nullptr)
 {
-
+	
 	setCurrentLayoutView(Spatializer::getInstance()->currentLayout);
 	startTimerHz(30); //repaint at 30hz
 
@@ -23,7 +24,7 @@ SpatializerPanel::SpatializerPanel(const String & name) :
 
 SpatializerPanel::~SpatializerPanel()
 {
-	if (textureBlock != nullptr) Spatializer::getInstance()->removeAsyncSpatListener(this);
+	Spatializer::getInstance()->removeAsyncSpatListener(this);
 }
 
 
@@ -53,7 +54,7 @@ void SpatializerPanel::paint(Graphics & g)
 {
 	if (Engine::mainEngine->isClearing) return;
 
-	if (OpenGLContext::getCurrentContext() == nullptr)
+	if (juce::OpenGLContext::getCurrentContext() == nullptr)
 	{
 		g.setColour(HIGHLIGHT_COLOR);
 		g.setFont(16);
@@ -73,6 +74,14 @@ void SpatializerPanel::resized()
 	if (currentLayoutView != nullptr)
 	{
 		currentLayoutView->setBounds(getLocalBounds());
+	}
+}
+
+void SpatializerPanel::mouseDown(const MouseEvent& e)
+{
+	if (e.eventComponent == this)
+	{
+		Spatializer::getInstance()->selectThis();
 	}
 }
 
