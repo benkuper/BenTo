@@ -1,8 +1,8 @@
 {
-    "board": "esp32:esp32:esp32",
-    "configuration": "PSRAM=disabled,PartitionScheme=huge_app,CPUFreq=160,FlashMode=qio,FlashFreq=80,FlashSize=4M,UploadSpeed=921600,DebugLevel=none",
+    "board": "esp32:esp32:tinypico",
+    "configuration": "PartitionScheme=default,UploadSpeed=921600,FlashMode=qio,FlashFreq=80,PSRAM=enabled,DebugLevel=none",
     "sketch": "BentoFlowCreator.ino",
     "output": "../ArduinoOutput",
     "programmer": "AVRISP mkII",
-    "port": "COM5"
+    "port": "COM12"
 }

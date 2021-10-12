@@ -34,7 +34,7 @@
 // button pin
 #define BUTTON_COUNT 2
 #define BUTTON_INPUT_MODE INPUT_PULLUP
-const int buttonPins[BUTTON_COUNT]{ 4, 14 };
+const int buttonPins[BUTTON_COUNT]{ 14, 4 };
 
 //apparently helps having stable fastLED with TinyPICO and WS2812C
 #define FASTLED_FORCE_LOOPDELAY

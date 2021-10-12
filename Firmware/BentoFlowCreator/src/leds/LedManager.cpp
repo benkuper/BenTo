@@ -204,6 +204,10 @@ bool LedManager::handleCommand(String command, var *data, int numData)
         {
             setMode((Mode)data[0].intValue());
         }
+
+        return true;
     }
 #endif
+
+    return false;
 }

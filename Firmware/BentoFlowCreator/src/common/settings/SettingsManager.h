@@ -58,7 +58,7 @@ class SettingsManager {
   signed char getSChar(const char *key, const signed char defaultValue = '\0');
   unsigned char getUChar(const char *key, const unsigned char defaultValue = '\0');
 
-  const char *getChar(const char *key, const char *defaultValue = '\0');
+  const char *getChar(const char *key, const char *defaultValue);
   String getString(const char *key, const String defaultValue = "");
   float getFloat(const char *key, const float defaultValue = 0.0f);
   double getDouble(const char *key, const double defaultValue = (double)(0.0));

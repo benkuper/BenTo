@@ -1,14 +1,14 @@
 
 #include "src/MainManager.h"
-MainManager main("1.2.4");
+MainManager mainManager("1.2.4");
 
 void setup()
 {
   delay(50); //
-  main.init();
+  mainManager.init();
 }
 
 void loop()
 {
-  main.update();
+  mainManager.update();
 }

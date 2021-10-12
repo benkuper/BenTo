@@ -11,7 +11,7 @@
 //  #define LT_HOOP
 //  #define CLARINET
 // #define SAX
-// #define GUITAR
+ #define GUITAR
 //  #define GLOVE
 //  #define GENERIC_PWM
 //  #define DMX
@@ -23,7 +23,7 @@
 //#define SUPERSTAFF
 //#define LAMP
 //#define ASPI
-#define POWERLED
+//#define POWERLED
 
 //#define CYRWHEEL
 
