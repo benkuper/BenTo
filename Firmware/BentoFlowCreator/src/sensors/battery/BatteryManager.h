@@ -49,8 +49,8 @@ public:
     const long criticalBatteryTimethreshold = 5000; // 5s
     long timeAtCriticalBattery;
 
-    const long batterySendTime = 1000;
-    long timeSinceLastBatterySent;
+    const long batteryReadTime = 1000;
+    long timeSinceLastBatteryRead;
 
     void init();
     void update();

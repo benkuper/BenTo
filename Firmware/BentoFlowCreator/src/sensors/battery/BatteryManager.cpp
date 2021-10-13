@@ -7,7 +7,7 @@ BatteryManager::BatteryManager() : Component("battery"),
                                    rawValue(0),
                                    value(1),
                                    isCharging(false),
-                                   timeSinceLastBatterySent(0),
+                                   timeSinceLastBatteryRead(0),
                                    isCriticalBattery(false),
                                    timeAtCriticalBattery(0)
 {
@@ -45,41 +45,54 @@ void BatteryManager::init()
 void BatteryManager::update()
 {
 #ifdef BATTERY_PIN
-    long curTime = millis();
-    rawValue = analogRead(BATTERY_PIN);
 
-    updateValue(rawValue);
-    updateMax(rawValue);
-    updateCharge();
-    voltage = (rawValue - defaultMinVal) * (3.8 - 3.2) / (defaultMaxVal - defaultMinVal) + 3.2;
+   long curTime = millis();
 
-    if (curTime > timeSinceLastBatterySent + batterySendTime)
-    {
+   if (curTime > timeSinceLastBatteryRead + batteryReadTime)
+   {
+         timeSinceLastBatteryRead = curTime;
+
+
+#ifdef CUSTOM_BATTERY_READ
+        rawValue = getBatteryRawValue();
+        voltage = getBatteryVoltage(rawValue);
+        value = (voltage - BATTERY_VOLTAGE_MIN) * (BATTERY_VOLTAGE_MAX - BATTERY_VOLTAGE_MIN);
+        isCharging = isChargingBattery();
+#else
+        rawValue = analogRead(BATTERY_PIN);
+        voltage = (rawValue - defaultMinVal) * (3.8 - 3.2) / (defaultMaxVal - defaultMinVal) + 3.2;
+        updateValue(rawValue);
+        updateMax(rawValue);
+        updateCharge();
+#endif
+
         sendEvent(BatteryEvent(BatteryEvent::Level, value));
         sendEvent(BatteryEvent(BatteryEvent::Voltage, voltage));
         sendEvent(BatteryEvent(BatteryEvent::RawValue, rawValue));
 #ifdef BATTERY_CHARGE_PIN
         sendEvent(BatteryEvent(BatteryEvent::Charging, isCharging));
 #endif
-        timeSinceLastBatterySent = curTime;
+
+        bool batteryIsOK = value > criticalBatteryThreshold;
+        if (batteryIsOK)
+        {
+            timeAtCriticalBattery = 0;
+            isCriticalBattery = false;
+        }
+        else
+        {
+            if (timeAtCriticalBattery == 0)
+                timeAtCriticalBattery = curTime;
+            else if (curTime > timeAtCriticalBattery + criticalBatteryTimethreshold)
+            {
+                isCriticalBattery = true;
+                sendEvent(BatteryEvent(BatteryEvent::CriticalLevel, value));
+            }
+        }
+
+
     }
 
-    bool batteryIsOK = value > criticalBatteryThreshold;
-    if (batteryIsOK)
-    {
-        timeAtCriticalBattery = 0;
-        isCriticalBattery = false;
-    }
-    else
-    {
-        if (timeAtCriticalBattery == 0)
-            timeAtCriticalBattery = curTime;
-        else if (curTime > timeAtCriticalBattery + criticalBatteryTimethreshold)
-        {
-            isCriticalBattery = true;
-            sendEvent(BatteryEvent(BatteryEvent::CriticalLevel, value));
-        }
-    }
 #endif
 }
 

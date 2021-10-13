@@ -11,13 +11,13 @@
 //  #define LT_HOOP
 //  #define CLARINET
 // #define SAX
- #define GUITAR
+// #define GUITAR
 //  #define GLOVE
-//  #define GENERIC_PWM
+  #define GENERIC_PWM
 //  #define DMX
 //  #define DRESS
 //  #define FLAIR
-//#define SIMPLE_ESP8266
+//  #define SIMPLE_ESP8266
 
 //#define RING
 //#define SUPERSTAFF

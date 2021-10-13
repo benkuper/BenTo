@@ -31,7 +31,12 @@ void FileManager::init()
     NDBG("Init");
 
 #ifdef FILES_USE_INTERNAL_MEMORY
+
+#ifdef ESP32
     if(SPIFFS.begin(true))// Start the SPI Flash Files System
+#else
+    if(SPIFFS.begin())
+#endif
     {
         sdIsDetected = true;
         NDBG("SPIFFS initialized.");

@@ -77,7 +77,8 @@
         "xutility": "cpp",
         "string_view": "cpp",
         "cinttypes": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "ranges": "cpp"
     },
     "C_Cpp.errorSquiggles": "Disabled",
 

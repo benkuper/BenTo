@@ -22,12 +22,7 @@
 
 //#include "../DebugHelpers.h"
 #include "SettingsManager.h"
-#ifdef ESP32
-#  include "SPIFFS.h"
-#endif
-#ifdef ESP8266
-#  include "FS.h"
-#endif
+
 
 /**
     Reads the content of settings file given by path/name

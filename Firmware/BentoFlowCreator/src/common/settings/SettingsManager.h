@@ -22,6 +22,7 @@
 
 #pragma once
 #include <Arduino.h>
+#include "Config.h"
 
 #ifdef ESP32
 #  include "SPIFFS.h"
