@@ -28,6 +28,8 @@
 #define SLEEP_WAKEUP_BUTTON GPIO_NUM_36
 #define SLEEP_WAKEUP_STATE HIGH
 
+#define POWEROFF_IF_NOTCONNECTED
+
 //setting low will colapse the power and the club will only turn on from USB or button press.
 
 // button pin
@@ -37,6 +39,7 @@ const int buttonPins[BUTTON_COUNT]{36};
 
 //battery sence
 #define BATTERY_PIN 35 // takes the measurment from the battery sence.
+#define BATTERY_CHARGE_PIN 39
 
 #define HAS_IMU
 //#define I2C_CLOCK 10000 // not sure what this is for.

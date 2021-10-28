@@ -830,6 +830,12 @@
     <Filter Include="JUCE Modules\juce_organicui\outliner">
       <UniqueIdentifier>{B17F69BA-D688-9888-1C58-CAEC6EC7496B}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\parrot\ui">
+      <UniqueIdentifier>{089CBAD6-F911-41CF-CEFB-E37E26509E82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_organicui\parrot">
+      <UniqueIdentifier>{DB5572FB-D815-3E4A-5CEA-C961D3EE513B}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_organicui\progress\ui">
       <UniqueIdentifier>{1F6412E5-4F92-D8E6-7867-550FB25EF9ED}</UniqueIdentifier>
     </Filter>
@@ -3748,6 +3754,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorParameterUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorStatusUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\DoubleSliderUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
@@ -3770,6 +3779,9 @@
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\IntStepperUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\P2DUI.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ParameterEditor.cpp">
@@ -3802,13 +3814,7 @@
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\FloatParameter.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\FloatRangeParameter.cpp">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\IntParameter.cpp">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\IntRangeParameter.cpp">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\controllable\parameter\Parameter.cpp">
@@ -3981,6 +3987,24 @@
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\outliner\Outliner.cpp">
       <Filter>JUCE Modules\juce_organicui\outliner</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\parrot\ui\ParrotPanel.cpp">
+      <Filter>JUCE Modules\juce_organicui\parrot\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\parrot\ui\ParrotUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\parrot\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\parrot\Parrot.cpp">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\parrot\ParrotManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\parrot\ParrotRecord.cpp">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\parrot\ParrotRecordManager.cpp">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\progress\ui\ProgressWindow.cpp">
       <Filter>JUCE Modules\juce_organicui\progress\ui</Filter>
@@ -7488,6 +7512,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorParameterUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ColorStatusUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\DoubleSliderUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
@@ -7510,6 +7537,9 @@
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\IntStepperUI.h">
+      <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\P2DUI.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\ui\ParameterEditor.h">
@@ -7542,13 +7572,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\FloatParameter.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\FloatRangeParameter.h">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\IntParameter.h">
-      <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\IntRangeParameter.h">
       <Filter>JUCE Modules\juce_organicui\controllable\parameter</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\controllable\parameter\Parameter.h">
@@ -7778,6 +7802,24 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\outliner\Outliner.h">
       <Filter>JUCE Modules\juce_organicui\outliner</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotPanel.h">
+      <Filter>JUCE Modules\juce_organicui\parrot\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\parrot\ui\ParrotUI.h">
+      <Filter>JUCE Modules\juce_organicui\parrot\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\parrot\Parrot.h">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\parrot\ParrotManager.h">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\parrot\ParrotRecord.h">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\parrot\ParrotRecordManager.h">
+      <Filter>JUCE Modules\juce_organicui\parrot</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\progress\ui\ProgressWindow.h">
       <Filter>JUCE Modules\juce_organicui\progress\ui</Filter>

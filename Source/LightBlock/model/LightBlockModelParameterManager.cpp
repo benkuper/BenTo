@@ -78,7 +78,7 @@ void LightBlockModelParameterManager::removeItemInternal(LightBlockModelParamete
 	autoRenameItems();
 }
 
-InspectableEditor * LightBlockModelParameterManager::getEditor(bool isRoot)
+InspectableEditor * LightBlockModelParameterManager::getEditorInternal(bool isRoot)
 {
 	return new LightBlockModelParameterManagerEditor(this, isRoot);
 }

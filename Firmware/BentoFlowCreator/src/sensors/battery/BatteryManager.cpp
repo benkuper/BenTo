@@ -59,7 +59,7 @@ void BatteryManager::update()
         value = (voltage - BATTERY_VOLTAGE_MIN) * (BATTERY_VOLTAGE_MAX - BATTERY_VOLTAGE_MIN);
         isCharging = isChargingBattery();
 #else
-        rawValue = analogRead(BATTERY_PIN);
+        rawValue = analogRead(BATTERY_PIN) / 4;
         voltage = (rawValue - defaultMinVal) * (3.8 - 3.2) / (defaultMaxVal - defaultMinVal) + 3.2;
         updateValue(rawValue);
         updateMax(rawValue);
@@ -73,7 +73,7 @@ void BatteryManager::update()
         sendEvent(BatteryEvent(BatteryEvent::Charging, isCharging));
 #endif
 
-        bool batteryIsOK = value > criticalBatteryThreshold;
+        bool batteryIsOK = voltage > 3.3; //value > criticalBatteryThreshold;
         if (batteryIsOK)
         {
             timeAtCriticalBattery = 0;
@@ -148,14 +148,15 @@ void BatteryManager::updateValue(int newValue)
 void BatteryManager::updateCharge()
 {
 #ifdef BATTERY_CHARGE_PIN
+    /*
     int measuredVal = 0;
     for (int i = 0; i < 10; i++)
     {
         int v = digitalRead(BATTERY_CHARGE_PIN);
         measuredVal += v;
     }
-
-    isCharging = measuredVal == 0;
+    */
+    isCharging = analogRead(BATTERY_CHARGE_PIN); //measuredVal == 0;
 #endif
 }
 

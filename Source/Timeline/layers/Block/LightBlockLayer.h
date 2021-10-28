@@ -40,6 +40,8 @@ public:
 	bool paste() override;
 	void selectAll(bool addToSelection = false) override;
 
+	virtual void getSnapTimes(Array<float> * arrayToFill) override;
+
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 	void endLoadFile() override;

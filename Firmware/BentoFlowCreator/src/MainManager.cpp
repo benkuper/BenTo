@@ -20,7 +20,6 @@ void MainManager::init()
     }
 #endif
 
-
 #ifdef HIGH_PIN_COUNT
     for (int i = 0; i < HIGH_PIN_COUNT; i++)
     {
@@ -29,7 +28,6 @@ void MainManager::init()
     }
 #endif
 
-   
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
     comm.init();
@@ -62,7 +60,6 @@ void MainManager::init()
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
-
 }
 
 void MainManager::update()
@@ -83,17 +80,29 @@ void MainManager::update()
     imu.update();
 
     cap.update();
+
+#ifdef POWEROFF_IF_NOTCONNECTED
+    if (comm.wifiManager.state == ConnectionState::ConnectionError)
+    {
+        if (!battery.isCharging)
+        {
+            NDBG("Not connected and battery not charging, poweroff");
+
+            sleep(CRGB::Yellow);
+        }
+    }
+#endif
 }
 
-void touchCallback(){}
+void touchCallback() {}
 
 void MainManager::sleep(CRGB color)
 {
     NDBG("Sleep now ! ");
     comm.sendMessage(name, "sleep", nullptr, 0);
-    leds.shutdown(color); //to replace with battery color
+    leds.shutdown(color); // to replace with battery color
     pwm.shutdown();
-    
+
     delay(500);
 
 #ifdef SLEEP_PIN
@@ -104,17 +113,17 @@ void MainManager::sleep(CRGB color)
         digitalWrite(SLEEP_PIN, SLEEP_PIN_SLEEP_VAL);
 #else
     digitalWrite(SLEEP_PIN, SLEEP_PIN_SLEEP_VAL);
-#endif //INFINITE LOOP
+#endif // INFINITE LOOP
 
-#endif //SLEEP_PIN
+#endif // SLEEP_PIN
 
 #ifdef SLEEP_WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup(SLEEP_WAKEUP_BUTTON, SLEEP_WAKEUP_STATE);
 #else
 #if defined TOUCH_WAKEUP_PIN
- //Configure Touchpad as wakeup source
-  touchAttachInterrupt(TOUCH_WAKEUP_PIN, touchCallback, 110);
-  esp_sleep_enable_touchpad_wakeup();
+    // Configure Touchpad as wakeup source
+    touchAttachInterrupt(TOUCH_WAKEUP_PIN, touchCallback, 110);
+    esp_sleep_enable_touchpad_wakeup();
 #endif
 #endif
 
@@ -123,7 +132,6 @@ void MainManager::sleep(CRGB color)
 #else
     esp_deep_sleep_start();
 #endif
-
 }
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
@@ -188,7 +196,6 @@ void MainManager::buttonEvent(const ButtonEvent &e)
     data[0].value.i = e.id;
     data[0].type = 'i';
 
-
     if (numBTData > 1)
     {
         data[1].value.i = e.value;
@@ -219,24 +226,25 @@ void MainManager::buttonEvent(const ButtonEvent &e)
 #endif
 
         if (e.id == sleepBTID)
-            sleep(); //only first button can sleep
+            sleep(); // only first button can sleep
 #endif
     }
 
     case ButtonEvent::MultiPress:
-        if(comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
+        if (comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
         {
-            if(e.value == 2)
+            if (e.value == 2)
             {
                 leds.playerMode.stop();
-            }else if(e.value >= 3)
+            }
+            else if (e.value >= 3)
             {
-                leds.playerMode.load("demo"+String(e.value-3));
+                leds.playerMode.load("demo" + String(e.value - 3));
                 leds.playerMode.loopShow = true;
                 leds.playerMode.play();
             }
         }
-    break;
+        break;
     }
 }
 
@@ -247,7 +255,6 @@ void MainManager::touchEvent(const TouchEvent &e)
 
     data[0].value.i = e.id;
     data[0].type = 'i';
-
 
     if (numBTData > 1)
     {
@@ -279,24 +286,25 @@ void MainManager::touchEvent(const TouchEvent &e)
 #endif
 
         if (e.id == sleepBTID)
-            sleep(); //only first button can sleep
+            sleep(); // only first button can sleep
 #endif
     }
 
     case TouchEvent::MultiPress:
-        if(comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
+        if (comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
         {
-            if(e.value == 2)
+            if (e.value == 2)
             {
                 leds.playerMode.stop();
-            }else if(e.value >= 3)
+            }
+            else if (e.value >= 3)
             {
-                leds.playerMode.load("demo"+String(e.value-3));
+                leds.playerMode.load("demo" + String(e.value - 3));
                 leds.playerMode.loopShow = true;
                 leds.playerMode.play();
             }
         }
-    break;
+        break;
     }
 }
 
@@ -321,7 +329,7 @@ void MainManager::imuEvent(const IMUEvent &e)
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 3);
     }
     break;
-    
+
     case IMUEvent::ThrowState:
     {
         var data[1];
@@ -350,7 +358,7 @@ void MainManager::capacitiveEvent(const CapacitiveEvent &e)
         comm.sendMessage(cap.name, CapacitiveEvent::eventNames[(int)e.type], data, CAPACITIVE_COUNT);
     }
     break;
-    
+
     case CapacitiveEvent::TouchUpdate:
     {
         var data[2];
@@ -398,7 +406,6 @@ void MainManager::timerEvent(const TimerEvent &e)
 {
     NDBG("Timer Event, init fileSystem and IMU");
     files.init();
-
     imu.init();
 }
 

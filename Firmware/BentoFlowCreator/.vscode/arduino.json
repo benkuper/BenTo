@@ -1,7 +1,7 @@
 {
     "sketch": "BentoFlowCreator.ino",
-    "configuration": "xtal=80,vt=flash,exception=legacy,ssl=all,eesz=4M2M,ip=lm2f,dbg=Disabled,lvl=None____,wipe=none,baud=921600",
-    "board": "esp8266:esp8266:d1_mini",
-    "port": "COM18",
+    "configuration": "PartitionScheme=default,UploadSpeed=1500000,DebugLevel=none",
+    "board": "esp32:esp32:m5stick-c",
+    "port": "COM13",
     "output": "../ArduinoOutput"
 }

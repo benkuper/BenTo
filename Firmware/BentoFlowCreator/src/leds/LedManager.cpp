@@ -38,7 +38,7 @@ void LedManager::init()
 void LedManager::update()
 {
 #ifdef LED_COUNT
-    //if (mode == System) rgbManager.clear();
+    // if (mode == System) rgbManager.clear();
 
     bool shouldUpdateLeds = true;
 
@@ -53,7 +53,8 @@ void LedManager::update()
         shouldUpdateLeds = true;
     }
 
-    if(shouldUpdateLeds) rgbManager.update();
+    if (shouldUpdateLeds)
+        rgbManager.update();
     irManager.update();
 
     connectedTimer.update();
@@ -111,13 +112,14 @@ void LedManager::shutdown(CRGB color)
     CRGB initLeds[LED_COUNT];
     memcpy(initLeds, rgbManager.leds, LED_COUNT * sizeof(CRGB));
 
+    rgbManager.setLedEnabled(true);
     for (int i = 0; i < 255; i++)
     {
         for (int led = 0; led < LED_COUNT; led++)
             rgbManager.setLed(led, blend(initLeds[led], color, i));
-            
+
         rgbManager.update();
-        FastLED.delay(2);
+        FastLED.delay(1);
     }
 
     FastLED.delay(50);
@@ -126,7 +128,7 @@ void LedManager::shutdown(CRGB color)
     {
         rgbManager.fillRange(color, i, 1, true);
         rgbManager.update();
-        FastLED.delay(3);
+        FastLED.delay(2);
     }
 
     rgbManager.clear();
@@ -134,11 +136,11 @@ void LedManager::shutdown(CRGB color)
     rgbManager.update();
     rgbManager.shutdown();
 
-#endif //LED_COUNT
+#endif // LED_COUNT
 
-#endif //NO_ANIMATIONS
+#endif // NO_ANIMATIONS
 
-delay(100);
+    delay(100);
 }
 
 void LedManager::setConnectionState(ConnectionState state)

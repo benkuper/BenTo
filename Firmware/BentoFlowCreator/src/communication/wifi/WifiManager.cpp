@@ -12,11 +12,11 @@ void WifiManager::init()
     NDBG("Init");
 
 #if defined USE_SETTINGS_MANAGER
-//init once with a json if it doesn't exist yet
+    // init once with a json if it doesn't exist yet
     prefs.readSettings(String("/" + name + ".json").c_str());
     String ssid = prefs.getString("ssid");
     String pass = prefs.getString("pass");
-    prefs.loadJson(String("{\"ssid\":\""+ssid+"\",\"pass\":\""+pass+"\"}").c_str());
+    prefs.loadJson(String("{\"ssid\":\"" + ssid + "\",\"pass\":\"" + pass + "\"}").c_str());
     prefs.writeSettings(String("/" + name + ".json").c_str());
 #endif
 
@@ -25,30 +25,46 @@ void WifiManager::init()
 
 void WifiManager::update()
 {
-    switch (state)
+    long curTime = millis();
+    if (curTime > lastConnectTime + timeBetweenTries)
     {
-    case Connecting:
-    {
-        long curTime = millis();
-        if (curTime > lastConnectTime + timeBetweenTries)
+        switch (state)
         {
+        case Connecting:
+        {
+
 #if defined ESP32
             if (WiFi.isConnected())
 #elif defined ESP8266
             if (WiFi.status() == WL_CONNECTED)
 #endif
                 setState(Connected);
+                timeAtConnect = -1;
         }
 
-        if (curTime > timeAtConnect + connectionTimeout)
-        {
-            setState(ConnectionError);
-        }
-    }
-    break;
+            if (curTime > timeAtConnect + connectionTimeout)
+            {
+                setState(ConnectionError);
+            }
+            break;
 
-    default:
-        break;
+        case Connected: 
+            if (!WiFi.isConnected())
+            {
+                NDBG("Lost connection ! will reconnect soon...");
+                if(timeAtConnect == -1)
+                {
+                    timeAtConnect = millis();
+                }else if(curTime > timeAtConnect + connectionTimeout)
+                {
+                    connect();
+                }
+            }
+            break;
+
+        default:
+            break;
+        }
     }
 }
 

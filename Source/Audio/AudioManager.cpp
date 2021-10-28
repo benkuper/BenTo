@@ -80,7 +80,7 @@ AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager * am
 	
 }
 
-InspectableEditor * AudioModuleHardwareSettings::getEditor(bool isRoot)
+InspectableEditor * AudioModuleHardwareSettings::getEditorInternal(bool isRoot)
 {
 	return new AudioManagerHardwareEditor(this, isRoot);
 }

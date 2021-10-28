@@ -210,7 +210,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
     }
     else if (checkCommand(command, "brightness", numData, 1))
     {
-        setBrightness(data[0].floatValue());
+        setBrightness(data[0].floatValue(), true);
         return true;
     }
     else if (checkCommand(command, "fill", numData, 3))

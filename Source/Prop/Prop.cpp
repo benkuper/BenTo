@@ -591,7 +591,7 @@ void Prop::loadJSONDataInternal(var data)
 	deviceID = data.getProperty("deviceID", "");
 }
 
-InspectableEditor* Prop::getEditor(bool isRoot)
+InspectableEditor* Prop::getEditorInternal(bool isRoot)
 {
 	return new PropEditor(this, isRoot);
 }

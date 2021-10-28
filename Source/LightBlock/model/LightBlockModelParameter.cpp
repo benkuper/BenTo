@@ -26,7 +26,7 @@ LightBlockModelParameter::LightBlockModelParameter(const String &name, Parameter
 	editable->hideInEditor = true;
 }
 
-InspectableEditor * LightBlockModelParameter::getEditor(bool isRoot)
+InspectableEditor * LightBlockModelParameter::getEditorInternal(bool isRoot)
 {
 	return new LightBlockModelParameterEditor(this, isRoot);
 }

@@ -13,17 +13,18 @@
 // #define SAX
 // #define GUITAR
 //  #define GLOVE
-  #define GENERIC_PWM
+//  #define GENERIC_PWM
 //  #define DMX
 //  #define DRESS
 //  #define FLAIR
 //  #define SIMPLE_ESP8266
-
+#define SIMPLE_ESP32
 //#define RING
 //#define SUPERSTAFF
 //#define LAMP
 //#define ASPI
 //#define POWERLED
+//#define BIKE
 
 //#define CYRWHEEL
 
@@ -77,6 +78,10 @@
 #include "config_lamp.h"
 #elif defined ASPI
 #include "config_aspi.h"
+#elif defined BIKE
+#include "config_bike.h"
+#elif defined SIMPLE_ESP32
+#include "config_simpleESP32.h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION

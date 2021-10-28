@@ -1,3 +1,4 @@
+#include "LightBlockLayer.h"
 /*
   ==============================================================================
 
@@ -156,6 +157,11 @@ void LightBlockLayer::selectAll(bool addToSelection)
 {
 	deselectThis(false);
 	blockClipManager.askForSelectAllItems(addToSelection);
+}
+
+void LightBlockLayer::getSnapTimes(Array<float>* arrayToFill)
+{
+	blockClipManager.getSnapTimes(arrayToFill);
 }
 
 
