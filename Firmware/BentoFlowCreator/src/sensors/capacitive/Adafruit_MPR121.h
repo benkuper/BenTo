@@ -19,10 +19,12 @@
  *  BSD license, all text above must be included in any redistribution
  */
 
-#ifndef ADAFRUIT_MPR121_H
-#define ADAFRUIT_MPR121_H
+#pragma once
 
 #include "Arduino.h"
+#include "../../common/Common.h"
+
+#ifdef CAPACITIVE_COUNT
 #include <Adafruit_BusIO_Register.h>
 #include <Adafruit_I2CDevice.h>
 
@@ -105,5 +107,8 @@ public:
 private:
   Adafruit_I2CDevice *i2c_dev = NULL;
 };
+
+
+#endif // CAPACITIVE def
 
 #endif

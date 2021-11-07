@@ -28,6 +28,8 @@
 
 #include "Adafruit_MPR121.h"
 
+#ifdef CAPACITIVE_COUNT
+
 // uncomment to use autoconfig !
 //#define AUTOCONFIG // use autoconfig (Yes it works pretty well!)
 
@@ -246,3 +248,5 @@ void Adafruit_MPR121::writeRegister(uint8_t reg, uint8_t value) {
     ecr_reg.write(ecr_backup);
   }
 }
+
+#endif
