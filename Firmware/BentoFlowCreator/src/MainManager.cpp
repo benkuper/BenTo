@@ -54,6 +54,8 @@ void MainManager::init()
 
     imu.addListener(std::bind(&MainManager::imuEvent, this, std::placeholders::_1));
 
+    leds.rgbManager.addListener(std::bind(&MainManager::rgbLedsEvent, this, std::placeholders::_1));
+
     cap.init();
     cap.addListener(std::bind(&MainManager::capacitiveEvent, this, std::placeholders::_1));
 
@@ -183,7 +185,7 @@ void MainManager::batteryEvent(const BatteryEvent &e)
 
     if (e.type == BatteryEvent::CriticalLevel)
     {
-
+        NDBG("Critical battery level detected => sleeping");
         sleep(CRGB::Red);
     }
 }
@@ -217,6 +219,7 @@ void MainManager::buttonEvent(const ButtonEvent &e)
 
     case ButtonEvent::VeryLongPress:
     {
+        NDBG("Very long press detected: sleeping");
 
 #ifndef NO_SLEEP_BUTTON
 #ifdef SLEEP_BUTTON_ID
@@ -374,6 +377,26 @@ void MainManager::capacitiveEvent(const CapacitiveEvent &e)
 #endif
 }
 
+void MainManager::rgbLedsEvent(const RGBLedsEvent &e)
+{
+    switch (e.type)
+    {
+    case RGBLedsEvent::BrightnessStatus:
+    {
+        var data[1];
+        for (int i = 0; i < e.numData; i++)
+        {
+            data[i].type = 'f';
+            data[i].value.f = e.data[i];
+        }
+
+        comm.sendMessage(leds.rgbManager.name, RGBLedsEvent::eventNames[(int)e.type], data, 1);
+    }
+    break;
+    
+    }
+}
+
 void MainManager::fileEvent(const FileEvent &e)
 {
 #ifdef HAS_FILES
@@ -398,6 +421,15 @@ void MainManager::fileEvent(const FileEvent &e)
         leds.setMode(LedManager::Stream);
 #endif
         comm.oscManager.setEnabled(true);
+    }
+    else if (e.type == FileEvent::FileList)
+    {
+        var data[1];
+        data[0].type = 's';
+        data[0].value.s = e.data.value.s;
+
+        comm.sendMessage(files.name, FileEvent::eventNames[(int)e.type], data, 1);
+        NDBG("FileList Event in Main Manager");
     }
 #endif
 }

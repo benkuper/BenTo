@@ -24,8 +24,12 @@ public:
         UploadStart,
         UploadProgress,
         UploadComplete,
-        UploadCancel
+        UploadCancel,
+        FileList, 
+        TYPES_MAX
     };
+    static const String eventNames[TYPES_MAX];
+
     FileEvent(Type t, var data) : type(t), data(data) {}
 
     Type type;
@@ -68,7 +72,7 @@ public:
     static File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
     static void deleteFileIfExists(String path);
 
-    static void listDir(const char *dirname, uint8_t levels);
+    static String listDir(const char *dirname, uint8_t levels);
 
 #endif
 
@@ -79,6 +83,9 @@ public:
     void returnOK();
     void returnFail(String msg);
     void handleNotFound();
+
+    // SD card enable
+    void setSDEnabled(bool enable);
 
     bool handleCommand(String command, var *data, int numData) override;
 };

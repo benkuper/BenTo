@@ -50,6 +50,7 @@ public:
     void touchEvent(const TouchEvent &e);
     void imuEvent(const IMUEvent &e);
     void capacitiveEvent(const CapacitiveEvent &e);
+    void rgbLedsEvent(const RGBLedsEvent &e);
 
     void fileEvent(const FileEvent &e);
     void timerEvent(const TimerEvent &e);

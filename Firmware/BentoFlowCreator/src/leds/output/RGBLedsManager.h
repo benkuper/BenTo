@@ -6,12 +6,15 @@
 class RGBLedsEvent
 {
 public:
-    enum Type
-    {
-        ASK_FOCUS
-    };
-    RGBLedsEvent(Type type) : type(type) {}
+    enum Type { ASK_FOCUS, BrightnessStatus, TYPES_MAX };
+    static const String eventNames[TYPES_MAX];
+
+    RGBLedsEvent(Type t, float * data = nullptr, int numData = 0) : type(t), data(data), numData(numData) {}
+
     Type type;
+    float * data;
+    int intData;
+    int numData;
 };
 
 class RGBLedsManager : public Component, public EventBroadcaster<RGBLedsEvent>

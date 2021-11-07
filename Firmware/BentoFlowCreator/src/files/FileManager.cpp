@@ -1,5 +1,6 @@
 #include "FileManager.h"
 
+const String FileEvent::eventNames[FileEvent::TYPES_MAX]{"uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list"};
 bool FileManager::sdIsDetected = false;
 
 #ifdef HAS_FILES
@@ -128,8 +129,9 @@ void FileManager::deleteFileIfExists(String path)
 #endif
 }
 
-void FileManager::listDir(const char *dirname, uint8_t levels)
+String FileManager::listDir(const char *dirname, uint8_t levels)
 {
+    String result = "";
 
 #ifdef FILES_USE_INTERNAL_MEMORY
     File root = SPIFFS.open("/","r");
@@ -140,13 +142,13 @@ void FileManager::listDir(const char *dirname, uint8_t levels)
     if (!root)
     {
         DBG("Failed to open directory");
-        return;
+        return result;
     }
 
     if (!root.isDirectory())
     {
         DBG("Not a directory");
-        return;
+        return result;
     }
 
     File file = root.openNextFile();
@@ -157,16 +159,19 @@ void FileManager::listDir(const char *dirname, uint8_t levels)
             DBG("  DIR : " + String(file.name()));
             if (levels)
             {
-                listDir(file.name(), levels - 1);
+                result += listDir(file.name(), levels - 1);
             }
         }
         else
         {
             DBG("  FILE: " + String(file.name()));
+            result += String(file.name()) + ",";
             DBG("  SIZE: " + String(file.size()));
         }
         file = root.openNextFile();
     }
+
+    return result;
 }
 #endif //HAS_FILES
 
@@ -297,6 +302,17 @@ void FileManager::handleNotFound()
 #endif
 }
 
+void FileManager::setSDEnabled(bool enable)
+{
+  if (enable) {
+      digitalWrite(SD_EN, LOW);
+      NDBG("Enabling SD card");
+  } else {
+      digitalWrite(SD_EN, HIGH);
+      NDBG("Disabled SD card");
+  }
+}
+
 bool FileManager::handleCommand(String command, var *data, int numData)
 {
 #ifdef HAS_FILES
@@ -304,6 +320,11 @@ bool FileManager::handleCommand(String command, var *data, int numData)
     if (checkCommand(command, "delete", numData, 1))
     {
         deleteFileIfExists(data[0].stringValue());
+        return true;
+    }
+    else if (checkCommand(command, "enable", numData, 1))
+    {
+        setSDEnabled(data[0].intValue() == 1);
         return true;
     }
     else if (checkCommand(command, "deleteFolder", numData, 0))
@@ -327,6 +348,15 @@ bool FileManager::handleCommand(String command, var *data, int numData)
 #endif
         }
 
+        return true;
+    }
+    else if (checkCommand(command, "list", numData, 0))
+    {
+        var data;
+        data.type = 's';
+        data.value.s = (char *)listDir("/", 0).c_str();
+
+        sendEvent(FileEvent(FileEvent::FileList, data));
         return true;
     }
 #endif //HAS_FILES

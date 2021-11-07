@@ -1,5 +1,7 @@
 #include "RGBLedsManager.h"
 
+const String RGBLedsEvent::eventNames[RGBLedsEvent::TYPES_MAX]{"askFocus", "brightnessStatus"};
+
 RGBLedsManager::RGBLedsManager() : Component("rgb"),
                                    globalBrightness(1),
                                    ledEnabled(false)
@@ -240,6 +242,13 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
             c.nscale8((int)(data[3].floatValue() * 255));
         point(c, data[hasAlpha ? 4 : 3].floatValue(), data[hasAlpha ? 5 : 4].floatValue());
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
+        return true;
+    }
+    else if (checkCommand(command, "brightnessStatus", numData, 0))
+    {
+        float msgData[1] =  { globalBrightness };
+        
+        sendEvent(RGBLedsEvent(RGBLedsEvent::BrightnessStatus, msgData, 1));
         return true;
     }
 #endif
