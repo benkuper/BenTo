@@ -27,8 +27,8 @@
  */
 
 
-#ifdef CAPACITIVE_COUNT
 #include "Adafruit_MPR121.h"
+#ifdef CAPACITIVE_COUNT
 
 // uncomment to use autoconfig !
 //#define AUTOCONFIG // use autoconfig (Yes it works pretty well!)
