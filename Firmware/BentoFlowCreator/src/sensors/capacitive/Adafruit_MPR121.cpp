@@ -26,9 +26,9 @@
  *  BSD license, all text here must be included in any redistribution.
  */
 
-#include "Adafruit_MPR121.h"
 
 #ifdef CAPACITIVE_COUNT
+#include "Adafruit_MPR121.h"
 
 // uncomment to use autoconfig !
 //#define AUTOCONFIG // use autoconfig (Yes it works pretty well!)
