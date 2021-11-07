@@ -1,7 +1,8 @@
 #include "../../common/Common.h"
 
+#ifdef CAPACITIVE_COUNT
 #include "Adafruit_MPR121.h"
-
+#endif
 // You can have up to 4 on one i2c bus but one is enough for testing!
 
 class CapacitiveEvent
