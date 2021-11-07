@@ -238,6 +238,29 @@ void BentoProp::exportBakedData(BakeData data)
 	builder.writeToStream(fs2, &progress);
 }
 
+void BentoProp::uploadFile(File f)
+{
+	String target = "http://" + remoteHost->stringValue() + "/upload";
+	FileInputStream fs(f);
+	MemoryBlock b;
+	fs.readIntoMemoryBlock(b);
+
+	URL url = URL(target).withDataToUpload("uploadData", f.getFileName(), b, "text/plain");
+	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this, "Content-Length:" + String(b.getSize()), 10000));// , "Content-Type: Text/plain");
+
+	if (stream != nullptr)
+	{
+		String response = stream->readEntireStreamAsString();
+		DBG("Got response : " << response);
+		NLOG(niceName, "Upload complete");
+	}
+	else
+	{
+		NLOGERROR(niceName, "Error uploading color data to prop (id " << String(globalID->intValue()) << ")");
+		return;
+	}
+}
+
 void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 {
 	if (serialDevice != nullptr)

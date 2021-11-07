@@ -304,6 +304,7 @@ void FileManager::handleNotFound()
 
 void FileManager::setSDEnabled(bool enable)
 {
+#ifdef SD_EN
   if (enable) {
       digitalWrite(SD_EN, LOW);
       NDBG("Enabling SD card");
@@ -311,6 +312,7 @@ void FileManager::setSDEnabled(bool enable)
       digitalWrite(SD_EN, HIGH);
       NDBG("Disabled SD card");
   }
+#endif
 }
 
 bool FileManager::handleCommand(String command, var *data, int numData)

@@ -228,7 +228,7 @@
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\WebServer\\src",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\SPIFFS\\src",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\Wire\\src",
-                "D:\\Documents\\Arduino\\libraries\\Adafruit_BusIO",
+                "D:\\Documents\\Arduino\\libraries\\Wasm3\\src",
                 "c:\\users\\bkupe\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2021r1\\xtensa-esp32-elf\\include\\c++\\8.4.0",
                 "c:\\users\\bkupe\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2021r1\\xtensa-esp32-elf\\include\\c++\\8.4.0\\xtensa-esp32-elf",
                 "c:\\users\\bkupe\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2021r1\\xtensa-esp32-elf\\include\\c++\\8.4.0\\backward",

@@ -42,6 +42,7 @@ public:
 
 	virtual void uploadBakedData(BakeData data) override;
 	virtual void exportBakedData(BakeData data) override;
+	virtual void uploadFile(File f) override;
 
 	virtual void loadBake(StringRef fileName, bool autoPlay = false) override;
 	virtual void playBake(float time = 0, bool loop = false) override;

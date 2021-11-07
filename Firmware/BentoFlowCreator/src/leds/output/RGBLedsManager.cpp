@@ -150,7 +150,7 @@ void RGBLedsManager::update()
 
 #else
 
-    if(ledEnabled) FastLED.show();
+    /*if(ledEnabled) */ FastLED.show();
 
 #endif
 #endif //LED_COUNT

@@ -19,6 +19,7 @@
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
 #include "BentoSettings.h"
+#include "WebAssembly/WasmManager.h"
 
 
 BentoEngine::BentoEngine() :
@@ -30,6 +31,7 @@ BentoEngine::BentoEngine() :
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
 	addChildControllableContainer(Spatializer::getInstance());
+	addChildControllableContainer(WasmManager::getInstance());
 
 	remoteHost = ioCC.addStringParameter("Remote Host", "Global remote host to send OSC to", "127.0.0.1");
 	remotePort = ioCC.addIntParameter("Remote port", "Remote port to send OSC to", 43001, 1024, 65535); 
@@ -48,7 +50,6 @@ BentoEngine::BentoEngine() :
 
 
 	GlobalSettings::getInstance()->addChildControllableContainer(BentoSettings::getInstance());
-
 
 	//BentoWebServer::getInstance(); //init
 
@@ -72,6 +73,7 @@ BentoEngine::~BentoEngine()
 	Spatializer::deleteInstance();
 
 	ZeroconfManager::deleteInstance();
+	WasmManager::deleteInstance();
 }
 
 void BentoEngine::clearInternal()
@@ -79,6 +81,7 @@ void BentoEngine::clearInternal()
 	PropManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
 	Spatializer::getInstance()->clear();
+	WasmManager::getInstance()->clear();
 }
 
 
@@ -159,6 +162,9 @@ var BentoEngine::getJSONData()
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
 
+	var wasmData = WasmManager::getInstance()->getJSONData();
+	if (!wasmData.isVoid() && wasmData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(WasmManager::getInstance()->shortName, wasmData);
+
 	return data;
 }
 
@@ -179,6 +185,8 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask * loadingTas
 	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));
 	propTask->setProgress(1);
 	propTask->end();	
+
+	WasmManager::getInstance()->loadJSONData(data.getProperty(WasmManager::getInstance()->shortName, var()));
 
 
 }

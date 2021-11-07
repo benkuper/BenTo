@@ -30,6 +30,17 @@
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{46E5FDF7-71F8-AEEB-CF03-501B0190C17C}" name="WebAssembly">
+        <GROUP id="{F6899AD0-CCDA-F91E-535C-DF42792C122B}" name="ui">
+          <FILE id="G7PlyO" name="WasmManagerUI.cpp" compile="1" resource="0"
+                file="Source/WebAssembly/ui/WasmManagerUI.cpp"/>
+          <FILE id="ySCMkq" name="WasmManagerUI.h" compile="0" resource="0" file="Source/WebAssembly/ui/WasmManagerUI.h"/>
+        </GROUP>
+        <FILE id="Z536IZ" name="WasmManager.cpp" compile="1" resource="0" file="Source/WebAssembly/WasmManager.cpp"/>
+        <FILE id="oIKBnc" name="WasmManager.h" compile="0" resource="0" file="Source/WebAssembly/WasmManager.h"/>
+        <FILE id="xHpf6Q" name="WasmScript.cpp" compile="1" resource="0" file="Source/WebAssembly/WasmScript.cpp"/>
+        <FILE id="EvI5IS" name="WasmScript.h" compile="0" resource="0" file="Source/WebAssembly/WasmScript.h"/>
+      </GROUP>
       <GROUP id="{6904D42F-2293-0320-A5A4-5AE3259D75F7}" name="Identification">
         <FILE id="s6Jv8B" name="IdentificationRule.cpp" compile="1" resource="0"
               file="Source/Identification/IdentificationRule.cpp"/>

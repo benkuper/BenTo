@@ -19,9 +19,13 @@ public:
     unsigned char scriptData[SCRIPT_MAX_SIZE];
     long scriptSize;
 
+    bool isRunning;
     IM3Runtime runtime;
     IM3Environment env;
-
+    IM3Function updateFunc;
+    IM3Function stopFunc;
+    TaskHandle_t taskHandle;
+    
     void init();
     void update();
 
@@ -30,7 +34,11 @@ public:
     void launchWasm();
     void shutdown();
 
-    static void launchWasmTask(void*);
+    void stop();
+
+    void launchWasmTask(void*);
+
+    static void launchWasmTaskStatic(void*);
     static M3Result LinkArduino  (IM3Runtime runtime);
     
     bool handleCommand(String command, var *data, int numData) override;

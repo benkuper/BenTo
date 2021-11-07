@@ -53,7 +53,7 @@ public:
 	Trigger* powerOffTrigger;
 	Trigger* restartTrigger;
 
-	HashMap<String, PropComponent *> components;
+	HashMap<String, PropComponent*> components;
 	RGBPropComponent* rgbComponent;
 
 	ControllableContainer bakingCC;
@@ -89,6 +89,7 @@ public:
 	int previousID; //for swapping
 	int updateRate;
 
+	Array<File, CriticalSection> filesToUpload;
 
 	//ping
 	virtual void clearItem() override;
@@ -113,6 +114,10 @@ public:
 
 	virtual void uploadBakedData(BakeData data);
 	virtual void exportBakedData(BakeData data);
+	virtual void addFileToUpload(File f);
+	virtual void uploadFileQueue();
+	virtual void uploadFile(File f);
+
 
 	virtual void loadBake(StringRef /*fileName*/, bool /*autoPlay*/) {}
 	virtual void playBake(float /*time */ = 0, bool /* loop */ = false) {}
@@ -140,7 +145,7 @@ public:
 	void setupComponentsJSONDefinition(var def);
 	void addComponent(PropComponent* pc);
 
-	PropComponent* getComponent(const String &name);
+	PropComponent* getComponent(const String& name);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

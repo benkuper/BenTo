@@ -14,3 +14,8 @@ m3ApiRawFunction(m3_arduino_digitalWrite);
 m3ApiRawFunction(m3_arduino_print);
 m3ApiRawFunction(m3_arduino_getPinLED);
 m3ApiRawFunction(m3_arduino_getGreeting);
+m3ApiRawFunction(m3_clearLeds);
+m3ApiRawFunction(m3_fillLeds);
+m3ApiRawFunction(m3_setLed);
+m3ApiRawFunction(m3_setLedRGB);
+m3ApiRawFunction(m3_setLedHSV);

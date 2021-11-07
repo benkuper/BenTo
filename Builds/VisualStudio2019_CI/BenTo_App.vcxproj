@@ -159,6 +159,9 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\WebAssembly\ui\WasmManagerUI.cpp"/>
+    <ClCompile Include="..\..\Source\WebAssembly\WasmManager.cpp"/>
+    <ClCompile Include="..\..\Source\WebAssembly\WasmScript.cpp"/>
     <ClCompile Include="..\..\Source\Identification\IdentificationRule.cpp"/>
     <ClCompile Include="..\..\Source\Identification\IdentificationRuleManager.cpp"/>
     <ClCompile Include="..\..\Source\Common\Serial\lib\serial\serial.cc"/>
@@ -3290,6 +3293,9 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\WebAssembly\ui\WasmManagerUI.h"/>
+    <ClInclude Include="..\..\Source\WebAssembly\WasmManager.h"/>
+    <ClInclude Include="..\..\Source\WebAssembly\WasmScript.h"/>
     <ClInclude Include="..\..\Source\Identification\IdentificationRule.h"/>
     <ClInclude Include="..\..\Source\Identification\IdentificationRuleManager.h"/>
     <ClInclude Include="..\..\Source\Common\Serial\lib\cobs\cobs.h"/>

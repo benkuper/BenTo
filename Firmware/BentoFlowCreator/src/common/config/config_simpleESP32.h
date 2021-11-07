@@ -25,9 +25,9 @@
 //#define SLEEP_WAKEUP_STATE LOW
 
 // button pin
-#define BUTTON_COUNT 2
+#define BUTTON_COUNT 0
 #define BUTTON_INPUT_MODE INPUT_PULLUP
-const int buttonPins[BUTTON_COUNT]{ 37, 39 };
+//const int buttonPins[BUTTON_COUNT]{ 37, 39 };
 
 /*
 #define TOUCH_COUNT 2

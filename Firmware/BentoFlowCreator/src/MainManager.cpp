@@ -1,13 +1,16 @@
 #include "MainManager.h"
 
+MainManager * MainManager::instance = nullptr;
 MainManager::MainManager(String fwVersion) : Component("root"),
                                              fwVersion(fwVersion),
                                              initTimer(2000)
 {
+    instance = this;
 }
 
 void MainManager::init()
 {
+
 #ifdef HAS_DISPLAY
     display.init();
 #endif
@@ -17,7 +20,9 @@ void MainManager::init()
     {
         pinMode(groundPins[i], OUTPUT);
         digitalWrite(groundPins[i], LOW);
+        gpio_hold_en((gpio_num_t)groundPins[i]);
     }
+    gpio_deep_sleep_hold_en();
 #endif
 
 #ifdef HIGH_PIN_COUNT
@@ -25,8 +30,12 @@ void MainManager::init()
     {
         pinMode(highPins[i], OUTPUT);
         digitalWrite(highPins[i], HIGH);
+        gpio_hold_en((gpio_num_t)highPins[i]);
     }
+    gpio_deep_sleep_hold_en();
 #endif
+
+
 
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
@@ -61,7 +70,11 @@ void MainManager::init()
 
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
+    scripts.init();
+
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
+
+    NDBG("Board is "+String(ARDUINO_BOARD));
 }
 
 void MainManager::update()
@@ -69,19 +82,23 @@ void MainManager::update()
     initTimer.update();
 
     files.update();
+    
     if (files.isUploading)
         return;
 
     comm.update();
+
+    imu.update();
+    buttons.update();
+    battery.update();
+    touch.update();
+    cap.update();
+
+    scripts.update();
+
     leds.update();
     pwm.update();
 
-    battery.update();
-    buttons.update();
-    touch.update();
-    imu.update();
-
-    cap.update();
 
 #ifdef POWEROFF_IF_NOTCONNECTED
     if (comm.wifiManager.state == ConnectionState::ConnectionError)
@@ -138,6 +155,9 @@ void MainManager::sleep(CRGB color)
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
 {
+
+
+
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
     leds.setConnectionState(e.type);
 

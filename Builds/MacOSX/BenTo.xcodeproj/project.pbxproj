@@ -20,6 +20,7 @@
 		1AD485D8E4765B79A6CE1005 /* Main.cpp */ = {isa = PBXBuildFile; fileRef = 5AD76FA55A9E6E31DCAEE680; };
 		1BA176C3BCA2BB935B7B348C /* win.cc */ = {isa = PBXBuildFile; fileRef = 02981ECE5EE4EDB834E85FB3; };
 		1E849A37E6B9D259A86ECA08 /* include_filmstro_ffmpeg_FFmpegVideoReader.cpp */ = {isa = PBXBuildFile; fileRef = A926A72AFCFBAACC5BF0218B; };
+		21DB621C249E0282B01B37B4 /* WasmScript.cpp */ = {isa = PBXBuildFile; fileRef = 5EE5BCB68F2E02D88CB09988; };
 		31012C82F371A777AC7AFF24 /* list_ports_win.cc */ = {isa = PBXBuildFile; fileRef = BA973948500C0C4F787D10F4; };
 		316CC8396079814B486C7B72 /* TimelineIncludes.cpp */ = {isa = PBXBuildFile; fileRef = D8FEC608C04265392AEB5A1B; };
 		359D71D55A53528BAB1EE7EB /* IdentificationRule.cpp */ = {isa = PBXBuildFile; fileRef = A5805AB2DDD240DDB8159591; };
@@ -27,6 +28,7 @@
 		43EEF4DFA57501DE6D455005 /* include_juce_opengl.mm */ = {isa = PBXBuildFile; fileRef = D239AAEE967D9E958B6ACAB3; };
 		47B629008D8514111CB11D29 /* SerialDevice.cpp */ = {isa = PBXBuildFile; fileRef = 4FE1871211462BBB87D34AFB; };
 		537C41D9F02529110920A1E1 /* Icon.icns */ = {isa = PBXBuildFile; fileRef = 51317BFC040AE415C6D3E7CC; };
+		54BAACF9B83A43D7AE11EFF8 /* WasmManagerUI.cpp */ = {isa = PBXBuildFile; fileRef = A5571A6CAE19E031C7DDD838; };
 		5981E9EEC5E8CDCDA9A9A221 /* BlockVizPanel.cpp */ = {isa = PBXBuildFile; fileRef = FEF14305268936F22039BF67; };
 		59AD036C62A5076D63D48C39 /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = B90E6FAC86CD2D932F3FB50E; };
 		59C4DC529881F6E72CBE3EAC /* AVKit.framework */ = {isa = PBXBuildFile; fileRef = BB837126791EF0960CC08D3F; };
@@ -51,6 +53,7 @@
 		9659DB1CAAB80BF9706141F0 /* unix.cc */ = {isa = PBXBuildFile; fileRef = FF8212362C0F64DBEC238CE2; };
 		9F8AC4618EFC364D1DF817CA /* AVFoundation.framework */ = {isa = PBXBuildFile; fileRef = 16621BE75EEBD08CCD26E8C4; };
 		A198394E001844380ACD129F /* include_juce_timeline.cpp */ = {isa = PBXBuildFile; fileRef = B3F00A16D10651397C0D1BAE; };
+		A3623AB2F62A61BDA298BACE /* WasmManager.cpp */ = {isa = PBXBuildFile; fileRef = 3EEDAE3B3CC662650E154BE2; };
 		A3AFC86C67024DF84AB349FB /* include_juce_gui_extra.mm */ = {isa = PBXBuildFile; fileRef = 091DCFB72171D73649C6465B; };
 		A5B64309CE58FAAFA6EE076B /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = EBFE82D98BAD390E587C3B13; };
 		A71B9AED3033260290867951 /* IdentificationRuleManager.cpp */ = {isa = PBXBuildFile; fileRef = D027E1CD25E7821AE21678A1; };
@@ -122,6 +125,7 @@
 		124981E3017EEB7984AFAA09 /* VideoIncludes.h */ /* VideoIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoIncludes.h; path = ../../Source/Video/VideoIncludes.h; sourceTree = SOURCE_ROOT; };
 		12F71DCA702CF35EA57E31B7 /* LightBlockModelPreset.h */ /* LightBlockModelPreset.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelPreset.h; path = ../../Source/LightBlock/model/preset/LightBlockModelPreset.h; sourceTree = SOURCE_ROOT; };
 		143B7D728464C53906E064B5 /* AudioManager.cpp */ /* AudioManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AudioManager.cpp; path = ../../Source/Audio/AudioManager.cpp; sourceTree = SOURCE_ROOT; };
+		14465BBF75F1E1E8F0AA2931 /* WasmManagerUI.h */ /* WasmManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WasmManagerUI.h; path = ../../Source/WebAssembly/ui/WasmManagerUI.h; sourceTree = SOURCE_ROOT; };
 		1450BC9E3E326A61FA510A2A /* PropIncludes.cpp */ /* PropIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropIncludes.cpp; path = ../../Source/Prop/PropIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		148B6414B641D7110D3787A3 /* PatternBlock.h */ /* PatternBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PatternBlock.h; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.h; sourceTree = SOURCE_ROOT; };
 		149D3395DF628039ECF97D4B /* CommonIncludes.cpp */ /* CommonIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CommonIncludes.cpp; path = ../../Source/CommonIncludes.cpp; sourceTree = SOURCE_ROOT; };
@@ -178,6 +182,7 @@
 		3CB40E424265CF9D5240523B /* BentoProp.cpp */ /* BentoProp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoProp.cpp; path = ../../Source/Prop/props/bento/BentoProp.cpp; sourceTree = SOURCE_ROOT; };
 		3CF751812457867DE7EF346A /* include_juce_simpleweb.cpp */ /* include_juce_simpleweb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb.cpp; sourceTree = SOURCE_ROOT; };
 		3EA271EE23512DABADB0DB9A /* UserLightBlockModelManager.cpp */ /* UserLightBlockModelManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = SOURCE_ROOT; };
+		3EEDAE3B3CC662650E154BE2 /* WasmManager.cpp */ /* WasmManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WasmManager.cpp; path = ../../Source/WebAssembly/WasmManager.cpp; sourceTree = SOURCE_ROOT; };
 		414654DC5F2DB306F91226BA /* RemapBlockFilter.h */ /* RemapBlockFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RemapBlockFilter.h; path = ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.h; sourceTree = SOURCE_ROOT; };
 		4297491F00482662E47F3924 /* PatternBlock.cpp */ /* PatternBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatternBlock.cpp; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp; sourceTree = SOURCE_ROOT; };
 		42D0B60221EE6B79C91E4545 /* node.png */ /* node.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = node.png; path = ../../Resources/models/node.png; sourceTree = SOURCE_ROOT; };
@@ -218,6 +223,7 @@
 		5DA027BC77001CC7A0276694 /* CompositeNode.cpp */ /* CompositeNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = CompositeNode.cpp; path = ../../Source/Node/nodes/composite/CompositeNode.cpp; sourceTree = SOURCE_ROOT; };
 		5E31E0202CC9FD5C38B3F1CC /* LightBlockModelLibrary.h */ /* LightBlockModelLibrary.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelLibrary.h; path = ../../Source/LightBlock/model/LightBlockModelLibrary.h; sourceTree = SOURCE_ROOT; };
 		5E3ED034F5CF78BB19EEA5EC /* noise.png */ /* noise.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = noise.png; path = ../../Resources/models/patterns/noise.png; sourceTree = SOURCE_ROOT; };
+		5EE5BCB68F2E02D88CB09988 /* WasmScript.cpp */ /* WasmScript.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WasmScript.cpp; path = ../../Source/WebAssembly/WasmScript.cpp; sourceTree = SOURCE_ROOT; };
 		6022B2F668B1183F14728C37 /* VideoClip.h */ /* VideoClip.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoClip.h; path = ../../Source/Timeline/layers/Video/VideoClip.h; sourceTree = SOURCE_ROOT; };
 		6098CCCC3C2D505E67782654 /* VideoIncludes.cpp */ /* VideoIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoIncludes.cpp; path = ../../Source/Video/VideoIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		60B292FF72E698B93A9AB7C2 /* ParameterNodeViewUI.cpp */ /* ParameterNodeViewUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterNodeViewUI.cpp; path = ../../Source/Node/nodes/parameter/ParameterNodeViewUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -273,6 +279,7 @@
 		8C9A74CAA1876AEF13C0DB3D /* BentoSettings.cpp */ /* BentoSettings.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoSettings.cpp; path = ../../Source/BentoSettings.cpp; sourceTree = SOURCE_ROOT; };
 		8DF0810BFB35524FB54ECDE1 /* ZeroconfManager.cpp */ /* ZeroconfManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ZeroconfManager.cpp; path = ../../Source/Common/Zeroconf/ZeroconfManager.cpp; sourceTree = SOURCE_ROOT; };
 		8E0C1BEEE69D71FA087B53BF /* LightBlockIncludes.h */ /* LightBlockIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockIncludes.h; path = ../../Source/LightBlock/LightBlockIncludes.h; sourceTree = SOURCE_ROOT; };
+		8E128055C11916623998EE98 /* WasmManager.h */ /* WasmManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WasmManager.h; path = ../../Source/WebAssembly/WasmManager.h; sourceTree = SOURCE_ROOT; };
 		8E2D9DF2881733CADA59D8E0 /* rainbow.png */ /* rainbow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = rainbow.png; path = ../../Resources/models/patterns/rainbow.png; sourceTree = SOURCE_ROOT; };
 		8FBC25BCC5AB6696DCD2A91A /* LightBlockEffect.h */ /* LightBlockEffect.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockEffect.h; path = ../../Source/Timeline/layers/Block/LightBlockEffect.h; sourceTree = SOURCE_ROOT; };
 		901361EA11E7E0741880CFBD /* PropManagerUI.h */ /* PropManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropManagerUI.h; path = ../../Source/Prop/ui/PropManagerUI.h; sourceTree = SOURCE_ROOT; };
@@ -308,6 +315,7 @@
 		A250B1035CA849FC5B073CCE /* SerialManager.cpp */ /* SerialManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialManager.cpp; path = ../../Source/Common/Serial/SerialManager.cpp; sourceTree = SOURCE_ROOT; };
 		A2EA8ABFF472FAEC83673DF2 /* DMXBlock.h */ /* DMXBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXBlock.h; path = ../../Source/LightBlock/model/blocks/dmx/DMXBlock.h; sourceTree = SOURCE_ROOT; };
 		A5410F5F7AE2D39A1F7DA314 /* PropShape.cpp */ /* PropShape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropShape.cpp; path = ../../Source/Prop/Shape/PropShape.cpp; sourceTree = SOURCE_ROOT; };
+		A5571A6CAE19E031C7DDD838 /* WasmManagerUI.cpp */ /* WasmManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WasmManagerUI.cpp; path = ../../Source/WebAssembly/ui/WasmManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		A5805AB2DDD240DDB8159591 /* IdentificationRule.cpp */ /* IdentificationRule.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IdentificationRule.cpp; path = ../../Source/Identification/IdentificationRule.cpp; sourceTree = SOURCE_ROOT; };
 		A5F64DEB041D66EBF645B749 /* LightBlockClipManager.h */ /* LightBlockClipManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipManager.h; path = ../../Source/Timeline/layers/Block/LightBlockClipManager.h; sourceTree = SOURCE_ROOT; };
 		A7DB8A823F95668252FB04D4 /* PositionRemapNode.h */ /* PositionRemapNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PositionRemapNode.h; path = ../../Source/Node/nodes/positionRemap/PositionRemapNode.h; sourceTree = SOURCE_ROOT; };
@@ -315,6 +323,7 @@
 		A926A72AFCFBAACC5BF0218B /* include_filmstro_ffmpeg_FFmpegVideoReader.cpp */ /* include_filmstro_ffmpeg_FFmpegVideoReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_filmstro_ffmpeg_FFmpegVideoReader.cpp; path = ../../JuceLibraryCode/include_filmstro_ffmpeg_FFmpegVideoReader.cpp; sourceTree = SOURCE_ROOT; };
 		A93764D22B731890A5D10F75 /* BatteryComponent.cpp */ /* BatteryComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BatteryComponent.cpp; path = ../../Source/Prop/Component/battery/BatteryComponent.cpp; sourceTree = SOURCE_ROOT; };
 		AA5294A14826CB5BBF76F43E /* LightBlockLayer.cpp */ /* LightBlockLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayer.cpp; path = ../../Source/Timeline/layers/Block/LightBlockLayer.cpp; sourceTree = SOURCE_ROOT; };
+		ACB8D802247AD26F074CA8FA /* WasmScript.h */ /* WasmScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WasmScript.h; path = ../../Source/WebAssembly/WasmScript.h; sourceTree = SOURCE_ROOT; };
 		AD55A210C5F1845A82921903 /* LightBlockModel.cpp */ /* LightBlockModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModel.cpp; path = ../../Source/LightBlock/model/LightBlockModel.cpp; sourceTree = SOURCE_ROOT; };
 		AE3B9B292DD3E471D7656B11 /* ScriptBlockFilter.cpp */ /* ScriptBlockFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ScriptBlockFilter.cpp; path = ../../Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.cpp; sourceTree = SOURCE_ROOT; };
 		AED1C1F9172B482D4CC281F2 /* juce_timeline */ /* juce_timeline */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_timeline; path = ../../Modules/juce_timeline; sourceTree = SOURCE_ROOT; };
@@ -714,6 +723,18 @@
 			name = "JUCE Library Code";
 			sourceTree = "<group>";
 		};
+		3E40D649FF7401EF272E58BF /* WebAssembly */ = {
+			isa = PBXGroup;
+			children = (
+				7BDA9EAE59D80D4244F63F3A,
+				3EEDAE3B3CC662650E154BE2,
+				8E128055C11916623998EE98,
+				5EE5BCB68F2E02D88CB09988,
+				ACB8D802247AD26F074CA8FA,
+			);
+			name = WebAssembly;
+			sourceTree = "<group>";
+		};
 		3F988B086EFDC73D3C8D00B4 /* models */ = {
 			isa = PBXGroup;
 			children = (
@@ -1031,6 +1052,15 @@
 				746266F5EEE79F13E1F107C5,
 			);
 			name = Audio;
+			sourceTree = "<group>";
+		};
+		7BDA9EAE59D80D4244F63F3A /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				A5571A6CAE19E031C7DDD838,
+				14465BBF75F1E1E8F0AA2931,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 		804962E3E247574AA8F5AAB7 /* files */ = {
@@ -1367,6 +1397,7 @@
 		DA08DC73F2CE78AB063AFD17 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				3E40D649FF7401EF272E58BF,
 				6C8EFF020E5E52F9858EAD91,
 				31E67B25124A445D58BC2A57,
 				75668C3074610EB07798E80A,
@@ -1566,6 +1597,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				54BAACF9B83A43D7AE11EFF8,
+				A3623AB2F62A61BDA298BACE,
+				21DB621C249E0282B01B37B4,
 				359D71D55A53528BAB1EE7EB,
 				A71B9AED3033260290867951,
 				CD62751F9653806034013404,

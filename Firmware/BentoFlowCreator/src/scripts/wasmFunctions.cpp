@@ -1,5 +1,6 @@
 #include "wasmFunctions.h"
 #include "../common/Common.h"
+#include "../MainManager.h"
 
 m3ApiRawFunction(m3_arduino_millis)
 {
@@ -81,5 +82,58 @@ m3ApiRawFunction(m3_arduino_getGreeting)
     const char buff[] = "Hello WASM world! 😊";
     memcpy(out, buff, min(sizeof(buff), out_len));
 
+    m3ApiSuccess();
+}
+
+
+m3ApiRawFunction(m3_clearLeds)
+{
+    MainManager::instance->leds.setMode(LedManager::Mode::Stream);
+    MainManager::instance->leds.rgbManager.clear();
+ 
+    m3ApiSuccess();
+}
+
+
+m3ApiRawFunction(m3_fillLeds)
+{
+    m3ApiGetArg     (uint32_t, color)
+    MainManager::instance->leds.setMode(LedManager::Mode::Stream);
+    MainManager::instance->leds.rgbManager.fillAll(CRGB(color));
+ 
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_setLed)
+{
+    m3ApiGetArg     (uint32_t, index)
+    m3ApiGetArg     (uint32_t, color)
+    MainManager::instance->leds.setMode(LedManager::Mode::Stream);
+    MainManager::instance->leds.rgbManager.setLed(index, CRGB(color));
+ 
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_setLedRGB)
+{
+    m3ApiGetArg     (uint32_t, index)
+    m3ApiGetArg     (uint32_t, r)
+    m3ApiGetArg     (uint32_t, g)
+    m3ApiGetArg     (uint32_t, b)
+    MainManager::instance->leds.setMode(LedManager::Mode::Stream);
+    MainManager::instance->leds.rgbManager.setLed(index, CRGB((uint8_t)r,(uint8_t)g,(uint8_t)b));
+ 
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_setLedHSV)
+{
+    m3ApiGetArg     (uint32_t, index)
+    m3ApiGetArg     (uint32_t, h)
+    m3ApiGetArg     (uint32_t, s)
+    m3ApiGetArg     (uint32_t, v)
+    MainManager::instance->leds.setMode(LedManager::Mode::Stream);
+    MainManager::instance->leds.rgbManager.setLed(index, CHSV((uint8_t)h,(uint8_t)s,(uint8_t)v));
+ 
     m3ApiSuccess();
 }

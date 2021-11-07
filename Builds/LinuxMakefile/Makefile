@@ -68,6 +68,9 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/WasmManagerUI_2f57d580.o \
+  $(JUCE_OBJDIR)/WasmManager_efaa0975.o \
+  $(JUCE_OBJDIR)/WasmScript_cd27320d.o \
   $(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o \
   $(JUCE_OBJDIR)/IdentificationRuleManager_8bd0c2cb.o \
   $(JUCE_OBJDIR)/serial_82f97e54.o \
@@ -136,6 +139,21 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(RESOURCES)
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/WasmManagerUI_2f57d580.o: ../../Source/WebAssembly/ui/WasmManagerUI.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WasmManagerUI.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WasmManager_efaa0975.o: ../../Source/WebAssembly/WasmManager.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WasmManager.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/WasmScript_cd27320d.o: ../../Source/WebAssembly/WasmScript.cpp
+	-$(V_AT)mkdir -p $(JUCE_OBJDIR)
+	@echo "Compiling WasmScript.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o: ../../Source/Identification/IdentificationRule.cpp
 	-$(V_AT)mkdir -p $(JUCE_OBJDIR)

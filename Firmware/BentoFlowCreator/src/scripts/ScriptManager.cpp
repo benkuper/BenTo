@@ -3,7 +3,9 @@
 
 ScriptManager *ScriptManager::instance = nullptr;
 
-ScriptManager::ScriptManager() : Component("scripts")
+ScriptManager::ScriptManager() : 
+    Component("scripts"),
+    isRunning(false)
 {
     instance = this;
 }
@@ -22,10 +24,17 @@ void ScriptManager::init()
 
 void ScriptManager::update()
 {
+    if(isRunning) m3_CallV(updateFunc);
 }
 
 void ScriptManager::launchScript(String path)
 {
+    if(isRunning)
+    {
+        NDBG("Script is running, stop before load");
+        stop();
+    }
+
     NDBG("Load script " + path + "...");
 
     File f = FileManager::openFile("/" + path + ".wasm", false); // false is for reading
@@ -54,28 +63,30 @@ void ScriptManager::launchScript(String path)
 void ScriptManager::launchWasm()
 {
     NDBG("Launching wasm...");
-    xTaskCreate(&ScriptManager::launchWasmTask, "wasm3", NATIVE_STACK_SIZE, NULL, 5, NULL);
+    if(isRunning) stop();
+    xTaskCreate(&ScriptManager::launchWasmTaskStatic, "wasm3", NATIVE_STACK_SIZE, NULL, 5, NULL);
     NDBG("Wasm task launched...");
+}
+
+void ScriptManager::launchWasmTaskStatic(void * v)
+{
+    instance->launchWasmTask(v);
 }
 
 void ScriptManager::launchWasmTask(void *)
 {
     M3Result result = m3Err_none;
 
-    IM3Environment env = instance->env;
-    IM3Runtime runtime = instance->runtime;
-
-
-
     IM3Module module;
+
     try
     {
 
         #ifdef WASM_MEMORY_LIMIT
             runtime->memoryLimit = WASM_MEMORY_LIMIT;
         #endif
-        
-        result = m3_ParseModule(env, &module, instance->scriptData, instance->scriptSize);
+
+        result = m3_ParseModule(env, &module, scriptData, scriptSize);
         if (result)
         {
             DBG("ParseModule error " + String(result));
@@ -100,32 +111,50 @@ void ScriptManager::launchWasmTask(void *)
         result = m3_FindFunction(&f, runtime, "_start");
         if (result)
         {
-            DBG("FindFunction error " + String(result));
+            DBG("FindFunction _start error " + String(result));
             return;
         }
 
+        result = m3_FindFunction(&updateFunc, runtime, "_update");
+        if (result)
+        {
+            DBG("FindFunction _update error " + String(result));
+            return;
+        }
+
+        result = m3_FindFunction(&stopFunc, runtime, "_stop");
+        if (result)
+        {
+            DBG("FindFunction _stop error " + String(result));
+            return;
+        }
+
+
         DBG("Running WebAssembly...");
+
+        isRunning = true;
 
         result = m3_CallV(f);
 
         // Should not arrive here
 
-        if (result)
-        {
-            M3ErrorInfo info;
-            m3_GetErrorInfo(runtime, &info);
-            String e = "Script Error: " + String(result) + " (" + String(info.message) + ")";
-            if (info.file && strlen(info.file) && info.line)
-            {
-                e += " at " + String(info.file) + ":" + String(info.line);
-            }
-            DBG(e);
-        }
+        // if (result)
+        // {
+        //     M3ErrorInfo info;
+        //     m3_GetErrorInfo(runtime, &info);
+        //     String e = "Script Error: " + String(result) + " (" + String(info.message) + ")";
+        //     if (info.file && strlen(info.file) && info.line)
+        //     {
+        //         e += " at " + String(info.file) + ":" + String(info.line);
+        //     }
+        //     DBG(e);
+        // }
     }
     catch (const std::exception &e)
     {
         DBG("Error launching wasm !");
     }
+
 }
 
 M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
@@ -142,12 +171,27 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getPinLED", "i()", &m3_arduino_getPinLED);
     m3_LinkRawFunction(module, arduino, "getGreeting", "v(*i)", &m3_arduino_getGreeting);
     m3_LinkRawFunction(module, arduino, "print", "v(*i)", &m3_arduino_print);
+    
+    m3_LinkRawFunction(module, arduino, "clearLeds", "v()", &m3_clearLeds);
+    m3_LinkRawFunction(module, arduino, "fillLeds", "v(i)", &m3_fillLeds);
+    m3_LinkRawFunction(module, arduino, "setLed", "v(ii)", &m3_setLed);
+    m3_LinkRawFunction(module, arduino, "setLedRGB", "v(iiii)", &m3_setLedRGB);
+    m3_LinkRawFunction(module, arduino, "setLedHSV", "v(iiii)", &m3_setLedHSV);
 
     return m3Err_none;
 }
 
+void ScriptManager::stop()
+{
+    NDBG("Stopping script");
+    m3_CallV(stopFunc);
+    vTaskDelete( taskHandle );
+}
+
 void ScriptManager::shutdown()
 {
+    stop();
+    isRunning = false;
 }
 
 bool ScriptManager::handleCommand(String command, var *data, int numData)
@@ -155,6 +199,11 @@ bool ScriptManager::handleCommand(String command, var *data, int numData)
     if (checkCommand(command, "load", numData, 1))
     {
         launchScript(data[0].stringValue());
+        return true;
+    }
+    if (checkCommand(command, "stop", numData, 0))
+    {
+        stop();
         return true;
     }
     return false;

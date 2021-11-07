@@ -9,6 +9,7 @@
 */
 
 #include "BentoEngine.h"
+#include "Prop.h"
 
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
@@ -421,6 +422,28 @@ void Prop::exportBakedData(BakeData data)
 	NLOG(niceName, "Export bake data " << data.name);
 }
 
+void Prop::addFileToUpload(File f)
+{
+	filesToUpload.add(f);
+	isUploading->setValue(true);
+}
+
+
+void Prop::uploadFileQueue()
+{
+	while (filesToUpload.size() > 0)
+	{
+		File f = filesToUpload.removeAndReturn(0);
+		uploadFile(f);
+	}
+}
+
+void Prop::uploadFile(File f)
+{
+	NLOG(niceName, "Uploading file " + f.getFullPathName() + "...");
+}
+
+
 void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data)
 {
 	if (!bakeMode->boolValue()) return;
@@ -628,6 +651,12 @@ void Prop::run()
 			}
 
 			isBaking->setValue(false);
+		}
+		else if (filesToUpload.size() > 0)
+		{
+			isUploading->setValue(true);
+			uploadFileQueue();
+			isUploading->setValue(false);
 		}
 		else
 		{

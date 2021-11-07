@@ -11,6 +11,12 @@
     <Filter Include="BenTo\Resources">
       <UniqueIdentifier>{8E65566C-A6CB-B998-F659-4E3386AD8621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\WebAssembly\ui">
+      <UniqueIdentifier>{D93B57FF-DFAE-CF7C-B6EA-530CDA469C48}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\WebAssembly">
+      <UniqueIdentifier>{B1A24394-E669-0CCE-B28E-B14B944998C8}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Identification">
       <UniqueIdentifier>{3C151171-CE25-CDDD-9297-CCA3FA02EB0E}</UniqueIdentifier>
     </Filter>
@@ -1096,6 +1102,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\WebAssembly\ui\WasmManagerUI.cpp">
+      <Filter>BenTo\Source\WebAssembly\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\WebAssembly\WasmManager.cpp">
+      <Filter>BenTo\Source\WebAssembly</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\WebAssembly\WasmScript.cpp">
+      <Filter>BenTo\Source\WebAssembly</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Identification\IdentificationRule.cpp">
       <Filter>BenTo\Source\Identification</Filter>
     </ClCompile>
@@ -4503,6 +4518,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\WebAssembly\ui\WasmManagerUI.h">
+      <Filter>BenTo\Source\WebAssembly\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\WebAssembly\WasmManager.h">
+      <Filter>BenTo\Source\WebAssembly</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\WebAssembly\WasmScript.h">
+      <Filter>BenTo\Source\WebAssembly</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Identification\IdentificationRule.h">
       <Filter>BenTo\Source\Identification</Filter>
     </ClInclude>

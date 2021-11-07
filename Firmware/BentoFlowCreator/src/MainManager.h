@@ -11,12 +11,15 @@
 #include "sensors/imu/IMUManager.h"
 #include "sensors/capacitive/CapacitiveManager.h"
 #include "pwm/PWMManager.h"
+#include "scripts/ScriptManager.h"
 
 class MainManager : public Component {
 public:
     MainManager(String fwVersion);
     ~MainManager() {}
 
+    static MainManager * instance;
+    
     String hardwareID;
     String fwVersion;
 
@@ -34,6 +37,7 @@ public:
     TouchManager touch;
     IMUManager imu;
     CapacitiveManager cap;
+    ScriptManager scripts;
 
     Timer initTimer; //to init blocking stuff after connection
 

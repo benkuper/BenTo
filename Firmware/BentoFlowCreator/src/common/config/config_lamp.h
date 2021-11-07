@@ -21,17 +21,17 @@
 
 //SLEEP
 #define BUTTON_INVERTED
-//#define SLEEP_WAKEUP_BUTTON GPIO_NUM_4
-//#define SLEEP_WAKEUP_STATE LOW
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_4
+#define SLEEP_WAKEUP_STATE LOW
 
 // button pin
-#define BUTTON_COUNT 0
-#define BUTTON_INPUT_MODE INPUT_PULLUP
-//const int buttonPins[BUTTON_COUNT]{ 4, 14 };
+ #define BUTTON_COUNT 1
+ #define BUTTON_INPUT_MODE INPUT_PULLUP
+ const int buttonPins[BUTTON_COUNT]{ 4 };
 
-#define TOUCH_COUNT 1
-const int touchPins[TOUCH_COUNT]{4};
-#define TOUCH_WAKEUP_PIN T0 //TOUCH_PAD_NUM0 //touch pad 0 is pin 4
+//#define TOUCH_COUNT 1
+//const int touchPins[TOUCH_COUNT]{4};
+//#define TOUCH_WAKEUP_PIN T0 //TOUCH_PAD_NUM0 //touch pad 0 is pin 4
 
 //apparently helps having stable fastLED with TinyPICO and WS2812C
 #define FASTLED_FORCE_LOOPDELAY
@@ -39,8 +39,8 @@ const int touchPins[TOUCH_COUNT]{4};
 #define HAS_FILES
 #define FILES_USE_INTERNAL_MEMORY
 
-#define GROUND_PIN_COUNT 2
-const int groundPins[GROUND_PIN_COUNT]{13};
+#define GROUND_PIN_COUNT 1
+const int groundPins[GROUND_PIN_COUNT]{ 14 };
 
 //TinyPICO code
 
