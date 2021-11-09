@@ -5,7 +5,10 @@ ScriptManager *ScriptManager::instance = nullptr;
 
 ScriptManager::ScriptManager() : Component("scripts"),
                                  isRunning(false),
-                                 runtime(NULL)
+                                 runtime(NULL),
+                                 initFunc(NULL),
+                                 updateFunc(NULL),
+                                 stopFunc(NULL)
 {
     instance = this;
 }
@@ -22,9 +25,10 @@ void ScriptManager::update()
 {
     if (isRunning)
     {
-        //TSTART()
-        m3_CallV(updateFunc);
-         //TFINISH("Script ")
+        // TSTART()
+        if (updateFunc != NULL)
+            m3_CallV(updateFunc);
+        // TFINISH("Script ")
     }
 }
 
@@ -46,12 +50,13 @@ void ScriptManager::launchScript(String path)
     }
 
     long totalBytes = f.size();
+#ifdef SCRIPT_MAX_SIZE
     if (totalBytes > SCRIPT_MAX_SIZE)
     {
         NDBG("Script size is more than max size");
         return;
     }
-
+#endif
     scriptSize = totalBytes;
 
     f.read(scriptData, scriptSize);
@@ -126,29 +131,40 @@ void ScriptManager::launchWasmTask()
         return;
     }
 
+    String foundFunc;
+
     result = m3_FindFunction(&initFunc, runtime, "init");
-    if (result)
-    {
-        DBG("FindFunction init error " + String(result));
-        return;
-    }
+    if (initFunc != NULL)
+        foundFunc += "init";
+    // if (result)
+    // {
+    //     DBG("FindFunction init error " + String(result));
+    //     return;
+    // }
 
     result = m3_FindFunction(&updateFunc, runtime, "update");
-    if (result)
-    {
-        DBG("FindFunction update error " + String(result));
-        return;
-    }
+    if (initFunc != NULL)
+        foundFunc += " / update";
 
-    result = m3_FindFunction(&stopFunc, runtime, "_stop");
-    if (result)
-    {
-        DBG("FindFunction _stop error " + String(result));
-        return;
-    }
+    // if (result)
+    // {
+    //     DBG("FindFunction update error " + String(result));
+    //     return;
+    // }
 
+    result = m3_FindFunction(&stopFunc, runtime, "stop");
+    if (initFunc != NULL)
+        foundFunc += " / stop";
+
+    // if (result)
+    // {
+    //     DBG("FindFunction stop error " + String(result));
+    // }
+
+    NDBG("Found functions : " + foundFunc);
     isRunning = true;
-    result = m3_CallV(initFunc);
+    if (initFunc != NULL)
+        result = m3_CallV(initFunc);
 
 #if WASM_ASYNC
     vTaskDelete(NULL);
@@ -177,9 +193,10 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getYaw", "f()", &m3_getYaw);
     m3_LinkRawFunction(module, arduino, "getPitch", "f()", &m3_getPitch);
     m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
+    m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
-    m3_LinkRawFunction(module, arduino, "getNumber", "f()", &m3_getNumber);
+    m3_LinkRawFunction(module, arduino, "getButtonState", "i(i)", &m3_getButtonState);
 
     return m3Err_none;
 }
@@ -187,7 +204,8 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
 void ScriptManager::stop()
 {
     NDBG("Stopping script");
-    m3_CallV(stopFunc);
+    if (stopFunc != NULL)
+        m3_CallV(stopFunc);
 
     isRunning = false;
     m3_FreeRuntime(runtime);
@@ -213,6 +231,6 @@ bool ScriptManager::handleCommand(String command, var *data, int numData)
         stop();
         return true;
     }
-    
+
     return false;
 }

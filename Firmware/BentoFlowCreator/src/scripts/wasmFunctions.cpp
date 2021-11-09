@@ -131,10 +131,10 @@ m3ApiRawFunction(m3_pointHSV)
 m3ApiRawFunction(m3_getOrientation)
 {
     m3ApiGetArg(uint32_t, oi);
-    m3ApiReturnType(float);
+    m3ApiReturnType(uint32_t);
     DBG("Get orientation "+String(oi));
     float v = oi < 3 ? MainManager::instance->imu.orientation[oi] : -1;
-    m3ApiReturn(v);
+    m3ApiReturn((uint32_t)v);
 }
 
 m3ApiRawFunction(m3_getYaw)
@@ -154,11 +154,6 @@ m3ApiRawFunction(m3_getRoll)
     m3ApiReturn(MainManager::instance->imu.orientation[2]);
 }
 
-m3ApiRawFunction(m3_getNumber)
-{
-    m3ApiReturnType(float);
-    m3ApiReturn(.3f);
-}
 
 m3ApiRawFunction(m3_getThrowState)
 {
@@ -166,8 +161,32 @@ m3ApiRawFunction(m3_getThrowState)
     m3ApiReturn((uint32_t)MainManager::instance->imu.throwState);
 }
 
+m3ApiRawFunction(m3_setIMUEnabled)
+{
+    m3ApiGetArg(uint32_t, en);
+    DBG("Set IMU enabled from script : "+String((int)en));
+    MainManager::instance->imu.setEnabled((bool)en);
+    m3ApiSuccess();
+}
+
+
 m3ApiRawFunction(m3_updateLeds)
 {
     MainManager::instance->leds.rgbManager.update();
     m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_getButtonState)
+{
+    m3ApiGetArg(uint32_t, oi);
+    m3ApiReturnType(uint32_t);
+    
+    #ifdef BUTTON_COUNT
+    int v = oi < BUTTON_COUNT ? MainManager::instance->buttons.isPressed[oi] : 0;
+    DBG("Get button state "+String(oi)+" : "+String(v));
+    #else
+    int v = 0;
+    #endif
+
+    m3ApiReturn((uint32_t)v);
 }

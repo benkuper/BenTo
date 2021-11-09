@@ -3,12 +3,12 @@
 #include "../common/Common.h"
 #include "wasmFunctions.h"
 
-#define SCRIPT_MAX_SIZE 16000
+#define SCRIPT_MAX_SIZE 32000
 
 #define WASM_STACK_SLOTS 2048
 #define NATIVE_STACK_SIZE (32 * 1024)
 
-#define WASM_MEMORY_LIMIT 4096
+#define WASM_MEMORY_LIMIT 4096*4
 
 #define WASM_ASYNC 0
 
