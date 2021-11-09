@@ -203,13 +203,18 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
 
 void ScriptManager::stop()
 {
-    NDBG("Stopping script");
-    if (stopFunc != NULL)
-        m3_CallV(stopFunc);
+    if (isRunning) {
+        NDBG("Stopping script");
+ 
+        if (stopFunc != NULL)
+            m3_CallV(stopFunc);
 
-    isRunning = false;
-    m3_FreeRuntime(runtime);
-    runtime = NULL;
+        isRunning = false;
+        m3_FreeRuntime(runtime);
+        runtime = NULL;
+    } else {
+        NDBG("Not stopping script, because non was running");
+    }
 }
 
 void ScriptManager::shutdown()
