@@ -192,14 +192,13 @@ void ScriptManager::stop()
     isRunning = false;
     m3_FreeRuntime(runtime);
     runtime = NULL;
-    m3_FreeEnvironment(env);
-    env = NULL;
 }
 
 void ScriptManager::shutdown()
 {
     stop();
- 
+    m3_FreeEnvironment(env);
+    env = NULL;
 }
 
 bool ScriptManager::handleCommand(String command, var *data, int numData)
