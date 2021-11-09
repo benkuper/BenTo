@@ -26,11 +26,12 @@ public:
     BoolParameter* lowMemory;
     Trigger* compileTrigger;
     Trigger* uploadToPropsTrigger;
-    Trigger* launchOnPropsTrigger;
+    Trigger* loadOnPropsTrigger;
 
     BoolParameter* autoCompile;
     BoolParameter* autoUpload;
     BoolParameter* autoLaunch;
+    Trigger* stopOnPropsTrigger;
     Time lastModTime;
 
     void checkAutoCompile();

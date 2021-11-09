@@ -26,9 +26,9 @@ WasmScript::WasmScript() :
 	compileTrigger = addTrigger("Compile", "Compiles the script");
 	uploadToPropsTrigger = addTrigger("Upload to Props", "");
 	autoUpload = addBoolParameter("Auto Upload", "", true);
-	launchOnPropsTrigger = addTrigger("Launch on Props", "");
+	loadOnPropsTrigger = addTrigger("Load on Props", "");
 	autoLaunch = addBoolParameter("Auto Launch", "", true);
-
+	stopOnPropsTrigger = addTrigger("Stop on Props", "");
 }
 
 WasmScript::~WasmScript()
@@ -102,7 +102,7 @@ void WasmScript::compile()
 			uploadToPropsTrigger->trigger();
 			if (autoLaunch->boolValue())
 			{
-				std::function<void()> func = std::bind(&Trigger::trigger, launchOnPropsTrigger);
+				std::function<void()> func = std::bind(&Trigger::trigger, loadOnPropsTrigger);
 				Timer::callAfterDelay(200, func);
 			}
 		}
@@ -151,11 +151,18 @@ void WasmScript::onContainerTriggerTriggered(Trigger* t)
 			p->addFileToUpload(f);
 		}
 	}
-	else if (t == launchOnPropsTrigger)
+	else if (t == loadOnPropsTrigger)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{
 			p->sendControlToProp("scripts.load", shortName);
+		}
+	}
+	else if (t == stopOnPropsTrigger)
+	{
+		for (auto& p : PropManager::getInstance()->items)
+		{
+			p->sendControlToProp("scripts.stop", shortName);
 		}
 	}
 }
