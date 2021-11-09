@@ -188,16 +188,18 @@ void ScriptManager::stop()
 {
     NDBG("Stopping script");
     m3_CallV(stopFunc);
+
+    isRunning = false;
+    m3_FreeRuntime(runtime);
+    runtime = NULL;
+    m3_FreeEnvironment(env);
+    env = NULL;
 }
 
 void ScriptManager::shutdown()
 {
     stop();
-    m3_FreeRuntime(runtime);
-    runtime = NULL;
-    m3_FreeEnvironment(env);
-    env = NULL;
-    isRunning = false;
+ 
 }
 
 bool ScriptManager::handleCommand(String command, var *data, int numData)
