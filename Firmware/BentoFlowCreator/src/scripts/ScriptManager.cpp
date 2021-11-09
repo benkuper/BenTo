@@ -27,7 +27,9 @@ void ScriptManager::update()
     {
         // TSTART()
         if (updateFunc != NULL)
+        {
             m3_CallV(updateFunc);
+        }
         // TFINISH("Script ")
     }
 }
@@ -143,7 +145,7 @@ void ScriptManager::launchWasmTask()
     // }
 
     result = m3_FindFunction(&updateFunc, runtime, "update");
-    if (initFunc != NULL)
+    if (updateFunc != NULL)
         foundFunc += " / update";
 
     // if (result)
@@ -153,7 +155,7 @@ void ScriptManager::launchWasmTask()
     // }
 
     result = m3_FindFunction(&stopFunc, runtime, "stop");
-    if (initFunc != NULL)
+    if (stopFunc != NULL)
         foundFunc += " / stop";
 
     // if (result)
@@ -162,7 +164,9 @@ void ScriptManager::launchWasmTask()
     // }
 
     NDBG("Found functions : " + foundFunc);
+    
     isRunning = true;
+
     if (initFunc != NULL)
         result = m3_CallV(initFunc);
 
@@ -178,7 +182,8 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
 
     m3_LinkRawFunction(module, arduino, "millis", "i()", &m3_arduino_millis);
     m3_LinkRawFunction(module, arduino, "delay", "v(i)", &m3_arduino_delay);
-    m3_LinkRawFunction(module, arduino, "print", "v(*i)", &m3_arduino_print);
+    m3_LinkRawFunction(module, arduino, "printFloat", "v(f)", &m3_printFloat);
+    m3_LinkRawFunction(module, arduino, "printInt", "v(i)", &m3_printInt);
 
     m3_LinkRawFunction(module, arduino, "clearLeds", "v()", &m3_clearLeds);
     m3_LinkRawFunction(module, arduino, "fillLeds", "v(i)", &m3_fillLeds);
@@ -189,7 +194,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "setLedHSV", "v(iiii)", &m3_setLedHSV);
     m3_LinkRawFunction(module, arduino, "pointRGB", "v(ffiii)", &m3_pointRGB);
     m3_LinkRawFunction(module, arduino, "pointHSV", "v(ffiii)", &m3_pointHSV);
-    m3_LinkRawFunction(module, arduino, "getOrientation", "i(i)", &m3_getOrientation);
+    m3_LinkRawFunction(module, arduino, "getOrientation", "f(i)", &m3_getOrientation);
     m3_LinkRawFunction(module, arduino, "getYaw", "f()", &m3_getYaw);
     m3_LinkRawFunction(module, arduino, "getPitch", "f()", &m3_getPitch);
     m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
