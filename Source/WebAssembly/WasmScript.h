@@ -13,7 +13,8 @@
 #include "JuceHeader.h"
 
 class WasmScript :
-    public BaseItem
+    public BaseItem,
+    public Thread
 {
 public:
     WasmScript();
@@ -27,10 +28,18 @@ public:
     Trigger* uploadToPropsTrigger;
     Trigger* launchOnPropsTrigger;
 
+    BoolParameter* autoCompile;
+    BoolParameter* autoUpload;
+    BoolParameter* autoLaunch;
+    Time lastModTime;
 
+    void checkAutoCompile();
     void compile();
 
     File getWasmFile();
 
+    void run() override;
+
+    void onContainerParameterChangedInternal(Parameter* p) override;
     void onContainerTriggerTriggered(Trigger* t) override;
 };
