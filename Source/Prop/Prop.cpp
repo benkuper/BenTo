@@ -235,7 +235,14 @@ void Prop::update()
 		}
 	}
 
-	if (!bakeMode->boolValue() && !isBaking->boolValue() && !isUploading->boolValue()) sendColorsToProp();
+	
+	if (!bakeMode->boolValue()
+		&& !isBaking->boolValue()
+		&& !isUploading->boolValue()
+		&& (rgbComponent != nullptr && rgbComponent->streamEnable->boolValue()))
+	{
+		sendColorsToProp();
+	}
 	else if (seekBakeTime != -1)
 	{
 		seekBakePlaying(seekBakeTime);

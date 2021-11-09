@@ -150,6 +150,7 @@ void RGBLedsManager::update()
 
 #else
 
+    // NDBG("FastLed.show()");
     /*if(ledEnabled) */ FastLED.show();
 
 #endif

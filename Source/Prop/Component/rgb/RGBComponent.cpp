@@ -17,6 +17,7 @@ RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
 {
 
     brightness = addFloatParameter("Brightness", "Brightness", params.getProperty("defaultBrightness",.5f), 0, 1);
+    streamEnable = addBoolParameter("Stream Colors", "If checked, this will be streaming colors", true);
 
     if (useLayout)
     {

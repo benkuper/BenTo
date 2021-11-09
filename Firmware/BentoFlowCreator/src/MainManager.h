@@ -20,6 +20,9 @@ public:
 
     static MainManager * instance;
     
+    long tstart;
+    long tend;
+
     String hardwareID;
     String fwVersion;
 

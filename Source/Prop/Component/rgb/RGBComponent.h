@@ -24,6 +24,7 @@ public:
     bool useLayout;
     Array<int> ledIndexMap;
 
+    BoolParameter* streamEnable;
     FloatParameter* brightness;
 
     void handePropConnected() override;

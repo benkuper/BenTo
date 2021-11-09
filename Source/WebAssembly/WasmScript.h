@@ -19,10 +19,14 @@ public:
     WasmScript();
     ~WasmScript();
 
+    enum CompileType {COMPILE_DEBUG, COMPILE_OPTIMIZED,COMPILE_TINY};
     FileParameter* scriptFile;
+    EnumParameter* compileType;
+    BoolParameter* lowMemory;
     Trigger* compileTrigger;
     Trigger* uploadToPropsTrigger;
     Trigger* launchOnPropsTrigger;
+
 
     void compile();
 

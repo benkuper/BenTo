@@ -53,8 +53,10 @@ void LedManager::update()
         shouldUpdateLeds = true;
     }
 
-    if (shouldUpdateLeds)
+   // if (shouldUpdateLeds)
+   
         rgbManager.update();
+
     irManager.update();
 
     connectedTimer.update();
@@ -63,6 +65,8 @@ void LedManager::update()
 
 void LedManager::setMode(Mode m)
 {
+    NDBG("LED Set mode "+String((int)m));
+
 #ifdef LED_COUNT
     if (m == mode)
         return;
@@ -83,6 +87,7 @@ void LedManager::setMode(Mode m)
     case System:
         currentMode = &sysLedMode;
         break;
+
     case Stream:
         currentMode = &streamMode;
         break;

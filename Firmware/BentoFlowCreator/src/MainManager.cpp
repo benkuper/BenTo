@@ -95,11 +95,12 @@ void MainManager::update()
     cap.update();
 
     scripts.update();
-
-    leds.update();
+    
     pwm.update();
 
-
+    leds.update();
+    
+    
 #ifdef POWEROFF_IF_NOTCONNECTED
     if (comm.wifiManager.state == ConnectionState::ConnectionError)
     {

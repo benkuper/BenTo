@@ -17,8 +17,13 @@ WasmScript::WasmScript() :
 	scriptFile = addFileParameter("Script", "Path to the script");
 	scriptFile->fileTypeFilter = "*.ts";
 
-	compileTrigger = addTrigger("Compile", "Compiles the script");
+	compileType = addEnumParameter("Compile Type", "");
+	compileType->addOption("Optimized", COMPILE_OPTIMIZED)->addOption("Debug", COMPILE_DEBUG)->addOption("Tiny", COMPILE_TINY);
 
+	lowMemory = addBoolParameter("Low Memory", "", false);
+
+
+	compileTrigger = addTrigger("Compile", "Compiles the script");
 	uploadToPropsTrigger = addTrigger("Upload to Props", "");
 	launchOnPropsTrigger = addTrigger("Launch on Props", "");
 
@@ -40,8 +45,30 @@ void WasmScript::compile()
 	bool silentMode = false;
 	bool result = true;
 
+	CompileType t = compileType->getValueDataAsEnum<CompileType>();
+	String options = "";
+	switch (t)
+	{
+	case COMPILE_DEBUG:
+		options = "--debug";
+		break;
+
+	case COMPILE_OPTIMIZED:
+		options = "-O3s --noAssert";
+		break;
+
+	case COMPILE_TINY:
+		options = "-O3z --noAssert --runtime stub --use abort =";
+		break;
+	}
+
+	if (lowMemory->boolValue())
+	{
+		options += " --lowMemoryLimit";
+	}
+
 	//String buildCommand = "npm run build";
-	String buildCommand = "npx asc app.ts -b " + shortName + ".wasm -t app.wat -O3z --runtime stub --noAssert --use abort=";
+	String buildCommand = "npx asc app.ts -b " + shortName + ".wasm -t app.wat " + options;
 	String command = "cd \"" + folder.getFullPathName() + "\" && " + buildCommand;
 	LOG(command);
 	if (silentMode) WinExec(command.getCharPointer(), SW_HIDE);
@@ -50,7 +77,7 @@ void WasmScript::compile()
 	File nwf = getWasmFile();
 	if (nwf.existsAsFile())
 	{
-		NLOG(niceName, "Script has been compiled successfully to "+nwf.getFileName());
+		NLOG(niceName, "Script has been compiled successfully to " + nwf.getFileName());
 	}
 	else
 	{
