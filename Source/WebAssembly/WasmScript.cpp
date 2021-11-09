@@ -25,7 +25,7 @@ WasmScript::WasmScript() :
 	autoCompile = addBoolParameter("Auto Compile", "", true);
 	compileTrigger = addTrigger("Compile", "Compiles the script");
 	uploadToPropsTrigger = addTrigger("Upload to Props", "");
-	autoCompile = addBoolParameter("Auto Upload", "", true);
+	autoUpload = addBoolParameter("Auto Upload", "", true);
 	launchOnPropsTrigger = addTrigger("Launch on Props", "");
 	autoLaunch = addBoolParameter("Auto Launch", "", true);
 
@@ -41,10 +41,9 @@ void WasmScript::checkAutoCompile()
 	File f = scriptFile->getFile();
 	if (!f.exists()) return;
 	Time t = f.getLastModificationTime();
-	if (t > lastModTime)
-	{
-		compile();
-	}
+	if (t > lastModTime) startThread();
+	lastModTime = t;
+
 }
 
 void WasmScript::compile()
@@ -104,7 +103,7 @@ void WasmScript::compile()
 			if (autoLaunch->boolValue())
 			{
 				std::function<void()> func = std::bind(&Trigger::trigger, launchOnPropsTrigger);
-				Timer::callAfterDelay(500, func);
+				Timer::callAfterDelay(200, func);
 			}
 		}
 	}
