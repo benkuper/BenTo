@@ -25,11 +25,13 @@ public:
 	StringParameter * remoteHost;
 	IntParameter * remotePort;
 	OSCSender globalSender;
+	StringParameter* projectName;
 
 	void clearInternal() override;
 
-	void processMessage(const OSCMessage &m) override;
+	juce::Result saveDocument(const File& file) override;
 
+	void processMessage(const OSCMessage &m) override;
 	var getJSONData() override;
 	void loadJSONDataInternalEngine(var data, ProgressTask * loadingTask) override;
 

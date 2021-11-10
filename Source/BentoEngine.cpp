@@ -39,7 +39,8 @@ BentoEngine::BentoEngine() :
 
 	ProjectSettings::getInstance()->addChildControllableContainer(&ioCC);
 	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
-	
+
+	projectName = ProjectSettings::getInstance()->addStringParameter("Project name", "This name will be used to identify the project when uploaded to the props", "project", true);
 	
 	//Communication
 	OSCRemoteControl::getInstance()->localPort->defaultValue = 43000;
@@ -82,6 +83,21 @@ void BentoEngine::clearInternal()
 	LightBlockModelLibrary::getInstance()->clear();
 	Spatializer::getInstance()->clear();
 	WasmManager::getInstance()->clear();
+
+	projectName->resetValue();
+}
+
+juce::Result BentoEngine::saveDocument(const File& file)
+{
+	juce::Result r = Engine::saveDocument(file);
+
+	if (r.wasOk()) {
+		if (projectName->getValue() == "project") {
+			projectName->setValue(file.getFileName().replace(".bento", ""));
+		}
+	}
+
+	return r;
 }
 
 
