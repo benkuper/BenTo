@@ -338,6 +338,11 @@
                   file="Source/LightBlock/model/ui/LightBlockModelUI.h"/>
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
+            <GROUP id="{EE5C0264-0254-0301-E4F8-139423483011}" name="wasm">
+              <FILE id="hCW9le" name="WasmBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/wasm/WasmBlock.cpp"
+                    xcodeResource="0"/>
+              <FILE id="aHyxRW" name="WasmBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/wasm/WasmBlock.h"/>
+            </GROUP>
             <GROUP id="{D937E358-C3AF-2A4E-107D-7B9701E30F09}" name="shape">
               <FILE id="FO2Ik9" name="PropShapeBlock.h" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/shape/PropShapeBlock.h"/>

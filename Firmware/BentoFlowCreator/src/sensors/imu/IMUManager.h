@@ -4,6 +4,8 @@
 #include "Adafruit_BNO055/Adafruit_BNO055.h"
 
 #define TRAIL_MAX 20
+#define IMU_READ_ASYNC
+#define NATIVE_STACK_SIZE (32 * 1024)
 
 class IMUEvent
 {
@@ -24,13 +26,18 @@ public:
     IMUManager();
     ~IMUManager();
 
+    static IMUManager * instance;
+
 #ifdef HAS_IMU
     Adafruit_BNO055 bno;
 #endif
 
+    long tstart;
+    long tend;
+
     bool isConnected;
     bool isEnabled;
-    int sendLevel; //0 = throws / 1 = +orientation / 2 = + other stuff
+    int sendLevel; //-1 = noSend / 0 = throws / 1 = +orientation / 2 = + other stuff
     
     long orientationSendTime;
     long timeSinceOrientationLastSent;
@@ -52,15 +59,24 @@ public:
     float semiFlatThreshold;
     float loftieThreshold;
     float singleThreshold;
-
+    
+#ifdef IMU_READ_ASYNC
+    bool hasNewData;
+    bool imuLock;
+    bool shouldStopRead;
+    static void readIMUStatic(void *);
+#endif
     
     void init();
     void update();
+    
+    void readIMU();
 
     void computeThrow();
 
     void setEnabled(bool value);
-
+    
+    void shutdown();
 
     bool handleCommand(String command, var * data, int numData) override;
 

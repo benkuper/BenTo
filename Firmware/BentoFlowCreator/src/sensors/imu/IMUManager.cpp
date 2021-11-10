@@ -1,6 +1,7 @@
 #include "IMUManager.h"
 
 const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration"};
+IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),
 #ifdef HAS_IMU
@@ -9,15 +10,23 @@ IMUManager::IMUManager() : Component("imu"),
                            isConnected(false),
                            isEnabled(false),
                            sendLevel(1),
-                           orientationSendTime(20), //50fps
+                           orientationSendTime(20), // 50fps
                            timeSinceOrientationLastSent(0),
                            throwState(0)
+#ifdef IMU_READ_ASYNC
+                           ,
+                           hasNewData(false), shouldStopRead(false), imuLock(false)
+#endif
 {
+
+  instance = this;
+
 #ifdef HAS_IMU
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
   bno.setAxisRemap(Adafruit_BNO055::IMU_REMAP_CONFIG);
   bno.setAxisSign(Adafruit_BNO055::IMU_REMAP_SIGN);
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
+  bno.setExtCrystalUse(true);
 #endif
 
   accelThresholds[0] = .8f;
@@ -59,7 +68,8 @@ void IMUManager::init()
   bno.setAxisSign(IMU_REMAP_SIGN);
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 
-  bno.setExtCrystalUse(true);
+  //bno.setExtCrystalUse(true);
+  bno.enterNormalMode();
 
   isConnected = true;
   NDBG("Imu is connected.");
@@ -78,24 +88,97 @@ void IMUManager::init()
   prefs.end();
 #endif
 
+#ifdef IMU_READ_ASYNC
+    DBG("IMU Task Create");
+    xTaskCreate(&IMUManager::readIMUStatic, "imu", NATIVE_STACK_SIZE, NULL, 1, NULL);
+#endif
+
 #endif
 }
 
 void IMUManager::update()
 {
+#ifdef HAS_IMU
   if (!isEnabled || !isConnected)
     return;
 
-#ifdef HAS_IMU
+#ifdef IMU_READ_ASYNC
+  if (!hasNewData)
+    return;
+  hasNewData = false;
+  imuLock = true;
+#else
+  readIMU();
+#endif
+
+  long curTime = millis();
+  if (curTime > timeSinceOrientationLastSent + orientationSendTime)
+  {
+   // TSTART()
+    if (sendLevel >= 1)
+    {
+
+      sendEvent(IMUEvent(IMUEvent::OrientationUpdate, orientation, 3));
+      if (sendLevel >= 2)
+      {
+        sendEvent(IMUEvent(IMUEvent::AccelUpdate, accel, 3));
+        sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
+        sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
+        // sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
+      }
+    }
+
+    timeSinceOrientationLastSent = curTime;
+  //  TFINISH("Send")
+  }
+
+#ifdef IMU_READ_ASYNC
+  imuLock = false;
+#endif
+
+#endif
+}
+
+#ifdef IMU_READ_ASYNC
+void IMUManager::readIMUStatic(void *)
+{
+  DBG("Thread IMU Start");
+  while (!instance->shouldStopRead)
+  {
+    instance->readIMU();
+    delay(5);
+  }
+
+  DBG("Thread IMU Finish");
+
+  vTaskDelete(NULL);
+
+  DBG("Task deleted");
+}
+#endif
+
+void IMUManager::readIMU()
+{
+  if (!isEnabled)
+    return;
+
+#ifdef IMU_READ_ASYNC
+  if (imuLock)
+    return;
+#endif
+
+  //DBG("Read IMU");
+
   imu::Quaternion q = bno.getQuat();
   q.normalize();
 
-  //float temp = q.x();  q.x() = -q.y();  q.y() = temp;
-  //q.z() = -q.z();
+  // float temp = q.x();  q.x() = -q.y();  q.y() = temp;
+  // q.z() = -q.z();
+
   imu::Vector<3> euler = q.toEuler();
-  orientation[0] = euler.x() * 180 / PI; //Yaw
-  orientation[1] = euler.y() * 180 / PI; //Pitch
-  orientation[2] = euler.z() * 180 / PI; //Roll
+  orientation[0] = euler.x() * 180 / PI; // Yaw
+  orientation[1] = euler.y() * 180 / PI; // Pitch
+  orientation[2] = euler.z() * 180 / PI; // Roll
 
   imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
   accel[0] = acc.x();
@@ -119,30 +202,13 @@ void IMUManager::update()
 
   computeThrow();
 
-  long curTime = millis();
-  if (curTime > timeSinceOrientationLastSent + orientationSendTime)
-  {
-    if (sendLevel >= 1)
-    {
-
-      sendEvent(IMUEvent(IMUEvent::OrientationUpdate, orientation, 3));
-      if (sendLevel >= 2)
-      {
-        sendEvent(IMUEvent(IMUEvent::AccelUpdate, accel, 3));
-        sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
-        sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
-        //sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
-      }
-    }
-
-    timeSinceOrientationLastSent = curTime;
-  }
+#ifdef IMU_READ_ASYNC
+  hasNewData = true;
 #endif
 }
 
 void IMUManager::computeThrow()
 {
-
 #ifdef HAS_IMU
   float maxAccelYZ = max(abs(accel[1]), abs(accel[2]));
   float maxAccel = max(maxAccelYZ, abs(accel[0]));
@@ -156,7 +222,7 @@ void IMUManager::computeThrow()
   int newState = 0;
   if (isFlatting)
   {
-    newState = 1; //flat
+    newState = 1; // flat
   }
   else
   {
@@ -186,11 +252,11 @@ void IMUManager::computeThrow()
       else if (throwPower < singleThreshold)
         newState = 2;
       else
-        newState = 3; //double
+        newState = 3; // double
     }
   }
 
-  //NDBG(String(throwState));
+  // NDBG(String(throwState));
 
   if (newState != throwState)
   {
@@ -205,7 +271,16 @@ void IMUManager::setEnabled(bool value)
 {
   if (isEnabled == value)
     return;
+
   isEnabled = value;
+}
+
+void IMUManager::shutdown()
+{
+  setEnabled(false);
+  #ifdef IMU_READ_ASYNC
+    shouldStopRead = true;
+    #endif
 }
 
 bool IMUManager::handleCommand(String command, var *data, int numData)

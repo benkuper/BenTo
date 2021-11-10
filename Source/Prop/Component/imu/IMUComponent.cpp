@@ -28,7 +28,7 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     orientation->setBounds(-180, -90, -180, 180, 90, 180);
 
     sendLevel = addEnumParameter("Send Level", "What to send from the device");
-    sendLevel->addOption("Throws only", 0)->addOption("Orientation", 1)->addOption("All", 2);
+    sendLevel->addOption("No Send", -1)->addOption("Throws only", 0)->addOption("Orientation", 1)->addOption("All", 2);
 
     accel = addPoint3DParameter("Accel", "Linear Acceleration of the prop");
     accel->setControllableFeedbackOnly(true);

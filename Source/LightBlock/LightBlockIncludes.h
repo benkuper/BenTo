@@ -46,6 +46,7 @@
 #include "model/blocks/picture/PictureBlock.h"
 
 #include "model/blocks/script/ScriptBlock.h"
+#include "model/blocks/wasm/WasmBlock.h"
 
 #include "model/blocks/shape/PropShapeBlock.h"
 

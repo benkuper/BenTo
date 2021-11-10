@@ -17,6 +17,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	pictureBlocksManagerUI("Pictures", &library->pictureBlocks),
 	nodeBlocksManagerUI("Nodes", &library->nodeBlocks),
 	scriptBlocksManagerUI("Scripts", &library->scriptBlocks),
+	wasmBlocksManagerUI("Wasm", &library->wasmBlocks),
 	timelineBlocksManagerUI("Timelines", &library->timelineBlocks),
 	genericFilterGroupUI(&library->genericFilterBlocks)
 {
@@ -35,6 +36,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	wasmBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
 
@@ -46,6 +48,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	container.addAndMakeVisible(&pictureBlocksManagerUI);
 	container.addAndMakeVisible(&nodeBlocksManagerUI);
 	container.addAndMakeVisible(&scriptBlocksManagerUI);
+	container.addAndMakeVisible(&wasmBlocksManagerUI);
 	container.addAndMakeVisible(&timelineBlocksManagerUI);
 
 	container.addAndMakeVisible(&genericFilterGroupUI);
@@ -56,6 +59,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	pictureBlocksManagerUI.addComponentListener(this);
 	nodeBlocksManagerUI.addComponentListener(this);
 	scriptBlocksManagerUI.addComponentListener(this);
+	wasmBlocksManagerUI.addComponentListener(this);
 	timelineBlocksManagerUI.addComponentListener(this);
 
 	library->addAsyncCoalescedContainerListener(this);
@@ -101,6 +105,9 @@ void LightBlockModelLibraryUI::resized()
 
 	scriptBlocksManagerUI.setBounds(r.withHeight(scriptBlocksManagerUI.getHeight()));
 	r.translate(0, scriptBlocksManagerUI.getHeight() + 10);
+	
+	wasmBlocksManagerUI.setBounds(r.withHeight(wasmBlocksManagerUI.getHeight()));
+	r.translate(0, wasmBlocksManagerUI.getHeight() + 10);
 
 	timelineBlocksManagerUI.setBounds(r.withHeight(timelineBlocksManagerUI.getHeight()));
 	r.translate(0, timelineBlocksManagerUI.getHeight() + 10);
@@ -128,6 +135,7 @@ void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent & e)
 			pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+			wasmBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
 

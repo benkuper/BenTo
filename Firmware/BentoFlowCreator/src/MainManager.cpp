@@ -89,17 +89,20 @@ void MainManager::update()
     comm.update();
 
     imu.update();
+
     buttons.update();
     battery.update();
     touch.update();
     cap.update();
 
-    scripts.update();
+    //tmp call this from ledmanager
+    //scripts.update();
     
     pwm.update();
 
+// TSTART()
     leds.update();
-    
+// TFINISH("Leds")
     
 #ifdef POWEROFF_IF_NOTCONNECTED
     if (comm.wifiManager.state == ConnectionState::ConnectionError)
@@ -119,6 +122,8 @@ void touchCallback() {}
 void MainManager::sleep(CRGB color)
 {
     NDBG("Sleep now ! ");
+    imu.shutdown();
+
     comm.sendMessage(name, "sleep", nullptr, 0);
     leds.shutdown(color); // to replace with battery color
     pwm.shutdown();

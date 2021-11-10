@@ -334,6 +334,9 @@
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\wasm\WasmBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3361,6 +3364,7 @@
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\wasm\WasmBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.h"/>

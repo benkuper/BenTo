@@ -14,6 +14,7 @@ m3ApiRawFunction(m3_fillLeds);
 m3ApiRawFunction(m3_fillLedsRGB);
 m3ApiRawFunction(m3_fillLedsHSV);
 m3ApiRawFunction(m3_setLed);
+m3ApiRawFunction(m3_getLed);
 m3ApiRawFunction(m3_setLedRGB);
 m3ApiRawFunction(m3_setLedHSV);
 m3ApiRawFunction(m3_pointRGB);

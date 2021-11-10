@@ -151,7 +151,8 @@ void RGBLedsManager::update()
 #else
 
     // NDBG("FastLed.show()");
-    /*if(ledEnabled) */ FastLED.show();
+    /*if(ledEnabled) */ 
+    FastLED.show();
 
 #endif
 #endif //LED_COUNT
@@ -289,7 +290,7 @@ void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear)
 #ifdef LED_COUNT
     if (doClear)
         clear();
-    LedHelpers::point(leds, LED_COUNT, c, pos, fade);
+    LedHelpers::point(leds, LED_COUNT, c, pos, fade, doClear);
 #endif
 }
 

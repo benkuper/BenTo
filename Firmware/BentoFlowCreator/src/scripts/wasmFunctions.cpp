@@ -82,6 +82,21 @@ m3ApiRawFunction(m3_setLed)
     m3ApiSuccess();
 }
 
+m3ApiRawFunction(m3_getLed)
+{
+    m3ApiReturnType(uint32_t)
+    m3ApiGetArg(uint32_t, index);
+
+    if(index < LED_COUNT)
+    {
+        CRGB c = MainManager::instance->leds.rgbManager.leds[index];
+        uint32_t val = c.r << 16 | c.g << 8 | c.b;
+        m3ApiReturn(val);
+    }
+    
+    m3ApiReturn(0)
+}
+
 m3ApiRawFunction(m3_setLedRGB)
 {
     m3ApiGetArg(uint32_t, index);

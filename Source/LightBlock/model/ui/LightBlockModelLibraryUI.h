@@ -32,6 +32,7 @@ public:
 	LightBlockModelManagerUI pictureBlocksManagerUI;
 	LightBlockModelManagerUI nodeBlocksManagerUI;
 	LightBlockModelManagerUI scriptBlocksManagerUI;
+	LightBlockModelManagerUI wasmBlocksManagerUI;
 	LightBlockModelManagerUI timelineBlocksManagerUI;
 
 	LightBlockModelGroupUI genericFilterGroupUI;

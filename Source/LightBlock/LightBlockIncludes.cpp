@@ -35,6 +35,7 @@
 #include "model/blocks/picture/PictureBlock.cpp"
 #include "model/blocks/picture/ui/PictureBlockUI.cpp"
 #include "model/blocks/script/ScriptBlock.cpp"
+#include "model/blocks/wasm/WasmBlock.cpp"
 #include "model/blocks/shape/PropShapeBlock.cpp"
 #include "model/blocks/timeline/TimelineBlock.cpp"
 #include "model/blocks/timeline/ui/TimelineBlockUI.cpp"
