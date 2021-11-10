@@ -1,4 +1,5 @@
 #include "LedManager.h"
+#include "../MainManager.h"
 
 LedManager::LedManager() : Component("leds"),
                            mode(Mode::Direct),
@@ -53,9 +54,10 @@ void LedManager::update()
         shouldUpdateLeds = true;
     }
 
+    MainManager::instance->scripts.update();
    // if (shouldUpdateLeds)
    
-        rgbManager.update();
+    rgbManager.update();
 
     irManager.update();
 

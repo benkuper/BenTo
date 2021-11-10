@@ -200,6 +200,7 @@
 		4DD4FEECCD340FE348B2B96F /* NodeBlockEditorToolItem.cpp */ /* NodeBlockEditorToolItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlockEditorToolItem.cpp; path = ../../Source/Node/ui/NodeBlockEditorToolItem.cpp; sourceTree = SOURCE_ROOT; };
 		4E9D333D665303870C9A2117 /* PropTargetFilter.cpp */ /* PropTargetFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropTargetFilter.cpp; path = ../../Source/Prop/TargetFilter/PropTargetFilter.cpp; sourceTree = SOURCE_ROOT; };
 		4EAE7FA2B5C4DE0B0EE98DBB /* Prop.cpp */ /* Prop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Prop.cpp; path = ../../Source/Prop/Prop.cpp; sourceTree = SOURCE_ROOT; };
+		4EC64605494795D986E02A40 /* WasmBlock.cpp */ /* WasmBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = WasmBlock.cpp; path = ../../Source/LightBlock/model/blocks/wasm/WasmBlock.cpp; sourceTree = SOURCE_ROOT; };
 		4FE1871211462BBB87D34AFB /* SerialDevice.cpp */ /* SerialDevice.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SerialDevice.cpp; path = ../../Source/Common/Serial/SerialDevice.cpp; sourceTree = SOURCE_ROOT; };
 		500D85928B2B8F7C8E885687 /* IOKit.framework */ /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		50C5085938A1F52427582B6F /* ButtonsComponent.h */ /* ButtonsComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ButtonsComponent.h; path = ../../Source/Prop/Component/buttons/ButtonsComponent.h; sourceTree = SOURCE_ROOT; };
@@ -322,6 +323,7 @@
 		A82A92FDBAE79C90064D08B4 /* PropShapeGroup.h */ /* PropShapeGroup.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropShapeGroup.h; path = ../../Source/Prop/Shape/PropShapeGroup.h; sourceTree = SOURCE_ROOT; };
 		A926A72AFCFBAACC5BF0218B /* include_filmstro_ffmpeg_FFmpegVideoReader.cpp */ /* include_filmstro_ffmpeg_FFmpegVideoReader.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_filmstro_ffmpeg_FFmpegVideoReader.cpp; path = ../../JuceLibraryCode/include_filmstro_ffmpeg_FFmpegVideoReader.cpp; sourceTree = SOURCE_ROOT; };
 		A93764D22B731890A5D10F75 /* BatteryComponent.cpp */ /* BatteryComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BatteryComponent.cpp; path = ../../Source/Prop/Component/battery/BatteryComponent.cpp; sourceTree = SOURCE_ROOT; };
+		A9C2EA98B5A2D1E7D83A9E5E /* WasmBlock.h */ /* WasmBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WasmBlock.h; path = ../../Source/LightBlock/model/blocks/wasm/WasmBlock.h; sourceTree = SOURCE_ROOT; };
 		AA5294A14826CB5BBF76F43E /* LightBlockLayer.cpp */ /* LightBlockLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayer.cpp; path = ../../Source/Timeline/layers/Block/LightBlockLayer.cpp; sourceTree = SOURCE_ROOT; };
 		ACB8D802247AD26F074CA8FA /* WasmScript.h */ /* WasmScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WasmScript.h; path = ../../Source/WebAssembly/WasmScript.h; sourceTree = SOURCE_ROOT; };
 		AD55A210C5F1845A82921903 /* LightBlockModel.cpp */ /* LightBlockModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModel.cpp; path = ../../Source/LightBlock/model/LightBlockModel.cpp; sourceTree = SOURCE_ROOT; };
@@ -919,6 +921,7 @@
 		64AE0BC7468CA8DD2D47ED08 /* blocks */ = {
 			isa = PBXGroup;
 			children = (
+				DBB4024243784AAC2ECAFD3F,
 				6DB432CE13F57CE2E8D54378,
 				457BC62EF1B8C73372750500,
 				AC5FEA16BBDEBE2E561C18FF,
@@ -1420,6 +1423,15 @@
 				5AD76FA55A9E6E31DCAEE680,
 			);
 			name = Source;
+			sourceTree = "<group>";
+		};
+		DBB4024243784AAC2ECAFD3F /* wasm */ = {
+			isa = PBXGroup;
+			children = (
+				4EC64605494795D986E02A40,
+				A9C2EA98B5A2D1E7D83A9E5E,
+			);
+			name = wasm;
 			sourceTree = "<group>";
 		};
 		DC5B0C05A8E1714C135C6474 /* buttons */ = {

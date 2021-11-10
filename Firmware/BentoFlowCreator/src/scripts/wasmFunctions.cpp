@@ -2,6 +2,8 @@
 #include "../common/Common.h"
 #include "../MainManager.h"
 
+
+
 m3ApiRawFunction(m3_arduino_millis)
 {
     m3ApiReturnType(uint32_t);
@@ -12,22 +14,24 @@ m3ApiRawFunction(m3_arduino_millis)
 m3ApiRawFunction(m3_arduino_delay)
 {
     m3ApiGetArg(uint32_t, ms);
-
     delay(ms);
-
     m3ApiSuccess();
 }
 
-m3ApiRawFunction(m3_arduino_print)
+m3ApiRawFunction(m3_printFloat)
 {
-    m3ApiGetArgMem(const uint8_t *, buf);
-    m3ApiGetArg(uint32_t, len);
-
-    // printf("api: print %p %d\n", buf, len);
-    Serial.write(buf, len);
-
+    m3ApiGetArg(float, val);
+    DBG("Print from script : "+String(val));
     m3ApiSuccess();
 }
+
+m3ApiRawFunction(m3_printInt)
+{
+    m3ApiGetArg(uint32_t, val);
+    DBG("Print from script : "+String(val));
+    m3ApiSuccess();
+}
+
 
 m3ApiRawFunction(m3_clearLeds)
 {
@@ -78,6 +82,21 @@ m3ApiRawFunction(m3_setLed)
     m3ApiSuccess();
 }
 
+m3ApiRawFunction(m3_getLed)
+{
+    m3ApiReturnType(uint32_t)
+    m3ApiGetArg(uint32_t, index);
+
+    if(index < LED_COUNT)
+    {
+        CRGB c = MainManager::instance->leds.rgbManager.leds[index];
+        uint32_t val = c.r << 16 | c.g << 8 | c.b;
+        m3ApiReturn(val);
+    }
+    
+    m3ApiReturn(0)
+}
+
 m3ApiRawFunction(m3_setLedRGB)
 {
     m3ApiGetArg(uint32_t, index);
@@ -110,7 +129,6 @@ m3ApiRawFunction(m3_pointRGB)
     m3ApiGetArg(uint32_t, s);
     m3ApiGetArg(uint32_t, v);
 
-    DBG("Call pointRGB " + String(pos));
     MainManager::instance->leds.rgbManager.point(CRGB((uint8_t)h, (uint8_t)s, (uint8_t)v), pos, radius, false);
 
     m3ApiSuccess();
@@ -130,11 +148,12 @@ m3ApiRawFunction(m3_pointHSV)
 
 m3ApiRawFunction(m3_getOrientation)
 {
+    m3ApiReturnType(float);
     m3ApiGetArg(uint32_t, oi);
-    m3ApiReturnType(uint32_t);
-    DBG("Get orientation "+String(oi));
+    
     float v = oi < 3 ? MainManager::instance->imu.orientation[oi] : -1;
-    m3ApiReturn((uint32_t)v);
+
+    m3ApiReturn(v);
 }
 
 m3ApiRawFunction(m3_getYaw)
@@ -164,7 +183,6 @@ m3ApiRawFunction(m3_getThrowState)
 m3ApiRawFunction(m3_setIMUEnabled)
 {
     m3ApiGetArg(uint32_t, en);
-    DBG("Set IMU enabled from script : "+String((int)en));
     MainManager::instance->imu.setEnabled((bool)en);
     m3ApiSuccess();
 }
@@ -178,12 +196,12 @@ m3ApiRawFunction(m3_updateLeds)
 
 m3ApiRawFunction(m3_getButtonState)
 {
-    m3ApiGetArg(uint32_t, oi);
     m3ApiReturnType(uint32_t);
-    
+
+    m3ApiGetArg(uint32_t, btIndex);
+
     #ifdef BUTTON_COUNT
-    int v = oi < BUTTON_COUNT ? MainManager::instance->buttons.isPressed[oi] : 0;
-    DBG("Get button state "+String(oi)+" : "+String(v));
+    int v = btIndex < BUTTON_COUNT ? MainManager::instance->buttons.isPressed[btIndex] : 0;
     #else
     int v = 0;
     #endif

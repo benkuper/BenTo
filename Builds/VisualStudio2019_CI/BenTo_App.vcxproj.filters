@@ -116,6 +116,9 @@
     <Filter Include="BenTo\Source\LightBlock\model\ui">
       <UniqueIdentifier>{B383C455-EF1C-7AEC-66DF-D469CE5E13A6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\wasm">
+      <UniqueIdentifier>{A4927C05-8F3A-18E1-114A-E034370646ED}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\shape">
       <UniqueIdentifier>{E5517CF7-7EE0-BCAE-B9D5-0AB2C64316EA}</UniqueIdentifier>
     </Filter>
@@ -1320,6 +1323,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\wasm\WasmBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\wasm</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>
@@ -4721,6 +4727,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\wasm\WasmBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\wasm</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>

@@ -24,6 +24,7 @@ public:
 	UserLightBlockModelManager pictureBlocks;	
 	UserLightBlockModelManager nodeBlocks;
 	UserLightBlockModelManager scriptBlocks;
+	UserLightBlockModelManager wasmBlocks;
 	UserLightBlockModelManager timelineBlocks;
 
 

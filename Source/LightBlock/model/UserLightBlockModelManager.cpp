@@ -64,6 +64,8 @@ LightBlockModel * UserLightBlockModelManager::createItem()
 	case LIVE_FEED: return new LiveFeedBlock();
 	case VIDEO: return new VideoBlock();
 
+	case WASM: return new WasmBlock();
+
 	default:
 		break;
 	}

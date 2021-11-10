@@ -58,7 +58,7 @@ public:
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *) override;
 	void childStructureChanged(ControllableContainer * cc) override;
 
-	void handleEnterExit(bool enter, Array<Prop *> props);
+	void handleEnterExit(bool enter, Array<Prop*> props) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

@@ -19,11 +19,13 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	pictureBlocks("Pictures", UserLightBlockModelManager::PICTURE),
 	nodeBlocks("Nodes", UserLightBlockModelManager::NODE),
 	scriptBlocks("Scripts", UserLightBlockModelManager::SCRIPT),
+	wasmBlocks("Wasm", UserLightBlockModelManager::WASM),
 	timelineBlocks("Timeline", UserLightBlockModelManager::TIMELINE),
 	genericFilterBlocks("Generic Filters")
 {
 
 	scriptBlocks.itemDataType = "Script";
+	scriptBlocks.itemDataType = "Wasm";
 	pictureBlocks.itemDataType = "Picture";
 	liveFeedBlocks.itemDataType = "LiveFeed";
 	videoBlocks.itemDataType = "Video";
@@ -59,6 +61,7 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	addChildControllableContainer(&pictureBlocks);
 	addChildControllableContainer(&nodeBlocks);
 	addChildControllableContainer(&scriptBlocks);
+	addChildControllableContainer(&wasmBlocks);
 	addChildControllableContainer(&timelineBlocks);
 
 
@@ -106,6 +109,8 @@ var LightBlockModelLibrary::getJSONData()
 	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("nodes", uData);
 	uData = scriptBlocks.getJSONData();
 	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("scripts", uData);
+	uData = wasmBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("wasm", uData);
 	uData = timelineBlocks.getJSONData();
 	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("timelines", uData);
 	uData = liveFeedBlocks.getJSONData();
@@ -128,6 +133,7 @@ void LightBlockModelLibrary::loadJSONDataInternal(var data)
 	pictureBlocks.loadJSONData(data.getProperty("pictures", var()));
 	nodeBlocks.loadJSONData(data.getProperty("nodes", var()));
 	scriptBlocks.loadJSONData(data.getProperty("scripts", var()));
+	wasmBlocks.loadJSONData(data.getProperty("wasm", var()));
 	timelineBlocks.loadJSONData(data.getProperty("timelines", var()));
 	genericFilterBlocks.loadJSONData(data.getProperty("genericFilters", var()));
 }
@@ -148,7 +154,8 @@ Array<LightBlockModel*> LightBlockModelLibrary::getAllModels(bool includeUserMod
 	{
 		for (auto & m : pictureBlocks.items) result.add(m);
 		for (auto & m : nodeBlocks.items) result.add(m);
-		for (auto & m : scriptBlocks.items) result.add(m);
+		for (auto& m : scriptBlocks.items) result.add(m);
+		for (auto & m : wasmBlocks.items) result.add(m);
 		for (auto& m : timelineBlocks.items) result.add(m);
 		for (auto& m : liveFeedBlocks.items) result.add(m);
 		for (auto & m : videoBlocks.items) result.add(m);
@@ -312,6 +319,13 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupM
 		index += pa.size();
 		mList.addArray(pa);
 		menu.addSubMenu(LightBlockModelLibrary::getInstance()->scriptBlocks.niceName, scriptsMenu);
+
+		PopupMenu wasmMenu;
+		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->wasmBlocks, wasmMenu, includePresets, index);
+		index += pa.size();
+		mList.addArray(pa);
+		menu.addSubMenu(LightBlockModelLibrary::getInstance()->wasmBlocks.niceName, wasmMenu);
+
 
 		PopupMenu timelinesMenu;
 		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->timelineBlocks, timelinesMenu, includePresets, index);
