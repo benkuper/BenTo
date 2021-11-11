@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity"};
 IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),
@@ -40,6 +40,9 @@ IMUManager::IMUManager() : Component("imu"),
   semiFlatThreshold = 2;
   loftieThreshold = 12;
   singleThreshold = 25;
+
+  activity = .0;
+  prevActivity = .0;
 }
 
 IMUManager::~IMUManager()
@@ -124,6 +127,7 @@ void IMUManager::update()
         sendEvent(IMUEvent(IMUEvent::AccelUpdate, accel, 3));
         sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
         sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
+        sendEvent(IMUEvent(IMUEvent::ActivityUpdate));
         // sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
       }
     }
@@ -201,6 +205,7 @@ void IMUManager::readIMU()
   // gravity[2] = grav.z();
 
   computeThrow();
+  computeActivity();
 
 #ifdef IMU_READ_ASYNC
   hasNewData = true;
@@ -266,6 +271,18 @@ void IMUManager::computeThrow()
 
 #endif
 }
+
+
+void IMUManager::computeActivity()
+{
+  float maxLinearAccel = max(max(abs(linearAccel[0]), abs(linearAccel[1])), abs(linearAccel[2]));
+  maxLinearAccel = 	(((maxLinearAccel - 0) * (1 - 0)) / (40 - 0)) + 0; // remap to 0..1 range
+  maxLinearAccel = min(maxLinearAccel, (float)1.0);
+
+  activity = prevActivity + (maxLinearAccel - prevActivity) * 0.1;
+  prevActivity = activity;
+}
+
 
 void IMUManager::setEnabled(bool value)
 {

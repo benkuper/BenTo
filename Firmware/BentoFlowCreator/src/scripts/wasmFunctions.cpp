@@ -208,3 +208,10 @@ m3ApiRawFunction(m3_getButtonState)
 
     m3ApiReturn((uint32_t)v);
 }
+
+m3ApiRawFunction(m3_getActivity)
+{
+    m3ApiReturnType(float);
+    m3ApiReturn(MainManager::instance->imu.activity);
+}
+
