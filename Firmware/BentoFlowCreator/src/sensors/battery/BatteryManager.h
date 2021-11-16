@@ -6,7 +6,7 @@
 class BatteryEvent
 {
 public:
-    enum Type { Level, Voltage, RawValue, CriticalLevel, Charging, Reset, TYPES_MAX};
+    enum Type { Level, Voltage, RawValue, CriticalLevel, Charging, Reset, SendEnabled, TYPES_MAX};
 
     static const String eventNames[TYPES_MAX];
 
@@ -28,6 +28,7 @@ public:
     int curPos = 0;
 
     bool isCharging;
+    bool sendEnabled;
 
 #ifndef BATTERY_DEFAULT_MIN
 #define BATTERY_DEFAULT_MIN 222 //TESTED: 3.2V
@@ -62,6 +63,8 @@ public:
     void updateCharge();
     void setMax(int value, bool save = false);
     void resetMax();
+    void setSendEnabled(bool value);
+
 
 
 private:
