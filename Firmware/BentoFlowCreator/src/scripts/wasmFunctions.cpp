@@ -215,3 +215,18 @@ m3ApiRawFunction(m3_getActivity)
     m3ApiReturn(MainManager::instance->imu.activity);
 }
 
+m3ApiRawFunction(m3_setBatterySendEnabled)
+{
+    m3ApiGetArg(uint32_t, en);
+    MainManager::instance->battery.setSendEnabled((bool)en);
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_randomInt)
+{
+    m3ApiReturnType(uint32_t);
+    m3ApiGetArg(uint32_t, min);
+    m3ApiGetArg(uint32_t, max);
+
+    m3ApiReturn((uint32_t) random(min, max+1));
+}

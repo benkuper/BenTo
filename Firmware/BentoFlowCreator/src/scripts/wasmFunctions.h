@@ -28,3 +28,5 @@ m3ApiRawFunction(m3_setIMUEnabled);
 m3ApiRawFunction(m3_updateLeds);
 m3ApiRawFunction(m3_getButtonState);
 m3ApiRawFunction(m3_getActivity);
+m3ApiRawFunction(m3_setBatterySendEnabled);
+m3ApiRawFunction(m3_randomInt);
