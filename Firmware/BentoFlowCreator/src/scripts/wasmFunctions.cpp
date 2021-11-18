@@ -1,7 +1,9 @@
 #include "wasmFunctions.h"
 #include "../common/Common.h"
 #include "../MainManager.h"
+#include "SimplexNoise/SimplexNoise.h"
 
+SimplexNoise sn;
 
 
 m3ApiRawFunction(m3_arduino_millis)
@@ -229,4 +231,16 @@ m3ApiRawFunction(m3_randomInt)
     m3ApiGetArg(uint32_t, max);
 
     m3ApiReturn((uint32_t) random(min, max+1));
+}
+
+m3ApiRawFunction(m3_noise)
+{
+    m3ApiReturnType(float);
+    m3ApiGetArg(float, x);
+    m3ApiGetArg(float, y);
+
+    float n = (float) sn.noise(x,y);
+    n = (n+1) /2; // convert to value range [0..1]
+
+    m3ApiReturn(n);
 }

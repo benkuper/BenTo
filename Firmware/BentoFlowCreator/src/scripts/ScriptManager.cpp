@@ -208,6 +208,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
 
     m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
     m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
+    m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
 
     return m3Err_none;
 }
