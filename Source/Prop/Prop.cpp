@@ -522,7 +522,7 @@ void Prop::handleOSCMessage(const OSCMessage& m)
 	{
 		if (logIncoming->boolValue())
 		{
-			String s = "Received : ";
+			String s = "Received : " + m.getAddressPattern().toString() + ", ";
 			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
 			NLOG(niceName, s);
 		}
