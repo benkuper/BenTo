@@ -2,33 +2,6 @@
     "version": 4,
     "configurations": [
         {
-            "name": "Win32",
-            "compilerPath": "C:/Program Files (x86)/Microsoft Visual Studio/2017/Community/VC/Tools/MSVC/14.16.27023/bin/Hostx64/x64/cl.exe",
-            "compilerArgs": [],
-            "intelliSenseMode": "msvc-x64",
-            "includePath": [
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.6.3\\**",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp8266\\tools\\**",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.5.2\\**",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\**",
-                "${workspaceFolder}/**",
-                "${workspaceFolder}",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\1.0.6\\**",
-                "C:\\Program Files (x86)\\Arduino\\libraries\\**",
-                "D:\\Documents\\Arduino\\libraries\\**",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp8266\\hardware\\esp8266\\2.7.4\\**"
-            ],
-            "forcedInclude": [],
-            "cStandard": "c11",
-            "cppStandard": "c++17",
-            "defines": [
-                "_DEBUG",
-                "UNICODE",
-                "_UNICODE",
-                "USBCON"
-            ]
-        },
-        {
             "name": "Arduino",
             "compilerPath": "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2021r1\\bin\\xtensa-esp32-elf-g++",
             "compilerArgs": [
@@ -219,16 +192,9 @@
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\tools\\sdk\\esp32\\include\\fb_gfx\\include",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\cores\\esp32",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\variants\\esp32",
+                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\Wire\\src",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\Preferences\\src",
                 "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\WiFi\\src",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\ESPmDNS\\src",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\SPI\\src",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\SD\\src",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\FS\\src",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\WebServer\\src",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\Wire\\src",
-                "D:\\Documents\\Arduino\\libraries\\Wasm3\\src",
-                "C:\\Users\\bkupe\\AppData\\Local\\Arduino15\\packages\\esp32\\hardware\\esp32\\2.0.0\\libraries\\SPIFFS\\src",
                 "c:\\users\\bkupe\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2021r1\\xtensa-esp32-elf\\include\\c++\\8.4.0",
                 "c:\\users\\bkupe\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2021r1\\xtensa-esp32-elf\\include\\c++\\8.4.0\\xtensa-esp32-elf",
                 "c:\\users\\bkupe\\appdata\\local\\arduino15\\packages\\esp32\\tools\\xtensa-esp32-elf-gcc\\gcc8_4_0-esp-2021r1\\xtensa-esp32-elf\\include\\c++\\8.4.0\\backward",

@@ -20,6 +20,9 @@ BentoProp::BentoProp(var params) :
 	if (params.hasProperty("vid")) serialParam->vidFilter = (int)params.getProperty("vid", 0);
 	if (params.hasProperty("pid")) serialParam->pidFilter = (int)params.getProperty("pid", 0);
 
+	indexPrefix = generalCC.addIntParameter("Index Prefix", "If enabled, this prepends a byte corresponding to the strip index it's addressing.", 1, 1, 255, false);
+	indexPrefix->canBeDisabledByUser = true;
+
 	scriptObject.setMethod("send", &BentoProp::sendMessageToPropFromScript);
 
 	connectionCC.addParameter(serialParam);
@@ -115,6 +118,10 @@ void BentoProp::sendColorsToPropInternal()
 	const int numLeds = resolution->intValue();
 	
 	Array<uint8> data;
+	if (indexPrefix->enabled)
+	{
+		data.add(indexPrefix->intValue());
+	}
 
 	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection);
 	int startIndex =  invert ? numLeds - 1 : 0;

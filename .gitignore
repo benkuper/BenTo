@@ -91,3 +91,5 @@ site/
 BenTo-win-x64-bleedingedge.exe
 
 *.bin
+
+Firmware/build/
