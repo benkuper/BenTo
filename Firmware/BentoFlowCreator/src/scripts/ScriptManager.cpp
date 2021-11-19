@@ -204,6 +204,11 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
     m3_LinkRawFunction(module, arduino, "getButtonState", "i(i)", &m3_getButtonState);
+    m3_LinkRawFunction(module, arduino, "getActivity", "f()", &m3_getActivity);
+
+    m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
+    m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
+    m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
 
     return m3Err_none;
 }

@@ -43,6 +43,9 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     //gravity = addPoint3DParameter("Gravity", "Linear Acceleration of the prop");
     //gravity->setControllableFeedbackOnly(true);
 
+    activity = addFloatParameter("Activity", "Activity based on linear-acceleration", 0, 0, 1);
+    activity->setControllableFeedbackOnly(true);
+
     projectedAngle = addFloatParameter("Projected Angle", "Normalized projected angle for ease of use", 0, 0, 1);
     projectedAngle->setControllableFeedbackOnly(true);
 

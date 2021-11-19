@@ -27,6 +27,7 @@ public:
     Point3DParameter* linearAccel;
     Point3DParameter* gyro;
     //Point3DParameter* gravity;
+    FloatParameter* activity;
 
 
     FloatParameter* projectedAngle;

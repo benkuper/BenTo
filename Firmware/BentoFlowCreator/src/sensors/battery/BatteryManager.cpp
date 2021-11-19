@@ -1,12 +1,13 @@
 #include "BatteryManager.h"
 
-const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level", "voltage", "rawValue", "criticalLevel", "charging", "reset"};
+const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level", "voltage", "rawValue", "criticalLevel", "charging", "reset", "sendEnabled"};
 
 BatteryManager::BatteryManager() : Component("battery"),
                                    voltage(4.1f),
                                    rawValue(0),
                                    value(1),
                                    isCharging(false),
+                                   sendEnabled(true),
                                    timeSinceLastBatteryRead(0),
                                    isCriticalBattery(false),
                                    timeAtCriticalBattery(0)
@@ -66,9 +67,12 @@ void BatteryManager::update()
         updateCharge();
 #endif
 
-        sendEvent(BatteryEvent(BatteryEvent::Level, value));
-        sendEvent(BatteryEvent(BatteryEvent::Voltage, voltage));
-        sendEvent(BatteryEvent(BatteryEvent::RawValue, rawValue));
+        if (sendEnabled) {
+            sendEvent(BatteryEvent(BatteryEvent::Level, value));
+            sendEvent(BatteryEvent(BatteryEvent::Voltage, voltage));
+            sendEvent(BatteryEvent(BatteryEvent::RawValue, rawValue));
+        }
+
 #ifdef BATTERY_CHARGE_PIN
         sendEvent(BatteryEvent(BatteryEvent::Charging, isCharging));
 #endif
@@ -160,12 +164,24 @@ void BatteryManager::updateCharge()
 #endif
 }
 
+void BatteryManager::setSendEnabled(bool value)
+{
+  if (sendEnabled == value)
+    return;
+
+  sendEnabled = value;
+}
+
 bool BatteryManager::handleCommand(String command, var *data, int numData)
 {
 #ifdef BATTERY_PIN
     if (checkCommand(command, "reset", numData, 0))
     {
         resetMax();
+        return true;
+    } else if (checkCommand(command, "sendEnabled", numData, 1))
+    {
+        sendEnabled = data[0].intValue() == 1;
         return true;
     }
 #endif
