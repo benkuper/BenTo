@@ -1,4 +1,6 @@
 #include <Arduino.h>
+
+#define MAIN_INCLUDE
 #include "UnityIncludes.h"
 
 RootComponent root;
