@@ -9,6 +9,7 @@ DeclareComponentSingleton(Communication, "comm",)
     void onChildComponentEvent(const ComponentEvent &e) override;
 
     void sendParameterFeedback(Component * c, Parameter * param);
+    void sendConfigFeedback(Component * c, const String &configName, const String &val);
 
     DeclareEventTypes(MessageReceived);
     DeclareEventNames("MessageReceived");

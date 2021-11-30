@@ -47,10 +47,22 @@ bool Component::handleCommand(const String &command, var *data, int numData)
 {
     //NDBG("Handle Command : " + command + ", num data : " + String(numData));
 
-    CommandCheck("setConfig", 2)
-        SetConfig(data[0].stringValue(), data[1]);
-        return true;
-    EndCommandCheck
+    if(command == "setConfig")
+    {
+        if(numData >= 2)
+        {
+            SetConfig(data[0].stringValue(), data[1]);
+            return true;
+        }else if(numData == 1)
+        {
+            SendConfigFeedback(data[0].stringValue());
+            return true;
+        }
+        else
+        {
+            NDBG("setConfig requires at least 1 argument");
+        }
+    }
 
     if (handleCommandInternal(command, data, numData))
         return true;

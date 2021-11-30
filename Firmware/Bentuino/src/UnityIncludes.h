@@ -12,6 +12,9 @@
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
 #include <ArduinoJson.h>
+#include <SPI.h>
+#include <SPIFFS.h>
+#include "../lib/SD/src/SD.h" //really weird
 
 // Firmware
 

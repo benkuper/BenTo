@@ -53,6 +53,7 @@ public:
 #define DeviceID RootComponent::instance->deviceID
 
 #define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
+#define SendConfigFeedback(configName) CommunicationComponent::instance->sendConfigFeedback(this, configName, GetStringConfig(configName));
 
 #define CommandCheck(cmd, Count) if(command == cmd) { if(numData < Count) { NDBG("setConfig needs 2 parameters, only " + String(numData) +" provided."); return false; } else {
 #define ElifCommandCheck(cmd, Count) EndCommandCheck else CommandCheck(cmd, Count) 

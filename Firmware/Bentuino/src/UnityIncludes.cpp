@@ -1,6 +1,10 @@
 
 #include "UnityIncludes.h"
 
+//SD shit
+#include "../lib/SD/src/SD.cpp" //really weird
+#include "../lib/SD/src/sd_diskio.cpp" //really weird
+
 // Firmware
 
 #include "Component/ComponentEvent.cpp"
