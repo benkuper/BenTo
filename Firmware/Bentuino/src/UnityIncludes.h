@@ -20,10 +20,8 @@
 #include "Common/color.h"
 #include "Common/Helpers.h"
 #include "Common/EventBroadcaster.h"
+#include "Common/Parameter.h"
 
-
-#include "Controllable/Controllable.h"
-#include "Controllable/Parameter.h"
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
 

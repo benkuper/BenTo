@@ -25,10 +25,34 @@ bool SettingsComponent::saveSettings()
     if (s == 0)
     {
         NDBG(F("Saving settings error"));
-        json = "{}";
+        return false;
     }
 
     prefs.putString("settings.json", json);
 
+    NDBG(F("Settings saved."));
     return true;
+}
+
+void SettingsComponent::setConfig(const String &comp, const String &name, var val, bool save)
+{
+    NDBG("Set Config " + comp + ":" + name + " = " + val.stringValue());
+    switch (val.type)
+    {
+    case 'b':
+        settings[comp][name] = val.boolValue();
+        break;
+     case 'i':
+        settings[comp][name] = val.intValue();
+        break;
+     case 'f':
+        settings[comp][name] = val.floatValue();
+        break;
+     case 's':
+        settings[comp][name] = val.stringValue();
+        break;
+    }
+
+    if (save)
+        saveSettings();
 }

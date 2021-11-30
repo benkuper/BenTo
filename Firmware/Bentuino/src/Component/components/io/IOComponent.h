@@ -5,14 +5,14 @@ DeclareComponent(IO, "io",)
 
     int pin;
     int mode;
-    Parameter<float> * value;
+    Parameter * value;
     float prevValue;
 
     bool initInternal() override
     {
         pin = GetIntConfig("pin");
         mode = GetIntConfig("mode");
-        value = addParameter<float>("value", 0);
+        value = addParameter("value", 0.0f);
         prevValue = value->val;
 
         setupPin();
@@ -53,7 +53,7 @@ DeclareComponent(IO, "io",)
             case D_OUTPUT:
             case A_OUTPUT:
             {
-                if(prevValue != value->val)
+                if(prevValue != (float)value->val)
                 {
                     if(mode == D_OUTPUT) digitalWrite(pin, (bool)value->val);
                     else
@@ -61,7 +61,7 @@ DeclareComponent(IO, "io",)
                         //analogWrite
                     }
 
-                    prevValue = value->val;
+                    prevValue = (float)value->val;
                 }
             }
             break;

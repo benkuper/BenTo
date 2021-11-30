@@ -13,4 +13,6 @@ StaticJsonDocument<4096> settings;
 bool initInternal() override;
 bool saveSettings();
 
+void setConfig(const String &comp, const String &name, var val, bool save);
+
 EndDeclareComponent

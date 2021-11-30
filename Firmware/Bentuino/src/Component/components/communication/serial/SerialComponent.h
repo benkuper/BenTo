@@ -2,25 +2,23 @@
 
 DeclareComponentSingleton(Serial, "serial",)
 
-    bool initInternal() override
-    {
-        Serial.begin(115200);
-        return true;
-    }
+    char buffer[512];
+    byte bufferIndex;
 
-    void updateInternal()
-    {
+    Parameter * feedbackEnabled;
 
-    }
+    bool initInternal() override;
 
-    void clearInternal()
-    {
+    void updateInternal();
+    void clearInternal();
 
-    }
+    
+    void processMessage(String buffer);
+    void sendMessage(String source, String command, var * data, int numData);
 
-    void send(const String &message)
-    {
-        Serial.println(message);
-    }
+    void send(const String &message);
+
+    DeclareEventTypes(MessageReceived);
+    DeclareEventNames("MessageReceived");
 
 EndDeclareComponent

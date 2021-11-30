@@ -20,7 +20,7 @@ DeclareComponentSingleton(Wifi, "wifi",)
 
     String ssid;
     String pass;
-    
+
     bool initInternal() override;
     void updateInternal() override;
     void clearInternal() override;

@@ -9,22 +9,23 @@ class Component : public EventBroadcaster<ComponentEvent>
 public:
     Component(const String &name) : name(name),
                                     isInit(false),
-                                    numComponents(0)
+                                    numComponents(0),
+                                    numParameters(0)
     {
-        enabled = addParameter<bool>("enabled", true);
+        enabled = addParameter("enabled", true);
     }
 
     virtual ~Component() {}
 
     String name;
     bool isInit;
-    Parameter<bool> *enabled;
+    Parameter *enabled;
 
     Component *components[MAX_CHILD_COMPONENTS];
     uint8_t numComponents;
 
-    Controllable *controllables[MAX_CHILD_COMPONENTS];
-    uint8_t numControllables;
+    Parameter *parameters[MAX_CHILD_COMPONENTS];
+    uint8_t numParameters;
 
     virtual String getEventName(uint8_t type) const { return "[noname]"; }
 
@@ -56,12 +57,20 @@ public:
         return c;
     }
 
-    template <class T>
-    Parameter<T> *addParameter(const String &name, T val)
+    Component * getComponentWithName(const String& name)
     {
-        Parameter<T> *p = new Parameter<T>(name, val);
-        controllables[numControllables] = p;
-        //AddDefaultParameterListener(p)
-        return p;
+        if(name == this->name) return this;
+
+        for(int i=0;i<numComponents;i++)
+        {
+            if(components[i]->name == name) return components[i];
+        }
+
+        return NULL;
     }
+
+    Parameter *addParameter(const String &name, var val);
+    
+    bool handleCommand(const String &command, var * data, int numData);
+    virtual bool handleCommandInternal(const String &command, var * data, int numData) { return false; }
 };

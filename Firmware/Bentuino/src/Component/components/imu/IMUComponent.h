@@ -3,11 +3,11 @@
 DeclareComponent(IMU, "imu", )
 
 Adafruit_BNO055 bno;
-Parameter<bool> *isConnected;
+Parameter *isConnected;
 
 bool initInternal() override
 {
-    isConnected = addParameter<bool>("connected", false);
+    isConnected = addParameter("connected", false);
 
     // Wire.begin(SDA_PIN, SCL_PIN);
 

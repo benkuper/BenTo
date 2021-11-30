@@ -8,7 +8,7 @@
 
 //Component Helpers
 
-#define AddComponent(v, Type) addComponent<Type ## Component>();
+#define AddComponent(comp, Type) comp = addComponent<Type ## Component>();
 #define AddDefaultComponentListener(comp) comp->addListener(std::bind(&Component::onChildComponentEvent, this, std::placeholders::_1));
 
 #define DeclareEventTypes(...) enum EventTypes { __VA_ARGS__, TYPES_MAX };
@@ -23,7 +23,8 @@ String getEventName(uint8_t type) const override { return eventNames[type]; }
 #define GetFloatConfig(sname) GetConfig(sname, float)
 #define GetBoolConfig(sname) GetConfig(sname, bool)
 
-#define SetConfig(sname,val) SettingsComponent::instance->settings[name][sname] = val;
+#define SetConfig(sname,val) SettingsComponent::instance->setConfig(name, sname, val, true);
+#define SetConfigSave(sname,val) SettingsComponent::instance->setConfig(name, sname, val, false);
 
 //Internal
 #define PDerive(Class) ,public Class
@@ -47,3 +48,12 @@ public:
 
 
 #define EndDeclareComponent };
+
+
+#define DeviceID RootComponent::instance->deviceID
+
+#define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
+
+#define CommandCheck(cmd, Count) if(command == cmd) { if(numData < Count) { NDBG("setConfig needs 2 parameters, only " + String(numData) +" provided."); return false; } else {
+#define ElifCommandCheck(cmd, Count) EndCommandCheck else CommandCheck(cmd, Count) 
+#define EndCommandCheck }}

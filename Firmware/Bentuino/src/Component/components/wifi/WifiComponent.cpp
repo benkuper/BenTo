@@ -1,6 +1,6 @@
 ImplementSingleton(WifiComponent)
 
-bool WifiComponent::initInternal()
+    bool WifiComponent::initInternal()
 {
     state = Off;
 
@@ -20,31 +20,34 @@ void WifiComponent::updateInternal()
         switch (state)
         {
         case Connecting:
-        {
 
 #if defined ESP32
             if (WiFi.isConnected())
 #elif defined ESP8266
             if (WiFi.status() == WL_CONNECTED)
 #endif
+            {
                 setState(Connected);
+                NDBG("Connected, local IP is "+getIP());
                 timeAtConnect = -1;
-        }
+            }
 
             if (curTime > timeAtConnect + connectionTimeout)
             {
+                NDBG("Connection Error");
                 setState(ConnectionError);
             }
             break;
 
-        case Connected: 
+        case Connected:
             if (!WiFi.isConnected())
             {
                 NDBG("Lost connection ! will reconnect soon...");
-                if(timeAtConnect == -1)
+                if (timeAtConnect == -1)
                 {
                     timeAtConnect = millis();
-                }else if(curTime > timeAtConnect + connectionTimeout)
+                }
+                else if (curTime > timeAtConnect + connectionTimeout)
                 {
                     connect();
                 }

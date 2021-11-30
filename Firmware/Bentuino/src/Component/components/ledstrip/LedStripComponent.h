@@ -6,6 +6,7 @@ DeclareComponent(LedStrip, "ledstrip", )
 
 int pin;
 int count;
+Parameter * brightness;
 
 Color *colors;
 
@@ -27,7 +28,8 @@ bool initInternal() override
     if(pin == 0) pin = 27; //default pin for creators
     count = GetIntConfig("count");
     if(count == 0) count = 32; //default count for creators
-
+    brightness = addParameter("brightness", 1);
+    
     strip = new Adafruit_NeoPixel(count, pin, NEO_GRB + NEO_KHZ800);
 
     colors = (Color *)malloc(count * sizeof(Color));
