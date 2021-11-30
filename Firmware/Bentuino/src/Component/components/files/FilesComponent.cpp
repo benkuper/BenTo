@@ -1,0 +1,1 @@
+ImplementSingleton(FilesComponent)

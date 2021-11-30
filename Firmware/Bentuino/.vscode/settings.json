@@ -1,8 +1,0 @@
-{
-    "files.associations": {
-        "typeinfo": "cpp",
-        "new": "cpp",
-        "random": "cpp",
-        "limits": "cpp"
-    }
-}
