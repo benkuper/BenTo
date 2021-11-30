@@ -8,6 +8,7 @@ class Component : public EventBroadcaster<ComponentEvent>
 {
 public:
     Component(const String &name) : name(name),
+                                    isInit(false),
                                     numComponents(0)
     {
         enabled = addParameter<bool>("enabled", true);
@@ -16,6 +17,7 @@ public:
     virtual ~Component() {}
 
     String name;
+    bool isInit;
     Parameter<bool> *enabled;
 
     Component *components[MAX_CHILD_COMPONENTS];
@@ -28,33 +30,11 @@ public:
 
     virtual void onChildComponentEvent(const ComponentEvent &e) {}
 
-    void init()
-    {
-        initInternal();
-    }
+    bool init();
+    void update();
+    void clear();
 
-    void update()
-    {
-        for (int i = 0; i < numComponents; i++)
-            components[i]->update();
-            
-        updateInternal();
-    }
-
-    void clear()
-    {
-        clearInternal();
-
-        for (int i = 0; i < numComponents; i++)
-        {
-            components[i]->clear();
-            delete components[i];
-        }
-
-        numComponents = 0;
-    }
-
-    virtual void initInternal() {}
+    virtual bool initInternal() { return true; }
     virtual void updateInternal() {}
     virtual void clearInternal() {}
 

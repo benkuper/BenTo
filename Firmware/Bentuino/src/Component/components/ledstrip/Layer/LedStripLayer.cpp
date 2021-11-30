@@ -1,6 +1,6 @@
 LedStripLayer::LedStripLayer(const String &name, Type t, LedStripComponent *strip) : Component(name),
                                                                                      strip(strip),
-                                                                                     numLeds(strip->count->val),
+                                                                                     numLeds(strip->count),
                                                                                      type(t),
                                                                                      blendMode(ADD)
 {

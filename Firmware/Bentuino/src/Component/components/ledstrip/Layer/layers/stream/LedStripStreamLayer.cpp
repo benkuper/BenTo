@@ -1,5 +1,6 @@
-void LedStripStreamLayer::initInternal()
+bool LedStripStreamLayer::initInternal()
 {
+    return true;
 }
 
 void LedStripStreamLayer::updateInternal()

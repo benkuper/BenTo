@@ -1,9 +1,9 @@
 #pragma once
 DeclareComponentSingleton(Files, "files",)
 
-    void initInternal() override
+    bool initInternal() override
     {
-        
+        return true;
     }
 
     void updateInternal()

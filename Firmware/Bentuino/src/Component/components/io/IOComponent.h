@@ -3,20 +3,22 @@ DeclareComponent(IO, "io",)
 
     enum PinMode { D_INPUT, D_INPUT_PULLUP, A_INPUT, D_OUTPUT, A_OUTPUT };
 
-    Parameter<int> * pin;
-    Parameter<int> * mode;
+    int pin;
+    int mode;
     Parameter<float> * value;
     float prevValue;
 
-    void initInternal() override
+    bool initInternal() override
     {
-        pin = addParameter<int>("pin", -1);
-        mode = addParameter<int>("mode", D_OUTPUT);
+        pin = GetIntConfig("pin");
+        mode = GetIntConfig("mode");
         value = addParameter<float>("value", 0);
         prevValue = value->val;
 
         setupPin();
         updatePin();
+
+        return true;
     }
 
     void updateInternal()
@@ -31,21 +33,21 @@ DeclareComponent(IO, "io",)
 
     void setupPin()
     {
-        if(pin->val != -1)
+        if(pin != -1)
         {
-            pinMode(pin->val, mode->val);
+            pinMode(pin, mode);
         }
     }
 
     void updatePin()
     {
-        if(pin->val == -1) return;
+        if(pin == -1) return;
 
-        switch(mode->val)
+        switch(mode)
         {
             case D_INPUT:
             case D_INPUT_PULLUP:
-                value->set(digitalRead(pin->val));
+                value->set(digitalRead(pin));
                 break;
 
             case D_OUTPUT:
@@ -53,7 +55,7 @@ DeclareComponent(IO, "io",)
             {
                 if(prevValue != value->val)
                 {
-                    if(mode->val == D_OUTPUT) digitalWrite(pin->val, (bool)value->val);
+                    if(mode == D_OUTPUT) digitalWrite(pin, (bool)value->val);
                     else
                     {
                         //analogWrite
@@ -65,7 +67,7 @@ DeclareComponent(IO, "io",)
             break;
 
             case A_INPUT:
-                value->set(analogRead(pin->val) / 4095.0f);
+                value->set(analogRead(pin) / 4095.0f);
             break;
         }
     }

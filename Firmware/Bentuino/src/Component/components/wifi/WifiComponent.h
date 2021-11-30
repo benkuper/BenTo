@@ -18,10 +18,10 @@ DeclareComponentSingleton(Wifi, "wifi",)
 
     ConnectionState state;
 
-    Parameter<String> * ssid;
-    Parameter<String> * pass;
-
-    void initInternal() override;
+    String ssid;
+    String pass;
+    
+    bool initInternal() override;
     void updateInternal() override;
     void clearInternal() override;
 

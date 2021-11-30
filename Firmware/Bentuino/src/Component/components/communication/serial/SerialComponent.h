@@ -2,9 +2,10 @@
 
 DeclareComponentSingleton(Serial, "serial",)
 
-    void initInternal() override
+    bool initInternal() override
     {
         Serial.begin(115200);
+        return true;
     }
 
     void updateInternal()

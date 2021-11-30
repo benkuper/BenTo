@@ -14,7 +14,7 @@ SequenceComponent * sequence;
 IMUComponent * imu;
 LedStripComponent *strip;
 
-void initInternal() override;
+bool initInternal() override;
 void onChildComponentEvent(const ComponentEvent &e) override;
 
 //const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};

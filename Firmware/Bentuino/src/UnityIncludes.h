@@ -11,7 +11,7 @@
 #include <utility/quaternion.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
-
+#include <ArduinoJson.h>
 
 // Firmware
 

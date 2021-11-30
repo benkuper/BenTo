@@ -1,9 +1,9 @@
 #pragma once
 DeclareComponentSingleton(OSC, "osc",)
 
-    void initInternal() override
+    bool initInternal() override
     {
-        
+        return true;
     }
 
     void updateInternal()

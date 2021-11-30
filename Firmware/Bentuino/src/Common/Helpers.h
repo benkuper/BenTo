@@ -1,5 +1,5 @@
-#define DBG(text) SerialComponent::instance->send(text);
-#define NDBG(text) SerialComponent::instance->send("["+name+"] "+text);
+#define DBG(text) SerialComponent::instance->send(text)
+#define NDBG(text) SerialComponent::instance->send("["+name+"] "+text)
 
 #define DeclareSingleton(Class) static Class * instance;
 #define ImplementSingleton(Class) Class * Class::instance = NULL;
@@ -17,15 +17,13 @@ String getEventName(uint8_t type) const override { return eventNames[type]; }
 
 
 // Preferences
-#define LoadFloat(name,defaultVal) SettingsComponent::instance->getFloat(this,name,defaultVal) 
-#define LoadInt(name,defaultVal) SettingsComponent::instance->getInt(this,name,defaultVal) 
-#define LoadString(name,defaultVal) SettingsComponent::instance->getString(this,name,defaultVal) 
-#define LoadBool(name,defaultVal) SettingsComponent::instance->getBool(this,name,defaultVal)
+#define GetConfig(sname, Class) SettingsComponent::instance->settings[name][sname].as<Class>()
+#define GetStringConfig(sname) GetConfig(sname, String)
+#define GetIntConfig(sname) GetConfig(sname, int)
+#define GetFloatConfig(sname) GetConfig(sname, float)
+#define GetBoolConfig(sname) GetConfig(sname, bool)
 
-#define SaveFloat(name) SettingsComponent::instance->getFloat(this,name) 
-#define SaveInt(name) SettingsComponent::instance->getInt(this,name) 
-#define SaveString(name) SettingsComponent::instance->getString(this,name) 
-#define SaveBool(name) SettingsComponent::instance->getBool(this,name) 
+#define SetConfig(sname,val) SettingsComponent::instance->settings[name][sname] = val;
 
 //Internal
 #define PDerive(Class) ,public Class

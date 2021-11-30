@@ -1,15 +1,15 @@
 ImplementSingleton(WifiComponent)
 
-void WifiComponent::initInternal()
+bool WifiComponent::initInternal()
 {
-    NDBG("Init");
-
     state = Off;
 
-    ssid = addParameter<String>("ssid", LoadString("ssid", "freeboxrondrouge"));
-    pass = addParameter<String>("pass", LoadString("pass","moufledelenfer"));
+    ssid = GetStringConfig("ssid");
+    pass = GetStringConfig("pass");
 
     connect();
+
+    return true;
 }
 
 void WifiComponent::updateInternal()
@@ -88,8 +88,8 @@ void WifiComponent::connect()
     WiFi.setTxPower(WIFI_POWER_19dBm);
 #endif
 
-    NDBG("Connecting to " + ssid->val + " : " + pass->val + "...");
-    WiFi.begin(ssid->val.c_str(), pass->val.c_str());
+    NDBG("Connecting to " + ssid + " : " + pass + "...");
+    WiFi.begin(ssid.c_str(), pass.c_str());
 
     setState(Connecting);
 }

@@ -1,9 +1,9 @@
 #pragma once
 DeclareComponent(Servo, "servo",)
 
-    void initInternal() override
+    bool initInternal() override
     {
-        
+        return true;
     }
 
     void updateInternal()

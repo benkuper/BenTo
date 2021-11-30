@@ -1,9 +1,9 @@
 #pragma once
 DeclareComponentSingleton(Battery, "battery",)
 
-    void initInternal() override
+    bool initInternal() override
     {
-        
+        return true;
     }
 
     void updateInternal()

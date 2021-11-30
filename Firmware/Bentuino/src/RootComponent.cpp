@@ -1,4 +1,4 @@
-void RootComponent::initInternal()
+bool RootComponent::initInternal()
 {
     BoardInit;
 
@@ -13,6 +13,8 @@ void RootComponent::initInternal()
     
     AddComponent(strip, LedStrip);
     AddComponent(imu, IMU);
+
+    return true;
 }
 
 void RootComponent::onChildComponentEvent(const ComponentEvent &e)

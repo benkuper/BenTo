@@ -5,7 +5,7 @@ DeclareComponent(IMU, "imu", )
 Adafruit_BNO055 bno;
 Parameter<bool> *isConnected;
 
-void initInternal() override
+bool initInternal() override
 {
     isConnected = addParameter<bool>("connected", false);
 
@@ -14,8 +14,7 @@ void initInternal() override
     if (!bno.begin())
     {
         NDBG("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-        isConnected->set(false);
-        return;
+        return false;
     }
 
     bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
@@ -26,8 +25,7 @@ void initInternal() override
     // bno.setExtCrystalUse(true);
     bno.enterNormalMode();
 
-    NDBG("IMU is connected");
-    isConnected->set(true);
+    return true;
 }
 
 void updateInternal()

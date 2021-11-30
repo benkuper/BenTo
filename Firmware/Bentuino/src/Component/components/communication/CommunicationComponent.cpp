@@ -1,7 +1,9 @@
 ImplementSingleton(CommunicationComponent)
 
-void CommunicationComponent::initInternal()
+bool CommunicationComponent::initInternal()
 {
     AddComponent(serial, Serial)
     AddComponent(osc, OSC)
+
+    return true;
 }

@@ -4,8 +4,8 @@
 
 DeclareComponent(LedStrip, "ledstrip", )
 
-Parameter<int> *pin;
-Parameter<int> *count;
+int pin;
+int count;
 
 Color *colors;
 
@@ -21,14 +21,16 @@ LedStripLayer *userLayers[LEDSTRIP_NUM_USER_LAYERS];
 
 Adafruit_NeoPixel *strip;
 
-void initInternal() override
+bool initInternal() override
 {
-    count = addParameter<int>("count", 32);
-    pin = addParameter<int>("pin", 27);
+    pin = GetIntConfig("pin");
+    if(pin == 0) pin = 27; //default pin for creators
+    count = GetIntConfig("count");
+    if(count == 0) count = 32; //default count for creators
 
-    strip = new Adafruit_NeoPixel(count->val, pin->val, NEO_GRB + NEO_KHZ800);
+    strip = new Adafruit_NeoPixel(count, pin, NEO_GRB + NEO_KHZ800);
 
-    colors = (Color *)malloc(count->val * sizeof(Color));
+    colors = (Color *)malloc(count * sizeof(Color));
 
     bakeLayer = addComponent(new LedStripBakeLayer(this));
     streamLayer = addComponent(new LedStripStreamLayer(this));
@@ -38,6 +40,8 @@ void initInternal() override
     userLayers[0] = bakeLayer;
     userLayers[1] = streamLayer;
     userLayers[2] = scriptLayer;
+
+    return true;
 }
 
 void updateInternal()
@@ -64,8 +68,7 @@ void clearInternal()
 // Layer functions
 void processLayer(LedStripLayer *layer)
 {
-    int numLeds = count->val;
-    for (int i = 0; i < numLeds; i++)
+    for (int i = 0; i < count; i++)
     {
         Color c = layer->colors[i];
         switch (layer->blendMode)
@@ -113,12 +116,11 @@ void processLayer(LedStripLayer *layer)
 
 // Color functions
 
-inline void clearColors()
+void clearColors()
 {
-    memset(colors, 0, count->val * sizeof(Color));
 }
 
-inline void showLeds()
+void showLeds()
 {
     if(strip != NULL) strip->show();
 }

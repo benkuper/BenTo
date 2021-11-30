@@ -4,6 +4,6 @@ DeclareComponentSingleton(Communication, "comm",)
     SerialComponent * serial;
     OSCComponent * osc;
     
-    void initInternal() override;
+    bool initInternal() override;
 
 EndDeclareComponent

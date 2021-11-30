@@ -10,6 +10,7 @@
             "includePath": [
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/include",
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/src",
+                "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/ArduinoJson/src",
                 "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                 "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src",
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/Adafruit BNO055",
@@ -113,6 +114,7 @@
                 "path": [
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/include",
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/src",
+                    "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/ArduinoJson/src",
                     "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WiFi/src",
                     "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/Preferences/src",
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/Adafruit BNO055",

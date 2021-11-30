@@ -1,5 +1,6 @@
-void LedStripBakeLayer::initInternal()
+bool LedStripBakeLayer::initInternal()
 {
+    return true;
 }
 
 void LedStripBakeLayer::updateInternal()
