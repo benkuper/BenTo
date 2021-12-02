@@ -28,6 +28,8 @@ public:
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
 
+	IntParameter* indexPrefix;
+
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);
