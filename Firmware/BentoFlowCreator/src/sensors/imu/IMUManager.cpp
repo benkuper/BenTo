@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug"};
 IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),
@@ -31,6 +31,7 @@ IMUManager::IMUManager() : Component("imu"),
 
   accelThresholds[0] = .8f;
   accelThresholds[1] = 2;
+  accelThresholds[2] = 4;
 
   diffThreshold = 8;
 
@@ -81,6 +82,7 @@ void IMUManager::init()
   prefs.begin(name.c_str());
   accelThresholds[0] = prefs.getFloat("throwMin", accelThresholds[0]);
   accelThresholds[1] = prefs.getFloat("throwMax", accelThresholds[1]);
+  accelThresholds[1] = prefs.getFloat("throwFast", accelThresholds[2]);
   diffThreshold = prefs.getFloat("diff", diffThreshold);
   flatThresholds[0] = prefs.getFloat("flatMin", flatThresholds[0]);
   flatThresholds[1] = prefs.getFloat("flatMax", flatThresholds[1]);
@@ -95,6 +97,14 @@ void IMUManager::init()
     DBG("IMU Task Create");
     xTaskCreate(&IMUManager::readIMUStatic, "imu", NATIVE_STACK_SIZE, NULL, 1, NULL);
 #endif
+
+  DBG("IMU Thresholds: ");
+  DBG("flat threshold " + String(flatThresholds[0]) + " " + String(flatThresholds[1]));
+  DBG("accel threshold " + String(accelThresholds[0]) + " " + String(accelThresholds[1]));
+  DBG("diff threshold " + String(diffThreshold));
+  DBG("semiFlat threshold " + String(semiFlatThreshold));
+  DBG("loftie threshold " + String(loftieThreshold));
+  DBG("single threshold " + String(singleThreshold));
 
 #endif
 }
@@ -223,6 +233,7 @@ void IMUManager::computeThrow()
   bool curIsFlat = throwState == 1;
   float flatThresh = curIsFlat ? flatThresholds[1] : flatThresholds[0];
   bool isFlatting = maxAccel < flatThresh;
+  bool isFastSpin = false;
 
   int newState = 0;
   if (isFlatting)
@@ -233,10 +244,12 @@ void IMUManager::computeThrow()
   {
     bool curIsThrowing = throwState > 1;
     float throwThresh = curIsThrowing ? accelThresholds[1] : accelThresholds[0];
+		throwThresh = isFastSpin ? throwThresh : accelThresholds[2];
 
     bool accelCheck = maxAccelYZ < throwThresh;
 
     bool isThrowing = false;
+    
     if (curIsThrowing)
     {
       isThrowing = accelCheck;
@@ -284,6 +297,20 @@ void IMUManager::computeActivity()
 }
 
 
+void IMUManager::sendCalibrationStatus() {
+  uint8_t system, gyro, accel, mag;
+  system = gyro = accel = mag = 0;
+  bno.getCalibration(&system, &gyro, &accel, &mag);
+
+  calibration[0] = (float)system;
+  calibration[1] = (float)gyro;
+  calibration[2] = (float)accel;
+  calibration[3] = (float)mag;
+
+  sendEvent(IMUEvent(IMUEvent::CalibrationStatus, calibration, 4));
+}
+
+
 void IMUManager::setEnabled(bool value)
 {
   if (isEnabled == value)
@@ -320,25 +347,18 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
   }
   else if (checkCommand(command, "calibrationStatus", numData, 0))
   {
-    uint8_t system, gyro, accel, mag;
-    system = gyro = accel = mag = 0;
-    bno.getCalibration(&system, &gyro, &accel, &mag);
-
-    calibration[0] = (float)system;
-    calibration[1] = (float)gyro;
-    calibration[2] = (float)accel;
-    calibration[3] = (float)mag;
-
-    sendEvent(IMUEvent(IMUEvent::CalibrationStatus, calibration, 4));
+    sendCalibrationStatus();
     return true;
   }
-  else if (checkCommand(command, "accelThresholds", numData, 2))
+  else if (checkCommand(command, "accelThresholds", numData, 3))
   {
     accelThresholds[0] = data[0].floatValue();
     accelThresholds[1] = data[1].floatValue();
+    accelThresholds[2] = data[2].floatValue();
     prefs.begin(name.c_str());
     prefs.putFloat("throwMin", accelThresholds[0]);
     prefs.putFloat("throwMax", accelThresholds[1]);
+    prefs.putFloat("throwFast", accelThresholds[2]);
     prefs.end();
     return true;
   }
