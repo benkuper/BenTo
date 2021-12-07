@@ -10,7 +10,7 @@
 class IMUEvent
 {
 public:
-    enum Type { OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, ThrowState, CalibrationStatus, ActivityUpdate, Debug, TYPES_MAX };
+    enum Type { OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, ThrowState, CalibrationStatus, ActivityUpdate, Debug, ProjectedAngleUpdate, TYPES_MAX };
     static const String eventNames[TYPES_MAX];
 
     IMUEvent(Type t, float * data = nullptr, int numData = 0) : type(t), data(data), numData(numData) {}
@@ -62,6 +62,11 @@ public:
     float semiFlatThreshold;
     float loftieThreshold;
     float singleThreshold;
+
+    // Projected Angle
+    float angleOffset;
+    float projectedAngle;
+    float xOnCalibration;
     
 #ifdef IMU_READ_ASYNC
     bool hasNewData;
@@ -78,8 +83,10 @@ public:
     void sendCalibrationStatus();
     void computeThrow();
     void computeActivity();
+    void computeProjectedAngle();
 
     void setEnabled(bool value);
+    void setProjectAngleOffset(float yaw, float angle);
     
     void shutdown();
 

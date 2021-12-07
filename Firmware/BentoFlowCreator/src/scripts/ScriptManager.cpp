@@ -200,6 +200,8 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getYaw", "f()", &m3_getYaw);
     m3_LinkRawFunction(module, arduino, "getPitch", "f()", &m3_getPitch);
     m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
+    m3_LinkRawFunction(module, arduino, "getProjectedAngle", "f()", &m3_getProjectedAngle);
+    m3_LinkRawFunction(module, arduino, "setProjectedAngleOffset", "v(ff)", &m3_setProjectedAngleOffset);
     m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
