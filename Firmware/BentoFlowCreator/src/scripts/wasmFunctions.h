@@ -24,6 +24,8 @@ m3ApiRawFunction(m3_getYaw);
 m3ApiRawFunction(m3_getPitch);
 m3ApiRawFunction(m3_getRoll);
 m3ApiRawFunction(m3_getThrowState);
+m3ApiRawFunction(m3_getProjectedAngle);
+m3ApiRawFunction(m3_setProjectedAngleOffset);
 m3ApiRawFunction(m3_setIMUEnabled);
 m3ApiRawFunction(m3_updateLeds);
 m3ApiRawFunction(m3_getButtonState);

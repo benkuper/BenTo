@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngleClub"};
 IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),
@@ -10,7 +10,7 @@ IMUManager::IMUManager() : Component("imu"),
                            isConnected(false),
                            isEnabled(false),
                            sendLevel(1),
-                           orientationSendTime(20), // 50fps
+                           orientationSendTime(10), // 100fps
                            timeSinceOrientationLastSent(0),
                            throwState(0)
 #ifdef IMU_READ_ASYNC
@@ -44,6 +44,8 @@ IMUManager::IMUManager() : Component("imu"),
 
   activity = .0;
   prevActivity = .0;
+
+  angleOffset = .0f;
 }
 
 IMUManager::~IMUManager()
@@ -138,6 +140,7 @@ void IMUManager::update()
         sendEvent(IMUEvent(IMUEvent::LinearAccelUpdate, linearAccel, 3));
         sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
         sendEvent(IMUEvent(IMUEvent::ActivityUpdate));
+        sendEvent(IMUEvent(IMUEvent::ProjectedAngleUpdate));
         // sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
       }
     }
@@ -216,11 +219,69 @@ void IMUManager::readIMU()
 
   computeThrow();
   computeActivity();
+  computeProjectedAngle();
 
 #ifdef IMU_READ_ASYNC
   hasNewData = true;
 #endif
 }
+
+void IMUManager::computeProjectedAngle() {
+  float eulerRadians[3];
+  float lookAt[3];
+  float result;
+
+  //Recalculate x orientation for the projected angle, based on xOnCalibration
+  float xOrientation = orientation[0];
+  float newX = 0;
+  if (xOnCalibration < 0) {
+    if (xOrientation > xOnCalibration) {
+      if (xOrientation < 0) {
+        newX = (xOnCalibration * -1) - (xOrientation * -1);
+      } else {
+        if (xOrientation + (xOnCalibration * -1) > 180.0f) {
+          newX = (360.0f - xOrientation - (xOnCalibration * -1)) * -1;
+        } else {
+          newX = xOrientation + (xOnCalibration * -1);
+        }
+      }
+    } else {
+      newX = (xOnCalibration * -1) - (xOrientation * -1);
+    }
+  } else {
+    if (xOrientation > xOnCalibration) {
+      newX = xOrientation - xOnCalibration;
+    } else {
+      if ((xOrientation - xOnCalibration) < -180) {
+        newX = (180.0f - xOnCalibration) + (180.0f - (xOrientation * -1));
+      } else {
+        newX = xOrientation - xOnCalibration;
+      }
+    }
+  }
+
+  eulerRadians[0] = newX * PI / 180.0f;
+  eulerRadians[1] = orientation[1] * PI / 180.0f;
+  eulerRadians[2] = orientation[2] * PI / 180.0f;
+
+  lookAt[0] = cos(eulerRadians[1]) * sin(eulerRadians[0]);
+  lookAt[1] = sin(eulerRadians[1]);
+  lookAt[2] = cos(eulerRadians[1]) * cos(eulerRadians[0]);
+
+  result = atan(lookAt[1] / lookAt[2]) - PI / 2.0f;
+
+  if (lookAt[2] > 0.0f) {
+    result = result + PI;
+  }
+
+  result = (result / PI) * 0.5f + 0.5f;
+	result = fmod((result + angleOffset), 1.0f);
+
+  projectedAngle = 1 - result;
+
+  // DBG("Projected Angle: " + String(projectedAngle));
+}
+
 
 void IMUManager::computeThrow()
 {
@@ -317,6 +378,12 @@ void IMUManager::setEnabled(bool value)
     return;
 
   isEnabled = value;
+}
+
+void IMUManager::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
+{
+  angleOffset = angle;
+  xOnCalibration = yaw;
 }
 
 void IMUManager::shutdown()

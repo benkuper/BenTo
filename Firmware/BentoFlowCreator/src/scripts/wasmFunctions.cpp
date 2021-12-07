@@ -182,6 +182,21 @@ m3ApiRawFunction(m3_getThrowState)
     m3ApiReturn((uint32_t)MainManager::instance->imu.throwState);
 }
 
+
+m3ApiRawFunction(m3_getProjectedAngle)
+{
+    m3ApiReturnType(float);
+    m3ApiReturn(MainManager::instance->imu.projectedAngle);
+}
+
+m3ApiRawFunction(m3_setProjectedAngleOffset)
+{
+    m3ApiGetArg(float, yaw);
+    m3ApiGetArg(float, angle);
+    MainManager::instance->imu.setProjectAngleOffset(yaw, angle);
+    m3ApiSuccess();
+}
+
 m3ApiRawFunction(m3_setIMUEnabled)
 {
     m3ApiGetArg(uint32_t, en);
