@@ -182,6 +182,7 @@ void IMUManager::readIMU()
 {
   if (!isEnabled)
     return;
+#ifdef HAS_IMU
 
 #ifdef IMU_READ_ASYNC
   if (imuLock)
@@ -228,6 +229,8 @@ void IMUManager::readIMU()
 
 #ifdef IMU_READ_ASYNC
   hasNewData = true;
+#endif
+
 #endif
 }
 
