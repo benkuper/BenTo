@@ -10,6 +10,7 @@
 
 IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     PropComponent(prop, "IMU", true),
+    offsetConfigCC("Orientation Offset Config"),
     angleConfigCC("Angle Config"),
     throwConfigCC("Throw Config"),
     timeAtThrow(0)
@@ -49,6 +50,9 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     projectedAngle = addFloatParameter("Projected Angle", "Normalized projected angle for ease of use", 0, 0, 1);
     projectedAngle->setControllableFeedbackOnly(true);
 
+    projectedAngleClub = addFloatParameter("Projected Angle Club", "Normalized projected angle for ease of use", 0, 0, 1);
+    projectedAngleClub->setControllableFeedbackOnly(true);
+
     throwState = addEnumParameter("Throw State", "The current detected state of throw");
     throwState->addOption("None", 0)->addOption("Flat", 1)->addOption("Single", 2)->addOption("Double", 3)->addOption("Semi-flat", 4)->addOption("Loftie", 5);
 
@@ -63,10 +67,15 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
     throwTime->setControllableFeedbackOnly(true);
 
     
+    offsetConfigCC.editorIsCollapsed = true;
+    addChildControllableContainer(&offsetConfigCC);
     angleConfigCC.editorIsCollapsed = true;
     addChildControllableContainer(&angleConfigCC);
     throwConfigCC.editorIsCollapsed = true;
     addChildControllableContainer(&throwConfigCC);
+
+    orientationCalibrate = offsetConfigCC.addTrigger("Calibrate", "");
+    orientationXOffset = offsetConfigCC.addFloatParameter("Orientation X Offset", "", 0, -180, 180);
 
     calibrate = angleConfigCC.addTrigger("Calibrate Yaw", "");
     offset = angleConfigCC.addFloatParameter("Yaw Offset", "", 0, -180, 180);
@@ -130,7 +139,12 @@ void IMUPropComponent::onControllableFeedbackUpdate(ControllableContainer* cc, C
         float tVal = orientation->x - 180;
         if (tVal < -180) tVal += 360;
         offset->setValue(tVal);
-    }if (cc == &throwConfigCC)
+    } else if (c == orientationCalibrate) {
+        Parameter* p = orientationXOffset;
+        sendControl(p->shortName, p->value);
+    }
+    
+    if (cc == &throwConfigCC)
     {
         if (c->type != c->TRIGGER) sendControl(c->shortName, ((Parameter*)c)->value);
     }

@@ -31,7 +31,12 @@ public:
 
 
     FloatParameter* projectedAngle;
+    FloatParameter* projectedAngleClub;
     EnumParameter* throwState;
+
+    ControllableContainer offsetConfigCC;
+    Trigger* orientationCalibrate;
+    FloatParameter* orientationXOffset;
 
     ControllableContainer angleConfigCC;
     Trigger* calibrate;

@@ -49,6 +49,7 @@ public:
     float gyro[3];
     float linearAccel[3];
     float gravity[3];
+    float orientationXOffset;
     
     int throwState; //0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
     float activity;
@@ -86,6 +87,7 @@ public:
     void computeProjectedAngle();
 
     void setEnabled(bool value);
+    void setOrientationXOffset(float offset);
     void setProjectAngleOffset(float yaw, float angle);
     
     void shutdown();

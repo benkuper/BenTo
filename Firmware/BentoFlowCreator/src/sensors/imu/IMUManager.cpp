@@ -10,7 +10,7 @@ IMUManager::IMUManager() : Component("imu"),
                            isConnected(false),
                            isEnabled(false),
                            sendLevel(1),
-                           orientationSendTime(10), // 100fps
+                           orientationSendTime(20), // 50fps
                            timeSinceOrientationLastSent(0),
                            throwState(0)
 #ifdef IMU_READ_ASYNC
@@ -44,6 +44,7 @@ IMUManager::IMUManager() : Component("imu"),
 
   activity = .0;
   prevActivity = .0;
+  orientationXOffset = .0;
 
   angleOffset = .0f;
 }
@@ -92,6 +93,8 @@ void IMUManager::init()
   semiFlatThreshold = prefs.getFloat("semiFlat", semiFlatThreshold);
   loftieThreshold = prefs.getFloat("loftie", loftieThreshold);
   singleThreshold = prefs.getFloat("single", singleThreshold);
+
+  orientationXOffset = prefs.getFloat("xOffset", orientationXOffset);
   prefs.end();
 #endif
 
@@ -100,13 +103,14 @@ void IMUManager::init()
     xTaskCreate(&IMUManager::readIMUStatic, "imu", NATIVE_STACK_SIZE, NULL, 1, NULL);
 #endif
 
-  DBG("IMU Thresholds: ");
+  DBG("IMU CONFIG: ");
   DBG("flat threshold " + String(flatThresholds[0]) + " " + String(flatThresholds[1]));
   DBG("accel threshold " + String(accelThresholds[0]) + " " + String(accelThresholds[1]));
   DBG("diff threshold " + String(diffThreshold));
   DBG("semiFlat threshold " + String(semiFlatThreshold));
   DBG("loftie threshold " + String(loftieThreshold));
   DBG("single threshold " + String(singleThreshold));
+  DBG("orientation x offset " + String(orientationXOffset));
 
 #endif
 }
@@ -193,9 +197,10 @@ void IMUManager::readIMU()
   // q.z() = -q.z();
 
   imu::Vector<3> euler = q.toEuler();
-  orientation[0] = euler.x() * 180 / PI; // Yaw
+  orientation[0] = fmod(((euler.x() * 180 / PI) + orientationXOffset + 180.0f*5), 360.0f) - 180.0f;
   orientation[1] = euler.y() * 180 / PI; // Pitch
   orientation[2] = euler.z() * 180 / PI; // Roll
+  
 
   imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
   accel[0] = acc.x();
@@ -380,6 +385,11 @@ void IMUManager::setEnabled(bool value)
   isEnabled = value;
 }
 
+void IMUManager::setOrientationXOffset(float offset = 0.0f)
+{
+  orientationXOffset = offset;
+}
+
 void IMUManager::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
 {
   angleOffset = angle;
@@ -468,6 +478,14 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     singleThreshold = data[0].floatValue();
     prefs.begin(name.c_str());
     prefs.putFloat("single", singleThreshold);
+    prefs.end();
+    return true;
+  }
+  else if (checkCommand(command, "orientationXOffset", numData, 1))
+  {
+    orientationXOffset = data[0].floatValue();
+    prefs.begin(name.c_str());
+    prefs.putFloat("xOffset", orientationXOffset);
     prefs.end();
     return true;
   }
