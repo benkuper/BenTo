@@ -282,7 +282,7 @@ void IMUManager::computeProjectedAngle() {
   result = (result / PI) * 0.5f + 0.5f;
 	result = fmod((result + angleOffset), 1.0f);
 
-  projectedAngle = 1 - result;
+  projectedAngle = result;
 
   // DBG("Projected Angle: " + String(projectedAngle));
 }
