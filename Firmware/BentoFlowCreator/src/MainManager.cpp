@@ -368,6 +368,16 @@ void MainManager::imuEvent(const IMUEvent &e)
     }
     break;
 
+    
+    case IMUEvent::ProjectedAngleUpdate:
+    {
+        var data[1];
+        data[0].type = 'f';
+        data[0].value.f = imu.projectedAngle;
+        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 1);
+    }
+    break;
+
     case IMUEvent::ThrowState:
     {
         var data[1];
