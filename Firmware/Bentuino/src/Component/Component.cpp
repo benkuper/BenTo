@@ -39,28 +39,24 @@ Parameter *Component::addParameter(const String &name, var val)
     Parameter *p = new Parameter(name, val);
     parameters[numParameters] = p;
     numParameters++;
-    // AddDefaultParameterListener(p)
-    return p;
+    AddDefaultParameterListener(Component, p) return p;
 }
 
 bool Component::handleCommand(const String &command, var *data, int numData)
 {
     //NDBG("Handle Command : " + command + ", num data : " + String(numData));
 
-    if(command == "setConfig")
+    if(CheckCommand("setConfig", 1))
     {
-        if(numData >= 2)
+        if (numData >= 2)
         {
             SetConfig(data[0].stringValue(), data[1]);
-            return true;
-        }else if(numData == 1)
-        {
-            SendConfigFeedback(data[0].stringValue());
             return true;
         }
         else
         {
-            NDBG("setConfig requires at least 1 argument");
+            SendConfigFeedback(data[0].stringValue());
+            return true;
         }
     }
 
@@ -86,4 +82,16 @@ bool Component::handleCommand(const String &command, var *data, int numData)
     }
 
     return false;
+}
+
+bool Component::checkCommand(const String &command, const String &ref, int numData, int expectedData)
+{
+    if (command != ref)
+        return false;
+    if (numData < expectedData)
+    {
+        NDBG("Command " + command + " expects at least " + expectedData + " arguments");
+        return false;
+    }
+    return true;
 }

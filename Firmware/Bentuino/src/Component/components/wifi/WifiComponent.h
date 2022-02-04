@@ -31,7 +31,7 @@ DeclareComponentSingleton(Wifi, "wifi",)
 
     String getIP() const;
 
-    DeclareEventTypes(ConnectionStateChanged);
-    DeclareEventNames("ConnectionStateChanged");
+    DeclareComponentEventTypes(ConnectionStateChanged);
+    DeclareComponentEventNames("ConnectionStateChanged");
 
 EndDeclareComponent

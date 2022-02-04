@@ -86,12 +86,14 @@ void FilesComponent::deleteFileIfExists(String path)
 
     if (useInternalMemory)
     {
-        if (SPIFFS.exists(path)) SPIFFS.remove(path);
+        if (SPIFFS.exists(path))
+            SPIFFS.remove(path);
     }
     else
     {
 
-        if (SD.exists(path.c_str()))  SD.remove(path.c_str());
+        if (SD.exists(path.c_str()))
+            SD.remove(path.c_str());
     }
 }
 
@@ -143,50 +145,44 @@ String FilesComponent::listDir(const char *dirname, uint8_t levels)
 
 bool FilesComponent::handleCommandInternal(const String &command, var *data, int numData)
 {
-    /*
-        if (checkCommand(command, "delete", numData, 1))
-        {
-            deleteFileIfExists(data[0].stringValue());
-            return true;
-        }
-        else if (checkCommand(command, "enable", numData, 1))
-        {
-            setSDEnabled(data[0].intValue() == 1);
-            return true;
-        }
-        else if (checkCommand(command, "deleteFolder", numData, 0))
-        {
-            if (numData > 0)
-            {
-                DBG("Deleting folder " + data[0].stringValue());
-    #ifdef FILES_USE_INTERNAL_MEMORY
-                SPIFFS.rmdir(data[0].stringValue());
-    #else
-                SD.rmdir(data[0].stringValue());
-    #endif
-            }
-            else
-            {
-                DBG("Deleting all files");
-    #ifdef FILES_USE_INTERNAL_MEMORY
-                SPIFFS.rmdir("/");
-    #else
-                SD.rmdir("/");
-    #endif
-            }
 
-            return true;
-        }
-        else if (checkCommand(command, "list", numData, 0))
+    if (checkCommand(command, "delete", numData, 1))
+    {
+        deleteFileIfExists(data[0].stringValue());
+        return true;
+    }
+    else if (checkCommand(command, "deleteFolder", numData, 0))
+    {
+        if (numData > 0)
         {
-            var data;
-            data.type = 's';
-            data.value.s = (char *)listDir("/", 0).c_str();
-
-            sendEvent(FileEvent(FileEvent::FileList, data));
-            return true;
+            NDBG("Deleting folder " + data[0].stringValue());
+#ifdef FILES_USE_INTERNAL_MEMORY
+            SPIFFS.rmdir(data[0].stringValue());
+#else
+            SD.rmdir(data[0].stringValue());
+#endif
         }
-        */
+        else
+        {
+            NDBG("Deleting all files");
+#ifdef FILES_USE_INTERNAL_MEMORY
+            SPIFFS.rmdir("/");
+#else
+            SD.rmdir("/");
+#endif
+        }
+
+        return true;
+    }
+    else if (checkCommand(command, "list", numData, 0))
+    {
+        var data;
+        data.type = 's';
+        data.value.s = (char *)listDir("/", 0).c_str();
+
+        sendEvent(FileList, &data, 1);
+        return true;
+    }
 
     return false;
 }

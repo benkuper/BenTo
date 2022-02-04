@@ -6,15 +6,22 @@
 #define InitSingleton() instance = this;
 #define DeleteSingleton() instance = NULL;
 
-//Component Helpers
+//Event Helpers
+#define DeclareEventTypes(...) enum EventTypes { __VA_ARGS__, TYPES_MAX };
 
+
+//Parameter Helpers
+#define AddDefaultParameterListener(Class, param) param->addListener(std::bind(&Class::onParameterEvent, this, std::placeholders::_1));
+
+//Component Helpers
 #define AddComponent(comp, Type) comp = addComponent<Type ## Component>();
 #define AddDefaultComponentListener(comp) comp->addListener(std::bind(&Component::onChildComponentEvent, this, std::placeholders::_1));
 
-#define DeclareEventTypes(...) enum EventTypes { __VA_ARGS__, TYPES_MAX };
-#define DeclareEventNames(...) const String eventNames[TYPES_MAX] { __VA_ARGS__ };\
-String getEventName(uint8_t type) const override { return eventNames[type]; }
+#define DeclareComponentEventTypes(...) enum ComponentEventTypes { __VA_ARGS__, TYPES_MAX };
+#define DeclareComponentEventNames(...) const String componentEventNames[TYPES_MAX] { __VA_ARGS__ };\
+String getComponentEventName(uint8_t type) const override { return componentEventNames[type]; }
 
+#define CheckCommand(cmd, num) checkCommand(command, cmd, numData, num)
 
 // Preferences
 #define GetConfig(sname, Class) SettingsComponent::instance->settings[name][sname].as<Class>()

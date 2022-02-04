@@ -15,7 +15,7 @@ String listDir(const char *dirname, uint8_t levels);
 
 bool handleCommandInternal(const String &command, var *data, int numData) override;
 
-DeclareEventTypes(sUPLOAD_START, UPLOAD_PROGRESS, UPLOAD_COMPLETE, UPLOAD_CANCEL, FILE_LIST);
-DeclareEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");
+DeclareComponentEventTypes(UploadStart, UploadProgress, UploadComplete, UploadCancel, FileList);
+DeclareComponentEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");
 
 EndDeclareComponent

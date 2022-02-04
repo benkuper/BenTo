@@ -16,7 +16,7 @@ DeclareComponentSingleton(OSC, "osc",)
 
     }
 
-    DeclareEventTypes(MessageReceived);
-    DeclareEventNames("MessageReceived");    
+    DeclareComponentEventTypes(MessageReceived);
+    DeclareComponentEventNames("MessageReceived");    
     
 EndDeclareComponent

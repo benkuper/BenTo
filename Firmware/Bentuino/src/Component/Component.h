@@ -27,7 +27,7 @@ public:
     Parameter *parameters[MAX_CHILD_COMPONENTS];
     uint8_t numParameters;
 
-    virtual String getEventName(uint8_t type) const { return "[noname]"; }
+    virtual String getComponentEventName(uint8_t type) const { return "[noname]"; }
 
     virtual void onChildComponentEvent(const ComponentEvent &e) {}
 
@@ -70,7 +70,10 @@ public:
     }
 
     Parameter *addParameter(const String &name, var val);
+
+    virtual void onParameterEvent(const ParameterEvent &e) {}
     
     bool handleCommand(const String &command, var * data, int numData);
     virtual bool handleCommandInternal(const String &command, var * data, int numData) { return false; }
+    bool checkCommand(const String &command, const String &ref, int numData, int expectedData);
 };

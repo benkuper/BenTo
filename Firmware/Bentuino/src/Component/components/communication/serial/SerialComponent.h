@@ -18,7 +18,7 @@ DeclareComponentSingleton(Serial, "serial",)
 
     void send(const String &message);
 
-    DeclareEventTypes(MessageReceived);
-    DeclareEventNames("MessageReceived");
+    DeclareComponentEventTypes(MessageReceived);
+    DeclareComponentEventNames("MessageReceived");
 
 EndDeclareComponent

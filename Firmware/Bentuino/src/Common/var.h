@@ -45,7 +45,7 @@ struct var
     operator float() const { return floatValue(); }
     operator String() const { return stringValue(); }
     operator char *() const { return value.s; }
-
+    
     int boolValue() const
     {
         switch (type)
@@ -110,5 +110,20 @@ struct var
             return value.s;
         }
         return "";
+    }
+
+    bool operator== (const var &other) const
+    {
+        switch (type)
+        {
+        case 'b':
+        case 'i':
+        case 'f':
+            return intValue() == other.boolValue();
+        case 's':
+            return stringValue() == String(other.stringValue());
+        }
+
+        return false;
     }
 };
