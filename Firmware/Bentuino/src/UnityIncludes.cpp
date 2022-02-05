@@ -21,6 +21,8 @@
 #include "Component/components/sequence/SequenceComponent.cpp"
 #include "Component/components/files/FilesComponent.cpp"
 
+#include "Component/components/imu/IMUComponent.cpp"
+
 #include "Component/components/ledstrip/Layer/LedStripLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.cpp"

@@ -10,7 +10,8 @@ DeclareComponentSingleton(Communication, "comm",)
 
     void sendParameterFeedback(Component * c, Parameter * param);
     void sendConfigFeedback(Component * c, const String &configName, const String &val);
-
+    void sendEventFeedback(const ComponentEvent &e);
+    
     DeclareComponentEventTypes(MessageReceived);
     DeclareComponentEventNames("MessageReceived");
 

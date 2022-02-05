@@ -26,6 +26,11 @@ void CommunicationComponent::sendParameterFeedback(Component *c, Parameter *para
     serial->sendMessage(c->name, param->name, data, 1);
 }
 
+void CommunicationComponent::sendEventFeedback(const ComponentEvent &e)
+{
+    serial->sendMessage(e.component->name, e.getName(), e.data, e.numData);
+}
+
 void CommunicationComponent::sendConfigFeedback(Component *c, const String &configName, const String &val)
 {
     var data[1]{val};

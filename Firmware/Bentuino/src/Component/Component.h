@@ -60,11 +60,25 @@ public:
     Component * getComponentWithName(const String& name)
     {
         if(name == this->name) return this;
-
-        for(int i=0;i<numComponents;i++)
+        
+        int subCompIndex = name.indexOf('.');
+        
+        if(subCompIndex > 0)
         {
-            if(components[i]->name == name) return components[i];
+            String n = name.substring(0, subCompIndex);
+            for(int i=0;i<numComponents;i++)
+            {
+                if(components[i]->name == n) return components[i]->getComponentWithName(name.substring(subCompIndex+1));
+            }
         }
+        else
+        {
+            for(int i=0;i<numComponents;i++)
+            {
+                if(components[i]->name == name) return components[i];
+            }
+        }
+       
 
         return NULL;
     }

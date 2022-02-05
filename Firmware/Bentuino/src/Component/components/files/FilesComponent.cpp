@@ -25,6 +25,7 @@ bool FilesComponent::initInternal()
         if (sdEnPin > 0)
         {
             sdEnVal = GetIntConfig("sdEnVal");
+            NDBG("Setting SD En Pin "+String(sdEnPin)+" to "+String(sdEnVal));
             pinMode(sdEnPin, OUTPUT);
             digitalWrite(sdEnPin, sdEnVal);
         }
@@ -34,18 +35,31 @@ bool FilesComponent::initInternal()
         int sdMosi = GetIntConfig("sdMosi");
         int sdCS = GetIntConfig("sdCS");
 
+        if(sdSck == 0 || sdMiso == 0 || sdMosi == 0 || sdCS == 0)
+        {
+            String npin;
+            if(sdSck == 0) npin += "SCK,";
+            if(sdMiso == 0) npin += "MISO,";
+            if(sdMosi == 0) npin += "MOSI,";
+            if(sdCS == 0) npin += "CS";
+            NDBG(npin+ " pins not defined, please set to use SD");
+            return false;
+        }
+
         int sdSpeed = GetIntConfig("sdSpeed");
         if (sdSpeed == 0)
             sdSpeed = 27000000;
 
+        NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : "+String(sdSck)+","+String(sdMiso)+","+String(sdMosi)+","+String(sdCS)+","+String(sdSpeed));
         pinMode(sdSck, INPUT_PULLUP);
         pinMode(sdMiso, INPUT_PULLUP);
         pinMode(sdMosi, INPUT_PULLUP);
-        pinMode(sdCS, INPUT_PULLUP);
-
+        pinMode(sdCS, OUTPUT);
+        digitalWrite(sdCS, LOW);
+        
         spiSD.begin((int8_t)sdSck, (int8_t)sdMiso, (int8_t)sdMosi, (int8_t)sdCS); // SCK,MISO,MOSI,ss
 
-        if (SD.begin((uint8_t)sdCS, spiSD, (uint32_t)sdSpeed))
+        if (SD.begin((uint8_t)sdCS, spiSD))
         {
             NDBG("SD Card initialized.");
             // listDir("/", 0);
@@ -121,6 +135,8 @@ String FilesComponent::listDir(const char *dirname, uint8_t levels)
     }
 
     File file = root.openNextFile();
+    if(!file) NDBG("  [Empty directory]");
+
     while (file)
     {
         if (file.isDirectory())

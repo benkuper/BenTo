@@ -64,8 +64,12 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             }else{
                 NDBG("No component found for "+e.data[0].stringValue());
             }
+            
+            return;
         }
     }
+
+    comm->sendEventFeedback(e);
 }
 
 bool RootComponent::handleCommandInternal(const String &command, var *data, int numData)

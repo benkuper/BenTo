@@ -1,45 +1,68 @@
 #pragma once
 
+#define TRAIL_MAX 20
+#define IMU_READ_ASYNC
+#define NATIVE_STACK_SIZE (32 * 1024)
+
 DeclareComponent(IMU, "imu", )
 
     Adafruit_BNO055 bno;
 Parameter *isConnected;
-bool initInternal() override
-{
-    isConnected = addParameter("connected", false);
+Parameter *sendLevel;
+Parameter* orientationSendRate;
 
-    int sdaPin = GetIntConfig("sdaPin");
-    int sclPin = GetIntConfig("sclPin");
+long timeSinceOrientationLastSent;
 
-    if (sdaPin == 0)
-        sdaPin = 23;
-    if (sclPin == 0)
-        sclPin = 22;
+// IMU data
+var calibration[4];
+var orientation[3];
+var accel[3];
+var gyro[3];
+var linearAccel[3];
+var gravity[3];
+float orientationXOffset;
 
-    Wire.begin(sdaPin, sclPin);
+int throwState; // 0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
+float activity;
+float prevActivity;
+float debug[4];
 
-    if (!bno.begin())
-    {
-        NDBG("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-        return false;
-    }
+// IMU Compute
+float flatThresholds[2];
+float accelThresholds[3];
+float diffThreshold;
+float semiFlatThreshold;
+float loftieThreshold;
+float singleThreshold;
 
-    bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
-    bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
-    bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
-    bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
-    bno.setExtCrystalUse(true);
-    bno.enterNormalMode();
+// Projected Angle
+float angleOffset;
+float projectedAngle;
+float xOnCalibration;
 
-    return true;
-}
+#ifdef IMU_READ_ASYNC
+bool hasNewData;
+bool imuLock;
+bool shouldStopRead;
+static void readIMUStatic(void *);
+#endif
 
-void updateInternal()
-{
-}
+bool initInternal();
+void updateInternal();
+void clearInternal();
 
-void clearInternal()
-{
-}
+void readIMU();
+void sendCalibrationStatus();
+void computeThrow();
+void computeActivity();
+void computeProjectedAngle();
+
+void setOrientationXOffset(float offset);
+void setProjectAngleOffset(float yaw, float angle);
+
+bool handleCommandInternal(const String &command, var *data, int numData) override;
+
+DeclareComponentEventTypes(OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, ThrowState, CalibrationStatus, ActivityUpdate, Debug, ProjectedAngleUpdate);
+DeclareComponentEventNames("orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngleClub");
 
 EndDeclareComponent
