@@ -1,19 +1,26 @@
 #pragma once
 DeclareComponentSingleton(WebServer, "server",)
 
-    bool initInternal() override
-    {
-        return true;
-    }
+WebServer server;
 
-    void updateInternal()
-    {
+bool isUploading;
+int uploadedBytes;
+File uploadingFile;
 
-    }
+bool initInternal() override;
+void updateInternal() override;
+void clearInternal() override;
 
-    void clearInternal()
-    {
+void onEnabledChanged() override;
 
-    }
+void handleFileUpload();
+void returnOK();
+void returnFail(String msg);
+void handleNotFound();
+
+void handleQueryData();
+
+DeclareComponentEventTypes (UploadStart, Uploading, UploadDone, UploadCanceled)
+DeclareComponentEventNames("UploadStart","Uploading","UploadDone", "UploadCanceled")
 
 EndDeclareComponent

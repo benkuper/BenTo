@@ -9,7 +9,7 @@ struct var
         char *s;
     } value;
 
-    var(){type = '?';}
+    var() {type = '?';}
 
     var(bool v)
     {
@@ -39,13 +39,15 @@ struct var
         value.s = v;
     };
 
-   
+    
     operator bool() const { return boolValue(); }
     operator int() const { return intValue(); }
     operator float() const { return floatValue(); }
     operator String() const { return stringValue(); }
     operator char *() const { return value.s; }
-    
+
+    bool isVoid() { return type == '?'; }    
+
     int boolValue() const
     {
         switch (type)
@@ -56,6 +58,7 @@ struct var
             return value.i;
         case 'f':
             return (int)value.f;
+            
         case 's':
             return String(value.s).toInt();
         }
@@ -117,11 +120,13 @@ struct var
         switch (type)
         {
         case 'b':
+            return boolValue() == other.boolValue();
         case 'i':
+            return intValue() == other.intValue();
         case 'f':
-            return intValue() == other.boolValue();
+            return floatValue() == other.floatValue();
         case 's':
-            return stringValue() == String(other.stringValue());
+            return stringValue() == other.stringValue();
         }
 
         return false;

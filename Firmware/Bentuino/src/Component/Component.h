@@ -9,6 +9,7 @@ class Component : public EventBroadcaster<ComponentEvent>
 public:
     Component(const String &name) : name(name),
                                     isInit(false),
+                                    parentComponent(NULL),
                                     numComponents(0),
                                     numParameters(0)
     {
@@ -20,6 +21,8 @@ public:
     String name;
     bool isInit;
     Parameter *enabled;
+
+    Component *parentComponent;
 
     Component *components[MAX_CHILD_COMPONENTS];
     uint8_t numComponents;
@@ -51,43 +54,51 @@ public:
     T *addComponent(T *c)
     {
         components[numComponents] = (Component *)c;
+        c->parentComponent = this;
         AddDefaultComponentListener(c);
         numComponents++;
         c->init();
         return c;
     }
 
-    Component * getComponentWithName(const String& name)
+    Component *getComponentWithName(const String &name)
     {
-        if(name == this->name) return this;
-        
+        if (name == this->name)
+            return this;
+
         int subCompIndex = name.indexOf('.');
-        
-        if(subCompIndex > 0)
+
+        if (subCompIndex > 0)
         {
             String n = name.substring(0, subCompIndex);
-            for(int i=0;i<numComponents;i++)
+            for (int i = 0; i < numComponents; i++)
             {
-                if(components[i]->name == n) return components[i]->getComponentWithName(name.substring(subCompIndex+1));
+                if (components[i]->name == n)
+                    return components[i]->getComponentWithName(name.substring(subCompIndex + 1));
             }
         }
         else
         {
-            for(int i=0;i<numComponents;i++)
+            for (int i = 0; i < numComponents; i++)
             {
-                if(components[i]->name == name) return components[i];
+                if (components[i]->name == name)
+                    return components[i];
             }
         }
-       
 
         return NULL;
     }
 
-    Parameter *addParameter(const String &name, var val);
+    Parameter* addParameter(const String &name, var val, var minVal = var(), var maxVal = var());
 
-    virtual void onParameterEvent(const ParameterEvent &e) {}
-    
-    bool handleCommand(const String &command, var * data, int numData);
-    virtual bool handleCommandInternal(const String &command, var * data, int numData) { return false; }
+    virtual void onParameterEvent(const ParameterEvent &e);
+    virtual void onEnabledChanged() {}
+    virtual void onParameterEventInternal(const ParameterEvent &e) {}
+
+    bool handleCommand(const String &command, var *data, int numData);
+    virtual bool handleCommandInternal(const String &command, var *data, int numData) { return false; }
     bool checkCommand(const String &command, const String &ref, int numData, int expectedData);
+
+    virtual void fillJSONData(JsonObject o);
+    String getFullPath();
 };

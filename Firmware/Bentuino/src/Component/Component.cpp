@@ -34,19 +34,27 @@ void Component::clear()
     numParameters = 0;
 }
 
-Parameter *Component::addParameter(const String &name, var val)
+Parameter *Component::addParameter(const String &name, var val, var minVal, var maxVal)
 {
-    Parameter *p = new Parameter(name, val);
+    Parameter *p = new Parameter(name, val, minVal, maxVal);
     parameters[numParameters] = p;
     numParameters++;
     AddDefaultParameterListener(Component, p) return p;
 }
 
+void Component::onParameterEvent(const ParameterEvent &e)
+{
+    if (e.parameter == enabled)
+        onEnabledChanged();
+
+    onParameterEventInternal(e);
+
+    SendParameterFeedback(e.parameter);
+}
+
 bool Component::handleCommand(const String &command, var *data, int numData)
 {
-    //NDBG("Handle Command : " + command + ", num data : " + String(numData));
-
-    if(CheckCommand("setConfig", 1))
+    if (CheckCommand("setConfig", 1))
     {
         if (numData >= 2)
         {
@@ -67,10 +75,16 @@ bool Component::handleCommand(const String &command, var *data, int numData)
     {
         if (parameters[i]->name == command)
         {
+            if (parameters[i]->readOnly)
+            {
+                NDBG("Parameter " + parameters[i]->name + "is read only !");
+                return true;
+            }
+
             if (numData > 0) // query for feedback
             {
                 parameters[i]->set(data[0]);
-                NDBG("Set Parameter " + parameters[i]->name + " : " + parameters[i]->val.stringValue());
+                //NDBG("Set Parameter " + parameters[i]->name + " : " +data[0].stringValue());
             }
             else
             {
@@ -94,4 +108,43 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
         return false;
     }
     return true;
+}
+
+void Component::fillJSONData(JsonObject o)
+{
+    String fullPath = getFullPath();
+    o["DESCRIPTION"] = name;
+    o["FULL_PATH"] = fullPath;
+    o["ACCESS"] = 0;
+
+    JsonObject contents = o.createNestedObject("CONTENTS");
+
+    for (int i = 0; i < numParameters; i++)
+    {
+        Parameter *p = parameters[i];
+        JsonObject po = contents.createNestedObject(p->name);
+        p->fillJSONData(po);
+        po["FULL_PATH"] = fullPath + "/" + p->name;
+    }
+
+
+    for (int i = 0; i < numComponents; i++)
+    {
+        Component *c = components[i];
+        JsonObject co = contents.createNestedObject(c->name);
+        c->fillJSONData(co);
+    }
+}
+
+String Component::getFullPath()
+{
+    Component *pc = parentComponent;
+    String s = name;
+    while (pc != NULL)
+    {
+        s = pc->name + "/" + s;
+        pc = pc->parentComponent;
+    }
+
+    return "/" + s;
 }

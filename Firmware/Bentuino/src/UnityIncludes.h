@@ -14,6 +14,10 @@
 #include <ArduinoJson.h>
 #include <SPI.h>
 #include <SPIFFS.h>
+#include <OSCMessage.h>
+#include <ESPmDNS.h>
+#include <WebServer.h>
+
 #include "../lib/SD/src/SD.h" //really weird
 
 // Firmware

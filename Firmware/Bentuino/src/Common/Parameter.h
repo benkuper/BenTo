@@ -6,20 +6,18 @@ class Parameter;
 class ParameterEvent
 {
 public:
-    ParameterEvent(Parameter * p, uint8_t type = -1, var * data = NULL, int numData = 0) :
-        parameter(p),
-        type(type),
-        data(data),
-        numData(numData)
-        {
+    ParameterEvent(Parameter *p, uint8_t type = -1, var *data = NULL, int numData = 0) : parameter(p),
+                                                                                         type(type),
+                                                                                         data(data),
+                                                                                         numData(numData)
+    {
+    }
 
-        }
-        
-    ~ParameterEvent(){}
+    ~ParameterEvent() {}
 
-    Parameter * parameter;
+    Parameter *parameter;
     uint8_t type;
-    var * data;
+    var *data;
     int numData;
 
     String getName() const;
@@ -28,18 +26,27 @@ public:
 class Parameter : public EventBroadcaster<ParameterEvent>
 {
 public:
-    Parameter(const String &name, var val) : name(name), val(val) {}
-    virtual ~Parameter() {}
+    Parameter(const String &name, var val, var minVal = var(), var maxVal = var());
+
+    virtual ~Parameter();
 
     String name;
     var val;
+    var minVal;
+    var maxVal;
+    bool readOnly;
 
-    void set(const var &v, bool force = false) 
-    {
-        if(val == v && !force) return;
-        val = v;
-        sendEvent(ParameterEvent(this, ValueChanged, &val, 1));
-    }
+    bool boolValue();
+    int intValue();
+    float floatValue();
+    String stringValue();
+
+    bool hasRange();
+
+    void set(const var &v, bool force = false);
+
+    void setRange(var newMin, var newMax);
+    void fillJSONData(JsonObject o);
 
     DeclareEventTypes(ValueChanged);
 };

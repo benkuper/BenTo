@@ -108,7 +108,7 @@ void SerialComponent::processMessage(String buffer)
 
 void SerialComponent::sendMessage(String source, String command, var *data, int numData)
 {
-    if (!feedbackEnabled)
+    if (!feedbackEnabled->boolValue())
         return;
 
     String msg = source + "." + command;

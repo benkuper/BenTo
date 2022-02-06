@@ -1,19 +1,8 @@
 #pragma once
 DeclareComponent(Stepper, "stepper",)
 
-    bool initInternal() override
-    {
-        return true;
-    }
-
-    void updateInternal()
-    {
-
-    }
-
-    void clearInternal()
-    {
-
-    }
+bool initInternal() override;
+void updateInternal() override;
+void clearInternal() override;
 
 EndDeclareComponent

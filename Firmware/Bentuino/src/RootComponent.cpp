@@ -10,7 +10,7 @@ ImplementSingleton(RootComponent)
 
     deviceID = "";
     for (int i = 0; i < 6; i++)
-        deviceID += (i > 0 ? ":" : "") + String(mac[i], HEX);
+        deviceID += (i > 0 ? "-" : "") + String(mac[i], HEX);
 
     deviceID.toUpperCase();
 
@@ -66,6 +66,13 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             }
             
             return;
+        }
+    }else if(e.component == wifi)
+    {
+        if(e.type == WifiComponent::ConnectionStateChanged)
+        {
+            comm->osc->enabled->set((bool)(wifi->state == WifiComponent::Connected), true);
+            server->enabled->set((bool)(wifi->state == WifiComponent::Connected), true);
         }
     }
 

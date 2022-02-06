@@ -8,9 +8,8 @@ DeclareComponentSingleton(Serial, "serial",)
     Parameter * feedbackEnabled;
 
     bool initInternal() override;
-
-    void updateInternal();
-    void clearInternal();
+    void updateInternal() override;
+    void clearInternal() override;
 
     
     void processMessage(String buffer);

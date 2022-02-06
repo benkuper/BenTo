@@ -1,7 +1,8 @@
 bool IMUComponent::initInternal()
 {
     isConnected = addParameter("connected", false);
-    sendLevel = addParameter("sendLevel", false);
+    isConnected->readOnly = true;
+    sendLevel = addParameter("sendLevel", 0);
     orientationSendRate = addParameter("orientationSendRate", 50);
 
     int sdaPin = GetIntConfig("sdaPin");
@@ -63,6 +64,8 @@ bool IMUComponent::initInternal()
     imuLock = false;
     xTaskCreate(&IMUComponent::readIMUStatic, "imu", NATIVE_STACK_SIZE, this, 1, NULL);
 #endif
+
+    enabled->set(false);
 
     return true;
 }
@@ -134,7 +137,7 @@ void IMUComponent::readIMUStatic(void *_imu)
 
 void IMUComponent::readIMU()
 {
-    if(!enabled->val) return;
+    if(!enabled->boolValue()) return;
 
 #ifdef IMU_READ_ASYNC
     if (imuLock)

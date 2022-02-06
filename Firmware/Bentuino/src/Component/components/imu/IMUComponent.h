@@ -47,9 +47,9 @@ bool shouldStopRead;
 static void readIMUStatic(void *);
 #endif
 
-bool initInternal();
-void updateInternal();
-void clearInternal();
+bool initInternal() override;
+void updateInternal() override;
+void clearInternal() override;
 
 void readIMU();
 void sendCalibrationStatus();

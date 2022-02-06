@@ -7,6 +7,8 @@
 
 // Firmware
 
+#include "Common/Parameter.cpp"
+
 #include "Component/ComponentEvent.cpp"
 #include "Component/Component.cpp"
 
@@ -23,6 +25,7 @@
 
 #include "Component/components/imu/IMUComponent.cpp"
 
+#include "Component/components/ledstrip/LedStripComponent.cpp"
 #include "Component/components/ledstrip/Layer/LedStripLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.cpp"

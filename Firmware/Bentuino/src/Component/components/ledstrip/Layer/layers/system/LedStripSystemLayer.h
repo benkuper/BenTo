@@ -18,17 +18,6 @@ public:
     void updateInternal() override;
     void clearInternal() override;
 
-    void setSystemMode(SystemMode m)
-    {
-        if(systemMode == m) return;
-        systemMode = m;
-        timeAtModeChanged = millis();
-    }
-
-    void setConnectionMode(SystemConnectionMode m)
-    {
-        if(connectionMode == m) return;
-        connectionMode = m;
-        timeAtConnectionModeChanged = millis();
-    }
+    void setSystemMode(SystemMode m);
+    void setConnectionMode(SystemConnectionMode m);
 };
