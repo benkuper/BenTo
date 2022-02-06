@@ -1,9 +1,9 @@
-ImplementSingleton(CommunicationComponent)
+ImplementSingleton(CommunicationComponent);
 
-    bool CommunicationComponent::initInternal()
+bool CommunicationComponent::initInternal()
 {
-    AddComponent(serial, Serial);
-    AddComponent(osc, OSC);
+    AddComponent(serial, Serial, true);
+    AddComponent(osc, OSC, false);
 
     return true;
 }

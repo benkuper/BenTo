@@ -21,6 +21,7 @@
         "vector": "cpp",
         "initializer_list": "cpp",
         "cstdlib": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "new": "cpp"
     }
 }

@@ -1,7 +1,6 @@
 #pragma once
 
 #define TRAIL_MAX 20
-#define IMU_READ_ASYNC
 #define NATIVE_STACK_SIZE (32 * 1024)
 
 DeclareComponent(IMU, "imu", )
@@ -40,17 +39,19 @@ float angleOffset;
 float projectedAngle;
 float xOnCalibration;
 
-#ifdef IMU_READ_ASYNC
 bool hasNewData;
 bool imuLock;
 bool shouldStopRead;
-static void readIMUStatic(void *);
-#endif
 
 bool initInternal() override;
 void updateInternal() override;
 void clearInternal() override;
 
+void startIMUTask();
+
+static void readIMUStatic(void *);
+
+bool setupBNO();
 void readIMU();
 void sendCalibrationStatus();
 void computeThrow();

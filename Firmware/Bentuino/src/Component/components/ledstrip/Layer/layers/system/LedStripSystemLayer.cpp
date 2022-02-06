@@ -5,6 +5,9 @@ bool LedStripSystemLayer::initInternal()
 
 void LedStripSystemLayer::updateInternal()
 {
+    colors[numLeds-1] = Color(255, 0, 0, 255);
+    //colors[1] = Color(0, 255, 0, 255);
+    //colors[2] = Color(0, 0, 255, 255);
 }
 
 void LedStripSystemLayer::clearInternal()

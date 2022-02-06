@@ -6,6 +6,7 @@
 
 //Libraries
 #include <Adafruit_NeoPixel.h>
+#include <Adafruit_DotStar.h>
 #include <utility/vector.h>
 #include <utility/matrix.h>
 #include <utility/quaternion.h>

@@ -1,14 +1,36 @@
 bool LedStripComponent::initInternal()
 {
+    // init
+    neoPixelStrip = NULL;
+    dotStarStrip = NULL;
+
+    for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
+        userLayers[i] = NULL;
+    systemLayer = NULL;
+
     pin = GetIntConfig("pin");
-    if(pin == 0) pin = 27; //default pin for creators
     count = GetIntConfig("count");
-    if(count == 0) count = 32; //default count for creators
+    enPin = GetIntConfig("enPin");
+    clkPin = GetIntConfig("clkPin");
+
+    if (enPin != 0)
+    {
+        NDBG("Setting Led Enable pin : " + String(enPin));
+        pinMode(enPin, OUTPUT);
+        digitalWrite(enPin, HIGH); // enable LEDs
+    }
+
     brightness = addParameter("brightness", .5f, 0, 1);
-    
-    strip = new Adafruit_NeoPixel(count, pin, NEO_GRB + NEO_KHZ800);
 
     colors = (Color *)malloc(count * sizeof(Color));
+    for (int i = 0; i < count; i++)
+        colors[i] = Color(0, 0, 0, 0);
+
+    if (count == 0 || pin == 0)
+    {
+        NDBG("Ledstrip pin and count have not been set");
+        return false;
+    }
 
     bakeLayer = addComponent(new LedStripBakeLayer(this));
     streamLayer = addComponent(new LedStripStreamLayer(this));
@@ -19,6 +41,23 @@ bool LedStripComponent::initInternal()
     userLayers[1] = streamLayer;
     userLayers[2] = scriptLayer;
 
+    if (clkPin > 0)
+    {
+        dotStarStrip = new Adafruit_DotStar(count, pin, clkPin, DOTSTAR_BGR);
+        dotStarStrip->begin();
+        dotStarStrip->setBrightness(brightness->floatValue() * 255);
+        // dotStarStrip->fill(dotStarStrip->Color(255, 0, 0));
+        // dotStarStrip->show();
+    }
+    else
+    {
+        neoPixelStrip = new Adafruit_NeoPixel(count, pin, NEO_GRB + NEO_KHZ800);
+        neoPixelStrip->begin();
+        neoPixelStrip->setBrightness(brightness->floatValue() * 255);
+        // neoPixelStrip->fill(neoPixelStrip->Color(255, 0, 0));
+        // neoPixelStrip->show();
+    }
+
     return true;
 }
 
@@ -26,6 +65,7 @@ void LedStripComponent::updateInternal()
 {
     // all layer's internal colors are updated in Component's update() function
 
+    clearColors();
     for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
         processLayer(userLayers[i]);
 
@@ -39,13 +79,41 @@ void LedStripComponent::clearInternal()
     clearColors();
     showLeds();
 
-    delete strip;
-    strip = NULL;
+    delete neoPixelStrip;
+    neoPixelStrip = NULL;
+
+    delete dotStarStrip;
+    dotStarStrip = NULL;
+}
+
+void LedStripComponent::onParameterEventInternal(const ParameterEvent &e)
+{
+    if (e.parameter == brightness)
+    {
+        if (neoPixelStrip != NULL)
+            neoPixelStrip->setBrightness(brightness->floatValue() * 255);
+        else if (dotStarStrip != NULL)
+            dotStarStrip->setBrightness(brightness->floatValue() * 255);
+    }
+}
+
+void LedStripComponent::onEnabledChanged()
+{
+    if (enPin != 0)
+        digitalWrite(enPin, enabled->intValue()); // enable LEDs
 }
 
 // Layer functions
 void LedStripComponent::processLayer(LedStripLayer *layer)
 {
+    if (layer == NULL)
+        return;
+
+    if (!layer->enabled->boolValue())
+        return;
+
+
+    // NDBG("Process Layer " + layer->name);
     for (int i = 0; i < count; i++)
     {
         Color c = layer->colors[i];
@@ -96,9 +164,34 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
 
 void LedStripComponent::clearColors()
 {
+    for(int i=0;i<count;i++) colors[i] = Color(0,0,0,0);
+    //memset(colors, 0, sizeof(colors) * count);
 }
 
 void LedStripComponent::showLeds()
 {
-    if(strip != NULL) strip->show();
+    if (neoPixelStrip != NULL)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            float a = colors[i].a / 255.0f;
+            neoPixelStrip->setPixelColor(i,
+                                         (uint8_t)(colors[i].r * a),
+                                         (uint8_t)(colors[i].g * a),
+                                         (uint8_t)(colors[i].b * a));
+        }
+        neoPixelStrip->show();
+    }
+    else if (dotStarStrip != NULL)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            float a = colors[i].a / 255.0f;
+            dotStarStrip->setPixelColor(i,
+                                        (uint8_t)(colors[i].r * a),
+                                        (uint8_t)(colors[i].g * a),
+                                        (uint8_t)(colors[i].b * a));
+        }
+        dotStarStrip->show();
+    }
 }

@@ -6,6 +6,8 @@ DeclareComponent(LedStrip, "ledstrip", )
 
 int pin;
 int count;
+int enPin;
+int clkPin;
 Parameter * brightness;
 
 Color *colors;
@@ -20,11 +22,15 @@ LedStripSystemLayer *systemLayer;
 
 LedStripLayer *userLayers[LEDSTRIP_NUM_USER_LAYERS];
 
-Adafruit_NeoPixel *strip;
+Adafruit_NeoPixel *neoPixelStrip;
+Adafruit_DotStar * dotStarStrip;
 
 bool initInternal() override;
 void updateInternal() override;
 void clearInternal() override;
+
+void onParameterEventInternal(const ParameterEvent &e) override;
+void onEnabledChanged() override;
 
 // Layer functions
 void processLayer(LedStripLayer *layer);
@@ -32,5 +38,6 @@ void processLayer(LedStripLayer *layer);
 // Color functions
 void clearColors();
 void showLeds();
+
 
 EndDeclareComponent

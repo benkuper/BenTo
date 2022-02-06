@@ -13,9 +13,13 @@ FilesComponent * files;
 WebServerComponent * server;
 SequenceComponent * sequence;
 
+
 //users
 IMUComponent * imu;
 LedStripComponent *strip;
+
+//Needs a single structure
+LedStreamReceiverComponent * streamReceiver;
 
 bool initInternal() override;
 

@@ -7,7 +7,6 @@ bool OSCComponent::initInternal()
     
     remoteHost = GetStringConfig("remoteHost");
     isAlive = addParameter("isAlive",false);
-    enabled->set(false);
 
     return true;
 }
@@ -34,8 +33,10 @@ void OSCComponent::onEnabledChanged()
 
         if (MDNS.begin((DeviceID).c_str()))
         {
+            MDNS.setInstanceName("Bentuino - " + DeviceID);
             NDBG("OSC Zeroconf started");
             MDNS.addService("osc", "udp", 9000);
+            MDNS.addService("oscjson", "tcp", 80);
         }
         else
         {

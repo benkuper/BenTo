@@ -14,7 +14,7 @@
 #define AddDefaultParameterListener(Class, param) param->addListener(std::bind(&Class::onParameterEvent, this, std::placeholders::_1));
 
 //Component Helpers
-#define AddComponent(comp, Type) comp = addComponent<Type ## Component>();
+#define AddComponent(comp, Type, Enabled) comp = addComponent<Type ## Component>(Enabled);
 #define AddDefaultComponentListener(comp) comp->addListener(std::bind(&Component::onChildComponentEvent, this, std::placeholders::_1));
 
 #define DeclareComponentEventTypes(...) enum ComponentEventTypes { __VA_ARGS__, TYPES_MAX };
@@ -44,13 +44,13 @@ public:
 
 #define DeclareComponent(ClassPrefix,name,Derives) \
     DeclareComponentClass(ClassPrefix, Derives) \
-    ClassPrefix ## Component():Component(name) {}\
+    ClassPrefix ## Component(bool _enabled = true):Component(name, _enabled) {}\
     ~ClassPrefix ## Component(){}
 
 #define DeclareComponentSingleton(ClassPrefix,name,Derives) \
     DeclareComponentClass(ClassPrefix, Derives)\
     DeclareSingleton(ClassPrefix ## Component) \
-    ClassPrefix ## Component():Component(name) { InitSingleton() }\
+    ClassPrefix ## Component(bool _enabled = true):Component(name, _enabled) { InitSingleton() }\
     ~ClassPrefix ## Component(){ DeleteSingleton() }
 
 

@@ -6,8 +6,6 @@ ImplementSingleton(WebServerComponent)
     server.on("/upload", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
     server.on("/", HTTP_ANY, std::bind(&WebServerComponent::handleQueryData, this));
 
-    enabled->set(false);
-
     return true;
 }
 
@@ -136,8 +134,9 @@ void WebServerComponent::handleNotFound()
 
 void WebServerComponent::handleQueryData()
 {
-    NDBG("Handle Query Data");
-    
+    NDBG("URI : " + String(server.uri()));
+    server.header("HOST_INFO");
+        
     DynamicJsonDocument doc(8000);
     JsonObject o = doc.to<JsonObject>();
     RootComponent::instance->fillJSONData(o);

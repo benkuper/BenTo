@@ -22,19 +22,6 @@ bool IMUComponent::initInternal()
 
     Wire.begin(sdaPin, sclPin);
 
-    if (!bno.begin())
-    {
-        NDBG("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
-        return false;
-    }
-
-    bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
-    bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
-    bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
-    bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
-    bno.setExtCrystalUse(true);
-    bno.enterNormalMode();
-
     // Init values
     accelThresholds[0] = .8f;
     accelThresholds[1] = 2;
@@ -58,28 +45,18 @@ bool IMUComponent::initInternal()
     timeSinceOrientationLastSent = 0;
     throwState = 0;
 
-#ifdef IMU_READ_ASYNC
-    hasNewData = false,
-    shouldStopRead = false;
-    imuLock = false;
-    xTaskCreate(&IMUComponent::readIMUStatic, "imu", NATIVE_STACK_SIZE, this, 1, NULL);
-#endif
-
-    enabled->set(false);
+    startIMUTask();
 
     return true;
 }
 
 void IMUComponent::updateInternal()
 {
-#ifdef IMU_READ_ASYNC
     if (!hasNewData)
         return;
+
     hasNewData = false;
     imuLock = true;
-#else
-    readIMU();
-#endif
 
     long curTime = millis();
     int orientationSendMS = 1000 / (float)orientationSendRate->val;
@@ -88,8 +65,8 @@ void IMUComponent::updateInternal()
     {
         if ((int)sendLevel->val >= 1)
         {
-           //NDBG("Orientation send "+
-           sendEvent(OrientationUpdate, orientation, 3);
+            // NDBG("Orientation send "+
+            sendEvent(OrientationUpdate, orientation, 3);
             if ((int)sendLevel->val >= 2)
             {
                 sendEvent(AccelUpdate, accel, 3);
@@ -104,23 +81,35 @@ void IMUComponent::updateInternal()
         timeSinceOrientationLastSent = curTime;
     }
 
-#ifdef IMU_READ_ASYNC
     imuLock = false;
-#endif
 }
 
 void IMUComponent::clearInternal()
 {
-#ifdef IMU_READ_ASYNC
     shouldStopRead = true;
-#endif
 }
 
-#ifdef IMU_READ_ASYNC
+void IMUComponent::startIMUTask()
+{
+    hasNewData = false,
+    shouldStopRead = false;
+    imuLock = false;
+    xTaskCreate(&IMUComponent::readIMUStatic, "imu", NATIVE_STACK_SIZE, this, 1, NULL);
+}
+
 void IMUComponent::readIMUStatic(void *_imu)
 {
     DBG("[IMU] Async Thread Start");
     IMUComponent *imuComp = (IMUComponent *)_imu;
+
+    bool result = imuComp->setupBNO();
+
+    if(!result)
+    {
+        vTaskDelete(NULL);
+        return;
+    }
+
     while (!imuComp->shouldStopRead)
     {
         imuComp->readIMU();
@@ -128,21 +117,35 @@ void IMUComponent::readIMUStatic(void *_imu)
     }
 
     DBG("[IMU] Async Thread Stop");
-
     vTaskDelete(NULL);
-
     DBG("[IMU] Task deleted");
 }
-#endif
+
+bool IMUComponent::setupBNO()
+{
+    if (!bno.begin()) 
+    {
+        NDBG("Ooops, no BNO055 detected ... Check your wiring or I2C ADDR!");
+        return false;
+    }
+
+    bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
+    bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
+    bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
+    bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
+    bno.setExtCrystalUse(true);
+    bno.enterNormalMode();
+
+    return true;
+}
 
 void IMUComponent::readIMU()
 {
-    if(!enabled->boolValue()) return;
+    if (!enabled->boolValue())
+        return;
 
-#ifdef IMU_READ_ASYNC
     if (imuLock)
         return;
-#endif
 
     imu::Quaternion q = bno.getQuat();
     q.normalize();
@@ -176,9 +179,7 @@ void IMUComponent::readIMU()
     computeActivity();
     computeProjectedAngle();
 
-#ifdef IMU_READ_ASYNC
     hasNewData = true;
-#endif
 }
 
 void IMUComponent::computeProjectedAngle()
@@ -348,7 +349,7 @@ void IMUComponent::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
     xOnCalibration = yaw;
 }
 
-bool IMUComponent::handleCommandInternal(const String& command, var *data, int numData)
+bool IMUComponent::handleCommandInternal(const String &command, var *data, int numData)
 {
     if (checkCommand(command, "calibrationStatus", numData, 0))
     {

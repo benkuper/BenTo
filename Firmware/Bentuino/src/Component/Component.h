@@ -7,13 +7,13 @@
 class Component : public EventBroadcaster<ComponentEvent>
 {
 public:
-    Component(const String &name) : name(name),
+    Component(const String &name, bool _enabled = true) : name(name),
                                     isInit(false),
                                     parentComponent(NULL),
                                     numComponents(0),
                                     numParameters(0)
     {
-        enabled = addParameter("enabled", true);
+        enabled = addParameter("enabled", _enabled);
     }
 
     virtual ~Component() {}
@@ -48,7 +48,7 @@ public:
     }
 
     template <class T>
-    T *addComponent() { return addComponent(new T()); };
+    T *addComponent(bool _enabled) { return addComponent(new T(_enabled)); };
 
     template <class T>
     T *addComponent(T *c)

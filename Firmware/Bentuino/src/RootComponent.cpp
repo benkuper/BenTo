@@ -14,16 +14,20 @@ ImplementSingleton(RootComponent)
 
     deviceID.toUpperCase();
 
-    AddComponent(settings, Settings);
-    AddComponent(comm, Communication);
-    AddComponent(wifi, Wifi);
-    AddComponent(battery, Battery);
-    AddComponent(files, Files);
-    AddComponent(server, WebServer);
-    AddComponent(sequence, Sequence);
+    AddComponent(settings, Settings, true);
+    AddComponent(comm, Communication, true);
 
-    AddComponent(strip, LedStrip);
-    AddComponent(imu, IMU);
+    AddComponent(streamReceiver, LedStreamReceiver, false);
+    AddComponent(strip, LedStrip, true);
+   
+    AddComponent(battery, Battery, true);
+    AddComponent(sequence, Sequence, true);
+    
+    AddComponent(server, WebServer, false);
+    AddComponent(imu, IMU, false);
+
+    AddComponent(wifi, Wifi, true);
+    AddComponent(files, Files, true);
 
     return true;
 }
@@ -71,8 +75,10 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     {
         if(e.type == WifiComponent::ConnectionStateChanged)
         {
-            comm->osc->enabled->set((bool)(wifi->state == WifiComponent::Connected), true);
-            server->enabled->set((bool)(wifi->state == WifiComponent::Connected), true);
+            bool isConnected = wifi->state == WifiComponent::Connected;
+            comm->osc->enabled->set(isConnected);
+            server->enabled->set(isConnected);
+            streamReceiver->enabled->set(isConnected);
         }
     }
 
