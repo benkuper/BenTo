@@ -166,6 +166,13 @@ void IMUComponent::readIMU()
     q.normalize();
 
     imu::Vector<3> euler = q.toEuler();
+
+    if(isnan(euler.x()) || isnan(euler.y()) || isnan(euler.z()))
+    {
+        //NDBG("Reading is sh*t (nan)");
+        return;
+    }
+
     orientation[0] = (float)(fmodf(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f);
     orientation[1] = (float)(euler.y() * 180 / PI); // Pitch
     orientation[2] = (float)(euler.z() * 180 / PI); // Roll
