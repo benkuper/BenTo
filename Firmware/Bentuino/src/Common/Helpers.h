@@ -33,6 +33,9 @@ String getComponentEventName(uint8_t type) const override { return componentEven
 #define SetConfig(sname,val) SettingsComponent::instance->setConfig(name, sname, val, true);
 #define SetConfigSave(sname,val) SettingsComponent::instance->setConfig(name, sname, val, false);
 
+
+
+
 //Internal
 #define PDerive(Class) ,public Class
 #define DeclareComponentClass(ClassPrefix,...) class ClassPrefix ## Component :\

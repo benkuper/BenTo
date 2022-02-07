@@ -12,6 +12,7 @@ bool LedStripComponent::initInternal()
     count = GetIntConfig("count");
     enPin = GetIntConfig("enPin");
     clkPin = GetIntConfig("clkPin");
+    invertStrip = GetBoolConfig("invertStrip");
 
     if (enPin != 0)
     {
@@ -46,16 +47,18 @@ bool LedStripComponent::initInternal()
         dotStarStrip = new Adafruit_DotStar(count, pin, clkPin, DOTSTAR_BGR);
         dotStarStrip->begin();
         dotStarStrip->setBrightness(brightness->floatValue() * 255);
-        // dotStarStrip->fill(dotStarStrip->Color(255, 0, 0));
-        // dotStarStrip->show();
+        //  dotStarStrip->fill(dotStarStrip->Color(255, 0, 0));
+        //  dotStarStrip->show();
+        //  delay(300);
     }
     else
     {
         neoPixelStrip = new Adafruit_NeoPixel(count, pin, NEO_GRB + NEO_KHZ800);
         neoPixelStrip->begin();
         neoPixelStrip->setBrightness(brightness->floatValue() * 255);
-        // neoPixelStrip->fill(neoPixelStrip->Color(255, 0, 0));
-        // neoPixelStrip->show();
+        //  neoPixelStrip->fill(neoPixelStrip->Color(255, 0, 0));
+        //  neoPixelStrip->show();
+        //  delay(300);
     }
 
     return true;
@@ -112,25 +115,19 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
     if (!layer->enabled->boolValue())
         return;
 
-
-    // NDBG("Process Layer " + layer->name);
     for (int i = 0; i < count; i++)
     {
         Color c = layer->colors[i];
+        
         switch (layer->blendMode)
         {
         case LedStripLayer::ADD:
-            colors[i].r = min(colors[i].r + c.r, 255);
-            colors[i].g = min(colors[i].g + c.g, 255);
-            colors[i].b = min(colors[i].b + c.b, 255);
-            colors[i].a = min(colors[i].a + c.a, 255);
+            colors[i] += c;
+            //if(i == 0) NDBG(" > "+colors[i].toString());
             break;
 
         case LedStripLayer::MULTIPLY:
-            colors[i].r *= c.r / 255.0f;
-            colors[i].g *= c.g / 255.0f;
-            colors[i].b *= c.b / 255.0f;
-            colors[i].a *= c.a / 255.0f;
+            colors[i] *= c;
             break;
 
         case LedStripLayer::MAX:
@@ -164,8 +161,8 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
 
 void LedStripComponent::clearColors()
 {
-    for(int i=0;i<count;i++) colors[i] = Color(0,0,0,0);
-    //memset(colors, 0, sizeof(colors) * count);
+    // for(int i=0;i<count;i++) colors[i] = Color(0,0,0,0);
+    memset(colors, 0, sizeof(Color) * count);
 }
 
 void LedStripComponent::showLeds()
@@ -175,7 +172,7 @@ void LedStripComponent::showLeds()
         for (int i = 0; i < count; i++)
         {
             float a = colors[i].a / 255.0f;
-            neoPixelStrip->setPixelColor(i,
+            neoPixelStrip->setPixelColor(ledMap(i),
                                          (uint8_t)(colors[i].r * a),
                                          (uint8_t)(colors[i].g * a),
                                          (uint8_t)(colors[i].b * a));
@@ -187,11 +184,16 @@ void LedStripComponent::showLeds()
         for (int i = 0; i < count; i++)
         {
             float a = colors[i].a / 255.0f;
-            dotStarStrip->setPixelColor(i,
+            dotStarStrip->setPixelColor(ledMap(i),
                                         (uint8_t)(colors[i].r * a),
                                         (uint8_t)(colors[i].g * a),
                                         (uint8_t)(colors[i].b * a));
         }
         dotStarStrip->show();
     }
+}
+
+int LedStripComponent::ledMap(int index) const
+{
+    return invertStrip ? count - 1 - index : index;
 }

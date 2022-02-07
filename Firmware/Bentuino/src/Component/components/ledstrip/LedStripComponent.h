@@ -8,7 +8,11 @@ int pin;
 int count;
 int enPin;
 int clkPin;
+
 Parameter * brightness;
+
+//mapping
+bool invertStrip;
 
 Color *colors;
 
@@ -39,5 +43,6 @@ void processLayer(LedStripLayer *layer);
 void clearColors();
 void showLeds();
 
+int ledMap(int index) const;
 
 EndDeclareComponent

@@ -68,13 +68,6 @@ void LedStreamReceiverComponent::receiveUDP()
             if (stripIndex < layers.size())
             {
                 LedStripStreamLayer *layer = layers[stripIndex];
-                 /*int numColors = floor((byteIndex - 2) * 1.0f / LEDSTREAM_LED_CHANNELS);
-               for (int i = 0; i < numColors; i++)
-                {
-                    int index = 1 + i * LEDSTREAM_LED_CHANNELS;
-                    layer->colors[i] = Color(streamBuffer[index], streamBuffer[index + 1], streamBuffer[index + 2], streamBuffer[index + 3]);
-                    NDBG("Color  " +String(i)+": "+ String(layer->colors[i].r)+","+ String(layer->colors[i].g)+","+ String(layer->colors[i].b)+","+ String(layer->colors[i].a));
-                }*/
                  memcpy((uint8_t *)layer->colors, streamBuffer + 1, byteIndex - 2);
             }
             else

@@ -30,4 +30,11 @@ public:
     BlendMode blendMode;
     
     Color * colors;
+
+    //Helper functions
+    void clearColors();
+    void fillAll(Color c);
+    void fillRange(Color c, float start, float end, bool clear = true);
+    void point(Color c, float pos, float radius, bool clear = true);
+
 };
