@@ -126,14 +126,15 @@ void IMUComponent::readIMUStatic(void *_imu)
     }
 
     imuComp->bno.enterSuspendMode();
-    
+
     DBG("[IMU] Async Thread Stop");
     vTaskDelete(NULL);
 }
 
 bool IMUComponent::setupBNO()
 {
-    if(imuIsInit) return true;
+    if (imuIsInit)
+        return true;
 
     NDBG("Setup BNO...");
     if (!bno.begin())
@@ -161,15 +162,15 @@ void IMUComponent::readIMU()
 
     if (imuLock)
         return;
-    
+
     imu::Quaternion q = bno.getQuat();
     q.normalize();
 
     imu::Vector<3> euler = q.toEuler();
 
-    if(isnan(euler.x()) || isnan(euler.y()) || isnan(euler.z()))
+    if (isnan(euler.x()) || isnan(euler.y()) || isnan(euler.z()))
     {
-        //NDBG("Reading is sh*t (nan)");
+        // NDBG("Reading is sh*t (nan)");
         return;
     }
 
@@ -332,7 +333,8 @@ void IMUComponent::computeThrow()
     if (newState != throwState)
     {
         throwState = newState;
-        sendEvent(ThrowState);
+        var data[1]{throwState};
+        sendEvent(ThrowState, data, 1);
     }
 }
 
