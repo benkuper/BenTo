@@ -2,7 +2,7 @@ LedStripLayer::LedStripLayer(const String &name, Type t, LedStripComponent *stri
                                                                                      strip(strip),
                                                                                      numLeds(strip->count),
                                                                                      type(t),
-                                                                                     blendMode(ADD)
+                                                                                     blendMode(Add)
 {
     colors = (Color *)malloc(numLeds * sizeof(Color));
     for (int i = 0; i < numLeds; i++)
@@ -50,7 +50,7 @@ void LedStripLayer::point(Color c, float pos, float radius, bool doClear)
     {
         float rel = i * 1.0f / max(numLeds - 1, 1);
         float fac = max(1 - (std::abs((float)(pos - rel)) / radius), 0.f);
-        Color tc = c.withMultipledAlpha(fac);
+        Color tc = c.withMultipliedAlpha(fac);
         colors[i] += tc;
     }
 }

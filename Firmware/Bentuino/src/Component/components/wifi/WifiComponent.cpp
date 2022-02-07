@@ -71,6 +71,7 @@ void WifiComponent::setState(ConnectionState s)
         return;
 
     state = s;
+    timeAtStateChange = millis();
     sendEvent(ConnectionStateChanged);
 }
 
@@ -95,6 +96,12 @@ void WifiComponent::connect()
     WiFi.begin(ssid.c_str(), pass.c_str());
 
     setState(Connecting);
+}
+
+void WifiComponent::disable()
+{
+    WiFi.disconnect();
+    setState(Disabled);
 }
 
 void WifiComponent::disconnect()

@@ -93,25 +93,25 @@ struct Color
     static float mix(float a, float b, float t) { return a + (b - a) * t; }
     static float fract(float x) { return x - int(x); }
 
-    Color withMultipledAlpha(float val)
+    Color withMultipliedAlpha(float val)
     {
         Color c = clone();
         c.a *= val;
         return c;
     }
 
-    Color lerp(Color a, Color b, float weight)
+    Color lerp(Color toColor, float weight)
     {
-        Color r;
+        Color c;
         for (uint8_t i = 0; i < 4; i++)
         {
-            if (a.raw[i] == b.raw[i])
-                r.raw[i] = a.raw[i];
+            if (raw[i] == toColor.raw[i])
+                c.raw[i] = raw[i];
             else
-                r.raw[i] = a.raw[i] + weight * (b.raw[i] - a.raw[i]);
+                c.raw[i] = raw[i] + weight * (toColor.raw[i] - raw[i]);
         }
 
-        return r;
+        return c;
     }
 
     String toString() const { return "[" + String(r) + "," + String(g) + "," + String(b) + "," + String(a) + "]"; }

@@ -3,7 +3,7 @@
 class LedStripBakeLayer : public LedStripLayer
 {
 public:
-    LedStripBakeLayer(LedStripComponent *strip) : LedStripLayer("bake", LedStripLayer::BAKE, strip) {}
+    LedStripBakeLayer(LedStripComponent *strip) : LedStripLayer("bake", LedStripLayer::Bake, strip) {}
     ~LedStripBakeLayer() {}
 
     File curFile;

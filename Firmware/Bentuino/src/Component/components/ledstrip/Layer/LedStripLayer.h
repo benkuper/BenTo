@@ -6,19 +6,19 @@ class LedStripLayer :
 public:
     enum Type
     {
-        SYSTEM,
-        STREAM,
-        BAKE,
-        SCRIPT
+        System,
+        Stream,
+        Bake,
+        Script
     };
 
     enum BlendMode
     {
-        ADD,
-        MULTIPLY,
-        MAX,
-        MIN,
-        ALPHA
+        Add,
+        Multiply,
+        Max,
+        Min,
+        Alpha
     };
 
     LedStripLayer(const String &name, Type t, LedStripComponent * strip);
@@ -36,5 +36,4 @@ public:
     void fillAll(Color c);
     void fillRange(Color c, float start, float end, bool clear = true);
     void point(Color c, float pos, float radius, bool clear = true);
-
 };

@@ -39,9 +39,11 @@ float angleOffset;
 float projectedAngle;
 float xOnCalibration;
 
+//Threading
 bool hasNewData;
 bool imuLock;
 bool shouldStopRead;
+bool imuIsInit;
 
 bool initInternal() override;
 void updateInternal() override;
@@ -60,6 +62,8 @@ void computeProjectedAngle();
 
 void setOrientationXOffset(float offset);
 void setProjectAngleOffset(float yaw, float angle);
+
+void onEnabledChanged() override;
 
 bool handleCommandInternal(const String &command, var *data, int numData) override;
 

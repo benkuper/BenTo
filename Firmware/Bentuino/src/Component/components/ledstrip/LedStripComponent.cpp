@@ -14,6 +14,7 @@ bool LedStripComponent::initInternal()
     clkPin = GetIntConfig("clkPin");
     invertStrip = GetBoolConfig("invertStrip");
 
+
     if (enPin != 0)
     {
         NDBG("Setting Led Enable pin : " + String(enPin));
@@ -21,7 +22,10 @@ bool LedStripComponent::initInternal()
         digitalWrite(enPin, HIGH); // enable LEDs
     }
 
-    brightness = addParameter("brightness", .5f, 0, 1);
+    float defaultBrightness = GetFloatConfig("defaultBrightness");
+    if(defaultBrightness == 0) defaultBrightness = .5f;
+
+    brightness = addParameter("brightness", defaultBrightness, 0, 1);
 
     colors = (Color *)malloc(count * sizeof(Color));
     for (int i = 0; i < count; i++)
@@ -87,6 +91,8 @@ void LedStripComponent::clearInternal()
 
     delete dotStarStrip;
     dotStarStrip = NULL;
+
+    setStripPower(false);
 }
 
 void LedStripComponent::onParameterEventInternal(const ParameterEvent &e)
@@ -102,8 +108,13 @@ void LedStripComponent::onParameterEventInternal(const ParameterEvent &e)
 
 void LedStripComponent::onEnabledChanged()
 {
+    setStripPower(enabled->boolValue());
+}
+
+void LedStripComponent::setStripPower(bool value)
+{
     if (enPin != 0)
-        digitalWrite(enPin, enabled->intValue()); // enable LEDs
+        digitalWrite(enPin, value); // enable LEDs
 }
 
 // Layer functions
@@ -121,30 +132,30 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
         
         switch (layer->blendMode)
         {
-        case LedStripLayer::ADD:
+        case LedStripLayer::Add:
             colors[i] += c;
             //if(i == 0) NDBG(" > "+colors[i].toString());
             break;
 
-        case LedStripLayer::MULTIPLY:
+        case LedStripLayer::Multiply:
             colors[i] *= c;
             break;
 
-        case LedStripLayer::MAX:
+        case LedStripLayer::Max:
             colors[i].r = max(colors[i].r, c.r);
             colors[i].g = max(colors[i].g, c.g);
             colors[i].b = max(colors[i].b, c.b);
             colors[i].a = max(colors[i].a, c.a);
             break;
 
-        case LedStripLayer::MIN:
+        case LedStripLayer::Min:
             colors[i].r = min(colors[i].r, c.r);
             colors[i].g = min(colors[i].g, c.g);
             colors[i].b = min(colors[i].b, c.b);
             colors[i].a = min(colors[i].a, c.a);
             break;
 
-        case LedStripLayer::ALPHA:
+        case LedStripLayer::Alpha:
         {
             float a = c.a / 255.0f;
             colors[i].r = colors[i].r + (c.r - colors[i].r) * a;
@@ -163,6 +174,7 @@ void LedStripComponent::clearColors()
 {
     // for(int i=0;i<count;i++) colors[i] = Color(0,0,0,0);
     memset(colors, 0, sizeof(Color) * count);
+    
 }
 
 void LedStripComponent::showLeds()

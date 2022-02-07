@@ -36,6 +36,8 @@ void clearInternal() override;
 void onParameterEventInternal(const ParameterEvent &e) override;
 void onEnabledChanged() override;
 
+void setStripPower(bool value);
+
 // Layer functions
 void processLayer(LedStripLayer *layer);
 

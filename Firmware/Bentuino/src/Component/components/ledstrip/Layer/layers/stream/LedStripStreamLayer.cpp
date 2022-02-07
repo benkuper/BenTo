@@ -15,7 +15,10 @@ void LedStripStreamLayer::updateInternal()
 
 void LedStripStreamLayer::clearInternal()
 {
-    LedStreamReceiverComponent::instance->unregisterLayer(this);
+    if(LedStreamReceiverComponent::instance != nullptr)
+    {
+        LedStreamReceiverComponent::instance->unregisterLayer(this);
+    }
 }
 
 bool LedStreamReceiverComponent::initInternal()
@@ -68,6 +71,7 @@ void LedStreamReceiverComponent::receiveUDP()
             if (stripIndex < layers.size())
             {
                 LedStripStreamLayer *layer = layers[stripIndex];
+                
                  memcpy((uint8_t *)layer->colors, streamBuffer + 1, byteIndex - 2);
             }
             else

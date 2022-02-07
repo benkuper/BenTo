@@ -15,6 +15,8 @@ DeclareComponentSingleton(Wifi, "wifi",)
     const long connectionTimeout = 10000; //ms
     long timeAtConnect;
     long lastConnectTime;
+    
+    long timeAtStateChange;
 
     ConnectionState state;
 
@@ -27,6 +29,8 @@ DeclareComponentSingleton(Wifi, "wifi",)
 
     void connect();
     void disconnect();
+
+    void disable();
     void setState(ConnectionState s);
 
     String getIP() const;

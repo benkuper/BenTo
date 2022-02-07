@@ -18,10 +18,16 @@
     pinMode(POWER_KEEP_PIN, OUTPUT);\
     digitalWrite(POWER_KEEP_PIN, HIGH);
 
+#define BoardShutdown \
+    digitalWrite(POWER_KEEP_PIN, LOW);
 #endif
 
 
 
 #ifndef BoardInit
 #define BoardInit 
+#endif
+
+#ifndef BoardShutdown
+#define BoardShutdown
 #endif

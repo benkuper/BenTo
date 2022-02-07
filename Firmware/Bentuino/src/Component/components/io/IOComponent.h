@@ -1,5 +1,9 @@
 #pragma once
-DeclareComponent(IO, "io", )
+class IOComponent :
+    public Component
+{
+public:
+    IOComponent(const String &name = "io", bool _enabled = true) : Component(name, _enabled) {}
 
     enum PinMode { D_INPUT,
                    D_INPUT_PULLUP,
@@ -9,12 +13,14 @@ DeclareComponent(IO, "io", )
 
 int pin;
 int mode;
+bool inverted;
+
 Parameter *value;
 float prevValue;
 
-bool initInternal() override;
-void updateInternal() override;
-void clearInternal() override;
+virtual bool initInternal() override;
+virtual void updateInternal() override;
+virtual void clearInternal() override;
 
 void setupPin();
 void updatePin();

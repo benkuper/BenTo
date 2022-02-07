@@ -23,6 +23,9 @@
 #include "Component/components/sequence/SequenceComponent.cpp"
 #include "Component/components/files/FilesComponent.cpp"
 
+#include "Component/components/io/IOComponent.cpp"
+#include "Component/components/io/button/ButtonComponent.cpp"
+
 #include "Component/components/imu/IMUComponent.cpp"
 
 #include "Component/components/ledstrip/LedStripComponent.cpp"

@@ -18,6 +18,7 @@
 #include <OSCMessage.h>
 #include <ESPmDNS.h>
 #include <WebServer.h>
+#include <arduino-timer.h>
 
 #include "../lib/SD/src/SD.h" //really weird
 
@@ -29,6 +30,7 @@
 #include "Common/Helpers.h"
 #include "Common/EventBroadcaster.h"
 #include "Common/Parameter.h"
+
 
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
@@ -43,6 +45,7 @@
 #include "Component/components/files/FilesComponent.h"
 #include "Component/components/imu/IMUComponent.h"
 #include "Component/components/io/IOComponent.h"
+#include "Component/components/io/button/ButtonComponent.h"
 
 #include "Component/components/ledstrip/Layer/LedStripLayer.h"
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.h"

@@ -8,7 +8,7 @@
 class LedStripStreamLayer : public LedStripLayer
 {
 public:
-    LedStripStreamLayer(LedStripComponent *strip) : LedStripLayer("stream", LedStripLayer::STREAM, strip) {}
+    LedStripStreamLayer(LedStripComponent *strip) : LedStripLayer("stream", LedStripLayer::Stream, strip) {}
     ~LedStripStreamLayer() {}
 
     bool initInternal() override;

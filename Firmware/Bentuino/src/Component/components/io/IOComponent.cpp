@@ -2,7 +2,13 @@ bool IOComponent::initInternal()
 {
     pin = GetIntConfig("pin");
     mode = GetIntConfig("mode");
-    value = addParameter("value", 0.0f);
+    inverted = GetBoolConfig("inverted");
+
+    if (mode == D_INPUT || mode == D_INPUT_PULLUP || mode == D_OUTPUT)
+        value = addParameter("value", false);
+    else
+        value = addParameter("value", 0.0f);
+
     prevValue = value->val;
 
     setupPin();
@@ -37,28 +43,38 @@ void IOComponent::updatePin()
     {
     case D_INPUT:
     case D_INPUT_PULLUP:
-        value->set(digitalRead(pin));
-        break;
+    {
+        bool val = digitalRead(pin);
+        if (inverted)
+            val = !val;
+        value->set(val);
+    }
+    break;
 
     case D_OUTPUT:
     case A_OUTPUT:
     {
-        if (prevValue != (float)value->val)
+        if (prevValue != value->floatValue())
         {
             if (mode == D_OUTPUT)
-                digitalWrite(pin, (bool)value->val);
+                digitalWrite(pin, inverted ? !value->boolValue() : value->boolValue());
             else
             {
                 // analogWrite
             }
 
-            prevValue = (float)value->val;
+            prevValue = value->floatValue();
         }
     }
     break;
 
     case A_INPUT:
-        value->set(analogRead(pin) / 4095.0f);
-        break;
+    {
+        float v = analogRead(pin) / 4095.0f;
+        if (inverted)
+            v = 1 - v;
+        value->set(v);
+    }
+    break;
     }
 }
