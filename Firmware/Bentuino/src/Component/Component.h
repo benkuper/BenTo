@@ -8,10 +8,10 @@ class Component : public EventBroadcaster<ComponentEvent>
 {
 public:
     Component(const String &name, bool _enabled = true) : name(name),
-                                    isInit(false),
-                                    parentComponent(NULL),
-                                    numComponents(0),
-                                    numParameters(0)
+                                                          isInit(false),
+                                                          parentComponent(NULL),
+                                                          numComponents(0),
+                                                          numParameters(0)
     {
         enabled = addParameter("enabled", _enabled);
     }
@@ -35,7 +35,7 @@ public:
     virtual String getComponentEventName(uint8_t type) const { return "[noname]"; }
 
     virtual void onChildComponentEvent(const ComponentEvent &e) {}
-    
+
     bool init(JsonObject o = JsonObject());
     void update();
     void clear();
@@ -91,8 +91,8 @@ public:
         return NULL;
     }
 
-    Parameter* addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
-    Parameter* addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); //helpers for non ranged config param declaration simplification
+    Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
+    Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
 
     virtual void onParameterEvent(const ParameterEvent &e);
     virtual void onEnabledChanged() {}
@@ -104,5 +104,12 @@ public:
 
     virtual void fillSettingsData(JsonObject o, bool configOnly = false);
     virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true);
-    String getFullPath();
+
+    String getFullPath(bool includeRoot = false, bool scriptMode = false);
+
+    // void scripting
+    virtual void linkScriptFunctions(Script *s);
+    virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char * tName) {}
+
+    DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
 };

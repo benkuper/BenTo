@@ -41,5 +41,5 @@ public:
 #endif
    void launchWasmTask();
 
-    static M3Result LinkArduino(IM3Runtime runtime);
+    M3Result LinkArduino(IM3Runtime runtime);
 };

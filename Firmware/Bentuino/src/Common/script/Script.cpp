@@ -171,40 +171,40 @@ void Script::launchWasmTask()
 
 M3Result Script::LinkArduino(IM3Runtime runtime)
 {
-    IM3Module module = runtime->modules;
-    const char *arduino = "arduino";
+    //IM3Module module = runtime->modules;
+    RootComponent::instance->linkScriptFunctions(this);
 
-    m3_LinkRawFunction(module, arduino, "millis", "i()", &m3_arduino_millis);
-    m3_LinkRawFunction(module, arduino, "delay", "v(i)", &m3_arduino_delay);
-    m3_LinkRawFunction(module, arduino, "printFloat", "v(f)", &m3_printFloat);
-    m3_LinkRawFunction(module, arduino, "printInt", "v(i)", &m3_printInt);
+    // m3_LinkRawFunction(module, arduino, "millis", "i()", &m3_arduino_millis);
+    // m3_LinkRawFunction(module, arduino, "delay", "v(i)", &m3_arduino_delay);
+    // m3_LinkRawFunction(module, arduino, "printFloat", "v(f)", &m3_printFloat);
+    // m3_LinkRawFunction(module, arduino, "printInt", "v(i)", &m3_printInt);
 
-    m3_LinkRawFunction(module, arduino, "clearLeds", "v()", &m3_clearLeds);
-    m3_LinkRawFunction(module, arduino, "fillLeds", "v(i)", &m3_fillLeds);
-    m3_LinkRawFunction(module, arduino, "fillLedsRGB", "v(iii)", &m3_fillLedsRGB);
-    m3_LinkRawFunction(module, arduino, "fillLedsHSV", "v(iii)", &m3_fillLedsHSV);
-    m3_LinkRawFunction(module, arduino, "setLed", "v(ii)", &m3_setLed);
-    m3_LinkRawFunction(module, arduino, "getLed", "i(i)", &m3_getLed);
+    // m3_LinkRawFunction(module, arduino, "clearLeds", "v()", &m3_clearLeds);
+    // m3_LinkRawFunction(module, arduino, "fillLeds", "v(i)", &m3_fillLeds);
+    // m3_LinkRawFunction(module, arduino, "fillLedsRGB", "v(iii)", &m3_fillLedsRGB);
+    // m3_LinkRawFunction(module, arduino, "fillLedsHSV", "v(iii)", &m3_fillLedsHSV);
+    // m3_LinkRawFunction(module, arduino, "setLed", "v(ii)", &m3_setLed);
+    // m3_LinkRawFunction(module, arduino, "getLed", "i(i)", &m3_getLed);
 
-    m3_LinkRawFunction(module, arduino, "setLedRGB", "v(iiii)", &m3_setLedRGB);
-    m3_LinkRawFunction(module, arduino, "setLedHSV", "v(iiii)", &m3_setLedHSV);
-    m3_LinkRawFunction(module, arduino, "pointRGB", "v(ffiii)", &m3_pointRGB);
-    m3_LinkRawFunction(module, arduino, "pointHSV", "v(ffiii)", &m3_pointHSV);
-    m3_LinkRawFunction(module, arduino, "getOrientation", "f(i)", &m3_getOrientation);
-    m3_LinkRawFunction(module, arduino, "getYaw", "f()", &m3_getYaw);
-    m3_LinkRawFunction(module, arduino, "getPitch", "f()", &m3_getPitch);
-    m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
-    m3_LinkRawFunction(module, arduino, "getProjectedAngle", "f()", &m3_getProjectedAngle);
-    m3_LinkRawFunction(module, arduino, "setProjectedAngleOffset", "v(ff)", &m3_setProjectedAngleOffset);
-    m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
-    m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
-    m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
-    m3_LinkRawFunction(module, arduino, "getButtonState", "i(i)", &m3_getButtonState);
-    m3_LinkRawFunction(module, arduino, "getActivity", "f()", &m3_getActivity);
+    // m3_LinkRawFunction(module, arduino, "setLedRGB", "v(iiii)", &m3_setLedRGB);
+    // m3_LinkRawFunction(module, arduino, "setLedHSV", "v(iiii)", &m3_setLedHSV);
+    // m3_LinkRawFunction(module, arduino, "pointRGB", "v(ffiii)", &m3_pointRGB);
+    // m3_LinkRawFunction(module, arduino, "pointHSV", "v(ffiii)", &m3_pointHSV);
+    // m3_LinkRawFunction(module, arduino, "getOrientation", "f(i)", &m3_getOrientation);
+    // m3_LinkRawFunction(module, arduino, "getYaw", "f()", &m3_getYaw);
+    // m3_LinkRawFunction(module, arduino, "getPitch", "f()", &m3_getPitch);
+    // m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
+    // m3_LinkRawFunction(module, arduino, "getProjectedAngle", "f()", &m3_getProjectedAngle);
+    // m3_LinkRawFunction(module, arduino, "setProjectedAngleOffset", "v(ff)", &m3_setProjectedAngleOffset);
+    // m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
+    // m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
+    // m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
+    // m3_LinkRawFunction(module, arduino, "getButtonState", "i(i)", &m3_getButtonState);
+    // m3_LinkRawFunction(module, arduino, "getActivity", "f()", &m3_getActivity);
 
-    m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
-    m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
-    m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
+    // m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
+    // m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
+    // m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
 
     return m3Err_none;
 }

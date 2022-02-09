@@ -80,7 +80,7 @@
 
 #define AddParameter(name, val) addParameter(name, val)
 #define AddRangeParameter(name, val, minVal, maxVal, isConfig) addParameter(name, val, minVal, maxVal, false)
-//Only config parameters check the settings
+// Only config parameters check the settings
 #define AddConfigParameter(name, val) addParameter(name, Settings::getVal(o, name, val), var(), var(), true)
 #define AddRangeConfigParameter(name, val, minVal, maxVal) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, true)
 
@@ -97,3 +97,44 @@
 
 // #define SetConfig(sname,val) SettingsComponent::instance->setConfig(name, sname, val, true);
 // #define SetConfigSave(sname,val) SettingsComponent::instance->setConfig(name, sname, val, false);
+
+// Script
+
+#define LinkScriptFunctionsStart                                                                     \
+    virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char *tName) override \
+    {
+
+#define LinkScriptFunctionsEnd }
+
+#define DeclareScriptFunctionVoid(Class, FunctionName, CallArgs, DeclarationArgs, GetArgs) \
+    virtual void FunctionName##FromScript(DeclarationArgs);                                \
+    static m3ApiRawFunction(m3_##FunctionName)                                             \
+    {                                                                                      \
+        GetArgs;                                                                           \
+        static_cast<Class *>(_ctx->userdata)->FunctionName ## FromScript(CallArgs);        \
+        m3ApiSuccess();                                                                    \
+    } 
+
+#define DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, CallArgs, DeclarationArgs, GetArgs) \
+    virtual ReturnType FunctionName##FromScript(DeclarationArgs);                                        \
+    static m3ApiRawFunction(m3_##FunctionName)                                                           \
+    {                                                                                                    \
+        m3ApiReturnType(ReturnType);                                                                     \
+        GetArgs;                                                                                         \
+        ReturnType result = static_cast<Class *>(_ctx->userdata)->FunctionName ## FromScript(CallArgs);  \
+        m3ApiReturn(result);                                                                             \
+    }
+
+#define COMMA ,
+#define SA(Type, index) m3ApiGetArg(Type, arg##index);
+#define CA(Type, index) Type arg##index
+
+#define DeclareScriptFunctionVoid0(Class, FunctionName) DeclareScriptFunctionVoid(Class, FunctionName, , , )
+#define DeclareScriptFunctionVoid1(Class, FunctionName, Type1) DeclareScriptFunctionVoid(Class, FunctionName, arg1, CA(Type1, 1), SA(Type1, 1))
+#define DeclareScriptFunctionVoid2(Class, FunctionName, Type1, Type2) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2, CA(Type1, 1) COMMA CA(Type2, 2), SA(Type1, 1) SA(Type2, 2))
+#define DeclareScriptFunctionVoid3(Class, FunctionName, Type1, Type2, Type3) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3))
+
+#define DeclareScriptFunctionReturn0(Class, FunctionName, ReturnType) DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, , , )
+#define DeclareScriptFunctionReturn1(Class, FunctionName, ReturnType, Type1) DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, arg1, CA(Type1, 1), SA(Type1, 1))
+#define DeclareScriptFunctionReturn2(Class, FunctionName, ReturnType, Type1, Type2) DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, arg1 COMMA arg2, CA(Type1, 1) COMMA CA(Type2, 2), SA(Type1, 1) SA(Type2, 2))
+#define DeclareScriptFunctionReturn3(Class, FunctionName, ReturnType, Type1, Type2, Type3) DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, arg1 COMMA arg2 COMMA arg3, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3))

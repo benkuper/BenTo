@@ -118,6 +118,8 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
     return true;
 }
 
+// Save / Load
+
 void Component::fillSettingsData(JsonObject o, bool configOnly)
 {
     for (int i = 0; i < numParameters; i++)
@@ -162,21 +164,55 @@ void Component::fillOSCQueryData(JsonObject o, bool includeConfig)
 
     for (int i = 0; i < numComponents; i++)
     {
+        if(components[i] == nullptr) continue;
+
         Component *c = components[i];
         JsonObject co = contents.createNestedObject(c->name);
         c->fillOSCQueryData(co);
     }
 }
 
-String Component::getFullPath()
+String Component::getFullPath(bool includeRoot, bool scriptMode)
 {
     Component *pc = parentComponent;
     String s = name;
+
+    char separator = scriptMode ? '_' : '/';
+
     while (pc != NULL)
     {
-        s = pc->name + "/" + s;
+        if (pc == RootComponent::instance && !includeRoot)
+            break;
+        s = pc->name + separator + s;
         pc = pc->parentComponent;
     }
 
-    return "/" + s;
+    if (!scriptMode)
+        s = "/" + s;
+
+    return s;
+}
+
+// Scripts
+void Component::linkScriptFunctions(Script *script)
+{
+    IM3Module module = script->runtime->modules;
+    const char * tName = getFullPath(false, true).c_str();
+    
+    m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
+
+    linkScriptFunctionsInternal(script, module, tName);
+
+    for (int i = 0; i < numComponents; i++)
+    {
+        if(components[i] == nullptr) continue;
+        components[i]->linkScriptFunctions(script);
+    } 
+}
+
+//Script functions
+
+void Component::setEnabledFromScript(uint32_t val)
+{
+    enabled->set((bool)val);
 }
