@@ -119,18 +119,18 @@ void OSCComponent::processMessage(OSCMessage &msg)
         String tc = addrStr.substring(0, tcIndex); // component name
         String cmd = addrStr.substring(tcIndex + 1);
 
-        int numData = msg.size() + 2;
-        var *data = (var *)malloc(numData * sizeof(var)); // max 16 arguments
+        const int numData = 10; // max 10-2 = 8 arguments
+        var data[numData];
+        data[0] = tc;
+        data[1] = cmd;
+        NDBG(data[0].stringValue() + "." + data[1].stringValue());
 
-        data[0] = (char *)tc.c_str();
-        data[1] = (char *)cmd.c_str();
-
-        for (int i = 0; i < msg.size(); i++)
+        for (int i = 0; i < msg.size() && i < numData - 2; i++)
         {
             data[i + 2] = OSCArgumentToVar(msg, i);
         }
 
-        sendEvent(MessageReceived, data, numData);
+        sendEvent(MessageReceived, data, msg.size() + 2);
     }
 }
 

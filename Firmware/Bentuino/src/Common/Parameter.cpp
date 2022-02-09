@@ -9,7 +9,6 @@ Parameter::Parameter(const String &name, var val, var _minVal, var _maxVal, bool
 
     if (!_minVal.isVoid() && !_maxVal.isVoid())
         setRange(_minVal, _maxVal);
-
 }
 
 Parameter::~Parameter() {}
@@ -104,26 +103,31 @@ void Parameter::setRange(var newMin, var newMax)
     }
 }
 
-void Parameter::fillSettingsData(JsonObject o)
+void Parameter::fillSettingsData(JsonObject o, bool configOnly)
 {
-    o["type"] = val.type;
-    o["readOnly"] = readOnly;
-    o["isConfig"] = isConfig;
+    if (!configOnly)
+    {
+        o["type"] = val.type;
+        o["readOnly"] = readOnly;
+        o["isConfig"] = isConfig;
+    }
+
+    JsonVariant v = configOnly ? o : o["value"];
 
     // Only store value for now, should not require more
     switch (val.type)
     {
     case 'b':
-        o["value"] = val.boolValue();
+        v.set(val.boolValue());
         break;
     case 'i':
-        o["value"] = val.intValue();
+        v.set(val.intValue());
         break;
     case 'f':
-        o["value"] = val.floatValue();
+        v.set(val.floatValue());
         break;
     case 's':
-        o["value"] = val.stringValue();
+        v.set(val.stringValue());
         break;
     }
 }

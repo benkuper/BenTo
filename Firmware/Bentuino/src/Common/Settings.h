@@ -7,7 +7,7 @@ class Settings
 public:
     static Preferences prefs;
     static DynamicJsonDocument settings;
-
+    
     static bool loadSettings();
     static bool saveSettings();
 

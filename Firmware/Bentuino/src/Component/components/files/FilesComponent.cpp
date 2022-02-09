@@ -2,13 +2,13 @@ ImplementSingleton(FilesComponent);
 
 bool FilesComponent::initInternal(JsonObject o)
 {
-    sdEnPin = addConfigParameter("sdEnPin", 0);
-    sdEnVal = addConfigParameter("sdEnVal", 0);
-    sdSCK = addConfigParameter("sdSCK", 0);
-    sdMiso = addConfigParameter("sdMiso", 0);
-    sdMosi = addConfigParameter("sdMosi", 0);
-    sdCS = addConfigParameter("sdCS", 0);
-    sdSpeed = addConfigParameter("sdSpeed", 27000000);
+    sdEnPin = AddConfigParameter("sdEnPin", 0);
+    sdEnVal = AddConfigParameter("sdEnVal", 0);
+    sdSCK = AddConfigParameter("sdSCK", 0);
+    sdMiso = AddConfigParameter("sdMiso", 0);
+    sdMosi = AddConfigParameter("sdMosi", 0);
+    sdCS = AddConfigParameter("sdCS", 0);
+    sdSpeed = AddConfigParameter("sdSpeed", 27000000);
 
     if (sdEnPin->intValue() > 0)
     {

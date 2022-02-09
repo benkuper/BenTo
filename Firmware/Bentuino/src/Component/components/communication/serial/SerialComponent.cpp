@@ -51,18 +51,16 @@ void SerialComponent::processMessage(String buffer)
     String cmd = target.substring(tcIndex + 1);                               // parameter name
     String args = (splitIndex != -1 ? buffer.substring(splitIndex + 1) : ""); // value
 
-    //const int maxData = 16;
-    //var *data = (var *)malloc(maxData * sizeof(var)); // max 16 arguments
-    
-    var data[16];
+    const int numData = 10;    
+    var data[numData];
 
     data[0] = tc;
-    data[1] = cmd.c_str();
+    data[1] = cmd;
 
     int index = 2;
     // COUNT
     char *pch = strtok((char *)args.c_str(), ",");
-    while (pch != NULL && index < 16)
+    while (pch != NULL && index < numData)
     {
         String s = String(pch);
 

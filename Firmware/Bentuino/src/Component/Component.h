@@ -102,7 +102,7 @@ public:
     virtual bool handleCommandInternal(const String &command, var *data, int numData) { return false; }
     bool checkCommand(const String &command, const String &ref, int numData, int expectedData);
 
-    virtual void fillSettingsData(JsonObject o);
+    virtual void fillSettingsData(JsonObject o, bool configOnly = false);
     virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true);
     String getFullPath();
 };

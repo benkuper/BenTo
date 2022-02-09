@@ -78,8 +78,9 @@
 #define AddDefaultParameterListener(Class, param) param->addListener(std::bind(&Class::onParameterEvent, this, std::placeholders::_1));
 #define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
 
-#define AddParameter(name, val) addParameter(name, Settings::getVal(o, name, val))
-#define AddRangeParameter(name, val, minVal, maxVal, isConfig) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, false)
+#define AddParameter(name, val) addParameter(name, val)
+#define AddRangeParameter(name, val, minVal, maxVal, isConfig) addParameter(name, val, minVal, maxVal, false)
+//Only config parameters check the settings
 #define AddConfigParameter(name, val) addParameter(name, Settings::getVal(o, name, val), var(), var(), true)
 #define AddRangeConfigParameter(name, val, minVal, maxVal) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, true)
 

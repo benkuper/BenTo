@@ -48,7 +48,7 @@ public:
 
     void setRange(var newMin, var newMax);
 
-    void fillSettingsData(JsonObject o);
+    void fillSettingsData(JsonObject o, bool configOnly);
     void fillOSCQueryData(JsonObject o);
 
     DeclareEventTypes(ValueChanged);

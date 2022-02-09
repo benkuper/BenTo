@@ -45,14 +45,14 @@ void RootComponent::updateInternal()
 
 void RootComponent::restart()
 {
-    saveSettings();
+   // saveSettings();
 
     ESP.restart();
 }
 
 void RootComponent::shutdown()
 {
-    saveSettings();
+   // saveSettings();
 
     timeAtShutdown = millis();
     timer.in(1000, [](void *) -> bool
@@ -84,7 +84,8 @@ void RootComponent::saveSettings()
     NDBG("Saving settings");
     Settings::settings.clear();
     JsonObject o = Settings::settings.to<JsonObject>();
-    fillSettingsData(o);
+    fillSettingsData(o, true);
+    NDBG("Settings retrieved");
     Settings::saveSettings();
 }
 

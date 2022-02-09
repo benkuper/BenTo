@@ -1,7 +1,7 @@
 bool Component::init(JsonObject o)
 {
-    //NDBG(name+" init, o = "+String(o.size()));
-    //for (JsonPair kv : o)  NDBG(String(kv.key().c_str()) +" > "+kv.value().as<String>());
+    // NDBG(name+" init, o = "+String(o.size()));
+    // for (JsonPair kv : o)  NDBG(String(kv.key().c_str()) +" > "+kv.value().as<String>());
 
     isInit = initInternal(o);
     if (isInit)
@@ -92,7 +92,7 @@ bool Component::handleCommand(const String &command, var *data, int numData)
             if (numData > 0) // query for feedback
             {
                 parameters[i]->set(data[0]);
-                NDBG("Set Parameter " + parameters[i]->name + " : " +data[0].stringValue()+" >> "+parameters[i]->stringValue());
+                NDBG("Set Parameter " + parameters[i]->name + " : " + data[0].stringValue() + " >> " + parameters[i]->stringValue());
             }
             else
             {
@@ -118,21 +118,26 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
     return true;
 }
 
-void Component::fillSettingsData(JsonObject o)
+void Component::fillSettingsData(JsonObject o, bool configOnly)
 {
     for (int i = 0; i < numParameters; i++)
     {
         Parameter *p = parameters[i];
+        if (!p->isConfig && configOnly)
+            continue;
         JsonObject po = o.createNestedObject(p->name);
-        p->fillSettingsData(po);
+        p->fillSettingsData(po, configOnly);
     }
 
-    JsonObject comps = o.createNestedObject("components");
-    for (int i = 0; i < numComponents; i++)
+    if (numComponents > 0)
     {
-        Component *c = components[i];
-        JsonObject co = comps.createNestedObject(c->name);
-        c->fillSettingsData(co);
+        JsonObject comps = o.createNestedObject("components");
+        for (int i = 0; i < numComponents; i++)
+        {
+            Component *c = components[i];
+            JsonObject co = comps.createNestedObject(c->name);
+            c->fillSettingsData(co, configOnly);
+        }
     }
 }
 
@@ -148,12 +153,12 @@ void Component::fillOSCQueryData(JsonObject o, bool includeConfig)
     for (int i = 0; i < numParameters; i++)
     {
         Parameter *p = parameters[i];
-        if(p->isConfig && !includeConfig) continue;
+        if (p->isConfig && !includeConfig)
+            continue;
         JsonObject po = contents.createNestedObject(p->name);
         p->fillOSCQueryData(po);
         po["FULL_PATH"] = fullPath + "/" + p->name;
     }
-
 
     for (int i = 0; i < numComponents; i++)
     {

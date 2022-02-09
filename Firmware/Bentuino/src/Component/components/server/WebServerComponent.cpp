@@ -12,7 +12,8 @@ ImplementSingleton(WebServerComponent)
 
 void WebServerComponent::updateInternal()
 {
-    if(!enabled->boolValue()) return;
+    if (!enabled->boolValue())
+        return;
     server.handleClient();
 }
 
@@ -146,7 +147,12 @@ void WebServerComponent::handleQueryData()
 
 void WebServerComponent::handleSettings()
 {
+    bool configOnly = server.hasArg("configOnly") ? (bool)server.arg("configOnly").toInt() : false;
+
     String jStr;
-    serializeJson(Settings::settings, jStr);
+    DynamicJsonDocument doc(4000);
+    JsonObject o = doc.to<JsonObject>();
+    RootComponent::instance->fillSettingsData(o, configOnly);
+    serializeJson(doc, jStr);
     server.send(200, "application/json", jStr);
 }
