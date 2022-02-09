@@ -81,11 +81,9 @@ void RootComponent::powerdown()
 
 void RootComponent::saveSettings()
 {
-    NDBG("Saving settings");
     Settings::settings.clear();
     JsonObject o = Settings::settings.to<JsonObject>();
     fillSettingsData(o, true);
-    NDBG("Settings retrieved");
     Settings::saveSettings();
 }
 

@@ -10,6 +10,9 @@
 #include "Common/Settings.cpp"
 #include "Common/Parameter.cpp"
 
+#include "Common/script/Script.cpp"
+#include "Common/script/wasmFunctions.cpp"
+
 #include "Component/ComponentEvent.cpp"
 #include "Component/Component.cpp"
 

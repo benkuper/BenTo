@@ -23,6 +23,9 @@
 #include <ESPmDNS.h>
 #include <WebServer.h>
 #include <arduino-timer.h>
+#include <wasm3.h>
+#include <m3_env.h>
+#include <SimplexNoise.h>
 
 #include "../lib/SD/src/SD.h" //really weird
 
@@ -36,6 +39,8 @@
 #include "Common/Parameter.h"
 #include "Common/Settings.h"
 
+#include "Common/script/Script.h"
+#include "Common/script/wasmFunctions.h"
 
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
