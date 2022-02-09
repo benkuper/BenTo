@@ -1,9 +1,9 @@
 ImplementSingleton(CommunicationComponent);
 
-bool CommunicationComponent::initInternal()
+bool CommunicationComponent::initInternal(JsonObject o)
 {
-    AddComponent(serial, Serial, true);
-    AddComponent(osc, OSC, false);
+    AddComponent("serial", serial, Serial, true);
+    AddComponent("osc", osc, OSC, false);
 
     return true;
 }
@@ -24,15 +24,18 @@ void CommunicationComponent::sendParameterFeedback(Component *c, Parameter *para
 {
     var data[1]{param->val};
     serial->sendMessage(c->name, param->name, data, 1);
+    osc->sendMessage(c->name, param->name, data, 1);
 }
 
 void CommunicationComponent::sendEventFeedback(const ComponentEvent &e)
 {
     serial->sendMessage(e.component->name, e.getName(), e.data, e.numData);
+    osc->sendMessage(e.component->name, e.getName(), e.data, e.numData);
 }
 
-void CommunicationComponent::sendConfigFeedback(Component *c, const String &configName, const String &val)
+void CommunicationComponent::sendMessage(Component *c, const String &mName, const String &val)
 {
     var data[1]{val};
-    serial->sendMessage(c->name, configName, data, 1);
+    serial->sendMessage(c->name, mName, data, 1);
+    osc->sendMessage(c->name, mName, data, 1);
 }

@@ -1,10 +1,11 @@
 ImplementSingleton(WebServerComponent)
 
-    bool WebServerComponent::initInternal()
+    bool WebServerComponent::initInternal(JsonObject o)
 {
     server.onNotFound(std::bind(&WebServerComponent::handleNotFound, this));
     server.on("/upload", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
     server.on("/", HTTP_ANY, std::bind(&WebServerComponent::handleQueryData, this));
+    server.on("/settings", HTTP_ANY, std::bind(&WebServerComponent::handleSettings, this));
 
     return true;
 }
@@ -134,14 +135,18 @@ void WebServerComponent::handleNotFound()
 
 void WebServerComponent::handleQueryData()
 {
-    NDBG("URI : " + String(server.uri()));
-    server.header("HOST_INFO");
-        
     DynamicJsonDocument doc(8000);
     JsonObject o = doc.to<JsonObject>();
-    RootComponent::instance->fillJSONData(o);
+    RootComponent::instance->fillOSCQueryData(o);
 
     String jStr;
     serializeJson(doc, jStr);
+    server.send(200, "application/json", jStr);
+}
+
+void WebServerComponent::handleSettings()
+{
+    String jStr;
+    serializeJson(Settings::settings, jStr);
     server.send(200, "application/json", jStr);
 }

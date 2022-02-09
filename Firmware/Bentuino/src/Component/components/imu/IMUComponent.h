@@ -9,6 +9,8 @@ DeclareComponent(IMU, "imu", )
 Parameter *isConnected;
 Parameter *sendLevel;
 Parameter* orientationSendRate;
+Parameter *sdaPin;
+Parameter *sclPin;
 
 long timeSinceOrientationLastSent;
 
@@ -45,7 +47,7 @@ bool imuLock;
 bool shouldStopRead;
 bool imuIsInit;
 
-bool initInternal() override;
+bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 

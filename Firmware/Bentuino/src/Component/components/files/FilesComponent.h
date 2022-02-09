@@ -2,12 +2,18 @@
 
 DeclareComponentSingleton(Files, "files", );
 
-bool initInternal() override;
+bool initInternal(JsonObject o) override;
+bool initInternalMemory();
 
 SPIClass spiSD;
 bool useInternalMemory;
-int sdEnPin;
-int sdEnVal;
+Parameter * sdEnPin;
+Parameter * sdEnVal;
+Parameter * sdSCK;
+Parameter * sdMiso;
+Parameter * sdMosi;
+Parameter * sdCS;
+Parameter * sdSpeed;
 
 File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
 void deleteFileIfExists(String path);

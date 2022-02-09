@@ -8,21 +8,20 @@
 class LedStripStreamLayer : public LedStripLayer
 {
 public:
-    LedStripStreamLayer(LedStripComponent *strip) : LedStripLayer("stream", LedStripLayer::Stream, strip) {}
+    LedStripStreamLayer(const String &name, LedStripComponent *strip) : LedStripLayer(name, LedStripLayer::Stream, strip) {}
     ~LedStripStreamLayer() {}
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void clearInternal() override;
 };
-
 
 DeclareComponentSingleton(LedStreamReceiver, "streamReceiver", )
 
     WiFiUDP udp;
 Parameter *receiveRate;
 
-bool initInternal() override;
+bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 

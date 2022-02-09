@@ -22,6 +22,8 @@
         "initializer_list": "cpp",
         "cstdlib": "cpp",
         "ostream": "cpp",
-        "new": "cpp"
+        "new": "cpp",
+        "istream": "cpp",
+        "sstream": "cpp"
     }
 }

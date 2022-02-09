@@ -3,7 +3,7 @@
 class LedStripBakeLayer : public LedStripLayer
 {
 public:
-    LedStripBakeLayer(LedStripComponent *strip) : LedStripLayer("bake", LedStripLayer::Bake, strip) {}
+    LedStripBakeLayer(const String &name, LedStripComponent *strip) : LedStripLayer(name, LedStripLayer::Bake, strip) {}
     ~LedStripBakeLayer() {}
 
     File curFile;
@@ -31,7 +31,7 @@ public:
     long timeSinceLastSeek;
     float timeToSeek; // used to limit seeking
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void clearInternal() override;
 

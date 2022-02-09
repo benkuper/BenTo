@@ -24,10 +24,12 @@ public:
     LedStripLayer(const String &name, Type t, LedStripComponent * strip);
     ~LedStripLayer();
 
+    void initColors();
+
     LedStripComponent * strip;
     int numLeds;
     Type type;
-    BlendMode blendMode;
+    Parameter * blendMode;
     
     Color * colors;
 

@@ -1,11 +1,11 @@
 ImplementSingleton(SerialComponent);
 
-bool SerialComponent::initInternal()
+bool SerialComponent::initInternal(JsonObject o)
 {
     bufferIndex = 0;
     memset(buffer, 0, 512);
     Serial.begin(115200);
-    feedbackEnabled = addParameter("feedbackEnabled", false);
+    feedbackEnabled = AddParameter("feedbackEnabled", false);
     return true;
 }
 
@@ -51,16 +51,18 @@ void SerialComponent::processMessage(String buffer)
     String cmd = target.substring(tcIndex + 1);                               // parameter name
     String args = (splitIndex != -1 ? buffer.substring(splitIndex + 1) : ""); // value
 
-    const int maxData = 16;
-    var *data = (var *)malloc(maxData * sizeof(var)); // max 16 arguments
+    //const int maxData = 16;
+    //var *data = (var *)malloc(maxData * sizeof(var)); // max 16 arguments
     
-    data[0] = (char *)tc.c_str();
-    data[1] = (char *)cmd.c_str();
+    var data[16];
+
+    data[0] = tc;
+    data[1] = cmd.c_str();
 
     int index = 2;
     // COUNT
     char *pch = strtok((char *)args.c_str(), ",");
-    while (pch != NULL && index < maxData)
+    while (pch != NULL && index < 16)
     {
         String s = String(pch);
 
@@ -81,20 +83,13 @@ void SerialComponent::processMessage(String buffer)
             int i = s.toInt();
 
             if (f == i && s.indexOf('.') == -1)
-            {
-                data[index].value.i = i;
-                data[index].type = 'i';
-            }
+                data[index] = i;
             else
-            {
-                data[index].value.f = f;
-                data[index].type = 'f';
-            }
+                data[index] = f;
         }
         else
         {
-            data[index].value.s = pch;
-            data[index].type = 's';
+            data[index] = pch;
         }
 
         pch = strtok(NULL, ",");
@@ -103,7 +98,7 @@ void SerialComponent::processMessage(String buffer)
 
     sendEvent(MessageReceived, data, index);
 
-    free(data);
+    //free(data);
 }
 
 void SerialComponent::sendMessage(String source, String command, var *data, int numData)

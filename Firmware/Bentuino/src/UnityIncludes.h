@@ -25,17 +25,16 @@
 // Firmware
 
 #include "Common/BoardDefines.h"
+#include "Common/Helpers.h"
 #include "Common/var.h"
 #include "Common/color.h"
-#include "Common/Helpers.h"
 #include "Common/EventBroadcaster.h"
 #include "Common/Parameter.h"
+#include "Common/Settings.h"
 
 
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
-
-#include "Component/components/settings/SettingsComponent.h"
 
 #include "Component/components/wifi/WifiComponent.h"
 #include "Component/components/battery/BatteryComponent.h"

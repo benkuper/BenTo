@@ -1,7 +1,7 @@
 #pragma once
 DeclareComponentSingleton(Battery, "battery",)
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
 
     void updateInternal() override;
 

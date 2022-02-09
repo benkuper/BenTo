@@ -1,7 +1,7 @@
 #pragma once
 DeclareComponent(Stepper, "stepper",)
 
-bool initInternal() override;
+bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 

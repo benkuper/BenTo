@@ -20,10 +20,10 @@ DeclareComponentSingleton(Wifi, "wifi",)
 
     ConnectionState state;
 
-    String ssid;
-    String pass;
+    Parameter * ssid;
+    Parameter * pass;
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void clearInternal() override;
 

@@ -3,7 +3,7 @@
 #define MAIN_INCLUDE
 #include "UnityIncludes.h"
 
-RootComponent root;
+RootComponent root("root");
 
 void setup()
 {

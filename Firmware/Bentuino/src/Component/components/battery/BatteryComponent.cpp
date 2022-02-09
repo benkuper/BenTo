@@ -1,6 +1,6 @@
 ImplementSingleton(BatteryComponent);
 
-bool BatteryComponent::initInternal()
+bool BatteryComponent::initInternal(JsonObject o)
 {
     return true;
 }

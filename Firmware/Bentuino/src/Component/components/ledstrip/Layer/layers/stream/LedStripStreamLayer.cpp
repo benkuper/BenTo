@@ -1,6 +1,6 @@
 ImplementSingleton(LedStreamReceiverComponent);
 
-bool LedStripStreamLayer::initInternal()
+bool LedStripStreamLayer::initInternal(JsonObject o)
 {
 
     LedStreamReceiverComponent::instance->registerLayer(this);
@@ -21,7 +21,7 @@ void LedStripStreamLayer::clearInternal()
     }
 }
 
-bool LedStreamReceiverComponent::initInternal()
+bool LedStreamReceiverComponent::initInternal(JsonObject o)
 {
     receiveRate = addParameter("receiveRate", 50, 1, 200);
     byteIndex = 0;

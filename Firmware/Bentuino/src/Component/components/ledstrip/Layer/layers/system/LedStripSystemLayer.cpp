@@ -1,4 +1,4 @@
-bool LedStripSystemLayer::initInternal()
+bool LedStripSystemLayer::initInternal(JsonObject o)
 {
     // blendMode = Alpha;
     return true;

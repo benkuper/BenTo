@@ -7,7 +7,7 @@ DeclareComponentSingleton(Serial, "serial",)
 
     Parameter * feedbackEnabled;
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void clearInternal() override;
 

@@ -7,14 +7,14 @@
 DeclareComponentSingleton(OSC, "osc",)
 
     WiFiUDP udp;
-    String remoteHost;
+    Parameter * remoteHost;
 
     //Ping
     bool pingEnabled; //only activate ping check if received a first ping
     long timeSinceLastReceivedPing;
     Parameter * isAlive;
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void clearInternal() override;
 

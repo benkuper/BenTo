@@ -1,76 +1,71 @@
 ImplementSingleton(FilesComponent);
 
-bool FilesComponent::initInternal()
+bool FilesComponent::initInternal(JsonObject o)
 {
-    useInternalMemory = GetBoolConfig("useSD");
+    sdEnPin = addConfigParameter("sdEnPin", 0);
+    sdEnVal = addConfigParameter("sdEnVal", 0);
+    sdSCK = addConfigParameter("sdSCK", 0);
+    sdMiso = addConfigParameter("sdMiso", 0);
+    sdMosi = addConfigParameter("sdMosi", 0);
+    sdCS = addConfigParameter("sdCS", 0);
+    sdSpeed = addConfigParameter("sdSpeed", 27000000);
 
-    if (useInternalMemory) // use internal
+    if (sdEnPin->intValue() > 0)
     {
-        NDBG("No SD Pin in config, using internal memory");
-        if (SPIFFS.begin(true)) // Start the SPI Flash Files System
-        {
-            NDBG("SPIFFS initialized.");
-            listDir("/", 0);
-        }
-        else
-        {
-            NDBG("Error initializing SPIFFS");
-            return false;
-        }
+        NDBG("Setting SD En Pin " + String(sdEnPin->intValue()) + " to " + String(sdEnVal->intValue()));
+        pinMode(sdEnPin->intValue(), OUTPUT);
+        digitalWrite(sdEnPin->intValue(), sdEnVal->intValue());
+    }
+
+    if (sdSCK->intValue() == 0 || sdMiso->intValue() == 0 || sdMosi->intValue() == 0 || sdCS->intValue() == 0)
+    {
+        String npin;
+        if (sdSCK->intValue() == 0)
+            npin += "SCK,";
+        if (sdMiso->intValue() == 0)
+            npin += "MISO,";
+        if (sdMosi->intValue() == 0)
+            npin += "MOSI,";
+        if (sdCS->intValue() == 0)
+            npin += "CS";
+
+        NDBG(npin + " pins not defined, using internal memory");
+        return initInternalMemory();
+    }
+
+    NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : " + sdSCK->stringValue() + "," + sdMiso->stringValue() + "," + sdMosi->stringValue() + "," + sdCS->stringValue() + "," + sdSpeed->stringValue());
+    pinMode(sdSCK->intValue(), INPUT_PULLUP);
+    pinMode(sdMiso->intValue(), INPUT_PULLUP);
+    pinMode(sdMosi->intValue(), INPUT_PULLUP);
+    pinMode(sdCS->intValue(), OUTPUT);
+    digitalWrite(sdCS->intValue(), LOW);
+
+    spiSD.begin((int8_t)sdSCK->intValue(), (int8_t)sdMiso->intValue(), (int8_t)sdMosi->intValue(), (int8_t)sdCS->intValue()); // SCK,MISO,MOSI,ss
+
+    if (SD.begin((uint8_t)sdCS->intValue(), spiSD))
+    {
+        NDBG("SD Card initialized.");
+        // listDir("/", 0);
     }
     else
     {
-
-        sdEnPin = GetIntConfig("sdEnPin");
-        if (sdEnPin > 0)
-        {
-            sdEnVal = GetIntConfig("sdEnVal");
-            NDBG("Setting SD En Pin "+String(sdEnPin)+" to "+String(sdEnVal));
-            pinMode(sdEnPin, OUTPUT);
-            digitalWrite(sdEnPin, sdEnVal);
-        }
-
-        int sdSck = GetIntConfig("sdSCK");
-        int sdMiso = GetIntConfig("sdMiso");
-        int sdMosi = GetIntConfig("sdMosi");
-        int sdCS = GetIntConfig("sdCS");
-
-        if(sdSck == 0 || sdMiso == 0 || sdMosi == 0 || sdCS == 0)
-        {
-            String npin;
-            if(sdSck == 0) npin += "SCK,";
-            if(sdMiso == 0) npin += "MISO,";
-            if(sdMosi == 0) npin += "MOSI,";
-            if(sdCS == 0) npin += "CS";
-            NDBG(npin+ " pins not defined, please set to use SD");
-            return false;
-        }
-
-        int sdSpeed = GetIntConfig("sdSpeed");
-        if (sdSpeed == 0)
-            sdSpeed = 27000000;
-
-        NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : "+String(sdSck)+","+String(sdMiso)+","+String(sdMosi)+","+String(sdCS)+","+String(sdSpeed));
-        pinMode(sdSck, INPUT_PULLUP);
-        pinMode(sdMiso, INPUT_PULLUP);
-        pinMode(sdMosi, INPUT_PULLUP);
-        pinMode(sdCS, OUTPUT);
-        digitalWrite(sdCS, LOW);
-        
-        spiSD.begin((int8_t)sdSck, (int8_t)sdMiso, (int8_t)sdMosi, (int8_t)sdCS); // SCK,MISO,MOSI,ss
-
-        if (SD.begin((uint8_t)sdCS, spiSD))
-        {
-            NDBG("SD Card initialized.");
-            // listDir("/", 0);
-        }
-        else
-        {
-            NDBG("Error initializing SD Card");
-            return false;
-        }
+        NDBG("Error initializing SD Card, using internal memory");
+        return initInternalMemory();
     }
 
+    return true;
+}
+
+bool FilesComponent::initInternalMemory()
+{
+    if (!SPIFFS.begin(true)) // Start the SPI Flash Files System
+    {
+        NDBG("Error initializing SPIFFS");
+        return false;
+    }
+
+    NDBG("SPIFFS initialized.");
+    //listDir("/", 0);
     return true;
 }
 
@@ -135,7 +130,8 @@ String FilesComponent::listDir(const char *dirname, uint8_t levels)
     }
 
     File file = root.openNextFile();
-    if(!file) NDBG("  [Empty directory]");
+    if (!file)
+        NDBG("  [Empty directory]");
 
     while (file)
     {
@@ -194,7 +190,7 @@ bool FilesComponent::handleCommandInternal(const String &command, var *data, int
     {
         var data;
         data.type = 's';
-        data.value.s = (char *)listDir("/", 0).c_str();
+        data = listDir("/", 0);
 
         sendEvent(FileList, &data, 1);
         return true;

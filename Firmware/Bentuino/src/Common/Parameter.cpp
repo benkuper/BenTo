@@ -1,13 +1,15 @@
 
-Parameter::Parameter(const String &name, var val, var _minVal, var _maxVal) : name(name),
-                                                                              val(val),
-                                                                              readOnly(false)
+Parameter::Parameter(const String &name, var val, var _minVal, var _maxVal, bool isConfig) : name(name),
+                                                                                             val(val),
+                                                                                             isConfig(isConfig),
+                                                                                             readOnly(false)
 {
     if (val.type == 'b')
         setRange(false, true);
 
     if (!_minVal.isVoid() && !_maxVal.isVoid())
         setRange(_minVal, _maxVal);
+
 }
 
 Parameter::~Parameter() {}
@@ -24,35 +26,50 @@ bool Parameter::hasRange()
 
 void Parameter::set(const var &v, bool force)
 {
-    if (val == v && !force)
-        return;
-
     switch (val.type)
     {
     case 'b':
-        val.value.b = v.boolValue(); // force bool here
+        if (val.boolValue() == v.boolValue() && !force)
+            return;
+
+        val = v.boolValue();
         break;
 
     case 'i':
     {
+        int newVal = val.intValue();
         if (hasRange())
-            val.value.i = min(max(v.intValue(), minVal.intValue()), maxVal.intValue());
+            newVal = min(max(v.intValue(), minVal.intValue()), maxVal.intValue());
         else
-            val.value.i = v.intValue();
+            newVal = v.intValue();
+
+        if (val.intValue() == v.intValue() && !force)
+            return;
+        val = newVal;
     }
     break;
 
     case 'f':
     {
-        if (hasRange()) 
-            val.value.f = min(max(v.floatValue(), minVal.floatValue()), maxVal.floatValue());
+        float newVal = val.intValue();
+
+        if (hasRange())
+            newVal = min(max(v.floatValue(), minVal.floatValue()), maxVal.floatValue());
         else
-            val.value.f = v.floatValue();
+            newVal = v.floatValue();
+
+        if (val.floatValue() == v.floatValue() && !force)
+            return;
+
+        val = newVal;
     }
     break;
 
     case 's':
-        val.value.s = (char *)v.stringValue().c_str();
+        if (val.stringValue() == v.stringValue() && !force)
+            return;
+
+        val = v.s;
         break;
 
     default:
@@ -87,7 +104,31 @@ void Parameter::setRange(var newMin, var newMax)
     }
 }
 
-void Parameter::fillJSONData(JsonObject o)
+void Parameter::fillSettingsData(JsonObject o)
+{
+    o["type"] = val.type;
+    o["readOnly"] = readOnly;
+    o["isConfig"] = isConfig;
+
+    // Only store value for now, should not require more
+    switch (val.type)
+    {
+    case 'b':
+        o["value"] = val.boolValue();
+        break;
+    case 'i':
+        o["value"] = val.intValue();
+        break;
+    case 'f':
+        o["value"] = val.floatValue();
+        break;
+    case 's':
+        o["value"] = val.stringValue();
+        break;
+    }
+}
+
+void Parameter::fillOSCQueryData(JsonObject o)
 {
     o["DESCRIPTION"] = name;
     o["ACCESS"] = readOnly ? 1 : 3;

@@ -9,9 +9,9 @@
 class ButtonComponent : public IOComponent
 {
 public:
-    ButtonComponent(bool _enabled) : IOComponent("button", _enabled) {}
+    ButtonComponent(const String& name, bool _enabled) : IOComponent(name, _enabled) {}
 
-    bool isSystem;
+    Parameter *isSystem;
 
     int debounceCount;
     long timeAtPress;
@@ -19,7 +19,7 @@ public:
     bool isLongPressed;
     bool isVeryLongPressed;
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void onParameterEvent(const ParameterEvent &e) override;
 

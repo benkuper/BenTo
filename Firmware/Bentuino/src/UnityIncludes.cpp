@@ -7,12 +7,12 @@
 
 // Firmware
 
+#include "Common/Settings.cpp"
 #include "Common/Parameter.cpp"
 
 #include "Component/ComponentEvent.cpp"
 #include "Component/Component.cpp"
 
-#include "Component/components/settings/SettingsComponent.cpp"
 #include "Component/components/wifi/WifiComponent.cpp"
 #include "Component/components/battery/BatteryComponent.cpp"
 #include "Component/components/communication/CommunicationComponent.cpp"

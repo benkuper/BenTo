@@ -1,15 +1,19 @@
-bool IOComponent::initInternal()
+bool IOComponent::initInternal(JsonObject o)
 {
-    pin = GetIntConfig("pin");
-    mode = GetIntConfig("mode");
-    inverted = GetBoolConfig("inverted");
+    pin = addConfigParameter("pin", 0);
+    mode = addConfigParameter("mode", D_INPUT);
+    inverted = addConfigParameter("inverted", false);
 
-    if (mode == D_INPUT || mode == D_INPUT_PULLUP || mode == D_OUTPUT)
+    int m = mode->intValue();
+
+    if (m == D_INPUT || m == D_INPUT_PULLUP || m == D_OUTPUT)
         value = addParameter("value", false);
     else
         value = addParameter("value", 0.0f);
 
-    prevValue = value->val;
+    value->readOnly = true;
+
+    prevValue = value->floatValue();
 
     setupPin();
     updatePin();
@@ -19,7 +23,7 @@ bool IOComponent::initInternal()
 
 void IOComponent::updateInternal()
 {
-    updatePin();
+    if(enabled->boolValue()) updatePin();
 }
 
 void IOComponent::clearInternal()
@@ -28,23 +32,45 @@ void IOComponent::clearInternal()
 
 void IOComponent::setupPin()
 {
-    if (pin != -1)
+    if (pin->intValue() != -1)
     {
-        pinMode(pin, mode);
+        int m = mode->intValue();
+
+        int pinm = -1;
+        switch (m)
+        {
+        case D_INPUT:
+        case A_INPUT:
+            pinm = INPUT;
+            break;
+
+        case D_INPUT_PULLUP:
+            pinm = INPUT_PULLUP;
+            break;
+
+        case D_OUTPUT:
+        case A_OUTPUT:
+            pinm = OUTPUT;
+            break;
+        }
+
+        if (pinm != -1)
+            pinMode(pin->intValue(), pinm);
     }
 }
 
 void IOComponent::updatePin()
 {
-    if (pin == -1)
+    if (pin->intValue() == -1)
         return;
 
-    switch (mode)
+    int m = mode->intValue();
+    switch (m)
     {
     case D_INPUT:
     case D_INPUT_PULLUP:
     {
-        bool val = digitalRead(pin);
+        bool val = digitalRead(pin->intValue());
         if (inverted)
             val = !val;
         value->set(val);
@@ -56,8 +82,8 @@ void IOComponent::updatePin()
     {
         if (prevValue != value->floatValue())
         {
-            if (mode == D_OUTPUT)
-                digitalWrite(pin, inverted ? !value->boolValue() : value->boolValue());
+            if (m == D_OUTPUT)
+                digitalWrite(pin->intValue(), inverted ? !value->boolValue() : value->boolValue());
             else
             {
                 // analogWrite
@@ -70,7 +96,7 @@ void IOComponent::updatePin()
 
     case A_INPUT:
     {
-        float v = analogRead(pin) / 4095.0f;
+        float v = analogRead(pin->intValue()) / 4095.0f;
         if (inverted)
             v = 1 - v;
         value->set(v);

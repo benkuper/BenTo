@@ -5,7 +5,6 @@ DeclareComponentSingleton(Root, "root", )
 String deviceID;
 
 // system
-SettingsComponent * settings;
 CommunicationComponent * comm;
 WifiComponent * wifi;
 BatteryComponent * battery;
@@ -25,13 +24,15 @@ LedStreamReceiverComponent * streamReceiver;
 Timer<5> timer;
 long timeAtShutdown;
 
-bool initInternal() override;
+bool initInternal(JsonObject o) override;
 void updateInternal() override;
 
 void shutdown();
 void restart();
 
 void powerdown();
+
+void saveSettings();
 
 void onChildComponentEvent(const ComponentEvent &e) override;
 

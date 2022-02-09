@@ -1,6 +1,9 @@
-bool Component::init()
+bool Component::init(JsonObject o)
 {
-    isInit = initInternal();
+    //NDBG(name+" init, o = "+String(o.size()));
+    //for (JsonPair kv : o)  NDBG(String(kv.key().c_str()) +" > "+kv.value().as<String>());
+
+    isInit = initInternal(o);
     if (isInit)
         NDBG(F("Init OK"));
     else
@@ -34,12 +37,17 @@ void Component::clear()
     numParameters = 0;
 }
 
-Parameter *Component::addParameter(const String &name, var val, var minVal, var maxVal)
+Parameter *Component::addParameter(const String &name, var val, var minVal, var maxVal, bool isConfig)
 {
-    Parameter *p = new Parameter(name, val, minVal, maxVal);
+    Parameter *p = new Parameter(name, val, minVal, maxVal, isConfig);
     parameters[numParameters] = p;
     numParameters++;
     AddDefaultParameterListener(Component, p) return p;
+}
+
+Parameter *Component::addConfigParameter(const String &name, var val, var minVal, var maxVal)
+{
+    return addParameter(name, val, minVal, maxVal, true);
 }
 
 void Component::onParameterEvent(const ParameterEvent &e)
@@ -54,19 +62,19 @@ void Component::onParameterEvent(const ParameterEvent &e)
 
 bool Component::handleCommand(const String &command, var *data, int numData)
 {
-    if (CheckCommand("setConfig", 1))
-    {
-        if (numData >= 2)
-        {
-            SetConfig(data[0].stringValue(), data[1]);
-            return true;
-        }
-        else
-        {
-            SendConfigFeedback(data[0].stringValue());
-            return true;
-        }
-    }
+    // if (CheckCommand("setConfig", 1))
+    // {
+    //     if (numData >= 2)
+    //     {
+    //         SetConfig(data[0].stringValue(), data[1]);
+    //         return true;
+    //     }
+    //     else
+    //     {
+    //         SendConfigFeedback(data[0].stringValue());
+    //         return true;
+    //     }
+    // }
 
     if (handleCommandInternal(command, data, numData))
         return true;
@@ -84,7 +92,7 @@ bool Component::handleCommand(const String &command, var *data, int numData)
             if (numData > 0) // query for feedback
             {
                 parameters[i]->set(data[0]);
-                //NDBG("Set Parameter " + parameters[i]->name + " : " +data[0].stringValue());
+                NDBG("Set Parameter " + parameters[i]->name + " : " +data[0].stringValue()+" >> "+parameters[i]->stringValue());
             }
             else
             {
@@ -110,7 +118,25 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
     return true;
 }
 
-void Component::fillJSONData(JsonObject o)
+void Component::fillSettingsData(JsonObject o)
+{
+    for (int i = 0; i < numParameters; i++)
+    {
+        Parameter *p = parameters[i];
+        JsonObject po = o.createNestedObject(p->name);
+        p->fillSettingsData(po);
+    }
+
+    JsonObject comps = o.createNestedObject("components");
+    for (int i = 0; i < numComponents; i++)
+    {
+        Component *c = components[i];
+        JsonObject co = comps.createNestedObject(c->name);
+        c->fillSettingsData(co);
+    }
+}
+
+void Component::fillOSCQueryData(JsonObject o, bool includeConfig)
 {
     String fullPath = getFullPath();
     o["DESCRIPTION"] = name;
@@ -122,8 +148,9 @@ void Component::fillJSONData(JsonObject o)
     for (int i = 0; i < numParameters; i++)
     {
         Parameter *p = parameters[i];
+        if(p->isConfig && !includeConfig) continue;
         JsonObject po = contents.createNestedObject(p->name);
-        p->fillJSONData(po);
+        p->fillOSCQueryData(po);
         po["FULL_PATH"] = fullPath + "/" + p->name;
     }
 
@@ -132,7 +159,7 @@ void Component::fillJSONData(JsonObject o)
     {
         Component *c = components[i];
         JsonObject co = contents.createNestedObject(c->name);
-        c->fillJSONData(co);
+        c->fillOSCQueryData(co);
     }
 }
 

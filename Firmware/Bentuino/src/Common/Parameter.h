@@ -26,7 +26,7 @@ public:
 class Parameter : public EventBroadcaster<ParameterEvent>
 {
 public:
-    Parameter(const String &name, var val, var minVal = var(), var maxVal = var());
+    Parameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
 
     virtual ~Parameter();
 
@@ -34,6 +34,7 @@ public:
     var val;
     var minVal;
     var maxVal;
+    bool isConfig;
     bool readOnly;
 
     bool boolValue();
@@ -46,7 +47,9 @@ public:
     void set(const var &v, bool force = false);
 
     void setRange(var newMin, var newMax);
-    void fillJSONData(JsonObject o);
+
+    void fillSettingsData(JsonObject o);
+    void fillOSCQueryData(JsonObject o);
 
     DeclareEventTypes(ValueChanged);
 };

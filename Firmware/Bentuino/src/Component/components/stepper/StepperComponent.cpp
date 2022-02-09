@@ -1,4 +1,4 @@
-bool StepperComponent::initInternal()
+bool StepperComponent::initInternal(JsonObject o)
 {
     return true;
 }

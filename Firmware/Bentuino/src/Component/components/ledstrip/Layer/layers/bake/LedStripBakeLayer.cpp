@@ -1,4 +1,4 @@
-bool LedStripBakeLayer::initInternal()
+bool LedStripBakeLayer::initInternal(JsonObject o)
 {
     frameSize = numLeds * 4;
 
@@ -7,8 +7,8 @@ bool LedStripBakeLayer::initInternal()
     totalFrames = 0;
     groupID = -1;
     localID = -1;
-    idMode = addParameter("idMode",false);
-    loopShow = addParameter("loop", false);
+    idMode = AddParameter("idMode",false);
+    loopShow = AddParameter("loop", false);
     isPlaying = false;
     curTimeMs = 0;
     prevTimeMs = 0;

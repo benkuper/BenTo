@@ -11,14 +11,14 @@ public:
                    D_OUTPUT,
                    A_OUTPUT };
 
-int pin;
-int mode;
-bool inverted;
+Parameter * pin;
+Parameter * mode;
+Parameter * inverted;
 
 Parameter *value;
 float prevValue;
 
-virtual bool initInternal() override;
+virtual bool initInternal(JsonObject o) override;
 virtual void updateInternal() override;
 virtual void clearInternal() override;
 

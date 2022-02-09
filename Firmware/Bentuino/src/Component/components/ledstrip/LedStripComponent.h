@@ -4,15 +4,15 @@
 
 DeclareComponent(LedStrip, "ledstrip", )
 
-int pin;
-int count;
-int enPin;
-int clkPin;
+Parameter * dataPin;
+Parameter * count;
+Parameter * clkPin;
+Parameter * enPin;
 
 Parameter * brightness;
 
 //mapping
-bool invertStrip;
+Parameter * invertStrip;
 
 Color *colors;
 
@@ -29,7 +29,7 @@ LedStripLayer *userLayers[LEDSTRIP_NUM_USER_LAYERS];
 Adafruit_NeoPixel *neoPixelStrip;
 Adafruit_DotStar * dotStarStrip;
 
-bool initInternal() override;
+bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 

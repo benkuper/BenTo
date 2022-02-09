@@ -1,4 +1,4 @@
-bool LedStripComponent::initInternal()
+bool LedStripComponent::initInternal(JsonObject o)
 {
     // init
     neoPixelStrip = NULL;
@@ -6,49 +6,46 @@ bool LedStripComponent::initInternal()
 
     for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
         userLayers[i] = NULL;
+
     systemLayer = NULL;
 
-    pin = GetIntConfig("pin");
-    count = GetIntConfig("count");
-    enPin = GetIntConfig("enPin");
-    clkPin = GetIntConfig("clkPin");
-    invertStrip = GetBoolConfig("invertStrip");
+    dataPin = AddConfigParameter("dataPin", 0);
+    count = AddConfigParameter("count", 0);
+    enPin = AddConfigParameter("enPin", 0);
+    clkPin = AddConfigParameter("clkPin", 0);
+    invertStrip = AddConfigParameter("invertStrip", false);
 
-
-    if (enPin != 0)
+    if (enPin->intValue() != 0)
     {
-        NDBG("Setting Led Enable pin : " + String(enPin));
-        pinMode(enPin, OUTPUT);
-        digitalWrite(enPin, HIGH); // enable LEDs
+        NDBG("Setting Led Enable pin : " + String(enPin->intValue()));
+        pinMode(enPin->intValue(), OUTPUT);
+        digitalWrite(enPin->intValue(), HIGH); // enable LEDs
     }
 
-    float defaultBrightness = GetFloatConfig("defaultBrightness");
-    if(defaultBrightness == 0) defaultBrightness = .5f;
+    brightness = addParameter("brightness", .5f, 0, 1);
 
-    brightness = addParameter("brightness", defaultBrightness, 0, 1);
-
-    colors = (Color *)malloc(count * sizeof(Color));
-    for (int i = 0; i < count; i++)
+    colors = (Color *)malloc(count->intValue() * sizeof(Color));
+    for (int i = 0; i < count->intValue(); i++)
         colors[i] = Color(0, 0, 0, 0);
 
-    if (count == 0 || pin == 0)
+    if (count->intValue() == 0 || dataPin->intValue() == 0)
     {
         NDBG("Ledstrip pin and count have not been set");
         return false;
     }
 
-    bakeLayer = addComponent(new LedStripBakeLayer(this));
-    streamLayer = addComponent(new LedStripStreamLayer(this));
-    scriptLayer = addComponent(new LedStripScriptLayer(this));
-    systemLayer = addComponent(new LedStripSystemLayer(this));
+    bakeLayer = addComponent(new LedStripBakeLayer("bake", this));
+    streamLayer = addComponent(new LedStripStreamLayer("stream", this));
+    scriptLayer = addComponent(new LedStripScriptLayer("script", this));
+    systemLayer = addComponent(new LedStripSystemLayer("system", this));
 
     userLayers[0] = bakeLayer;
     userLayers[1] = streamLayer;
     userLayers[2] = scriptLayer;
 
-    if (clkPin > 0)
+    if (clkPin->intValue() > 0)
     {
-        dotStarStrip = new Adafruit_DotStar(count, pin, clkPin, DOTSTAR_BGR);
+        dotStarStrip = new Adafruit_DotStar(count->intValue(), dataPin->intValue(), clkPin->intValue(), DOTSTAR_BGR);
         dotStarStrip->begin();
         dotStarStrip->setBrightness(brightness->floatValue() * 255);
         //  dotStarStrip->fill(dotStarStrip->Color(255, 0, 0));
@@ -57,7 +54,7 @@ bool LedStripComponent::initInternal()
     }
     else
     {
-        neoPixelStrip = new Adafruit_NeoPixel(count, pin, NEO_GRB + NEO_KHZ800);
+        neoPixelStrip = new Adafruit_NeoPixel(count->intValue(), dataPin->intValue(), NEO_GRB + NEO_KHZ800);
         neoPixelStrip->begin();
         neoPixelStrip->setBrightness(brightness->floatValue() * 255);
         //  neoPixelStrip->fill(neoPixelStrip->Color(255, 0, 0));
@@ -70,6 +67,12 @@ bool LedStripComponent::initInternal()
 
 void LedStripComponent::updateInternal()
 {
+
+    if(dotStarStrip == NULL && neoPixelStrip == NULL)
+    {
+        return; //not active
+    }
+
     // all layer's internal colors are updated in Component's update() function
 
     clearColors();
@@ -104,6 +107,25 @@ void LedStripComponent::onParameterEventInternal(const ParameterEvent &e)
         else if (dotStarStrip != NULL)
             dotStarStrip->setBrightness(brightness->floatValue() * 255);
     }
+    else if (e.parameter == count)
+    {
+        if (neoPixelStrip != NULL)
+            neoPixelStrip->updateLength(count->intValue());
+        else if (dotStarStrip != NULL)
+            dotStarStrip->setBrightness(count->intValue());
+
+        // free(colors);
+        // colors = (Color *)malloc(count->intValue() * sizeof(Color));
+        // for (int i = 0; i < count->intValue(); i++)
+        //     colors[i] = Color(0, 0, 0, 0);
+
+
+        // for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
+        //     if (userLayers[i] != NULL)
+        //         userLayers[i]->initColors();
+
+        // systemLayer->initColors();
+    }
 }
 
 void LedStripComponent::onEnabledChanged()
@@ -113,8 +135,10 @@ void LedStripComponent::onEnabledChanged()
 
 void LedStripComponent::setStripPower(bool value)
 {
-    if (enPin != 0)
-        digitalWrite(enPin, value); // enable LEDs
+    if (enPin->intValue() != 0)
+        digitalWrite(enPin->intValue(), value); // enable LEDs
+
+    pinMode(dataPin->intValue(), value ? OUTPUT : OPEN_DRAIN);
 }
 
 // Layer functions
@@ -126,15 +150,17 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
     if (!layer->enabled->boolValue())
         return;
 
-    for (int i = 0; i < count; i++)
+    for (int i = 0; i < count->intValue(); i++)
     {
         Color c = layer->colors[i];
-        
-        switch (layer->blendMode)
+
+        LedStripLayer::BlendMode bm = (LedStripLayer::BlendMode)layer->blendMode->intValue();
+
+        switch (bm)
         {
         case LedStripLayer::Add:
             colors[i] += c;
-            //if(i == 0) NDBG(" > "+colors[i].toString());
+            // if(i == 0) NDBG(" > "+colors[i].toString());
             break;
 
         case LedStripLayer::Multiply:
@@ -172,16 +198,15 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
 
 void LedStripComponent::clearColors()
 {
-    // for(int i=0;i<count;i++) colors[i] = Color(0,0,0,0);
-    memset(colors, 0, sizeof(Color) * count);
-    
+    // for(int i=0;i<count->intValue();i++) colors[i] = Color(0,0,0,0);
+    memset(colors, 0, sizeof(Color) * count->intValue());
 }
 
 void LedStripComponent::showLeds()
 {
     if (neoPixelStrip != NULL)
     {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count->intValue(); i++)
         {
             float a = colors[i].a / 255.0f;
             neoPixelStrip->setPixelColor(ledMap(i),
@@ -193,7 +218,7 @@ void LedStripComponent::showLeds()
     }
     else if (dotStarStrip != NULL)
     {
-        for (int i = 0; i < count; i++)
+        for (int i = 0; i < count->intValue(); i++)
         {
             float a = colors[i].a / 255.0f;
             dotStarStrip->setPixelColor(ledMap(i),
@@ -207,5 +232,5 @@ void LedStripComponent::showLeds()
 
 int LedStripComponent::ledMap(int index) const
 {
-    return invertStrip ? count - 1 - index : index;
+    return invertStrip->intValue() ? count->intValue() - 1 - index : index;
 }

@@ -1,6 +1,6 @@
 ImplementSingleton(RootComponent);
 
-bool RootComponent::initInternal()
+bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
 
@@ -16,22 +16,24 @@ bool RootComponent::initInternal()
 
     deviceID.toUpperCase();
 
-    AddComponent(settings, Settings, true);
-    AddComponent(comm, Communication, true);
+    Settings::loadSettings();
+    JsonObject o = Settings::settings.as<JsonObject>();
 
-    AddComponent(streamReceiver, LedStreamReceiver, false);
-    AddComponent(strip, LedStrip, true);
+    AddComponent("comm", comm, Communication, true);
 
-    AddComponent(battery, Battery, true);
-    AddComponent(sequence, Sequence, true);
+    AddComponent("streamReceiver", streamReceiver, LedStreamReceiver, false);
+    AddComponent("strip", strip, LedStrip, true);
 
-    AddComponent(server, WebServer, false);
-    AddComponent(imu, IMU, false);
+    AddComponent("battery", battery, Battery, true);
+    AddComponent("sequence", sequence, Sequence, true);
 
-    AddComponent(wifi, Wifi, true);
-    AddComponent(files, Files, true);
+    AddComponent("server", server, WebServer, false);
+    AddComponent("imu", imu, IMU, false);
 
-    AddComponent(button, Button, true);
+    AddComponent("wifi", wifi, Wifi, true);
+    AddComponent("files", files, Files, true);
+
+    AddComponent("button", button, Button, false);
 
     return true;
 }
@@ -43,11 +45,15 @@ void RootComponent::updateInternal()
 
 void RootComponent::restart()
 {
+    saveSettings();
+
     ESP.restart();
 }
 
 void RootComponent::shutdown()
 {
+    saveSettings();
+
     timeAtShutdown = millis();
     timer.in(1000, [](void *) -> bool
              {  RootComponent::instance->powerdown(); return false; });
@@ -71,6 +77,15 @@ void RootComponent::powerdown()
 #else
     esp_deep_sleep_start();
 #endif
+}
+
+void RootComponent::saveSettings()
+{
+    NDBG("Saving settings");
+    Settings::settings.clear();
+    JsonObject o = Settings::settings.to<JsonObject>();
+    fillSettingsData(o);
+    Settings::saveSettings();
 }
 
 void RootComponent::onChildComponentEvent(const ComponentEvent &e)
@@ -109,7 +124,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     }
     else if (e.component == button)
     {
-        if (button->isSystem)
+        if (button->isSystem->boolValue())
         {
             switch (e.type)
             {
@@ -136,6 +151,14 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
         shutdown();
     else if (command == "restart")
         restart();
+    else if (command == "stats")
+    {
+        comm->sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
+    }
+    else if (command == "saveSettings")
+    {
+        saveSettings();
+    }
     else
     {
         return false;

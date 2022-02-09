@@ -1,4 +1,4 @@
-bool ServoComponent::initInternal()
+bool ServoComponent::initInternal(JsonObject o)
 {
     return true;
 }

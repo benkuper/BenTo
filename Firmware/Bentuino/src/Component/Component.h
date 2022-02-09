@@ -17,8 +17,10 @@ public:
     }
 
     virtual ~Component() {}
+    virtual String getTypeString() const { return "[notype]"; }
 
     String name;
+
     bool isInit;
     Parameter *enabled;
 
@@ -33,12 +35,12 @@ public:
     virtual String getComponentEventName(uint8_t type) const { return "[noname]"; }
 
     virtual void onChildComponentEvent(const ComponentEvent &e) {}
-
-    bool init();
+    
+    bool init(JsonObject o = JsonObject());
     void update();
     void clear();
 
-    virtual bool initInternal() { return true; }
+    virtual bool initInternal(JsonObject o) { return true; }
     virtual void updateInternal() {}
     virtual void clearInternal() {}
 
@@ -48,16 +50,16 @@ public:
     }
 
     template <class T>
-    T *addComponent(bool _enabled) { return addComponent(new T(_enabled)); };
+    T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return addComponent(new T(name, _enabled), o); };
 
     template <class T>
-    T *addComponent(T *c)
+    T *addComponent(T *c, JsonObject o = JsonObject())
     {
         components[numComponents] = (Component *)c;
         c->parentComponent = this;
         AddDefaultComponentListener(c);
         numComponents++;
-        c->init();
+        c->init(o);
         return c;
     }
 
@@ -89,7 +91,8 @@ public:
         return NULL;
     }
 
-    Parameter* addParameter(const String &name, var val, var minVal = var(), var maxVal = var());
+    Parameter* addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
+    Parameter* addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); //helpers for non ranged config param declaration simplification
 
     virtual void onParameterEvent(const ParameterEvent &e);
     virtual void onEnabledChanged() {}
@@ -99,6 +102,7 @@ public:
     virtual bool handleCommandInternal(const String &command, var *data, int numData) { return false; }
     bool checkCommand(const String &command, const String &ref, int numData, int expectedData);
 
-    virtual void fillJSONData(JsonObject o);
+    virtual void fillSettingsData(JsonObject o);
+    virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true);
     String getFullPath();
 };

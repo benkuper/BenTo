@@ -1,26 +1,27 @@
-bool IMUComponent::initInternal()
+bool IMUComponent::initInternal(JsonObject o)
 {
-    isConnected = addParameter("connected", false);
+    isConnected = AddParameter("connected", false);
     isConnected->readOnly = true;
-    sendLevel = addParameter("sendLevel", 0);
-    orientationSendRate = addParameter("orientationSendRate", 50);
 
-    int sdaPin = GetIntConfig("sdaPin");
-    int sclPin = GetIntConfig("sclPin");
+    sendLevel = AddParameter("sendLevel", 0);
 
-    if (sdaPin == 0)
+    orientationSendRate = AddConfigParameter("orientationSendRate", 50);
+    sdaPin = AddConfigParameter("sdaPin",0);
+    sclPin = AddConfigParameter("sclPin",0);
+
+    if(sdaPin->intValue() == 0 || sclPin->intValue() == 0)
     {
-        sdaPin = 23;
-        SetConfig("sdaPin", sdaPin);
+        String npin;
+        if (sdaPin->intValue() == 0)
+            npin += "SDA,";
+        if (sclPin->intValue() == 0)
+            npin += "SCL";
+
+        NDBG(npin + " pins not defined, not using IMU");
+        return false;
     }
 
-    if (sclPin == 0)
-    {
-        sclPin = 22;
-        SetConfig("sclPin", sclPin);
-    }
-
-    Wire.begin(sdaPin, sclPin);
+    Wire.begin(sdaPin->intValue(), sclPin->intValue());
 
     // Init values
     accelThresholds[0] = .8f;
