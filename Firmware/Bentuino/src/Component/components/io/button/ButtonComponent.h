@@ -9,7 +9,7 @@
 class ButtonComponent : public IOComponent
 {
 public:
-    ButtonComponent(const String& name, bool _enabled) : IOComponent(name, _enabled) {}
+    ButtonComponent(const String &name, bool _enabled) : IOComponent(name, _enabled) {}
 
     Parameter *isSystem;
 
@@ -25,4 +25,12 @@ public:
 
     DeclareComponentEventTypes(ShortPress, LongPress, VeryLongPress, MultiPress);
     DeclareComponentEventNames("ShortPress", "LongPress", "VeryLongPress", "MultiPress");
+
+    LinkScriptFunctionsStart
+    LinkScriptFunction(ButtonComponent, getState, i, );
+    LinkScriptFunction(ButtonComponent, getMultipress, i, );
+    LinkScriptFunctionsEnd
+
+    DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t) {  return isVeryLongPressed?3:isLongPressed?2:value->intValue(); }
+    DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) {  return multiPressCount; }
 };

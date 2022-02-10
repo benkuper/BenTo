@@ -1,10 +1,11 @@
-Script::Script() : isRunning(false),
-                   runtime(NULL),
-                   initFunc(NULL),
-                   updateFunc(NULL),
-                   stopFunc(NULL)
+Script::Script(Component *localComponent) :
+                                            isRunning(false),
+                                            localComponent(localComponent),
+                                            runtime(NULL),
+                                            initFunc(NULL),
+                                            updateFunc(NULL),
+                                            stopFunc(NULL)
 {
-
 }
 
 void Script::init()
@@ -29,7 +30,7 @@ void Script::init()
 //     }
 // }
 
-void Script::load(const String& path)
+void Script::load(const String &path)
 {
     if (isRunning)
     {
@@ -171,13 +172,18 @@ void Script::launchWasmTask()
 
 M3Result Script::LinkArduino(IM3Runtime runtime)
 {
-    //IM3Module module = runtime->modules;
-    RootComponent::instance->linkScriptFunctions(this);
+    IM3Module module = runtime->modules;
+    const char *util = "util";
 
-    // m3_LinkRawFunction(module, arduino, "millis", "i()", &m3_arduino_millis);
-    // m3_LinkRawFunction(module, arduino, "delay", "v(i)", &m3_arduino_delay);
-    // m3_LinkRawFunction(module, arduino, "printFloat", "v(f)", &m3_printFloat);
-    // m3_LinkRawFunction(module, arduino, "printInt", "v(i)", &m3_printInt);
+    m3_LinkRawFunction(module, util, "millis", "i()", &m3_arduino_millis);
+    m3_LinkRawFunction(module, util, "delay", "v(i)", &m3_arduino_delay);
+    m3_LinkRawFunction(module, util, "printFloat", "v(f)", &m3_printFloat);
+    m3_LinkRawFunction(module, util, "printInt", "v(i)", &m3_printInt);
+    m3_LinkRawFunction(module, util, "randomInt", "i(ii)", &m3_randomInt);
+    m3_LinkRawFunction(module, util, "noise", "f(ff)", &m3_noise);
+
+    if(localComponent != NULL) localComponent->linkScriptFunctions(this, true);
+    RootComponent::instance->linkScriptFunctions(this);
 
     // m3_LinkRawFunction(module, arduino, "clearLeds", "v()", &m3_clearLeds);
     // m3_LinkRawFunction(module, arduino, "fillLeds", "v(i)", &m3_fillLeds);
@@ -203,8 +209,6 @@ M3Result Script::LinkArduino(IM3Runtime runtime)
     // m3_LinkRawFunction(module, arduino, "getActivity", "f()", &m3_getActivity);
 
     // m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
-    // m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
-    // m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
 
     return m3Err_none;
 }

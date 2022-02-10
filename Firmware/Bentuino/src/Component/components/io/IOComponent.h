@@ -25,4 +25,12 @@ virtual void clearInternal() override;
 void setupPin();
 void updatePin();
 
+LinkScriptFunctionsStart
+LinkScriptFunction(IOComponent, get,f,);
+LinkScriptFunction(IOComponent, set,,f);
+LinkScriptFunctionsEnd
+
+DeclareScriptFunctionReturn0(IOComponent, get,float) { return value->floatValue(); }
+DeclareScriptFunctionVoid1(IOComponent, set,float)  { return value->set(arg1); }
+
 EndDeclareComponent

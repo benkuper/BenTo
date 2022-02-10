@@ -108,7 +108,7 @@ public:
     String getFullPath(bool includeRoot = false, bool scriptMode = false);
 
     // void scripting
-    virtual void linkScriptFunctions(Script *s);
+    virtual void linkScriptFunctions(Script *s, bool isLocal = false);
     virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char * tName) {}
 
     DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);

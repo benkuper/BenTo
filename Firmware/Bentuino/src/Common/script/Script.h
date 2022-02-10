@@ -6,15 +6,19 @@
 #define WASM_MEMORY_LIMIT 4096*4
 #define WASM_ASYNC 0
 
+class Component;
+
 class Script
 {
 public:
-    Script();
+    Script(Component * localComponent = NULL);
     ~Script();
 
     bool isRunning;
     unsigned char scriptData[SCRIPT_MAX_SIZE];
     long scriptSize;
+
+    Component * localComponent;
 
     IM3Runtime runtime;
     IM3Environment env;

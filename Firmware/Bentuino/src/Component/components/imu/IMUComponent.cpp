@@ -6,10 +6,10 @@ bool IMUComponent::initInternal(JsonObject o)
     sendLevel = AddParameter("sendLevel", 0);
 
     orientationSendRate = AddConfigParameter("orientationSendRate", 50);
-    sdaPin = AddConfigParameter("sdaPin",0);
-    sclPin = AddConfigParameter("sclPin",0);
+    sdaPin = AddConfigParameter("sdaPin", 0);
+    sclPin = AddConfigParameter("sclPin", 0);
 
-    if(sdaPin->intValue() == 0 || sclPin->intValue() == 0)
+    if (sdaPin->intValue() == 0 || sclPin->intValue() == 0)
     {
         String npin;
         if (sdaPin->intValue() == 0)
@@ -59,19 +59,26 @@ void IMUComponent::updateInternal()
     imuLock = true;
 
     long curTime = millis();
-    int orientationSendMS = 1000 / (float)orientationSendRate->val;
+    int orientationSendMS = 1000 / orientationSendRate->intValue();
 
     if (curTime > timeSinceOrientationLastSent + orientationSendMS)
     {
-        if ((int)sendLevel->val >= 1)
+        if ((int)sendLevel->intValue() >= 1)
         {
             // NDBG("Orientation send "+
-            sendEvent(OrientationUpdate, orientation, 3);
+            var oData[3] { orientation[0],orientation[1],orientation[2] };
+            sendEvent(OrientationUpdate, oData, 3);
             if ((int)sendLevel->val >= 2)
             {
-                sendEvent(AccelUpdate, accel, 3);
-                sendEvent(LinearAccelUpdate, linearAccel, 3);
-                sendEvent(GyroUpdate, gyro, 3);
+                var aData[3] { accel[0],accel[1],accel[2] };
+                sendEvent(AccelUpdate, aData, 3);
+                
+                var laData[3] { linearAccel[0],linearAccel[1],linearAccel[2] };
+                sendEvent(LinearAccelUpdate, laData, 3);
+                
+                var gData[3] { gyro[0],gyro[1],gyro[2]};
+                sendEvent(GyroUpdate, gData, 3);
+                
                 sendEvent(ActivityUpdate);
                 sendEvent(ProjectedAngleUpdate);
                 // sendEvent(Gravity, gravity, 3);
@@ -260,8 +267,8 @@ void IMUComponent::computeProjectedAngle()
     }
 
     eulerRadians[0] = newX * PI / 180.0f;
-    eulerRadians[1] = (float)orientation[1] * PI / 180.0f;
-    eulerRadians[2] = (float)orientation[2] * PI / 180.0f;
+    eulerRadians[1] = orientation[1] * PI / 180.0f;
+    eulerRadians[2] = orientation[2] * PI / 180.0f;
 
     lookAt[0] = cos(eulerRadians[1]) * sin(eulerRadians[0]);
     lookAt[1] = sin(eulerRadians[1]);
@@ -355,12 +362,13 @@ void IMUComponent::sendCalibrationStatus()
     system = gyro = accel = mag = 0;
     bno.getCalibration(&system, &gyro, &accel, &mag);
 
-    calibration[0] = (float)system;
-    calibration[1] = (float)gyro;
-    calibration[2] = (float)accel;
-    calibration[3] = (float)mag;
+    var data[4];
+    data[0] = (float)system;
+    data[1] = (float)gyro;
+    data[2] = (float)accel;
+    data[3] = (float)mag;
 
-    sendEvent(CalibrationStatus, calibration, 4);
+    sendEvent(CalibrationStatus, data, 4);
 }
 
 void IMUComponent::setOrientationXOffset(float offset = 0.0f)
@@ -384,3 +392,13 @@ bool IMUComponent::handleCommandInternal(const String &command, var *data, int n
 
     return false;
 }
+
+// Script functions
+
+
+
+
+
+
+
+

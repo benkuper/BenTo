@@ -164,7 +164,8 @@ void Component::fillOSCQueryData(JsonObject o, bool includeConfig)
 
     for (int i = 0; i < numComponents; i++)
     {
-        if(components[i] == nullptr) continue;
+        if (components[i] == nullptr)
+            continue;
 
         Component *c = components[i];
         JsonObject co = contents.createNestedObject(c->name);
@@ -194,23 +195,24 @@ String Component::getFullPath(bool includeRoot, bool scriptMode)
 }
 
 // Scripts
-void Component::linkScriptFunctions(Script *script)
+void Component::linkScriptFunctions(Script *script, bool isLocal)
 {
     IM3Module module = script->runtime->modules;
-    const char * tName = getFullPath(false, true).c_str();
-    
+    const char *tName = isLocal ? "local" : getFullPath(false, true).c_str();
+
     m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
 
     linkScriptFunctionsInternal(script, module, tName);
 
     for (int i = 0; i < numComponents; i++)
     {
-        if(components[i] == nullptr) continue;
+        if (components[i] == nullptr)
+            continue;
         components[i]->linkScriptFunctions(script);
-    } 
+    }
 }
 
-//Script functions
+// Script functions
 
 void Component::setEnabledFromScript(uint32_t val)
 {

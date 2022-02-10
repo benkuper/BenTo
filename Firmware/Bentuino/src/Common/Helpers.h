@@ -1,5 +1,9 @@
+#define STR(x) #x
+#define XSTR(x) STR(x)
+#define COMMA ,
+
 #define DBG(text) SerialComponent::instance->send(text)
-#define NDBG(text) SerialComponent::instance->send("[" + name + "] " + text)
+#define NDBG(text) SerialComponent::instance->send("[" XSTR(name) "] " XSTR(text))
 
 #define DeviceID RootComponent::instance->deviceID
 
@@ -84,48 +88,34 @@
 #define AddConfigParameter(name, val) addParameter(name, Settings::getVal(o, name, val), var(), var(), true)
 #define AddRangeConfigParameter(name, val, minVal, maxVal) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, true)
 
-// Config (obsolete)
-
-//#define SendConfigFeedback(configName) CommunicationComponent::instance->sendConfigFeedback(this, configName, GetStringConfig(configName));
-
-// Preferences
-// #define GetConfig(sname, Class) SettingsComponent::instance->settings[name][sname].as<Class>()
-// #define GetStringConfig(sname) GetConfig(sname, String)
-// #define GetIntConfig(sname) GetConfig(sname, int)
-// #define GetFloatConfig(sname) GetConfig(sname, float)
-// #define GetBoolConfig(sname) GetConfig(sname, bool)
-
-// #define SetConfig(sname,val) SettingsComponent::instance->setConfig(name, sname, val, true);
-// #define SetConfigSave(sname,val) SettingsComponent::instance->setConfig(name, sname, val, false);
-
 // Script
 
 #define LinkScriptFunctionsStart                                                                     \
     virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char *tName) override \
     {
-
 #define LinkScriptFunctionsEnd }
 
+#define LinkScriptFunction(Class, FunctionName, ReturnType, Args) m3_LinkRawFunctionEx(module, tName, XSTR(FunctionName), XSTR(ReturnType(Args)), &Class::m3_##FunctionName, this);
+
 #define DeclareScriptFunctionVoid(Class, FunctionName, CallArgs, DeclarationArgs, GetArgs) \
-    virtual void FunctionName##FromScript(DeclarationArgs);                                \
     static m3ApiRawFunction(m3_##FunctionName)                                             \
     {                                                                                      \
         GetArgs;                                                                           \
-        static_cast<Class *>(_ctx->userdata)->FunctionName ## FromScript(CallArgs);        \
+        static_cast<Class *>(_ctx->userdata)->FunctionName##FromScript(CallArgs);          \
         m3ApiSuccess();                                                                    \
-    } 
+    }                                                                                      \
+    virtual void FunctionName##FromScript(DeclarationArgs)
 
 #define DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, CallArgs, DeclarationArgs, GetArgs) \
-    virtual ReturnType FunctionName##FromScript(DeclarationArgs);                                        \
     static m3ApiRawFunction(m3_##FunctionName)                                                           \
     {                                                                                                    \
         m3ApiReturnType(ReturnType);                                                                     \
         GetArgs;                                                                                         \
-        ReturnType result = static_cast<Class *>(_ctx->userdata)->FunctionName ## FromScript(CallArgs);  \
+        ReturnType result = static_cast<Class *>(_ctx->userdata)->FunctionName##FromScript(CallArgs);    \
         m3ApiReturn(result);                                                                             \
-    }
+    }                                                                                                    \
+    virtual ReturnType FunctionName##FromScript(DeclarationArgs)
 
-#define COMMA ,
 #define SA(Type, index) m3ApiGetArg(Type, arg##index);
 #define CA(Type, index) Type arg##index
 

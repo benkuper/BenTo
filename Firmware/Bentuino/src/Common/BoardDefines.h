@@ -1,7 +1,6 @@
 #pragma once
 
-#define STR(x) #x
-#define XSTR(x) STR(x)
+
 
 #ifndef MAIN_INCLUDE //Avoid showing twice
 #pragma message ("Compiling For " ARDUINO_BOARD)
