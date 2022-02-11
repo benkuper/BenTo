@@ -32,11 +32,15 @@
 
 #include "Component/components/imu/IMUComponent.cpp"
 
+#include "Component/components/servo/ServoComponent.cpp"
+#include "Component/components/stepper/StepperComponent.cpp"
+
 #include "Component/components/ledstrip/LedStripComponent.cpp"
 #include "Component/components/ledstrip/Layer/LedStripLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/script/LedStripScriptLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.cpp"
+
 
 #include "RootComponent.cpp"

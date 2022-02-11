@@ -28,6 +28,7 @@
 #include <SimplexNoise.h>
 #include <ESP32Servo.h>
 #include <ArtnetWifi.h>
+#include <FastAccelStepper.h>
 
 #include "../lib/SD/src/SD.h" //really weird
 

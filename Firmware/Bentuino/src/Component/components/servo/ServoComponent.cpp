@@ -4,7 +4,7 @@ bool ServoComponent::initInternal(JsonObject o)
     if (pin > 0)
         servo.attach(pin->intValue());
 
-    position = AddParameter("position", 0, 0, 180);
+    position = AddParameter("position", 0);
     return true;
 }
 

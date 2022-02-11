@@ -16,6 +16,8 @@ SequenceComponent * sequence;
 ButtonComponent * button;
 IMUComponent * imu;
 LedStripComponent *strip;
+ServoComponent * servo;
+StepperComponent * stepper;
 
 //Needs a single structure
 LedStreamReceiverComponent * streamReceiver;

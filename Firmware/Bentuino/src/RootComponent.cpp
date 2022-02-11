@@ -35,6 +35,9 @@ bool RootComponent::initInternal(JsonObject)
 
     AddComponent("button", button, Button, false);
 
+    AddComponent("servo", servo, Servo, true);
+    AddComponent("stepper", stepper, Stepper, true);
+
     return true;
 }
 
