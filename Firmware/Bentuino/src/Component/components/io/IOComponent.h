@@ -22,7 +22,7 @@ virtual bool initInternal(JsonObject o) override;
 virtual void updateInternal() override;
 virtual void clearInternal() override;
 
-void setupPin();
+virtual void setupPin();
 void updatePin();
 
 LinkScriptFunctionsStart

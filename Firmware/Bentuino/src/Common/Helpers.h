@@ -3,7 +3,7 @@
 #define COMMA ,
 
 #define DBG(text) SerialComponent::instance->send(text)
-#define NDBG(text) SerialComponent::instance->send("[" XSTR(name) "] " XSTR(text))
+#define NDBG(text) SerialComponent::instance->send("[" + name + "] " + text)
 
 #define DeviceID RootComponent::instance->deviceID
 

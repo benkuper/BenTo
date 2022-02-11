@@ -96,7 +96,6 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     {
         if (e.type == CommunicationComponent::MessageReceived)
         {
-
             if (Component *targetComponent = getComponentWithName(e.data[0].stringValue()))
             {
                 bool handled = targetComponent->handleCommand(e.data[1], &e.data[2], e.numData - 2);

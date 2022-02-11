@@ -105,30 +105,31 @@ void Parameter::setRange(var newMin, var newMax)
 
 void Parameter::fillSettingsData(JsonObject o, bool configOnly)
 {
+    // Only store value for now, should not require more
+
+    const char *prop = configOnly ? name.c_str() : "value";
+
+    switch (val.type)
+    {
+    case 'b':
+        o[prop] = val.boolValue();
+        break;
+    case 'i':
+        o[prop] = val.intValue();
+        break;
+    case 'f':
+        o[prop] = val.floatValue();
+        break;
+    case 's':
+        o[prop] = val.stringValue();
+        break;
+    }
+
     if (!configOnly)
     {
         o["type"] = val.type;
         o["readOnly"] = readOnly;
         o["isConfig"] = isConfig;
-    }
-
-    JsonVariant v = configOnly ? o : o["value"];
-
-    // Only store value for now, should not require more
-    switch (val.type)
-    {
-    case 'b':
-        v.set(val.boolValue());
-        break;
-    case 'i':
-        v.set(val.intValue());
-        break;
-    case 'f':
-        v.set(val.floatValue());
-        break;
-    case 's':
-        v.set(val.stringValue());
-        break;
     }
 }
 

@@ -12,7 +12,7 @@ class Script
 {
 public:
     Script(Component * localComponent = NULL);
-    ~Script();
+    ~Script() {}
 
     bool isRunning;
     unsigned char scriptData[SCRIPT_MAX_SIZE];

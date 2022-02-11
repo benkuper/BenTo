@@ -26,13 +26,15 @@
 #include <wasm3.h>
 #include <m3_env.h>
 #include <SimplexNoise.h>
+#include <ESP32Servo.h>
+#include <ArtnetWifi.h>
 
 #include "../lib/SD/src/SD.h" //really weird
 
 // Firmware
 
-#include "Common/BoardDefines.h"
 #include "Common/Helpers.h"
+#include "Common/BoardDefines.h"
 #include "Common/var.h"
 #include "Common/color.h"
 #include "Common/EventBroadcaster.h"

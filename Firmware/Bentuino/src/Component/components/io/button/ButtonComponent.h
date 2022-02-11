@@ -21,7 +21,7 @@ public:
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
-    void onParameterEvent(const ParameterEvent &e) override;
+    void onParameterEventInternal(const ParameterEvent &e) override;
 
     DeclareComponentEventTypes(ShortPress, LongPress, VeryLongPress, MultiPress);
     DeclareComponentEventNames("ShortPress", "LongPress", "VeryLongPress", "MultiPress");

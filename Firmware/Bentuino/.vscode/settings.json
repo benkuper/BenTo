@@ -24,6 +24,26 @@
         "ostream": "cpp",
         "new": "cpp",
         "istream": "cpp",
-        "sstream": "cpp"
+        "sstream": "cpp",
+        "bitset": "cpp",
+        "cctype": "cpp",
+        "clocale": "cpp",
+        "cstdarg": "cpp",
+        "cstddef": "cpp",
+        "cstdint": "cpp",
+        "cstdio": "cpp",
+        "cstring": "cpp",
+        "ctime": "cpp",
+        "cwchar": "cpp",
+        "cwctype": "cpp",
+        "exception": "cpp",
+        "iosfwd": "cpp",
+        "limits": "cpp",
+        "memory": "cpp",
+        "numeric": "cpp",
+        "stdexcept": "cpp",
+        "streambuf": "cpp",
+        "cinttypes": "cpp",
+        "regex": "cpp"
     }
 }

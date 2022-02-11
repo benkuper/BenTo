@@ -43,9 +43,9 @@ void ButtonComponent::updateInternal()
     }
 }
 
-void ButtonComponent::onParameterEvent(const ParameterEvent &e)
+void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
 {
-    IOComponent::onParameterEvent(e);
+    IOComponent::onParameterEventInternal(e);
 
     if (e.parameter == value)
     {

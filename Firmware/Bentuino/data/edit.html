@@ -1,0 +1,40 @@
+<html>
+
+<head>
+    <!-- when using the mode "code", it's important to specify charset utf-8 -->
+    <meta charset="utf-8">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.2/jsoneditor.min.css"
+        integrity="sha512-LDaPaKECzpambd6J0xPGx2s/z8EA1rAm3JzmoMgKO0VTRbXHTeE54oDLRw26eFiyBZ3Cf888tBEHzeUTYA3ddw=="
+        crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jsoneditor/9.7.2/jsoneditor.min.js"
+        integrity="sha512-9T9AIzkTI9pg694MCTReaZ0vOimxuTKXA15Gin+AZ4eycmg85iEXGX811BAjyY+NOcDCdlA9k2u9SqVAyNqFkQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+</head>
+
+<body style="width:90%;height:90%">
+        <!--<button id="save" style="width:100px;height:20px" onclick="saveSettings()">Save</button>-->
+        <div id="jsoneditor" style="width:100%;height:90%"></div>
+
+        <script>
+            // create the editor
+            const container = document.getElementById("jsoneditor");
+            const options = {onChangeJSON:editorChange};
+            const editor = new JSONEditor(container, options);
+
+            function editorChange(data)
+            {
+                console.log("data changed :",data);
+            }
+            jQuery.getJSON("http://192.168.0.48/settings?configOnly=1", null, function (data) { editor.set(data); });
+
+            function saveSettings() {
+                var json = editor.get();
+                $.get("http://192.168.0.48/saveSettings");
+            };
+        </script>
+</body>
+
+</html>

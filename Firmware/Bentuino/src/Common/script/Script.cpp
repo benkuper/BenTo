@@ -177,6 +177,7 @@ M3Result Script::LinkArduino(IM3Runtime runtime)
 
     m3_LinkRawFunction(module, util, "millis", "i()", &m3_arduino_millis);
     m3_LinkRawFunction(module, util, "delay", "v(i)", &m3_arduino_delay);
+    m3_LinkRawFunction(module, util, "log", "v(f)", &m3_logUTF16);
     m3_LinkRawFunction(module, util, "printFloat", "v(f)", &m3_printFloat);
     m3_LinkRawFunction(module, util, "printInt", "v(i)", &m3_printInt);
     m3_LinkRawFunction(module, util, "randomInt", "i(ii)", &m3_randomInt);

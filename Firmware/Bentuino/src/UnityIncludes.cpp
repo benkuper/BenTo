@@ -11,6 +11,7 @@
 #include "Common/Parameter.cpp"
 
 #include "Common/script/Script.cpp"
+#include "Common/script/utf16.cpp"
 #include "Common/script/wasmFunctions.cpp"
 
 #include "Component/ComponentEvent.cpp"

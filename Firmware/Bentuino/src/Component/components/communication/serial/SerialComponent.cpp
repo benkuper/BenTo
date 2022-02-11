@@ -59,6 +59,7 @@ void SerialComponent::processMessage(String buffer)
 
     int index = 2;
     // COUNT
+    
     char *pch = strtok((char *)args.c_str(), ",");
     while (pch != NULL && index < numData)
     {

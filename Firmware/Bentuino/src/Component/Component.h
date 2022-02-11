@@ -2,7 +2,7 @@
 
 #define MAX_CHILD_COMPONENTS 32
 #define MAX_CHILD_CONTROLLABLES 32
-#define MAX_EVENT_TYPES 16
+//#define MAX_EVENT_TYPES 16
 
 class Component : public EventBroadcaster<ComponentEvent>
 {
@@ -111,5 +111,5 @@ public:
     virtual void linkScriptFunctions(Script *s, bool isLocal = false);
     virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char * tName) {}
 
-    DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
+    // DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
 };

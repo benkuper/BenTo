@@ -2,11 +2,15 @@ ImplementSingleton(WebServerComponent)
 
     bool WebServerComponent::initInternal(JsonObject o)
 {
+    server.enableCORS(); // This is the magic
     server.onNotFound(std::bind(&WebServerComponent::handleNotFound, this));
-    server.on("/upload", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
     server.on("/", HTTP_ANY, std::bind(&WebServerComponent::handleQueryData, this));
     server.on("/settings", HTTP_ANY, std::bind(&WebServerComponent::handleSettings, this));
+    server.on("/uploadBake", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
+    server.on("/uploadSequence", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
+    server.on("/uploadScript", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
 
+    server.serveStatic("/edit", SPIFFS, "/edit.html");
     return true;
 }
 
@@ -38,10 +42,13 @@ void WebServerComponent::onEnabledChanged()
 
 void WebServerComponent::handleFileUpload()
 {
-    if (server.uri() != "/upload")
-    {
+    String destFolder = "";
+    if (server.uri() == "/uploadBake")
+        destFolder = "bake";
+    else if (server.uri() == "/uploadSequence")
+        destFolder = "sequences";
+    else
         return;
-    }
 
     HTTPUpload &upload = server.upload();
 
@@ -50,7 +57,7 @@ void WebServerComponent::handleFileUpload()
         uploadedBytes = 0;
         // totalBytes = server.header("Content-Length").toInt();
 
-        uploadingFile = FilesComponent::instance->openFile(upload.filename, true, true);
+        uploadingFile = FilesComponent::instance->openFile(destFolder + "/" + upload.filename, true, true);
         if (uploadingFile)
         {
             var data[1];

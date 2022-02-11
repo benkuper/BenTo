@@ -1,8 +1,5 @@
 bool Component::init(JsonObject o)
 {
-    // NDBG(name+" init, o = "+String(o.size()));
-    // for (JsonPair kv : o)  NDBG(String(kv.key().c_str()) +" > "+kv.value().as<String>());
-
     isInit = initInternal(o);
     if (isInit)
         NDBG(F("Init OK"));
@@ -62,20 +59,6 @@ void Component::onParameterEvent(const ParameterEvent &e)
 
 bool Component::handleCommand(const String &command, var *data, int numData)
 {
-    // if (CheckCommand("setConfig", 1))
-    // {
-    //     if (numData >= 2)
-    //     {
-    //         SetConfig(data[0].stringValue(), data[1]);
-    //         return true;
-    //     }
-    //     else
-    //     {
-    //         SendConfigFeedback(data[0].stringValue());
-    //         return true;
-    //     }
-    // }
-
     if (handleCommandInternal(command, data, numData))
         return true;
 
@@ -127,8 +110,8 @@ void Component::fillSettingsData(JsonObject o, bool configOnly)
         Parameter *p = parameters[i];
         if (!p->isConfig && configOnly)
             continue;
-        JsonObject po = o.createNestedObject(p->name);
-        p->fillSettingsData(po, configOnly);
+
+        p->fillSettingsData(configOnly ? o : o.createNestedObject(p->name), configOnly);
     }
 
     if (numComponents > 0)
@@ -200,7 +183,7 @@ void Component::linkScriptFunctions(Script *script, bool isLocal)
     IM3Module module = script->runtime->modules;
     const char *tName = isLocal ? "local" : getFullPath(false, true).c_str();
 
-    m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
+    //m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
 
     linkScriptFunctionsInternal(script, module, tName);
 
@@ -214,7 +197,7 @@ void Component::linkScriptFunctions(Script *script, bool isLocal)
 
 // Script functions
 
-void Component::setEnabledFromScript(uint32_t val)
-{
-    enabled->set((bool)val);
-}
+// void Component::setEnabledFromScript(uint32_t val)
+// {
+//     enabled->set((bool)val);
+// }

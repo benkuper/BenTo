@@ -38,7 +38,6 @@ void onChildComponentEvent(const ComponentEvent &e) override;
 
 bool handleCommandInternal(const String & command, var * data, int numData) override;
 
-
 bool isShuttingDown() const { return timeAtShutdown > 0; }
 //const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};
 
