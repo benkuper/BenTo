@@ -19,6 +19,8 @@ LedStripComponent *strip;
 ServoComponent * servo;
 StepperComponent * stepper;
 
+IOComponent * ioComponents[16];
+
 //Needs a single structure
 LedStreamReceiverComponent * streamReceiver;
 

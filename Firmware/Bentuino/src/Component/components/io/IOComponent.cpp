@@ -1,17 +1,21 @@
+int IOComponent::pwmChannelCount = 0;
+
 bool IOComponent::initInternal(JsonObject o)
 {
-    pin = addConfigParameter("pin", 0);
-    mode = addConfigParameter("mode", D_INPUT);
-    inverted = addConfigParameter("inverted", false);
+    pwmChannel = -1;
+
+    pin = AddConfigParameter("pin", 0);
+    mode = AddConfigParameter("mode", D_INPUT);
+    inverted = AddConfigParameter("inverted", false);
 
     int m = mode->intValue();
 
     if (m == D_INPUT || m == D_INPUT_PULLUP || m == D_OUTPUT)
-        value = addParameter("value", false);
+        value = AddParameter("value", false);
     else
-        value = addParameter("value", 0.0f);
+        value = AddRangeParameter("value", 0.0f, 0.0f, 1.0f, false);
 
-    value->readOnly = true;
+    value->readOnly = m == D_INPUT || m == D_INPUT_PULLUP || m == D_OUTPUT;
 
     prevValue = value->floatValue();
 
@@ -23,7 +27,8 @@ bool IOComponent::initInternal(JsonObject o)
 
 void IOComponent::updateInternal()
 {
-    if(enabled->boolValue()) updatePin();
+    if (enabled->boolValue())
+        updatePin();
 }
 
 void IOComponent::clearInternal()
@@ -49,13 +54,35 @@ void IOComponent::setupPin()
             break;
 
         case D_OUTPUT:
-        case A_OUTPUT:
             pinm = OUTPUT;
+            break;
+
+        default:
             break;
         }
 
         if (pinm != -1)
+        {
             pinMode(pin->intValue(), pinm);
+        }
+        else if (m == A_OUTPUT)
+        {
+            if (m == A_OUTPUT)
+            {
+                if (pwmChannelCount < 15)
+                {
+                    pwmChannel = pwmChannelCount;
+                    ledcSetup(pwmChannel, 5000, 10); // 0-1024 at a 5khz resolution
+                    ledcAttachPin(pin->intValue(), pwmChannel);
+                    pwmChannelCount++;
+                    NDBG("Attach pin "+pin->stringValue()+" to "+String(pwmChannel));
+                }
+                else
+                {
+                    NDBG("Max channels reached, not able to create another A_OUTPUT");
+                }
+            }
+        }
     }
 }
 
@@ -83,10 +110,17 @@ void IOComponent::updatePin()
         if (prevValue != value->floatValue())
         {
             if (m == D_OUTPUT)
+            {
                 digitalWrite(pin->intValue(), inverted ? !value->boolValue() : value->boolValue());
+            }
             else
             {
-                // analogWrite
+                if (pwmChannel != -1)
+                {
+                    uint32_t v = value->floatValue() * 1024;
+                    NDBG("Set PWM with value "+String(v));
+                    ledcWrite(pwmChannel, v);
+                }
             }
 
             prevValue = value->floatValue();

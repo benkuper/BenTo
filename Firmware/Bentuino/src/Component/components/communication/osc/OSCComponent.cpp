@@ -2,6 +2,8 @@ ImplementSingleton(OSCComponent)
 
     bool OSCComponent::initInternal(JsonObject o)
 {
+    udpIsInit = false;
+
     pingEnabled = false;
     timeSinceLastReceivedPing = 0;
 
@@ -24,7 +26,15 @@ void OSCComponent::clearInternal()
 
 void OSCComponent::onEnabledChanged()
 {
-    if (enabled->boolValue())
+    setupConnection();
+}
+
+void OSCComponent::setupConnection()
+{
+    bool shouldConnect = enabled->boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
+
+    udpIsInit = false;
+    if (shouldConnect)
     {
         NDBG("Start OSC Receiver on " + String(OSC_LOCAL_PORT));
         udp.begin(OSC_LOCAL_PORT);
@@ -43,6 +53,8 @@ void OSCComponent::onEnabledChanged()
         {
             NDBG("Error setting up MDNS responder!");
         }
+
+        udpIsInit = true;
     }
     else
     {
@@ -57,7 +69,7 @@ void OSCComponent::onEnabledChanged()
 
 void OSCComponent::receiveOSC()
 {
-    if (!enabled->boolValue())
+    if (!enabled->boolValue() || !udpIsInit)
         return;
 
     OSCMessage msg;

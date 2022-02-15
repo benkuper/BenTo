@@ -20,6 +20,7 @@ public:
 DeclareComponentSingleton(LedStreamReceiver, "streamReceiver", )
 
     WiFiUDP udp;
+    bool udpIsInit;
 Parameter *receiveRate;
 ArtnetWifi artnet;
 
@@ -30,6 +31,9 @@ void clearInternal() override;
 
 void receiveUDP();
 void onEnabledChanged() override;
+
+void setupConnection();
+
 void onParameterEventInternal(const ParameterEvent &e) override;
 
 long lastReceiveTime;

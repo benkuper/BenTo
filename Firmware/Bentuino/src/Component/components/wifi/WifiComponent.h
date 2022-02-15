@@ -15,7 +15,6 @@ DeclareComponentSingleton(Wifi, "wifi",)
     const long connectionTimeout = 10000; //ms
     long timeAtConnect;
     long lastConnectTime;
-    
     long timeAtStateChange;
 
     ConnectionState state;

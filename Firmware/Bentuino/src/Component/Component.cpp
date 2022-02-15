@@ -1,5 +1,7 @@
 bool Component::init(JsonObject o)
 {
+    enabled->set(Settings::getVal(o, "enabled", enabled->boolValue()));
+
     isInit = initInternal(o);
     if (isInit)
         NDBG(F("Init OK"));

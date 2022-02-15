@@ -7,6 +7,7 @@
 DeclareComponentSingleton(OSC, "osc",)
 
     WiFiUDP udp;
+    bool udpIsInit;
     Parameter * remoteHost;
 
     //Ping
@@ -19,6 +20,8 @@ DeclareComponentSingleton(OSC, "osc",)
     void clearInternal() override;
 
     void onEnabledChanged() override;
+
+    void setupConnection();
 
     void receiveOSC();
     void processMessage(OSCMessage &m);

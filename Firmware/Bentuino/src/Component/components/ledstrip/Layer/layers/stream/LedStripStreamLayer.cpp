@@ -23,6 +23,7 @@ void LedStripStreamLayer::clearInternal()
 
 bool LedStreamReceiverComponent::initInternal(JsonObject o)
 {
+    udpIsInit = false;
     receiveRate = addParameter("receiveRate", 50, 1, 200);
     byteIndex = 0;
 
@@ -35,7 +36,7 @@ bool LedStreamReceiverComponent::initInternal(JsonObject o)
 void LedStreamReceiverComponent::updateInternal()
 {
 
-    if (!enabled->boolValue())
+    if (!enabled->boolValue() || !udpIsInit)
         return;
 
     if (useArtnet->boolValue())
@@ -62,6 +63,8 @@ void LedStreamReceiverComponent::clearInternal()
 
 void LedStreamReceiverComponent::receiveUDP()
 {
+    if(!udp.available()) return;
+
     while (udp.parsePacket())
     {
         //  NDBG("Packet available : " + String(size));
@@ -99,7 +102,16 @@ void LedStreamReceiverComponent::receiveUDP()
 
 void LedStreamReceiverComponent::onEnabledChanged()
 {
-    if (enabled->boolValue())
+    setupConnection();
+}
+
+void LedStreamReceiverComponent::setupConnection()
+{
+    bool shouldConnect = enabled->boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
+
+    udpIsInit = false;
+
+    if (shouldConnect)
     {
         NDBG("Start Receive Led Stream on UDP " + String(LEDSTREAM_RECEIVE_PORT));
 
@@ -112,6 +124,8 @@ void LedStreamReceiverComponent::onEnabledChanged()
             udp.begin(8888);
             udp.flush();
         }
+
+        udpIsInit = true;
     }
     else
     {

@@ -21,22 +21,28 @@ bool RootComponent::initInternal(JsonObject)
 
     AddComponent("comm", comm, Communication, true);
 
-    AddComponent("streamReceiver", streamReceiver, LedStreamReceiver, false);
+    AddComponent("streamReceiver", streamReceiver, LedStreamReceiver, true);
     AddComponent("strip", strip, LedStrip, true);
 
     AddComponent("battery", battery, Battery, true);
     AddComponent("sequence", sequence, Sequence, true);
 
-    AddComponent("server", server, WebServer, false);
+    AddComponent("server", server, WebServer, true);
     AddComponent("imu", imu, IMU, false);
 
     AddComponent("wifi", wifi, Wifi, true);
     AddComponent("files", files, Files, true);
 
+    for(int i=0;i<16;i++)
+    {
+        AddComponent("io"+String(i+1), ioComponents[i], IO, false);
+    }
     AddComponent("button", button, Button, false);
 
     AddComponent("servo", servo, Servo, true);
     AddComponent("stepper", stepper, Stepper, true);
+
+  
 
     return true;
 }
@@ -117,10 +123,9 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     {
         if (e.type == WifiComponent::ConnectionStateChanged)
         {
-            bool isConnected = wifi->state == WifiComponent::Connected;
-            comm->osc->enabled->set(isConnected);
-            server->enabled->set(isConnected);
-            streamReceiver->enabled->set(isConnected);
+            comm->osc->setupConnection();
+            server->setupConnection();
+            streamReceiver->setupConnection();
         }
     }
     else if (e.component == button)

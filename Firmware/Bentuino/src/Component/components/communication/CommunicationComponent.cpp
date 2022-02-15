@@ -3,7 +3,7 @@ ImplementSingleton(CommunicationComponent);
 bool CommunicationComponent::initInternal(JsonObject o)
 {
     AddComponent("serial", serial, Serial, true);
-    AddComponent("osc", osc, OSC, false);
+    AddComponent("osc", osc, OSC, true);
 
     return true;
 }

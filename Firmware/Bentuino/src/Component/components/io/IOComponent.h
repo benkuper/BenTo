@@ -1,9 +1,5 @@
 #pragma once
-class IOComponent :
-    public Component
-{
-public:
-    IOComponent(const String &name = "io", bool _enabled = true) : Component(name, _enabled) {}
+DeclareComponent(IO,"io",)
 
     enum PinMode { D_INPUT,
                    D_INPUT_PULLUP,
@@ -14,6 +10,8 @@ public:
 Parameter * pin;
 Parameter * mode;
 Parameter * inverted;
+int pwmChannel;
+static int pwmChannelCount;
 
 Parameter *value;
 float prevValue;

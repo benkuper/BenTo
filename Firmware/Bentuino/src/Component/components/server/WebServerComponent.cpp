@@ -28,7 +28,14 @@ void WebServerComponent::clearInternal()
 // SERVER
 void WebServerComponent::onEnabledChanged()
 {
-    if (enabled->boolValue())
+    setupConnection();
+}
+
+void WebServerComponent::setupConnection()
+{
+    bool shouldConnect = enabled->boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
+
+    if (shouldConnect)
     {
         server.begin();
         NDBG("HTTP server started");
@@ -143,7 +150,7 @@ void WebServerComponent::handleNotFound()
 
 void WebServerComponent::handleQueryData()
 {
-    DynamicJsonDocument doc(8000);
+    DynamicJsonDocument doc(32000);
     JsonObject o = doc.to<JsonObject>();
     RootComponent::instance->fillOSCQueryData(o);
 
@@ -157,7 +164,7 @@ void WebServerComponent::handleSettings()
     bool configOnly = server.hasArg("configOnly") ? (bool)server.arg("configOnly").toInt() : false;
 
     String jStr;
-    DynamicJsonDocument doc(4000);
+    DynamicJsonDocument doc(32000);
     JsonObject o = doc.to<JsonObject>();
     RootComponent::instance->fillSettingsData(o, configOnly);
     serializeJson(doc, jStr);

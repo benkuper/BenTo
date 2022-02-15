@@ -13,6 +13,8 @@ void clearInternal() override;
 
 void onEnabledChanged() override;
 
+void setupConnection();
+
 void handleFileUpload();
 void returnOK();
 void returnFail(String msg);

@@ -13,7 +13,7 @@ public:
                                                           numComponents(0),
                                                           numParameters(0)
     {
-        enabled = addParameter("enabled", _enabled);
+        enabled = addParameter("enabled", _enabled, var(), var(), true);
     }
 
     virtual ~Component() {}
@@ -109,7 +109,7 @@ public:
 
     // void scripting
     virtual void linkScriptFunctions(Script *s, bool isLocal = false);
-    virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char * tName) {}
+    virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char *tName) {}
 
     // DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
 };
