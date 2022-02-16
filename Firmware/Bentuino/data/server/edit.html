@@ -28,11 +28,11 @@
             {
                 console.log("data changed :",data);
             }
-            jQuery.getJSON("http://192.168.0.48/settings?configOnly=1", null, function (data) { editor.set(data); });
+            jQuery.getJSON("http://localhost/settings?configOnly=1", null, function (data) { editor.set(data); });
 
             function saveSettings() {
                 var json = editor.get();
-                $.get("http://192.168.0.48/saveSettings");
+                $.get("http://localhost/saveSettings");
             };
         </script>
 </body>

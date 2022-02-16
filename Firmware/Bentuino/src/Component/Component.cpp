@@ -64,30 +64,26 @@ bool Component::handleCommand(const String &command, var *data, int numData)
     if (handleCommandInternal(command, data, numData))
         return true;
 
-    for (int i = 0; i < numParameters; i++)
+    if (Parameter *p = getParameterWithName(command))
     {
-        if (parameters[i]->name == command)
+        if (p->readOnly)
         {
-            if (parameters[i]->readOnly)
-            {
-                NDBG("Parameter " + parameters[i]->name + "is read only !");
-                return true;
-            }
-
-            if (numData > 0) // query for feedback
-            {
-                parameters[i]->set(data[0]);
-                NDBG("Set Parameter " + parameters[i]->name + " : " + data[0].stringValue() + " >> " + parameters[i]->stringValue());
-            }
-            else
-            {
-                SendParameterFeedback(parameters[i]);
-            }
-
+            NDBG("Parameter " + p->name + "is read only !");
             return true;
         }
-    }
 
+        if (numData > 0) // query for feedback
+        {
+            p->set(data[0]);
+            NDBG("Set Parameter " + p->name + " : " + data[0].stringValue() + " >> " + p->stringValue());
+        }
+        else
+        {
+            SendParameterFeedback(p);
+        }
+
+        return true;
+    }
     return false;
 }
 
@@ -180,26 +176,55 @@ String Component::getFullPath(bool includeRoot, bool scriptMode)
 }
 
 // Scripts
-void Component::linkScriptFunctions(Script *script, bool isLocal)
+void Component::linkScriptFunctions(IM3Module module, bool isLocal)
 {
-    IM3Module module = script->runtime->modules;
     const char *tName = isLocal ? "local" : getFullPath(false, true).c_str();
 
-    //m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
+    // m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
 
-    linkScriptFunctionsInternal(script, module, tName);
+    linkScriptFunctionsInternal(module, tName);
 
     for (int i = 0; i < numComponents; i++)
     {
         if (components[i] == nullptr)
             continue;
-        components[i]->linkScriptFunctions(script);
+        components[i]->linkScriptFunctions(module);
     }
 }
 
-// Script functions
+Component *Component::getComponentWithName(const String &name)
+{
+    if (name == this->name)
+        return this;
 
-// void Component::setEnabledFromScript(uint32_t val)
-// {
-//     enabled->set((bool)val);
-// }
+    int subCompIndex = name.indexOf('.');
+
+    if (subCompIndex > 0)
+    {
+        String n = name.substring(0, subCompIndex);
+        for (int i = 0; i < numComponents; i++)
+        {
+            if (components[i]->name == n)
+                return components[i]->getComponentWithName(name.substring(subCompIndex + 1));
+        }
+    }
+    else
+    {
+        for (int i = 0; i < numComponents; i++)
+        {
+            if (components[i]->name == name)
+                return components[i];
+        }
+    }
+
+    return NULL;
+}
+
+Parameter *Component::getParameterWithName(const String &name)
+{
+    for (int i = 0; i < numParameters; i++)
+        if (parameters[i]->name == name)
+            return parameters[i];
+
+    return NULL;
+}

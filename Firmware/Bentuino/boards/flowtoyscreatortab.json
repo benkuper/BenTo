@@ -9,7 +9,8 @@
     "f_flash": "40000000L",
     "flash_mode": "dio",
     "mcu": "esp32",
-    "variant": "esp32"
+    "variant": "esp32",
+    "partitions":"no_ota.csv"
   },
   "connectivity": [
     "wifi",

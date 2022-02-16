@@ -1,0 +1,22 @@
+<html>
+
+<body style="background-color: #222222; color:#cccccc">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"
+        referrerpolicy="no-referrer"></script>
+        
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-file-upload/4.0.11/jquery.uploadfile.min.js" integrity="sha512-uwNlWrX8+f31dKuSezJIHdwlROJWNkP6URRf+FSWkxSgrGRuiAreWzJLA2IpyRH9lN2H67IP5H4CxBcAshYGNw==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-file-upload/4.0.11/uploadfile.min.css" integrity="sha512-MudWpfaBG6v3qaF+T8kMjKJ1Qg8ZMzoPsT5yWujVfvIgYo2xgT1CvZq+r3Ks2kiUKcpo6/EUMyIUhb3ay9lG7A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+    <div id="sequentialupload" style="width:500px;height:100px"></div>
+    <script>
+         $("#sequentialupload").uploadFile({
+        url:"/uploadFile",
+        fileName:"upload",
+        sequential:true,
+        sequentialCount:1	
+        }); 
+    </script>
+</body>
+    
+</html>

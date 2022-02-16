@@ -1,7 +1,7 @@
 #pragma once
 
-#define MAX_CHILD_COMPONENTS 32
-#define MAX_CHILD_CONTROLLABLES 32
+#define MAX_CHILD_COMPONENTS 16
+#define MAX_CHILD_CONTROLLABLES 16
 //#define MAX_EVENT_TYPES 16
 
 class Component : public EventBroadcaster<ComponentEvent>
@@ -63,37 +63,12 @@ public:
         return c;
     }
 
-    Component *getComponentWithName(const String &name)
-    {
-        if (name == this->name)
-            return this;
-
-        int subCompIndex = name.indexOf('.');
-
-        if (subCompIndex > 0)
-        {
-            String n = name.substring(0, subCompIndex);
-            for (int i = 0; i < numComponents; i++)
-            {
-                if (components[i]->name == n)
-                    return components[i]->getComponentWithName(name.substring(subCompIndex + 1));
-            }
-        }
-        else
-        {
-            for (int i = 0; i < numComponents; i++)
-            {
-                if (components[i]->name == name)
-                    return components[i];
-            }
-        }
-
-        return NULL;
-    }
+    Component *getComponentWithName(const String &name);
 
     Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
     Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
-
+    Parameter * getParameterWithName(const String &name);
+    
     virtual void onParameterEvent(const ParameterEvent &e);
     virtual void onEnabledChanged() {}
     virtual void onParameterEventInternal(const ParameterEvent &e) {}
@@ -108,8 +83,8 @@ public:
     String getFullPath(bool includeRoot = false, bool scriptMode = false);
 
     // void scripting
-    virtual void linkScriptFunctions(Script *s, bool isLocal = false);
-    virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char *tName) {}
+    virtual void linkScriptFunctions(IM3Module module, bool isLocal = false);
+    virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) {}
 
     // DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
 };

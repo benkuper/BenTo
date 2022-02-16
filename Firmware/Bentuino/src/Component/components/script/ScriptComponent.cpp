@@ -1,18 +1,18 @@
-bool LedStripScriptLayer::initInternal(JsonObject o)
+bool ScriptComponent::initInternal(JsonObject o)
 {
     return true;
 }
 
-void LedStripScriptLayer::updateInternal()
+void ScriptComponent::updateInternal()
 {
-    //script.update();
+    script.update();
 }
 
-void LedStripScriptLayer::clearInternal()
+void ScriptComponent::clearInternal()
 {
 }
 
-bool LedStripScriptLayer::handleCommandInternal(const String &command, var *data, int numData)
+bool ScriptComponent::handleCommandInternal(const String &command, var *data, int numData)
 {
     if (CheckCommand("load", 1))
     {

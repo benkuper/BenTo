@@ -2,6 +2,8 @@ ImplementSingleton(FilesComponent);
 
 bool FilesComponent::initInternal(JsonObject o)
 {
+     useInternalMemory = false;
+
     sdEnPin = AddConfigParameter("sdEnPin", 0);
     sdEnVal = AddConfigParameter("sdEnVal", 0);
     sdSCK = AddConfigParameter("sdSCK", 0);
@@ -44,15 +46,20 @@ bool FilesComponent::initInternal(JsonObject o)
 
     if (SD.begin((uint8_t)sdCS->intValue(), spiSD))
     {
-        NDBG("SD Card initialized.");
+      
+       NDBG("SD Card initialized.");
+       SD.mkdir("/scripts");
+       SD.mkdir("/sequences");
+       SD.mkdir("/bake");
         // listDir("/", 0);
     }
     else
     {
         NDBG("Error initializing SD Card, using internal memory");
-        return initInternalMemory();
+        useInternalMemory = true;
     }
 
+    initInternalMemory();
     return true;
 }
 
@@ -63,9 +70,7 @@ bool FilesComponent::initInternalMemory()
         NDBG("Error initializing SPIFFS");
         return false;
     }
-
     NDBG("SPIFFS initialized.");
-    //listDir("/", 0);
     return true;
 }
 

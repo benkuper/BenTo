@@ -8,7 +8,9 @@ m3ApiRawFunction(m3_printInt);
 m3ApiRawFunction(m3_randomInt);
 m3ApiRawFunction(m3_noise);
 
-m3ApiRawFunction(m3_setInt);
-m3ApiRawFunction(m3_setFloat);
+m3ApiRawFunction(m3_getIntUTF16);
+m3ApiRawFunction(m3_getFloatUTF16);
+m3ApiRawFunction(m3_setIntUTF16);
+m3ApiRawFunction(m3_setFloatUTF16);
 
-void handleM3SetVal(const uint8_t * buf, uint32_t len, var val);
+Parameter * getParameterFromM3(const uint8_t * buf, uint32_t len);

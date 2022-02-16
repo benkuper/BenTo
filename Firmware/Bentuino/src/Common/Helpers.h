@@ -2,6 +2,8 @@
 #define XSTR(x) STR(x)
 #define COMMA ,
 
+// #define DBG(t)
+// #define NDBG(t)
 #define DBG(text) SerialComponent::instance->send(text)
 #define NDBG(text) SerialComponent::instance->send("[" + name + "] " + text)
 
@@ -91,7 +93,7 @@
 // Script
 
 #define LinkScriptFunctionsStart                                                                     \
-    virtual void linkScriptFunctionsInternal(Script *, IM3Module module, const char *tName) override \
+    virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) override \
     {
 #define LinkScriptFunctionsEnd }
 

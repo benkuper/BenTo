@@ -1,5 +1,6 @@
 ImplementSingleton(RootComponent);
 
+
 bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
@@ -27,22 +28,23 @@ bool RootComponent::initInternal(JsonObject)
     AddComponent("battery", battery, Battery, true);
     AddComponent("sequence", sequence, Sequence, true);
 
-    AddComponent("server", server, WebServer, true);
     AddComponent("imu", imu, IMU, false);
 
     AddComponent("wifi", wifi, Wifi, true);
     AddComponent("files", files, Files, true);
+    AddComponent("script", script, Script, true);
+    AddComponent("server", server, WebServer, true);
 
-    for(int i=0;i<16;i++)
-    {
-        AddComponent("io"+String(i+1), ioComponents[i], IO, false);
-    }
     AddComponent("button", button, Button, false);
 
-    AddComponent("servo", servo, Servo, true);
-    AddComponent("stepper", stepper, Stepper, true);
+    // for(int i=0;i<16;i++)
+    // {
+    //     AddComponent("io"+String(i+1), ioComponents[i], IO, false);
+    // }
 
-  
+    // AddComponent("servo", servo, Servo, true);
+    // AddComponent("stepper", stepper, Stepper, true);
+
 
     return true;
 }
@@ -72,7 +74,7 @@ void RootComponent::powerdown()
 {
     clear();
 
-    NDBG("Sleep now, baby.");
+    //NDBG("Sleep now, baby.");
 
 #ifdef WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup((gpio_num_t)WAKEUP_BUTTON, WAKEUP_BUTTON_STATE);
@@ -125,7 +127,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
         {
             comm->osc->setupConnection();
             server->setupConnection();
-            streamReceiver->setupConnection();
+            // streamReceiver->setupConnection();
         }
     }
     else if (e.component == button)
@@ -148,7 +150,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
         }
     }
 
-    comm->sendEventFeedback(e);
+   comm->sendEventFeedback(e);
 }
 
 bool RootComponent::handleCommandInternal(const String &command, var *data, int numData)
@@ -159,7 +161,9 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
         restart();
     else if (command == "stats")
     {
-        comm->sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
+        DBG("Heap "+String(ESP.getFreeHeap())+" free / "+String(ESP.getHeapSize())+" total");
+        DBG("Free Stack size  "+String((int)uxTaskGetStackHighWaterMark(NULL))+" free");
+        //comm->sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
     }
     else if (command == "saveSettings")
     {

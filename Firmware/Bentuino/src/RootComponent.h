@@ -7,22 +7,24 @@ String deviceID;
 // system
 CommunicationComponent * comm;
 WifiComponent * wifi;
-BatteryComponent * battery;
 FilesComponent * files;
 WebServerComponent * server;
+ScriptComponent *script;
+
+BatteryComponent * battery;
 SequenceComponent * sequence;
 
 //users
 ButtonComponent * button;
 IMUComponent * imu;
+LedStreamReceiverComponent * streamReceiver;
 LedStripComponent *strip;
 ServoComponent * servo;
 StepperComponent * stepper;
 
-IOComponent * ioComponents[16];
+// IOComponent * ioComponents[16];
 
 //Needs a single structure
-LedStreamReceiverComponent * streamReceiver;
 
 //Behaviour
 Timer<5> timer;

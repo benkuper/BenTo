@@ -6,11 +6,9 @@ ImplementSingleton(WebServerComponent)
     server.onNotFound(std::bind(&WebServerComponent::handleNotFound, this));
     server.on("/", HTTP_ANY, std::bind(&WebServerComponent::handleQueryData, this));
     server.on("/settings", HTTP_ANY, std::bind(&WebServerComponent::handleSettings, this));
-    server.on("/uploadBake", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
-    server.on("/uploadSequence", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
-    server.on("/uploadScript", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
-
-    server.serveStatic("/edit", SPIFFS, "/edit.html");
+    server.on("/uploadFile", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
+    server.serveStatic("/edit", SPIFFS, "/server/edit.html");
+    server.serveStatic("/upload", SPIFFS, "/server/upload.html");
     return true;
 }
 
@@ -49,22 +47,32 @@ void WebServerComponent::setupConnection()
 
 void WebServerComponent::handleFileUpload()
 {
-    String destFolder = "";
-    if (server.uri() == "/uploadBake")
-        destFolder = "bake";
-    else if (server.uri() == "/uploadSequence")
-        destFolder = "sequences";
-    else
-        return;
+    String dest = "";
 
     HTTPUpload &upload = server.upload();
 
+    if (upload.filename.endsWith(".wasm"))
+        dest = "/scripts";
+    else if (upload.filename.endsWith(".colors") || upload.filename.endsWith(".meta"))
+        dest = "/bake";
+    else if (upload.filename.endsWith(".seq"))
+        dest = "/sequences";
+
+    if (dest == "")
+    {
+        NDBG("File " + String(upload.filename) + " not handled");
+        return;
+    }
+    dest += "/" + upload.filename;
+
     if (upload.status == UPLOAD_FILE_START)
     {
+        NDBG("Upload destination : " + dest);
+
         uploadedBytes = 0;
         // totalBytes = server.header("Content-Length").toInt();
 
-        uploadingFile = FilesComponent::instance->openFile(destFolder + "/" + upload.filename, true, true);
+        uploadingFile = FilesComponent::instance->openFile(dest, true, true);
         if (uploadingFile)
         {
             var data[1];
@@ -94,6 +102,7 @@ void WebServerComponent::handleFileUpload()
 
             uploadedBytes += upload.currentSize;
             float p = uploadedBytes * 1.0f / 1000000;
+            NDBG("Upload progression... " + String((int)(p * 100)) + "%");
             if (uploadedBytes % 8000 < 4000)
             {
                 var data[1];
@@ -104,16 +113,18 @@ void WebServerComponent::handleFileUpload()
     }
     else if (upload.status == UPLOAD_FILE_END)
     {
-
+        DBG("Upload file end");
         if (uploadingFile)
         {
             String n = uploadingFile.name();
             NDBG("Upload total size " + String(upload.totalSize) + " < > " + String(uploadingFile.size()));
             uploadingFile.close();
+            NDBG("File closed");
 
-            var data[1];
-            data[0] = (char *)uploadingFile.name();
-            sendEvent(UploadDone, data, 1);
+            DBG("Send event");
+            //var data[1];
+            //data[0] = var(uploadingFile.name());
+            sendEvent(UploadDone);
             isUploading = false;
         }
         else
