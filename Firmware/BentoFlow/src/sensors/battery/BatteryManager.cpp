@@ -60,7 +60,7 @@ void BatteryManager::update()
         value = (voltage - BATTERY_VOLTAGE_MIN) * (BATTERY_VOLTAGE_MAX - BATTERY_VOLTAGE_MIN);
         isCharging = isChargingBattery();
 #else
-        rawValue = analogRead(BATTERY_PIN) / 4;
+        rawValue = analogRead(BATTERY_PIN);
         voltage = (rawValue - defaultMinVal) * (3.8 - 3.2) / (defaultMaxVal - defaultMinVal) + 3.2;
         updateValue(rawValue);
         updateMax(rawValue);

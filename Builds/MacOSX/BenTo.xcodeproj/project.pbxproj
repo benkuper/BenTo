@@ -1549,7 +1549,7 @@
 		6A50FB53C4AC2437E07541F9 = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					5FD64B0FD59767DFD945EE30 = {
@@ -1732,6 +1732,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
+				EXCLUDED_ARCHS = "i386 arm64 arm64e";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1772,6 +1773,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				OTHER_CFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_CPLUSPLUSFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
@@ -1840,6 +1842,7 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				DEAD_CODE_STRIPPING = YES;
+				EXCLUDED_ARCHS = "i386 arm64 arm64e";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1881,6 +1884,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				OTHER_CFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_CPLUSPLUSFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;

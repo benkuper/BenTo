@@ -145,8 +145,8 @@ private:
     // buffer audio to match the video's audio frame size
     AudioBufferFIFO<float>  audioFifo;
 
-    juce::ScopedPointer<FFmpegVideoScaler> outVideoScaler;
-    juce::ScopedPointer<FFmpegVideoScaler> inVideoScaler;
+    std::unique_ptr<FFmpegVideoScaler> outVideoScaler;
+    std::unique_ptr<FFmpegVideoScaler> inVideoScaler;
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (FFmpegVideoWriter)
 };

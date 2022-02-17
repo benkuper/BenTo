@@ -412,7 +412,7 @@ void FFmpegVideoWriter::writeNextVideoFrame (const juce::Image& image, const juc
     // use scaler and add interface for image processing / e.g. branding
     if (videoContext) {
         if (! outVideoScaler) {
-            outVideoScaler = new FFmpegVideoScaler ();
+            outVideoScaler.reset(new FFmpegVideoScaler());
             outVideoScaler->setupScaler (image.getWidth(),
                                          image.getHeight(),
                                          AV_PIX_FMT_BGR0,
@@ -553,7 +553,7 @@ void FFmpegVideoWriter::videoSizeChanged (const int width, const int height, con
 void FFmpegVideoWriter::displayNewFrame (const AVFrame* frame)
 {
     if (!inVideoScaler) {
-        inVideoScaler = new FFmpegVideoScaler();
+        inVideoScaler.reset(new FFmpegVideoScaler());
         inVideoScaler->setupScaler (frame->width, frame->height, static_cast<AVPixelFormat> (frame->format),
                                     videoWidth,   videoHeight,   AV_PIX_FMT_BGR0);
     }
