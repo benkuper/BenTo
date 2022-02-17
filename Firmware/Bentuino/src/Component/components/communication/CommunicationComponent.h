@@ -1,8 +1,15 @@
 #pragma once
-DeclareComponentSingleton(Communication, "comm",)
 
-    SerialComponent * serial;
-    OSCComponent * osc;
+class CommunicationComponent : public Component
+{
+public:
+    CommunicationComponent() : Component(Type_Comm) { instance = this; }
+    ~CommunicationComponent() {}
+    
+    DeclareSingleton(CommunicationComponent);
+
+    SerialComponent serial;
+    OSCComponent osc;
     
     bool initInternal(JsonObject o) override;
 
@@ -14,5 +21,4 @@ DeclareComponentSingleton(Communication, "comm",)
     
     DeclareComponentEventTypes(MessageReceived);
     DeclareComponentEventNames("MessageReceived");
-
-EndDeclareComponent
+};

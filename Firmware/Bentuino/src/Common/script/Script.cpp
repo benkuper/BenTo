@@ -75,7 +75,7 @@ void Script::launchWasm()
         stop();
 
 #if WASM_ASYNC
-    xTaskCreate(&Script::launchWasmTaskStatic, "wasm3", NATIVE_STACK_SIZE, this, 5, NULL);
+    xTaskCreate(&Script::launchWasmTaskStatic, "wasm3", SCRIPT_NATIVE_STACK_SIZE, this, 5, NULL);
     DBG("Wasm task launched");
 #else
     launchWasmTask();
@@ -99,7 +99,7 @@ void Script::launchWasmTask()
     if (!env)
         FATAL("NewEnvironment", "failed");
 
-    runtime = m3_NewRuntime(env, WASM_STACK_SLOTS, NULL);
+    runtime = m3_NewRuntime(env, SCRIPT_WASM_STACK_SLOTS, NULL);
     if (!runtime)
         FATAL("NewRuntime", "failed");
 

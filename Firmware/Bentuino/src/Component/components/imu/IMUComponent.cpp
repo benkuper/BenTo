@@ -109,7 +109,7 @@ void IMUComponent::startIMUTask()
     hasNewData = false,
     shouldStopRead = false;
     imuLock = false;
-    xTaskCreate(&IMUComponent::readIMUStatic, "imu", NATIVE_STACK_SIZE, this, 1, NULL);
+    xTaskCreate(&IMUComponent::readIMUStatic, "imu", IMU_NATIVE_STACK_SIZE, this, 1, NULL);
 }
 
 void IMUComponent::readIMUStatic(void *_imu)

@@ -7,7 +7,6 @@ ImplementSingleton(WifiComponent)
     ssid = AddConfigParameter("ssid", "");
     pass = AddConfigParameter("pass", "");
 
-    connect();
 
     return true;
 }
@@ -77,6 +76,13 @@ void WifiComponent::setState(ConnectionState s)
 
 void WifiComponent::connect()
 {
+    if(ssid->stringValue() == "")
+    {
+        NDBG("Empty SSID, not connecting");
+        setState(Off);
+        return;
+    }
+
     lastConnectTime = millis();
     timeAtConnect = millis();
 

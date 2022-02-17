@@ -161,12 +161,14 @@ void WebServerComponent::handleNotFound()
 
 void WebServerComponent::handleQueryData()
 {
-    DynamicJsonDocument doc(32000);
+    DBG("handle query data");
+    doc.clear();
     JsonObject o = doc.to<JsonObject>();
     RootComponent::instance->fillOSCQueryData(o);
 
     String jStr;
     serializeJson(doc, jStr);
+    DBG("Serve "+jStr);
     server.send(200, "application/json", jStr);
 }
 
@@ -175,7 +177,7 @@ void WebServerComponent::handleSettings()
     bool configOnly = server.hasArg("configOnly") ? (bool)server.arg("configOnly").toInt() : false;
 
     String jStr;
-    DynamicJsonDocument doc(32000);
+    doc.clear();
     JsonObject o = doc.to<JsonObject>();
     RootComponent::instance->fillSettingsData(o, configOnly);
     serializeJson(doc, jStr);

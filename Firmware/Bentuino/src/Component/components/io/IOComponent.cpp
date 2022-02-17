@@ -13,7 +13,7 @@ bool IOComponent::initInternal(JsonObject o)
     if (m == D_INPUT || m == D_INPUT_PULLUP || m == D_OUTPUT)
         value = AddParameter("value", false);
     else
-        value = AddRangeParameter("value", 0.0f, 0.0f, 1.0f, false);
+        value = AddRangeParameter("value", 0.0f, 0.0f, 1.0f);
 
     value->readOnly = m == D_INPUT || m == D_INPUT_PULLUP || m == D_OUTPUT;
 
@@ -98,7 +98,7 @@ void IOComponent::updatePin()
     case D_INPUT_PULLUP:
     {
         bool val = digitalRead(pin->intValue());
-        if (inverted)
+        if (inverted->boolValue())
             val = !val;
         value->set(val);
     }

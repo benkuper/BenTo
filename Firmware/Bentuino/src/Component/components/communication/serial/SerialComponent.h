@@ -1,6 +1,12 @@
 #pragma once
 
-DeclareComponentSingleton(Serial, "serial",)
+class SerialComponent : public Component
+{
+public:
+    SerialComponent() : Component(Type_Serial) { instance = this; }
+    ~SerialComponent() {}
+    
+    DeclareSingleton(SerialComponent);
 
     char buffer[512];
     byte bufferIndex;
@@ -19,5 +25,4 @@ DeclareComponentSingleton(Serial, "serial",)
 
     DeclareComponentEventTypes(MessageReceived);
     DeclareComponentEventNames("MessageReceived");
-
-EndDeclareComponent
+};

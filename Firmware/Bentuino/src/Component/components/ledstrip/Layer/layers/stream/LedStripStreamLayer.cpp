@@ -35,12 +35,14 @@ bool LedStreamReceiverComponent::initInternal(JsonObject o)
 
 void LedStreamReceiverComponent::updateInternal()
 {
-
     if (!enabled->boolValue() || !udpIsInit)
         return;
 
+    DBG("Update internal");
+
     if (useArtnet->boolValue())
     {
+        DBG("read artnet");
         artnet.read();
     }
     else
@@ -63,14 +65,15 @@ void LedStreamReceiverComponent::clearInternal()
 
 void LedStreamReceiverComponent::receiveUDP()
 {
+    DBG("Receive UDP");
     if(!udp.available()) return;
 
     while (udp.parsePacket())
     {
-        //  NDBG("Packet available : " + String(size));
+        NDBG("Packet available");
         byteIndex += udp.read(streamBuffer + byteIndex, LEDSTREAM_MAX_PACKET_SIZE - byteIndex);
 
-        // NDBG("Received : " + String(byteIndex));
+        NDBG("Received : " + String(byteIndex));
 
         bool isFinal = streamBuffer[byteIndex - 1] == 255;
 
@@ -79,7 +82,7 @@ void LedStreamReceiverComponent::receiveUDP()
 
             int stripIndex = streamBuffer[0];
 
-            // NDBG("Is Final : " + String(stripIndex));
+            NDBG("Is Final : " + String(stripIndex));
 
             if (stripIndex < layers.size())
             {

@@ -2,34 +2,89 @@
 
 #define MAX_CHILD_COMPONENTS 16
 #define MAX_CHILD_CONTROLLABLES 16
-//#define MAX_EVENT_TYPES 16
+
+enum ComponentType
+{
+    Type_Root,
+    Type_Battery,
+    Type_Button,
+    Type_IO,
+    Type_OSC,
+    Type_Serial,
+    Type_Comm,
+    Type_Strip,
+    Type_Layer,
+    Type_BakeLayer,
+    Type_StreamLayer,
+    Type_StreamLayerReceiver,
+    Type_ScriptLayer,
+    Type_SystemLayer,
+    Type_Script,
+    Type_Servo,
+    Type_Stepper,
+    Type_Server,
+    Type_Wifi,
+    Type_Sequence,
+    Type_IMU,
+    Type_Files,
+    TYPES_MAX
+};
+
+const String componentTypeNames[TYPES_MAX]{
+    "Root",
+    "Battery",
+    "Button",
+    "IO",
+    "OSC",
+    "Serial",
+    "Comm",
+    "Strip",
+    "Layer",
+    "BakeLayer",
+    "StreamLayer",
+    "StreamLayerReceiver",
+    "ScriptLayer",
+    "SystemLayer",
+    "Script",
+    "Servo",
+    "Stepper",
+    "Server",
+    "Wifi",
+    "Sequence",
+    "IMU",
+    "Files"};
 
 class Component : public EventBroadcaster<ComponentEvent>
 {
 public:
-    Component(const String &name, bool _enabled = true) : name(name),
-                                                          isInit(false),
-                                                          parentComponent(NULL),
-                                                          numComponents(0),
-                                                          numParameters(0)
+    Component(ComponentType t, const String &_name = "") : type(t),
+                                                  name(_name),
+                                                  isInit(false),
+                                                  parentComponent(NULL),
+                                                  numComponents(0),
+                                                  numOwnedComponents(0),
+                                                  numParameters(0)
     {
-        enabled = addParameter("enabled", _enabled, var(), var(), true);
     }
 
     virtual ~Component() {}
-    virtual String getTypeString() const { return "[notype]"; }
+    virtual String getTypeString() const { return componentTypeNames[type]; }
 
+    ComponentType type;
     String name;
 
     bool isInit;
     Parameter *enabled;
+    Parameter *sendFeedback;
 
     Component *parentComponent;
 
-    Component *components[MAX_CHILD_COMPONENTS];
+    Component *components[MAX_CHILD_COMPONENTS];      // all components
+    Component *ownedComponents[MAX_CHILD_COMPONENTS]; // components that are dynamically created
     uint8_t numComponents;
+    uint8_t numOwnedComponents;
 
-    Parameter *parameters[MAX_CHILD_COMPONENTS];
+    Parameter *parameters[MAX_CHILD_CONTROLLABLES];
     uint8_t numParameters;
 
     virtual String getComponentEventName(uint8_t type) const { return "[noname]"; }
@@ -50,25 +105,29 @@ public:
     }
 
     template <class T>
-    T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return addComponent(new T(name, _enabled), o); };
-
-    template <class T>
-    T *addComponent(T *c, JsonObject o = JsonObject())
+    T *addComponent(const String &name, JsonObject o = JsonObject())
     {
-        components[numComponents] = (Component *)c;
+        T *c = addComponent(new T(name), o);
+        ownedComponents[numOwnedComponents] = c;
+        numOwnedComponents++;
+        return c;
+    };
+
+    void addComponent(Component *c, JsonObject o = JsonObject())
+    {
+        components[numComponents] = c;
         c->parentComponent = this;
         AddDefaultComponentListener(c);
         numComponents++;
         c->init(o);
-        return c;
     }
 
     Component *getComponentWithName(const String &name);
 
     Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
     Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
-    Parameter * getParameterWithName(const String &name);
-    
+    Parameter *getParameterWithName(const String &name);
+
     virtual void onParameterEvent(const ParameterEvent &e);
     virtual void onEnabledChanged() {}
     virtual void onParameterEventInternal(const ParameterEvent &e) {}

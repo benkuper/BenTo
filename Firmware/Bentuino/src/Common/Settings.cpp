@@ -1,5 +1,5 @@
 Preferences Settings::prefs;
-DynamicJsonDocument Settings::settings(32000);
+DynamicJsonDocument Settings::settings(16000);
 
 bool Settings::loadSettings()
 {

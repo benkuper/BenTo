@@ -5,7 +5,7 @@ bool SerialComponent::initInternal(JsonObject o)
     bufferIndex = 0;
     memset(buffer, 0, 512);
     Serial.begin(115200);
-    feedbackEnabled = AddParameter("sendFeedback", false);
+    feedbackEnabled = AddParameter("enableFeedback", false);
     return true;
 }
 
@@ -104,7 +104,7 @@ void SerialComponent::sendMessage(String source, String command, var *data, int 
 {
     if (!feedbackEnabled->boolValue())
         return;
-
+    
     String msg = source + "." + command;
     for (int i = 0; i < numData; i++)
     {

@@ -1,27 +1,32 @@
 #pragma once
 
-DeclareComponentSingleton(Files, "files", );
+class FilesComponent : public Component
+{
+public:
+    FilesComponent() : Component(Type_Files) { instance = this; }
+    ~FilesComponent() {}
 
-bool initInternal(JsonObject o) override;
-bool initInternalMemory();
+    DeclareSingleton(FilesComponent);
 
-SPIClass spiSD;
-bool useInternalMemory;
-Parameter * sdEnPin;
-Parameter * sdEnVal;
-Parameter * sdSCK;
-Parameter * sdMiso;
-Parameter * sdMosi;
-Parameter * sdCS;
-Parameter * sdSpeed;
+    bool initInternal(JsonObject o) override;
+    bool initInternalMemory();
 
-File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
-void deleteFileIfExists(String path);
-String listDir(const char *dirname, uint8_t levels);
+    SPIClass spiSD;
+    bool useInternalMemory;
+    Parameter *sdEnPin;
+    Parameter *sdEnVal;
+    Parameter *sdSCK;
+    Parameter *sdMiso;
+    Parameter *sdMosi;
+    Parameter *sdCS;
+    Parameter *sdSpeed;
 
-bool handleCommandInternal(const String &command, var *data, int numData) override;
+    File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
+    void deleteFileIfExists(String path);
+    String listDir(const char *dirname, uint8_t levels);
 
-DeclareComponentEventTypes(UploadStart, UploadProgress, UploadComplete, UploadCancel, FileList);
-DeclareComponentEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");
+    bool handleCommandInternal(const String &command, var *data, int numData) override;
 
-EndDeclareComponent
+    DeclareComponentEventTypes(UploadStart, UploadProgress, UploadComplete, UploadCancel, FileList);
+    DeclareComponentEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");
+};

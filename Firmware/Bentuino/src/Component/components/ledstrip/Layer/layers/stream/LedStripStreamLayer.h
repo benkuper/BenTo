@@ -9,7 +9,7 @@
 class LedStripStreamLayer : public LedStripLayer
 {
 public:
-    LedStripStreamLayer(const String &name, LedStripComponent *strip) : LedStripLayer(name, LedStripLayer::Stream, strip) {}
+    LedStripStreamLayer(LedStripComponent *strip) : LedStripLayer("stream", LedStripLayer::Stream, strip, Type_StreamLayer) {}
     ~LedStripStreamLayer() {}
 
     bool initInternal(JsonObject o) override;
@@ -17,33 +17,38 @@ public:
     void clearInternal() override;
 };
 
-DeclareComponentSingleton(LedStreamReceiver, "streamReceiver", )
+class LedStreamReceiverComponent : public Component
+{
+public:
+    LedStreamReceiverComponent() : Component(Type_StreamLayerReceiver) { instance = this; }
+    ~LedStreamReceiverComponent() {}
+
+    DeclareSingleton(LedStreamReceiverComponent);
 
     WiFiUDP udp;
     bool udpIsInit;
-Parameter *receiveRate;
-ArtnetWifi artnet;
+    Parameter *receiveRate;
+    ArtnetWifi artnet;
 
-Parameter *useArtnet;
-bool initInternal(JsonObject o) override;
-void updateInternal() override;
-void clearInternal() override;
+    Parameter *useArtnet;
+    bool initInternal(JsonObject o) override;
+    void updateInternal() override;
+    void clearInternal() override;
 
-void receiveUDP();
-void onEnabledChanged() override;
+    void receiveUDP();
+    void onEnabledChanged() override;
 
-void setupConnection();
+    void setupConnection();
 
-void onParameterEventInternal(const ParameterEvent &e) override;
+    void onParameterEventInternal(const ParameterEvent &e) override;
 
-long lastReceiveTime;
-uint8_t streamBuffer[LEDSTREAM_MAX_PACKET_SIZE];
-int byteIndex;
+    long lastReceiveTime;
+    uint8_t streamBuffer[LEDSTREAM_MAX_PACKET_SIZE];
+    int byteIndex;
 
-std::vector<LedStripStreamLayer *> layers;
+    std::vector<LedStripStreamLayer *> layers;
 
-void registerLayer(LedStripStreamLayer *layer);
-void unregisterLayer(LedStripStreamLayer *layer);
-static void onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t *data);
-
-EndDeclareComponent
+    void registerLayer(LedStripStreamLayer *layer);
+    void unregisterLayer(LedStripStreamLayer *layer);
+    static void onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t *data);
+};

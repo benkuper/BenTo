@@ -1,29 +1,35 @@
 #pragma once
-DeclareComponentSingleton(WebServer, "server",)
+class WebServerComponent : public Component
+{
+public:
+    WebServerComponent() : Component(Type_Server) { instance = this; }
+    ~WebServerComponent() {}
 
-WebServer server;
+    DeclareSingleton(WebServerComponent);
 
-bool isUploading;
-int uploadedBytes;
-File uploadingFile;
+    WebServer server;
+    StaticJsonDocument<16000> doc; // not in ram then
 
-bool initInternal(JsonObject o) override;
-void updateInternal() override;
-void clearInternal() override;
+    bool isUploading;
+    int uploadedBytes;
+    File uploadingFile;
 
-void onEnabledChanged() override;
+    bool initInternal(JsonObject o) override;
+    void updateInternal() override;
+    void clearInternal() override;
 
-void setupConnection();
+    void onEnabledChanged() override;
 
-void handleFileUpload();
-void returnOK();
-void returnFail(String msg);
-void handleNotFound();
+    void setupConnection();
 
-void handleQueryData();
-void handleSettings();
+    void handleFileUpload();
+    void returnOK();
+    void returnFail(String msg);
+    void handleNotFound();
 
-DeclareComponentEventTypes (UploadStart, Uploading, UploadDone, UploadCanceled)
-DeclareComponentEventNames("UploadStart","Uploading","UploadDone", "UploadCanceled")
+    void handleQueryData();
+    void handleSettings();
 
-EndDeclareComponent
+    DeclareComponentEventTypes(UploadStart, Uploading, UploadDone, UploadCanceled);
+    DeclareComponentEventNames("UploadStart", "Uploading", "UploadDone", "UploadCanceled");
+};

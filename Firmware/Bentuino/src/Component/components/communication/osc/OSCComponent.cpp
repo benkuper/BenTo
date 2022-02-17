@@ -1,6 +1,6 @@
-ImplementSingleton(OSCComponent)
+ImplementSingleton(OSCComponent);
 
-    bool OSCComponent::initInternal(JsonObject o)
+bool OSCComponent::initInternal(JsonObject o)
 {
     udpIsInit = false;
 
@@ -17,6 +17,7 @@ void OSCComponent::updateInternal()
 {
     if (pingEnabled && millis() > timeSinceLastReceivedPing + OSC_PING_TIMEOUT)
         isAlive->set(false);
+
     receiveOSC();
 }
 
@@ -58,12 +59,12 @@ void OSCComponent::setupConnection()
     }
     else
     {
-        NDBG("Stopping Receiver");
         udp.flush();
         udp.stop();
         isAlive->set(false);
 
         MDNS.end();
+        NDBG("Stopping Receiver");
     }
 }
 
@@ -148,7 +149,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(OSCMessage &msg)
 {
-    if (!enabled->boolValue())
+    if (!enabled->boolValue() || !udpIsInit)
         return;
 
     if (remoteHost->stringValue().length() == 0)
@@ -164,7 +165,7 @@ void OSCComponent::sendMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(String address)
 {
-    if (!enabled->boolValue())
+    if (!enabled->boolValue() || !udpIsInit)
         return;
 
     OSCMessage m(address.c_str());
@@ -173,7 +174,7 @@ void OSCComponent::sendMessage(String address)
 
 void OSCComponent::sendMessage(const String &source, const String &command, var *data, int numData)
 {
-    if (!enabled->boolValue())
+    if (!enabled->boolValue() || !udpIsInit)
         return;
 
     OSCMessage msg(("/" + source + "/" + command).c_str());

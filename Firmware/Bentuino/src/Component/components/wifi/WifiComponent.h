@@ -6,21 +6,38 @@
 #include <ESP8266WiFi.h>
 #endif
 
-DeclareComponentSingleton(Wifi, "wifi",)
+class WifiComponent : public Component
+{
+public:
+    WifiComponent() : Component(Type_Wifi) { instance = this; }
+    ~WifiComponent() {}
 
-    enum ConnectionState { Off, Connecting, Connected, ConnectionError, Disabled, Hotspot, PingAlive, PingDead, CONNECTION_STATES_MAX };
-    const String connectionStateNames[CONNECTION_STATES_MAX] {"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot", "PingAlive","PingDead" };
+    DeclareSingleton(WifiComponent);
 
-    const long timeBetweenTries = 500; //ms
-    const long connectionTimeout = 10000; //ms
+    enum ConnectionState
+    {
+        Off,
+        Connecting,
+        Connected,
+        ConnectionError,
+        Disabled,
+        Hotspot,
+        PingAlive,
+        PingDead,
+        CONNECTION_STATES_MAX
+    };
+    const String connectionStateNames[CONNECTION_STATES_MAX]{"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot", "PingAlive", "PingDead"};
+
+    const long timeBetweenTries = 500;    // ms
+    const long connectionTimeout = 10000; // ms
     long timeAtConnect;
     long lastConnectTime;
     long timeAtStateChange;
 
     ConnectionState state;
 
-    Parameter * ssid;
-    Parameter * pass;
+    Parameter *ssid;
+    Parameter *pass;
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
@@ -36,5 +53,4 @@ DeclareComponentSingleton(Wifi, "wifi",)
 
     DeclareComponentEventTypes(ConnectionStateChanged);
     DeclareComponentEventNames("ConnectionStateChanged");
-
-EndDeclareComponent
+};

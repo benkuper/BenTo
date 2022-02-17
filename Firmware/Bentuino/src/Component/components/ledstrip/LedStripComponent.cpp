@@ -1,16 +1,19 @@
+LedStripComponent::LedStripComponent() : Component(Type_Strip, "strip"),
+                                         bakeLayer(this),
+                                         streamLayer(this),
+                                         scriptLayer(this),
+                                         systemLayer(this)
+{
+}
+
 bool LedStripComponent::initInternal(JsonObject o)
 {
     // init
     neoPixelStrip = NULL;
     dotStarStrip = NULL;
 
-    for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
-        userLayers[i] = NULL;
-
-    systemLayer = NULL;
-
     dataPin = AddConfigParameter("dataPin", 0);
-    count = AddConfigParameter("count", 0);
+    count = AddRangeConfigParameter("count", 0, 0, MAX_PIXELS);
     enPin = AddConfigParameter("enPin", 0);
     clkPin = AddConfigParameter("clkPin", 0);
     invertStrip = AddConfigParameter("invertStrip", false);
@@ -24,9 +27,8 @@ bool LedStripComponent::initInternal(JsonObject o)
 
     brightness = addParameter("brightness", .5f, 0, 1);
 
-    colors = (Color *)malloc(count->intValue() * sizeof(Color));
-    for (int i = 0; i < count->intValue(); i++)
-        colors[i] = Color(0, 0, 0, 0);
+    // colors = (Color *)malloc(count->intValue() * sizeof(Color));
+    memset(colors, 0, sizeof(Color) * MAX_PIXELS);
 
     if (count->intValue() == 0 || dataPin->intValue() == 0)
     {
@@ -34,32 +36,34 @@ bool LedStripComponent::initInternal(JsonObject o)
         return false;
     }
 
-    bakeLayer = addComponent(new LedStripBakeLayer("bake", this));
-    streamLayer = addComponent(new LedStripStreamLayer("stream", this));
-    scriptLayer = addComponent(new LedStripScriptLayer("script", this));
-    systemLayer = addComponent(new LedStripSystemLayer("system", this));
+    AddComponent(bakeLayer, "bake");
+    AddComponent(streamLayer, "stream");
+    AddComponent(scriptLayer, "script");
+    AddComponent(systemLayer, "system");
 
-    userLayers[0] = bakeLayer;
-    userLayers[1] = streamLayer;
-    userLayers[2] = scriptLayer;
+    userLayers[0] = &bakeLayer;
+    userLayers[1] = &streamLayer;
+    userLayers[2] = &scriptLayer;
 
     if (clkPin->intValue() > 0)
     {
+        NDBG("Using dotStar lib");
         dotStarStrip = new Adafruit_DotStar(count->intValue(), dataPin->intValue(), clkPin->intValue(), DOTSTAR_BGR);
         dotStarStrip->begin();
         dotStarStrip->setBrightness(brightness->floatValue() * 255);
-        //  dotStarStrip->fill(dotStarStrip->Color(255, 0, 0));
-        //  dotStarStrip->show();
-        //  delay(300);
+         dotStarStrip->fill(dotStarStrip->Color(255, 0, 0));
+         dotStarStrip->show();
+         delay(300);
     }
     else
     {
+        NDBG("Using neopixel lib");
         neoPixelStrip = new Adafruit_NeoPixel(count->intValue(), dataPin->intValue(), NEO_GRB + NEO_KHZ800);
         neoPixelStrip->begin();
         neoPixelStrip->setBrightness(brightness->floatValue() * 255);
-        //  neoPixelStrip->fill(neoPixelStrip->Color(255, 0, 0));
-        //  neoPixelStrip->show();
-        //  delay(300);
+         neoPixelStrip->fill(neoPixelStrip->Color(20, 0, 0));
+         neoPixelStrip->show();
+         delay(300);
     }
 
     return true;
@@ -67,10 +71,11 @@ bool LedStripComponent::initInternal(JsonObject o)
 
 void LedStripComponent::updateInternal()
 {
+    if(!enabled->boolValue()) return;
 
-    if(dotStarStrip == NULL && neoPixelStrip == NULL)
+    if (dotStarStrip == NULL && neoPixelStrip == NULL)
     {
-        return; //not active
+        return; // not active
     }
 
     // all layer's internal colors are updated in Component's update() function
@@ -79,7 +84,7 @@ void LedStripComponent::updateInternal()
     for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
         processLayer(userLayers[i]);
 
-    processLayer(systemLayer);
+    processLayer(&systemLayer);
 
     showLeds();
 }
@@ -113,18 +118,6 @@ void LedStripComponent::onParameterEventInternal(const ParameterEvent &e)
             neoPixelStrip->updateLength(count->intValue());
         else if (dotStarStrip != NULL)
             dotStarStrip->setBrightness(count->intValue());
-
-        // free(colors);
-        // colors = (Color *)malloc(count->intValue() * sizeof(Color));
-        // for (int i = 0; i < count->intValue(); i++)
-        //     colors[i] = Color(0, 0, 0, 0);
-
-
-        // for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
-        //     if (userLayers[i] != NULL)
-        //         userLayers[i]->initColors();
-
-        // systemLayer->initColors();
     }
 }
 

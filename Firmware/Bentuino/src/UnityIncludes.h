@@ -7,14 +7,46 @@
 #define ARDUINOJSON_USE_LONG_LONG 0
 #define ARDUINOJSON_USE_DOUBLE 0
 
+//Constants defaults if not specified in board compilation options
+
+//Fixed component definitions
+//Ledstrip
+#ifndef NUM_STRIPS
+#define NUM_STRIPS 1
+#endif
+
+#ifndef MAX_PIXELS
+#define MAX_PIXELS 500
+#endif
+
+#ifndef NUM_BUTTONS
+#define NUM_BUTTONS 1
+#endif
+
+#ifndef NUM_IMUS
+#define NUM_IMUS 1
+#endif
+
+#ifndef NUM_SERVOS
+#define NUM_SERVOS 0
+#endif
+
+#ifndef NUM_STEPPERS
+#define NUM_STEPPERS 0
+#endif
+
+#ifndef NUM_IOS
+#define NUM_IOS 0
+#endif
+
 // Libraries
- #include <Adafruit_NeoPixel.h>
- #include <Adafruit_DotStar.h>
- #include <utility/vector.h>
- #include <utility/matrix.h>
- #include <utility/quaternion.h>
- #include <Adafruit_Sensor.h>
- #include <Adafruit_BNO055.h>
+#include <Adafruit_NeoPixel.h>
+#include <Adafruit_DotStar.h>
+#include <utility/vector.h>
+#include <utility/matrix.h>
+#include <utility/quaternion.h>
+#include <Adafruit_Sensor.h>
+#include <Adafruit_BNO055.h>
 #include <ArduinoJson.h>
 #include <SPI.h>
 #include <SPIFFS.h>
@@ -26,14 +58,13 @@
 #include <ESP32Servo.h>
 #include <ArtnetWifi.h>
 #include <FastAccelStepper.h>
-
+#include <esp_adc_cal.h>
 #include "../lib/SD/src/SD.h" //really weird
 
 #include <wasm3.h>
 #include <m3_env.h>
 
 // Firmware
-
 #include "Common/Helpers.h"
 #include "Common/BoardDefines.h"
 #include "Common/var.h"
@@ -67,6 +98,7 @@
 #include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.h"
 #include "Component/components/ledstrip/Layer/layers/script/LedStripScriptLayer.h"
 #include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.h"
+
 #include "Component/components/ledstrip/LedStripComponent.h"
 
 #include "Component/components/sequence/SequenceComponent.h"

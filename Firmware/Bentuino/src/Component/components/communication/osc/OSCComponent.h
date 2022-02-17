@@ -4,16 +4,22 @@
 #define OSC_REMOTE_PORT 10000
 #define OSC_PING_TIMEOUT 5000
 
-DeclareComponentSingleton(OSC, "osc",)
+class OSCComponent : public Component
+{
+public:
+    OSCComponent() : Component(Type_OSC) { instance = this; }
+    ~OSCComponent() {}
+
+    DeclareSingleton(OSCComponent);
 
     WiFiUDP udp;
     bool udpIsInit;
-    Parameter * remoteHost;
+    Parameter *remoteHost;
 
-    //Ping
-    bool pingEnabled; //only activate ping check if received a first ping
+    // Ping
+    bool pingEnabled; // only activate ping check if received a first ping
     long timeSinceLastReceivedPing;
-    Parameter * isAlive;
+    Parameter *isAlive;
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
@@ -32,10 +38,9 @@ DeclareComponentSingleton(OSC, "osc",)
     void sendMessage(String address);
     void sendMessage(const String &source, const String &command, var *data, int numData);
 
-    //Helper
+    // Helper
     var OSCArgumentToVar(OSCMessage &m, int index);
 
     DeclareComponentEventTypes(MessageReceived);
-    DeclareComponentEventNames("MessageReceived");    
-    
-EndDeclareComponent
+    DeclareComponentEventNames("MessageReceived");
+};

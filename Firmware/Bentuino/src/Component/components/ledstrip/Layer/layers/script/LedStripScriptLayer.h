@@ -3,7 +3,7 @@
 class LedStripScriptLayer : public LedStripLayer
 {
 public:
-    LedStripScriptLayer(const String &name, LedStripComponent *strip) : LedStripLayer(name, LedStripLayer::ScriptType, strip), script(this) {}
+    LedStripScriptLayer(LedStripComponent *strip) : LedStripLayer("script", LedStripLayer::ScriptType, strip, Type_ScriptLayer), script(this) {}
     ~LedStripScriptLayer() {}
 
     Script script;

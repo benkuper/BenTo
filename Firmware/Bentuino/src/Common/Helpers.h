@@ -9,6 +9,10 @@
 
 #define DeviceID RootComponent::instance->deviceID
 
+// Math Helpers
+#define MapF(val, iMin, iMax, oMin, oMax) (oMin + ((val - iMin) / (iMax - iMin)) * (oMax - oMin))
+#define Map01(val, iMin, iMax) ((val - iMin) / (iMax - iMin))
+
 // Class Helpers
 #define DeclareSingleton(Class) static Class *instance;
 #define ImplementSingleton(Class) Class *Class::instance = NULL;
@@ -23,9 +27,13 @@
 };
 
 // Component Helpers
-#define AddComponent(name, comp, Type, enabled) comp = addComponent<Type##Component>(name, enabled, o["components"][name]);
+#define AddComponent(Comp, Name) \
+    Comp.name = Name;            \
+    addComponent(&Comp, o["components"][Name]);
+#define AddOwnedComponent(name, comp, Type) comp = addComponent<Type##Component>(name, o["components"][name]);
 #define AddDefaultComponentListener(comp) comp->addListener(std::bind(&Component::onChildComponentEvent, this, std::placeholders::_1));
 
+/*
 // > Component Class definition
 #define PDerive(Class) , public Class
 #define DeclareComponentClass(ParentClass, ClassPrefix, ...) \
@@ -34,17 +42,17 @@
     {                                                        \
     public:
 
-#define DeclareSubComponent(ParentClass, ClassPrefix, Type, Derives)                                    \
-    DeclareComponentClass(ParentClass, ClassPrefix, Derives)                                            \
-        ClassPrefix##Component(const String &name, bool enabled = true) : ParentClass(name, enabled) {} \
-    ~ClassPrefix##Component() {}                                                                        \
+#define DeclareSubComponent(ParentClass, ClassPrefix, Type, Derives) \
+    DeclareComponentClass(ParentClass, ClassPrefix, Derives)         \
+        ClassPrefix##Component() : ParentClass() { name = Type; }    \
+    ~ClassPrefix##Component() {}                                     \
     virtual String getTypeString() const override { return Type; }
 
-#define DeclareComponentSingleton(ClassPrefix, Type, Derives)                                                              \
-    DeclareComponentClass(Component, ClassPrefix, Derives)                                                                 \
-        DeclareSingleton(ClassPrefix##Component)                                                                           \
-            ClassPrefix##Component(const String &name, bool enabled = true) : Component(name, enabled) { InitSingleton() } \
-    ~ClassPrefix##Component() { DeleteSingleton() }                                                                        \
+#define DeclareComponentSingleton(ClassPrefix, Type, Derives)         \
+    DeclareComponentClass(Component, ClassPrefix, Derives)            \
+        DeclareSingleton(ClassPrefix##Component)                      \
+            ClassPrefix##Component() { name = Type; InitSingleton() } \
+    ~ClassPrefix##Component() { DeleteSingleton() }                   \
     virtual String getTypeString() const override { return Type; }
 
 #define DeclareComponent(ClassPrefix, Type, Derives) DeclareSubComponent(Component, ClassPrefix, Type, Derives)
@@ -52,6 +60,7 @@
 #define EndDeclareComponent \
     }                       \
     ;
+*/
 
 // > Events
 #define DeclareComponentEventTypes(...) enum ComponentEventTypes \
@@ -85,14 +94,14 @@
 #define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
 
 #define AddParameter(name, val) addParameter(name, val)
-#define AddRangeParameter(name, val, minVal, maxVal, isConfig) addParameter(name, val, minVal, maxVal, false)
+#define AddRangeParameter(name, val, minVal, maxVal) addParameter(name, val, minVal, maxVal, false)
 // Only config parameters check the settings
 #define AddConfigParameter(name, val) addParameter(name, Settings::getVal(o, name, val), var(), var(), true)
 #define AddRangeConfigParameter(name, val, minVal, maxVal) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, true)
 
 // Script
 
-#define LinkScriptFunctionsStart                                                                     \
+#define LinkScriptFunctionsStart                                                           \
     virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) override \
     {
 #define LinkScriptFunctionsEnd }

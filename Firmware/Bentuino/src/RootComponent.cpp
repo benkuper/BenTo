@@ -1,6 +1,5 @@
 ImplementSingleton(RootComponent);
 
-
 bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
@@ -20,31 +19,72 @@ bool RootComponent::initInternal(JsonObject)
     Settings::loadSettings();
     JsonObject o = Settings::settings.as<JsonObject>();
 
-    AddComponent("comm", comm, Communication, true);
+    AddComponent(comm, "comm");
+    AddComponent(battery, "battery");
+    AddComponent(files, "files");
+    AddComponent(server, "server");
+    AddComponent(sequence, "sequence");
 
-    AddComponent("streamReceiver", streamReceiver, LedStreamReceiver, true);
-    AddComponent("strip", strip, LedStrip, true);
+    AddComponent(wifi, "wifi");
 
-    AddComponent("battery", battery, Battery, true);
-    AddComponent("sequence", sequence, Sequence, true);
+        
 
-    AddComponent("imu", imu, IMU, false);
+#if NUM_BUTTONS
+    for (int i = 0; i < NUM_BUTTONS; i++)
+    {
+        String sName = "button" + String(i + 1);
+        AddComponent(buttons[i], sName);
+    }
+#endif
 
-    AddComponent("wifi", wifi, Wifi, true);
-    AddComponent("files", files, Files, true);
-    AddComponent("script", script, Script, true);
-    AddComponent("server", server, WebServer, true);
+#if NUM_IMUS
+    for (int i = 0; i < NUM_IMUS; i++)
+    {
+        String sName = "imu" + String(i + 1);
+        AddComponent(imus[i], sName);
+    }
+#endif
 
-    AddComponent("button", button, Button, false);
+#if NUM_STRIPS
+    AddComponent(streamReceiver, "streamReceiver");
+    for (int i = 0; i < NUM_STRIPS; i++)
+    {
+        String sName = "strip" + String(i + 1);
+        AddComponent(strips[i], sName);
+    }
+    NDBG("Strips init");
+#endif
 
-    // for(int i=0;i<16;i++)
-    // {
-    //     AddComponent("io"+String(i+1), ioComponents[i], IO, false);
-    // }
 
-    // AddComponent("servo", servo, Servo, true);
-    // AddComponent("stepper", stepper, Stepper, true);
+#if NUM_IOS
+    for (int i = 0; i < NUM_IOS; i++)
+    {
+        String sName = "io" + String(i + 1);
+        AddComponent(ios[i], sName);
+    }
+#endif
 
+#if NUM_STEPPERS
+    for (int i = 0; i < NUM_STEPPERS; i++)
+    {
+        String sName = "stepper" + String(i + 1);
+        AddComponent(steppers[i], sName);
+    }
+#endif
+
+#if NUM_SERVOS
+    for (int i = 0; i < NUM_SERVOS; i++)
+    {
+        String sName = "servo" + String(i + 1);
+        AddComponent(servos[i], sName);
+    }
+#endif
+
+    
+    wifi.connect();
+    DBG("Heap " + String(ESP.getFreeHeap()) + " free / " + String(ESP.getHeapSize()) + " total");
+    DBG("Free Stack size  " + String((int)uxTaskGetStackHighWaterMark(NULL)) + " free");
+    
 
     return true;
 }
@@ -56,15 +96,15 @@ void RootComponent::updateInternal()
 
 void RootComponent::restart()
 {
-   // saveSettings();
+    // saveSettings();
 
     ESP.restart();
 }
 
 void RootComponent::shutdown()
 {
-   // saveSettings();
-
+    // saveSettings();
+    NDBG("Shutdown !");
     timeAtShutdown = millis();
     timer.in(1000, [](void *) -> bool
              {  RootComponent::instance->powerdown(); return false; });
@@ -74,7 +114,7 @@ void RootComponent::powerdown()
 {
     clear();
 
-    //NDBG("Sleep now, baby.");
+    // NDBG("Sleep now, baby.");
 
 #ifdef WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup((gpio_num_t)WAKEUP_BUTTON, WAKEUP_BUTTON_STATE);
@@ -96,6 +136,7 @@ void RootComponent::saveSettings()
     JsonObject o = Settings::settings.to<JsonObject>();
     fillSettingsData(o, true);
     Settings::saveSettings();
+    restart();
 }
 
 void RootComponent::onChildComponentEvent(const ComponentEvent &e)
@@ -103,7 +144,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     if (isShuttingDown())
         return;
 
-    if (e.component == comm)
+    if (e.component == &comm)
     {
         if (e.type == CommunicationComponent::MessageReceived)
         {
@@ -121,25 +162,33 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             return;
         }
     }
-    else if (e.component == wifi)
+    else if (e.component == &wifi)
     {
         if (e.type == WifiComponent::ConnectionStateChanged)
         {
-            comm->osc->setupConnection();
-            server->setupConnection();
-            // streamReceiver->setupConnection();
+            comm.osc.setupConnection();
+            server.setupConnection();
+            streamReceiver.setupConnection();
         }
     }
-    else if (e.component == button)
+    else if (e.component == &battery)
     {
+        if (e.type == BatteryComponent::CriticalBattery)
+        {
+            shutdown();
+        }
+    }
+    else if (e.component->type == Type_Button)
+    {
+        ButtonComponent *button = (ButtonComponent *)e.component;
         if (button->isSystem->boolValue())
         {
             switch (e.type)
             {
             case ButtonComponent::ShortPress:
             {
-                if (wifi->state == WifiComponent::Connecting)
-                    wifi->disable();
+                if (wifi.state == WifiComponent::Connecting)
+                    wifi.disable();
             }
             break;
 
@@ -150,7 +199,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
         }
     }
 
-   comm->sendEventFeedback(e);
+    comm.sendEventFeedback(e);
 }
 
 bool RootComponent::handleCommandInternal(const String &command, var *data, int numData)
@@ -161,9 +210,9 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
         restart();
     else if (command == "stats")
     {
-        DBG("Heap "+String(ESP.getFreeHeap())+" free / "+String(ESP.getHeapSize())+" total");
-        DBG("Free Stack size  "+String((int)uxTaskGetStackHighWaterMark(NULL))+" free");
-        //comm->sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
+        DBG("Heap " + String(ESP.getFreeHeap()) + " free / " + String(ESP.getHeapSize()) + " total");
+        DBG("Free Stack size  " + String((int)uxTaskGetStackHighWaterMark(NULL)) + " free");
+        comm.sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
     }
     else if (command == "saveSettings")
     {

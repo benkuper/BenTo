@@ -1,24 +1,17 @@
-LedStripLayer::LedStripLayer(const String &name, Type t, LedStripComponent *strip) : Component(name),
-                                                                                     strip(strip),
-                                                                                     type(t),
-                                                                                     colors(nullptr)
+LedStripLayer::LedStripLayer(const String &name, Type t, LedStripComponent *strip, ComponentType cType) : Component(cType, name),
+                                                                                                          strip(strip),
+                                                                                                          type(t)
 {
+    this->name = name;
     blendMode = addParameter("blendMode", Add);
     initColors();
 }
 
-LedStripLayer::~LedStripLayer()
-{
-    free(colors);
-}
 
 void LedStripLayer::initColors()
 {
-    if (colors != nullptr)
-        free(colors);
 
-    numLeds = strip->count->intValue();
-    colors = (Color *)malloc(numLeds * sizeof(Color));
+    clearColors();
     for (int i = 0; i < numLeds; i++)
         colors[i] = Color(0, 0, 0, 0);
 }

@@ -1,50 +1,67 @@
 //#define NUM_SYSTEM_COMPONENTS 6
+class RootComponent : public Component
+{
+public:
+    RootComponent() : Component(Type_Root, "root") { instance = this; }
+    ~RootComponent() {}
 
-DeclareComponentSingleton(Root, "root", )
+    DeclareSingleton(RootComponent);
 
-String deviceID;
+    String deviceID;
+    
+    // system
+    CommunicationComponent comm;
+    WifiComponent wifi;
+    FilesComponent files;
+    WebServerComponent server;
+    // ScriptComponent *script;
 
-// system
-CommunicationComponent * comm;
-WifiComponent * wifi;
-FilesComponent * files;
-WebServerComponent * server;
-ScriptComponent *script;
+    BatteryComponent battery;
+    SequenceComponent sequence;
 
-BatteryComponent * battery;
-SequenceComponent * sequence;
+#if NUM_BUTTONS > 0
+    ButtonComponent buttons[NUM_BUTTONS];
+#endif
 
-//users
-ButtonComponent * button;
-IMUComponent * imu;
-LedStreamReceiverComponent * streamReceiver;
-LedStripComponent *strip;
-ServoComponent * servo;
-StepperComponent * stepper;
+#if NUM_IMUS > 0
+    IMUComponent imus[NUM_IMUS];
+#endif
 
-// IOComponent * ioComponents[16];
+#if NUM_STRIPS
+    LedStreamReceiverComponent streamReceiver;
+    LedStripComponent strips[NUM_STRIPS];
+#endif
 
-//Needs a single structure
+#if NUM_SERVOS
+    ServoComponent servo[NUM_SERVOS];
+#endif
 
-//Behaviour
-Timer<5> timer;
-long timeAtShutdown;
+#if NUM_STEPPERS > 0
+    StepperComponent stepper[NUM_STEPPERS];
+#endif
 
-bool initInternal(JsonObject o) override;
-void updateInternal() override;
+#if NUM_IOS > 0
+    IOComponent ios[NUM_IOS];
+#endif
 
-void shutdown();
-void restart();
+    // Behaviour
+    Timer<5> timer;
+    long timeAtShutdown;
 
-void powerdown();
+    bool initInternal(JsonObject o) override;
+    void updateInternal() override;
 
-void saveSettings();
+    void shutdown();
+    void restart();
 
-void onChildComponentEvent(const ComponentEvent &e) override;
+    void powerdown();
 
-bool handleCommandInternal(const String & command, var * data, int numData) override;
+    void saveSettings();
 
-bool isShuttingDown() const { return timeAtShutdown > 0; }
-//const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};
+    void onChildComponentEvent(const ComponentEvent &e) override;
 
-EndDeclareComponent
+    bool handleCommandInternal(const String &command, var *data, int numData) override;
+
+    bool isShuttingDown() const { return timeAtShutdown > 0; }
+    // const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};
+};

@@ -2,7 +2,7 @@ bool ButtonComponent::initInternal(JsonObject o)
 {
     bool result = IOComponent::initInternal(o);
 
-    isSystem = addParameter("isSystem", false);
+    isSystem = AddConfigParameter("isSystem", false);
     
     debounceCount = 0;
     multiPressCount = 0;

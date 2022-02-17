@@ -1,6 +1,7 @@
 bool Component::init(JsonObject o)
 {
-    enabled->set(Settings::getVal(o, "enabled", enabled->boolValue()));
+    enabled = AddParameter("enabled", true);
+    sendFeedback = AddConfigParameter("sendFeedback", true);
 
     isInit = initInternal(o);
     if (isInit)
@@ -55,8 +56,7 @@ void Component::onParameterEvent(const ParameterEvent &e)
         onEnabledChanged();
 
     onParameterEventInternal(e);
-
-    SendParameterFeedback(e.parameter);
+    if(sendFeedback->boolValue()) SendParameterFeedback(e.parameter);
 }
 
 bool Component::handleCommand(const String &command, var *data, int numData)
@@ -127,6 +127,8 @@ void Component::fillSettingsData(JsonObject o, bool configOnly)
 void Component::fillOSCQueryData(JsonObject o, bool includeConfig)
 {
     String fullPath = getFullPath();
+    NDBG("Fill OSC Query data "+fullPath);
+
     o["DESCRIPTION"] = name;
     o["FULL_PATH"] = fullPath;
     o["ACCESS"] = 0;

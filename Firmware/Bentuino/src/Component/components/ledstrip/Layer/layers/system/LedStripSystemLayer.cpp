@@ -27,6 +27,8 @@ void LedStripSystemLayer::updateWifiStatus()
 
     if (connectionState != WifiComponent::Connecting && relT > animTime)
         return;
+        
+    DBG("Update Wifi");
 
     Color color = Color(0, 255, 255);
 
@@ -86,7 +88,7 @@ void LedStripSystemLayer::updateShutdown()
 
     float t = relT / animTime;
 
-    Color c(0, 255, 255);
+    Color c = Color(255,0,0).lerp(Color(0,255,0), BatteryComponent::instance->value->floatValue());
     c = c.withMultipliedAlpha(min(t * 2, 1.f));
     float end = constrain((1 - t) * 2, 0, 1);
 

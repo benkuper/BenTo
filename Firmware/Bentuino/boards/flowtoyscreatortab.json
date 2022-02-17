@@ -4,7 +4,7 @@
       "ldscript": "esp32_out.ld"
     },
     "core": "esp32",
-    "extra_flags": "-DARDUINO_FLOWTOYS_CREATOR_TAB -DPOWER_KEEP_PIN=12 -DWAKEUP_BUTTON=36 -DWAKEUP_BUTTON_STATE=HIGH",
+    "extra_flags": "-DARDUINO_FLOWTOYS_CREATOR_TAB -DPOWER_KEEP_PIN=12 -DWAKEUP_BUTTON=36 -DWAKEUP_BUTTON_STATE=HIGH -DNUM_STRIPS=1 -DNUM_BUTTONS=1 -DNUM_IMUS=1",
     "f_cpu": "240000000L",
     "f_flash": "40000000L",
     "flash_mode": "dio",
