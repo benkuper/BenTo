@@ -19,6 +19,3 @@
 [submodule "Modules/juce_simpleweb"]
 	path = Modules/juce_simpleweb
 	url = https://github.com/benkuper/juce_simpleweb
-[submodule "Firmware/BentoFlowCreator/src/scripts/SimplexNoise"]
-	path = Firmware/BentoFlowCreator/src/scripts/SimplexNoise
-	url = https://github.com/jshaw/SimplexNoise
