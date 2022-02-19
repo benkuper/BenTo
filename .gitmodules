@@ -10,9 +10,6 @@
 [submodule "Firmware\\BentoFlowCreator\\src\\sensors\\imu\\"]
 	path = Firmware\\BentoFlowCreator\\src\\sensors\\imu\\
 	url = https://github.com/adafruit/Adafruit_Sensor
-[submodule "Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_BNO055"]
-	path = Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_BNO055
-	url = https://github.com/benkuper/Adafruit_BNO055
 [submodule "Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_Sensor"]
 	path = Firmware/BentoFlowCreator/src/sensors/imu/Adafruit_Sensor
 	url = https://github.com/benkuper/Adafruit_Sensor
