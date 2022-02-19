@@ -1,5 +1,5 @@
 #include "Config.h"
-#ifdef LAMP
+#ifdef ARDUINO_FLOWTOYS_CREATOR_LIGHTBULB
 #include <Arduino.h>
 
 

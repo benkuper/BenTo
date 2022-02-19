@@ -74,7 +74,7 @@
 #include "config_tab_powerled.h"
 #elif defined CYRWHEEL
 #include "config_tab_cyrwheel.h"
-#elif defined LAMP
+#elif defined ARDUINO_FLOWTOYS_CREATOR_LIGHTBULB
 #include "config_lamp.h"
 #elif defined ASPI
 #include "config_aspi.h"
