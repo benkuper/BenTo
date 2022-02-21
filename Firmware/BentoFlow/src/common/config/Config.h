@@ -78,10 +78,12 @@
 #include "config_lamp.h"
 #elif defined ASPI
 #include "config_aspi.h"
-#elif defined BIKE
+#elif defined ARDUINO_BIKE
 #include "config_bike.h"
 #elif defined SIMPLE_ESP32
 #include "config_simpleESP32.h"
+#elif defined ARDUINO_M5_TESTER
+#include "config_m5tester.h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION
@@ -90,7 +92,6 @@
     #define LEDMAP(index) index
 #endif
 
-//#pragma message("Compiling for " __DEVICE_TYPE__)
-
+//#pragma message("Compiling for " ARDUINO_BOARD " (" DEVICE_TYPE ") ")
 
 #endif

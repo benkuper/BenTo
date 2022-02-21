@@ -4,7 +4,7 @@
       "ldscript": "esp32_out.ld"
     },
     "core": "esp32",
-    "extra_flags": "-DARDUINO_FLOWTOYS_CREATOR_LIGHTBULB",
+    "extra_flags": "-DARDUINO_FLOWTOYS_CREATOR_SUPERSTAFF",
     "f_cpu": "240000000L",
     "f_flash": "40000000L",
     "flash_mode": "dio",
@@ -31,7 +31,7 @@
     "maximum_ram_size": 327680,
     "maximum_size": 4194304,
     "require_upload_port": true,
-    "speed": 460800
+    "speed": 921600
   },
   "url": "https://github.com/benkuper/Bento",
   "vendor": "Flowtoys"

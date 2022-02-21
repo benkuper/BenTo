@@ -1,7 +1,7 @@
 #include "../../common/Common.h"
 
 #include <Wire.h>
-#include "Adafruit_BNO055/Adafruit_BNO055.h"
+#include <Adafruit_BNO055.h>
 
 #define TRAIL_MAX 20
 #define IMU_READ_ASYNC

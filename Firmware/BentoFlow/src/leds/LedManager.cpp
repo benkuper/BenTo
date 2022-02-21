@@ -139,7 +139,7 @@ void LedManager::shutdown(CRGB color)
     }
 
     rgbManager.clear();
-    delay(30);
+    FastLED.delay(30);
     rgbManager.update();
     rgbManager.shutdown();
 
