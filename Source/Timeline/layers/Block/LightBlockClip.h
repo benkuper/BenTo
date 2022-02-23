@@ -29,6 +29,8 @@ public:
 	FloatParameter * fadeIn;
 	FloatParameter * fadeOut;
 
+	FloatParameter* timeOffsetByID;
+
 	std::unique_ptr<PropTargetFilterManager> filterManager;
 	BaseManager<LightBlockEffect> effects;
 

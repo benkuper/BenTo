@@ -26,6 +26,10 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
 	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength(), false);
 	fadeOut->canBeDisabledByUser = true;
 
+	timeOffsetByID = addFloatParameter("Time Offset by ID", "Offset computed time by Prop ID", 0);
+	timeOffsetByID->defaultUI = FloatParameter::TIME;
+
+
 	effects.userCanAddItemsManually = false;
 	addChildControllableContainer(&effects);
 
@@ -86,7 +90,9 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 	
 	float factor = 1;
 
-	double relTimeTotal = absoluteTime - time->floatValue();
+	int id = params.getProperty("forceID", p->globalID->intValue());
+	float offset = id * timeOffsetByID->floatValue();
+	double relTimeTotal = absoluteTime - time->floatValue() + offset;
 	if (fadeIn->floatValue() > 0) factor *= jmin<double>(relTimeTotal / fadeIn->floatValue(),1.f);
 	if (fadeOut->floatValue() > 0) factor *= jmin<double>((getTotalLength() - relTimeTotal) / fadeOut->floatValue(), 1.f);
 	factor = jmax(factor, 0.f);
@@ -98,6 +104,7 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 
 
 	double relTimeLooped = getRelativeTime(absoluteTime, true);
+	relTimeLooped = fmodf(relTimeLooped + offset, getCoreEndTime());
 	Array<Colour> colors = currentBlock->getColors(p, relTimeLooped, params);
 
 	for (int i = 0; i < effects.items.size(); i++)
@@ -135,9 +142,9 @@ void LightBlockClip::blockParamControlModeChanged(Parameter * p)
 
 void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEnd)
 {
+	settingLengthFromMethod = true;
 	LayerBlock::setCoreLength(value, stretch, stickToCoreEnd);
 
-	settingLengthFromMethod = true;
 	if (currentBlock != nullptr)
 	{
 		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();

@@ -56,17 +56,17 @@ var LightBlock::getLocalParams(Prop* p, double time, var params)
 	paramsLock.enter();
 	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
 
-	if (localParams.getProperty("updateAutomation", true))
-	{
-		for (auto& param : paramList)
-		{
-			if (param.wasObjectDeleted()) continue;
-			if (param->controlMode != Parameter::AUTOMATION || param->automation == nullptr) continue;
-			param->automation->timeParamRef->setValue(fmodf(time, param->automation->lengthParamRef->floatValue()));
-		}
-	}
-	else
-	{
+	//if (localParams.getProperty("updateAutomation", true))
+	//{
+	//	for (auto& param : paramList)
+	//	{
+	//		if (param.wasObjectDeleted()) continue;
+	//		if (param->controlMode != Parameter::AUTOMATION || param->automation == nullptr) continue;
+	//		//param->automation->timeParamRef->setValue(fmodf(time, param->automation->lengthParamRef->floatValue()));
+	//	}
+	//}
+	//else
+	//{
 		for (auto& param : paramList)
 		{
 			if (param->controlMode != Parameter::AUTOMATION) continue;
@@ -89,7 +89,7 @@ var LightBlock::getLocalParams(Prop* p, double time, var params)
 			}
 
 		}
-	}
+	//}
 
 	for (auto& param : paramList)
 	{

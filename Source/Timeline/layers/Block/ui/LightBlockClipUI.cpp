@@ -66,7 +66,7 @@ void LightBlockClipUI::paint(Graphics& g)
 	g.drawImage(previewImage, getCoreBounds().toFloat(), RectanglePlacement::stretchToFit);
 	if (item->loopLength->floatValue() > 0)
 	{
-		g.setTiledImageFill(previewImage, getCoreWidth(), 0, .5f);
+		g.setTiledImageFill(previewImage.rescaled(getCoreWidth(),getHeight(),Graphics::ResamplingQuality::lowResamplingQuality), getCoreWidth(), 0, .5f);
 		g.fillRect(getLocalBounds().withLeft(getCoreWidth()));
 	}
 	imgLock.exit();
