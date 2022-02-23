@@ -80,10 +80,20 @@ void LightBlockClipManagerUI::itemDropped(const SourceDetails & source)
 		m.addSeparator();
 		int index = 1;
 		for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
-		int result = m.show();
-		if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+		m.showMenuAsync(PopupMenu::Options(), [this, modelUI, clip](int result)
+			{
+				if (result > 0)
+				{
+					LightBlockColorProvider* provider = modelUI->item->presetManager.items[result - 1];
+					if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
+					else clip->activeProvider->setValueFromTarget(provider);
+				}
+			}
+		);
 	}
-
-	if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
-	else clip->activeProvider->setValueFromTarget(provider);
+	else
+	{
+		if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
+		else clip->activeProvider->setValueFromTarget(provider);
+	}
 }

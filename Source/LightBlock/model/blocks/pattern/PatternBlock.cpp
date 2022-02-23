@@ -1,3 +1,4 @@
+#include "PatternBlock.h"
 /*
   ==============================================================================
 
@@ -194,7 +195,7 @@ void PointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 	float relEnd = jmin<int>(relPos + (bSize * resolution / 2.f), resolution);
 	float relSize = bSize * resolution;
 
-	result->fill(bBGColor);
+	result->fill(bBGColor.withMultipliedBrightness(bBrightness));
 
 	for (int i = relStart; i <= relEnd && i < resolution; i++)
 	{
@@ -204,6 +205,55 @@ void PointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 		result->set(invert ? resolution - i : i, c.withMultipliedBrightness(bBrightness));
 	}
 }
+
+RangePattern::RangePattern(var params) :
+	PatternBlock(getTypeString(), params)
+{
+	brightness = paramsContainer->addFloatParameter("Brightness", "", 1, 0, 1);
+	color = paramsContainer->addColorParameter("Color", "The color of the point", Colours::white);
+	bgColor = paramsContainer->addColorParameter("Background Color", "The color of the background", Colours::black);
+	start = paramsContainer->addFloatParameter("Start", "Range start", 0);
+	end = paramsContainer->addFloatParameter("End", "Range end", .5f);
+	fade = paramsContainer->addFloatParameter("Fade", "The fading of the point", 1, 0, 1);
+	extendNum = paramsContainer->addIntParameter("Num Props", "The number of props the point is navigating through", 1, 1);
+}
+
+void RangePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
+{
+	var colorVar = getParamValue<var>(color, params);
+	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
+
+	var bgColorVar = getParamValue<var>(bgColor, params);
+	Colour bBGColor = Colour::fromFloatRGBA(bgColorVar[0], bgColorVar[1], bgColorVar[2], bgColorVar[3]);
+
+	float bBrightness = getParamValue<float>(brightness, params);
+	float bStart = getParamValue<float>(start, params);
+	float bEnd = getParamValue<float>(end, params);
+	//float bFade = getParamValue<float>(fade, params);
+	int bExtend = getParamValue<int>(extendNum, params);
+
+	float extendStart = bStart * bExtend;
+	float extendEnd = bEnd * bExtend;
+
+	float relExtStart = (extendStart - id % bExtend) * resolution;
+	float relExtEnd = (extendEnd - id % bExtend) * resolution;
+	float relStart = jmax<int>(relExtStart, 0);
+	float relEnd = jmin<int>(relExtEnd, resolution);
+
+	result->fill(bBGColor.withMultipliedBrightness(bBrightness));
+
+	
+	for (int i = relStart; i <= relEnd && i < resolution; i++)
+	{
+		result->set(i, bColor.withMultipliedBrightness(bBrightness));
+		//float diff = 1 - (fabsf(i - relPos) * 1.f / (relSize / (bFade * 2)));
+		//bool invert = id % 2 == 0 ? bInvertEvens : bInvertOdds;
+		//Colour c = bBGColor.interpolatedWith(bColor, diff);
+		//result->set(invert ? resolution - i : i, c.withMultipliedBrightness(bBrightness));
+	}
+	
+}
+
 
 MultiPointPattern::MultiPointPattern(var params) :
 	PatternBlock(getTypeString(), params)
@@ -238,7 +288,7 @@ void MultiPointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double
 	float bGap = getParamValue<float>(gap, params);
 
 
-	result->fill(bBGColor);
+	result->fill(bBGColor.withMultipliedBrightness(bBrightness));
 	if (bGap == 0 || bSize == 0) return;
 
 	if (targetPos < 0) targetPos = fmodf(targetPos, -bGap) + bGap;

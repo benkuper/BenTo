@@ -63,18 +63,22 @@ void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownP
 	Array<LightBlockColorProvider *> mList =  LightBlockModelLibrary::fillProvidersMenu(assignToAllMenu, true, true, false, 10000);
 
 	menu.addSubMenu("Assign to All", assignToAllMenu);
-	int result = menu.show();
-
-	if (result == 0) return;
-	else if (result == -1) 	manager->autoAssignIdTrigger->trigger();
-	else if (result == -2) manager->detectProps->trigger();
-	else if (result >= 10000)
-	{
-		LightBlockColorProvider * mp = mList[result - 10000];
-		for (auto & p : manager->items) p->activeProvider->setValueFromTarget(mp);
-	} else
-	{
-		Prop * p = manager->managerFactory->createFromMenuResult(result);
-		if(p != nullptr) manager->addItem(p);
-	}
+	
+	menu.showMenuAsync(PopupMenu::Options(), [this, mList](int result)
+		{
+			if (result == 0) return;
+			else if (result == -1) 	manager->autoAssignIdTrigger->trigger();
+			else if (result == -2) manager->detectProps->trigger();
+			else if (result >= 10000)
+			{
+				LightBlockColorProvider* mp = mList[result - 10000];
+				for (auto& p : manager->items) p->activeProvider->setValueFromTarget(mp);
+			}
+			else
+			{
+				Prop* p = manager->managerFactory->createFromMenuResult(result);
+				if (p != nullptr) manager->addItem(p);
+			}
+		}
+	);
 }

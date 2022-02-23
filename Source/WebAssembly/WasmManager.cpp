@@ -28,19 +28,41 @@ void WasmManager::run()
 {
     File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("Bento/wasm/wasmcompiler.exe");
 
+    std::function<void(File& f)> func = [this](File& f)
+    {
+        if (f.existsAsFile()) return;
+
+        URL url("http://benjamin.kuperberg.fr/bento/download/wasmcompiler.exe");
+        LOG("Downloading compiler...");
+        downloadTask = url.downloadToFile(f,
+            URL::DownloadTaskOptions().withListener(this));
+
+        if (downloadTask == nullptr)
+        {
+            LOGERROR("Error downloading compiler");
+        }
+    };
+
     if (f.existsAsFile())
     {
-        bool result = AlertWindow::showOkCancelBox(AlertWindow::QuestionIcon, "Compiler already exists", "There is already a compiler found. Do you want to replace it ?", "Go ahead", "No way");
-        if (result) f.deleteFile();
-        else return;
-    }
+        AlertWindow::showAsync(
+            MessageBoxOptions().withIconType(AlertWindow::QuestionIcon)
+            .withTitle("Compiler already exists")
+            .withMessage("There is already a compiler found. Do you want to replace it ?")
+            .withButton("Go ahead")
+            .withButton("No way"),
+            [&f, func](int result)
+            {
+                if (result) f.deleteFile();
+                else return;
 
-    URL url("http://benjamin.kuperberg.fr/bento/download/wasmcompiler.exe");
-    LOG("Downloading compiler...");
-    downloadTask = url.downloadToFile(f, "", this);
-    if (downloadTask == nullptr)
+                func(f);
+            }
+        );
+    }
+    else
     {
-        LOGERROR("Error downloading compiler");
+        func(f);
     }
 }
 

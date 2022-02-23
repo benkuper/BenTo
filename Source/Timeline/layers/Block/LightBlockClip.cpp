@@ -12,6 +12,7 @@ LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
 	LayerBlock(getTypeString()),
 	effects("Block Effects"),
 	layer(layer),
+	settingLengthFromMethod(false),
 	clipNotifier(10)
 {
 	itemDataType = "LightBlockClip";
@@ -136,6 +137,7 @@ void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEn
 {
 	LayerBlock::setCoreLength(value, stretch, stickToCoreEnd);
 
+	settingLengthFromMethod = true;
 	if (currentBlock != nullptr)
 	{
 		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
@@ -146,6 +148,7 @@ void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEn
 			pa->automation->setLength(coreLength->floatValue(), stretch, stickToCoreEnd);
 		}
 	}
+	settingLengthFromMethod = false;
 }
 
 void LightBlockClip::notifyUpdatePreview()
@@ -181,6 +184,11 @@ void LightBlockClip::onContainerParameterChangedInternal(Parameter * p)
 	{
 		fadeIn->setRange(0, getTotalLength());
 		fadeOut->setRange(0, getTotalLength());
+
+		if (p == coreLength && !settingLengthFromMethod)
+		{
+			setCoreLength(coreLength->floatValue());
+		}
 	}
 	/*
 	else if (p == autoFade)

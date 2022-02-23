@@ -235,7 +235,7 @@ void Prop::update()
 		}
 	}
 
-	
+
 	if (!bakeMode->boolValue()
 		&& !isBaking->boolValue()
 		&& !isUploading->boolValue()
@@ -346,14 +346,20 @@ void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
 
 	if (afterBake == EXPORT)
 	{
-		FileChooser fc("Export a block");
-		if (fc.browseForFileToSave(true)) exportFile = fc.getResult();
-		else return;
-	}
+		FileChooser* fc(new FileChooser("Export a block"));
+		fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
+			{
+				File f = fc.getResult();
+				delete& fc;
+				if (f == File()) return;
 
-	bakingProgress->setValue(0);
-	uploadProgress->setValue(0);
-	isBaking->setValue(true);
+				exportFile = f;
+				bakingProgress->setValue(0);
+				uploadProgress->setValue(0);
+				isBaking->setValue(true);
+			}
+		);
+	}
 }
 
 BakeData Prop::bakeBlock()
@@ -494,7 +500,7 @@ void Prop::sendControlToProp(String message, var value)
 void Prop::handleOSCMessage(const OSCMessage& m)
 {
 	if (m.getAddressPattern().toString() == "/pong") handlePong();
-	else if (m.getAddressPattern().toString() == "/enabled") 
+	else if (m.getAddressPattern().toString() == "/enabled")
 	{
 		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
 	}
@@ -547,7 +553,7 @@ void Prop::handleOSCMessage(const OSCMessage& m)
 			for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
 			if (pc != nullptr) pc->handleMessage(mSplit[2], value);
 		}
-		
+
 	}
 }
 

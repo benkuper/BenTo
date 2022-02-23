@@ -66,14 +66,14 @@ ZeroconfManager::ZeroconfSearcher * ZeroconfManager::getSearcher(StringRef name)
 	return nullptr;
 }
 
-ZeroconfManager::ServiceInfo * ZeroconfManager::showMenuAndGetService(StringRef searcherName, bool showLocal, bool showRemote, bool separateLocalAndRemote, bool excludeInternal)
+void ZeroconfManager::showMenuAndGetService(StringRef searcherName, std::function<void(ZeroconfManager::ServiceInfo*)> returnFunc, bool showLocal, bool showRemote, bool separateLocalAndRemote, bool excludeInternal, const String& nameFilter)
 {
-	ZeroconfSearcher * s = getSearcher(searcherName);
+	ZeroconfSearcher* s = getSearcher(searcherName);
 
 	if (s == nullptr)
 	{
 		DBG("No searcher found for service " << searcherName);
-		return nullptr;
+		return;
 	}
 
 	PopupMenu p;
@@ -85,16 +85,20 @@ ZeroconfManager::ServiceInfo * ZeroconfManager::showMenuAndGetService(StringRef 
 	{
 		for (int i = 0; i < s->services.size(); i++)
 		{
-			ServiceInfo * info = s->services[i];
+			ServiceInfo* info = s->services[i];
+			if (nameFilter.isNotEmpty() && !info->name.contains(nameFilter)) continue;
 			p.addItem(1 + i, info->name + " on " + info->host + " (" + info->ip + ":" + String(info->port) + ")");
 		}
 	}
 
-	int result = p.show();
 
-	if (result <= 0) return nullptr;
-	
-	return s->services[result - 1];
+	p.showMenuAsync(PopupMenu::Options(), [s, returnFunc](int result)
+		{
+			if (result <= 0) return;
+
+			returnFunc(s->services[result - 1]);
+		}
+	);
 }
 
 void ZeroconfManager::search()

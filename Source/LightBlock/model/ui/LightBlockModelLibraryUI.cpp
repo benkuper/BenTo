@@ -26,7 +26,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 
 	viewport.setViewedComponent(&container, false);
 	viewport.setScrollBarsShown(true, false);
-	viewport.setScrollOnDragEnabled(false);
+	viewport.setScrollOnDragMode(Viewport::ScrollOnDragMode::never);
 	viewport.setScrollBarThickness(10);
 	addAndMakeVisible(viewport);
 

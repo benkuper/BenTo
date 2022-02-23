@@ -32,6 +32,8 @@ public:
 	std::unique_ptr<PropTargetFilterManager> filterManager;
 	BaseManager<LightBlockEffect> effects;
 
+	bool settingLengthFromMethod; //set length
+
 	void setBlockFromProvider(LightBlockColorProvider * provider);
 	Array<Colour> getColors(Prop * p, double absoluteTime, var params);
 
