@@ -1,4 +1,4 @@
-/*
+	/*
   ==============================================================================
 
 	BentoEngine.cpp
@@ -20,7 +20,7 @@
 //#include "WebServer/BentoWebServer.h"
 #include "BentoSettings.h"
 #include "WebAssembly/WasmManager.h"
-
+#include "Timeline/TimelineBlockSequence.h"
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento"),
@@ -162,6 +162,29 @@ void BentoEngine::processMessage(const OSCMessage & m)
 		else
 		{
 			if(Prop * p = PropManager::getInstance()->getPropWithId(id)) p->handleOSCMessage(lm);
+		}
+	}
+	else if (aList[1] == "assignAndPlay")
+	{
+		String modelName = OSCHelpers::getStringArg(m[0]);
+		LightBlockModel* lm = LightBlockModelLibrary::getInstance()->getModelWithName(modelName);
+
+		if (TimelineBlock * b = dynamic_cast<TimelineBlock *>(lm))
+		{
+			Array<Prop*> props;
+			if (m.size() == 1) props.addArray(PropManager::getInstance()->items);
+			else
+			{
+				for (int i = 1; i < m.size();i++) props.add(PropManager::getInstance()->getPropWithId(m[i].getInt32()));
+			}
+
+			for (auto& p : props)
+			{
+				p->activeProvider->setValueFromTarget(b);
+				p->enabled->setValue(true);
+				b->sequence->stopTrigger->trigger();
+				b->sequence->playTrigger->trigger();
+			}
 		}
 	}
 }
