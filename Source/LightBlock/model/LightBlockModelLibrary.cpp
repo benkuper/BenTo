@@ -183,7 +183,7 @@ Array<LightBlockModel*> LightBlockModelLibrary::getAllFilters(bool includeUserMo
 LightBlockModel * LightBlockModelLibrary::getModelWithName(const String & modelName)
 {
 	Array<LightBlockModel *> models = getAllModels();
-	for (auto &m : models) if (m->shortName == modelName) return m;
+	for (auto &m : models) if (m->shortName == modelName || m->niceName == modelName) return m;
 	return nullptr;
 }
 
