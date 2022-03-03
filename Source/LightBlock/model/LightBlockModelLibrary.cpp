@@ -19,7 +19,6 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	pictureBlocks("Pictures", UserLightBlockModelManager::PICTURE),
 	nodeBlocks("Nodes", UserLightBlockModelManager::NODE),
 	scriptBlocks("Scripts", UserLightBlockModelManager::SCRIPT),
-	wasmBlocks("Wasm", UserLightBlockModelManager::WASM),
 	timelineBlocks("Timeline", UserLightBlockModelManager::TIMELINE),
 	genericFilterBlocks("Generic Filters")
 {

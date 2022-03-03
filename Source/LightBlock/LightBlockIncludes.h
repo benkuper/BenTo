@@ -28,7 +28,6 @@
 
 #include "model/LightBlockModelGroup.h"
 #include "model/UserLightBlockModelManager.h"
-#include "model/LightBlockModelLibrary.h"
 
 #include "model/blocks/filters/LightBlockFilter.h"
 #include "model/blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.h"
@@ -56,9 +55,7 @@
 #include "model/blocks/video/LiveFeedBlock.h"
 #include "model/blocks/video/VideoBlock.h"
 
-
-#include "model/ui/LightBlockModelParameterEditor.h"
-#include "model/ui/LightBlockModelParameterManagerEditor.h"
+#include "model/LightBlockModelLibrary.h"
 
 #include "model/ui/LightBlockModelUI.h"
 #include "model/ui/LightBlockModelManagerUI.h"
@@ -67,6 +64,14 @@
 #include "model/blocks/timeline/ui/TimelineBlockUI.h"
 #include "model/blocks/node/ui/NodeBlockUI.h"
 #include "model/blocks/picture/ui/PictureBlockUI.h"
+
+#include "model/ui/LightBlockModelParameterEditor.h"
+#include "model/ui/LightBlockModelParameterManagerEditor.h"
+
+
+
+
+
 
 #include "model/ui/LightBlockModelGroupUI.h"
 #include "model/ui/LightBlockModelLibraryUI.h"

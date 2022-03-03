@@ -1,6 +1,6 @@
 #include "MainManager.h"
 
-MainManager * MainManager::instance = nullptr;
+MainManager *MainManager::instance = nullptr;
 MainManager::MainManager(String fwVersion) : Component("root"),
                                              fwVersion(fwVersion),
                                              initTimer(2000)
@@ -34,8 +34,6 @@ void MainManager::init()
     }
     gpio_deep_sleep_hold_en();
 #endif
-
-
 
     ((EventBroadcaster<CommunicationEvent> *)&comm)->addListener(std::bind(&MainManager::communicationEvent, this, std::placeholders::_1));
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
@@ -74,7 +72,7 @@ void MainManager::init()
 
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
 
-    NDBG("Board is "+String(ARDUINO_BOARD));
+    NDBG("Board is " + String(ARDUINO_BOARD));
 }
 
 void MainManager::update()
@@ -82,7 +80,7 @@ void MainManager::update()
     initTimer.update();
 
     files.update();
-    
+
     if (files.isUploading)
         return;
 
@@ -95,15 +93,15 @@ void MainManager::update()
     touch.update();
     cap.update();
 
-    //tmp call this from ledmanager
-    //scripts.update();
-    
+    // tmp call this from ledmanager
+    // scripts.update();
+
     pwm.update();
 
-// TSTART()
+    // TSTART()
     leds.update();
-// TFINISH("Leds")
-    
+    // TFINISH("Leds")
+
 #ifdef POWEROFF_IF_NOTCONNECTED
     if (comm.wifiManager.state == ConnectionState::ConnectionError)
     {
@@ -161,8 +159,6 @@ void MainManager::sleep(CRGB color)
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
 {
-
-
 
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
     leds.setConnectionState(e.type);
@@ -265,12 +261,20 @@ void MainManager::buttonEvent(const ButtonEvent &e)
             if (e.value == 2)
             {
                 leds.playerMode.stop();
+                scripts.stop();
             }
             else if (e.value >= 3)
             {
-                leds.playerMode.load("demo" + String(e.value - 3));
-                leds.playerMode.loopShow = true;
-                leds.playerMode.play();
+                if (e.id == 0)
+                {
+                    leds.playerMode.load("demo" + String(e.value - 3));
+                    leds.playerMode.loopShow = true;
+                    leds.playerMode.play();
+                }
+                else
+                {
+                    scripts.launchScript("demo" + String(e.value - 3));
+                }
             }
         }
         break;
@@ -368,7 +372,6 @@ void MainManager::imuEvent(const IMUEvent &e)
     }
     break;
 
-    
     case IMUEvent::ProjectedAngleUpdate:
     {
         var data[1];
@@ -438,7 +441,6 @@ void MainManager::rgbLedsEvent(const RGBLedsEvent &e)
         comm.sendMessage(leds.rgbManager.name, RGBLedsEvent::eventNames[(int)e.type], data, 1);
     }
     break;
-    
     }
 }
 
