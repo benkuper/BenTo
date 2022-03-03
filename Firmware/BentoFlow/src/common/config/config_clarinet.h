@@ -25,7 +25,7 @@
 #define KEEP_SLEEP_PIN_HIGH
 #define SLEEP_PIN 12 // pin for turning the LDO on and off. LOW for off and HIGH for on.
 #define SLEEP_PIN_SLEEP_VAL LOW
-#define SLEEP_WAKEUP_BUTTON GPIO_NUM_4
+#define SLEEP_WAKEUP_BUTTON GPIO_NUM_36
 #define SLEEP_WAKEUP_STATE HIGH
 
 // #define POWEROFF_IF_NOTCONNECTED
@@ -35,7 +35,7 @@
 // button pin
 #define BUTTON_COUNT 2
 #define BUTTON_INPUT_MODE INPUT_PULLDOWN
-const int buttonPins[BUTTON_COUNT]{4, 5};
+const int buttonPins[BUTTON_COUNT]{36, 5};
 
 //battery sence
 #define BATTERY_PIN 35 // takes the measurment from the battery sence.
