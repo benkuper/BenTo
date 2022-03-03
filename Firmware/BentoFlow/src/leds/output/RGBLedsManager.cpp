@@ -191,6 +191,8 @@ void RGBLedsManager::setBrightness(float value, bool save)
 void RGBLedsManager::setLedEnabled(bool val)
 {
     ledEnabled = val;
+    FastLED.clear();
+    FastLED.show();
 #ifdef LED_EN_PIN
     NDBG("Set Led Enabled : "+String(val));
     pinMode(LED_EN_PIN, OUTPUT); //enable LEDs

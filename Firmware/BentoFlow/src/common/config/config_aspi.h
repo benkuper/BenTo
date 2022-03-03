@@ -10,12 +10,12 @@
 #endif
 
 // main leds config
-#define LED_COUNT 104
+#define LED_COUNT 104 + 122 // 104 leds dans le corps, 122 leds dans le tube
 #define LED_DATA_PIN 26
 #define LED_TYPE WS2812B
 #define LED_COLOR_ORDER GRB
 #define LED_MAX_BRIGHTNESS 200
-#define LED_DEFAULT_BRIGHTNESS .5
+#define LED_DEFAULT_BRIGHTNESS .2
 //#define LED_USE_FET
 //#define LED_FET_PIN 33
 
@@ -23,6 +23,7 @@
 #define GENERATE_LED_INDEX_MAP
 #define STRIP_LED_COUNT 26
 #define NUM_STRIPS 4
+#define NUM_LEDS_IN_BODY STRIP_LED_COUNT * NUM_STRIPS
 
 
 void generateLedIndexMap();

@@ -76,7 +76,7 @@
 #include "config_tab_cyrwheel.h"
 #elif defined ARDUINO_FLOWTOYS_CREATOR_LIGHTBULB
 #include "config_lamp.h"
-#elif defined ASPI
+#elif defined ARDUINO_ASPI
 #include "config_aspi.h"
 #elif defined ARDUINO_BIKE
 #include "config_bike.h"
