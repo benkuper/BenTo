@@ -21,6 +21,9 @@
 */
 
 //#include "../DebugHelpers.h"
+
+#ifndef ESP32
+
 #include "SettingsManager.h"
 
 
@@ -28,23 +31,23 @@
     Reads the content of settings file given by path/name
 */
 int SettingsManager::readSettings(const char *fileName) {
-  // DBG("Reading settings from: " + String(fileName));
+  Serial.println("Reading settings from: " + String(fileName));
   unsigned int loaded = SM_SUCCESS;
   openSPIFFS();
   File file = SPIFFS.open(fileName, "r");
   if (!file) {
-    // DBG("Could not open file");
+     Serial.println("Could not open file");
     SPIFFS.end();
     loaded = SM_ERROR;
   } else {
     char js[JSON_LEN] = {0};
     getFileContent(js, file);
-    // DBG("File content : "+String(js));
+     Serial.println("File content : "+String(js));
     loaded = loadJson(js);
     file.close();
     SPIFFS.end();
   }
-  // DBG("Closing file");
+   Serial.println("Closing file");
   return loaded;
 }
 
@@ -428,3 +431,5 @@ int SettingsManager::setBool(const char *key, const bool value, bool addIfMissin
     return SM_KEY_NOT_FOUND;
   }
 }
+
+#endif

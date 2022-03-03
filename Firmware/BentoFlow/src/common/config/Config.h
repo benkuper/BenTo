@@ -44,7 +44,7 @@
 #include "config_lthoop.h"
 #elif defined LT_BALL
 #include "config_ltball.h"
-#elif defined CLARINET
+#elif defined ARDUINO_CLARINET
 #include "config_clarinet.h"
 #elif defined SAX
 #include "config_sax.h"

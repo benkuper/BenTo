@@ -197,15 +197,22 @@ void IMUManager::readIMU()
   // float temp = q.x();  q.x() = -q.y();  q.y() = temp;
   // q.z() = -q.z();
 
+   imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+  if(acc.x() == 0 && acc.y() == 0 && acc.z() == 0) return;
+  accel[0] = acc.x();
+  accel[1] = acc.y();
+  accel[2] = acc.z();
+
+
   imu::Vector<3> euler = q.toEuler();
+  if(isnan(euler.x()) || isnan(euler.y()) || isnan(euler.z())) return;
+  
   orientation[0] = fmod(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f;
   orientation[1] = euler.y() * 180 / PI; // Pitch
   orientation[2] = euler.z() * 180 / PI; // Roll
 
-  imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-  accel[0] = acc.x();
-  accel[1] = acc.y();
-  accel[2] = acc.z();
+
+ 
 
   imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   linearAccel[0] = laccel.x();

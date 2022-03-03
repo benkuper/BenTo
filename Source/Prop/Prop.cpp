@@ -360,6 +360,12 @@ void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
 			}
 		);
 	}
+	else
+	{
+		bakingProgress->setValue(0);
+		uploadProgress->setValue(0);
+		isBaking->setValue(true);
+	}
 }
 
 BakeData Prop::bakeBlock()

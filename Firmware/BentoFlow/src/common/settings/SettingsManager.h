@@ -21,6 +21,9 @@
 */
 
 #pragma once
+
+#ifndef ESP32
+
 #include <Arduino.h>
 #include "Config.h"
 
@@ -90,3 +93,5 @@ class SettingsManager {
   void getFileContent(char *content, File &file);
   void openSPIFFS();
 };
+
+#endif
