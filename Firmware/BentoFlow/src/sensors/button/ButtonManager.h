@@ -31,9 +31,11 @@ public:
     ButtonManager();
     ~ButtonManager(){}
 
+#ifdef BUTTON_COUNT
     bool isPressed[BUTTON_COUNT];
     bool isLongPressed[BUTTON_COUNT];
     bool isVeryLongPressed[BUTTON_COUNT];
+#endif
 
     void init();
     void update();
@@ -45,9 +47,11 @@ private :
     const int multiPressTime = 300;       //each new press shorter than 500ms after the previous one will increase the multiclick
     
     const int buttonPressDebounce = 5;    //denoising, needs five reads to validate a change
+    
+#ifdef BUTTON_COUNT
     int debounceCount[BUTTON_COUNT];
 
     long timeAtPress[BUTTON_COUNT];
     int multiPressCount[BUTTON_COUNT];
-
+#endif
 };

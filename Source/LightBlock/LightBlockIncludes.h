@@ -39,7 +39,6 @@
 
 #include "model/blocks/node/NodeBlock.h"
 
-#include "model/blocks/pattern/PerlinNoise.hpp"
 #include "model/blocks/pattern/PatternBlock.h"
 
 #include "model/blocks/picture/PictureBlock.h"

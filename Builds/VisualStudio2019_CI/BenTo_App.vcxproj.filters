@@ -4875,9 +4875,6 @@
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PerlinNoise.hpp">
-      <Filter>BenTo\Source\LightBlock\model\blocks\pattern</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\pattern</Filter>
     </ClInclude>
@@ -7879,6 +7876,9 @@
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\OSCHelpers.h">
+      <Filter>JUCE Modules\juce_organicui\helpers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\helpers\PerlinNoise.hpp">
       <Filter>JUCE Modules\juce_organicui\helpers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\QueuedNotifier.h">

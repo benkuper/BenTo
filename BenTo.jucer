@@ -413,7 +413,6 @@
               <FILE id="eocegK" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
             </GROUP>
             <GROUP id="{C3E304E5-69B5-CD46-F35F-67763032BEA6}" name="pattern">
-              <FILE id="VKxV3L" name="PerlinNoise.hpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PerlinNoise.hpp"/>
               <FILE id="RcwkQf" name="PatternBlock.cpp" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/pattern/PatternBlock.cpp"/>
               <FILE id="qnd4Dp" name="PatternBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PatternBlock.h"/>

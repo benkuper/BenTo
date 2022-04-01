@@ -3438,7 +3438,6 @@
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\LiveFeedBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\TextureBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.h"/>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PerlinNoise.hpp"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\timeline\ui\TimelineBlockUI.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\timeline\TimelineBlock.h"/>
@@ -4440,6 +4439,7 @@
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\DebugHelpers.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\NetworkHelpers.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\OSCHelpers.h"/>
+    <ClInclude Include="..\..\Modules\juce_organicui\helpers\PerlinNoise.hpp"/>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\QueuedNotifier.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\RegexFunctions.h"/>
     <ClInclude Include="..\..\Modules\juce_organicui\helpers\StringUtil.h"/>

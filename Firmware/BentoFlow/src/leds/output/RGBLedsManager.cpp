@@ -56,24 +56,47 @@ void RGBLedsManager::init()
 
     setLedEnabled(true);
 
-#if defined LED_CLK_PIN
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
-#else
+
 #ifdef LED_NUM_STRIPS
+#define LED_START1 0
 #if LED_NUM_STRIPS >= 1
-    FastLED.addLeds<LED_TYPE, LED_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
+#if defined LED_CLK_PIN1
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_CLK_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
+#else
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
+#endif //CLK
+#define LED_START2 LED_START1+LED_COUNT1
 
 #if LED_NUM_STRIPS >= 2
-    FastLED.addLeds<LED_TYPE, LED_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
+#if defined LED_CLK_PIN2
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_CLK_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
+#else
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
+#endif //CLK
+#define LED_START3 LED_START2+LED_COUNT2
 
 #if LED_NUM_STRIPS >= 3
-    FastLED.addLeds<LED_TYPE, LED_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
+#if defined LED_CLK_PIN3
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_CLK_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
+#else
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
+#endif //CL
+#define LED_START4 LED_START3+LED_COUNT3
 
 #if LED_NUM_STRIPS >= 4
-    FastLED.addLeds<LED_TYPE, LED_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
+#if defined LED_CLK_PIN4
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_CLK_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
+#else
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
+#endif //CLK
+#define LED_START5 LED_START4+LED_COUNT4
 
 #if LED_NUM_STRIPS >= 5
-    FastLED.addLeds<LED_TYPE, LED_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
+#if defined LED_CLK_PIN5
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_CLK_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
+#else
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
+#endif //CLK
 
 #endif //5
 #endif //4
@@ -81,19 +104,14 @@ void RGBLedsManager::init()
 #endif //2
 #endif //1
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
-#endif
-#endif
-
-#if defined LED2_TYPE
-#if defined LED2_CLK_PIN
-    FastLED.addLeds<LED2_TYPE, LED2_DATA_PIN, LED2_CLK_PIN, LED2_COLOR_ORDER>(leds, LED2_COUNT).setCorrection(TypicalLEDStrip);
+#if defined LED_CLK_PIN
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #else
-    FastLED.addLeds<LED2_TYPE, LED2_DATA_PIN, LED2_COLOR_ORDER>(leds, LED2_COUNT).setCorrection(TypicalLEDStrip);
-#endif //LED2_CLK
-#endif //LED2
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+#endif //CLK
+#endif // MULTISTRIP
+#endif //PWM / DMX / FastLED switch
 
-#endif
 
 #ifdef USE_PREFERENCES
     prefs.begin(name.c_str());

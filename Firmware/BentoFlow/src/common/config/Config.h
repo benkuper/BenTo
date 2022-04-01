@@ -84,6 +84,8 @@
 #include "config_simpleESP32.h"
 #elif defined ARDUINO_M5_TESTER
 #include "config_m5tester.h"
+#elif defined ARDUINO_FABIO_BALL
+#include "config_fabioball.h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION

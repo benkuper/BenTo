@@ -5,6 +5,7 @@ const String ButtonEvent::eventNames[ButtonEvent::TYPES_MAX]{"pressed", "shortPr
 
 ButtonManager::ButtonManager() : Component("buttons")
 {
+#ifdef BUTTON_COUNT
     for (int i = 0; i < BUTTON_COUNT; i++)
     {
         isPressed[i] = false;
@@ -12,6 +13,7 @@ ButtonManager::ButtonManager() : Component("buttons")
         multiPressCount[i] = 0;
         timeAtPress[i] = 0;
     }
+#endif
 }
 
 void ButtonManager::init()

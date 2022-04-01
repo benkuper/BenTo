@@ -2,6 +2,8 @@
 #include <Arduino.h>
 #include "../DebugHelpers.h"
 
+#ifdef ARDUINO_ASPI
+
 int ledIndexMap[LED_COUNT];
 
 void generateLedIndexMap()
@@ -25,3 +27,5 @@ int getLedAtIndex(int index)
 {
     return ledIndexMap[index];
 }
+
+#endif
