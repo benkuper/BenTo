@@ -29,6 +29,8 @@ void PropViz::paint(Graphics & g)
 		return;
 	}
 
+	if (PropManager::getInstance()->disablePreview->boolValue()) return;
+
 	int numLeds = prop->resolution->intValue();
 
 	Prop::Shape shape = prop->type->getValueDataAsEnum<Prop::Shape>();
@@ -79,6 +81,7 @@ void PropViz::paint(Graphics & g)
 
 void PropViz::newMessage(const Prop::PropEvent & e)
 {
+	if (PropManager::getInstance()->disablePreview->boolValue()) return;
 	switch (e.type)
 	{
 	case Prop::PropEvent::BLOCK_CHANGED:

@@ -24,6 +24,6 @@ public:
 
 	void autoRenameItems();
 	void removeItemInternal(LightBlockModelParameter * i) override;
-	InspectableEditor * getEditorInternal(bool isRoot) override;
+	InspectableEditor * getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = {}) override;
 
 };

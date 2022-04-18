@@ -44,6 +44,7 @@ public:
 
 	Trigger * autoAssignIdTrigger;
 	Trigger* clearAll;
+	BoolParameter* disablePreview;
 
 	ControllableContainer connectionCC;
 	Trigger* detectProps;

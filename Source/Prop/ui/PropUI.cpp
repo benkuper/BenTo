@@ -22,7 +22,7 @@ PropUI::PropUI(Prop* p) :
 	acceptedDropTypes.add("Node");
 
 	idUI.reset(p->globalID->createLabelUI());
-	idUI->showLabel = true;
+	idUI->showLabel = false;
 
 	if (BatteryPropComponent* bat = dynamic_cast<BatteryPropComponent*>(p->getComponent("battery")))
 	{

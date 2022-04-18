@@ -34,19 +34,22 @@ PropManager::PropManager() :
 
 	autoAssignIdTrigger = controlsCC.addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 	sendFeedback = controlsCC.addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
+	clearAll = controlsCC.addTrigger("Clear all props", "Remove all props from manager");
+	disablePreview = controlsCC.addBoolParameter("Disable preview", "If checked, this will disable preview in prop UI, it reduces considerably the cpu/gpu consumption.", false);
 	addChildControllableContainer(&controlsCC);
 
 	bakeAll = showCC.addTrigger("Bake All", "Bake all props");
 	bakeMode = showCC.addBoolParameter("Bake Mode", "Bake Mode", false);
 	powerOffAll = showCC.addTrigger("Poweroff All", "");
 	resetAll = showCC.addTrigger("Reset All", "");
-	clearAll = showCC.addTrigger("Clear all props", "Remove all props from manager");
 	fileName = showCC.addStringParameter("Show filename", "Filename of the show", "timeline");
 	loadAll = showCC.addTrigger("Load all", "Load show on all devices that can play");
 	playAll = showCC.addTrigger("Play all", "Play show on all devices that can play");
 	stopAll = showCC.addTrigger("Stop all", "Stop show on all devices that can stop");
 	loop = showCC.addBoolParameter("Loop show", "If checked, this will tell the player to loop the playing", false);
 	addChildControllableContainer(&showCC);
+
+
 	
 	String localIp = NetworkHelpers::getLocalIP();
 
