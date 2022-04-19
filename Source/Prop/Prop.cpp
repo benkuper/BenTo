@@ -226,7 +226,8 @@ void Prop::update()
 	else if (currentBlock != nullptr)
 	{
 		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
-		colors = currentBlock->getColors(this, time, var());
+		colors.clear();
+		colors.addArray(currentBlock->getColors(this, time, var()));
 
 		if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
 		{

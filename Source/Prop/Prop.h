@@ -81,7 +81,7 @@ public:
 
 	File exportFile;
 
-	Array<Colour> colors;
+	Array<Colour, CriticalSection> colors;
 
 	std::unique_ptr<LightBlock> currentBlock;
 	TargetParameter* activeProvider;
