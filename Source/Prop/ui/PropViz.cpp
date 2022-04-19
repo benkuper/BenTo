@@ -1,26 +1,31 @@
 /*
   ==============================================================================
 
-    PropViz.cpp
-    Created: 11 Apr 2018 10:17:51pm
-    Author:  Ben
+	PropViz.cpp
+	Created: 11 Apr 2018 10:17:51pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-PropViz::PropViz(Prop * prop) :
+juce_ImplementSingleton(VizTimer);
+
+PropViz::PropViz(Prop* prop) :
 	prop(prop),
-	propRef(prop)
+	propRef(prop),
+	shouldRepaint(true)
 {
 	prop->addAsyncCoalescedPropListener(this);
+	VizTimer::getInstance()->registerViz(this);
 }
 
 PropViz::~PropViz()
 {
-	if(!propRef.wasObjectDeleted()) prop->removeAsyncPropListener(this);
+	if (!propRef.wasObjectDeleted()) prop->removeAsyncPropListener(this);
+	if (VizTimer* vz = VizTimer::getInstanceWithoutCreating()) vz->unregisterViz(this);
 }
 
-void PropViz::paint(Graphics & g)
+void PropViz::paint(Graphics& g)
 {
 	if (propRef.wasObjectDeleted() || prop->currentBlock == nullptr)
 	{
@@ -60,35 +65,71 @@ void PropViz::paint(Graphics & g)
 	{
 		float size = jmin(getWidth(), getHeight()) - 8;
 		Rectangle<int> r = getLocalBounds().withSizeKeepingCentre(size, size);
-		
+
 		float radius = r.getWidth() / 2;
 		float angle = float_Pi * 2 / numLeds;
-		
+
 		for (int i = 0; i < numLeds; i++)
 		{
-			Rectangle<float> lr(cosf(angle * i) * radius, sinf(angle * i) * radius,4,4);
-			lr.translate(r.getCentreX()-2, r.getCentreY()-2);
+			Rectangle<float> lr(cosf(angle * i) * radius, sinf(angle * i) * radius, 4, 4);
+			lr.translate(r.getCentreX() - 2, r.getCentreY() - 2);
 			g.setColour(Colours::white.withAlpha(.2f));
-			g.drawEllipse(lr , .5f);
+			g.drawEllipse(lr, .5f);
 			g.setColour(prop->colors[i]);
 			g.fillEllipse(lr);
 		}
 	}
 	break;
 	}
-	
+
 }
 
-void PropViz::newMessage(const Prop::PropEvent & e)
+void PropViz::newMessage(const Prop::PropEvent& e)
 {
 	if (PropManager::getInstance()->disablePreview->boolValue()) return;
 	switch (e.type)
 	{
 	case Prop::PropEvent::BLOCK_CHANGED:
-		repaint();
+		//repaint();
+		shouldRepaint = true;
 		break;
 	case Prop::PropEvent::COLORS_UPDATED:
-		repaint();
+		//repaint();
+		shouldRepaint = true;
 		break;
 	}
+}
+
+void PropViz::handleRepaint()
+{
+	if (shouldRepaint)
+	{
+		if (prop->colorLock.tryEnter())
+		{
+			repaint();
+			shouldRepaint = false;
+			prop->colorLock.exit();
+		}
+	}
+}
+
+VizTimer::VizTimer()
+{
+	startTimerHz(20);
+}
+
+void VizTimer::registerViz(PropViz* viz)
+{
+	vizArray.addIfNotAlreadyThere(viz);
+}
+
+void VizTimer::unregisterViz(PropViz* viz)
+{
+	vizArray.removeAllInstancesOf(viz);
+}
+
+void VizTimer::timerCallback()
+{
+	if (PropManager::getInstance()->disablePreview->boolValue()) return;
+	for (auto& v : vizArray) v->handleRepaint();
 }
