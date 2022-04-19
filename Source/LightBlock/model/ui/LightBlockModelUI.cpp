@@ -9,7 +9,8 @@
 */
 
 LightBlockModelUI::LightBlockModelUI(LightBlockModel* model) :
-	BaseItemMinimalUI(model)
+	BaseItemMinimalUI(model),
+	timelineBlock(dynamic_cast<TimelineBlock*>(model))
 {
 	bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bgColor = BG_COLOR.brighter(.1f);
 
@@ -30,7 +31,9 @@ LightBlockModelUI::~LightBlockModelUI()
 
 void LightBlockModelUI::paint(Graphics& g)
 {
-	g.setColour(bgColor.brighter(isMouseOver()?.2f:0));
+	Colour bgC = bgColor;
+	if (timelineBlock != nullptr && timelineBlock->sequence->isPlaying->boolValue()) bgC = GREEN_COLOR.darker();
+	g.setColour(bgC.brighter(isMouseOver() ? .2f : 0));
 	g.fillRoundedRectangle(getLocalBounds().toFloat(), 2);
 	g.setColour(Colours::white);// .withAlpha(isMouseOver() ? .2f : 1.f));
 	if (modelImage.getWidth() > 0)
@@ -40,11 +43,11 @@ void LightBlockModelUI::paint(Graphics& g)
 	}
 
 	g.setColour(Colours::black.withAlpha(.5f));
-	g.fillRoundedRectangle(getLocalBounds().removeFromTop(isMouseOver()?16:14).toFloat(), 2);
+	g.fillRoundedRectangle(getLocalBounds().removeFromTop(isMouseOver() ? 16 : 14).toFloat(), 2);
 
 	g.setFont(isMouseOver() ? 13 : 12);
 	g.setColour(Colours::white);
-	g.drawFittedText(item->niceName, getLocalBounds().removeFromTop(isMouseOver()?16:14), Justification::centred, 3);
+	g.drawFittedText(item->niceName, getLocalBounds().removeFromTop(isMouseOver() ? 16 : 14), Justification::centred, 3);
 }
 
 
@@ -133,5 +136,13 @@ void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent& e)
 		bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bgColor = BG_COLOR.brighter(.1f);
 		repaint();
 		break;
+	}
+}
+
+void LightBlockModelUI::controllableFeedbackUpdateInternal(Controllable* c)
+{
+	if (timelineBlock != nullptr && c == timelineBlock->sequence->isPlaying)
+	{
+		repaint();
 	}
 }

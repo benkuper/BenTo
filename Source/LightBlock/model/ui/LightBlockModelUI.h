@@ -19,7 +19,8 @@ public:
 	~LightBlockModelUI();
 
 	Image modelImage;
-	
+	TimelineBlock* timelineBlock;
+
 	//static const Identifier dragAndDropID;
 
 	void paint(Graphics &g) override;
@@ -30,6 +31,9 @@ public:
 
 	void newMessage(const LightBlockModel::ModelEvent &e) override;
 
+	void controllableFeedbackUpdateInternal(Controllable* c) override;
+
 	void mouseDown(const MouseEvent &e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
 };
+

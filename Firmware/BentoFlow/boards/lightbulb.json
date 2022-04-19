@@ -10,7 +10,7 @@
     "flash_mode": "dio",
     "mcu": "esp32",
     "variant": "esp32",
-    "partitions":"no_ota.csv"
+    "partitions":"noota_3g.csv"
   },
   "connectivity": [
     "wifi",

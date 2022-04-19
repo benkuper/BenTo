@@ -187,6 +187,13 @@ void BentoEngine::processMessage(const OSCMessage & m)
 			}
 		}
 	}
+	else if (aList[1] == "stopAllSequences")
+	{
+		for (auto& b : LightBlockModelLibrary::getInstance()->timelineBlocks.items)
+		{
+			if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(b)) tb->sequence->stopTrigger->trigger();
+		}
+	}
 }
 
 
