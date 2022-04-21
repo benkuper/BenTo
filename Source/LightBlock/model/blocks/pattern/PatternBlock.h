@@ -140,6 +140,8 @@ public:
 	ColorParameter* color;
 	ColorParameter* bgColor;
 	IntParameter* extendNum;
+	BoolParameter* invertOdds;
+	BoolParameter* invertEvens;
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 

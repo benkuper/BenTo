@@ -12,12 +12,12 @@ RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
 	PropComponent(prop, "RGB"),
 	updateRate(params.getProperty("updateRate", 50)),
 	resolution(params.getProperty("resolution", 32)),
-	invertDirection(params.getProperty("invertDirection", false)),
 	useLayout(params.hasProperty("layout"))
 {
 
 	brightness = addFloatParameter("Brightness", "Brightness", params.getProperty("defaultBrightness", .5f), 0, 1);
 	streamEnable = addBoolParameter("Stream Colors", "If checked, this will be streaming colors", true);
+	invertDirection = addBoolParameter("Invert Direction", "If checked, inverse the order of  the leds", params.getProperty("invertDirection", false));
 
 	if (useLayout)
 	{

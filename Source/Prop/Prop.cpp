@@ -210,6 +210,8 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 
 void Prop::update()
 {
+	if (!enabled->boolValue()) return;
+
 	HashMap<String, PropComponent*>::Iterator it(components);
 	while (it.next()) it.getValue()->update();
 

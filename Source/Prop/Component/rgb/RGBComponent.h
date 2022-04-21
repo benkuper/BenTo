@@ -19,13 +19,13 @@ public:
 
     float updateRate;
     int resolution;
-    bool invertDirection;
 
     bool useLayout;
     Array<int> ledIndexMap;
 
     BoolParameter* streamEnable;
     FloatParameter* brightness;
+    BoolParameter* invertDirection;
 
     void handePropConnected() override;
 };
