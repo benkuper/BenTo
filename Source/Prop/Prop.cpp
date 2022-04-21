@@ -10,6 +10,7 @@
 
 #include "BentoEngine.h"
 #include "Prop.h"
+#include "Timeline/TimelineIncludes.h"
 
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
@@ -196,9 +197,20 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 		currentBlock->provider->addInspectableListener(this);
 		currentBlock->provider->addColorProviderListener(this);
 
+
 		registerLinkedInspectable(currentBlock->provider.get());
 
 		startThread();
+
+
+		if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(currentBlock->provider.get()))
+		{
+			if (tb->autoSetPropEnabled->boolValue())
+			{
+				bool hasLayers = !tb->sequence->getLayersForProp(this).isEmpty();
+				enabled->setValue(hasLayers);
+			}
+		}
 	}
 
 	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)

@@ -94,6 +94,14 @@
     #define LEDMAP(index) index
 #endif
 
+#ifndef BoardInit
+#define BoardInit
+#endif
+
+#ifndef BoardShutdown
+#define BoardShutdown
+#endif
+
 //#pragma message("Compiling for " ARDUINO_BOARD " (" DEVICE_TYPE ") ")
 
 #endif

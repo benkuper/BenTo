@@ -29,13 +29,13 @@ void BatteryManager::init()
     setMax(prefs.getInt("max", defaultMaxVal), false);
     prefs.end();
 #elif defined USE_SETTINGS_MANAGER
-    //init once with a json if it doesn't exist yet
+    // init once with a json if it doesn't exist yet
     prefs.readSettings(String("/" + name + ".json").c_str());
     float max = prefs.getInt("max", defaultMaxVal);
     prefs.loadJson(String("{\"max\":\"" + String(max) + "\"}").c_str());
     prefs.writeSettings(String("/" + name + ".json").c_str());
 
-    //actually read the data
+    // actually read the data
     prefs.readSettings(String("/" + name + ".json").c_str());
     setMax(prefs.getInt("max", defaultMaxVal), false);
 #endif
@@ -47,17 +47,16 @@ void BatteryManager::update()
 {
 #ifdef BATTERY_PIN
 
-   long curTime = millis();
+    long curTime = millis();
 
-   if (curTime > timeSinceLastBatteryRead + batteryReadTime)
-   {
-         timeSinceLastBatteryRead = curTime;
-
+    if (curTime > timeSinceLastBatteryRead + batteryReadTime)
+    {
+        timeSinceLastBatteryRead = curTime;
 
 #ifdef CUSTOM_BATTERY_READ
         rawValue = getBatteryRawValue();
         voltage = getBatteryVoltage(rawValue);
-        value = (voltage - BATTERY_VOLTAGE_MIN) * (BATTERY_VOLTAGE_MAX - BATTERY_VOLTAGE_MIN);
+        value = constrain((voltage - BATTERY_VOLTAGE_MIN) / (BATTERY_VOLTAGE_MAX - BATTERY_VOLTAGE_MIN),0,1);
         isCharging = isChargingBattery();
 #else
         rawValue = analogRead(BATTERY_PIN);
@@ -67,7 +66,8 @@ void BatteryManager::update()
         updateCharge();
 #endif
 
-        if (sendEnabled) {
+        if (sendEnabled)
+        {
             sendEvent(BatteryEvent(BatteryEvent::Level, value));
             sendEvent(BatteryEvent(BatteryEvent::Voltage, voltage));
             sendEvent(BatteryEvent(BatteryEvent::RawValue, rawValue));
@@ -77,7 +77,7 @@ void BatteryManager::update()
         sendEvent(BatteryEvent(BatteryEvent::Charging, isCharging));
 #endif
 
-        bool batteryIsOK = voltage > 3.3; //value > criticalBatteryThreshold;
+        bool batteryIsOK = voltage > BATTERY_VOLTAGE_MIN; // value > criticalBatteryThreshold;
         if (batteryIsOK)
         {
             timeAtCriticalBattery = 0;
@@ -93,8 +93,6 @@ void BatteryManager::update()
                 sendEvent(BatteryEvent(BatteryEvent::CriticalLevel, value));
             }
         }
-
-
     }
 
 #endif
@@ -160,16 +158,16 @@ void BatteryManager::updateCharge()
         measuredVal += v;
     }
     */
-    isCharging = analogRead(BATTERY_CHARGE_PIN); //measuredVal == 0;
+    isCharging = analogRead(BATTERY_CHARGE_PIN); // measuredVal == 0;
 #endif
 }
 
 void BatteryManager::setSendEnabled(bool value)
 {
-  if (sendEnabled == value)
-    return;
+    if (sendEnabled == value)
+        return;
 
-  sendEnabled = value;
+    sendEnabled = value;
 }
 
 bool BatteryManager::handleCommand(String command, var *data, int numData)
@@ -179,7 +177,8 @@ bool BatteryManager::handleCommand(String command, var *data, int numData)
     {
         resetMax();
         return true;
-    } else if (checkCommand(command, "sendEnabled", numData, 1))
+    }
+    else if (checkCommand(command, "sendEnabled", numData, 1))
     {
         sendEnabled = data[0].intValue() == 1;
         return true;

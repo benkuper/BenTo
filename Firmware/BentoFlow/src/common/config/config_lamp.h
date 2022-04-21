@@ -66,4 +66,14 @@ float getBatteryVoltage(int raw);
 
 bool isChargingBattery();
 
+
+#define DOTSTAR_PWR 13
+#define DOTSTAR_DATA 2
+#define DOTSTAR_CLK 12
+
+#define BoardInit \
+digitalWrite( DOTSTAR_PWR, true ); \
+pinMode( DOTSTAR_DATA, INPUT_PULLDOWN ); \
+pinMode( DOTSTAR_CLK,  INPUT_PULLDOWN );
+
 #endif

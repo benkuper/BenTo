@@ -72,6 +72,8 @@ void MainManager::init()
 
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
 
+    BoardInit
+
     NDBG("Board is " + String(ARDUINO_BOARD));
 }
 
@@ -125,6 +127,8 @@ void MainManager::sleep(CRGB color)
     comm.sendMessage(name, "sleep", nullptr, 0);
     leds.shutdown(color); // to replace with battery color
     pwm.shutdown();
+
+    BoardShutdown
 
     delay(500);
 

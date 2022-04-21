@@ -134,6 +134,8 @@ void RGBLedsManager::init()
 
 void RGBLedsManager::update()
 {
+    if(!ledEnabled) return;
+
 #ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
     for (int i = 0; i < LED_COUNT; i++)
@@ -220,7 +222,7 @@ void RGBLedsManager::setLedEnabled(bool val)
 #ifdef LED_USE_FET
     NDBG("Set Led Enabled (FET) : "+String(val));
     digitalWrite(LED_FET_PIN, val);
-    pinMode(LED_DATA_PIN, val ? OUTPUT : INPUT);
+    pinMode(LED_DATA_PIN, val ? OUTPUT : INPUT_PULLDOWN);
 #endif
 }
 
