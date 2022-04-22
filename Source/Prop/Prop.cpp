@@ -132,6 +132,8 @@ Prop::Prop(var params) :
 
 	pingEnabled = params.getProperty("ping", pingEnabled);
 	if (pingEnabled) startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
+
+	startThread();
 }
 
 Prop::~Prop()
@@ -171,8 +173,6 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 
 	if (currentBlock != nullptr)
 	{
-		signalThreadShouldExit();
-		waitForThreadToExit(100);
 
 		removeChildControllableContainer(currentBlock.get());
 		if (!currentBlock->provider.wasObjectDeleted())
@@ -200,7 +200,6 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 
 		registerLinkedInspectable(currentBlock->provider.get());
 
-		startThread();
 
 
 		if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(currentBlock->provider.get()))
@@ -212,6 +211,22 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 			}
 		}
 	}
+	
+	if (currentBlock != nullptr && enabled->boolValue())
+	{
+		//if(!isThreadRunning()) startThread();
+		
+	}
+	else
+	{
+		//if (isThreadRunning())
+		//{
+		//	signalThreadShouldExit();
+		//	waitForThreadToExit(50);
+		//}
+	}
+	
+
 
 	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
 	{
@@ -696,7 +711,7 @@ void Prop::run()
 		}
 		else
 		{
-			update();
+			if(enabled->boolValue()) update();
 			sleep(1000.0f / updateRate); //50fps
 		}
 	}

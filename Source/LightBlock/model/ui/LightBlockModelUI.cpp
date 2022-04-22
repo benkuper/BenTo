@@ -12,7 +12,6 @@ LightBlockModelUI::LightBlockModelUI(LightBlockModel* model) :
 	BaseItemMinimalUI(model),
 	timelineBlock(dynamic_cast<TimelineBlock*>(model))
 {
-	bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bgColor = BG_COLOR.brighter(.1f);
 
 	updateThumbnail();
 
@@ -31,6 +30,9 @@ LightBlockModelUI::~LightBlockModelUI()
 
 void LightBlockModelUI::paint(Graphics& g)
 {
+	Colour bc = item->itemColor->getColor();
+	bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bc;
+	
 	Colour bgC = bgColor;
 	if (timelineBlock != nullptr && timelineBlock->sequence->isPlaying->boolValue()) bgC = GREEN_COLOR.darker();
 	g.setColour(bgC.brighter(isMouseOver() ? .2f : 0));
@@ -133,7 +135,6 @@ void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent& e)
 		break;
 
 	case LightBlockModel::ModelEvent::EDITING_STATE_CHANGED:
-		bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bgColor = BG_COLOR.brighter(.1f);
 		repaint();
 		break;
 	}
