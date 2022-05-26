@@ -165,7 +165,10 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
 
 
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
-    leds.setConnectionState(e.type);
+
+    if(!leds.playerMode.isPlaying) {
+        leds.setConnectionState(e.type);
+    }
 
     if (e.source == "wifi")
     {
