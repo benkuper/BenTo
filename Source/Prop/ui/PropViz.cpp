@@ -1,26 +1,31 @@
 /*
   ==============================================================================
 
-    PropViz.cpp
-    Created: 11 Apr 2018 10:17:51pm
-    Author:  Ben
+	PropViz.cpp
+	Created: 11 Apr 2018 10:17:51pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-PropViz::PropViz(Prop * prop) :
+juce_ImplementSingleton(VizTimer);
+
+PropViz::PropViz(Prop* prop) :
 	prop(prop),
-	propRef(prop)
+	propRef(prop),
+	shouldRepaint(true)
 {
 	prop->addAsyncCoalescedPropListener(this);
+	VizTimer::getInstance()->registerViz(this);
 }
 
 PropViz::~PropViz()
 {
-	if(!propRef.wasObjectDeleted()) prop->removeAsyncPropListener(this);
+	if (!propRef.wasObjectDeleted()) prop->removeAsyncPropListener(this);
+	if (VizTimer* vz = VizTimer::getInstanceWithoutCreating()) vz->unregisterViz(this);
 }
 
-void PropViz::paint(Graphics & g)
+void PropViz::paint(Graphics& g)
 {
 	if (propRef.wasObjectDeleted() || prop->currentBlock == nullptr)
 	{
@@ -29,7 +34,11 @@ void PropViz::paint(Graphics & g)
 		return;
 	}
 
+	if (PropManager::getInstance()->disablePreview->boolValue()) return;
+
 	int numLeds = prop->resolution->intValue();
+
+	if (numLeds == 0) return;
 
 	Prop::Shape shape = prop->type->getValueDataAsEnum<Prop::Shape>();
 
@@ -38,14 +47,17 @@ void PropViz::paint(Graphics & g)
 	case Prop::Shape::CLUB:
 	{
 		float ratio = getWidth() * 1.0f / getHeight();
-		int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 1);
+		int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 2);
 
-		Rectangle<int> lr(getLocalBounds());
-		lr = lr.withSizeKeepingCentre(ledSize, ledSize * numLeds);
+		Rectangle<int> lr(getLocalBounds().reduced(0,ledSize));
+
+		Rectangle<int> ls = lr.withCentre(lr.getCentre()).withSizeKeepingCentre(ledSize, ledSize);
+		//lr = lr.withSizeKeepingCentre(ledSize, ledSize * numLeds);
 
 		for (int i = 0; i < numLeds; i++)
 		{
-			Rectangle<float> ledR = lr.removeFromTop(ledSize).reduced(1).toFloat();
+			float p = i * 1.0f / (numLeds - 1);
+			Rectangle<float> ledR = ls.withY(lr.getY() + p * lr.getHeight() - ledSize / 2.0f).toFloat();
 			g.setColour(Colours::white.withAlpha(.2f));
 			g.drawEllipse(ledR, .5f);
 			g.setColour(prop->colors[numLeds - 1 - i]);
@@ -58,34 +70,72 @@ void PropViz::paint(Graphics & g)
 	{
 		float size = jmin(getWidth(), getHeight()) - 8;
 		Rectangle<int> r = getLocalBounds().withSizeKeepingCentre(size, size);
-		
+
 		float radius = r.getWidth() / 2;
 		float angle = float_Pi * 2 / numLeds;
-		
+
 		for (int i = 0; i < numLeds; i++)
 		{
-			Rectangle<float> lr(cosf(angle * i) * radius, sinf(angle * i) * radius,4,4);
-			lr.translate(r.getCentreX()-2, r.getCentreY()-2);
+			Rectangle<float> lr(cosf(angle * i) * radius, sinf(angle * i) * radius, 4, 4);
+			lr.translate(r.getCentreX() - 2, r.getCentreY() - 2);
 			g.setColour(Colours::white.withAlpha(.2f));
-			g.drawEllipse(lr , .5f);
+			g.drawEllipse(lr, .5f);
 			g.setColour(prop->colors[i]);
 			g.fillEllipse(lr);
 		}
 	}
 	break;
 	}
-	
+
 }
 
-void PropViz::newMessage(const Prop::PropEvent & e)
+void PropViz::newMessage(const Prop::PropEvent& e)
 {
+	if (PropManager::getInstance()->disablePreview->boolValue()) return;
 	switch (e.type)
 	{
 	case Prop::PropEvent::BLOCK_CHANGED:
-		repaint();
+		//repaint();
+		shouldRepaint = true;
 		break;
+
 	case Prop::PropEvent::COLORS_UPDATED:
-		repaint();
+		//repaint();
+		shouldRepaint = true;
 		break;
 	}
+}
+
+void PropViz::handleRepaint()
+{
+	if (shouldRepaint)
+	{
+		//if (prop->colorLock.tryEnter())
+	//	{
+			repaint();
+			shouldRepaint = false;
+			//prop->colorLock.exit();
+	//	}
+	}
+}
+
+VizTimer::VizTimer()
+{
+	startTimerHz(20);
+}
+
+void VizTimer::registerViz(PropViz* viz)
+{
+	vizArray.addIfNotAlreadyThere(viz);
+}
+
+void VizTimer::unregisterViz(PropViz* viz)
+{
+	vizArray.removeAllInstancesOf(viz);
+}
+
+void VizTimer::timerCallback()
+{
+	if (PropManager::getInstance()->disablePreview->boolValue()) return;
+	for (auto& v : vizArray) v->handleRepaint();
 }

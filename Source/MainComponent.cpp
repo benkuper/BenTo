@@ -29,6 +29,7 @@ MainComponent::MainComponent() :
 MainComponent::~MainComponent()
 {
 	SharedTextureManager::deleteInstance();
+	VizTimer::deleteInstance();
 }
 
 void MainComponent::init()

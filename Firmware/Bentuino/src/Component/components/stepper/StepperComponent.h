@@ -1,19 +1,22 @@
 #pragma once
 DeclareComponent(Stepper, "stepper",)
 
-    bool initInternal() override
-    {
-        return true;
-    }
+static FastAccelStepperEngine engine;
+static bool engineIsInit;
+FastAccelStepper *stepper = NULL;
 
-    void updateInternal()
-    {
+Parameter * stepPin;
+Parameter * dirPin;
+Parameter * enPin;
+Parameter * speed;
+Parameter * accel;
 
-    }
+Parameter * position;
 
-    void clearInternal()
-    {
+bool initInternal(JsonObject o) override;
+void updateInternal() override;
+void clearInternal() override;
 
-    }
+void onParameterEventInternal(const ParameterEvent &e) override;
 
 EndDeclareComponent

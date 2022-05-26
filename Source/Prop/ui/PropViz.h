@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PropViz.h
-    Created: 11 Apr 2018 10:17:51pm
-    Author:  Ben
+	PropViz.h
+	Created: 11 Apr 2018 10:17:51pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -15,14 +15,34 @@ class PropViz :
 	public Prop::AsyncListener
 {
 public:
-	PropViz(Prop * prop);
+	PropViz(Prop* prop);
 	~PropViz();
 
-	Prop * prop;
+	Prop* prop;
 	WeakReference<Inspectable> propRef;
 	BoolParameter* imuRef;
 
-	void paint(Graphics &g) override;
-	void newMessage(const Prop::PropEvent &e) override;
+	bool shouldRepaint;
 
+	void paint(Graphics& g) override;
+	void newMessage(const Prop::PropEvent& e) override;
+
+	void handleRepaint();
+};
+
+class VizTimer :
+	public Timer
+{
+public:
+	juce_DeclareSingleton(VizTimer, true);
+
+	VizTimer();
+	~VizTimer() {}
+
+	Array<PropViz*, CriticalSection> vizArray;
+
+	void registerViz(PropViz* viz);
+	void unregisterViz(PropViz* viz);
+
+	void timerCallback() override;
 };

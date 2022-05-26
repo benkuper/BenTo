@@ -7,10 +7,9 @@ DeclareComponentSingleton(Serial, "serial",)
 
     Parameter * feedbackEnabled;
 
-    bool initInternal() override;
-
-    void updateInternal();
-    void clearInternal();
+    bool initInternal(JsonObject o) override;
+    void updateInternal() override;
+    void clearInternal() override;
 
     
     void processMessage(String buffer);
@@ -18,7 +17,7 @@ DeclareComponentSingleton(Serial, "serial",)
 
     void send(const String &message);
 
-    DeclareEventTypes(MessageReceived);
-    DeclareEventNames("MessageReceived");
+    DeclareComponentEventTypes(MessageReceived);
+    DeclareComponentEventNames("MessageReceived");
 
 EndDeclareComponent

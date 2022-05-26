@@ -30,7 +30,7 @@ ScriptBlock::~ScriptBlock()
 
 Array<WeakReference<Controllable>> ScriptBlock::getModelParameters()
 {
-	return script.scriptParamsContainer.getAllControllables();
+	return script.scriptParamsContainer->getAllControllables();
 }
 
 void ScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)

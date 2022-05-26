@@ -123,7 +123,7 @@ void BentoProp::sendColorsToPropInternal()
 		data.add(indexPrefix->intValue());
 	}
 
-	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection);
+	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection->boolValue());
 	int startIndex =  invert ? numLeds - 1 : 0;
 	int endIndex = invert ? -1 : numLeds;
 	int step = invert ? -1 : 1;

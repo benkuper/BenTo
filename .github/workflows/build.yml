@@ -2,13 +2,13 @@ on: [push]
 
 env:
   ProjectName: BenTo
-  PackagesVersion: 1.2.9
+  PackagesVersion: 1.2.10
 
 jobs:
   windows:
     name: Windows
     #if: false # always skip job (heap space needs fix)
-    runs-on: windows-latest
+    runs-on: windows-2019
     strategy:
       matrix:
         include:

@@ -126,6 +126,28 @@ public:
 	String getTypeString() const override { return "Point"; }
 };
 
+class RangePattern :
+	public PatternBlock
+{
+public:
+	RangePattern(var params = var());
+	~RangePattern() {}
+
+	FloatParameter* brightness;
+	FloatParameter* start;
+	FloatParameter* end;
+	FloatParameter* fade;
+	ColorParameter* color;
+	ColorParameter* bgColor;
+	IntParameter* extendNum;
+	BoolParameter* invertOdds;
+	BoolParameter* invertEvens;
+
+	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
+
+	String getTypeString() const override { return "Range"; }
+};
+
 class MultiPointPattern :
 	public PatternBlock
 {

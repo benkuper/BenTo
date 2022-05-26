@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    ModelNodeUI.cpp
-    Created: 5 Mar 2019 11:17:25am
-    Author:  bkupe
+	ModelNodeUI.cpp
+	Created: 5 Mar 2019 11:17:25am
+	Author:  bkupe
 
   ==============================================================================
 */
 
-ModelNodeUI::ModelNodeUI(ModelNode * mn) :
+ModelNodeUI::ModelNodeUI(ModelNode* mn) :
 	ColorNodeViewUI(mn),
 	modelNode(mn),
 	isDraggingItemOver(false)
@@ -20,7 +20,7 @@ ModelNodeUI::~ModelNodeUI()
 {
 }
 
-void ModelNodeUI::paintOverChildren(Graphics & g)
+void ModelNodeUI::paintOverChildren(Graphics& g)
 {
 	if (isDraggingItemOver)
 	{
@@ -30,13 +30,12 @@ void ModelNodeUI::paintOverChildren(Graphics & g)
 }
 
 
-void ModelNodeUI::itemDropped(const SourceDetails & source)
+void ModelNodeUI::itemDropped(const SourceDetails& source)
 {
-	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
+	LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get());
 
 	if (modelUI != nullptr)
 	{
-		LightBlockColorProvider * provider = modelUI->item;
 
 		bool shift = KeyPress::isKeyCurrentlyDown(16);
 		if (shift)
@@ -45,12 +44,23 @@ void ModelNodeUI::itemDropped(const SourceDetails & source)
 			m.addItem(-1, "Default");
 			m.addSeparator();
 			int index = 1;
-			for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
-			int result = m.show();
-			if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+			for (auto& p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+			m.showMenuAsync(PopupMenu::Options(), [this, modelUI](int result)
+				{
+					if (result >= 1)
+					{
+						LightBlockColorProvider* provider = modelUI->item->presetManager.items[result - 1];
+						modelNode->activeProvider->setValueFromTarget(provider, true);
+					}
+				}
+			);
+
+		}
+		else
+		{
+			modelNode->activeProvider->setValueFromTarget(modelUI->item, true);
 		}
 
-		modelNode->activeProvider->setValueFromTarget(provider, true);
 	}
 
 	ColorNodeViewUI::itemDropped(source);

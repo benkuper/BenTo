@@ -10,6 +10,7 @@
 
 #include "BentoEngine.h"
 #include "Prop.h"
+#include "Timeline/TimelineIncludes.h"
 
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
@@ -131,6 +132,8 @@ Prop::Prop(var params) :
 
 	pingEnabled = params.getProperty("ping", pingEnabled);
 	if (pingEnabled) startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
+
+	startThread();
 }
 
 Prop::~Prop()
@@ -170,8 +173,6 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 
 	if (currentBlock != nullptr)
 	{
-		signalThreadShouldExit();
-		waitForThreadToExit(100);
 
 		removeChildControllableContainer(currentBlock.get());
 		if (!currentBlock->provider.wasObjectDeleted())
@@ -196,10 +197,36 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 		currentBlock->provider->addInspectableListener(this);
 		currentBlock->provider->addColorProviderListener(this);
 
+
 		registerLinkedInspectable(currentBlock->provider.get());
 
-		startThread();
+
+
+		if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(currentBlock->provider.get()))
+		{
+			if (tb->autoSetPropEnabled->boolValue())
+			{
+				bool hasLayers = !tb->sequence->getLayersForProp(this).isEmpty();
+				enabled->setValue(hasLayers);
+			}
+		}
 	}
+	
+	if (currentBlock != nullptr && enabled->boolValue())
+	{
+		//if(!isThreadRunning()) startThread();
+		
+	}
+	else
+	{
+		//if (isThreadRunning())
+		//{
+		//	signalThreadShouldExit();
+		//	waitForThreadToExit(50);
+		//}
+	}
+	
+
 
 	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
 	{
@@ -210,6 +237,8 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 
 void Prop::update()
 {
+	if (!enabled->boolValue()) return;
+
 	HashMap<String, PropComponent*>::Iterator it(components);
 	while (it.next()) it.getValue()->update();
 
@@ -226,7 +255,10 @@ void Prop::update()
 	else if (currentBlock != nullptr)
 	{
 		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
+
+		colorLock.enter();
 		colors = currentBlock->getColors(this, time, var());
+		colorLock.exit();
 
 		if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
 		{
@@ -235,7 +267,7 @@ void Prop::update()
 		}
 	}
 
-	
+
 	if (!bakeMode->boolValue()
 		&& !isBaking->boolValue()
 		&& !isUploading->boolValue()
@@ -346,14 +378,26 @@ void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
 
 	if (afterBake == EXPORT)
 	{
-		FileChooser fc("Export a block");
-		if (fc.browseForFileToSave(true)) exportFile = fc.getResult();
-		else return;
-	}
+		FileChooser* fc(new FileChooser("Export a block"));
+		fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
+			{
+				File f = fc.getResult();
+				delete& fc;
+				if (f == File()) return;
 
-	bakingProgress->setValue(0);
-	uploadProgress->setValue(0);
-	isBaking->setValue(true);
+				exportFile = f;
+				bakingProgress->setValue(0);
+				uploadProgress->setValue(0);
+				isBaking->setValue(true);
+			}
+		);
+	}
+	else
+	{
+		bakingProgress->setValue(0);
+		uploadProgress->setValue(0);
+		isBaking->setValue(true);
+	}
 }
 
 BakeData Prop::bakeBlock()
@@ -494,7 +538,7 @@ void Prop::sendControlToProp(String message, var value)
 void Prop::handleOSCMessage(const OSCMessage& m)
 {
 	if (m.getAddressPattern().toString() == "/pong") handlePong();
-	else if (m.getAddressPattern().toString() == "/enabled") 
+	else if (m.getAddressPattern().toString() == "/enabled")
 	{
 		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
 	}
@@ -547,7 +591,7 @@ void Prop::handleOSCMessage(const OSCMessage& m)
 			for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
 			if (pc != nullptr) pc->handleMessage(mSplit[2], value);
 		}
-		
+
 	}
 }
 
@@ -621,7 +665,7 @@ void Prop::loadJSONDataInternal(var data)
 	deviceID = data.getProperty("deviceID", "");
 }
 
-InspectableEditor* Prop::getEditorInternal(bool isRoot)
+InspectableEditor* Prop::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new PropEditor(this, isRoot);
 }
@@ -667,7 +711,7 @@ void Prop::run()
 		}
 		else
 		{
-			update();
+			if(enabled->boolValue()) update();
 			sleep(1000.0f / updateRate); //50fps
 		}
 	}

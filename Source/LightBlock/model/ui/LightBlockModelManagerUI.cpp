@@ -24,11 +24,25 @@ LightBlockModelManagerUI::~LightBlockModelManagerUI()
 
 void LightBlockModelManagerUI::paint(Graphics & g)
 {
+
+
 	Rectangle<int> hr = getLocalBounds().reduced(2).removeFromTop(headerHeight);
 	g.setColour(BG_COLOR.brighter(.1f));
 	g.fillRoundedRectangle(hr.toFloat(), 2);
 	g.setColour(TEXT_COLOR);
 	g.drawFittedText(manager->niceName, hr, Justification::centred, 1);
+
+	if (isDraggingOver)
+	{
+		g.setColour(BLUE_COLOR);
+
+		if (LightBlockModelUI* bui = itemsUI[currentDropIndex >= 0 ? currentDropIndex : itemsUI.size() - 1])
+		{
+			juce::Rectangle<int> buiBounds = getLocalArea(bui, bui->getLocalBounds());
+			int tx = currentDropIndex >= 0 ? buiBounds.getX() - 1 : buiBounds.getRight() + 1;
+			g.drawLine(tx, buiBounds.getY(), tx, buiBounds.getBottom(), 2);
+		}
+	}
 }
 
 void LightBlockModelManagerUI::resized()
@@ -89,6 +103,33 @@ void LightBlockModelManagerUI::setThumbSize(int value)
 	if (thumbSize == value) return;
 	thumbSize = value;
 	resized();
+}
+
+int LightBlockModelManagerUI::getDropIndexForPosition(Point<int> localPosition)
+{
+	LightBlockModelUI* closestUI = nullptr;;
+	float minDist = INT32_MAX;;
+	bool rightSide = false;
+
+	for (int i = 0; i < itemsUI.size(); ++i)
+	{
+		LightBlockModelUI* iui = itemsUI[i];
+		Point<int> p = getLocalArea(iui, iui->getLocalBounds()).getCentre();
+
+		float dist = p.getDistanceFrom(localPosition);
+		if (dist < minDist)
+		{
+			closestUI = iui;
+			minDist = dist;
+			rightSide = localPosition.x > p.x;
+		}
+	}
+
+
+	int index = itemsUI.indexOf(closestUI);
+	if (rightSide) index++;
+
+	return index;
 }
 
 LightBlockModelUI * LightBlockModelManagerUI::createUIForItem(LightBlockModel * i)

@@ -81,6 +81,7 @@ public:
 
 	File exportFile;
 
+	SpinLock colorLock;
 	Array<Colour> colors;
 
 	std::unique_ptr<LightBlock> currentBlock;
@@ -151,7 +152,7 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 
-	InspectableEditor* getEditorInternal(bool isRoot) override;
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = {}) override;
 
 	//Listener
 	class  PropListener

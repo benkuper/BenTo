@@ -22,6 +22,7 @@ public:
 	~TimelineBlock();
 
 	Trigger* bakeToProps;
+	BoolParameter* autoSetPropEnabled;
 
 	std::unique_ptr<TimelineBlockSequence> sequence;
 

@@ -5,7 +5,7 @@
 
 //  #define CREATOR_PROTO_V0
 //  #define CREATOR_PROTO_V1
-// #define CREATOR_PROTO_V2
+ #define CREATOR_PROTO_V2
 // #define CREATOR_TAB_HOOP
 //  #define LT_BALL
 //  #define LT_HOOP
@@ -18,7 +18,7 @@
 //  #define DRESS
 //  #define FLAIR
 //  #define SIMPLE_ESP8266
-  #define SIMPLE_ESP32
+//  #define SIMPLE_ESP32
 //  #define RING
 //  #define SUPERSTAFF
 // #define LAMP

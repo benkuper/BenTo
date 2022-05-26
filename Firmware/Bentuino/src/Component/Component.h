@@ -1,25 +1,30 @@
 #pragma once
 
-#define MAX_CHILD_COMPONENTS 32
-#define MAX_CHILD_CONTROLLABLES 32
-#define MAX_EVENT_TYPES 16
+#define MAX_CHILD_COMPONENTS 16
+#define MAX_CHILD_CONTROLLABLES 16
+//#define MAX_EVENT_TYPES 16
 
 class Component : public EventBroadcaster<ComponentEvent>
 {
 public:
-    Component(const String &name) : name(name),
-                                    isInit(false),
-                                    numComponents(0),
-                                    numParameters(0)
+    Component(const String &name, bool _enabled = true) : name(name),
+                                                          isInit(false),
+                                                          parentComponent(NULL),
+                                                          numComponents(0),
+                                                          numParameters(0)
     {
-        enabled = addParameter("enabled", true);
+        enabled = addParameter("enabled", _enabled, var(), var(), true);
     }
 
     virtual ~Component() {}
+    virtual String getTypeString() const { return "[notype]"; }
 
     String name;
+
     bool isInit;
     Parameter *enabled;
+
+    Component *parentComponent;
 
     Component *components[MAX_CHILD_COMPONENTS];
     uint8_t numComponents;
@@ -27,15 +32,15 @@ public:
     Parameter *parameters[MAX_CHILD_COMPONENTS];
     uint8_t numParameters;
 
-    virtual String getEventName(uint8_t type) const { return "[noname]"; }
+    virtual String getComponentEventName(uint8_t type) const { return "[noname]"; }
 
     virtual void onChildComponentEvent(const ComponentEvent &e) {}
 
-    bool init();
+    bool init(JsonObject o = JsonObject());
     void update();
     void clear();
 
-    virtual bool initInternal() { return true; }
+    virtual bool initInternal(JsonObject o) { return true; }
     virtual void updateInternal() {}
     virtual void clearInternal() {}
 
@@ -45,32 +50,41 @@ public:
     }
 
     template <class T>
-    T *addComponent() { return addComponent(new T()); };
+    T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return addComponent(new T(name, _enabled), o); };
 
     template <class T>
-    T *addComponent(T *c)
+    T *addComponent(T *c, JsonObject o = JsonObject())
     {
         components[numComponents] = (Component *)c;
+        c->parentComponent = this;
         AddDefaultComponentListener(c);
         numComponents++;
-        c->init();
+        c->init(o);
         return c;
     }
 
-    Component * getComponentWithName(const String& name)
-    {
-        if(name == this->name) return this;
+    Component *getComponentWithName(const String &name);
 
-        for(int i=0;i<numComponents;i++)
-        {
-            if(components[i]->name == name) return components[i];
-        }
-
-        return NULL;
-    }
-
-    Parameter *addParameter(const String &name, var val);
+    Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
+    Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
+    Parameter * getParameterWithName(const String &name);
     
-    bool handleCommand(const String &command, var * data, int numData);
-    virtual bool handleCommandInternal(const String &command, var * data, int numData) { return false; }
+    virtual void onParameterEvent(const ParameterEvent &e);
+    virtual void onEnabledChanged() {}
+    virtual void onParameterEventInternal(const ParameterEvent &e) {}
+
+    bool handleCommand(const String &command, var *data, int numData);
+    virtual bool handleCommandInternal(const String &command, var *data, int numData) { return false; }
+    bool checkCommand(const String &command, const String &ref, int numData, int expectedData);
+
+    virtual void fillSettingsData(JsonObject o, bool configOnly = false);
+    virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true);
+
+    String getFullPath(bool includeRoot = false, bool scriptMode = false);
+
+    // void scripting
+    virtual void linkScriptFunctions(IM3Module module, bool isLocal = false);
+    virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) {}
+
+    // DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
 };

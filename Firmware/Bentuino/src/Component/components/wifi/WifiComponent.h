@@ -15,23 +15,26 @@ DeclareComponentSingleton(Wifi, "wifi",)
     const long connectionTimeout = 10000; //ms
     long timeAtConnect;
     long lastConnectTime;
+    long timeAtStateChange;
 
     ConnectionState state;
 
-    String ssid;
-    String pass;
+    Parameter * ssid;
+    Parameter * pass;
 
-    bool initInternal() override;
+    bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void clearInternal() override;
 
     void connect();
     void disconnect();
+
+    void disable();
     void setState(ConnectionState s);
 
     String getIP() const;
 
-    DeclareEventTypes(ConnectionStateChanged);
-    DeclareEventNames("ConnectionStateChanged");
+    DeclareComponentEventTypes(ConnectionStateChanged);
+    DeclareComponentEventNames("ConnectionStateChanged");
 
 EndDeclareComponent

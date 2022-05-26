@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    VideoLayerTimeline.cpp
-    Created: 4 Jan 2021 11:07:35pm
-    Author:  bkupe
+	VideoLayerTimeline.cpp
+	Created: 4 Jan 2021 11:07:35pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -63,7 +63,7 @@ VideoLayerClipManagerUI::~VideoLayerClipManagerUI()
 
 LayerBlockUI* VideoLayerClipManagerUI::createUIForItem(LayerBlock* item)
 {
-	VideoClipUI * ui = new VideoClipUI((VideoClip *)item);
+	VideoClipUI* ui = new VideoClipUI((VideoClip*)item);
 	ui->setupThumbnail();
 	return ui;
 }
@@ -76,11 +76,16 @@ void VideoLayerClipManagerUI::mouseDoubleClick(const MouseEvent& e)
 void VideoLayerClipManagerUI::addClipWithFileChooserAt(float position)
 {
 	FileChooser chooser("Load  video file", File(), "*.mp4;*.mov;*.avi;*.mpeg");
-	bool result = chooser.browseForFileToOpen();
-	if (result)
-	{
-		float time = timeline->getTimeForX(position);
-		VideoClip* clip = dynamic_cast<VideoClip*>(manager->addBlockAt(time));
-		clip->filePath->setValue(chooser.getResult().getFullPathName());
-	}
+	FileChooser* fc(new FileChooser("Export a block"));
+	fc->launchAsync(FileBrowserComponent::FileChooserFlags::openMode, [this, position](const FileChooser& fc)
+		{
+			File f = fc.getResult();
+			delete& fc;
+			if (f == File()) return;
+
+			float time = timeline->getTimeForX(position);
+			VideoClip* clip = dynamic_cast<VideoClip*>(manager->addBlockAt(time));
+			clip->filePath->setValue(f.getFullPathName());
+		}
+	);
 }

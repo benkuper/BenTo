@@ -1,19 +1,16 @@
 #pragma once
+
 DeclareComponent(Servo, "servo",)
 
-    bool initInternal() override
-    {
-        return true;
-    }
+Parameter * pin;
+Parameter * position;
 
-    void updateInternal()
-    {
+Servo servo;
 
-    }
+bool initInternal(JsonObject o) override;
+void updateInternal() override;
+void clearInternal() override;
 
-    void clearInternal()
-    {
-
-    }
+void onParameterEventInternal(const ParameterEvent &e) override;
 
 EndDeclareComponent

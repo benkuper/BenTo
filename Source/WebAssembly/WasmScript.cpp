@@ -55,8 +55,8 @@ void WasmScript::compile()
 	File wf = getWasmFile();
 	if (wf.exists()) wf.deleteFile();
 
-	bool silentMode = false;
-	bool result = true;
+	//bool silentMode = false;
+	//bool result = true;
 
 	CompileType t = compileType->getValueDataAsEnum<CompileType>();
 	String options = "";

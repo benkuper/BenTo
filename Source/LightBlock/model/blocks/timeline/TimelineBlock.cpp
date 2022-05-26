@@ -17,6 +17,8 @@ TimelineBlock::TimelineBlock(var params) :
 
 	bakeToProps = addTrigger("Bake to props", "");
 
+	autoSetPropEnabled = addBoolParameter("Auto Set enabled", "If checked, this will automatically enable / disable prop based on whether they are filtered by the sequence", false);
+
 	sequence.reset(new TimelineBlockSequence());
 	sequence->addSequenceListener(this);
 	addChildControllableContainer(sequence.get());

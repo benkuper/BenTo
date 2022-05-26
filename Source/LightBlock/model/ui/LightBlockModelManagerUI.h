@@ -26,6 +26,7 @@ public:
 	void resized() override;
 
 	void setThumbSize(int value);
+	int getDropIndexForPosition(Point<int> localPosition) override;
 
 	LightBlockModelUI * createUIForItem(LightBlockModel * i) override;
 

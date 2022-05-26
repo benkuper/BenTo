@@ -48,6 +48,7 @@ profile
 **/VisualStudio2017/Win32
 **/VisualStudio2017/x64
 **/VisualStudio2019/x64
+**/VisualStudio2022/x64
 **/Builds/x64
 **/.vs
 **/CodeBlocks/bin
@@ -70,6 +71,7 @@ profile
 
 Builds/VisualStudio2017/
 Builds/VisualStudio2019/
+Builds/VisualStudio2022/
 Binaries/
 
 update\.json

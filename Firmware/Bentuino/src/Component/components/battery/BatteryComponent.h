@@ -1,19 +1,10 @@
 #pragma once
-DeclareComponentSingleton(Battery, "battery",)
+DeclareComponentSingleton(Battery, "battery", )
 
-    bool initInternal() override
-    {
-        return true;
-    }
+    Parameter *sendFeedback;
 
-    void updateInternal()
-    {
-
-    }
-
-    void clearInternal()
-    {
-
-    }
+bool initInternal(JsonObject o) override;
+void updateInternal() override;
+void clearInternal() override;
 
 EndDeclareComponent

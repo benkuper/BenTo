@@ -66,7 +66,7 @@ void LightBlockClipUI::paint(Graphics& g)
 	g.drawImage(previewImage, getCoreBounds().toFloat(), RectanglePlacement::stretchToFit);
 	if (item->loopLength->floatValue() > 0)
 	{
-		g.setTiledImageFill(previewImage, getCoreWidth(), 0, .5f);
+		g.setTiledImageFill(previewImage.rescaled(getCoreWidth(),getHeight(),Graphics::ResamplingQuality::lowResamplingQuality), getCoreWidth(), 0, .5f);
 		g.fillRect(getLocalBounds().withLeft(getCoreWidth()));
 	}
 	imgLock.exit();
@@ -209,31 +209,34 @@ void LightBlockClipUI::mouseDown(const MouseEvent& e)
 
 			p.addSubMenu("Edit...", ap);
 
-			int result = p.show();
-			if (result > 0)
-			{
-				if (result == 1) setTargetAutomation(nullptr);
-				else
+			p.showMenuAsync(PopupMenu::Options(), [this, params](int result)
 				{
-					WeakReference<Parameter> pa = params[result - 2];
-					if (pa->controlMode != Parameter::ControlMode::AUTOMATION)
+					if (result > 0)
 					{
-						pa->setControlMode(Parameter::ControlMode::AUTOMATION);
-						pa->automation->setManualMode(true);
-						Automation* a = dynamic_cast<Automation*>(pa->automation->automationContainer);
-						if (a != nullptr)
+						if (result == 1) setTargetAutomation(nullptr);
+						else
 						{
-							a->clear();
-							AutomationKey* k = a->addItem(0, 0);
-							k->setEasing(Easing::BEZIER);
-							a->addKey(a->length->floatValue(), 1);
-							shouldUpdateImage = true;
+							WeakReference<Parameter> pa = params[result - 2];
+							if (pa->controlMode != Parameter::ControlMode::AUTOMATION)
+							{
+								pa->setControlMode(Parameter::ControlMode::AUTOMATION);
+								pa->automation->setManualMode(true);
+								Automation* a = dynamic_cast<Automation*>(pa->automation->automationContainer);
+								if (a != nullptr)
+								{
+									a->clear();
+									AutomationKey* k = a->addItem(0, 0);
+									k->setEasing(Easing::BEZIER);
+									a->addKey(a->length->floatValue(), 1);
+									shouldUpdateImage = true;
+								}
+							}
+
+							if (!pa.wasObjectDeleted()) setTargetAutomation(pa->automation.get());
 						}
 					}
-
-					if (!pa.wasObjectDeleted()) setTargetAutomation(pa->automation.get());
 				}
-			}
+			);
 		}
 	}
 }
@@ -315,12 +318,41 @@ void LightBlockClipUI::newMessage(const LightBlockClip::ClipEvent& e)
 
 void LightBlockClipUI::itemDropped(const SourceDetails& source)
 {
-
 	if (LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get()))
 	{
 		if (modelUI != nullptr)
 		{
-			LightBlockColorProvider* provider = modelUI->item;
+
+			std::function<void(LightBlockColorProvider*, LightBlockModelUI*)> assignFunc = [this](LightBlockColorProvider* provider, LightBlockModelUI* modelUI)
+			{
+				if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
+				else
+				{
+					if (ScriptBlock* sb = dynamic_cast<ScriptBlock*>(provider))
+					{
+						PopupMenu m;
+						m.addItem(1, "Replace source");
+						m.addItem(2, "Add as effect");
+
+						m.showMenuAsync(PopupMenu::Options(), [this, provider](int result)
+							{
+								if (result == 2)
+								{
+									clip->addEffectFromProvider(provider);
+								}
+								else
+								{
+									clip->activeProvider->setValueFromTarget(provider, true);
+								}
+							}
+						);
+					}
+					else
+					{
+						clip->activeProvider->setValueFromTarget(provider, true);
+					}
+				}
+			};
 
 			bool shift = KeyPress::isKeyCurrentlyDown(16);
 			if (shift)
@@ -330,33 +362,22 @@ void LightBlockClipUI::itemDropped(const SourceDetails& source)
 				m.addSeparator();
 				int index = 1;
 				for (auto& p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
-				int result = m.show();
-				if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+				m.showMenuAsync(PopupMenu::Options(), [this, modelUI, assignFunc](int result)
+					{
+						if (result >= 1)
+						{
+							LightBlockColorProvider* provider = modelUI->item->presetManager.items[result - 1];
+							assignFunc(provider, modelUI);
+						}
+					}
+				);
 			}
-
-			if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
 			else
 			{
-				if (ScriptBlock* sb = dynamic_cast<ScriptBlock*>(provider))
-				{
-					PopupMenu m;
-					m.addItem(1, "Replace source");
-					m.addItem(2, "Add as effect");
-
-					if (m.show() == 2)
-					{
-						clip->addEffectFromProvider(provider);
-					}
-					else
-					{
-						clip->activeProvider->setValueFromTarget(provider, true);
-					}
-				}
-				else
-				{
-					clip->activeProvider->setValueFromTarget(provider, true);
-				}
+				assignFunc(modelUI->item, modelUI);
 			}
+
+
 		}
 	}
 

@@ -2,12 +2,18 @@
 
 DeclareComponentSingleton(Files, "files", );
 
-bool initInternal() override;
+bool initInternal(JsonObject o) override;
+bool initInternalMemory();
 
 SPIClass spiSD;
 bool useInternalMemory;
-int sdEnPin;
-int sdEnVal;
+Parameter * sdEnPin;
+Parameter * sdEnVal;
+Parameter * sdSCK;
+Parameter * sdMiso;
+Parameter * sdMosi;
+Parameter * sdCS;
+Parameter * sdSpeed;
 
 File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
 void deleteFileIfExists(String path);
@@ -15,7 +21,7 @@ String listDir(const char *dirname, uint8_t levels);
 
 bool handleCommandInternal(const String &command, var *data, int numData) override;
 
-DeclareEventTypes(sUPLOAD_START, UPLOAD_PROGRESS, UPLOAD_COMPLETE, UPLOAD_CANCEL, FILE_LIST);
-DeclareEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");
+DeclareComponentEventTypes(UploadStart, UploadProgress, UploadComplete, UploadCancel, FileList);
+DeclareComponentEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");
 
 EndDeclareComponent

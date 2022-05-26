@@ -19,7 +19,7 @@ public:
 	//StringParameter * argumentName; 
 	BoolParameter * editable;
 
-	InspectableEditor * getEditorInternal(bool isRoot) override;
+	InspectableEditor * getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = {}) override;
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

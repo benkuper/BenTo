@@ -24,7 +24,7 @@ public:
 	UserLightBlockModelManager pictureBlocks;	
 	UserLightBlockModelManager nodeBlocks;
 	UserLightBlockModelManager scriptBlocks;
-	UserLightBlockModelManager wasmBlocks;
+	WasmBlockManager wasmBlocks;
 	UserLightBlockModelManager timelineBlocks;
 
 
@@ -35,6 +35,7 @@ public:
 	std::unique_ptr<LightBlockModel> noiseBlock;
 	std::unique_ptr<LightBlockModel> pointBlock;
 	std::unique_ptr<LightBlockModel> multiPointBlock;
+	std::unique_ptr<LightBlockModel> rangeBlock;
 
 	//Generic / Filters
 	LightBlockModelGroup genericFilterBlocks;
@@ -60,8 +61,9 @@ public:
 	LightBlockModel* getModelWithName(const String& modelName);
 	LightBlockModel * getFilterWithName(const String &modelName);
 
-	static LightBlockColorProvider* showSourcesAndGet();
-	static LightBlockColorProvider * showFiltersAndGet();
+
+	static void showSourcesAndGet(std::function<void(ControllableContainer*)> returnFunc);
+	static void showFiltersAndGet(std::function<void(ControllableContainer*)> returnFunc);
 	static Array<LightBlockColorProvider *> fillProvidersMenu(PopupMenu &menu, bool includePresets, bool includeSources, bool includeFilters, int startIndex = 1);
 	static Array<LightBlockColorProvider *> fillUserLightBlockManagerMenu(UserLightBlockModelManager * manager, PopupMenu &menu, bool includePresets, int startIndex);
 

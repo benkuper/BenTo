@@ -17,7 +17,7 @@ public:
 	enum BlockType { PICTURE, NODE, SCRIPT, TIMELINE, LIVE_FEED, VIDEO, WASM };
 
 	UserLightBlockModelManager(const String &name, BlockType type);
-	~UserLightBlockModelManager();
+	virtual ~UserLightBlockModelManager();
 
 	BlockType type;
 	File libFolder;

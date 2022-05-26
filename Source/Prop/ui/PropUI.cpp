@@ -1,14 +1,14 @@
 /*
   ==============================================================================
 
-    PropUI.cpp
-    Created: 10 Apr 2018 7:00:05pm
-    Author:  Ben
+	PropUI.cpp
+	Created: 10 Apr 2018 7:00:05pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-PropUI::PropUI(Prop * p) :
+PropUI::PropUI(Prop* p) :
 	BaseItemUI(p),
 	viz(p),
 	imuRef(nullptr)
@@ -22,9 +22,9 @@ PropUI::PropUI(Prop * p) :
 	acceptedDropTypes.add("Node");
 
 	idUI.reset(p->globalID->createLabelUI());
-	idUI->showLabel = true;
+	idUI->showLabel = false;
 
-	if (BatteryPropComponent * bat = dynamic_cast<BatteryPropComponent*>(p->getComponent("battery")))
+	if (BatteryPropComponent* bat = dynamic_cast<BatteryPropComponent*>(p->getComponent("battery")))
 	{
 		batteryUI.reset(bat->level->createSlider());
 		addAndMakeVisible(batteryUI.get());
@@ -33,7 +33,7 @@ PropUI::PropUI(Prop * p) :
 	addAndMakeVisible(idUI.get());
 	addAndMakeVisible(&viz);
 
-	if(IMUPropComponent * imu = dynamic_cast<IMUPropComponent *>(p->getComponent("imu"))) imuRef = imu->enabled;
+	if (IMUPropComponent* imu = dynamic_cast<IMUPropComponent*>(p->getComponent("imu"))) imuRef = imu->enabled;
 
 	viz.setInterceptsMouseClicks(false, false);
 
@@ -46,21 +46,21 @@ PropUI::~PropUI()
 {
 }
 
-void PropUI::paintOverChildren(Graphics & g)
+void PropUI::paintOverChildren(Graphics& g)
 {
 	BaseItemUI::paintOverChildren(g);
 	if (item->isBaking->boolValue())
 	{
 		g.fillAll(Colours::black.withAlpha(.3f));
-		
+
 		g.setColour(Colours::orange.darker().withAlpha(.2f));
-		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->bakingProgress->floatValue()*viz.getHeight()).toFloat(), 2);
-		
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->bakingProgress->floatValue() * viz.getHeight()).toFloat(), 2);
+
 		g.setColour(Colours::limegreen.darker().withAlpha(.2f));
-		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->uploadProgress->floatValue()*viz.getHeight()).toFloat(), 2);
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->uploadProgress->floatValue() * viz.getHeight()).toFloat(), 2);
 
 		g.setColour(item->isUploading->boolValue() ? Colours::limegreen : Colours::orange);
-		g.drawFittedText(item->isUploading->boolValue()?"Uploading ...":"Baking...", getLocalBounds(), Justification::centred, 1);
+		g.drawFittedText(item->isUploading->boolValue() ? "Uploading ..." : "Baking...", getLocalBounds(), Justification::centred, 1);
 	}
 
 	g.setColour(item->isConnected->boolValue() ? GREEN_COLOR : BG_COLOR);
@@ -72,7 +72,7 @@ void PropUI::paintOverChildren(Graphics & g)
 		g.setColour(YELLOW_COLOR);
 		g.drawEllipse(r.toFloat().reduced(2), 1);
 	}
-	
+
 
 	if (isDraggingOver)
 	{
@@ -80,15 +80,20 @@ void PropUI::paintOverChildren(Graphics & g)
 	}
 }
 
-void PropUI::mouseDown(const MouseEvent & e)
+void PropUI::mouseDown(const MouseEvent& e)
 {
 	BaseItemUI::mouseDown(e);
 
 	if (e.mods.isRightButtonDown())
 	{
-		LightBlockColorProvider * p = LightBlockModelLibrary::showSourcesAndGet();
-		if (p != nullptr) item->activeProvider->setValueFromTarget(p);
-	} else if (e.mods.isLeftButtonDown())
+		LightBlockModelLibrary::showSourcesAndGet([this](ControllableContainer* cc)
+			{
+				LightBlockColorProvider* p = dynamic_cast<LightBlockColorProvider*>(cc);
+				if (p != nullptr) item->activeProvider->setValueFromTarget(p);
+			}
+		);
+	}
+	else if (e.mods.isLeftButtonDown())
 	{
 		if (e.mods.isAltDown())
 		{
@@ -97,7 +102,7 @@ void PropUI::mouseDown(const MouseEvent & e)
 	}
 }
 
-void PropUI::mouseUp(const MouseEvent & e)
+void PropUI::mouseUp(const MouseEvent& e)
 {
 	BaseItemUI::mouseUp(e);
 	item->findPropMode->setValue(false);
@@ -105,10 +110,10 @@ void PropUI::mouseUp(const MouseEvent & e)
 
 void PropUI::resizedInternalHeader(Rectangle<int>& r)
 {
-	
+
 }
 
-void PropUI::resizedInternalContent(Rectangle<int> &r)
+void PropUI::resizedInternalContent(Rectangle<int>& r)
 {
 
 	idUI->setBounds(r.removeFromTop(16).removeFromLeft(30));
@@ -122,7 +127,7 @@ void PropUI::resizedInternalContent(Rectangle<int> &r)
 	viz.setBounds(r.reduced(2));
 }
 
-void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
+void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef) repaint();
 	else if (c == item->type)
@@ -132,13 +137,12 @@ void PropUI::controllableFeedbackUpdateInternal(Controllable * c)
 	}
 }
 
-void PropUI::itemDropped(const SourceDetails & source)
+void PropUI::itemDropped(const SourceDetails& source)
 {
-	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
+	LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get());
 
 	if (modelUI != nullptr)
 	{
-		LightBlockColorProvider * provider = modelUI->item;
 
 		bool shift = KeyPress::isKeyCurrentlyDown(16);
 		if (shift)
@@ -147,14 +151,24 @@ void PropUI::itemDropped(const SourceDetails & source)
 			m.addItem(-1, "Default");
 			m.addSeparator();
 			int index = 1;
-			for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
-			int result = m.show();
-			if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+			for (auto& p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+			m.showMenuAsync(PopupMenu::Options(), [this, modelUI](int result)
+				{
+					if (result >= 1)
+					{
+						LightBlockColorProvider* provider = modelUI->item->presetManager.items[result - 1];
+						item->activeProvider->setValueFromTarget(provider);
+					}
+				}
+			);
+		}
+		else
+		{
+			item->activeProvider->setValueFromTarget(modelUI->item);
 		}
 
-		item->activeProvider->setValueFromTarget(provider);
 	}
-	
+
 	BaseItemUI::itemDropped(source);
 
 }

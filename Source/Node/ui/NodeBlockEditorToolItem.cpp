@@ -31,8 +31,8 @@ void NodeBlockEditorToolItem::paint(Graphics & g)
 void NodeBlockEditorToolItem::mouseDrag(const MouseEvent &e)
 {
 	if (isDragAndDropActive()) return;
-	Image dndImage = ImageCache::getFromMemory(BinaryData::new_png, BinaryData::new_pngSize).rescaled(40, 40);
-	dndImage.multiplyAllAlphas(.5f);
+	ScaledImage dndImage = ScaledImage(ImageCache::getFromMemory(BinaryData::new_png, BinaryData::new_pngSize).rescaled(40, 40));
+	dndImage.getImage().multiplyAllAlphas(.5f);
 
 	if (e.getDistanceFromDragStart() > 40)
 	{

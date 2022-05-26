@@ -19,7 +19,6 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	pictureBlocks("Pictures", UserLightBlockModelManager::PICTURE),
 	nodeBlocks("Nodes", UserLightBlockModelManager::NODE),
 	scriptBlocks("Scripts", UserLightBlockModelManager::SCRIPT),
-	wasmBlocks("Wasm", UserLightBlockModelManager::WASM),
 	timelineBlocks("Timeline", UserLightBlockModelManager::TIMELINE),
 	genericFilterBlocks("Generic Filters")
 {
@@ -38,6 +37,7 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	noiseBlock.reset(new NoisePattern());
 	pointBlock.reset(new PointPattern());
 	multiPointBlock.reset(new MultiPointPattern());
+	rangeBlock.reset(new RangePattern());
 
 	//videoBlock.reset(new VideoBlock());;
 	//shapeBlock.reset(new ShapeEditorBlock());;
@@ -49,6 +49,7 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	genericBlocks.addChildControllableContainer(noiseBlock.get());
 	genericBlocks.addChildControllableContainer(pointBlock.get());
 	genericBlocks.addChildControllableContainer(multiPointBlock.get());
+	genericBlocks.addChildControllableContainer(rangeBlock.get());
 
 	addChildControllableContainer(&genericBlocks);
 
@@ -181,7 +182,7 @@ Array<LightBlockModel*> LightBlockModelLibrary::getAllFilters(bool includeUserMo
 LightBlockModel * LightBlockModelLibrary::getModelWithName(const String & modelName)
 {
 	Array<LightBlockModel *> models = getAllModels();
-	for (auto &m : models) if (m->shortName == modelName) return m;
+	for (auto &m : models) if (m->shortName == modelName || m->niceName == modelName) return m;
 	return nullptr;
 }
 
@@ -192,25 +193,28 @@ LightBlockModel* LightBlockModelLibrary::getFilterWithName(const String& modelNa
 	return nullptr;
 }
 
-LightBlockColorProvider* LightBlockModelLibrary::showSourcesAndGet()
+void LightBlockModelLibrary::showSourcesAndGet(std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
 	Array<LightBlockColorProvider *> mList = fillProvidersMenu(menu, true, true, false);
-	int result = menu.show();
-
-	if (result > 0) return mList[result - 1];
-	return nullptr;
+	
+	menu.showMenuAsync(PopupMenu::Options(), [&mList, returnFunc](int result)
+		{
+			if (result > 0) returnFunc(mList[result - 1]);
+		}
+	);
 }
 
 
-LightBlockColorProvider* LightBlockModelLibrary::showFiltersAndGet()
+void LightBlockModelLibrary::showFiltersAndGet(std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
 	Array<LightBlockColorProvider*> mList = fillProvidersMenu(menu, true, false, true);
-	int result = menu.show();
-
-	if (result > 0) return mList[result - 1];
-	return nullptr;
+	menu.showMenuAsync(PopupMenu::Options(), [&mList, returnFunc](int result)
+		{
+			if (result > 0) returnFunc(mList[result - 1]);
+		}
+	);
 }
 
 Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupMenu& menu, bool includePresets, bool includeSources, bool includeFilters, int startIndex)

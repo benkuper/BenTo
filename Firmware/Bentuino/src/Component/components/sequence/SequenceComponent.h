@@ -1,19 +1,8 @@
 #pragma once
 DeclareComponentSingleton(Sequence, "sequence",)
 
-    bool initInternal() override
-    {
-        return true;
-    }
-
-    void updateInternal()
-    {
-
-    }
-
-    void clearInternal()
-    {
-
-    }
+bool initInternal(JsonObject o) override;
+void updateInternal() override;
+void clearInternal() override;
 
 EndDeclareComponent

@@ -217,7 +217,6 @@
 		5731628241F8F54285734659 /* ParameterNode.h */ /* ParameterNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterNode.h; path = ../../Source/Node/nodes/parameter/ParameterNode.h; sourceTree = SOURCE_ROOT; };
 		5745CC92BC3ABCE7867B60B8 /* LightBlockModelParameterManager.cpp */ /* LightBlockModelParameterManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterManager.cpp; path = ../../Source/LightBlock/model/LightBlockModelParameterManager.cpp; sourceTree = SOURCE_ROOT; };
 		578BA26258BA1C1EBF555777 /* new.png */ /* new.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = new.png; path = ../../Resources/new.png; sourceTree = SOURCE_ROOT; };
-		5ACEE368856DF4CFDF949786 /* PerlinNoise.hpp */ /* PerlinNoise.hpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PerlinNoise.hpp; path = ../../Source/LightBlock/model/blocks/pattern/PerlinNoise.hpp; sourceTree = SOURCE_ROOT; };
 		5AD76FA55A9E6E31DCAEE680 /* Main.cpp */ /* Main.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Main.cpp; path = ../../Source/Main.cpp; sourceTree = SOURCE_ROOT; };
 		5C285ACB0343B36611B16A80 /* TimelineEditor.cpp */ /* TimelineEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineEditor.cpp; path = ../../Source/Timeline/TimelineEditor.cpp; sourceTree = SOURCE_ROOT; };
 		5C591433015D9C429CAAACC7 /* RGBComponent.h */ /* RGBComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RGBComponent.h; path = ../../Source/Prop/Component/rgb/RGBComponent.h; sourceTree = SOURCE_ROOT; };
@@ -503,7 +502,6 @@
 		0EF4F4537B16D0575E8E64F8 /* pattern */ = {
 			isa = PBXGroup;
 			children = (
-				5ACEE368856DF4CFDF949786,
 				4297491F00482662E47F3924,
 				148B6414B641D7110D3787A3,
 			);
@@ -1549,7 +1547,7 @@
 		6A50FB53C4AC2437E07541F9 = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1300;
+				LastUpgradeCheck = 1320;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					5FD64B0FD59767DFD945EE30 = {
@@ -1732,15 +1730,15 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
+				EXCLUDED_ARCHS = "i386 arm64 arm64e";
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_DEBUG=1",
 					"DEBUG=1",
-					"JUCE_MODAL_LOOPS_PERMITTED=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.4.0b1",
+					"JUCE_APP_VERSION=1.4.0b10",
 					"JUCE_APP_VERSION_HEX=0x10400",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -1772,6 +1770,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				OTHER_CFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_CPLUSPLUSFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
@@ -1840,15 +1839,15 @@
 				COMBINE_HIDPI_IMAGES = YES;
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				DEAD_CODE_STRIPPING = YES;
+				EXCLUDED_ARCHS = "i386 arm64 arm64e";
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"_NDEBUG=1",
 					"NDEBUG=1",
-					"JUCE_MODAL_LOOPS_PERMITTED=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=1.4.0b1",
+					"JUCE_APP_VERSION=1.4.0b10",
 					"JUCE_APP_VERSION_HEX=0x10400",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -1881,6 +1880,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../../chataigne/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				OTHER_CFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_CPLUSPLUSFLAGS = "FILMSTRO_USE_FFMPEG=0";
 				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;

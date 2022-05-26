@@ -10,6 +10,9 @@
 
 #pragma once
 
+
+
+
 class WasmBlock :
 	public LightBlockModel,
     public Thread
@@ -49,4 +52,16 @@ public:
     void handleEnterExit(bool enter, Array<Prop*> props) override;
 
     String getTypeString() const override { return "Wasm"; }
+};
+
+
+class WasmBlockManager :
+    public UserLightBlockModelManager,
+    public Timer
+{
+public:
+    WasmBlockManager() : UserLightBlockModelManager("Wasm", WASM) { startTimerHz(1); }
+    ~WasmBlockManager() {}
+
+    void timerCallback() override { for (auto& i : items) ((WasmBlock*)i)->checkAutoCompile(); }
 };

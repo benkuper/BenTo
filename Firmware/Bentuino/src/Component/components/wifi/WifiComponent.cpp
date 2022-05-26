@@ -1,11 +1,11 @@
 ImplementSingleton(WifiComponent)
 
-    bool WifiComponent::initInternal()
+    bool WifiComponent::initInternal(JsonObject o)
 {
     state = Off;
 
-    ssid = GetStringConfig("ssid");
-    pass = GetStringConfig("pass");
+    ssid = AddConfigParameter("ssid", "");
+    pass = AddConfigParameter("pass", "");
 
     connect();
 
@@ -28,7 +28,7 @@ void WifiComponent::updateInternal()
 #endif
             {
                 setState(Connected);
-                NDBG("Connected, local IP is "+getIP());
+                NDBG("Connected, local IP is " + getIP());
                 timeAtConnect = -1;
             }
 
@@ -71,6 +71,7 @@ void WifiComponent::setState(ConnectionState s)
         return;
 
     state = s;
+    timeAtStateChange = millis();
     sendEvent(ConnectionStateChanged);
 }
 
@@ -91,10 +92,16 @@ void WifiComponent::connect()
     WiFi.setTxPower(WIFI_POWER_19dBm);
 #endif
 
-    NDBG("Connecting to " + ssid + " : " + pass + "...");
-    WiFi.begin(ssid.c_str(), pass.c_str());
+    NDBG("Connecting to " + ssid->stringValue() + " : " + pass->stringValue() + "...");
+    WiFi.begin(ssid->stringValue().c_str(), pass->stringValue().c_str());
 
     setState(Connecting);
+}
+
+void WifiComponent::disable()
+{
+    WiFi.disconnect();
+    setState(Disabled);
 }
 
 void WifiComponent::disconnect()

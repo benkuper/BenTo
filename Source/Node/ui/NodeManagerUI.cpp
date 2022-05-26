@@ -209,7 +209,6 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 
 		node->viewUIPosition->setPoint(getViewMousePosition().toFloat() - node->viewUISize->getPoint() / 2);
 
-		LightBlockColorProvider * provider = modelUI->item;
 
 		bool shift = KeyPress::isKeyCurrentlyDown(16);
 		if (shift)
@@ -219,11 +218,22 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 			m.addSeparator();
 			int index = 1;
 			for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
-			int result = m.show();
-			if (result >= 1) provider = modelUI->item->presetManager.items[result - 1];
+			m.showMenuAsync(PopupMenu::Options(), [this, modelUI](int result)
+				{
+					if (result >= 1)
+					{
+						LightBlockColorProvider* provider = modelUI->item;
+						provider = modelUI->item->presetManager.items[result - 1];
+					}
+				}
+			);
+		}
+		else
+		{
+			node->activeProvider->setValueFromTarget(modelUI->item);
+
 		}
 
-		node->activeProvider->setValueFromTarget(provider);
 	}else if (dragType == "NodeTool")
 	{
 		Node * node = manager->addItem(NodeFactory::getInstance()->create(source.description.getProperty("nodeType", "")));
