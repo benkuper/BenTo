@@ -377,6 +377,15 @@ void MainManager::imuEvent(const IMUEvent &e)
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 1);
     }
     break;
+        
+    case IMUEvent::SpinUpdate:
+    {
+        var data[1];
+        data[0].type = 'f';
+        data[0].value.f = imu.spin;
+        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 1);
+    }
+    break;
 
     case IMUEvent::ThrowState:
     {
@@ -384,6 +393,19 @@ void MainManager::imuEvent(const IMUEvent &e)
         data[0].type = 'i';
         data[0].value.i = imu.throwState;
         comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 1);
+    }
+    break;
+    
+    case IMUEvent::Debug:
+    {
+        var data[4];
+        for (int i = 0; i < e.numData; i++)
+        {
+            data[i].type = 'f';
+            data[i].value.f = e.data[i];
+        }
+
+        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 4);
     }
     break;
     }

@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngleClub"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngleClub", "spin"};
 IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),
@@ -47,6 +47,7 @@ IMUManager::IMUManager() : Component("imu"),
   orientationXOffset = .0;
 
   angleOffset = .0f;
+  countNonDouble = 0;
 }
 
 IMUManager::~IMUManager()
@@ -145,6 +146,7 @@ void IMUManager::update()
         sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
         sendEvent(IMUEvent(IMUEvent::ActivityUpdate));
         sendEvent(IMUEvent(IMUEvent::ProjectedAngleUpdate));
+        sendEvent(IMUEvent(IMUEvent::SpinUpdate));
         // sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
       }
     }
@@ -226,12 +228,49 @@ void IMUManager::readIMU()
   computeThrow();
   computeActivity();
   computeProjectedAngle();
+  computeSpin();
 
 #ifdef IMU_READ_ASYNC
   hasNewData = true;
 #endif
 
 #endif
+}
+
+void IMUManager::computeSpin() {
+  float currentSpin = 0.5;
+
+  if (throwState == 0) {
+		spinCount = 0;
+		currentSpinLastUpdate = 0;
+		lastThrowState = 0;
+		spin = 0;
+		return;
+  }
+
+  if (throwState > 0 && lastThrowState == 0) {
+		launchOrientationX = orientation[0];
+
+		if (launchOrientationX >= 0 && launchOrientationX < 180) {
+			launchProjectedAngle = projectedAngle;
+    } else {
+			launchProjectedAngle = 1-projectedAngle;
+    }
+  }
+
+  if (launchOrientationX >= 0 && launchOrientationX < 180) {
+    currentSpin = projectedAngle;
+  }	else {
+		currentSpin = 1 - projectedAngle;
+  }
+
+  if (currentSpin > 0 && currentSpin < 0.5 && currentSpinLastUpdate > 0.5) {
+		spinCount += 1;
+  }
+
+  lastThrowState = throwState;
+  currentSpinLastUpdate = currentSpin;
+	spin = currentSpin + spinCount - launchProjectedAngle;
 }
 
 void IMUManager::computeProjectedAngle() {
@@ -285,6 +324,12 @@ void IMUManager::computeProjectedAngle() {
   result = (result / PI) * 0.5f + 0.5f;
 	result = fmod((result + angleOffset), 1.0f);
 
+  if (result >= 0.5) {
+		result = result - 0.5;
+  } else {
+		result = result + 0.5;
+  }
+
   projectedAngle = result;
 
   // DBG("Projected Angle: " + String(projectedAngle));
@@ -312,8 +357,9 @@ void IMUManager::computeThrow()
   else
   {
     bool curIsThrowing = throwState > 1;
+    isFastSpin = accel[0] >= 38.0f;
     float throwThresh = curIsThrowing ? accelThresholds[1] : accelThresholds[0];
-		throwThresh = isFastSpin ? throwThresh : accelThresholds[2];
+		throwThresh = isFastSpin ? accelThresholds[2] : throwThresh;
 
     bool accelCheck = maxAccelYZ < throwThresh;
 
@@ -330,6 +376,7 @@ void IMUManager::computeThrow()
     }
 
     float throwPower = abs(accel[0]);
+
     if (isThrowing)
     {
       if (throwPower < semiFlatThreshold)
@@ -340,6 +387,24 @@ void IMUManager::computeThrow()
         newState = 2;
       else
         newState = 3; // double
+
+      if (curIsThrowing && throwState != newState) {
+        if (throwState == 3 && newState == 2) {
+          newState = 3; // double will stay a double
+        } else if (throwState == 2 && newState == 5) {
+          newState = 2; // single will stay a single
+        }
+      }
+    }
+
+    if (newState != 3 && countNonDouble < 10) {
+      countNonDouble = countNonDouble + 1;
+    } else if (newState == 3) {
+      countNonDouble = 0;
+    }
+
+    if (throwState == 3 && newState != 3 && countNonDouble < 3) {
+      newState = 3; 
     }
   }
 
