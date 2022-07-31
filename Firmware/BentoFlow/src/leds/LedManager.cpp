@@ -55,8 +55,6 @@ void LedManager::update()
     }
 
     MainManager::instance->scripts.update();
-   // if (shouldUpdateLeds)
-   
     rgbManager.update();
 
     irManager.update();
@@ -190,7 +188,9 @@ void LedManager::playerEvent(const PlayerEvent &e)
 void LedManager::timerEvent(const TimerEvent &e)
 {
     if (e.timer == &connectedTimer)
-        setMode(Stream);
+    {
+       setMode(Stream);
+    }
 }
 
 bool LedManager::handleCommand(String command, var *data, int numData)

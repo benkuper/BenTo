@@ -44,8 +44,8 @@
 		7D3C7886D439BAE2D3231BA2 /* AudioManager.cpp */ = {isa = PBXBuildFile; fileRef = 143B7D728464C53906E064B5; };
 		7E5E5CFC2BA334ED4572C64A /* VideoPreviewPanel.cpp */ = {isa = PBXBuildFile; fileRef = 01CDEF946B6BB684FF5A12DF; };
 		81DF8C5FCEE32E5E09A237B7 /* cobs.cpp */ = {isa = PBXBuildFile; fileRef = 87859A531C6BE994FC1F48E9; };
+		83D4E544BE8C1356AD840F51 /* include_juce_audio_processors_ara.cpp */ = {isa = PBXBuildFile; fileRef = 86D4D8E738F1C0E72F9B315B; };
 		84248625CBE2A6EC77945E1A /* include_juce_audio_devices.mm */ = {isa = PBXBuildFile; fileRef = 1B8CAFF34FA21717526CE282; };
-		8D16EE897B04EA403EF92A6F /* Carbon.framework */ = {isa = PBXBuildFile; fileRef = 9898B2BEF8B5FEB40CCDA382; };
 		8DC8942CF19D2719FAA1501C /* Cocoa.framework */ = {isa = PBXBuildFile; fileRef = ECFA7C2ABFEEE6597DAE785F; };
 		8E7C102F0D4932B643078096 /* include_juce_audio_basics.mm */ = {isa = PBXBuildFile; fileRef = CEB1B439924B457073ECFF09; };
 		8FB41920036A869538807BB0 /* include_juce_audio_formats.mm */ = {isa = PBXBuildFile; fileRef = BFB48EC24C48066BB0905BC2; };
@@ -75,6 +75,7 @@
 		E1AC503B307E412FDC126CCB /* LightBlockIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 069D959D5272239004599CD9; };
 		E2314AB73D21B4F19B330A13 /* MainComponent.cpp */ = {isa = PBXBuildFile; fileRef = 491070B201D8CE02E6ECF797; };
 		E6C1229FAFCFF5147ACCA579 /* RecentFilesMenuTemplate.nib */ = {isa = PBXBuildFile; fileRef = 2A4458583B4DE883FA1D4C65; };
+		E71301EE834E36C91403C7B6 /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXBuildFile; fileRef = BE950B96A096623580B6C120; };
 		E8262ADC71F8F455343B7A0A /* VideoIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 6098CCCC3C2D505E67782654; };
 		EB901348F68195A64875526D /* include_juce_organicui2.cpp */ = {isa = PBXBuildFile; fileRef = 38F811D5159ADC42396F5517; };
 		F13CA73C6582D698D6C1E86A /* SerialDeviceParameter.cpp */ = {isa = PBXBuildFile; fileRef = 0CDDE2CF576B339D7586EFEA; };
@@ -264,6 +265,7 @@
 		832926A951BB3C8E60899D6C /* LightBlockLayer.h */ /* LightBlockLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockLayer.h; path = ../../Source/Timeline/layers/Block/LightBlockLayer.h; sourceTree = SOURCE_ROOT; };
 		8409223F8EDA1B87DC3A05E6 /* TimelineBlockSequence.cpp */ /* TimelineBlockSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TimelineBlockSequence.cpp; path = ../../Source/Timeline/TimelineBlockSequence.cpp; sourceTree = SOURCE_ROOT; };
 		85CDC92A5B223242E6AD3FB8 /* PictureBlock.h */ /* PictureBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureBlock.h; path = ../../Source/LightBlock/model/blocks/picture/PictureBlock.h; sourceTree = SOURCE_ROOT; };
+		86D4D8E738F1C0E72F9B315B /* include_juce_audio_processors_ara.cpp */ /* include_juce_audio_processors_ara.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_ara.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_ara.cpp; sourceTree = SOURCE_ROOT; };
 		87859A531C6BE994FC1F48E9 /* cobs.cpp */ /* cobs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = cobs.cpp; path = ../../Source/Common/Serial/lib/cobs/cobs.cpp; sourceTree = SOURCE_ROOT; };
 		878A4313101E6FF0D57EE3CD /* include_juce_osc.cpp */ /* include_juce_osc.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_osc.cpp; path = ../../JuceLibraryCode/include_juce_osc.cpp; sourceTree = SOURCE_ROOT; };
 		87CFC58F1D51FFE44508FB15 /* list_ports_osx.cc */ /* list_ports_osx.cc */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = list_ports_osx.cc; path = ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc; sourceTree = SOURCE_ROOT; };
@@ -292,7 +294,6 @@
 		967ED1CDEC97558662D91937 /* LightBlockModelPresetManager.h */ /* LightBlockModelPresetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelPresetManager.h; path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.h; sourceTree = SOURCE_ROOT; };
 		979B35F538874DE551B15E85 /* TextureBlock.cpp */ /* TextureBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = TextureBlock.cpp; path = ../../Source/LightBlock/model/blocks/video/TextureBlock.cpp; sourceTree = SOURCE_ROOT; };
 		97BD7D4EC3A2A377EBAD2E65 /* AudioManagerHardwareEditor.h */ /* AudioManagerHardwareEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioManagerHardwareEditor.h; path = ../../Source/Audio/ui/AudioManagerHardwareEditor.h; sourceTree = SOURCE_ROOT; };
-		9898B2BEF8B5FEB40CCDA382 /* Carbon.framework */ /* Carbon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Carbon.framework; path = System/Library/Frameworks/Carbon.framework; sourceTree = SDKROOT; };
 		9990B1F8459DA7EDCEB16AAA /* NodeConnection.cpp */ /* NodeConnection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnection.cpp; path = ../../Source/Node/NodeConnection.cpp; sourceTree = SOURCE_ROOT; };
 		99ED218AAF56CF315A0D41F2 /* LightBlockClipManagerUI.cpp */ /* LightBlockClipManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockClipManagerUI.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		9A1C190C37DF4F6FB1EC82A4 /* ModelNodeUI.h */ /* ModelNodeUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelNodeUI.h; path = ../../Source/Node/nodes/model/ui/ModelNodeUI.h; sourceTree = SOURCE_ROOT; };
@@ -355,6 +356,7 @@
 		BDFA3A8DCA3E6124656086EC /* fadeOut.png */ /* fadeOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fadeOut.png; path = ../../Resources/fadeOut.png; sourceTree = SOURCE_ROOT; };
 		BDFE960AEA3A00ED05E20B59 /* BatteryComponent.h */ /* BatteryComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BatteryComponent.h; path = ../../Source/Prop/Component/battery/BatteryComponent.h; sourceTree = SOURCE_ROOT; };
 		BE8152E81195DCC2AFC2C39D /* PictureBlockUI.h */ /* PictureBlockUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureBlockUI.h; path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.h; sourceTree = SOURCE_ROOT; };
+		BE950B96A096623580B6C120 /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
 		BFB48EC24C48066BB0905BC2 /* include_juce_audio_formats.mm */ /* include_juce_audio_formats.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_formats.mm; path = ../../JuceLibraryCode/include_juce_audio_formats.mm; sourceTree = SOURCE_ROOT; };
 		C0B7644868BBF8ADCC8B3FD5 /* LightBlockLayerTimeline.cpp */ /* LightBlockLayerTimeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerTimeline.cpp; path = ../../Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.cpp; sourceTree = SOURCE_ROOT; };
 		C15F2A6F1FD48A1EFD75B7EB /* LightBlockModelGroupUI.cpp */ /* LightBlockModelGroupUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelGroupUI.cpp; path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -453,7 +455,6 @@
 				F5D86A96CBB3B1E4CC6D3257,
 				9F8AC4618EFC364D1DF817CA,
 				59C4DC529881F6E72CBE3EAC,
-				8D16EE897B04EA403EF92A6F,
 				8DC8942CF19D2719FAA1501C,
 				AB9CC0A43E26083734A54F42,
 				BD752E66BA8677849E5469C2,
@@ -699,6 +700,8 @@
 				1B8CAFF34FA21717526CE282,
 				BFB48EC24C48066BB0905BC2,
 				A0581BEF4C53A1EAE08C8473,
+				86D4D8E738F1C0E72F9B315B,
+				BE950B96A096623580B6C120,
 				FE1830C650A587C48B922820,
 				B10CB38310C17F95146B503D,
 				FC8419BA2850E3E9B353A698,
@@ -1153,7 +1156,6 @@
 				B4245501C4641B9E696FD08F,
 				16621BE75EEBD08CCD26E8C4,
 				BB837126791EF0960CC08D3F,
-				9898B2BEF8B5FEB40CCDA382,
 				ECFA7C2ABFEEE6597DAE785F,
 				78B73D9D5B0E32AC35532E05,
 				05147B0EFDCDAF5F831D2723,
@@ -1547,7 +1549,7 @@
 		6A50FB53C4AC2437E07541F9 = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1320;
+				LastUpgradeCheck = 1340;
 				ORGANIZATIONNAME = "";
 				TargetAttributes = {
 					5FD64B0FD59767DFD945EE30 = {
@@ -1646,6 +1648,8 @@
 				84248625CBE2A6EC77945E1A,
 				8FB41920036A869538807BB0,
 				F57FA00F5C7C2ECAC574766D,
+				83D4E544BE8C1356AD840F51,
+				E71301EE834E36C91403C7B6,
 				07D0C950B345B1981E2BC91B,
 				6942FA9E2449FCE382D8443E,
 				740A3202EB5DBDE7176FE433,
@@ -1738,16 +1742,16 @@
 					"DEBUG=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.4.0b10",
+					"JUCE_APP_VERSION=1.4.0b11",
 					"JUCE_APP_VERSION_HEX=0x10400",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
 					"JucePlugin_Build_AUv3=0",
-					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
 					"JucePlugin_Build_Standalone=0",
 					"JucePlugin_Build_Unity=0",
+					"JucePlugin_Build_LV2=0",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
@@ -1770,7 +1774,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
@@ -1845,16 +1849,16 @@
 					"NDEBUG=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.4.0b10",
+					"JUCE_APP_VERSION=1.4.0b11",
 					"JUCE_APP_VERSION_HEX=0x10400",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
 					"JucePlugin_Build_AU=0",
 					"JucePlugin_Build_AUv3=0",
-					"JucePlugin_Build_RTAS=0",
 					"JucePlugin_Build_AAX=0",
 					"JucePlugin_Build_Standalone=0",
 					"JucePlugin_Build_Unity=0",
+					"JucePlugin_Build_LV2=0",
 				);
 				GCC_VERSION = com.apple.compilers.llvm.clang.1_0;
 				HEADER_SEARCH_PATHS = (
@@ -1878,7 +1882,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus -lssl -lcrypto";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
