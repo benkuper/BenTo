@@ -10,6 +10,7 @@
 #include "sensors/touch/TouchManager.h"
 #include "sensors/imu/IMUManager.h"
 #include "sensors/capacitive/CapacitiveManager.h"
+#include "sensors/mic/MicManager.h"
 #include "pwm/PWMManager.h"
 #include "scripts/ScriptManager.h"
 
@@ -40,6 +41,7 @@ public:
     TouchManager touch;
     IMUManager imu;
     CapacitiveManager cap;
+    MicManager mic;
     ScriptManager scripts;
 
     Timer initTimer; //to init blocking stuff after connection
@@ -57,6 +59,7 @@ public:
     void touchEvent(const TouchEvent &e);
     void imuEvent(const IMUEvent &e);
     void capacitiveEvent(const CapacitiveEvent &e);
+    void micEvent(const MicEvent &e);
     void rgbLedsEvent(const RGBLedsEvent &e);
 
     void fileEvent(const FileEvent &e);

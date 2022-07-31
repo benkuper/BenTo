@@ -232,6 +232,28 @@ m3ApiRawFunction(m3_getActivity)
     m3ApiReturn(MainManager::instance->imu.activity);
 }
 
+m3ApiRawFunction(m3_setMicEnabled)
+{
+    m3ApiGetArg(uint32_t, en);
+    MicManager::instance->setEnabled((bool)en);
+    m3ApiSuccess();
+}
+
+
+
+m3ApiRawFunction(m3_getMicLevel)
+{
+    m3ApiReturnType(float);
+
+    #ifdef BUTTON_COUNT
+    float v =   MicManager::instance->enveloppe;
+    #else
+    float v = 0;
+    #endif
+
+    m3ApiReturn((float)v);
+}
+
 m3ApiRawFunction(m3_setBatterySendEnabled)
 {
     m3ApiGetArg(uint32_t, en);

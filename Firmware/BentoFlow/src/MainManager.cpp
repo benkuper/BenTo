@@ -66,6 +66,10 @@ void MainManager::init()
     cap.init();
     cap.addListener(std::bind(&MainManager::capacitiveEvent, this, std::placeholders::_1));
 
+    mic.init();
+    mic.addListener(std::bind(&MainManager::micEvent, this, std::placeholders::_1));
+
+
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
     scripts.init();
@@ -94,9 +98,10 @@ void MainManager::update()
     battery.update();
     touch.update();
     cap.update();
+    
+    mic.update();
 
-    // tmp call this from ledmanager
-    // scripts.update();
+    // tmp call this from ledmanager, not used now : scripts.update();
 
     pwm.update();
 
@@ -127,7 +132,8 @@ void MainManager::sleep(CRGB color)
     comm.sendMessage(name, "sleep", nullptr, 0);
     leds.shutdown(color); // to replace with battery color
     pwm.shutdown();
-
+    mic.shutdown();
+    
     BoardShutdown
 
     delay(500);
@@ -209,7 +215,7 @@ void MainManager::batteryEvent(const BatteryEvent &e)
     data[0].value.f = e.value;
     comm.sendMessage(battery.name, BatteryEvent::eventNames[(int)e.type], data, 1);
 
-    if (e.type == BatteryEvent::CriticalLevel)
+    if (e.type == BatteryEvent::CriticalLevel && !battery.isCharging)
     {
         NDBG("Critical battery level detected => sleeping");
         sleep(CRGB::Red);
@@ -426,6 +432,13 @@ void MainManager::capacitiveEvent(const CapacitiveEvent &e)
     }
     break;
     }
+#endif
+}
+
+void MainManager::micEvent(const MicEvent &e)
+{
+#if USE_MIC
+
 #endif
 }
 
