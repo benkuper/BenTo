@@ -29,6 +29,7 @@ SetupWindowTitle={#ApplicationName} {#ApplicationVersion} Setup
 
 [Files]
 Source: "Binaries/CI/App/*.exe"; DestDir: "{app}" ; Flags: ignoreversion
+Source: "Binaries/CI/App/*.bin"; DestDir: "{app}" ; Flags: ignoreversion
 Source: "Binaries/CI/App/*.dll"; DestDir: "{app}"; Flags: ignoreversion
 
 [Icons]
