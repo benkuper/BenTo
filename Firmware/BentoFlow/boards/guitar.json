@@ -4,13 +4,13 @@
       "ldscript": "esp32_out.ld"
     },
     "core": "esp32",
-    "extra_flags": "-DARDUINO_FLOWTOYS_CREATOR_LIGHTBULB",
+    "extra_flags": "-DARDUINO_GUITAR",
     "f_cpu": "240000000L",
     "f_flash": "40000000L",
     "flash_mode": "dio",
     "mcu": "esp32",
-    "variant": "esp32",
-    "partitions":"noota_3g.csv"
+    "variant": "m5stick_c",
+    "partitions":"no_ota.csv"
   },
   "connectivity": [
     "wifi",
@@ -18,21 +18,18 @@
     "ethernet",
     "can"
   ],
-  "debug": {
-    "openocd_board": "esp-wroom-32.cfg"
-  },
   "frameworks": [
     "arduino",
     "espidf"
   ],
-  "name": "Lightbulb",
+  "name": "M5Stick-C",
   "upload": {
     "flash_size": "4MB",
     "maximum_ram_size": 327680,
     "maximum_size": 4194304,
     "require_upload_port": true,
-    "speed": 921600
+    "speed": 1500000
   },
-  "url": "https://github.com/benkuper/Bento",
-  "vendor": "Flowtoys"
+  "url": "http://www.m5stack.com",
+  "vendor": "M5Stack"
 }

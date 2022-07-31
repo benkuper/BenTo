@@ -25,7 +25,7 @@
     "arduino",
     "espidf"
   ],
-  "name": "Flowtoys Creator Club",
+  "name": "Clarinet",
   "upload": {
     "flash_size": "4MB",
     "maximum_ram_size": 327680,

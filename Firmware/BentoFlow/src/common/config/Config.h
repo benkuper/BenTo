@@ -10,7 +10,7 @@
 //  #define LT_BALL
 //  #define LT_HOOP
 //  #define CLARINET
-// #define SAX
+ //#define SAX
 // #define GUITAR
 //  #define GLOVE
 //  #define GENERIC_PWM
@@ -46,9 +46,9 @@
 #include "config_ltball.h"
 #elif defined ARDUINO_CLARINET
 #include "config_clarinet.h"
-#elif defined SAX
+#elif defined ARDUINO_SAX
 #include "config_sax.h"
-#elif defined GUITAR
+#elif defined ARDUINO_GUITAR
 #include "config_guitar.h"
 #elif defined BOX
 #include "config_box.h"
@@ -76,6 +76,8 @@
 #include "config_tab_cyrwheel.h"
 #elif defined ARDUINO_FLOWTOYS_CREATOR_LIGHTBULB
 #include "config_lamp.h"
+#elif defined ARDUINO_COSTUME
+#include "config_costume.h"
 #elif defined ARDUINO_ASPI
 #include "config_aspi.h"
 #elif defined ARDUINO_BIKE

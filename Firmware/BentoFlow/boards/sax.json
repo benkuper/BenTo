@@ -4,7 +4,7 @@
       "ldscript": "esp32_out.ld"
     },
     "core": "esp32",
-    "extra_flags": "-DARDUINO_FLOWTOYS_CREATOR_LIGHTBULB",
+    "extra_flags": "-DARDUINO_SAX",
     "f_cpu": "240000000L",
     "f_flash": "40000000L",
     "flash_mode": "dio",
@@ -25,7 +25,7 @@
     "arduino",
     "espidf"
   ],
-  "name": "Lightbulb",
+  "name": "Sax",
   "upload": {
     "flash_size": "4MB",
     "maximum_ram_size": 327680,

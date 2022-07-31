@@ -22,7 +22,7 @@
     "arduino",
     "espidf"
   ],
-  "name": "M5Stick-C",
+  "name": "Aspi",
   "upload": {
     "flash_size": "4MB",
     "maximum_ram_size": 327680,
