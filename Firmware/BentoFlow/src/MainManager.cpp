@@ -69,7 +69,6 @@ void MainManager::init()
     mic.init();
     mic.addListener(std::bind(&MainManager::micEvent, this, std::placeholders::_1));
 
-
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
 
     scripts.init();
@@ -78,7 +77,7 @@ void MainManager::init()
 
     BoardInit
 
-    NDBG("Board is " + String(ARDUINO_BOARD));
+        NDBG("Board is " + String(ARDUINO_BOARD));
 }
 
 void MainManager::update()
@@ -98,7 +97,7 @@ void MainManager::update()
     battery.update();
     touch.update();
     cap.update();
-    
+
     mic.update();
 
     // tmp call this from ledmanager, not used now : scripts.update();
@@ -133,10 +132,10 @@ void MainManager::sleep(CRGB color)
     leds.shutdown(color); // to replace with battery color
     pwm.shutdown();
     mic.shutdown();
-    
+
     BoardShutdown
 
-    delay(500);
+        delay(500);
 
 #ifdef SLEEP_PIN
     pinMode(SLEEP_PIN, OUTPUT);
@@ -171,7 +170,10 @@ void MainManager::connectionEvent(const ConnectionEvent &e)
 {
 
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
-    leds.setConnectionState(e.type);
+    if (!leds.playerMode.isPlaying)
+    {
+        leds.setConnectionState(e.type);
+    }
 
     if (e.source == "wifi")
     {
