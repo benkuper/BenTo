@@ -26,8 +26,12 @@ void BatteryManager::init()
 
 #ifdef USE_PREFERENCES
     prefs.begin(name.c_str());
-    setMax(prefs.getInt("max", defaultMaxVal), false);
+    setMin(prefs.getInt("min", BATTERY_RAW_MIN), false);
+    setMax(prefs.getInt("max", BATTERY_RAW_MAX), false);
     prefs.end();
+
+    NDBG("Custom min/max raw values : " + String(minVal)+" / "+String(maxVal));
+
 #elif defined USE_SETTINGS_MANAGER
     // init once with a json if it doesn't exist yet
     prefs.readSettings(String("/" + name + ".json").c_str());
@@ -60,9 +64,9 @@ void BatteryManager::update()
         isCharging = isChargingBattery();
 #else
         rawValue = analogRead(BATTERY_PIN);
-        voltage = (rawValue - defaultMinVal) * (3.8 - 3.2) / (defaultMaxVal - defaultMinVal) + 3.2;
+        voltage = BATTERY_VOLTAGE_MIN + (rawValue - minVal) * (BATTERY_VOLTAGE_MAX  - BATTERY_VOLTAGE_MIN) / (maxVal - minVal);
         updateValue(rawValue);
-        updateMax(rawValue);
+        //updateMax(rawValue);
         updateCharge();
 #endif
 
@@ -106,6 +110,23 @@ void BatteryManager::updateMax(int currentValue)
     }
 }
 
+void BatteryManager::setMin(int newMin, bool save)
+{
+    minVal = max(newMin, 0);
+
+    if (save)
+    {
+#ifdef USE_PREFERENCES
+        prefs.begin(name.c_str());
+        prefs.putInt("min", minVal);
+        prefs.end();
+#elif defined USE_SETTINGS_MANAGER
+        prefs.readSettings(String("/" + name + ".json").c_str());
+        prefs.setInt("min", maxVal);
+#endif
+    }
+}
+
 void BatteryManager::setMax(int newMax, bool save)
 {
     maxVal = max(newMax, 0);
@@ -125,8 +146,8 @@ void BatteryManager::setMax(int newMax, bool save)
 
 void BatteryManager::resetMax()
 {
-    maxVal = defaultMaxVal;
-    setMax(defaultMaxVal, true);
+    maxVal = BATTERY_RAW_MAX;
+    setMax(maxVal, true);
 
     sendEvent(BatteryEvent(BatteryEvent::Reset, maxVal));
 }
@@ -181,6 +202,11 @@ bool BatteryManager::handleCommand(String command, var *data, int numData)
     else if (checkCommand(command, "sendEnabled", numData, 1))
     {
         sendEnabled = data[0].intValue() == 1;
+        return true;
+    }else if(checkCommand(command, "minMax", numData, 2))
+    {
+        setMin(data[0].intValue(), true);
+        setMax(data[1].intValue(), true);
         return true;
     }
 #endif

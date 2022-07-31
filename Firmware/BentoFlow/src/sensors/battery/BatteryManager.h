@@ -30,19 +30,25 @@ public:
     bool isCharging;
     bool sendEnabled;
 
-#ifndef BATTERY_DEFAULT_MIN
-#define BATTERY_DEFAULT_MIN 222 //TESTED: 3.2V
+#ifndef BATTERY_RAW_MIN
+#define BATTERY_RAW_MIN 205 //TESTED: 3.5V
 #endif
 
-#ifndef BATTERY_DEFAULT_MAX
-#define BATTERY_DEFAULT_MAX 335 // TESTED: 3.8V
+#ifndef BATTERY_RAW_MAX
+#define BATTERY_RAW_MAX 324 // TESTED: 4.2V
 #endif
 
-    const int defaultMinVal = BATTERY_DEFAULT_MIN; 
-    const int defaultMaxVal = BATTERY_DEFAULT_MAX; 
+#ifndef BATTERY_VOLTAGE_MIN
+#define BATTERY_VOLTAGE_MIN 3.5
+#endif
 
-    int minVal = defaultMinVal;
-    int maxVal = defaultMaxVal;
+#ifndef BATTERY_VOLTAGE_MAX
+#define BATTERY_VOLTAGE_MAX 4.2²
+#endif
+
+
+    int minVal = BATTERY_RAW_MIN;
+    int maxVal = BATTERY_RAW_MAX;
 
     bool isCriticalBattery;
 
@@ -61,6 +67,7 @@ public:
     void updateValue(int currentValue);
     void updateMax(int currentValue);
     void updateCharge();
+    void setMin(int value, bool save = false);
     void setMax(int value, bool save = false);
     void resetMax();
     void setSendEnabled(bool value);
