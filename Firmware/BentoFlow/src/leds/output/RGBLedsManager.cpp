@@ -113,9 +113,18 @@ void RGBLedsManager::init()
 #endif //PWM / DMX / FastLED switch
 
 
+
 #ifdef USE_PREFERENCES
     prefs.begin(name.c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
+
+    
+    uint8_t tempR = prefs.getChar("tempR", 0xff);
+    uint8_t tempG = prefs.getChar("tempG", 0xff);
+    uint8_t tempB = prefs.getChar("tempB", 0xff);
+    
+    setTemperature(tempR, tempG, tempB);
+
     prefs.end();
 #elif defined USE_SETTINGS_MANAGER
     //init once with a json if it doesn't exist yet
@@ -208,6 +217,32 @@ void RGBLedsManager::setBrightness(float value, bool save)
 #endif //LED_COUNT
 }
 
+
+void RGBLedsManager::setTemperature(uint8_t r, uint8_t g, uint8_t b, bool save)
+{
+    temperature = CRGB(r, g, b);
+    
+#ifdef LED_COUNT
+#ifdef LED_SEPARATE_CHANNELS
+#elif defined LED_USE_DMX
+#else
+    FastLED.setTemperature(temperature);
+    FastLED.show();
+#endif
+    if (save)
+    {
+#ifdef USE_PREFERENCES
+        prefs.begin(name.c_str());
+        prefs.putChar("tempR", r);
+        prefs.putChar("tempg", g);
+        prefs.putChar("tempB", b);
+        prefs.end();
+#elif defined USE_SETTINGS_MANAGER
+#endif
+    }
+#endif //LED_COUNT
+}
+
 void RGBLedsManager::setLedEnabled(bool val)
 {
     ledEnabled = val;
@@ -238,6 +273,9 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
     {
         setBrightness(data[0].floatValue(), true);
         return true;
+    }else if(checkCommand(command,"temperature", numData, 3))
+    {
+        setTemperature((int)(data[0].floatValue() * 255), (int)(data[1].floatValue() * 255), (int)(data[2].floatValue() * 255), true);
     }
     else if (checkCommand(command, "fill", numData, 3))
     {

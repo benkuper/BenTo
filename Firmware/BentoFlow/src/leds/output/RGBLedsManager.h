@@ -32,6 +32,7 @@ public:
 #endif
 
     float globalBrightness;
+    CRGB temperature;
     bool ledEnabled;
 
     void init();
@@ -39,6 +40,7 @@ public:
     void shutdown();
 
     void setBrightness(float value, bool save = false);
+    void setTemperature(uint8_t r, uint8_t g, uint8_t b, bool save = false);
     bool handleCommand(String command, var *data, int numData) override;
 
     void setLedEnabled(bool val);
