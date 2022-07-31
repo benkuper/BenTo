@@ -207,6 +207,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
     m3_LinkRawFunction(module, arduino, "getButtonState", "i(i)", &m3_getButtonState);
     m3_LinkRawFunction(module, arduino, "getActivity", "f()", &m3_getActivity);
+    m3_LinkRawFunction(module, arduino, "getSpin", "f()", &m3_getSpin);
 
     m3_LinkRawFunction(module, arduino, "setMicEnabled", "v(i)", &m3_setMicEnabled);
     m3_LinkRawFunction(module, arduino, "getMicLevel", "f()", &m3_getMicLevel);

@@ -232,6 +232,12 @@ m3ApiRawFunction(m3_getActivity)
     m3ApiReturn(MainManager::instance->imu.activity);
 }
 
+m3ApiRawFunction(m3_getSpin)
+{
+    m3ApiReturnType(float);
+    m3ApiReturn(MainManager::instance->imu.spin);
+}
+
 m3ApiRawFunction(m3_setMicEnabled)
 {
     m3ApiGetArg(uint32_t, en);

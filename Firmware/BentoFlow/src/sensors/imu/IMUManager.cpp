@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngleClub"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngleClub", "spin"};
 IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),
@@ -47,6 +47,7 @@ IMUManager::IMUManager() : Component("imu"),
   orientationXOffset = .0;
 
   angleOffset = .0f;
+  countNonDouble = 0;
 }
 
 IMUManager::~IMUManager()
@@ -75,7 +76,7 @@ void IMUManager::init()
   bno.setAxisSign(IMU_REMAP_SIGN);
   bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 
-  // bno.setExtCrystalUse(true);
+  //bno.setExtCrystalUse(true);
   bno.enterNormalMode();
 
   isConnected = true;
@@ -99,8 +100,8 @@ void IMUManager::init()
 #endif
 
 #ifdef IMU_READ_ASYNC
-  DBG("IMU Task Create");
-  xTaskCreate(&IMUManager::readIMUStatic, "imu", NATIVE_STACK_SIZE, NULL, 1, NULL);
+    DBG("IMU Task Create");
+    xTaskCreate(&IMUManager::readIMUStatic, "imu", NATIVE_STACK_SIZE, NULL, 1, NULL);
 #endif
 
   DBG("IMU CONFIG: ");
@@ -133,7 +134,7 @@ void IMUManager::update()
   long curTime = millis();
   if (curTime > timeSinceOrientationLastSent + orientationSendTime)
   {
-    // TSTART()
+   // TSTART()
     if (sendLevel >= 1)
     {
 
@@ -145,12 +146,13 @@ void IMUManager::update()
         sendEvent(IMUEvent(IMUEvent::GyroUpdate, gyro, 3));
         sendEvent(IMUEvent(IMUEvent::ActivityUpdate));
         sendEvent(IMUEvent(IMUEvent::ProjectedAngleUpdate));
+        sendEvent(IMUEvent(IMUEvent::SpinUpdate));
         // sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
       }
     }
 
     timeSinceOrientationLastSent = curTime;
-    //  TFINISH("Send")
+  //  TFINISH("Send")
   }
 
 #ifdef IMU_READ_ASYNC
@@ -189,7 +191,7 @@ void IMUManager::readIMU()
     return;
 #endif
 
-  // DBG("Read IMU");
+  //DBG("Read IMU");
 
   imu::Quaternion q = bno.getQuat();
   q.normalize();
@@ -197,22 +199,16 @@ void IMUManager::readIMU()
   // float temp = q.x();  q.x() = -q.y();  q.y() = temp;
   // q.z() = -q.z();
 
-   imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-  if(acc.x() == 0 && acc.y() == 0 && acc.z() == 0) return;
+  imu::Vector<3> euler = q.toEuler();
+  orientation[0] = fmod(((euler.x() * 180 / PI) + orientationXOffset + 180.0f*5), 360.0f) - 180.0f;
+  orientation[1] = euler.y() * 180 / PI; // Pitch
+  orientation[2] = euler.z() * 180 / PI; // Roll
+  
+
+  imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
   accel[0] = acc.x();
   accel[1] = acc.y();
   accel[2] = acc.z();
-
-
-  imu::Vector<3> euler = q.toEuler();
-  if(isnan(euler.x()) || isnan(euler.y()) || isnan(euler.z())) return;
-  
-  orientation[0] = fmod(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f;
-  orientation[1] = euler.y() * 180 / PI; // Pitch
-  orientation[2] = euler.z() * 180 / PI; // Roll
-
-
- 
 
   imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   linearAccel[0] = laccel.x();
@@ -232,6 +228,7 @@ void IMUManager::readIMU()
   computeThrow();
   computeActivity();
   computeProjectedAngle();
+  computeSpin();
 
 #ifdef IMU_READ_ASYNC
   hasNewData = true;
@@ -240,54 +237,71 @@ void IMUManager::readIMU()
 #endif
 }
 
-void IMUManager::computeProjectedAngle()
-{
+void IMUManager::computeSpin() {
+  float currentSpin = 0.5;
+
+  if (throwState == 0) {
+		spinCount = 0;
+		currentSpinLastUpdate = 0;
+		lastThrowState = 0;
+		spin = 0;
+		return;
+  }
+
+  if (throwState > 0 && lastThrowState == 0) {
+		launchOrientationX = orientation[0];
+
+		if (launchOrientationX >= 0 && launchOrientationX < 180) {
+			launchProjectedAngle = projectedAngle;
+    } else {
+			launchProjectedAngle = 1-projectedAngle;
+    }
+  }
+
+  if (launchOrientationX >= 0 && launchOrientationX < 180) {
+    currentSpin = projectedAngle;
+  }	else {
+		currentSpin = 1 - projectedAngle;
+  }
+
+  if (currentSpin > 0 && currentSpin < 0.5 && currentSpinLastUpdate > 0.5) {
+		spinCount += 1;
+  }
+
+  lastThrowState = throwState;
+  currentSpinLastUpdate = currentSpin;
+	spin = currentSpin + spinCount - launchProjectedAngle;
+}
+
+void IMUManager::computeProjectedAngle() {
   float eulerRadians[3];
   float lookAt[3];
   float result;
 
-  // Recalculate x orientation for the projected angle, based on xOnCalibration
+  //Recalculate x orientation for the projected angle, based on xOnCalibration
   float xOrientation = orientation[0];
   float newX = 0;
-  if (xOnCalibration < 0)
-  {
-    if (xOrientation > xOnCalibration)
-    {
-      if (xOrientation < 0)
-      {
+  if (xOnCalibration < 0) {
+    if (xOrientation > xOnCalibration) {
+      if (xOrientation < 0) {
         newX = (xOnCalibration * -1) - (xOrientation * -1);
-      }
-      else
-      {
-        if (xOrientation + (xOnCalibration * -1) > 180.0f)
-        {
+      } else {
+        if (xOrientation + (xOnCalibration * -1) > 180.0f) {
           newX = (360.0f - xOrientation - (xOnCalibration * -1)) * -1;
-        }
-        else
-        {
+        } else {
           newX = xOrientation + (xOnCalibration * -1);
         }
       }
-    }
-    else
-    {
+    } else {
       newX = (xOnCalibration * -1) - (xOrientation * -1);
     }
-  }
-  else
-  {
-    if (xOrientation > xOnCalibration)
-    {
+  } else {
+    if (xOrientation > xOnCalibration) {
       newX = xOrientation - xOnCalibration;
-    }
-    else
-    {
-      if ((xOrientation - xOnCalibration) < -180)
-      {
+    } else {
+      if ((xOrientation - xOnCalibration) < -180) {
         newX = (180.0f - xOnCalibration) + (180.0f - (xOrientation * -1));
-      }
-      else
-      {
+      } else {
         newX = xOrientation - xOnCalibration;
       }
     }
@@ -303,18 +317,24 @@ void IMUManager::computeProjectedAngle()
 
   result = atan(lookAt[1] / lookAt[2]) - PI / 2.0f;
 
-  if (lookAt[2] > 0.0f)
-  {
+  if (lookAt[2] > 0.0f) {
     result = result + PI;
   }
 
   result = (result / PI) * 0.5f + 0.5f;
-  result = fmod((result + angleOffset), 1.0f);
+	result = fmod((result + angleOffset), 1.0f);
+
+  if (result >= 0.5) {
+		result = result - 0.5;
+  } else {
+		result = result + 0.5;
+  }
 
   projectedAngle = result;
 
   // DBG("Projected Angle: " + String(projectedAngle));
 }
+
 
 void IMUManager::computeThrow()
 {
@@ -337,13 +357,14 @@ void IMUManager::computeThrow()
   else
   {
     bool curIsThrowing = throwState > 1;
+    isFastSpin = accel[0] >= 38.0f;
     float throwThresh = curIsThrowing ? accelThresholds[1] : accelThresholds[0];
-    throwThresh = isFastSpin ? throwThresh : accelThresholds[2];
+		throwThresh = isFastSpin ? accelThresholds[2] : throwThresh;
 
     bool accelCheck = maxAccelYZ < throwThresh;
 
     bool isThrowing = false;
-
+    
     if (curIsThrowing)
     {
       isThrowing = accelCheck;
@@ -355,6 +376,7 @@ void IMUManager::computeThrow()
     }
 
     float throwPower = abs(accel[0]);
+
     if (isThrowing)
     {
       if (throwPower < semiFlatThreshold)
@@ -365,6 +387,24 @@ void IMUManager::computeThrow()
         newState = 2;
       else
         newState = 3; // double
+
+      if (curIsThrowing && throwState != newState) {
+        if (throwState == 3 && newState == 2) {
+          newState = 3; // double will stay a double
+        } else if (throwState == 2 && newState == 5) {
+          newState = 2; // single will stay a single
+        }
+      }
+    }
+
+    if (newState != 3 && countNonDouble < 10) {
+      countNonDouble = countNonDouble + 1;
+    } else if (newState == 3) {
+      countNonDouble = 0;
+    }
+
+    if (throwState == 3 && newState != 3 && countNonDouble < 3) {
+      newState = 3; 
     }
   }
 
@@ -379,20 +419,19 @@ void IMUManager::computeThrow()
 #endif
 }
 
+
 void IMUManager::computeActivity()
 {
   float maxLinearAccel = max(max(abs(linearAccel[0]), abs(linearAccel[1])), abs(linearAccel[2]));
-  maxLinearAccel = (((maxLinearAccel - 0) * (1 - 0)) / (40 - 0)) + 0; // remap to 0..1 range
+  maxLinearAccel = 	(((maxLinearAccel - 0) * (1 - 0)) / (40 - 0)) + 0; // remap to 0..1 range
   maxLinearAccel = min(maxLinearAccel, (float)1.0);
 
   activity = prevActivity + (maxLinearAccel - prevActivity) * 0.1;
   prevActivity = activity;
 }
 
-void IMUManager::sendCalibrationStatus()
-{
 
-#ifdef HAS_IMU
+void IMUManager::sendCalibrationStatus() {
   uint8_t system, gyro, accel, mag;
   system = gyro = accel = mag = 0;
   bno.getCalibration(&system, &gyro, &accel, &mag);
@@ -403,8 +442,8 @@ void IMUManager::sendCalibrationStatus()
   calibration[3] = (float)mag;
 
   sendEvent(IMUEvent(IMUEvent::CalibrationStatus, calibration, 4));
-#endif
 }
+
 
 void IMUManager::setEnabled(bool value)
 {
@@ -428,9 +467,9 @@ void IMUManager::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
 void IMUManager::shutdown()
 {
   setEnabled(false);
-#ifdef IMU_READ_ASYNC
-  shouldStopRead = true;
-#endif
+  #ifdef IMU_READ_ASYNC
+    shouldStopRead = true;
+    #endif
 }
 
 bool IMUManager::handleCommand(String command, var *data, int numData)
