@@ -32,8 +32,8 @@ const int buttonPins[BUTTON_COUNT]{ 32 };
 
 //battery sence
 #define BATTERY_PIN 35 // takes the measurment from the battery sence. 
-#define BATTERY_DEFAULT_MIN 222
-#define BATTERY_DEFAULT_MAX 335
+#define BATTERY_RAW_MIN 222
+#define BATTERY_MAX_MAX 335
 
 #define HAS_IMU
 //#define I2C_CLOCK 10000 // not sure what this is for.

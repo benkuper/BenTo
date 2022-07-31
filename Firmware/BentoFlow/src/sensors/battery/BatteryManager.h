@@ -43,7 +43,7 @@ public:
 #endif
 
 #ifndef BATTERY_VOLTAGE_MAX
-#define BATTERY_VOLTAGE_MAX 4.2²
+#define BATTERY_VOLTAGE_MAX 4.2
 #endif
 
 

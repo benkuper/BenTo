@@ -400,7 +400,8 @@ void PropManager::run()
 {
 	LOG("Updating prop definitions...");
 	URL url("https://benjamin.kuperberg.fr/bento/getProps.php");
-	std::unique_ptr<URL::DownloadTask> t = url.downloadToFile(File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip"), "", this);
+
+	std::unique_ptr<URL::DownloadTask> t = url.downloadToFile(File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip"), URL::DownloadTaskOptions().withListener(this));
 	if (t != nullptr) propDownloadTask.reset(t.release());
 	else LOGERROR("Error downloading");
 }

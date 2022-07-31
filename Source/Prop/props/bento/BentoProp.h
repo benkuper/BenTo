@@ -54,8 +54,8 @@ public:
 	virtual void stopBakePlaying() override;
 	virtual void sendShowPropID(bool value) override;
 
-	static bool uploadProgressCallback(void* prop, int bytesSent, int totalBytes);
-	static bool uploadMetaDataProgressCallback(void * prop, int bytesSent, int totalBytes);
+	bool uploadProgressCallback(int bytesSent, int totalBytes);
+	bool uploadMetaDataProgressCallback(int bytesSent, int totalBytes);
 
 	virtual void sendYo();
 	virtual void sendPingInternal() override;

@@ -26,7 +26,6 @@ public:
 	Trigger* saveWifiTrigger;
 
 	ControllableContainer flashCC;
-	FileParameter* arduinoPath;
 	FileParameter* firmwareFile;
 	Trigger* flashConnected;
 

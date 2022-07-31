@@ -6,7 +6,8 @@ MicManager *MicManager::instance = NULL;
 
 MicManager::MicManager() : Component("mic"),
                            isEnabled(false),
-                           shouldStopRead(false)
+                           shouldStopRead(false),
+                           enveloppe(0)
 {
     instance = this;
 }
@@ -42,7 +43,8 @@ void MicManager::shutdown()
 
 void MicManager::i2sInit() // Init I2S.  初始化I2S
 {
-    i2s_config_t i2s_config = {
+#if USE_MIC
+   i2s_config_t i2s_config = {
         .mode = (i2s_mode_t)(I2S_MODE_MASTER | I2S_MODE_RX |
                              I2S_MODE_PDM), // Set the I2S operating mode.
                                             // 设置I2S工作模式
@@ -78,10 +80,12 @@ void MicManager::i2sInit() // Init I2S.  初始化I2S
     i2s_driver_install(I2S_NUM_0, &i2s_config, 0, NULL);
     i2s_set_pin(I2S_NUM_0, &pin_config);
     i2s_set_clk(I2S_NUM_0, 44100, I2S_BITS_PER_SAMPLE_16BIT, I2S_CHANNEL_MONO);
+#endif
 }
 
 void MicManager::showSignal()
 {
+#if USE_MIC
 
     int eMin = INT32_MAX;
     int eMax = INT32_MIN;
@@ -109,12 +113,14 @@ void MicManager::showSignal()
     float e = 0;
     for (int i = 0; i < RMS_WINDOW; i++) e = max(e, envWindow[i]);
     enveloppe = e;
+#endif
 
     // NDBG("Enveloppe " + String(enveloppe)+" ( " + String(eMin)+", "+String(eMax)+")");
 }
 
 void MicManager::mic_record_task(void *arg)
 {
+#if USE_MIC
     size_t bytesread;
 
     while (!instance->shouldStopRead)
@@ -128,6 +134,7 @@ void MicManager::mic_record_task(void *arg)
         instance->showSignal();
         delay(5);
     }
+#endif
 }
 
 void MicManager::setEnabled(bool value)

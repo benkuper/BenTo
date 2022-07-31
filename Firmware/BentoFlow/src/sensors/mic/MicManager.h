@@ -44,10 +44,9 @@ public:
     
     bool isEnabled;
     bool shouldStopRead;
-
-#if USE_MIC
     float enveloppe;
 
+#if USE_MIC
     uint8_t BUFFER[READ_LEN] = {0};
     uint16_t oldy[160];
     int16_t *adcBuffer = NULL;

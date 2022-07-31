@@ -179,7 +179,9 @@ void BentoProp::uploadBakedData(BakeData data)
 
 	URL metaUrl = URL(target).withDataToUpload("uploadData", data.name + ".meta", metaData, "text/plain");
 
-	std::unique_ptr<InputStream> mStream(metaUrl.createInputStream(true, &BentoProp::uploadMetaDataProgressCallback, this, "",20000));
+	std::unique_ptr<InputStream> mStream(metaUrl.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadMetaDataProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withConnectionTimeoutMs(20000)));
+
+
 
 	if (mStream != nullptr)
 	{
@@ -213,7 +215,10 @@ void BentoProp::uploadBakedData(BakeData data)
 	sleep(500);
 
 	url = URL(target).withDataToUpload("uploadData", data.name + ".colors", dataToSend, sendCompressedFile->boolValue() ? "application/zip" : "text/plain");
-	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this,"Content-Length:"+String(dataToSend.getSize()), 10000));// , "Content-Type: Text/plain");
+
+	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withExtraHeaders("Content-Length:" + String(dataToSend.getSize())).withConnectionTimeoutMs(10000)));
+
+	
 
 	if (stream != nullptr)
 	{
@@ -253,7 +258,10 @@ void BentoProp::uploadFile(File f)
 	fs.readIntoMemoryBlock(b);
 
 	URL url = URL(target).withDataToUpload("uploadData", f.getFileName(), b, "text/plain");
-	std::unique_ptr<InputStream> stream(url.createInputStream(true, &BentoProp::uploadProgressCallback, this, "Content-Length:" + String(b.getSize()), 10000));// , "Content-Type: Text/plain");
+
+	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withExtraHeaders("Content-Length:" + String(b.getSize())).withConnectionTimeoutMs(10000)));
+
+
 
 	if (stream != nullptr)
 	{
@@ -353,26 +361,23 @@ void BentoProp::sendShowPropID(bool value)
 	}
 }
 
-bool BentoProp::uploadProgressCallback(void* context, int bytesSent, int totalBytes)
+bool BentoProp::uploadProgressCallback(int bytesSent, int totalBytes)
 {
-	BentoProp* prop = (BentoProp*)context;
-	jassert(prop != nullptr);
-	if (prop->threadShouldExit()) return false;
+	
+	if (threadShouldExit()) return false;
 	float p = bytesSent * 1.0f / totalBytes;
-	prop->uploadProgress->setValue(.1f + p * .9f);
+	uploadProgress->setValue(.1f + p * .9f);
 	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
 
 	return true;
 }
 
-bool BentoProp::uploadMetaDataProgressCallback(void* context, int bytesSent, int totalBytes)
+bool BentoProp::uploadMetaDataProgressCallback(int bytesSent, int totalBytes)
 {
-	BentoProp* prop = dynamic_cast<BentoProp*>((BentoProp*)context);
-	jassert(prop != nullptr);
-	if (prop->threadShouldExit()) return false;
+	if (threadShouldExit()) return false;
 
 	float p = bytesSent * 1.0f / totalBytes;
-	prop->uploadProgress->setValue(p * .1f);
+	uploadProgress->setValue(p * .1f);
 
 	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
 

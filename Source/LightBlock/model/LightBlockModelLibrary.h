@@ -62,8 +62,8 @@ public:
 	LightBlockModel * getFilterWithName(const String &modelName);
 
 
-	static void showSourcesAndGet(std::function<void(ControllableContainer*)> returnFunc);
-	static void showFiltersAndGet(std::function<void(ControllableContainer*)> returnFunc);
+	static void showSourcesAndGet(ControllableContainer * sourceCC, std::function<void(ControllableContainer*)> returnFunc);
+	static void showFiltersAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc);
 	static Array<LightBlockColorProvider *> fillProvidersMenu(PopupMenu &menu, bool includePresets, bool includeSources, bool includeFilters, int startIndex = 1);
 	static Array<LightBlockColorProvider *> fillUserLightBlockManagerMenu(UserLightBlockModelManager * manager, PopupMenu &menu, bool includePresets, int startIndex);
 

@@ -193,7 +193,7 @@ LightBlockModel* LightBlockModelLibrary::getFilterWithName(const String& modelNa
 	return nullptr;
 }
 
-void LightBlockModelLibrary::showSourcesAndGet(std::function<void(ControllableContainer*)> returnFunc)
+void LightBlockModelLibrary::showSourcesAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
 	Array<LightBlockColorProvider *> mList = fillProvidersMenu(menu, true, true, false);
@@ -206,7 +206,7 @@ void LightBlockModelLibrary::showSourcesAndGet(std::function<void(ControllableCo
 }
 
 
-void LightBlockModelLibrary::showFiltersAndGet(std::function<void(ControllableContainer*)> returnFunc)
+void LightBlockModelLibrary::showFiltersAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
 	Array<LightBlockColorProvider*> mList = fillProvidersMenu(menu, true, false, true);

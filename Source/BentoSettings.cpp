@@ -26,8 +26,6 @@ BentoSettings::BentoSettings() :
 	saveWifiTrigger = wifiCC.addTrigger("Save credentials", "Save the credentials into all connected props");
 	addChildControllableContainer(&wifiCC);
 
-	arduinoPath = flashCC.addFileParameter("ESP32 Path", "Path to the ESP32 folder that includes \"tools\" and \"hardware\" subfolders");
-	arduinoPath->directoryMode = true;
 	firmwareFile = flashCC.addFileParameter("Firmware", "Firmware to flash to compatible props");
 	flashConnected = flashCC.addTrigger("Flash firmware", "Flash the firmware to connected props");
 	addChildControllableContainer(&flashCC);
@@ -43,39 +41,28 @@ void BentoSettings::onControllableFeedbackUpdate(ControllableContainer* cc, Cont
 
 	if (c == flashConnected)
 	{
+#if JUCE_WINDOWS
+		File flasher = File::getSpecialLocation(File::currentApplicationFile).getChildFile("../esptool.exe");
+
+
 		File fwFile = firmwareFile->getFile();
-		File esp32F = arduinoPath->getFile();
-		if (!fwFile.existsAsFile() || !esp32F.exists())
+		if (!fwFile.existsAsFile())
 		{
 			NLOGERROR(niceName, "Firmware file or flasher not found");
 			return;
 
 		}
 
-		File partitionsFwFile = fwFile.getChildFile("../" + fwFile.getFileNameWithoutExtension() + ".partitions.bin");
+		File partitionsFwFile = fwFile.getChildFile("../partitions.bin");
+
 		if (!partitionsFwFile.exists())
 		{
 			NLOGERROR(niceName, "Partitions file not found : " << partitionsFwFile.getFullPathName());
 			return;
 		}
 		
-		String fileName = "esptool";
-#if JUCE_WINDOWS
-		fileName += ".exe";
-#endif
-		File flasher = esp32F.getChildFile("packages/esp32/tools/esptool_py/2.6.1/"+fileName);
-		File espFolder = esp32F.getChildFile("packages/esp32/hardware/esp32");
-		Array<File> toolsFolders = espFolder.findChildFiles(File::TypesOfFileToFind::findDirectories, true, "tools");
-
-		LOG("Found " << toolsFolders.size() << "tools folder");
-		for (auto& tf : toolsFolders) LOG(" > " + tf.getFullPathName());
-
-		if (toolsFolders.size() == 0) return;
-		File toolsFolder = toolsFolders[0];
-
-
-		File app0Bin = toolsFolder.getChildFile("partitions/boot_app0.bin");
-		File bootloaderBin = toolsFolder.getChildFile("sdk/bin/bootloader_qio_80m.bin");
+		File app0Bin = fwFile.getChildFile("../boot_app0.bin");
+		File bootloaderBin = fwFile.getChildFile("../bootloader_qio_80m.bin");
 
 		for (auto& p : PropManager::getInstance()->items)
 		{
@@ -97,6 +84,10 @@ void BentoSettings::onControllableFeedbackUpdate(ControllableContainer* cc, Cont
 
 			}
 		}
+#else
+		LOGWARNING("Flashing only supported on Windows for now");
+#endif
+
 	}
 	else if (c == saveWifiTrigger)
 	{
