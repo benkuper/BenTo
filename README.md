@@ -7,6 +7,10 @@ Official BenTo Light Props Show Authoring Tool
 
 The documentation can be found at: https://bkuperberg.gitbook.io/bento-docs/
 
+## Discord
+
+If you have questions please join our discord server: https://discord.gg/Fdhf2dbT
+
 ## The Download Zone
 
 Releases are on the release page : https://github.com/benkuper/BenTo/releases
@@ -52,6 +56,11 @@ To build the software, you need to :
 - Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/r85kfdu2bv4ljxng?svg=true)](https://ci.appveyor.com/project/benkuper/bento)
 
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
+
+
+## Bento Remote (smartphone app)
+
+There is also a smartphone app that covers the functionality of the OSC command API: https://github.com/jonglissimo/bento-remote
 
 ## Screenshots
 
