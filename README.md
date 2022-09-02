@@ -9,7 +9,7 @@ The documentation can be found at: https://bkuperberg.gitbook.io/bento-docs/
 
 ## Discord
 
-If you have questions please join our discord server: https://discord.gg/Fdhf2dbT
+If you have questions please join our discord server: https://discord.gg/kedAeCbKUM
 
 ## The Download Zone
 
