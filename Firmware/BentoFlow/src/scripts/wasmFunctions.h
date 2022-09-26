@@ -30,6 +30,7 @@ m3ApiRawFunction(m3_setIMUEnabled);
 m3ApiRawFunction(m3_updateLeds);
 m3ApiRawFunction(m3_getButtonState);
 m3ApiRawFunction(m3_getActivity);
+m3ApiRawFunction(m3_getSpin);
 m3ApiRawFunction(m3_setMicEnabled);
 m3ApiRawFunction(m3_getMicLevel);
 m3ApiRawFunction(m3_setBatterySendEnabled);
