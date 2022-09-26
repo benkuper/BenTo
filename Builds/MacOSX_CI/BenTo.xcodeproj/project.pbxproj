@@ -57,6 +57,7 @@
 		A3AFC86C67024DF84AB349FB /* include_juce_gui_extra.mm */ = {isa = PBXBuildFile; fileRef = 091DCFB72171D73649C6465B; };
 		A5B64309CE58FAAFA6EE076B /* WebKit.framework */ = {isa = PBXBuildFile; fileRef = EBFE82D98BAD390E587C3B13; };
 		A71B9AED3033260290867951 /* IdentificationRuleManager.cpp */ = {isa = PBXBuildFile; fileRef = D027E1CD25E7821AE21678A1; };
+		A81C739C51DD974904D97093 /* include_juce_cryptography.mm */ = {isa = PBXBuildFile; fileRef = AC6DA19FDA0FEE0FD5884F54; };
 		AA276303915643D9EC996713 /* QuartzCore.framework */ = {isa = PBXBuildFile; fileRef = 364CB31C87000456A9F0353F; };
 		AB9CC0A43E26083734A54F42 /* CoreAudio.framework */ = {isa = PBXBuildFile; fileRef = 78B73D9D5B0E32AC35532E05; };
 		B08670E180B436DAF208B572 /* include_juce_osc.cpp */ = {isa = PBXBuildFile; fileRef = 878A4313101E6FF0D57EE3CD; };
@@ -142,6 +143,7 @@
 		1BEC6263B7071E6B42B16BE6 /* PropClusterGroup.cpp */ /* PropClusterGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropClusterGroup.cpp; path = ../../Source/Prop/Cluster/PropClusterGroup.cpp; sourceTree = SOURCE_ROOT; };
 		1DACA3C6B88F39699C445581 /* ModelNodeUI.cpp */ /* ModelNodeUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModelNodeUI.cpp; path = ../../Source/Node/nodes/model/ui/ModelNodeUI.cpp; sourceTree = SOURCE_ROOT; };
 		1F04EB3A5B1AC49DB467F5F2 /* CommonIncludes.h */ /* CommonIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommonIncludes.h; path = ../../Source/CommonIncludes.h; sourceTree = SOURCE_ROOT; };
+		1FB31E0DD68AFE02B5BA5B0A /* juce_cryptography */ /* juce_cryptography */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_cryptography; path = ../../JUCE/modules/juce_cryptography; sourceTree = SOURCE_ROOT; };
 		202B0B035DA4F9CD397EC3B7 /* SpatItem.cpp */ /* SpatItem.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SpatItem.cpp; path = ../../Source/Video/SpatItem.cpp; sourceTree = SOURCE_ROOT; };
 		20851EF3DD200B6155C04D4F /* LiveFeedBlock.h */ /* LiveFeedBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LiveFeedBlock.h; path = ../../Source/LightBlock/model/blocks/video/LiveFeedBlock.h; sourceTree = SOURCE_ROOT; };
 		21A4C58D48757E498A3FC8BA /* PropShapeBlock.h */ /* PropShapeBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropShapeBlock.h; path = ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.h; sourceTree = SOURCE_ROOT; };
@@ -325,6 +327,7 @@
 		A93764D22B731890A5D10F75 /* BatteryComponent.cpp */ /* BatteryComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BatteryComponent.cpp; path = ../../Source/Prop/Component/battery/BatteryComponent.cpp; sourceTree = SOURCE_ROOT; };
 		A9C2EA98B5A2D1E7D83A9E5E /* WasmBlock.h */ /* WasmBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WasmBlock.h; path = ../../Source/LightBlock/model/blocks/wasm/WasmBlock.h; sourceTree = SOURCE_ROOT; };
 		AA5294A14826CB5BBF76F43E /* LightBlockLayer.cpp */ /* LightBlockLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayer.cpp; path = ../../Source/Timeline/layers/Block/LightBlockLayer.cpp; sourceTree = SOURCE_ROOT; };
+		AC6DA19FDA0FEE0FD5884F54 /* include_juce_cryptography.mm */ /* include_juce_cryptography.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_cryptography.mm; path = ../../JuceLibraryCode/include_juce_cryptography.mm; sourceTree = SOURCE_ROOT; };
 		ACAED838721DDBA07AFFB02F /* juce_video */ /* juce_video */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_video; path = ../../JUCE/modules/juce_video; sourceTree = SOURCE_ROOT; };
 		ACB8D802247AD26F074CA8FA /* WasmScript.h */ /* WasmScript.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = WasmScript.h; path = ../../Source/WebAssembly/WasmScript.h; sourceTree = SOURCE_ROOT; };
 		AD55A210C5F1845A82921903 /* LightBlockModel.cpp */ /* LightBlockModel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModel.cpp; path = ../../Source/LightBlock/model/LightBlockModel.cpp; sourceTree = SOURCE_ROOT; };
@@ -704,6 +707,7 @@
 				BE950B96A096623580B6C120,
 				FE1830C650A587C48B922820,
 				B10CB38310C17F95146B503D,
+				AC6DA19FDA0FEE0FD5884F54,
 				FC8419BA2850E3E9B353A698,
 				4683C473B6C5CEBE2F560F61,
 				94E7764783E99087B327A706,
@@ -1350,6 +1354,7 @@
 				F91C24520EDCA6A868358C92,
 				A027BA66CF7BC147190A34AE,
 				DC0A6FB1D3FC6FA52DD51731,
+				1FB31E0DD68AFE02B5BA5B0A,
 				831165BD3103AB692FAFEE4A,
 				19AF14CEF00658DEFF7167B5,
 				FCC2F0668B987B97721522EB,
@@ -1652,6 +1657,7 @@
 				E71301EE834E36C91403C7B6,
 				07D0C950B345B1981E2BC91B,
 				6942FA9E2449FCE382D8443E,
+				A81C739C51DD974904D97093,
 				740A3202EB5DBDE7176FE433,
 				171D9D44646DA2D2A729A5F5,
 				B3674CFCE9FD26F15126504E,
