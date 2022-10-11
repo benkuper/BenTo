@@ -45,7 +45,8 @@
     This class provides an AudioSourcePlayer, which will adapt its resampler whenever 
     the device changes the sampling rate
   */
-class OutputSourcePlayer : public juce::AudioSourcePlayer
+class OutputSourcePlayer : 
+    public juce::AudioSourcePlayer
 {
 public:
     /**
@@ -74,9 +75,12 @@ public:
     /**
      Callback from the AudioIODevice. This drives the playback of the AudioSource
      */
-    void audioDeviceIOCallback (const float **inputChannelData, int totalNumInputChannels,
-                                float **outputChannelData, int totalNumOutputChannels,
-                                int numSamples) override
+    void audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
+        int totalNumInputChannels,
+        float* const* outputChannelData,
+        int totalNumOutputChannels,
+        int numSamples,
+        const juce::AudioIODeviceCallbackContext& context)
     {
         if (getCurrentSource()) {
             const juce::ScopedLock sl (readLock);
@@ -97,11 +101,11 @@ public:
             resampler->getNextAudioBlock (bufferToFill);
         }
         else {
-            juce::AudioSourcePlayer::audioDeviceIOCallback (inputChannelData,
+            juce::AudioSourcePlayer::audioDeviceIOCallbackWithContext (inputChannelData,
                                                             totalNumInputChannels,
                                                             outputChannelData,
                                                             totalNumOutputChannels,
-                                                            numSamples);
+                                                            numSamples, context);
         }
     }
 
