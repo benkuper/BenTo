@@ -50,12 +50,11 @@ void RGBLedsManager::init()
     dmx.init();
 #else
 
-    #ifdef LED_FET_PIN
+#ifdef LED_FET_PIN
     pinMode(LED_FET_PIN, OUTPUT);
-    #endif
+#endif
 
     setLedEnabled(true);
-
 
 #ifdef LED_NUM_STRIPS
 #define LED_START1 0
@@ -64,86 +63,88 @@ void RGBLedsManager::init()
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_CLK_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
 #else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
-#endif //CLK
-#define LED_START2 LED_START1+LED_COUNT1
+#endif // CLK
+#define LED_START2 LED_START1 + LED_COUNT1
 
 #if LED_NUM_STRIPS >= 2
 #if defined LED_CLK_PIN2
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_CLK_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
 #else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
-#endif //CLK
-#define LED_START3 LED_START2+LED_COUNT2
+#endif // CLK
+#define LED_START3 LED_START2 + LED_COUNT2
 
 #if LED_NUM_STRIPS >= 3
 #if defined LED_CLK_PIN3
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_CLK_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
 #else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
-#endif //CL
-#define LED_START4 LED_START3+LED_COUNT3
+#endif // CL
+#define LED_START4 LED_START3 + LED_COUNT3
 
 #if LED_NUM_STRIPS >= 4
 #if defined LED_CLK_PIN4
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_CLK_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
 #else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
-#endif //CLK
-#define LED_START5 LED_START4+LED_COUNT4
+#endif // CLK
+#define LED_START5 LED_START4 + LED_COUNT4
 
 #if LED_NUM_STRIPS >= 5
 #if defined LED_CLK_PIN5
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_CLK_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
 #else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
-#endif //CLK
+#endif // CLK
 
-#endif //5
-#endif //4
-#endif //3
-#endif //2
-#endif //1
+#endif // 5
+#endif // 4
+#endif // 3
+#endif // 2
+#endif // 1
 #else
 #if defined LED_CLK_PIN
+#if defined LED_DATA_RATE
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER, LED_DATA_RATE>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+#else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+#endif
 #else
     FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
-#endif //CLK
+#endif // CLK
 #endif // MULTISTRIP
-#endif //PWM / DMX / FastLED switch
-
-
+#endif // PWM / DMX / FastLED switch
 
 #ifdef USE_PREFERENCES
     prefs.begin(name.c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
 
-    
     uint8_t tempR = prefs.getChar("tempR", 0xff);
     uint8_t tempG = prefs.getChar("tempG", 0xff);
     uint8_t tempB = prefs.getChar("tempB", 0xff);
-    
+
     setTemperature(tempR, tempG, tempB);
 
     prefs.end();
 #elif defined USE_SETTINGS_MANAGER
-    //init once with a json if it doesn't exist yet
+    // init once with a json if it doesn't exist yet
     prefs.readSettings(String("/" + name + ".json").c_str());
     float brightness = prefs.getFloat("brightness", globalBrightness);
     prefs.loadJson(String("{\"brightness\":\"" + String(brightness) + "\"}").c_str());
     prefs.writeSettings(String("/" + name + ".json").c_str());
 
-    //actually read the data
+    // actually read the data
     prefs.readSettings(String("/" + name + ".json").c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
 #endif
 
-#endif //LED_COUNT
+#endif // LED_COUNT
 }
 
 void RGBLedsManager::update()
 {
-    if(!ledEnabled) return;
+    if (!ledEnabled)
+        return;
 
 #ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
@@ -180,11 +181,11 @@ void RGBLedsManager::update()
 #else
 
     // NDBG("FastLed.show()");
-    /*if(ledEnabled) */ 
+    /*if(ledEnabled) */
     FastLED.show();
 
 #endif
-#endif //LED_COUNT
+#endif // LED_COUNT
 }
 
 void RGBLedsManager::shutdown()
@@ -214,14 +215,13 @@ void RGBLedsManager::setBrightness(float value, bool save)
         prefs.setFloat("brightness", globalBrightness);
 #endif
     }
-#endif //LED_COUNT
+#endif // LED_COUNT
 }
-
 
 void RGBLedsManager::setTemperature(uint8_t r, uint8_t g, uint8_t b, bool save)
 {
     temperature = CRGB(r, g, b);
-    
+
 #ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
 #elif defined LED_USE_DMX
@@ -240,7 +240,7 @@ void RGBLedsManager::setTemperature(uint8_t r, uint8_t g, uint8_t b, bool save)
 #elif defined USE_SETTINGS_MANAGER
 #endif
     }
-#endif //LED_COUNT
+#endif // LED_COUNT
 }
 
 void RGBLedsManager::setLedEnabled(bool val)
@@ -249,13 +249,13 @@ void RGBLedsManager::setLedEnabled(bool val)
     FastLED.clear();
     FastLED.show();
 #ifdef LED_EN_PIN
-    NDBG("Set Led Enabled : "+String(val));
-    pinMode(LED_EN_PIN, OUTPUT); //enable LEDs
+    NDBG("Set Led Enabled : " + String(val));
+    pinMode(LED_EN_PIN, OUTPUT); // enable LEDs
     digitalWrite(LED_EN_PIN, val);
 #endif
 
 #ifdef LED_USE_FET
-    NDBG("Set Led Enabled (FET) : "+String(val));
+    NDBG("Set Led Enabled (FET) : " + String(val));
     digitalWrite(LED_FET_PIN, val);
     pinMode(LED_DATA_PIN, val ? OUTPUT : INPUT_PULLDOWN);
 #endif
@@ -273,7 +273,8 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
     {
         setBrightness(data[0].floatValue(), true);
         return true;
-    }else if(checkCommand(command,"temperature", numData, 3))
+    }
+    else if (checkCommand(command, "temperature", numData, 3))
     {
         setTemperature((int)(data[0].floatValue() * 255), (int)(data[1].floatValue() * 255), (int)(data[2].floatValue() * 255), true);
     }
@@ -308,8 +309,8 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
     }
     else if (checkCommand(command, "brightnessStatus", numData, 0))
     {
-        float msgData[1] =  { globalBrightness };
-        
+        float msgData[1] = {globalBrightness};
+
         sendEvent(RGBLedsEvent(RGBLedsEvent::BrightnessStatus, msgData, 1));
         return true;
     }
@@ -318,7 +319,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
     return false;
 }
 
-//Helpers
+// Helpers
 void RGBLedsManager::clear()
 {
 #ifdef LED_COUNT
@@ -328,7 +329,7 @@ void RGBLedsManager::clear()
 #else
     FastLED.clear();
 #endif
-#endif //LED_COUNT
+#endif // LED_COUNT
 }
 
 void RGBLedsManager::fillAll(CRGB c)

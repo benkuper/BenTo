@@ -75,10 +75,10 @@ public:
     /**
      Callback from the AudioIODevice. This drives the playback of the AudioSource
      */
-    void audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
-        int totalNumInputChannels,
-        float* const* outputChannelData,
-        int totalNumOutputChannels,
+    void audioDeviceIOCallbackWithContext(const float** inputChannelData,
+        int numInputChannels,
+        float** outputChannelData,
+        int numOutputChannels,
         int numSamples,
         const juce::AudioIODeviceCallbackContext& context)
     {
@@ -94,17 +94,17 @@ public:
                     resampler->flushBuffers ();
                 }
             }
-            juce::AudioBuffer<float> buffer (outputChannelData,
-                                             totalNumOutputChannels,
+            juce::AudioBuffer<float> buffer(outputChannelData,
+                                             numOutputChannels,
                                              numSamples);
             juce::AudioSourceChannelInfo bufferToFill (&buffer, 0, numSamples);
             resampler->getNextAudioBlock (bufferToFill);
         }
         else {
             juce::AudioSourcePlayer::audioDeviceIOCallbackWithContext (inputChannelData,
-                                                            totalNumInputChannels,
+                                                            numInputChannels,
                                                             outputChannelData,
-                                                            totalNumOutputChannels,
+                                                            numOutputChannels,
                                                             numSamples, context);
         }
     }

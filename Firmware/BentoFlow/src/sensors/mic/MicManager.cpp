@@ -19,7 +19,7 @@ void MicManager::init()
     M5.Lcd.setRotation(3);
     M5.Lcd.fillScreen(BLACK);
     M5.Lcd.setTextColor(WHITE, BLACK);
-    // M5.Lcd.println("mic test");
+   // M5.Lcd.println("mic test");
 
     i2sInit();
     xTaskCreate(mic_record_task, "mic_record_task", 2048, NULL, 1, NULL);
@@ -126,7 +126,10 @@ void MicManager::mic_record_task(void *arg)
     while (!instance->shouldStopRead)
     {
         if (!instance->isEnabled)
+        {
+            delay(100);
             continue;
+        }
 
         i2s_read(I2S_NUM_0, (char *)instance->BUFFER, READ_LEN, &bytesread,
                  (100 / portTICK_RATE_MS));

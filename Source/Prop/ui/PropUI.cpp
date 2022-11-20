@@ -8,8 +8,10 @@
   ==============================================================================
 */
 
+#include "Prop/PropIncludes.h"
+
 PropUI::PropUI(Prop* p) :
-	BaseItemUI(p),
+	BaseItemUI(p, HORIZONTAL),
 	viz(p),
 	imuRef(nullptr)
 {

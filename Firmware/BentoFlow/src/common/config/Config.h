@@ -40,6 +40,8 @@
 #include "config_protov2.h"
 #elif defined CREATOR_TAB_HOOP
 #include "config_tab_hoop.h"
+#elif defined ARDUINO_CREATOR_WHEEL
+#include "config_creatorwheel.h"
 #elif defined LT_HOOP
 #include "config_lthoop.h"
 #elif defined LT_BALL
@@ -88,6 +90,8 @@
 #include "config_m5tester.h"
 #elif defined ARDUINO_FABIO_BALL
 #include "config_fabioball.h"
+#elif defined ARDUINO_FLOORSTRIP
+#include "config_floorstrip.h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION

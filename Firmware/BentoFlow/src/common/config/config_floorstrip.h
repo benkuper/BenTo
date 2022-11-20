@@ -3,14 +3,14 @@
 #ifndef CONFIG_FILE
 #define CONFIG_FILE
 
-#define DEVICE_TYPE "Guitar"
+#define DEVICE_TYPE "Floor Strip"
 
 #ifndef ESP32
 #define ESP32
 #endif
 
 // main leds config
-#define LED_COUNT 324
+#define LED_COUNT 439
 #define LED_DATA_PIN 32
 #define LED_TYPE WS2812B
 #define LED_COLOR_ORDER GRB
@@ -19,7 +19,7 @@
 // #define LED_USE_FET
 // #define LED_FET_PIN 33
 
-#define USE_MIC 1
+//#define USE_MIC 1
 
 //battery
 /*#define BATTERY_CHARGE_PIN 34

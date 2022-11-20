@@ -21,6 +21,10 @@ NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 
 	acceptedDropTypes.add("NodeTool");
 	acceptedDropTypes.add("LightBlockModel");
+	acceptedDropTypes.add("Script");
+	acceptedDropTypes.add("Node");
+	acceptedDropTypes.add("Timeline");
+	acceptedDropTypes.add("Picture");
 	
 	addExistingItems(false);
 	
@@ -196,9 +200,8 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 	
 	dragType = source.description.getProperty("dataType", "");
 	
-	if (dragType == "LightBlockModel")
+	if (LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get()))
 	{
-		LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
 		if (modelUI == nullptr ) return;
 
 		NodeBlock * nb = dynamic_cast<NodeBlock *>(modelUI->item);

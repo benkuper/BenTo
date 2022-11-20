@@ -4252,6 +4252,9 @@
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardGroupItemUI.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardIFrameItemUI.cpp">
+      <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClCompile>
@@ -4283,6 +4286,9 @@
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardGroupItem.cpp">
+      <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardIFrameItem.cpp">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\dashboard\DashboardItem.cpp">
@@ -5914,6 +5920,9 @@
       <Filter>JUCE Modules\juce_audio_formats\codecs\flac</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\codecs\flac\stream_encoder.h">
+      <Filter>JUCE Modules\juce_audio_formats\codecs\flac</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\codecs\flac\win_utf8_io.h">
       <Filter>JUCE Modules\juce_audio_formats\codecs\flac</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\codecs\oggvorbis\libvorbis-1.3.7\lib\books\coupled\res_books_51.h">
@@ -7872,9 +7881,6 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_CGMetalLayerRenderer.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_PerScreenDisplayLinks.h">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
@@ -8451,6 +8457,9 @@
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardGroupItemUI.h">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardIFrameItemUI.h">
+      <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\ui\DashboardItemManagerUI.h">
       <Filter>JUCE Modules\juce_organicui\dashboard\ui</Filter>
     </ClInclude>
@@ -8482,6 +8491,9 @@
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardGroupItem.h">
+      <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardIFrameItem.h">
       <Filter>JUCE Modules\juce_organicui\dashboard</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_organicui\dashboard\DashboardItem.h">

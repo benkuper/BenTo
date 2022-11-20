@@ -10,8 +10,8 @@
 
 
 #include "BentoEngine.h"
+#include "Prop/PropIncludes.h"
 
-const OrganicApplication & getApp();
 juce_ImplementSingleton(PropManager)
 
 PropManager::PropManager() :
