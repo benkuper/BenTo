@@ -118,10 +118,13 @@ public:
 	ColorParameter* color;
 	ColorParameter* bgColor;
 	IntParameter* extendNum;
+	BoolParameter* loop;
 	BoolParameter* invertOdds;
 	BoolParameter* invertEvens;
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
+
+	void fillPoint(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params);
 
 	String getTypeString() const override { return "Point"; }
 };

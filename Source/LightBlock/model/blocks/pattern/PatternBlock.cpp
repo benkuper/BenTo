@@ -8,6 +8,9 @@
   ==============================================================================
 */
 
+#include "LightBlock/LightBlockIncludes.h"
+#include "PatternBlock.h"
+
 PatternBlock::PatternBlock(const String& name, var params) :
 	LightBlockModel(name == "" ? getTypeString() : name, params)
 {
@@ -166,6 +169,7 @@ PointPattern::PointPattern(var params) :
 	position = paramsContainer->addFloatParameter("Position", "Position of the point", .5f);
 	size = paramsContainer->addFloatParameter("Size", "Size of the point", .25f, 0);
 	fade = paramsContainer->addFloatParameter("Fade", "The fading of the point", 1, 0, 1);
+	loop = paramsContainer->addBoolParameter("Loop", "If checked, content that is overflowing will be showed on the other side of the prop. Useful for cycling objects like hoops.", true);
 	extendNum = paramsContainer->addIntParameter("Num Props", "The number of props the point is navigating through", 1, 1);
 	invertEvens = paramsContainer->addBoolParameter("Invert Evens", "If checked, swap the direction of props with even IDs", false);
 	invertOdds = paramsContainer->addBoolParameter("Invert Odds", "If checked, swap the direction of props with odd IDs", false);
@@ -173,13 +177,44 @@ PointPattern::PointPattern(var params) :
 
 void PointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
 {
-	var colorVar = getParamValue<var>(color, params);
-	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
-
 	var bgColorVar = getParamValue<var>(bgColor, params);
 	Colour bBGColor = Colour::fromFloatRGBA(bgColorVar[0], bgColorVar[1], bgColorVar[2], bgColorVar[3]);
 
 	float bBrightness = getParamValue<float>(brightness, params);
+	result->fill(bBGColor.withMultipliedBrightness(bBrightness));
+
+
+	float bPosition = getParamValue<float>(position, params);
+	float bSize = getParamValue<float>(size, params);
+	int bExtend = getParamValue<int>(extendNum, params);
+
+	int bLoop = getParamValue<bool>(loop, params);
+
+	if (bLoop)
+	{
+		bPosition = fmodf(bPosition, bExtend);
+		params.getDynamicObject()->setProperty("position", bPosition);
+	}
+
+	fillPoint(result, p, time, id, resolution, params);
+
+	if (bLoop)
+	{
+		if (bPosition - bSize / 2 < 0)
+		{
+			params.getDynamicObject()->setProperty("position", fmodf(bPosition, bExtend) + bExtend);
+			fillPoint(result, p, time, id, resolution, params);
+		}
+		else if (bPosition + bSize / 2 > bExtend)
+		{
+			params.getDynamicObject()->setProperty("position", fmodf(bPosition, bExtend) - bExtend);
+			fillPoint(result, p, time, id, resolution, params);
+		}
+	}
+}
+
+void PointPattern::fillPoint(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
+{
 	float bPosition = getParamValue<float>(position, params);
 	float bSize = getParamValue<float>(size, params);
 	float bFade = getParamValue<float>(fade, params);
@@ -187,21 +222,27 @@ void PointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double time
 	bool bInvertEvens = getParamValue<bool>(invertEvens, params);
 	bool bInvertOdds = getParamValue<bool>(invertOdds, params);
 
-	float extendPos = bPosition * bExtend;
-
-	float relPos = (extendPos - id % bExtend) * resolution;
-	float relStart = jmax<int>(relPos - (bSize * resolution / 2.f), 0);
-	float relEnd = jmin<int>(relPos + (bSize * resolution / 2.f), resolution);
 	float relSize = bSize * resolution;
 
-	result->fill(bBGColor.withMultipliedBrightness(bBrightness));
+	bool invert = id % 2 == 0 ? bInvertEvens : bInvertOdds;
+
+	float relPos = (bPosition - id % bExtend) * resolution;
+	float relStart = jmax<int>(relPos - (bSize * resolution / 2.f), 0);
+	float relEnd = jmin<int>(relPos + (bSize * resolution / 2.f), resolution);
+
+	var colorVar = getParamValue<var>(color, params);
+	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
+
+	float bBrightness = getParamValue<float>(brightness, params);
+
 
 	for (int i = relStart; i <= relEnd && i < resolution; i++)
 	{
 		float diff = 1 - (fabsf(i - relPos) * 1.f / (relSize / (bFade * 2)));
-		bool invert = id % 2 == 0 ? bInvertEvens : bInvertOdds;
-		Colour c = bBGColor.interpolatedWith(bColor, diff);
-		result->set(invert ? resolution - i : i, c.withMultipliedBrightness(bBrightness));
+
+		int index = invert ? resolution - i : i;
+		Colour c = result->getUnchecked(index).interpolatedWith(bColor, diff);
+		result->set(index, c.withMultipliedBrightness(bBrightness));
 	}
 }
 
