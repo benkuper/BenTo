@@ -570,11 +570,18 @@ void BentoProp::Flasher::run()
 #else
     ChildProcess cp;
     cp.start(flasher.getFullPathName()+parameters);
+    
+    String buffer;
     while(cp.isRunning())
     {
-        char buffer[64];
-        cp.readProcessOutput(buffer, 64);
-        LOG(String(buffer));
+        char buf[8];
+        memset(buf, 0, 8);
+        int numRead = cp.readProcessOutput(buf, 8);
+        buffer += String(buf, numRead);
+        StringArray lines;
+        lines.addLines(buffer);
+        for(int i=0;i<lines.size()-1;i++) LOG(lines[i]);
+        buffer = lines[lines.size()-1];
     }
 #endif
     
