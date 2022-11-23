@@ -572,8 +572,8 @@ void BentoProp::Flasher::run()
     cp.start(flasher.getFullPathName()+parameters);
     while(cp.isRunning())
     {
-        char buffer[1024];
-        cp.readProcessOutput(buffer, 1024);
+        char buffer[64];
+        cp.readProcessOutput(buffer, 64);
         LOG(String(buffer));
     }
 #endif
