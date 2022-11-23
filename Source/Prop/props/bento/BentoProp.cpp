@@ -462,7 +462,7 @@ void BentoProp::uploadFirmware()
     File flasher = appFolder.getChildFile("esptool.exe");
 #elif JUCE_MAC
     File bundle = juce::File::getSpecialLocation (juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
-    File flasher = bundle.getChildFile ("Resources").getChildFile ("esptool");
+    File flasher = bundle.getChildFile ("Resources").getChildFile ("esptool/esptool");
 #endif
     
 	File app0Bin = appFolder.getChildFile("boot_app0.bin");
