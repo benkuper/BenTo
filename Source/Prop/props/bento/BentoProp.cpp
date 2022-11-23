@@ -460,13 +460,18 @@ void BentoProp::uploadFirmware()
 	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
 #if JUCE_WINDOWS
     File flasher = appFolder.getChildFile("esptool.exe");
+    File app0Bin = appFolder.getChildFile("boot_app0.bin");
+    File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
 #elif JUCE_MAC
     File bundle = juce::File::getSpecialLocation (juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
-    File flasher = bundle.getChildFile ("Resources").getChildFile ("esptool/esptool");
+    File espFolder = bundle.getChildFile ("Resources").getChildFile ("esptool");
+    
+    File flasher = espFolder.getChildFile("esptool");
+    File app0Bin = espFolder.getChildFile("boot_app0.bin");
+    File bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
 #endif
     
-	File app0Bin = appFolder.getChildFile("boot_app0.bin");
-	File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
+
 
 	if (!flasher.existsAsFile())
 	{
@@ -500,9 +505,22 @@ void BentoProp::uploadFirmware()
 	parameters += " 0x8000 " + partitionsFile.getFullPathName();
 
 	LOG("Launch with parameters " + parameters);
+    
+#if JUCE_WINDOWS
 	flasher.startAsProcess(parameters);
 #else
-	LOGWARNING("Flashing only supported on Windows for now");
+    ChildProcess cp;
+    cp.start(flasher.getFullPathName()+parameters);
+    while(cp.isRunning())
+    {
+        char buffer[1024];
+        cp.readProcessOutput(buffer, 1024);
+        LOG(String(buffer));
+    }
+#endif
+    
+#else
+	LOGWARNING("Flashing only supported on Windows and mac for now");
 #endif
 
 }
