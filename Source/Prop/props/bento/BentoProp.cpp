@@ -560,10 +560,10 @@ void BentoProp::Flasher::run()
 	prop->serialParam->setValueForDevice(nullptr); //close device to let the flasher use it
 
 	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
-	parameters += " 0xe000 " + app0Bin.getFullPathName();
-	parameters += " 0x1000 " + bootloaderBin.getFullPathName();
-	parameters += " 0x10000 " + prop->firmwareFile.getFullPathName();
-	parameters += " 0x8000 " + partitionsFile.getFullPathName();
+	parameters += " 0xe000 \"" + app0Bin.getFullPathName() + "\"";
+	parameters += " 0x1000 \"" + bootloaderBin.getFullPathName() + "\"";
+	parameters += " 0x10000 \"" + prop->firmwareFile.getFullPathName() + "\"";
+	parameters += " 0x8000 \"" + partitionsFile.getFullPathName() + "\"";
 
 	NLOG(prop->niceName, "Flashing firmware...");
 	//NLOG(prop->niceName, "Launch with parameters " + parameters);
@@ -594,7 +594,7 @@ void BentoProp::Flasher::run()
 			}
 		}
 		buffer = lines[lines.size() - 1];
-		}
+	}
 	//#endif
 
 #else
@@ -603,4 +603,4 @@ void BentoProp::Flasher::run()
 
 	prop->flashingProgression->setValue(1);
 	prop->isFlashing->setValue(false);
-	}
+}
