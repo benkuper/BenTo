@@ -26,7 +26,6 @@ BentoSettings::BentoSettings() :
 	saveWifiTrigger = wifiCC.addTrigger("Save credentials", "Save the credentials into all connected props");
 	addChildControllableContainer(&wifiCC);
 
-	firmwareFile = flashCC.addFileParameter("Firmware", "Firmware to flash to compatible props");
 	flashConnected = flashCC.addTrigger("Flash firmware", "Flash the firmware to connected props");
 	addChildControllableContainer(&flashCC);
 

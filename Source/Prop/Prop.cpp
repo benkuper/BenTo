@@ -67,6 +67,13 @@ Prop::Prop(var params) :
 	powerOffTrigger = controlsCC.addTrigger("Power Off", "Power Off the prop");
 	restartTrigger = controlsCC.addTrigger("Restart", "Restart the prop");
 	uploadFirmwareTrigger = controlsCC.addTrigger("Upload Firmware", "Upload firmware. The props needs to be connected with usb");
+	isFlashing = controlsCC.addBoolParameter("Is Flashing", "Is currently flashing a firmware", false);
+	isFlashing->hideInEditor = true;
+	isFlashing->setControllableFeedbackOnly(true);
+	isFlashing->isSavable = false;
+	flashingProgression = controlsCC.addFloatParameter("Flashing Progression", "Progression of the flashing process", 0, 0, 1);
+	flashingProgression->setControllableFeedbackOnly(true);
+
 	addChildControllableContainer(&controlsCC);
 
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);

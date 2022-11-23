@@ -73,6 +73,9 @@ public:
 	FloatParameter* bakingProgress;
 	FloatParameter* uploadProgress;
 
+	BoolParameter* isFlashing;
+	FloatParameter* flashingProgression;
+
 	enum AfterBakeAction { UPLOAD, EXPORT, NOTHING };
 	AfterBakeAction afterBake;
 

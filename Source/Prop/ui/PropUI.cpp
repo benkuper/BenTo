@@ -64,6 +64,14 @@ void PropUI::paintOverChildren(Graphics& g)
 		g.setColour(item->isUploading->boolValue() ? Colours::limegreen : Colours::orange);
 		g.drawFittedText(item->isUploading->boolValue() ? "Uploading ..." : "Baking...", getLocalBounds(), Justification::centred, 1);
 	}
+	else if (item->isFlashing->boolValue())
+	{
+		g.setColour(Colours::lightpink.withAlpha(.2f));
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->flashingProgression->floatValue() * viz.getHeight()).toFloat(), 2);
+
+		g.setColour(Colours::lightpink);
+		g.drawFittedText("Flashing...", getLocalBounds(), Justification::centred, 1);
+	}
 
 	g.setColour(item->isConnected->boolValue() ? GREEN_COLOR : BG_COLOR);
 	Rectangle<int> r = getMainBounds().translated(0, headerHeight + headerGap).removeFromRight(20).removeFromTop(20).reduced(1);
@@ -88,7 +96,7 @@ void PropUI::mouseDown(const MouseEvent& e)
 
 	if (e.mods.isRightButtonDown())
 	{
-		LightBlockModelLibrary::showSourcesAndGet(nullptr,[this](ControllableContainer* cc)
+		LightBlockModelLibrary::showSourcesAndGet(nullptr, [this](ControllableContainer* cc)
 			{
 				LightBlockColorProvider* p = dynamic_cast<LightBlockColorProvider*>(cc);
 				if (p != nullptr) item->activeProvider->setValueFromTarget(p);
@@ -131,7 +139,7 @@ void PropUI::resizedInternalContent(Rectangle<int>& r)
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef) repaint();
+	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef || c == item->isFlashing || c == item->flashingProgression) repaint();
 	else if (c == item->type)
 	{
 		Prop::Shape shape = item->type->getValueDataAsEnum<Prop::Shape>();

@@ -26,7 +26,6 @@ public:
 	Trigger* saveWifiTrigger;
 
 	ControllableContainer flashCC;
-	FileParameter* firmwareFile;
 	Trigger* flashConnected;
 
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;

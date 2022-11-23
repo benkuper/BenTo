@@ -37,6 +37,7 @@ public:
     public:
         Flasher(BentoProp* prop);
         BentoProp * prop;
+
         void run() override;
     };
     
