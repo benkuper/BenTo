@@ -29,7 +29,19 @@ public:
 	SerialDevice* serialDevice;
 
 	IntParameter* indexPrefix;
-
+    
+    
+    class Flasher :
+        public Thread
+    {
+    public:
+        Flasher(BentoProp* prop);
+        BentoProp * prop;
+        void run() override;
+    };
+    
+    Flasher flasher;
+    
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);

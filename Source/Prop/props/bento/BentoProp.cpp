@@ -13,7 +13,8 @@
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
-	serialDevice(nullptr)
+	serialDevice(nullptr),
+    flasher(this)
 {
 	updateRate = params.getProperty("updateRate", 50);
 	remoteHost = connectionCC.addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
@@ -449,79 +450,7 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 
 void BentoProp::uploadFirmware()
 {
-#if JUCE_WINDOWS || JUCE_MAC
-	if (!firmwareFile.existsAsFile())
-	{
-		NLOGERROR(niceName, "Firmware file not found. It should be a file called firmware.bin aside the prop json definition file.");
-		return;
-
-	}
-
-	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
-#if JUCE_WINDOWS
-    File flasher = appFolder.getChildFile("esptool.exe");
-    File app0Bin = appFolder.getChildFile("boot_app0.bin");
-    File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
-#elif JUCE_MAC
-    File bundle = juce::File::getSpecialLocation (juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
-    File espFolder = bundle.getChildFile ("Resources").getChildFile ("esptool");
-    
-    File flasher = espFolder.getChildFile("esptool");
-    File app0Bin = espFolder.getChildFile("boot_app0.bin");
-    File bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
-#endif
-    
-
-
-	if (!flasher.existsAsFile())
-	{
-		NLOGERROR(niceName, "Flasher file not found. It should be a file esptool.exe inside Bento's Application folder");
-		return;
-	}
-
-
-	File partitionsFile = firmwareFile.getChildFile("../partitions.bin");
-
-	if (!partitionsFile.exists())
-	{
-		NLOGERROR(niceName, "Partitions file not found. It should be a file called partitions.bin aside the firmware.bin file");
-		return;
-	}
-
-	if (serialDevice == nullptr)
-	{
-		NLOGERROR(niceName, "Serial device is not connected. Please connect the prop and select from the serial device dropdown menu the right one.");
-		return;
-	}
-
-	String port = serialDevice->info->port;
-
-	serialParam->setValueForDevice(nullptr); //close device to let the flasher use it
-
-	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
-	parameters += " 0xe000 " + app0Bin.getFullPathName();
-	parameters += " 0x1000 " + bootloaderBin.getFullPathName();
-	parameters += " 0x10000 " + firmwareFile.getFullPathName();
-	parameters += " 0x8000 " + partitionsFile.getFullPathName();
-
-	LOG("Launch with parameters " + parameters);
-    
-#if JUCE_WINDOWS
-	flasher.startAsProcess(parameters);
-#else
-    ChildProcess cp;
-    cp.start(flasher.getFullPathName()+parameters);
-    while(cp.isRunning())
-    {
-        char buffer[1024];
-        cp.readProcessOutput(buffer, 1024);
-        LOG(String(buffer));
-    }
-#endif
-    
-#else
-	LOGWARNING("Flashing only supported on Windows and mac for now");
-#endif
+    flasher.startThread();
 
 }
 
@@ -568,4 +497,88 @@ var BentoProp::sendMessageToPropFromScript(const var::NativeFunctionArgs& a)
 	p->sendMessageToProp(m);
 
 	return true;
+}
+
+
+BentoProp::Flasher::Flasher(BentoProp* prop) :
+    Thread("Bento Flasher"),
+    prop(prop)
+{
+}
+
+void BentoProp::Flasher::run()
+{
+#if JUCE_WINDOWS || JUCE_MAC
+    if (!prop->firmwareFile.existsAsFile())
+    {
+        NLOGERROR(prop->niceName, "Firmware file not found. It should be a file called firmware.bin aside the prop json definition file.");
+        return;
+
+    }
+
+    File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
+#if JUCE_WINDOWS
+    File flasher = appFolder.getChildFile("esptool.exe");
+    File app0Bin = appFolder.getChildFile("boot_app0.bin");
+    File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
+#elif JUCE_MAC
+    File bundle = juce::File::getSpecialLocation (juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
+    File espFolder = bundle.getChildFile ("Resources").getChildFile ("esptool");
+    
+    File flasher = espFolder.getChildFile("esptool");
+    File app0Bin = espFolder.getChildFile("boot_app0.bin");
+    File bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
+#endif
+    
+
+
+    if (!flasher.existsAsFile())
+    {
+        NLOGERROR(prop->niceName, "Flasher file not found. It should be a file esptool.exe inside Bento's Application folder");
+        return;
+    }
+
+
+    File partitionsFile = prop->firmwareFile.getChildFile("../partitions.bin");
+
+    if (!partitionsFile.exists())
+    {
+        NLOGERROR(prop->niceName, "Partitions file not found. It should be a file called partitions.bin aside the firmware.bin file");
+        return;
+    }
+
+    if (prop->serialDevice == nullptr)
+    {
+        NLOGERROR(prop->niceName, "Serial device is not connected. Please connect the prop and select from the serial device dropdown menu the right one.");
+        return;
+    }
+
+    String port = prop->serialDevice->info->port;
+
+    prop->serialParam->setValueForDevice(nullptr); //close device to let the flasher use it
+
+    String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
+    parameters += " 0xe000 " + app0Bin.getFullPathName();
+    parameters += " 0x1000 " + bootloaderBin.getFullPathName();
+    parameters += " 0x10000 " + prop->firmwareFile.getFullPathName();
+    parameters += " 0x8000 " + partitionsFile.getFullPathName();
+
+    LOG("Launch with parameters " + parameters);
+    
+#if JUCE_WINDOWS
+    flasher.startAsProcess(parameters);
+#else
+    ChildProcess cp;
+    cp.start(flasher.getFullPathName()+parameters);
+    while(cp.isRunning())
+    {
+        char buffer[1024];
+        cp.readProcessOutput(buffer, 1024);
+        LOG(String(buffer));
+    }
+#endif
+    
+#else
+    LOGWARNING("Flashing only supported on Windows and mac for now");
+#endif
 }
