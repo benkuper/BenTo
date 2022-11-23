@@ -449,7 +449,7 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 
 void BentoProp::uploadFirmware()
 {
-#if JUCE_WINDOWS
+#if JUCE_WINDOWS || JUCE_MAC
 	if (!firmwareFile.existsAsFile())
 	{
 		NLOGERROR(niceName, "Firmware file not found. It should be a file called firmware.bin aside the prop json definition file.");
@@ -458,7 +458,13 @@ void BentoProp::uploadFirmware()
 	}
 
 	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
-	File flasher = appFolder.getChildFile("esptool.exe");
+#if JUCE_WINDOWS
+    File flasher = appFolder.getChildFile("esptool.exe");
+#elif JUCE_MAC
+    File bundle = juce::File::getSpecialLocation (juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
+    File flasher = bundle.getChildFile ("Resources").getChildFile ("esptool");
+#endif
+    
 	File app0Bin = appFolder.getChildFile("boot_app0.bin");
 	File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
 

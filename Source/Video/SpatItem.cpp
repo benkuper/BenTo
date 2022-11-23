@@ -151,7 +151,7 @@ void SpatItem::updatePoints()
 		Point<float> centerP = handles[0]->getPoint();
 		Point<float> radiusP = handles[1]->getPoint();
 		
-		float angle = float_Pi * 2 / numPoints;
+		float angle = MathConstants<float>::pi * 2 / numPoints;
 		float startAngle = centerP.getAngleToPoint(radiusP);
 		float radius = centerP.getDistanceFrom(radiusP);
 		for (int i = 0; i < numPoints; i++)

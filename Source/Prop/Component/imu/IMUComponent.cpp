@@ -156,14 +156,14 @@ void IMUPropComponent::computeAngle()
 
     Vector3D<float> euler = orientation->getVector();
     euler.x += offset->floatValue();
-    Vector3D<float> eulerRadians = euler * float_Pi / 180;
+    Vector3D<float> eulerRadians = euler * MathConstants<float>::pi  / 180;
     Vector3D<float> lookAt(cosf(eulerRadians.y) * sinf(eulerRadians.x), sinf(eulerRadians.y), cosf(eulerRadians.y) * cosf(eulerRadians.x));
 
-    float result = atanf(lookAt.y / lookAt.z) - float_Pi / 2;
+    float result = atanf(lookAt.y / lookAt.z) - MathConstants<float>::pi / 2;
 
     if (lookAt.z > 0) result += float_Pi;
 
-    result = (result / float_Pi) * .5 + .5;
+    result = (result / MathConstants<float>::pi ) * .5 + .5;
     result = fmodf(result + angleOffset->floatValue(), 1);
     if (invert->boolValue()) result = 1 - result;
     projectedAngle->setValue(result);

@@ -72,7 +72,7 @@ void PropViz::paint(Graphics& g)
 		Rectangle<int> r = getLocalBounds().withSizeKeepingCentre(size, size);
 
 		float radius = r.getWidth() / 2;
-		float angle = float_Pi * 2 / numLeds;
+		float angle = MathConstants<float>::pi  * 2 / numLeds;
 
 		for (int i = 0; i < numLeds; i++)
 		{
@@ -85,6 +85,9 @@ void PropViz::paint(Graphics& g)
 		}
 	}
 	break;
+            
+        default:
+            break;
 	}
 
 }
