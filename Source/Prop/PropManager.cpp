@@ -50,11 +50,11 @@ PropManager::PropManager() :
 	addChildControllableContainer(&showCC);
 
 
-	
+
 	String localIp = NetworkHelpers::getLocalIP();
 
 	addChildControllableContainer(&familiesCC);
-	
+
 	receiver.addListener(this);
 
 	setupReceiver();
@@ -93,17 +93,17 @@ void PropManager::setupReceiver()
 	else
 	{
 		NLOGERROR(niceName, "Error binding port " << localPort);
-		setWarningMessage("Error binding port " +  String(localPort));
+		setWarningMessage("Error binding port " + String(localPort));
 	}
-	
+
 	Array<IPAddress> ad;
 	IPAddress::findAllAddresses(ad);
 
 	Array<String> ips;
-	for (auto &a : ad) ips.add(a.toString());
+	for (auto& a : ad) ips.add(a.toString());
 	ips.sort();
 	String s = "Local IPs:";
-	for (auto &ip : ips) s += String("\n > ") + ip;
+	for (auto& ip : ips) s += String("\n > ") + ip;
 
 	NLOG(niceName, s);
 }
@@ -141,7 +141,7 @@ Prop* PropManager::createPropIfNotExist(const String& type, const String& host, 
 	return p;
 }
 
-Prop * PropManager::getPropWithHardwareId(const String &hardwareId)
+Prop* PropManager::getPropWithHardwareId(const String& hardwareId)
 {
 	for (auto& p : items)
 	{
@@ -150,9 +150,9 @@ Prop * PropManager::getPropWithHardwareId(const String &hardwareId)
 	return nullptr;
 }
 
-Prop * PropManager::getPropWithId(int id, Prop * excludeProp)
+Prop* PropManager::getPropWithId(int id, Prop* excludeProp)
 {
-	for (auto & p : items)
+	for (auto& p : items)
 	{
 		if (p == excludeProp) continue;
 		if (p->globalID->intValue() == id) return p;
@@ -160,9 +160,9 @@ Prop * PropManager::getPropWithId(int id, Prop * excludeProp)
 	return nullptr;
 }
 
-PropFamily * PropManager::getFamilyWithName(StringRef familyName)
+PropFamily* PropManager::getFamilyWithName(StringRef familyName)
 {
-	for (auto &p : families)
+	for (auto& p : families)
 	{
 		if (p->niceName == familyName) return p;
 	}
@@ -171,7 +171,7 @@ PropFamily * PropManager::getFamilyWithName(StringRef familyName)
 }
 
 
-void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Controllable * c)
+void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	BaseManager::onControllableFeedbackUpdate(cc, c);
 
@@ -239,7 +239,8 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 				else if (c == stopAll) bp->stopBakePlaying();
 			}
 		}
-	}else if (c == bakeMode)
+	}
+	else if (c == bakeMode)
 	{
 		for (auto& pr : items) pr->bakeMode->setValue(bakeMode->boolValue());
 	}
@@ -268,7 +269,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer * cc, Contr
 	}
 }
 
-void PropManager::addItemInternal(Prop * p, var)
+void PropManager::addItemInternal(Prop* p, var)
 {
 	p->addPropListener(this);
 
@@ -276,7 +277,7 @@ void PropManager::addItemInternal(Prop * p, var)
 	if (items.size() > 1) p->globalID->setValue(getFirstAvailableID());
 }
 
-void PropManager::removeItemInternal(Prop * p)
+void PropManager::removeItemInternal(Prop* p)
 {
 	p->removePropListener(this);
 }
@@ -284,7 +285,7 @@ void PropManager::removeItemInternal(Prop * p)
 void PropManager::clear()
 {
 	BaseManager::clear();
-	for (auto &f : families) f->props.clear();
+	for (auto& f : families) f->props.clear();
 }
 
 int PropManager::getFirstAvailableID()
@@ -297,13 +298,13 @@ int PropManager::getFirstAvailableID()
 	return numItems;
 }
 
-void PropManager::propIDChanged(Prop * p, int previousID)
+void PropManager::propIDChanged(Prop* p, int previousID)
 {
-	Prop * otherPropWithSameID = getPropWithId(p->globalID->intValue(), p);
+	Prop* otherPropWithSameID = getPropWithId(p->globalID->intValue(), p);
 	if (otherPropWithSameID != nullptr) otherPropWithSameID->globalID->setValue(previousID);
 }
 
-void PropManager::oscMessageReceived(const OSCMessage & m)
+void PropManager::oscMessageReceived(const OSCMessage& m)
 {
 	String address = m.getAddressPattern().toString();
 
@@ -316,7 +317,7 @@ void PropManager::oscMessageReceived(const OSCMessage & m)
 		//DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
 		createPropIfNotExist(pType, pHost, pid);
 	}
-	else  if(m.size() > 0 && m[0].isString())
+	else  if (m.size() > 0 && m[0].isString())
 	{
 		if (Prop* p = getPropWithHardwareId(OSCHelpers::getStringArg(m[0])))
 		{
@@ -349,10 +350,12 @@ void PropManager::updatePropsAndFamiliesDefinitions()
 	factory.defs.clear();
 
 	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props");
-	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
+	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, true, "*.json");
 
 	for (auto& f : propFiles)
 	{
+		if (f.getParentDirectory().getFileName() == "families") continue; //not treating the families folder here
+
 		var pData = JSON::parse(f);
 		if (pData.isObject())
 		{
@@ -364,10 +367,15 @@ void PropManager::updatePropsAndFamiliesDefinitions()
 			{
 				vidpids.add({ pData.getProperty("vid","").toString().getHexValue32(),pData.getProperty("pid","").toString().getHexValue32() });
 			}
+
+
+			File fw = f.getParentDirectory().getChildFile("firmware.bin");
+			if (fw.existsAsFile()) pData.getDynamicObject()->setProperty("firmware", fw.getFullPathName());
+
 			factory.defs.add(FactorySimpleParametricDefinition<Prop>::createDef(pData.getProperty("menu", "").toString(), pData.getProperty("name", "").toString(), createFunc, pData));
 		}
 	}
-	
+
 	for (auto& f : families) familiesCC.removeChildControllableContainer(f);
 	families.clear();
 

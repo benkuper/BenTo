@@ -8,6 +8,9 @@
   ==============================================================================
 */
 
+#include "Prop/PropIncludes.h"
+
+
 BentoProp::BentoProp(var params) :
 	Prop(params),
 	serialDevice(nullptr)
@@ -54,7 +57,7 @@ void BentoProp::setSerialDevice(SerialDevice* d)
 
 	if (serialDevice != nullptr)
 	{
-		if(serialDevice->isOpen()) serialDevice->addSerialDeviceListener(this);
+		if (serialDevice->isOpen()) serialDevice->addSerialDeviceListener(this);
 		else NLOGERROR(niceName, "Error opening port " << serialDevice->info->description);
 	}
 }
@@ -95,7 +98,10 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		sendYo();
 	}
-	
+	else if (c == uploadFirmwareTrigger)
+	{
+		uploadFirmware();
+	}
 }
 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
@@ -116,7 +122,7 @@ void BentoProp::portRemoved(SerialDevice* d)
 void BentoProp::sendColorsToPropInternal()
 {
 	const int numLeds = resolution->intValue();
-	
+
 	Array<uint8> data;
 	if (indexPrefix->enabled)
 	{
@@ -124,11 +130,11 @@ void BentoProp::sendColorsToPropInternal()
 	}
 
 	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection->boolValue());
-	int startIndex =  invert ? numLeds - 1 : 0;
+	int startIndex = invert ? numLeds - 1 : 0;
 	int endIndex = invert ? -1 : numLeds;
 	int step = invert ? -1 : 1;
 
-	for (int i = startIndex; i != endIndex; i+=step)
+	for (int i = startIndex; i != endIndex; i += step)
 	{
 		int index = (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
 		float a = colors[index].getFloatAlpha();
@@ -149,7 +155,7 @@ void BentoProp::sendColorsToPropInternal()
 		int length = jmin(maxPacketSize, dataSize - offset);
 
 		int dataSent = sender.write(remoteHost->stringValue(), remotePort, data.getRawDataPointer() + offset, length);
-		
+
 		if (dataSent == -1)
 		{
 			LOGWARNING("Error sending data");
@@ -211,14 +217,14 @@ void BentoProp::uploadBakedData(BakeData data)
 		dataToSend = os.getMemoryBlock();
 
 	}
-	
+
 	sleep(500);
 
 	url = URL(target).withDataToUpload("uploadData", data.name + ".colors", dataToSend, sendCompressedFile->boolValue() ? "application/zip" : "text/plain");
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withExtraHeaders("Content-Length:" + String(dataToSend.getSize())).withConnectionTimeoutMs(10000)));
 
-	
+
 
 	if (stream != nullptr)
 	{
@@ -324,7 +330,7 @@ void BentoProp::seekBakePlaying(float time)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.seek "+String(time)+"\n");
+		serialDevice->writeString("player.seek " + String(time) + "\n");
 	}
 	else
 	{
@@ -351,7 +357,7 @@ void BentoProp::sendShowPropID(bool value)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.id "+String(value?1:0)+"\n");
+		serialDevice->writeString("player.id " + String(value ? 1 : 0) + "\n");
 	}
 	else
 	{
@@ -363,7 +369,7 @@ void BentoProp::sendShowPropID(bool value)
 
 bool BentoProp::uploadProgressCallback(int bytesSent, int totalBytes)
 {
-	
+
 	if (threadShouldExit()) return false;
 	float p = bytesSent * 1.0f / totalBytes;
 	uploadProgress->setValue(.1f + p * .9f);
@@ -430,7 +436,7 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 	NLOG(niceName, "Set Wifi Credentials : " << ssid << ":" << pass);
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("wifi.setCredentials "+ssid+","+pass+"\n");
+		serialDevice->writeString("wifi.setCredentials " + ssid + "," + pass + "\n");
 	}
 	else
 	{
@@ -441,14 +447,68 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 	}
 }
 
+void BentoProp::uploadFirmware()
+{
+#if JUCE_WINDOWS
+	if (!firmwareFile.existsAsFile())
+	{
+		NLOGERROR(niceName, "Firmware file not found. It should be a file called firmware.bin aside the prop json definition file.");
+		return;
+
+	}
+
+	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
+	File flasher = appFolder.getChildFile("esptool.exe");
+	File app0Bin = appFolder.getChildFile("boot_app0.bin");
+	File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
+
+	if (!flasher.existsAsFile())
+	{
+		NLOGERROR(niceName, "Flasher file not found. It should be a file esptool.exe inside Bento's Application folder");
+		return;
+	}
+
+
+	File partitionsFile = firmwareFile.getChildFile("../partitions.bin");
+
+	if (!partitionsFile.exists())
+	{
+		NLOGERROR(niceName, "Partitions file not found. It should be a file called partitions.bin aside the firmware.bin file");
+		return;
+	}
+
+	if (serialDevice == nullptr)
+	{
+		NLOGERROR(niceName, "Serial device is not connected. Please connect the prop and select from the serial device dropdown menu the right one.");
+		return;
+	}
+
+	String port = serialDevice->info->port;
+
+	serialParam->setValueForDevice(nullptr); //close device to let the flasher use it
+
+	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
+	parameters += " 0xe000 " + app0Bin.getFullPathName();
+	parameters += " 0x1000 " + bootloaderBin.getFullPathName();
+	parameters += " 0x10000 " + firmwareFile.getFullPathName();
+	parameters += " 0x8000 " + partitionsFile.getFullPathName();
+
+	LOG("Launch with parameters " + parameters);
+	flasher.startAsProcess(parameters);
+#else
+	LOGWARNING("Flashing only supported on Windows for now");
+#endif
+
+}
+
 void BentoProp::sendControlToPropInternal(String control, var value)
 {
-	OSCMessage m("/"+control.replaceCharacter('.','/'));
+	OSCMessage m("/" + control.replaceCharacter('.', '/'));
 	if (value.isArray())
 	{
 		for (int i = 0; i < value.size(); i++) m.addArgument(OSCHelpers::varToArgument(value[i]));
 	}
-	else if(!value.isVoid())
+	else if (!value.isVoid())
 	{
 		m.addArgument(OSCHelpers::varToArgument(value));
 	}
@@ -471,7 +531,7 @@ void BentoProp::sendMessageToProp(const OSCMessage& m)
 
 var BentoProp::sendMessageToPropFromScript(const var::NativeFunctionArgs& a)
 {
-	BentoProp * p = getObjectFromJS<BentoProp>(a);
+	BentoProp* p = getObjectFromJS<BentoProp>(a);
 
 	if (!checkNumArgs(p->niceName, a, 1)) return false;
 

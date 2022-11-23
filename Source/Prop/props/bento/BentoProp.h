@@ -63,6 +63,8 @@ public:
 	virtual void restartProp() override;
 	virtual void sendWiFiCredentials(String ssid, String pass);
 
+	virtual void uploadFirmware() override;
+
 	virtual void sendControlToPropInternal(String control, var value = var()) override;
 	virtual void sendMessageToProp(const OSCMessage& m);
 

@@ -9,7 +9,7 @@
 */
 
 #include "BentoEngine.h"
-#include "Prop.h"
+#include "Prop/PropIncludes.h"
 #include "Timeline/TimelineIncludes.h"
 
 Prop::Prop(var params) :
@@ -30,6 +30,8 @@ Prop::Prop(var params) :
 	propNotifier(50)
 {
 	registerFamily(params.getProperty("family", "Mistery Family").toString());
+
+	firmwareFile = File(params.getProperty("firmware", ""));
 
 	customType = params.getProperty("type", "");
 
@@ -64,6 +66,7 @@ Prop::Prop(var params) :
 
 	powerOffTrigger = controlsCC.addTrigger("Power Off", "Power Off the prop");
 	restartTrigger = controlsCC.addTrigger("Restart", "Restart the prop");
+	uploadFirmwareTrigger = controlsCC.addTrigger("Upload Firmware", "Upload firmware. The props needs to be connected with usb");
 	addChildControllableContainer(&controlsCC);
 
 	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
@@ -211,11 +214,11 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 			}
 		}
 	}
-	
+
 	if (currentBlock != nullptr && enabled->boolValue())
 	{
 		//if(!isThreadRunning()) startThread();
-		
+
 	}
 	else
 	{
@@ -225,7 +228,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 		//	waitForThreadToExit(50);
 		//}
 	}
-	
+
 
 
 	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
@@ -711,7 +714,7 @@ void Prop::run()
 		}
 		else
 		{
-			if(enabled->boolValue()) update();
+			if (enabled->boolValue()) update();
 			sleep(1000.0f / updateRate); //50fps
 		}
 	}

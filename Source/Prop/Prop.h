@@ -52,6 +52,7 @@ public:
 	ControllableContainer controlsCC;
 	Trigger* powerOffTrigger;
 	Trigger* restartTrigger;
+	Trigger* uploadFirmwareTrigger;
 
 	HashMap<String, PropComponent*> components;
 	RGBPropComponent* rgbComponent;
@@ -92,6 +93,8 @@ public:
 
 	Array<File, CriticalSection> filesToUpload;
 
+	File firmwareFile;
+
 	//ping
 	virtual void clearItem() override;
 
@@ -119,7 +122,6 @@ public:
 	virtual void uploadFileQueue();
 	virtual void uploadFile(File f);
 
-
 	virtual void loadBake(StringRef /*fileName*/, bool /*autoPlay*/) {}
 	virtual void playBake(float /*time */ = 0, bool /* loop */ = false) {}
 	virtual void pauseBakePlaying() {}
@@ -135,6 +137,8 @@ public:
 
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
+
+	virtual void uploadFirmware() {}
 
 	virtual void handleOSCMessage(const OSCMessage& m);
 

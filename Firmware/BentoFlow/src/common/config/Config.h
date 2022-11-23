@@ -37,7 +37,7 @@
 #elif defined CREATOR_PROTO_V1
 #include "config_protov1.h"
 #elif defined ARDUINO_FLOWTOYS_CREATOR_CLUB
-#include "config_protov2.h"
+#include "config_creatorclub.h"
 #elif defined CREATOR_TAB_HOOP
 #include "config_tab_hoop.h"
 #elif defined ARDUINO_CREATOR_WHEEL
