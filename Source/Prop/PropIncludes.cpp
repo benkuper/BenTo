@@ -40,3 +40,7 @@
 #include "ui/PropManagerUI.cpp"
 #include "ui/PropUI.cpp"
 #include "ui/PropViz.cpp"
+
+
+#include "PropFlasher.cpp"
+#include "ui/PropFlasherPanel.cpp"

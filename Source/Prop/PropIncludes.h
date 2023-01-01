@@ -46,7 +46,11 @@
 #include "TargetFilter/PropTargetFilter.h"
 #include "TargetFilter/PropTargetFilterManager.h"
 
+#include "PropFlasher.h"
+#include "ui/PropFlasherPanel.h"
+
 #include "ui/PropViz.h"
 #include "ui/PropUI.h"
 #include "ui/PropManagerUI.h"
 #include "ui/PropEditor.h"
+

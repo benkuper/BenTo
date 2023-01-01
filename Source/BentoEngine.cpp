@@ -75,6 +75,8 @@ BentoEngine::~BentoEngine()
 
 	ZeroconfManager::deleteInstance();
 	WasmManager::deleteInstance();
+
+	PropFlasher::deleteInstance();
 }
 
 void BentoEngine::clearInternal()

@@ -15,6 +15,7 @@
 namespace BentoCommandIDs
 {
 	static const int updatePropDefinitions = 0x500;
+	static const int gotoFlasher = 0x501;
 }
 
 void MainComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& result)
@@ -23,6 +24,10 @@ void MainComponent::getCommandInfo(CommandID commandID, ApplicationCommandInfo& 
 	{
 	case BentoCommandIDs::updatePropDefinitions:
 		result.setInfo("Update Prop definitions", "", "General", result.readOnlyInKeyEditor);
+		break;
+
+	case BentoCommandIDs::gotoFlasher:
+		result.setInfo("Firmware Uploader", "", "General", result.readOnlyInKeyEditor);
 		break;
 
 	default:
@@ -39,6 +44,7 @@ void MainComponent::getAllCommands(Array<CommandID>& commands) {
 
 	const CommandID ids[] = {
 		BentoCommandIDs::updatePropDefinitions,
+		BentoCommandIDs::gotoFlasher,
 	};
 
 	commands.addArray(ids, numElementsInArray(ids));
@@ -54,6 +60,7 @@ PopupMenu MainComponent::getMenuForIndex(int topLevelMenuIndex, const String& me
 void MainComponent::fillFileMenuInternal(PopupMenu& menu)
 {
 	menu.addCommandItem(&getCommandManager(), BentoCommandIDs::updatePropDefinitions);
+	menu.addCommandItem(&getCommandManager(), BentoCommandIDs::gotoFlasher);
 }
 
 bool MainComponent::perform(const InvocationInfo& info)
@@ -64,6 +71,12 @@ bool MainComponent::perform(const InvocationInfo& info)
 	case BentoCommandIDs::updatePropDefinitions:
 	{
 		PropManager::getInstance()->startThread();
+	}
+	break;
+
+	case BentoCommandIDs::gotoFlasher:
+	{
+		PropFlasher::getInstance()->selectThis();
 	}
 	break;
 

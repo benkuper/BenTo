@@ -1552,6 +1552,9 @@
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropFlasher.cpp">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
       <Filter>BenTo\Source\Prop\Shape\ui</Filter>
     </ClCompile>
@@ -1622,6 +1625,9 @@
       <Filter>BenTo\Source\Prop\Component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropEditor.cpp">
+      <Filter>BenTo\Source\Prop\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\ui\PropFlasherPanel.cpp">
       <Filter>BenTo\Source\Prop\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropManagerUI.cpp">
@@ -5301,6 +5307,9 @@
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\PropFlasher.h">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h">
       <Filter>BenTo\Source\Prop\Shape\ui</Filter>
     </ClInclude>
@@ -5371,6 +5380,9 @@
       <Filter>BenTo\Source\Prop\Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\ui\PropEditor.h">
+      <Filter>BenTo\Source\Prop\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\ui\PropFlasherPanel.h">
       <Filter>BenTo\Source\Prop\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h">

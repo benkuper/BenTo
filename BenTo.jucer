@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source" id="LP0of5"
-              version="1.4.3b1" projectLineFeed="&#10;" jucerFormatVersion="1"
+              version="1.4.3b2" projectLineFeed="&#10;" jucerFormatVersion="1"
               cppLanguageStandard="17">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
@@ -476,6 +476,8 @@
               file="Source/VideoPreview/VideoPreviewPanel.h"/>
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
+        <FILE id="yBPkNV" name="PropFlasher.cpp" compile="0" resource="0" file="Source/Prop/PropFlasher.cpp"/>
+        <FILE id="Pucsvn" name="PropFlasher.h" compile="0" resource="0" file="Source/Prop/PropFlasher.h"/>
         <GROUP id="{D40B9824-1B5B-6FA5-B249-175979B439C7}" name="Shape">
           <GROUP id="{8334483F-C7CD-CCBB-F1CF-4555459226ED}" name="ui">
             <FILE id="ZTyQbn" name="PropShapeCurveEasingUI.cpp" compile="0" resource="0"
@@ -592,6 +594,10 @@
         <GROUP id="{2D4445E7-66E2-A651-74EF-D1FC94C498A0}" name="ui">
           <FILE id="LK4Os9" name="PropEditor.cpp" compile="0" resource="0" file="Source/Prop/ui/PropEditor.cpp"/>
           <FILE id="iHeBC5" name="PropEditor.h" compile="0" resource="0" file="Source/Prop/ui/PropEditor.h"/>
+          <FILE id="qdME0Z" name="PropFlasherPanel.cpp" compile="0" resource="0"
+                file="Source/Prop/ui/PropFlasherPanel.cpp"/>
+          <FILE id="GiLnQJ" name="PropFlasherPanel.h" compile="0" resource="0"
+                file="Source/Prop/ui/PropFlasherPanel.h"/>
           <FILE id="VxuHVc" name="PropManagerUI.cpp" compile="0" resource="0"
                 file="Source/Prop/ui/PropManagerUI.cpp"/>
           <FILE id="RgPZml" name="PropManagerUI.h" compile="0" resource="0" file="Source/Prop/ui/PropManagerUI.h"/>
@@ -651,7 +657,7 @@
         <MODULEPATH id="juce_core"/>
         <MODULEPATH id="juce_data_structures"/>
         <MODULEPATH id="juce_events"/>
-        <MODULEPATH id="juce_graphics" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_graphics"/>
         <MODULEPATH id="juce_gui_basics"/>
         <MODULEPATH id="juce_gui_extra"/>
         <MODULEPATH id="juce_opengl"/>
@@ -681,7 +687,7 @@
         <MODULEPATH id="juce_opengl"/>
         <MODULEPATH id="juce_gui_extra"/>
         <MODULEPATH id="juce_gui_basics"/>
-        <MODULEPATH id="juce_graphics" path="../chataigne/JUCE/modules"/>
+        <MODULEPATH id="juce_graphics"/>
         <MODULEPATH id="juce_events"/>
         <MODULEPATH id="juce_data_structures"/>
         <MODULEPATH id="juce_core"/>
@@ -805,7 +811,7 @@
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
                externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0"
-               xcodeValidArchs="x86_64">
+               xcodeValidArchs="x86_64" customXcodeResourceFolders="Resources/mac/esptool">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/serial/include&#10;../../External/servus/include"
                        osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug"
