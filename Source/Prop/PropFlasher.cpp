@@ -16,8 +16,21 @@ PropFlasher::PropFlasher() :
 	ControllableContainer("Prop Flasher"),
 	Thread("PropFlasher")
 {
+	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
+	for (auto& def : PropManager::getInstance()->factory.defs)
+	{
+		FactorySimpleParametricDefinition<Prop>* pDef = (FactorySimpleParametricDefinition<Prop>*)def;
+		String fw = pDef->params.getProperty("firmware", "");
+		if (fw.isEmpty()) continue;
+		fwType->addOption(pDef->type, fw);
+	}
+
+	fwType->addOption("Custom", "");
+
 	fwFileParam = addFileParameter("Firmware File", "The firmware.bin file to flash");
 	fwFileParam->fileTypeFilter = "*.bin";
+	fwFileParam->setEnabled(false);
+
 	setWifiAfterFlash = addBoolParameter("Set Wifi After flash", "Set wifi credentials in flashed props", true);
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
 	progression = addFloatParameter("Progression", "Progression", 0, 0, 1);
@@ -26,6 +39,27 @@ PropFlasher::PropFlasher() :
 PropFlasher::~PropFlasher()
 {
 	stopThread(1000);
+}
+void PropFlasher::onContainerParameterChanged(Parameter* p)
+{
+	if (p == fwType)
+	{
+		String ft = fwType->getValueData().toString();
+		fwFileParam->setEnabled(ft.isEmpty());
+
+		if (ft.isEmpty())
+		{
+			firmwareFile = fwFileParam->getFile();
+		}
+		else
+		{
+			firmwareFile = File(fwType->getValueData().toString());
+		}
+	}
+	else if (p == fwFileParam)
+	{
+		if (fwFileParam->enabled) firmwareFile = fwFileParam->getFile();
+	}
 }
 
 void PropFlasher::onContainerTriggerTriggered(Trigger* t)
@@ -36,8 +70,6 @@ void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 void PropFlasher::flash()
 {
 	stopThread(1000);
-
-	firmwareFile = fwFileParam->getFile();
 
 #if JUCE_WINDOWS || JUCE_MAC
 	if (!firmwareFile.exists())
@@ -81,7 +113,7 @@ void PropFlasher::flash()
 	LOGWARNING("Flashing not supported for this platform");
 #endif
 
-}
+	}
 
 void PropFlasher::run()
 {

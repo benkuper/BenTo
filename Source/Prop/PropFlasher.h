@@ -19,6 +19,7 @@ public:
 	PropFlasher();
 	~PropFlasher();
 
+	EnumParameter* fwType;
 	File firmwareFile;
 	File partitionsFile;
 
@@ -33,6 +34,7 @@ public:
 
 	int numFlashingProps;
 
+	void onContainerParameterChanged(Parameter* p) override;
 	void onContainerTriggerTriggered(Trigger* t) override;
 
 	void flash();
