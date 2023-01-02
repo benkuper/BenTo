@@ -25,12 +25,15 @@ public:
 
 	FileParameter* fwFileParam;
 	FloatParameter* progression;
-	BoolParameter* setWifiAfterFlash;
+	//BoolParameter* setWifiAfterFlash;
 	Trigger* flashTrigger;
+	Trigger* setWifiTrigger;
 
 	File flasher;
 	File app0Bin;
 	File bootloaderBin;
+
+	Array<SerialDeviceInfo*> flashedDevices;
 
 	int numFlashingProps;
 
@@ -38,9 +41,10 @@ public:
 	void onContainerTriggerTriggered(Trigger* t) override;
 
 	void flash();
+	void setAllWifi();
 
 	void run() override;
 
-	void flashProp(const String& port);
+	bool flashProp(const String& port);
 
 };

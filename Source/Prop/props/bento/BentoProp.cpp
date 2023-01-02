@@ -17,9 +17,9 @@ BentoProp::BentoProp(var params) :
 	flasher(this)
 {
 	updateRate = params.getProperty("updateRate", 50);
-	remoteHost = connectionCC.addStringParameter("Remote Host", "IP of the prop on the network", "192.168.0.100");
+	remoteHost = connectionCC.addStringParameter("Prop IP", "IP of the prop on the network", "192.168.0.100");
 
-	serialParam = new SerialDeviceParameter("Serial Device", "For connecting props trhough USB", true);
+	serialParam = new SerialDeviceParameter("USB Device", "For connecting props trhough USB", true);
 	serialParam->openBaudRate = 115200;
 	if (params.hasProperty("vid")) serialParam->vidFilter = (int)params.getProperty("vid", 0);
 	if (params.hasProperty("pid")) serialParam->pidFilter = (int)params.getProperty("pid", 0);

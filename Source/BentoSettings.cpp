@@ -16,18 +16,14 @@ juce_ImplementSingleton(BentoSettings)
 
 BentoSettings::BentoSettings() :
 	ControllableContainer("Bento Settings"),
-	flashCC("Flashing"),
 	wifiCC("WiFi")
 {
 	saveAndLoadRecursiveData = true;
 
 	wifiSSID = wifiCC.addStringParameter("WiFi SSID", "The ssid to save in the prop for connecting", "");
 	wifiPass = wifiCC.addStringParameter("WiFi Password", "The password to save in the prop for connecting", "");
-	saveWifiTrigger = wifiCC.addTrigger("Save credentials", "Save the credentials into all connected props");
+	saveWifiTrigger = wifiCC.addTrigger("Upload Credentials to Prop", "Save the credentials into all connected props");
 	addChildControllableContainer(&wifiCC);
-
-	flashConnected = flashCC.addTrigger("Flash firmware", "Flash the firmware to connected props");
-	addChildControllableContainer(&flashCC);
 
 }
 
@@ -37,12 +33,7 @@ BentoSettings::~BentoSettings()
 
 void BentoSettings::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
-
-	if (c == flashConnected)
-	{
-		for (auto& p : PropManager::getInstance()->items) p->uploadFirmwareTrigger->trigger();
-	}
-	else if (c == saveWifiTrigger)
+	if (c == saveWifiTrigger)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{

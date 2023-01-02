@@ -9,6 +9,7 @@
 */
 
 #include "Prop/PropIncludes.h"
+#include "BentoSettings.h"
 
 juce_ImplementSingleton(PropFlasher)
 
@@ -27,13 +28,29 @@ PropFlasher::PropFlasher() :
 
 	fwType->addOption("Custom", "");
 
+
+
+
 	fwFileParam = addFileParameter("Firmware File", "The firmware.bin file to flash");
 	fwFileParam->fileTypeFilter = "*.bin";
 	fwFileParam->setEnabled(false);
 
-	setWifiAfterFlash = addBoolParameter("Set Wifi After flash", "Set wifi credentials in flashed props", true);
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
 	progression = addFloatParameter("Progression", "Progression", 0, 0, 1);
+	//setWifiAfterFlash = addBoolParameter("Set Wifi After flash", "Set wifi credentials in flashed props", true);
+	setWifiTrigger = addTrigger("Set Wifi to props", "Set wifi (ssid and pass are set in File > Preferences > Bento Settings)");
+
+	String ft = fwType->getValueData().toString();
+	fwFileParam->setEnabled(ft.isEmpty());
+
+	if (ft.isEmpty())
+	{
+		firmwareFile = fwFileParam->getFile();
+	}
+	else
+	{
+		firmwareFile = File(fwType->getValueData().toString());
+	}
 }
 
 PropFlasher::~PropFlasher()
@@ -64,7 +81,8 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 
 void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 {
-	flash();
+	if (t == flashTrigger) flash();
+	else if (t == setWifiTrigger) setAllWifi();
 }
 
 void PropFlasher::flash()
@@ -113,7 +131,29 @@ void PropFlasher::flash()
 	LOGWARNING("Flashing not supported for this platform");
 #endif
 
+}
+
+void PropFlasher::setAllWifi()
+{
+	String wifiStr = "wifi.setCredentials " + BentoSettings::getInstance()->wifiSSID->stringValue() + "," + BentoSettings::getInstance()->wifiPass->stringValue() + "\nroot.restart\n";
+
+	LOG("Setting Wifi infos to prop...");
+	for (auto& f : flashedDevices)
+	{
+		SerialDevice* s = SerialManager::getInstance()->getPort(f, true, 115200);
+		if (s == nullptr)
+		{
+			LOGWARNING("Could not connect !");
+			continue;
+		}
+		s->writeString(wifiStr);
+		s->close();
+		LOG("Wifi is set to " << f->uniqueDescription);
 	}
+
+	LOG("All Props wifi are set !");
+}
+
 
 void PropFlasher::run()
 {
@@ -132,23 +172,43 @@ void PropFlasher::run()
 				//	continue;
 				//}
 
-				infos.add(info);
+				infos.addIfNotAlreadyThere(info);
 			}
 		}
 	}
 
 	LOG("Flashing " << infos.size() << " devices...");
 
+
+	numFlashingProps = infos.size();
 	progression->setValue(0);
+	flashedDevices.clear();
+
 	for (auto& i : infos)
 	{
-		flashProp(i->port);
+		if (!flashProp(i->port))
+		{
+			LOGERROR("Error flashing " << i->uniqueDescription);
+		}
+		else
+		{
+			LOG("Prop " << i->uniqueDescription << " flashed");
+			flashedDevices.add(i);
+		}
 	}
 
-	LOG("All props flashed !");
+	if (flashedDevices.size() == infos.size())
+	{
+		LOG("All props flashed !");
+	}
+	else
+	{
+		LOGWARNING("Flashed successfully " << flashedDevices.size() << " props out of " << infos.size());
+	}
+
 }
 
-void PropFlasher::flashProp(const String& port)
+bool PropFlasher::flashProp(const String& port)
 {
 	float startProgression = progression->floatValue();
 
@@ -159,16 +219,15 @@ void PropFlasher::flashProp(const String& port)
 	parameters += " 0x8000 \"" + partitionsFile.getFullPathName() + "\"";
 
 	LOG("Flashing firmware...");
-	//NLOG(prop->niceName, "Launch with parameters " + parameters);
+	//LOG("Launch with parameters " + parameters);
 
-	//#if JUCE_WINDOWS
-		//flasher.startAsProcess(parameters);
-	//#else
 	ChildProcess cp;
 	cp.start(flasher.getFullPathName() + parameters);
 
+	bool errored = false;
+
 	String buffer;
-	while (cp.isRunning())
+	while (!errored && cp.isRunning())
 	{
 		char buf[8];
 		memset(buf, 0, 8);
@@ -178,17 +237,36 @@ void PropFlasher::flashProp(const String& port)
 		lines.addLines(buffer);
 		for (int i = 0; i < lines.size() - 1; i++)
 		{
+			if (lines[i].toLowerCase().contains("error"))
+			{
+				errored = true;
+				break;
+			}
+
 			StringArray prog = RegexFunctions::getFirstMatch("Writing.+\\(([0-9]+) %\\)", lines[i]);
 			if (prog.size() > 1)
 			{
 				float relProg = prog[1].getFloatValue() / 100.0f;
-				if (relProg != 1) progression->setValue(startProgression + relProg / numFlashingProps); //not using 1 to avoid double 100% log from partitions and firmware.
+				float tProg = startProgression + relProg / numFlashingProps;
+				if (tProg != 1)
+				{
+					progression->setValue(tProg); //not using 1 to avoid double 100% log from partitions and firmware.
+					LOG("Flashing... " << (int)(relProg * 100) << "%");
+				}
 			}
+			buffer = lines[lines.size() - 1];
+			wait(10);
 		}
-		buffer = lines[lines.size() - 1];
 	}
-	//#endif
 
 	progression->setValue(startProgression + 1.0f / numFlashingProps);
-	LOG("Firmware flashed.");
+
+	//LOG(cp.readAllProcessOutput());
+
+	if (errored || cp.readAllProcessOutput().toLowerCase().contains("error"))
+	{
+		return false;
+	}
+
+	return true;
 }

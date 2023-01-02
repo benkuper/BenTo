@@ -25,8 +25,5 @@ public:
 	StringParameter * wifiPass;
 	Trigger* saveWifiTrigger;
 
-	ControllableContainer flashCC;
-	Trigger* flashConnected;
-
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 };
