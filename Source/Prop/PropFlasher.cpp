@@ -28,17 +28,16 @@ PropFlasher::PropFlasher() :
 
 	fwType->addOption("Custom", "");
 
-
-
-
 	fwFileParam = addFileParameter("Firmware File", "The firmware.bin file to flash");
 	fwFileParam->fileTypeFilter = "*.bin";
 	fwFileParam->setEnabled(false);
 
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
 	progression = addFloatParameter("Progression", "Progression", 0, 0, 1);
-	//setWifiAfterFlash = addBoolParameter("Set Wifi After flash", "Set wifi credentials in flashed props", true);
-	setWifiTrigger = addTrigger("Set Wifi to props", "Set wifi (ssid and pass are set in File > Preferences > Bento Settings)");
+	setWifiAfterFlash = addBoolParameter("Set Wifi After flash", "Set wifi credentials in flashed props", true);
+	wifiSSID = addStringParameter("Wifi SSID", "SSID for the wifi to set", "");
+	wifiPass = addStringParameter("Wifi Pass", "Pass for the wifi to set", "");
+	//setWifiTrigger = addTrigger("Set Wifi to props", "Set wifi (ssid and pass are set in File > Preferences > Bento Settings)");
 
 	String ft = fwType->getValueData().toString();
 	fwFileParam->setEnabled(ft.isEmpty());
@@ -77,12 +76,17 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 	{
 		if (fwFileParam->enabled) firmwareFile = fwFileParam->getFile();
 	}
+	else if (p == setWifiAfterFlash)
+	{
+		wifiSSID->setEnabled(setWifiAfterFlash->boolValue());
+		wifiPass->setEnabled(setWifiAfterFlash->boolValue());
+	}
 }
 
 void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == flashTrigger) flash();
-	else if (t == setWifiTrigger) setAllWifi();
+	//else if (t == setWifiTrigger) setAllWifi();
 }
 
 void PropFlasher::flash()
@@ -91,11 +95,10 @@ void PropFlasher::flash()
 
 #if JUCE_WINDOWS || JUCE_MAC
 	if (!firmwareFile.exists())
-		if (!firmwareFile.exists())
-		{
-			LOGERROR("Firmware file doesn't exist !");
-			return;
-		}
+	{
+		LOGERROR("Firmware file doesn't exist !");
+		return;
+	}
 
 	partitionsFile = firmwareFile.getChildFile("../partitions.bin");
 
@@ -135,9 +138,18 @@ void PropFlasher::flash()
 
 void PropFlasher::setAllWifi()
 {
-	String wifiStr = "wifi.setCredentials " + BentoSettings::getInstance()->wifiSSID->stringValue() + "," + BentoSettings::getInstance()->wifiPass->stringValue() + "\nroot.restart\n";
+	if (wifiSSID->stringValue().isEmpty() || wifiPass->stringValue().isEmpty())
+	{
+		LOGWARNING("Wifi SSID and Pass must be set to upload");
+		return;
+	}
+
+	String wifiStr = "wifi.setCredentials " + wifiSSID->stringValue() + "," + wifiPass->stringValue() + "\nroot.restart\n";
 
 	LOG("Setting Wifi infos to prop...");
+
+	Array<SerialDevice*> devices;
+	wait(500);
 	for (auto& f : flashedDevices)
 	{
 		SerialDevice* s = SerialManager::getInstance()->getPort(f, true, 115200);
@@ -146,10 +158,26 @@ void PropFlasher::setAllWifi()
 			LOGWARNING("Could not connect !");
 			continue;
 		}
-		s->writeString(wifiStr);
-		s->close();
-		LOG("Wifi is set to " << f->uniqueDescription);
+
+		s->addSerialDeviceListener(this);
+		devices.add(s);
 	}
+
+	wait(500);
+
+	for (auto& s : devices)
+	{
+
+		s->writeString(wifiStr);
+		s->port->flush();
+		//s->close(); //no need to close
+		LOG("Wifi is set for " << s->info->uniqueDescription);
+	}
+
+
+	wait(500);
+
+	for (auto& s : devices) s->removeSerialDeviceListener(this);
 
 	LOG("All Props wifi are set !");
 }
@@ -206,6 +234,13 @@ void PropFlasher::run()
 		LOGWARNING("Flashed successfully " << flashedDevices.size() << " props out of " << infos.size());
 	}
 
+	if (setWifiAfterFlash->boolValue()) setAllWifi();
+
+}
+
+void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)
+{
+	//LOG("Flasher Data Received :\n" << data.toString());
 }
 
 bool PropFlasher::flashProp(const String& port)

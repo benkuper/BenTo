@@ -12,7 +12,8 @@
 
 class PropFlasher :
 	public ControllableContainer,
-	public Thread
+	public Thread,
+	public SerialDevice::SerialDeviceListener
 {
 public:
 	juce_DeclareSingleton(PropFlasher, true);
@@ -25,9 +26,12 @@ public:
 
 	FileParameter* fwFileParam;
 	FloatParameter* progression;
-	//BoolParameter* setWifiAfterFlash;
+	BoolParameter* setWifiAfterFlash;
+	StringParameter* wifiSSID;
+	StringParameter* wifiPass;
+
 	Trigger* flashTrigger;
-	Trigger* setWifiTrigger;
+	//Trigger* setWifiTrigger;
 
 	File flasher;
 	File app0Bin;
@@ -44,6 +48,8 @@ public:
 	void setAllWifi();
 
 	void run() override;
+
+	void serialDataReceived(SerialDevice* s, const var& data) override;
 
 	bool flashProp(const String& port);
 
