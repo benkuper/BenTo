@@ -248,8 +248,8 @@ void PropFlasher::run()
 void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)
 {
 	//LOG("Flasher Data Received :\n" << data.toString());
-    if(data.toString().contains(wifiSSID->stringValue()+" : "+wifiPass.stringValue())
-       {
+    if(data.toString().contains(wifiSSID->stringValue()+" : "+wifiPass->stringValue()))
+    {
         LOG("Wifi is set for " << s->info->uniqueDescription);
     }
 }
