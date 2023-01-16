@@ -22,10 +22,10 @@ IMUManager::IMUManager() : Component("imu"),
   instance = this;
 
 #ifdef HAS_IMU
-  bno.setMode(OPERATION_MODE_CONFIG);
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
   bno.setAxisRemap(Adafruit_BNO055::IMU_REMAP_CONFIG);
   bno.setAxisSign(Adafruit_BNO055::IMU_REMAP_SIGN);
-  bno.setMode(OPERATION_MODE_NDOF);
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
   bno.setExtCrystalUse(true);
 #endif
 
@@ -71,10 +71,10 @@ void IMUManager::init()
     return;
   }
 
-  bno.setMode(OPERATION_MODE_CONFIG);
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
   bno.setAxisRemap(IMU_REMAP_CONFIG);
   bno.setAxisSign(IMU_REMAP_SIGN);
-  bno.setMode(OPERATION_MODE_NDOF);
+  bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
 
   // bno.setExtCrystalUse(true);
   bno.enterNormalMode();
