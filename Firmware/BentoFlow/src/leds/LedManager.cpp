@@ -215,6 +215,15 @@ bool LedManager::handleCommand(String command, var *data, int numData)
         }
 
         return true;
+    } else if (checkCommand(command, "playAndIr", numData, 2)) {
+        if (data[0].type == 'f') {
+            playerMode.play(data[0].floatValue());
+        }
+        if (data[1].type == 'f') {
+            irManager.setBrightness(data[1].floatValue());
+        }
+
+        return true;
     }
 #endif
 
