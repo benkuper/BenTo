@@ -4,8 +4,16 @@
 
 #ifdef HAS_FILES
 #ifdef ESP32
+
+#ifdef USE_SD_MMC
+#include "SD_MMC.h"
+#include "FS.h"
+#else
 #include <SPI.h>
 #include "../../lib/SD/src/SD.h" //really weird
+#endif
+
+
 #include <WebServer.h>
 #ifdef FILES_USE_INTERNAL_MEMORY
 #include <SPIFFS.h>
@@ -47,12 +55,12 @@ public:
 #ifdef FILES_USE_INTERNAL_MEMORY
 
 #else
+#ifndef USE_SD_MMC
     static SPIClass spiSD;
+#endif
 #endif
 
     File uploadingFile;
-
-
 
     static bool sdIsDetected;
     bool serverIsEnabled;

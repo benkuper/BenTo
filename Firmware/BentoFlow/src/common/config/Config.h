@@ -93,7 +93,9 @@
 #elif defined ARDUINO_FLOORSTRIP
 #include "config_floorstrip.h"
 #elif defined ARDUINO_ESP32_POE_ISO
-#include "config_olimex.h"
+#include "config_olimextester.h"
+#elif defined ARDUINO_OLIMEX_TUBE
+#include "config_olimextube.h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION

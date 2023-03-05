@@ -12,14 +12,13 @@
 // main leds config
 #define LED_COUNT 300
 // #define LED_EN_PIN 27 // pin for enabling the LED power. HIGH for on and LOW for off. 
-#define LED_DATA_PIN 15
-#define LED_CLK_PIN 14
+#define LED_DATA_PIN 32
+#define LED_CLK_PIN 33
 #define LED_TYPE    SK9822
 #define LED_COLOR_ORDER BGR
-#define LED_INVERT_DIRECTION
 #define LED_MAX_BRIGHTNESS 60
 #define LED_DEFAULT_BRIGHTNESS .5
-
+//#define LED_INVERT_DIRECTION
 
 //SLEEP
 #define BUTTON_INVERTED
@@ -40,8 +39,9 @@ const int touchPins[TOUCH_COUNT]{37, 39};
 //apparently helps having stable fastLED with TinyPICO and WS2812C
 // #define FASTLED_FORCE_LOOPDELAY
 
+// SD config
 #define HAS_FILES
-#define FILES_USE_INTERNAL_MEMORY
+#define USE_SD_MMC
 
 //#define GROUND_PIN_COUNT 2
 //const int groundPins[GROUND_PIN_COUNT]{13};
