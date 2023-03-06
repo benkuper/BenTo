@@ -200,21 +200,26 @@ void IMUManager::readIMU()
   // q.z() = -q.z();
 
   imu::Vector<3> euler = q.toEuler();
+  imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
+  imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
+  imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
+  
+  if(acc.x() == 0 && acc.y() == 0 && acc.z() == 0) return;
+  if(laccel.x() == 0 && laccel.y() == 0 && laccel.z() == 0) return;
+  if(gyr.x() == 0 && gyr.y() == 0 && gyr.z() == 0) return;
+
   orientation[0] = fmod(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f;
   orientation[1] = euler.y() * 180 / PI; // Pitch
   orientation[2] = euler.z() * 180 / PI; // Roll
 
-  imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
   accel[0] = acc.x();
   accel[1] = acc.y();
   accel[2] = acc.z();
 
-  imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   linearAccel[0] = laccel.x();
   linearAccel[1] = laccel.y();
   linearAccel[2] = laccel.z();
 
-  imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
   gyro[0] = gyr.x();
   gyro[1] = gyr.y();
   gyro[2] = gyr.z();
@@ -223,6 +228,7 @@ void IMUManager::readIMU()
   // gravity[0] = grav.x();
   // gravity[1] = grav.y();
   // gravity[2] = grav.z();
+
 
   computeThrow();
   computeActivity();

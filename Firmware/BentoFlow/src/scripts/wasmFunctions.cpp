@@ -245,8 +245,6 @@ m3ApiRawFunction(m3_setMicEnabled)
     m3ApiSuccess();
 }
 
-
-
 m3ApiRawFunction(m3_getMicLevel)
 {
     m3ApiReturnType(float);

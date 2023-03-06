@@ -75,13 +75,19 @@ void MainManager::init()
 
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
 
-    BoardInit
+    BoardInit;
 
-        NDBG("Board is " + String(ARDUINO_BOARD));
+    NDBG("Board is " + String(ARDUINO_BOARD));
+
+    // NDBG("Setup mic test");
+    // pinMode(32, INPUT);
 }
 
 void MainManager::update()
 {
+    // float a = analogRead(32);
+    // DBG("Mic val " + String(a));
+
     initTimer.update();
 
     files.update();
