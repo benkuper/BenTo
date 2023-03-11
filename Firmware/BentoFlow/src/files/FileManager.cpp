@@ -5,7 +5,9 @@ bool FileManager::sdIsDetected = false;
 
 #ifdef HAS_FILES
 #ifndef FILES_USE_INTERNAL_MEMORY
+#ifndef USE_SD_MMC
 SPIClass FileManager::spiSD(HSPI);
+#endif
 #endif
 #endif
 
@@ -55,6 +57,9 @@ void FileManager::init()
     digitalWrite(SD_EN, SD_POWER_VALUE);
 #endif
 
+#ifdef USE_SD_MMC
+    if(SD_MMC.begin())
+#else
     pinMode(SD_SCK, INPUT_PULLUP);
     pinMode(SD_MISO, INPUT_PULLUP);
     pinMode(SD_MOSI, INPUT_PULLUP);
@@ -63,6 +68,7 @@ void FileManager::init()
     spiSD.begin(SD_SCK, SD_MISO, SD_MOSI, SD_CS); // SCK,MISO,MOSI,ss
 
     if (SD.begin(SD_CS, spiSD, SDSPEED))
+#endif
     {
         NDBG("SD Card initialized.");
         listDir("/", 0);
@@ -101,7 +107,11 @@ File FileManager::openFile(String fileName, bool forWriting, bool deleteIfExists
 #ifdef FILES_USE_INTERNAL_MEMORY
     File f = SPIFFS.open(fileName, forWriting ? "w" : "r"); // Open it
 #else
+#ifdef USE_SD_MMC
+    File f = SD_MMC.open(fileName.c_str(), forWriting ? FILE_WRITE : FILE_READ);
+#else
     File f = SD.open(fileName.c_str(), forWriting ? FILE_WRITE : FILE_READ);
+#endif
 #endif
 
     DBG("Open file : " + String(f.name()));
@@ -122,9 +132,17 @@ void FileManager::deleteFileIfExists(String path)
         SPIFFS.remove(path);
     }
 #else
+#ifdef USE_SD_MMC
+    if (SD_MMC.exists(path.c_str()))
+#else
     if (SD.exists(path.c_str()))
+#endif
     {
+#ifdef USE_SD_MMC
+        SD_MMC.remove(path.c_str());
+#else
         SD.remove(path.c_str());
+#endif
         DBG("Removed file " + path);
     }
 #endif
@@ -137,7 +155,11 @@ String FileManager::listDir(const char *dirname, uint8_t levels)
 #ifdef FILES_USE_INTERNAL_MEMORY
     File root = SPIFFS.open("/", "r");
 #else
+#ifdef USE_SD_MMC
+    File root = SD_MMC.open(dirname);
+#else
     File root = SD.open(dirname);
+#endif
 #endif
 
     if (!root)
@@ -341,7 +363,11 @@ bool FileManager::handleCommand(String command, var *data, int numData)
 #ifdef FILES_USE_INTERNAL_MEMORY
             SPIFFS.rmdir(data[0].stringValue());
 #else
+#ifdef USE_SD_MMC
+            SD_MMC.rmdir(data[0].stringValue());
+#else
             SD.rmdir(data[0].stringValue());
+#endif
 #endif
         }
         else
@@ -350,7 +376,11 @@ bool FileManager::handleCommand(String command, var *data, int numData)
 #ifdef FILES_USE_INTERNAL_MEMORY
             SPIFFS.rmdir("/");
 #else
+#ifdef USE_SD_MMC
+            SD_MMC.rmdir("/");
+#else
             SD.rmdir("/");
+#endif
 #endif
         }
 
