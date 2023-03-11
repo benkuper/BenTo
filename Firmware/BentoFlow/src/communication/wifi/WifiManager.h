@@ -8,6 +8,19 @@
 #include <ESP8266WiFi.h>
 #endif
 
+#ifdef USE_ETHERNET
+#define ETH_CLK_MODE ETH_CLOCK_GPIO17_OUT
+#define ETH_PHY_POWER 12
+#include <ETH.h>
+#define NET ETH
+#else
+#define NET WiFi
+#endif
+
+#ifndef HOST_NAME
+#define HOST_NAME "bento"
+#endif
+
 class WifiManagerEvent
 {
 public:
@@ -50,6 +63,9 @@ public:
   void disable();
 
   void update();
+
+
+  void WiFiEvent(system_event_id_t event, system_event_info_t info);
 
   void saveWifiConfig(String ssid, String pass);
   String getIP();

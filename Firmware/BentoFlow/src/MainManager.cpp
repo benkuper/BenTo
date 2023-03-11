@@ -92,8 +92,10 @@ void MainManager::update()
 
     files.update();
 
+#ifdef HAS_FILES
     if (files.isUploading)
         return;
+#endif
 
     comm.update();
 

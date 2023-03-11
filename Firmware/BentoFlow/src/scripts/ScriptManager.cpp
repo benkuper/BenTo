@@ -36,6 +36,7 @@ void ScriptManager::update()
 
 void ScriptManager::launchScript(String path)
 {
+#ifdef HAS_FILES
     if (isRunning)
     {
         NDBG("Script is running, stop before load");
@@ -66,6 +67,7 @@ void ScriptManager::launchScript(String path)
     NDBG("Read " + String(scriptSize) + " bytes");
 
     launchWasm();
+#endif
 }
 
 void ScriptManager::launchWasm()
@@ -164,7 +166,7 @@ void ScriptManager::launchWasmTask()
     // }
 
     NDBG("Found functions : " + foundFunc);
-    
+
     isRunning = true;
 
     if (initFunc != NULL)
@@ -191,7 +193,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "fillLedsHSV", "v(iii)", &m3_fillLedsHSV);
     m3_LinkRawFunction(module, arduino, "setLed", "v(ii)", &m3_setLed);
     m3_LinkRawFunction(module, arduino, "getLed", "i(i)", &m3_getLed);
-    
+
     m3_LinkRawFunction(module, arduino, "setLedRGB", "v(iiii)", &m3_setLedRGB);
     m3_LinkRawFunction(module, arduino, "setLedHSV", "v(iiii)", &m3_setLedHSV);
     m3_LinkRawFunction(module, arduino, "pointRGB", "v(ffiii)", &m3_pointRGB);
@@ -221,16 +223,19 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
 
 void ScriptManager::stop()
 {
-    if (isRunning) {
+    if (isRunning)
+    {
         NDBG("Stopping script");
- 
+
         if (stopFunc != NULL)
             m3_CallV(stopFunc);
 
         isRunning = false;
         m3_FreeRuntime(runtime);
         runtime = NULL;
-    } else {
+    }
+    else
+    {
         NDBG("Not stopping script, because non was running");
     }
 }

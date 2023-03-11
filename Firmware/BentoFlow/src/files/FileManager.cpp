@@ -1,9 +1,9 @@
 #include "FileManager.h"
 
 const String FileEvent::eventNames[FileEvent::TYPES_MAX]{"uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list"};
-bool FileManager::sdIsDetected = false;
 
 #ifdef HAS_FILES
+bool FileManager::sdIsDetected = false;
 #ifndef FILES_USE_INTERNAL_MEMORY
 #ifndef USE_SD_MMC
 SPIClass FileManager::spiSD(HSPI);
@@ -11,10 +11,10 @@ SPIClass FileManager::spiSD(HSPI);
 #endif
 #endif
 
-FileManager::FileManager() : Component("files"),
-                             serverIsEnabled(false),
-                             isUploading(false)
+FileManager::FileManager() : Component("files")
 #ifdef HAS_FILES
+                             ,serverIsEnabled(false)
+                             ,isUploading(false)
                              ,
                              server(80)
 #endif
@@ -27,10 +27,10 @@ FileManager::FileManager() : Component("files"),
 
 void FileManager::init()
 {
+#ifdef HAS_FILES
     if (sdIsDetected)
         return;
 
-#ifdef HAS_FILES
     NDBG("Init");
 
 #ifdef FILES_USE_INTERNAL_MEMORY
