@@ -12,7 +12,7 @@ PositionRemapNode::PositionRemapNode(var params) :
 	ColorNode(getTypeString(), params)
 {
 	position = addFloatParameter("Position", "Center position of the color input", .25f, 0, 1);
-	size = addFloatParameter("Size", "Size of the color input", .5f, 0, 1);
+	size = addFloatParameter("Size", "Size of the color input", .5f, 0, 2);
 	extendNum = addIntParameter("Num Props", "The number of props to extend to", 1,1, 20);
 	invertEvens = addBoolParameter("Invert Evens", "If checked, swap the direction of props with even IDs", false);
 	invertOdds = addBoolParameter("Invert Odds", "If checked, swap the direction of props with odd IDs", false); 
