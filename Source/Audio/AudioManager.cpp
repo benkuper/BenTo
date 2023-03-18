@@ -19,6 +19,7 @@ AudioManager::AudioManager() :
 {
 	
 	am.initialiseWithDefaultDevices(2, 2);
+	am.addAudioCallback(this);
 	am.addAudioCallback(&player);
 
 	graph.reset();
@@ -44,10 +45,31 @@ AudioManager::~AudioManager()
 {
 
 	DBG("Remove audio callback here");
+	am.removeAudioCallback(this);
 	am.removeAudioCallback(&player);
 
 	graph.clear();
 	player.setProcessor(nullptr);
+}
+
+void AudioManager::audioDeviceIOCallbackWithContext(const float* const* inputChannelData,
+	int numInputChannels,
+	float* const* outputChannelData,
+	int numOutputChannels,
+	int numSamples,
+	const AudioIODeviceCallbackContext& context)
+{
+	//DBG("audio callback");
+	for (int i = 0; i < numOutputChannels; ++i) FloatVectorOperations::clear(outputChannelData[i], numSamples);
+}
+
+void AudioManager::audioDeviceAboutToStart(AudioIODevice*)
+{
+
+}
+
+void AudioManager::audioDeviceStopped()
+{
 }
 
 var AudioManager::getJSONData()
@@ -72,7 +94,7 @@ void AudioManager::loadJSONDataInternal(var data)
 	}
 }
 
-AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager * am) :
+AudioManagerHardwareSettings::AudioManagerHardwareSettings(AudioDeviceManager * am) :
 	ControllableContainer("Hardware Settings"),
 	am(am)
 {
@@ -80,7 +102,7 @@ AudioModuleHardwareSettings::AudioModuleHardwareSettings(AudioDeviceManager * am
 	
 }
 
-InspectableEditor * AudioModuleHardwareSettings::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+InspectableEditor * AudioManagerHardwareSettings::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {
 	return new AudioManagerHardwareEditor(this, isRoot);
 }

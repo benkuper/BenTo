@@ -16,10 +16,10 @@ class AudioManagerHardwareEditor :
 	public GenericControllableContainerEditor
 {
 public:
-	AudioManagerHardwareEditor(AudioModuleHardwareSettings * hs, bool isRoot);
+	AudioManagerHardwareEditor(AudioManagerHardwareSettings * hs, bool isRoot);
 	~AudioManagerHardwareEditor();
 
-	AudioModuleHardwareSettings * hs;
+	AudioManagerHardwareSettings * hs;
 	AudioDeviceSelectorComponent selector;
 
 	void setCollapsed(bool value, bool force = false, bool animate = true, bool doNotRebuild = false) override;

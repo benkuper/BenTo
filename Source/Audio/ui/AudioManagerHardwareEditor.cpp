@@ -11,7 +11,7 @@
 #include "AudioManagerHardwareEditor.h"
 
 
-AudioManagerHardwareEditor::AudioManagerHardwareEditor(AudioModuleHardwareSettings * hs, bool isRoot) :
+AudioManagerHardwareEditor::AudioManagerHardwareEditor(AudioManagerHardwareSettings * hs, bool isRoot) :
 	GenericControllableContainerEditor(hs, isRoot),
 	hs(hs),
 	selector(*hs->am, 0, 16, 0, 16, false, false, false, false)

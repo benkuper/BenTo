@@ -4921,6 +4921,9 @@
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\ui\SequenceUI.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Metronome.cpp">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_timeline\timeline\Sequence\Sequence.cpp">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence</Filter>
     </ClCompile>
@@ -11882,6 +11885,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\ui\SequenceUI.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Metronome.h">
+      <Filter>JUCE Modules\juce_timeline\timeline\Sequence</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Modules\juce_timeline\timeline\Sequence\Sequence.h">
       <Filter>JUCE Modules\juce_timeline\timeline\Sequence</Filter>
