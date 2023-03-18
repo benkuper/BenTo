@@ -24,6 +24,7 @@ public:
 
 #ifdef LED_COUNT
     CRGB leds[LED_COUNT];
+    CRGB outLeds[LED_COUNT];
     #ifdef LED_USE_DMX
         DMXESPSerial dmx;
         const int updateBreakTime = 20; //40ms break time

@@ -75,8 +75,11 @@ public:
   void start() override;
   void stop() override;
 
+
+  void processFile(String path); // TODO process the file after uploading, so we can implement INVERT_DIRECTION here
+
   //play control
-  void load(String path);
+  void load(String path, bool playAfter = true);
   void play(float atTime = 0);
   void seek(float t, bool doSendEvent = true);
   void pause();

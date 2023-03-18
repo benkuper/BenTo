@@ -145,7 +145,8 @@ void WifiManager::disable()
 
 void WifiManager::WiFiEvent(system_event_id_t event, system_event_info_t info)
 {
-    switch (event)
+ #ifdef USE_ETHERNET
+   switch (event)
     {
     case SYSTEM_EVENT_ETH_START:
         DBG("ETH Started");
@@ -179,6 +180,7 @@ void WifiManager::WiFiEvent(system_event_id_t event, system_event_info_t info)
     default:
         break;
     }
+#endif
 }
 
 void WifiManager::saveWifiConfig(String ssid, String pass)

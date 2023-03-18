@@ -60,41 +60,41 @@ void RGBLedsManager::init()
 #define LED_START1 0
 #if LED_NUM_STRIPS >= 1
 #if defined LED_CLK_PIN1
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_CLK_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_CLK_PIN1, LED_COLOR_ORDER>(outLeds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_COLOR_ORDER>(leds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN1, LED_COLOR_ORDER>(outLeds + LED_START1, LED_COUNT1).setCorrection(TypicalLEDStrip);
 #endif // CLK
 #define LED_START2 LED_START1 + LED_COUNT1
 
 #if LED_NUM_STRIPS >= 2
 #if defined LED_CLK_PIN2
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_CLK_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_CLK_PIN2, LED_COLOR_ORDER>(outLeds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_COLOR_ORDER>(leds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN2, LED_COLOR_ORDER>(outLeds + LED_START2, LED_COUNT2).setCorrection(TypicalLEDStrip);
 #endif // CLK
 #define LED_START3 LED_START2 + LED_COUNT2
 
 #if LED_NUM_STRIPS >= 3
 #if defined LED_CLK_PIN3
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_CLK_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_CLK_PIN3, LED_COLOR_ORDER>(outLeds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_COLOR_ORDER>(leds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN3, LED_COLOR_ORDER>(outLeds + LED_START3, LED_COUNT3).setCorrection(TypicalLEDStrip);
 #endif // CL
 #define LED_START4 LED_START3 + LED_COUNT3
 
 #if LED_NUM_STRIPS >= 4
 #if defined LED_CLK_PIN4
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_CLK_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_CLK_PIN4, LED_COLOR_ORDER>(outLeds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_COLOR_ORDER>(leds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN4, LED_COLOR_ORDER>(outLeds + LED_START4, LED_COUNT4).setCorrection(TypicalLEDStrip);
 #endif // CLK
 #define LED_START5 LED_START4 + LED_COUNT4
 
 #if LED_NUM_STRIPS >= 5
 #if defined LED_CLK_PIN5
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_CLK_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_CLK_PIN5, LED_COLOR_ORDER>(outLeds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_COLOR_ORDER>(leds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN5, LED_COLOR_ORDER>(outLeds + LED_START5, LED_COUNT5).setCorrection(TypicalLEDStrip);
 #endif // CLK
 
 #endif // 5
@@ -105,12 +105,12 @@ void RGBLedsManager::init()
 #else
 #if defined LED_CLK_PIN
 #if defined LED_DATA_RATE
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER, LED_DATA_RATE>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER, LED_DATA_RATE>(outLeds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_CLK_PIN, LED_COLOR_ORDER>(outLeds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #endif
 #else
-    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(leds, LED_COUNT).setCorrection(TypicalLEDStrip);
+    FastLED.addLeds<LED_TYPE, LED_DATA_PIN, LED_COLOR_ORDER>(outLeds, LED_COUNT).setCorrection(TypicalLEDStrip);
 #endif // CLK
 #endif // MULTISTRIP
 #endif // PWM / DMX / FastLED switch
@@ -152,14 +152,14 @@ void RGBLedsManager::update()
     {
 #ifndef PWMVAL
         int startChannel = i * 3;
-        ledcWrite(startChannel, map(leds[i].r * globalBrightness, 0, 255, 0, 1023));
-        ledcWrite(startChannel + 1, map(leds[i].g * globalBrightness, 0, 255, 0, 1023));
-        ledcWrite(startChannel + 2, map(leds[i].b * globalBrightness, 0, 255, 0, 1023));
+        ledcWrite(startChannel, map(outLeds[i].r * globalBrightness, 0, 255, 0, 1023));
+        ledcWrite(startChannel + 1, map(outLeds[i].g * globalBrightness, 0, 255, 0, 1023));
+        ledcWrite(startChannel + 2, map(outLeds[i].b * globalBrightness, 0, 255, 0, 1023));
 #else
         const RGBLedPins l = rgbLedPins[i];
-        analogWrite(l.rPin, PWMVAL(leds[i].r * globalBrightness));
-        analogWrite(l.gPin, PWMVAL(leds[i].g * globalBrightness));
-        analogWrite(l.bPin, PWMVAL(leds[i].b * globalBrightness));
+        analogWrite(l.rPin, PWMVAL(outLeds[i].r * globalBrightness));
+        analogWrite(l.gPin, PWMVAL(outLeds[i].g * globalBrightness));
+        analogWrite(l.bPin, PWMVAL(outLeds[i].b * globalBrightness));
 #endif
     }
 #elif defined LED_USE_DMX
@@ -169,9 +169,9 @@ void RGBLedsManager::update()
     {
         for (int i = 0; i < LED_COUNT; i++)
         {
-            dmx.write(dmxStartChannels[i], leds[i].r * globalBrightness);
-            dmx.write(dmxStartChannels[i] + 1, leds[i].g * globalBrightness);
-            dmx.write(dmxStartChannels[i] + 2, leds[i].b * globalBrightness);
+            dmx.write(dmxStartChannels[i], outLeds[i].r * globalBrightness);
+            dmx.write(dmxStartChannels[i] + 1, outLeds[i].g * globalBrightness);
+            dmx.write(dmxStartChannels[i] + 2, outLeds[i].b * globalBrightness);
         }
 
         dmx.update();
@@ -323,9 +323,11 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 void RGBLedsManager::clear()
 {
 #ifdef LED_COUNT
+    memset(leds, 0, LED_COUNT * sizeof(CRGB));
+
 #if defined LED_SEPARATE_CHANNELS || defined LED_USE_DMX
     for (int i = 0; i < LED_COUNT; i++)
-        leds[i] = CRGB::Black;
+        outLeds[i] = CRGB::Black;
 #else
     FastLED.clear();
 #endif
@@ -342,7 +344,7 @@ void RGBLedsManager::fillRange(CRGB c, float start, float end, bool doClear)
 #ifdef LED_COUNT
     if (doClear)
         clear();
-    LedHelpers::fillRange(leds, LED_COUNT, c, start, end);
+    LedHelpers::fillRange(outLeds, LED_COUNT, c, start, end);
 #endif
 }
 
@@ -351,7 +353,7 @@ void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear)
 #ifdef LED_COUNT
     if (doClear)
         clear();
-    LedHelpers::point(leds, LED_COUNT, c, pos, fade, doClear);
+    LedHelpers::point(outLeds, LED_COUNT, c, pos, fade, doClear);
 #endif
 }
 
@@ -361,6 +363,6 @@ void RGBLedsManager::setLed(int index, CRGB c)
 
     if (index < 0 || index >= LED_COUNT)
         return;
-    leds[index] = c;
+    outLeds[index] = c;
 #endif
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source" id="LP0of5"
-              version="1.4.3b3" projectLineFeed="&#10;" jucerFormatVersion="1"
+              version="1.4.3b4" projectLineFeed="&#10;" jucerFormatVersion="1"
               cppLanguageStandard="17">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">

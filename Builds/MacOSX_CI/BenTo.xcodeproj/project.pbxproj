@@ -43,6 +43,7 @@
 		751ED75F4438D941D4B18A83 /* include_juce_organicui4.cpp */ = {isa = PBXBuildFile; fileRef = CDBA5C4AC23371015C00FE6E; };
 		7D3C7886D439BAE2D3231BA2 /* AudioManager.cpp */ = {isa = PBXBuildFile; fileRef = 143B7D728464C53906E064B5; };
 		7E5E5CFC2BA334ED4572C64A /* VideoPreviewPanel.cpp */ = {isa = PBXBuildFile; fileRef = 01CDEF946B6BB684FF5A12DF; };
+		7F7125A6EA7FFC0BD02FA772 /* Security.framework */ = {isa = PBXBuildFile; fileRef = 9E93534FDA506C2ED9149F26; };
 		81DF8C5FCEE32E5E09A237B7 /* cobs.cpp */ = {isa = PBXBuildFile; fileRef = 87859A531C6BE994FC1F48E9; };
 		83D4E544BE8C1356AD840F51 /* include_juce_audio_processors_ara.cpp */ = {isa = PBXBuildFile; fileRef = 86D4D8E738F1C0E72F9B315B; };
 		84248625CBE2A6EC77945E1A /* include_juce_audio_devices.mm */ = {isa = PBXBuildFile; fileRef = 1B8CAFF34FA21717526CE282; };
@@ -308,6 +309,7 @@
 		9C2E10A82F6CAE3899CE2394 /* NodeViewUI.h */ /* NodeViewUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeViewUI.h; path = ../../Source/Node/ui/NodeViewUI.h; sourceTree = SOURCE_ROOT; };
 		9D3DF8EC0D55CB4AD3C8682F /* PropCluster.cpp */ /* PropCluster.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropCluster.cpp; path = ../../Source/Prop/Cluster/PropCluster.cpp; sourceTree = SOURCE_ROOT; };
 		9E04CA74B246EAB4BCDC6B57 /* LightBlockModelPreset.cpp */ /* LightBlockModelPreset.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelPreset.cpp; path = ../../Source/LightBlock/model/preset/LightBlockModelPreset.cpp; sourceTree = SOURCE_ROOT; };
+		9E93534FDA506C2ED9149F26 /* Security.framework */ /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		9EA1D5372D2A65B74AEBD74F /* PropIncludes.h */ /* PropIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropIncludes.h; path = ../../Source/Prop/PropIncludes.h; sourceTree = SOURCE_ROOT; };
 		9F0B1A7CFCF8899A30EF85FC /* LightBlockColorProvider.h */ /* LightBlockColorProvider.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockColorProvider.h; path = ../../Source/LightBlock/model/LightBlockColorProvider.h; sourceTree = SOURCE_ROOT; };
 		9F1AE08CBAA68C061662833C /* ModelNode.h */ /* ModelNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelNode.h; path = ../../Source/Node/nodes/model/ModelNode.h; sourceTree = SOURCE_ROOT; };
@@ -474,6 +476,7 @@
 				709F5FFB5DB8CB297E21AEB7,
 				FD63D2EE9C5301FAD6429F69,
 				AA276303915643D9EC996713,
+				7F7125A6EA7FFC0BD02FA772,
 				A5B64309CE58FAAFA6EE076B,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1181,6 +1184,7 @@
 				500D85928B2B8F7C8E885687,
 				BD281F63F59F33DAAC163F85,
 				364CB31C87000456A9F0353F,
+				9E93534FDA506C2ED9149F26,
 				EBFE82D98BAD390E587C3B13,
 			);
 			name = Frameworks;
@@ -1758,7 +1762,7 @@
 					"DEBUG=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.4.3b3",
+					"JUCE_APP_VERSION=1.4.3b4",
 					"JUCE_APP_VERSION_HEX=0x10403",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -1863,7 +1867,7 @@
 					"NDEBUG=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_2F3811D6=1",
-					"JUCE_APP_VERSION=1.4.3b3",
+					"JUCE_APP_VERSION=1.4.3b4",
 					"JUCE_APP_VERSION_HEX=0x10403",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

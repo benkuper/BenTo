@@ -4,6 +4,8 @@
 #include "stream/StreamMode.h"
 #include "player/PlayerMode.h"
 
+#include "fx/FXManager.h"
+
 #include "output/RGBLedsManager.h"
 #include "output/IRLedsManager.h"
 
@@ -25,6 +27,8 @@ public:
     RGBLedsManager rgbManager;
 #endif
 
+    FXManager fxManager;
+    
     IRLedsManager irManager;
 
     //timers

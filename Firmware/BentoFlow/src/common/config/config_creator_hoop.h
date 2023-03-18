@@ -7,12 +7,13 @@
 #endif
 
 // main leds config
-#define LED_COUNT 363
+#define LED_COUNT 155
 #define LED_EN_PIN 27 // pin for enabling the LED power. HIGH for on and LOW for off. 
 #define LED_DATA_PIN 25
-//#define LED_CLK_PIN 26
-#define LED_TYPE    WS2812B
-#define LED_COLOR_ORDER GRB
+#define LED_CLK_PIN 26
+#define LED_TYPE SK9822
+#define LED_COLOR_ORDER BGR
+//#define LED_DATA_RATE DATA_RATE_KHZ(24)
 //#define LED_INVERT_DIRECTION
 
 //out of 1

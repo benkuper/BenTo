@@ -8,6 +8,7 @@ LedManager::LedManager() : Component("leds"),
                            sysLedMode(rgbManager.leds, LED_COUNT),
                            streamMode(rgbManager.leds, LED_COUNT),
                            playerMode(rgbManager.leds, LED_COUNT),
+                           fxManager(rgbManager.leds, rgbManager.outLeds),
 #endif
                            connectedTimer(2000),
                            connectionIsAlive(false)
@@ -54,7 +55,11 @@ void LedManager::update()
         shouldUpdateLeds = true;
     }
 
+    memcpy(rgbManager.outLeds, rgbManager.leds, LED_COUNT * sizeof(CRGB));
+    
     MainManager::instance->scripts.update();
+    fxManager.update();
+
     rgbManager.update();
 
     irManager.update();

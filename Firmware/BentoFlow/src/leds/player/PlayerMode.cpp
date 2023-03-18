@@ -159,7 +159,12 @@ void PlayerMode::stop()
   stopPlaying();
 }
 
-void PlayerMode::load(String path)
+void PlayerMode::processFile(String path)
+{
+  //TODO
+}
+
+void PlayerMode::load(String path, bool playAfter)
 {
   showBlackFrame();
 
@@ -199,7 +204,7 @@ void PlayerMode::load(String path)
   curFile = FileManager::openFile(path + ".colors", false); //false is for reading
   if (!curFile)
   {
-    DBG("Error playing file " + path);
+    DBG("Error loading file " + path);
   }
   else
   {
@@ -211,7 +216,7 @@ void PlayerMode::load(String path)
     DBG("File loaded, " + String(totalBytes) + " bytes" + ", " + String(totalFrames) + " frames, " + String(totalTime) + " time");
   }
 
-  sendEvent(PlayerEvent(PlayerEvent::Play));
+  if(playAfter) sendEvent(PlayerEvent(PlayerEvent::Play));
 #endif
 }
 
