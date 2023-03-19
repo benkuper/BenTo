@@ -5,10 +5,10 @@ LedManager::LedManager() : Component("leds"),
                            mode(Mode::Direct),
 #ifdef LED_COUNT
                            currentMode(nullptr),
-                           sysLedMode(rgbManager.leds, LED_COUNT),
-                           streamMode(rgbManager.leds, LED_COUNT),
-                           playerMode(rgbManager.leds, LED_COUNT),
-                           fxManager(rgbManager.leds, rgbManager.outLeds),
+                           sysLedMode(rgbManager.leds[LED_BASE_LAYER], LED_COUNT),
+                           streamMode(rgbManager.leds[LED_BASE_LAYER], LED_COUNT),
+                           playerMode(rgbManager.leds[LED_BASE_LAYER], LED_COUNT),
+                           fxManager(rgbManager.leds[LED_SCRIPT_LAYER], rgbManager.leds[LED_OUT_LAYER]),
 #endif
                            connectedTimer(2000),
                            connectionIsAlive(false)
@@ -55,9 +55,9 @@ void LedManager::update()
         shouldUpdateLeds = true;
     }
 
-    memcpy(rgbManager.outLeds, rgbManager.leds, LED_COUNT * sizeof(CRGB));
-    
+    memcpy(rgbManager.leds[LED_SCRIPT_LAYER], rgbManager.leds[LED_BASE_LAYER], LED_COUNT * sizeof(CRGB));
     MainManager::instance->scripts.update();
+    memcpy(rgbManager.leds[LED_OUT_LAYER], rgbManager.leds[LED_SCRIPT_LAYER], LED_COUNT * sizeof(CRGB));
     fxManager.update();
 
     rgbManager.update();

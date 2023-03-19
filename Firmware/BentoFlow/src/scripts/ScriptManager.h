@@ -34,6 +34,8 @@ public:
     long tstart;
     long tend;
 
+    int blendMode; //to do. 0 = add, 1 = multiply
+
     void init();
     void update();
 

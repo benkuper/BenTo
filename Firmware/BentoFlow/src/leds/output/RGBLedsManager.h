@@ -23,8 +23,14 @@ public:
     RGBLedsManager();
 
 #ifdef LED_COUNT
-    CRGB leds[LED_COUNT];
-    CRGB outLeds[LED_COUNT];
+
+#define LED_NUM_LAYERS 3
+
+#define LED_BASE_LAYER 0
+#define LED_SCRIPT_LAYER 1
+#define LED_OUT_LAYER 2
+
+    CRGB leds[LED_NUM_LAYERS][LED_COUNT];
     #ifdef LED_USE_DMX
         DMXESPSerial dmx;
         const int updateBreakTime = 20; //40ms break time
@@ -47,12 +53,12 @@ public:
     void setLedEnabled(bool val);
 
     //Helpers
-    void clear();
-    void fillAll(CRGB c);
-    void fillRange(CRGB c, float start, float end, bool clear = true);
-    void point(CRGB c, float pos, float radius, bool clear = true);
+    void clear(int layer = LED_BASE_LAYER);
+    void fillAll(CRGB c, int layer = LED_BASE_LAYER);
+    void fillRange(CRGB c, float start, float end, bool clear = true, int layer = LED_BASE_LAYER);
+    void point(CRGB c, float pos, float radius, bool clear = true, int layer = LED_BASE_LAYER);
 
-    void setLed(int index, CRGB c);
+    void setLed(int index, CRGB c, int layer = LED_BASE_LAYER);
 
 private:
 #ifdef USE_PREFERENCES
