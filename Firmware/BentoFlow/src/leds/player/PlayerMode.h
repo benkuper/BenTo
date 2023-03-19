@@ -1,6 +1,5 @@
 #pragma once
 
-
 #include "../LedMode.h"
 #include "../../files/FileManager.h"
 #include <ArduinoJson.h>
@@ -9,6 +8,8 @@
 
 #define COLOR_SIZE 3
 #define FRAME_SIZE (LED_COUNT * COLOR_SIZE)
+
+#define MAX_SCRIPTS 100
 
 class PlayerEvent
 {
@@ -33,15 +34,17 @@ public:
   PlayerMode(CRGB *leds, int numLeds);
   ~PlayerMode();
 
-  //file
+  // file
 #ifdef HAS_FILES
   File curFile;
   File metaDataFile;
 #endif
-  
-  StaticJsonDocument<200> metaData;
 
-  //info
+  StaticJsonDocument<2048> metaData;
+
+
+
+  // info
   int fps;
   float totalTime;
   long totalFrames;
@@ -49,36 +52,45 @@ public:
   int localID;
   CRGB groupColor;
 
-  //control
+  // control
   bool idMode;
   bool loopShow;
 
-  //playing
+  // playing
   bool isPlaying;
   long curTimeMs;
   long prevTimeMs;
   long timeSinceLastSeek;
-  float timeToSeek; //used to limit seeking
+  float timeToSeek; // used to limit seeking
 
-  //byte buffer[FRAME_SIZE];
+
+  int numScripts;
+  String scripts[MAX_SCRIPTS];
+  float scriptStartTimes[MAX_SCRIPTS];
+  float scriptEndTimes[MAX_SCRIPTS];
+  int activeScriptIndex;
+
+  // byte buffer[FRAME_SIZE];
 
   void init() override;
   bool update() override;
 
   bool playFrame();
+  void playScripts();
+
   void showBlackFrame();
   void showIdFrame();
   void showCurrentFrame();
 
-  //void updateLeds();
+
+  // void updateLeds();
 
   void start() override;
   void stop() override;
 
-
   void processFile(String path); // TODO process the file after uploading, so we can implement INVERT_DIRECTION here
 
-  //play control
+  // play control
   void load(String path, bool playAfter = true);
   void play(float atTime = 0);
   void seek(float t, bool doSendEvent = true);
@@ -88,9 +100,12 @@ public:
 
   bool handleCommand(String command, var *data, int numData) override;
 
-  //Time computation helpers
-  #ifdef LED_COUNT
-  long msToBytePos(long t) const { return msToFrame(t) * FRAME_SIZE; } //rgba
+// Time computation helpers
+#ifdef LED_COUNT
+  long msToBytePos(long t) const
+  {
+    return msToFrame(t) * FRAME_SIZE;
+  } // rgba
   long msToFrame(long timeMs) const { return timeMs * fps / 1000; }
   long frameToMs(long frame) const { return frame * 1000 / fps; }
   float frameToSeconds(long frame) const { return frame * 1.0f / fps; };
@@ -100,7 +115,7 @@ public:
   long bytePosToFrame(long pos) const { return pos / FRAME_SIZE; }
   long bytePosToMs(long pos) const { return frameToMs(bytePosToFrame(pos)); }
   long bytePosToSeconds(long pos) const { return frameToSeconds(bytePosToFrame(pos)); }
-  #endif
+#endif
 };
 
-#endif //LED_COUNT
+#endif // LED_COUNT

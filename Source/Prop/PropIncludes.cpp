@@ -23,6 +23,8 @@
 #include "Component/ir/IRPropComponent.cpp"
 #include "Component/rgb/RGBComponent.cpp"
 #include "Component/touch/TouchComponent.cpp"
+#include "Component/fx/FXComponent.cpp"
+
 #include "Prop.cpp"
 #include "PropFamily.cpp"
 #include "PropManager.cpp"

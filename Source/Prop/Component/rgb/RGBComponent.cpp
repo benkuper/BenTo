@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Prop/PropIncludes.h"
+
 RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
 	PropComponent(prop, "RGB"),
 	updateRate(params.getProperty("updateRate", 50)),
@@ -33,14 +35,10 @@ RGBPropComponent::RGBPropComponent(Prop* prop, var params) :
 			LOGWARNING("Layout has not the same size as resolution " << layoutData.size() << " < > " << resolution);
 		}
 	}
+
+	sendValuesOnPropConnected.add(prop->enabled);
 }
 
 RGBPropComponent::~RGBPropComponent()
 {
-}
-
-void RGBPropComponent::handePropConnected()
-{
-	PropComponent::handePropConnected();
-	sendControl("enabled", prop->enabled->boolValue());
 }

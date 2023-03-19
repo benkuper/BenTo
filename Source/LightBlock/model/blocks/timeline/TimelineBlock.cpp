@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "LightBlock/LightBlockIncludes.h"
+#include "Timeline/TimelineIncludes.h"
 #include "BentoEngine.h"
 
 TimelineBlock::TimelineBlock(var params) :
@@ -72,6 +74,7 @@ BakeData TimelineBlock::getBakeDataForProp(Prop* p)
 
 	metaData.getDynamicObject()->setProperty("id", localID);
 	metaData.getDynamicObject()->setProperty("group", groupID);
+	metaData.getDynamicObject()->setProperty("scripts", sequence->getWasmTimingsDataForProp(p));
 
 	return BakeData(shortName, 0, sequence->totalTime->floatValue(), sequence->fps->intValue(), metaData);
 }

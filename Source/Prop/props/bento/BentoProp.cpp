@@ -248,6 +248,12 @@ void BentoProp::exportBakedData(BakeData data)
 	fs.writeFromInputStream(is, is.getDataSize());
 	fs.flush();
 
+	File mdFile = exportFile.getFileNameWithoutExtension() + ".meta";
+	if (mdFile.existsAsFile()) mdFile.deleteFile();
+	FileOutputStream mdfs(mdFile, true);
+	mdfs.writeString(JSON::toString(data.metaData));
+	mdfs.flush();
+
 	ZipFile::Builder builder;
 	builder.addFile(exportFile, 9, "data");
 	File zf = exportFile.getSiblingFile(exportFile.getFileNameWithoutExtension() + "_compressed.zip");
@@ -594,7 +600,7 @@ void BentoProp::Flasher::run()
 			}
 		}
 		buffer = lines[lines.size() - 1];
-	}
+			}
 	//#endif
 
 #else
@@ -603,4 +609,4 @@ void BentoProp::Flasher::run()
 
 	prop->flashingProgression->setValue(1);
 	prop->isFlashing->setValue(false);
-}
+		}

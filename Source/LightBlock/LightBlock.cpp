@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "LightBlock/LightBlockIncludes.h"
+
 LightBlock::LightBlock(LightBlockColorProvider * provider) :
 	ControllableContainer(provider->niceName),
 	provider(provider),

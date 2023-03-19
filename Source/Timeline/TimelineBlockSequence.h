@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    TimelineBlockSequence.h
-    Created: 17 Apr 2018 8:30:13pm
-    Author:  Ben
+	TimelineBlockSequence.h
+	Created: 17 Apr 2018 8:30:13pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -30,11 +30,12 @@ public:
 	PropClusterGroup* currentIdentityGroup;
 
 	PropClusterGroupManager clusterGroupManager;
-	
-	Array<Colour> getColors(Prop * p, double time, var params);
-	Array<LightBlockLayer *> getLayersForProp(Prop * p, bool includeDisabled = false);
 
-	void itemAdded(SequenceLayer * s) override;
+	Array<Colour> getColors(Prop* p, double time, var params);
+	Array<LightBlockLayer*> getLayersForProp(Prop* p, bool includeDisabled = false);
+	var getWasmTimingsDataForProp(Prop* p, float timeOffset = 0);
+
+	void itemAdded(SequenceLayer* s) override;
 
 	void itemAdded(PropClusterGroup* g) override;
 	void itemRemoved(PropClusterGroup* g) override;
@@ -44,6 +45,6 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	void onContainerParameterChangedInternal(Parameter* p) override; 
-	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
+	void onContainerParameterChangedInternal(Parameter* p) override;
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 };

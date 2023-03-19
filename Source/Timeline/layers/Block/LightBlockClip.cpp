@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Timeline/TimelineIncludes.h"
+
 LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
 	LayerBlock(getTypeString()),
 	effects("Block Effects"),

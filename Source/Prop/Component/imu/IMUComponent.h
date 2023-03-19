@@ -60,9 +60,6 @@ public:
 
     float timeAtThrow;
 
-
-    void handePropConnected() override;
-
     void onContainerParameterChanged(Parameter* p) override;
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 

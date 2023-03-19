@@ -1,5 +1,6 @@
 
 #include "PlayerMode.h"
+#include "../../scripts/ScriptManager.h"
 
 #ifdef LED_COUNT
 
@@ -15,13 +16,15 @@ PlayerMode::PlayerMode(CRGB *leds, int numLeds) : LedMode("player", leds, numLed
                                                   curTimeMs(0),
                                                   prevTimeMs(0),
                                                   timeSinceLastSeek(0),
-                                                  timeToSeek(0)
+                                                  timeToSeek(0),
+                                                  numScripts(0),
+                                                  activeScriptIndex(-1)
 {
 }
 
 PlayerMode::~PlayerMode()
 {
-  //free(ledBuffer);
+  // free(ledBuffer);
 }
 
 void PlayerMode::init()
@@ -81,15 +84,19 @@ bool PlayerMode::playFrame()
 
   long mil = millis();
   curTimeMs += mil - prevTimeMs;
-  prevTimeMs = mil;
 
   long fPos = curFile.position();
   long pos = msToBytePos(curTimeMs);
 
+  playScripts();
+
+  prevTimeMs = mil;
+
   if (pos < 0)
     return false;
+
   if (pos < fPos)
-    return false; //waiting for frame
+    return false; // waiting for frame
 
   int skippedFrames = 0;
   while (fPos < pos)
@@ -101,10 +108,10 @@ bool PlayerMode::playFrame()
     {
       DBG("Player overflowed, should not be here");
       return false;
-    } 
+    }
   }
 
-  if(skippedFrames > 0)
+  if (skippedFrames > 0)
   {
     DBG("Skipped frame " + String(skippedFrames));
   }
@@ -116,10 +123,39 @@ bool PlayerMode::playFrame()
 
   curFile.read((uint8_t *)leds, FRAME_SIZE);
 
-  //showCurrentFrame();
+  // showCurrentFrame();
 #endif
 
   return true;
+}
+
+void PlayerMode::playScripts()
+{
+  float curT = curTimeMs / 1000.0f;
+  // float prevT = prevTimeMs / 1000.0f;
+
+  // DBG("Play Script "+String(curT));
+  if (activeScriptIndex != -1)
+  {
+    if (scriptEndTimes[activeScriptIndex] < curT)
+    {
+      ScriptManager::instance->stop();
+      activeScriptIndex = -1;
+    }
+  }
+  else
+  {
+    for (int i = 0; i < numScripts; i++)
+    {
+      // DBG("Check for script " + String(scriptStartTimes[i]))
+      if(curT >= scriptStartTimes[i] && curT < scriptEndTimes[i])
+      {
+        ScriptManager::instance->launchScript(scripts[i]);
+        activeScriptIndex = i;
+        break;
+      }
+    }
+  }
 }
 
 void PlayerMode::showBlackFrame()
@@ -134,7 +170,7 @@ void PlayerMode::showIdFrame()
   LedHelpers::fillRange(leds, numLeds, groupColor, .9f, 1);
   CRGB c = rgb2hsv_approximate(CHSV(localID * 255.0f / 12, 255, 255));
   LedHelpers::fillRange(leds, numLeds, c, 0, localID * 1.f / numLeds, false);
-  //updateLeds();
+  // updateLeds();
 }
 
 /*
@@ -161,7 +197,7 @@ void PlayerMode::stop()
 
 void PlayerMode::processFile(String path)
 {
-  //TODO
+  // TODO
 }
 
 void PlayerMode::load(String path, bool playAfter)
@@ -171,7 +207,7 @@ void PlayerMode::load(String path, bool playAfter)
 #ifdef HAS_FILES
   DBG("Load file " + path);
   DBG("Reading meta data");
-  metaDataFile = FileManager::openFile(path + ".meta", false); //false is for reading
+  metaDataFile = FileManager::openFile(path + ".meta", false); // false is for reading
   if (!metaDataFile)
   {
     DBG("Error reading metadata");
@@ -194,14 +230,22 @@ void PlayerMode::load(String path, bool playAfter)
                         (float)(metaData["groupColor"][1]) * 255,
                         (float)(metaData["groupColor"][2]) * 255);
 
-      Serial.println("Loaded meta, id " + String(groupID) + ":" + String(localID) + " at " + String(fps) + " fps.");
+      numScripts = metaData["scripts"].size();
+      for (int i = 0; i < numScripts; i++)
+      {
+        scripts[i] = metaData["scripts"][i]["name"].as<String>();
+        scriptStartTimes[i] = (float)metaData["scripts"][i]["start"];
+        scriptEndTimes[i] = (float)metaData["scripts"][i]["end"];
+      }
+
+      NDBG("Loaded meta, id " + String(groupID) + ":" + String(localID) + " at " + String(fps) + " fps, " + String(numScripts) + " scripts");
     }
 
     metaDataFile.close();
   }
 
   DBG("Loading colors..");
-  curFile = FileManager::openFile(path + ".colors", false); //false is for reading
+  curFile = FileManager::openFile(path + ".colors", false); // false is for reading
   if (!curFile)
   {
     DBG("Error loading file " + path);
@@ -216,16 +260,19 @@ void PlayerMode::load(String path, bool playAfter)
     DBG("File loaded, " + String(totalBytes) + " bytes" + ", " + String(totalFrames) + " frames, " + String(totalTime) + " time");
   }
 
-  if(playAfter) sendEvent(PlayerEvent(PlayerEvent::Play));
+  if (playAfter)
+    sendEvent(PlayerEvent(PlayerEvent::Play));
 #endif
 }
 
 void PlayerMode::play(float atTime)
 {
+  
 #ifdef HAS_FILES
   DBG("Play " + String(atTime));
   if (!curFile)
     return;
+
 
   isPlaying = true;
 
@@ -254,8 +301,8 @@ void PlayerMode::seek(float t, bool doSendEvent)
   }
   else if (!isPlaying)
   {
-    curFile.read((uint8_t*)leds, FRAME_SIZE);
-    //showCurrentFrame();
+    curFile.read((uint8_t *)leds, FRAME_SIZE);
+    // showCurrentFrame();
   }
 
   if (doSendEvent)
@@ -278,6 +325,13 @@ void PlayerMode::stopPlaying()
   DBG("Stop");
   isPlaying = false;
   showBlackFrame();
+
+  if (activeScriptIndex != -1)
+  {
+    ScriptManager::instance->stop();
+    activeScriptIndex = -1;
+  }
+
   sendEvent(PlayerEvent(PlayerEvent::Stop));
 #endif
 }

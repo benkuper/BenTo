@@ -9,6 +9,7 @@
 */
 
 #include "Audio/AudioManager.h"
+#include "Timeline/TimelineIncludes.h"
 
 TimelineBlockSequence::TimelineBlockSequence() :
 	Sequence(),
@@ -21,7 +22,7 @@ TimelineBlockSequence::TimelineBlockSequence() :
 	clusterGroupManager.addBaseManagerListener(this);
 	addChildControllableContainer(&clusterGroupManager);
 
-	
+
 	//Timeline
 	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Blocks", &LightBlockLayer::create, this));
 	layerFactory.defs.add(SequenceLayerManager::LayerDefinition::createDef("", "Audio", &AudioLayer::create, this));
@@ -42,18 +43,18 @@ TimelineBlockSequence::~TimelineBlockSequence()
 {
 }
 
-Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params)
+Array<Colour> TimelineBlockSequence::getColors(Prop* p, double time, var params)
 {
 	if (identityMode->boolValue() && currentIdentityGroup != nullptr)
 	{
 		return currentIdentityGroup->getColorsForProp(p);
 	}
 
-	Array<LightBlockLayer *> layers = getLayersForProp(p);
+	Array<LightBlockLayer*> layers = getLayersForProp(p);
 
 	int numLayers = layers.size();
 	float t = params.getProperty("sequenceTime", true) ? currentTime->floatValue() : time;
-	
+
 	if (numLayers == 1 && layers[0] != nullptr)
 	{
 		params.getDynamicObject()->setProperty("forceID", layers[0]->filterManager->getTargetIDForProp(p));
@@ -61,7 +62,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	}
 
 	int resolution = p->resolution->intValue();
-	
+
 	Array<Colour> result;
 	result.resize(resolution);
 	result.fill(Colours::transparentBlack);
@@ -72,7 +73,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 	Array<LightBlockLayer::BlendMode> blendModes;
 
 	int numActiveLayers = 0;
-	for (auto &l : layers)
+	for (auto& l : layers)
 	{
 		if (l == nullptr) continue;
 
@@ -81,7 +82,7 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 
 		if (cols.isEmpty()) continue;
 
-		colors.add(cols); 
+		colors.add(cols);
 		blendModes.add(l->blendMode->getValueDataAsEnum<LightBlockLayer::BlendMode>());
 
 		numActiveLayers++;
@@ -117,36 +118,36 @@ Array<Colour> TimelineBlockSequence::getColors(Prop * p, double time, var params
 				float br = c.getBrightness();
 				float ma = c.getFloatAlpha();
 				float fac = jmap<float>(ma, 1, br);
-				r *=  fac;// jmin(r, colors[j][i].getFloatRed())* a;
+				r *= fac;// jmin(r, colors[j][i].getFloatRed())* a;
 				g *= fac;// jmin(g, colors[j][i].getFloatGreen())* a;
 				b *= fac;// jmin(b, colors[j][i].getFloatBlue())* a;
 				a *= fac;
 			}
 			break;
 			}
-			
+
 		}
 
-		result.set(i, Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f),jmin(a, 1.f)));
+		result.set(i, Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), jmin(a, 1.f)));
 	}
 
 	return result;
 
 }
 
-Array<LightBlockLayer*> TimelineBlockSequence::getLayersForProp(Prop * p, bool includeDisabled)
+Array<LightBlockLayer*> TimelineBlockSequence::getLayersForProp(Prop* p, bool includeDisabled)
 {
 
-	if (layerManager == nullptr) return nullptr; 
+	if (layerManager == nullptr) return nullptr;
 	if (Engine::mainEngine->isClearing) return nullptr;
 
-	Array<LightBlockLayer *> defaultLayers;
-	Array<LightBlockLayer *> result;
-	
-	for (auto &i : layerManager->items)
+	Array<LightBlockLayer*> defaultLayers;
+	Array<LightBlockLayer*> result;
+
+	for (auto& i : layerManager->items)
 	{
 		if (!includeDisabled && !i->enabled->boolValue()) continue;
-		LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(i);
+		LightBlockLayer* l = dynamic_cast<LightBlockLayer*>(i);
 		if (l == nullptr) continue;
 		if (l->filterManager->getTargetIDForProp(p) >= 0) result.add(l);
 		if (l->defaultLayer->boolValue()) defaultLayers.add(l);
@@ -155,17 +156,43 @@ Array<LightBlockLayer*> TimelineBlockSequence::getLayersForProp(Prop * p, bool i
 	return result.size() > 0 ? result : defaultLayers;
 }
 
-void TimelineBlockSequence::itemAdded(SequenceLayer * s)
+var TimelineBlockSequence::getWasmTimingsDataForProp(Prop* p, float timeOffset)
+{
+	var result;
+	Array<LightBlockLayer*> layers = getLayersForProp(p);
+	for (auto& layer : layers)
+	{
+		Array<LightBlockClip*> clips = layer->getClipsOfTypeForProp<WasmBlock>(p);
+
+		clips.sort(layer->blockClipManager.comparator);
+
+		for (auto& c : clips)
+		{
+			WasmBlock* b = (WasmBlock*)c->currentBlock->provider.get();
+			if (b == nullptr) continue;
+
+			var bData(new DynamicObject());
+			bData.getDynamicObject()->setProperty("name", b->shortName);
+			bData.getDynamicObject()->setProperty("start", c->time->floatValue() + timeOffset);
+			bData.getDynamicObject()->setProperty("end", c->getEndTime() + timeOffset);
+
+			result.append(bData);
+		}
+	}
+	return result;
+}
+
+void TimelineBlockSequence::itemAdded(SequenceLayer* s)
 {
 
-	LightBlockLayer * l = dynamic_cast<LightBlockLayer *>(s);
+	LightBlockLayer* l = dynamic_cast<LightBlockLayer*>(s);
 	if (l != nullptr)
 	{
 		if (!Engine::mainEngine->isLoadingFile && layerManager->items.size() == 1) l->defaultLayer->setValue(true);
 		return;
 	}
 
-	AudioLayer * al = dynamic_cast<AudioLayer *>(s);
+	AudioLayer* al = dynamic_cast<AudioLayer*>(s);
 	if (al != nullptr)
 	{
 		al->setAudioProcessorGraph(&AudioManager::getInstance()->graph, AUDIO_OUTPUT_GRAPH_ID);
@@ -181,7 +208,7 @@ void TimelineBlockSequence::itemAdded(PropClusterGroup* g)
 
 void TimelineBlockSequence::itemRemoved(PropClusterGroup* g)
 {
-	identityClusterGroup->removeOption(g->niceName);	
+	identityClusterGroup->removeOption(g->niceName);
 	currentIdentityGroup = clusterGroupManager.getItemWithName(identityClusterGroup->getValueData());
 }
 
@@ -223,7 +250,7 @@ void TimelineBlockSequence::onContainerParameterChangedInternal(Parameter* p)
 	}
 }
 
-void TimelineBlockSequence::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
+void TimelineBlockSequence::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Sequence::onControllableFeedbackUpdateInternal(cc, c);
 

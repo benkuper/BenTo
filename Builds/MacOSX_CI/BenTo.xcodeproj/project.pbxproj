@@ -361,6 +361,7 @@
 		BBF18D5349F504C770A40C2E /* PropFlasher.h */ /* PropFlasher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropFlasher.h; path = ../../Source/Prop/PropFlasher.h; sourceTree = SOURCE_ROOT; };
 		BBF45671EEBECEC715749580 /* Info-App.plist */ /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		BC3D98E1734C5FDC34A1EAC1 /* NodeManager.h */ /* NodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeManager.h; path = ../../Source/Node/NodeManager.h; sourceTree = SOURCE_ROOT; };
+		BCAACF04466C65897D2C584F /* FXComponent.cpp */ /* FXComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = FXComponent.cpp; path = ../../Source/Prop/Component/fx/FXComponent.cpp; sourceTree = SOURCE_ROOT; };
 		BD281F63F59F33DAAC163F85 /* OpenGL.framework */ /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		BD53F04D21FE3390070CD97E /* TextureBlock.h */ /* TextureBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = TextureBlock.h; path = ../../Source/LightBlock/model/blocks/video/TextureBlock.h; sourceTree = SOURCE_ROOT; };
 		BDFA3A8DCA3E6124656086EC /* fadeOut.png */ /* fadeOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fadeOut.png; path = ../../Resources/fadeOut.png; sourceTree = SOURCE_ROOT; };
@@ -447,6 +448,7 @@
 		FA71262AAE374D53D92C602D /* VideoClipUI.cpp */ /* VideoClipUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoClipUI.cpp; path = ../../Source/Timeline/layers/Video/ui/VideoClipUI.cpp; sourceTree = SOURCE_ROOT; };
 		FAE9C932E7731B1B8A1F7459 /* ScriptBlock.h */ /* ScriptBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ScriptBlock.h; path = ../../Source/LightBlock/model/blocks/script/ScriptBlock.h; sourceTree = SOURCE_ROOT; };
 		FB859827F4D0CEAF4233DAA5 /* IRPropComponent.cpp */ /* IRPropComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = IRPropComponent.cpp; path = ../../Source/Prop/Component/ir/IRPropComponent.cpp; sourceTree = SOURCE_ROOT; };
+		FBC8A350F02EA0CF459E5235 /* FXComponent.h */ /* FXComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = FXComponent.h; path = ../../Source/Prop/Component/fx/FXComponent.h; sourceTree = SOURCE_ROOT; };
 		FC8419BA2850E3E9B353A698 /* include_juce_data_structures.mm */ /* include_juce_data_structures.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_data_structures.mm; path = ../../JuceLibraryCode/include_juce_data_structures.mm; sourceTree = SOURCE_ROOT; };
 		FCC2F0668B987B97721522EB /* juce_graphics */ /* juce_graphics */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_graphics; path = ../../JUCE/modules/juce_graphics; sourceTree = SOURCE_ROOT; };
 		FD17A99C7CCEEE38883D71BC /* NodeConnectionManagerUI.h */ /* NodeConnectionManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeConnectionManagerUI.h; path = ../../Source/Node/ui/NodeConnectionManagerUI.h; sourceTree = SOURCE_ROOT; };
@@ -860,6 +862,7 @@
 		4CAECC0610CC4623C55C39FF /* components */ = {
 			isa = PBXGroup;
 			children = (
+				DE9A13DC11713789D5D46349,
 				CCFD5327B869F89F5DCCD270,
 				91BD92998C660273CFDEF61E,
 				D2B9753C5EED378C85189030,
@@ -1461,6 +1464,15 @@
 				50C5085938A1F52427582B6F,
 			);
 			name = buttons;
+			sourceTree = "<group>";
+		};
+		DE9A13DC11713789D5D46349 /* fx */ = {
+			isa = PBXGroup;
+			children = (
+				BCAACF04466C65897D2C584F,
+				FBC8A350F02EA0CF459E5235,
+			);
+			name = fx;
 			sourceTree = "<group>";
 		};
 		E19686653D6C6E467428EB51 /* ui */ = {

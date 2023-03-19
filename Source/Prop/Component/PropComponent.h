@@ -21,6 +21,7 @@ public:
 
     WeakReference<Prop> prop;
     bool feedbackEnabled;
+    Array<Parameter*> sendValuesOnPropConnected;
 
     Array<Controllable *> excludeControlControllables;
 
@@ -30,7 +31,7 @@ public:
 
     virtual void update() {}
 
-    virtual void handePropConnected() {}
+    virtual void handlePropConnected();
 
     virtual void handleMessage(const String &msg, var value = var());
 

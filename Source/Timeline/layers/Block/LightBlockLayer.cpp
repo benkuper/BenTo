@@ -1,4 +1,3 @@
-#include "LightBlockLayer.h"
 /*
   ==============================================================================
 
@@ -9,7 +8,10 @@
   ==============================================================================
 */
 
-LightBlockLayer::LightBlockLayer(Sequence * s, var params) :
+#include "Timeline/TimelineIncludes.h"
+
+
+LightBlockLayer::LightBlockLayer(Sequence* s, var params) :
 	SequenceLayer(s, "Block Layer"),
 	blockClipManager(this)
 {
@@ -40,9 +42,9 @@ LightBlockLayer::~LightBlockLayer()
 
 }
 
-Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
+Array<Colour> LightBlockLayer::getColors(Prop* p, double time, var params)
 {
-	Array<LayerBlock *> blocks = blockClipManager.getBlocksAtTime(time, false);
+	Array<LayerBlock*> blocks = blockClipManager.getBlocksAtTime(time, false);
 
 	int resolution = p->resolution->intValue();
 
@@ -58,9 +60,9 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 
 	int layerPropID = params.getProperty("forceID", -1);
 
-	for (auto &b : blocks)
+	for (auto& b : blocks)
 	{
-		LightBlockClip * clip = (LightBlockClip *)b;
+		LightBlockClip* clip = (LightBlockClip*)b;
 
 		int localID = ((LightBlockClip*)b)->filterManager->getTargetIDForProp(p);
 		if (localID == -1) continue;
@@ -90,7 +92,7 @@ Array<Colour> LightBlockLayer::getColors(Prop * p, double time, var params)
 			result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), jmin(a, 1.f))));
 		}
 	}
-	
+
 
 	return result;
 }
@@ -126,12 +128,13 @@ void LightBlockLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bo
 	if (!enabled->boolValue()) return;
 	if (Engine::mainEngine->isClearing) return;
 	if (PropManager::getInstanceWithoutCreating() == nullptr) return;
+	if (PropManager::getInstance()->bakeMode->boolValue()) return;
 
 	for (auto& c : blockClipManager.items)
 	{
-		Array<Prop *> props;
+		Array<Prop*> props;
 		for (auto& p : PropManager::getInstance()->items) if (filterManager->getTargetIDForProp(p) >= 0) props.add(p);
-		((LightBlockClip *)c)->handleEnterExit(c->isInRange(s->currentTime->floatValue()), props);
+		((LightBlockClip*)c)->handleEnterExit(c->isInRange(s->currentTime->floatValue()), props);
 	}
 }
 
@@ -142,7 +145,7 @@ void LightBlockLayer::onContainerParameterChangedInternal(Parameter* p)
 	{
 		for (auto& clip : blockClipManager.items)
 		{
-			((LightBlockClip *)clip)->notifyUpdatePreview();
+			((LightBlockClip*)clip)->notifyUpdatePreview();
 		}
 	}
 }

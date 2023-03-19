@@ -29,6 +29,7 @@
 #include "Component/ir/IRPropComponent.h"
 #include "Component/rgb/RGBComponent.h"
 #include "Component/touch/TouchComponent.h"
+#include "Component/fx/FXComponent.h"
 
 #include "PropFamily.h"
 #include "PropManager.h"

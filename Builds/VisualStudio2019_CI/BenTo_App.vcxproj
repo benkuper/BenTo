@@ -461,6 +461,9 @@
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\fx\FXComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Component\touch\TouchComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3733,6 +3736,7 @@
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h"/>
     <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\fx\FXComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\touch\TouchComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\ir\IRPropComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\battery\BatteryComponent.h"/>

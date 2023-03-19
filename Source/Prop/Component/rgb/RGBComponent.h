@@ -26,6 +26,4 @@ public:
     BoolParameter* streamEnable;
     FloatParameter* brightness;
     BoolParameter* invertDirection;
-
-    void handePropConnected() override;
 };

@@ -206,6 +206,9 @@
     <Filter Include="BenTo\Source\Prop\props">
       <UniqueIdentifier>{ABEFE2FE-02B2-87E2-62A2-5CA00196BE46}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Prop\Component\components\fx">
+      <UniqueIdentifier>{D0FA5C1C-2420-0846-5DB2-CEE73E5778FF}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Prop\Component\components\touch">
       <UniqueIdentifier>{E6503478-F0BF-90AD-F096-CCEE68CB328E}</UniqueIdentifier>
     </Filter>
@@ -1599,6 +1602,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\fx\FXComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component\components\fx</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Component\touch\TouchComponent.cpp">
       <Filter>BenTo\Source\Prop\Component\components\touch</Filter>
@@ -5381,6 +5387,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\fx\FXComponent.h">
+      <Filter>BenTo\Source\Prop\Component\components\fx</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Component\touch\TouchComponent.h">
       <Filter>BenTo\Source\Prop\Component\components\touch</Filter>

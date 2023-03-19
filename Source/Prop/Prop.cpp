@@ -352,7 +352,7 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 		if (isConnected->boolValue())
 		{
 			HashMap<String, PropComponent*>::Iterator it(components);
-			while (it.next()) it.getValue()->handePropConnected();
+			while (it.next()) it.getValue()->handlePropConnected();
 		}
 	}
 }
@@ -641,6 +641,7 @@ void Prop::setupComponentsJSONDefinition(var def)
 		updateRate = rgbComponent->updateRate;
 	}
 
+	if (def.hasProperty("fx")) addComponent(new FXPropComponent(this, def.getProperty("fx", var())));
 	if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));
 	if (def.hasProperty("touch")) addComponent(new TouchPropComponent(this, def.getProperty("touch", var())));
 	if (def.hasProperty("imu")) addComponent(new IMUPropComponent(this, def.getProperty("imu", var())));

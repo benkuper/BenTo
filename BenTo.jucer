@@ -546,6 +546,10 @@
         </GROUP>
         <GROUP id="{8E4ED156-FAC3-B69B-D00B-42398B54E32F}" name="Component">
           <GROUP id="{96B6B97F-243C-2E0E-1B3D-9482FBFB37B6}" name="components">
+            <GROUP id="{062D34D2-8CE6-36BB-644F-13D8FDA44D96}" name="fx">
+              <FILE id="H56yai" name="FXComponent.cpp" compile="0" resource="0" file="Source/Prop/Component/fx/FXComponent.cpp"/>
+              <FILE id="zb4GlC" name="FXComponent.h" compile="0" resource="0" file="Source/Prop/Component/fx/FXComponent.h"/>
+            </GROUP>
             <GROUP id="{4393D381-241C-E5DB-874A-9F8C40AA3899}" name="touch">
               <FILE id="C3YSwv" name="TouchComponent.cpp" compile="0" resource="0"
                     file="Source/Prop/Component/touch/TouchComponent.cpp"/>

@@ -327,7 +327,7 @@ void RGBLedsManager::clear()
 
 #if defined LED_SEPARATE_CHANNELS || defined LED_USE_DMX
     for (int i = 0; i < LED_COUNT; i++)
-        outLeds[i] = CRGB::Black;
+        leds[i] = CRGB::Black;
 #else
     FastLED.clear();
 #endif
@@ -344,7 +344,7 @@ void RGBLedsManager::fillRange(CRGB c, float start, float end, bool doClear)
 #ifdef LED_COUNT
     if (doClear)
         clear();
-    LedHelpers::fillRange(outLeds, LED_COUNT, c, start, end);
+    LedHelpers::fillRange(leds, LED_COUNT, c, start, end);
 #endif
 }
 
@@ -353,7 +353,7 @@ void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear)
 #ifdef LED_COUNT
     if (doClear)
         clear();
-    LedHelpers::point(outLeds, LED_COUNT, c, pos, fade, doClear);
+    LedHelpers::point(leds, LED_COUNT, c, pos, fade, doClear);
 #endif
 }
 
@@ -363,6 +363,6 @@ void RGBLedsManager::setLed(int index, CRGB c)
 
     if (index < 0 || index >= LED_COUNT)
         return;
-    outLeds[index] = c;
+    leds[index] = c;
 #endif
 }
