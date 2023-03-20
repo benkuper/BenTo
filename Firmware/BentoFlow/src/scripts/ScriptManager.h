@@ -36,6 +36,8 @@ public:
 
     int blendMode; //to do. 0 = add, 1 = multiply
 
+    float timeAtLaunch = 0;
+
     void init();
     void update();
 

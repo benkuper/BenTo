@@ -12,6 +12,13 @@ m3ApiRawFunction(m3_arduino_millis)
     m3ApiReturn(millis());
 }
 
+m3ApiRawFunction(m3_arduino_getTime)
+{
+    m3ApiReturnType(float);
+    float v = millis() / 1000.0f - ScriptManager::instance->timeAtLaunch;
+    m3ApiReturn(v);
+}
+
 m3ApiRawFunction(m3_arduino_delay)
 {
     m3ApiGetArg(uint32_t, ms);
@@ -266,13 +273,26 @@ m3ApiRawFunction(m3_setBatterySendEnabled)
     m3ApiSuccess();
 }
 
+m3ApiRawFunction(m3_getFXSpeed)
+{
+    m3ApiReturnType(float);
+    float v = MainManager::instance->leds.fxManager.offsetSpeed;
+    m3ApiReturn((float)v);
+}
+
+m3ApiRawFunction(m3_getFXIsoSpeed)
+{
+    m3ApiReturnType(float);
+    float v = MainManager::instance->leds.fxManager.isolationSpeed;
+    m3ApiReturn((float)v);
+}
+
 m3ApiRawFunction(m3_setFXSpeed)
 {
     m3ApiGetArg(float, sp);
     MainManager::instance->leds.fxManager.offsetSpeed = sp;
     m3ApiSuccess();
 }
-
 
 m3ApiRawFunction(m3_setFXIsoSpeed)
 {

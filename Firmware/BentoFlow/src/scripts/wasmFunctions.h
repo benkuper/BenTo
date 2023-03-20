@@ -6,6 +6,7 @@
 
 
 m3ApiRawFunction(m3_arduino_millis);
+m3ApiRawFunction(m3_arduino_getTime);
 m3ApiRawFunction(m3_arduino_delay);
 m3ApiRawFunction(m3_printFloat);
 m3ApiRawFunction(m3_printInt);
@@ -36,6 +37,8 @@ m3ApiRawFunction(m3_setMicEnabled);
 m3ApiRawFunction(m3_getMicLevel);
 m3ApiRawFunction(m3_setBatterySendEnabled);
 
+m3ApiRawFunction(m3_getFXSpeed);
+m3ApiRawFunction(m3_getFXIsoSpeed);
 m3ApiRawFunction(m3_setFXSpeed);
 m3ApiRawFunction(m3_setFXIsoSpeed);
 

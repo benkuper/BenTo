@@ -137,6 +137,8 @@ void ScriptManager::launchWasmTask()
 
     String foundFunc;
 
+    timeAtLaunch = millis() / 1000.0f;
+
     result = m3_FindFunction(&initFunc, runtime, "init");
     if (initFunc != NULL)
         foundFunc += "init";
@@ -183,6 +185,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     const char *arduino = "arduino";
 
     m3_LinkRawFunction(module, arduino, "millis", "i()", &m3_arduino_millis);
+    m3_LinkRawFunction(module, arduino, "getTime", "f()", &m3_arduino_getTime);
     m3_LinkRawFunction(module, arduino, "delay", "v(i)", &m3_arduino_delay);
     m3_LinkRawFunction(module, arduino, "printFloat", "v(f)", &m3_printFloat);
     m3_LinkRawFunction(module, arduino, "printInt", "v(i)", &m3_printInt);
@@ -204,8 +207,8 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
     m3_LinkRawFunction(module, arduino, "getProjectedAngle", "f()", &m3_getProjectedAngle);
     m3_LinkRawFunction(module, arduino, "setProjectedAngleOffset", "v(ff)", &m3_setProjectedAngleOffset);
-    m3_LinkRawFunction(module, arduino, "calibrateIMU", "v(i)", &m3_calibrateIMU);
-    
+    m3_LinkRawFunction(module, arduino, "calibrateIMU", "v(*)", &m3_calibrateIMU);
+
     m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
@@ -218,9 +221,10 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
 
     m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
 
-    m3_LinkRawFunction(module, arduino, "setFXSpeed", "v(i)", &m3_setFXSpeed);
-    m3_LinkRawFunction(module, arduino, "setFXIsoSpeed", "v(i)", &m3_setFXIsoSpeed);
-    
+    m3_LinkRawFunction(module, arduino, "getFXSpeed", "f()", &m3_getFXSpeed);
+    m3_LinkRawFunction(module, arduino, "getFXIsoSpeed", "f()", &m3_getFXIsoSpeed);
+    m3_LinkRawFunction(module, arduino, "setFXSpeed", "v(f)", &m3_setFXSpeed);
+    m3_LinkRawFunction(module, arduino, "setFXIsoSpeed", "v(f)", &m3_setFXIsoSpeed);
 
     m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
     m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
