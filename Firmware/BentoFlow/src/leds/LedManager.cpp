@@ -70,7 +70,7 @@ void LedManager::update()
 
 void LedManager::setMode(Mode m)
 {
-    NDBG("LED Set mode "+String((int)m));
+    NDBG("LED Set mode " + String((int)m));
 
 #ifdef LED_COUNT
     if (m == mode)
@@ -120,13 +120,13 @@ void LedManager::shutdown(CRGB color)
 
 #ifdef LED_COUNT
     CRGB initLeds[LED_COUNT];
-    memcpy(initLeds, rgbManager.leds, LED_COUNT * sizeof(CRGB));
+    memcpy(initLeds, rgbManager.leds[LED_OUT_LAYER], LED_COUNT * sizeof(CRGB));
 
     rgbManager.setLedEnabled(true);
     for (int i = 0; i < 255; i++)
     {
         for (int led = 0; led < LED_COUNT; led++)
-            rgbManager.setLed(led, blend(initLeds[led], color, i));
+            rgbManager.setLed(led, blend(initLeds[led], color, i), LED_OUT_LAYER);
 
         rgbManager.update();
         FastLED.delay(1);
@@ -136,7 +136,7 @@ void LedManager::shutdown(CRGB color)
 
     for (float i = 0; i <= 1; i += .01f)
     {
-        rgbManager.fillRange(color, i, 1, true);
+        rgbManager.fillRange(color, i, 1, true, LED_OUT_LAYER);
         rgbManager.update();
         FastLED.delay(2);
     }
@@ -194,7 +194,7 @@ void LedManager::timerEvent(const TimerEvent &e)
 {
     if (e.timer == &connectedTimer)
     {
-       setMode(Stream);
+        setMode(Stream);
     }
 }
 
@@ -220,11 +220,15 @@ bool LedManager::handleCommand(String command, var *data, int numData)
         }
 
         return true;
-    } else if (checkCommand(command, "playAndIr", numData, 2)) {
-        if (data[0].type == 'f') {
+    }
+    else if (checkCommand(command, "playAndIr", numData, 2))
+    {
+        if (data[0].type == 'f')
+        {
             playerMode.play(data[0].floatValue());
         }
-        if (data[1].type == 'f') {
+        if (data[1].type == 'f')
+        {
             irManager.setBrightness(data[1].floatValue());
         }
 

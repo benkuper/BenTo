@@ -49,6 +49,8 @@ public:
     float gyro[3];
     float linearAccel[3];
     float gravity[3];
+
+    float originalYaw; //for auto calibration
     float orientationXOffset;
     
     int throwState; //0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
@@ -98,9 +100,12 @@ public:
     void computeSpin();
 
     void setEnabled(bool value);
+
     void setOrientationXOffset(float offset);
     void setProjectAngleOffset(float yaw, float angle);
-    
+
+    void calibrate();
+
     void shutdown();
 
     bool handleCommand(String command, var * data, int numData) override;

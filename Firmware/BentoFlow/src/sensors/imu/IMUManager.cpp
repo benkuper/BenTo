@@ -9,7 +9,7 @@ IMUManager::IMUManager() : Component("imu"),
 #endif
                            isConnected(false),
                            isEnabled(false),
-                           sendLevel(1),
+                           sendLevel(-1),
                            orientationSendTime(20), // 50fps
                            timeSinceOrientationLastSent(0),
                            throwState(0)
@@ -203,10 +203,15 @@ void IMUManager::readIMU()
   imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
   imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
   imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-  
-  if(acc.x() == 0 && acc.y() == 0 && acc.z() == 0) return;
-  if(laccel.x() == 0 && laccel.y() == 0 && laccel.z() == 0) return;
-  if(gyr.x() == 0 && gyr.y() == 0 && gyr.z() == 0) return;
+
+  if (acc.x() == 0 && acc.y() == 0 && acc.z() == 0)
+    return;
+  if (laccel.x() == 0 && laccel.y() == 0 && laccel.z() == 0)
+    return;
+  if (gyr.x() == 0 && gyr.y() == 0 && gyr.z() == 0)
+    return;
+
+  originalYaw = fmod(((euler.x() * 180 / PI) + 180.0f * 5), 360.0f) - 180.0f;
 
   orientation[0] = fmod(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f;
   orientation[1] = euler.y() * 180 / PI; // Pitch
@@ -228,7 +233,6 @@ void IMUManager::readIMU()
   // gravity[0] = grav.x();
   // gravity[1] = grav.y();
   // gravity[2] = grav.z();
-
 
   computeThrow();
   computeActivity();
@@ -509,6 +513,11 @@ void IMUManager::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
   xOnCalibration = yaw;
 }
 
+void IMUManager::calibrate()
+{
+  orientationXOffset = -originalYaw;
+}
+
 void IMUManager::shutdown()
 {
   setEnabled(false);
@@ -602,6 +611,11 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     prefs.begin(name.c_str());
     prefs.putFloat("xOffset", orientationXOffset);
     prefs.end();
+    return true;
+  }
+  else if (checkCommand(command, "calibrate", numData, 0))
+  {
+    calibrate();
     return true;
   }
 #endif

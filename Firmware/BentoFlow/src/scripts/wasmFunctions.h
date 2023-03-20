@@ -26,6 +26,7 @@ m3ApiRawFunction(m3_getRoll);
 m3ApiRawFunction(m3_getThrowState);
 m3ApiRawFunction(m3_getProjectedAngle);
 m3ApiRawFunction(m3_setProjectedAngleOffset);
+m3ApiRawFunction(m3_calibrateIMU);
 m3ApiRawFunction(m3_setIMUEnabled);
 m3ApiRawFunction(m3_updateLeds);
 m3ApiRawFunction(m3_getButtonState);
@@ -34,5 +35,9 @@ m3ApiRawFunction(m3_getSpin);
 m3ApiRawFunction(m3_setMicEnabled);
 m3ApiRawFunction(m3_getMicLevel);
 m3ApiRawFunction(m3_setBatterySendEnabled);
+
+m3ApiRawFunction(m3_setFXSpeed);
+m3ApiRawFunction(m3_setFXIsoSpeed);
+
 m3ApiRawFunction(m3_randomInt);
 m3ApiRawFunction(m3_noise);

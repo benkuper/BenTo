@@ -30,19 +30,17 @@ public:
     FloatParameter* activity;
 
 
+    Trigger* orientationCalibrate;
     FloatParameter* projectedAngle;
     FloatParameter* projectedAngleClub;
     EnumParameter* throwState;
 
-    ControllableContainer offsetConfigCC;
-    Trigger* orientationCalibrate;
-    FloatParameter* orientationXOffset;
 
-    ControllableContainer angleConfigCC;
-    Trigger* calibrate;
-    FloatParameter* offset;
-    FloatParameter* angleOffset;
-    BoolParameter* invert;
+    //ControllableContainer angleConfigCC;
+    //Trigger* calibrate;
+    //FloatParameter* offset;
+    //FloatParameter* angleOffset;
+    //BoolParameter* invert;
 
     ControllableContainer throwConfigCC;
     Point2DParameter* flatThresholds;
@@ -63,7 +61,7 @@ public:
     void onContainerParameterChanged(Parameter* p) override;
     void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
-    void computeAngle();
+    //void computeAngle();
 
     void update() override;
 };

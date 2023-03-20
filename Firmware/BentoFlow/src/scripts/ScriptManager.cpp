@@ -204,6 +204,8 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
     m3_LinkRawFunction(module, arduino, "getProjectedAngle", "f()", &m3_getProjectedAngle);
     m3_LinkRawFunction(module, arduino, "setProjectedAngleOffset", "v(ff)", &m3_setProjectedAngleOffset);
+    m3_LinkRawFunction(module, arduino, "calibrateIMU", "v(i)", &m3_calibrateIMU);
+    
     m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
@@ -215,6 +217,11 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getMicLevel", "f()", &m3_getMicLevel);
 
     m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
+
+    m3_LinkRawFunction(module, arduino, "setFXSpeed", "v(i)", &m3_setFXSpeed);
+    m3_LinkRawFunction(module, arduino, "setFXIsoSpeed", "v(i)", &m3_setFXIsoSpeed);
+    
+
     m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
     m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
 

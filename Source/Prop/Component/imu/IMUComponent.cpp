@@ -12,8 +12,7 @@
 
 IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
 	PropComponent(prop, "IMU", true),
-	offsetConfigCC("Orientation Offset Config"),
-	angleConfigCC("Angle Config"),
+	//angleConfigCC("Angle Config"),
 	throwConfigCC("Throw Config"),
 	timeAtThrow(0)
 {
@@ -49,10 +48,11 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
 	activity = addFloatParameter("Activity", "Activity based on linear-acceleration", 0, 0, 1);
 	activity->setControllableFeedbackOnly(true);
 
-	projectedAngle = addFloatParameter("Projected Angle", "Normalized projected angle for ease of use", 0, 0, 1);
-	projectedAngle->setControllableFeedbackOnly(true);
+	orientationCalibrate = addTrigger("Calibrate", "");
+	//projectedAngle = addFloatParameter("Projected Angle", "Normalized projected angle for ease of use", 0, 0, 1);
+	//projectedAngle->setControllableFeedbackOnly(true);
 
-	projectedAngleClub = addFloatParameter("Projected Angle Club", "Normalized projected angle for ease of use", 0, 0, 1);
+	projectedAngleClub = addFloatParameter("Projected Angle on Prop", "Normalized projected angle for ease of use", 0, 0, 1);
 	projectedAngleClub->setControllableFeedbackOnly(true);
 
 	throwState = addEnumParameter("Throw State", "The current detected state of throw");
@@ -69,20 +69,17 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
 	throwTime->setControllableFeedbackOnly(true);
 
 
-	offsetConfigCC.editorIsCollapsed = true;
-	addChildControllableContainer(&offsetConfigCC);
-	angleConfigCC.editorIsCollapsed = true;
-	addChildControllableContainer(&angleConfigCC);
+	//angleConfigCC.editorIsCollapsed = true;
+	//addChildControllableContainer(&angleConfigCC);
 	throwConfigCC.editorIsCollapsed = true;
 	addChildControllableContainer(&throwConfigCC);
 
-	orientationCalibrate = offsetConfigCC.addTrigger("Calibrate", "");
-	orientationXOffset = offsetConfigCC.addFloatParameter("Orientation X Offset", "", 0, -180, 180);
+	//orientationXOffset = offsetConfigCC.addFloatParameter("Orientation X Offset", "", 0, -180, 180);
 
-	calibrate = angleConfigCC.addTrigger("Calibrate Yaw", "");
-	offset = angleConfigCC.addFloatParameter("Yaw Offset", "", 0, -180, 180);
-	angleOffset = angleConfigCC.addFloatParameter("Angle Offset", "", 0, 0, 1);
-	invert = angleConfigCC.addBoolParameter("Invert Direction", "", false);
+	//calibrate = angleConfigCC.addTrigger("Calibrate Yaw", "");
+	//offset = angleConfigCC.addFloatParameter("Yaw Offset", "", 0, -180, 180);
+	//angleOffset = angleConfigCC.addFloatParameter("Angle Offset", "", 0, 0, 1);
+	//invert = angleConfigCC.addBoolParameter("Invert Direction", "", false);
 
 	accelThresholds = throwConfigCC.addPoint2DParameter("Accel Thresholds", "");
 	diffThreshold = throwConfigCC.addFloatParameter("Diff Threshold", "", 8, 0);
@@ -114,8 +111,9 @@ IMUPropComponent::~IMUPropComponent()
 void IMUPropComponent::onContainerParameterChanged(Parameter* p)
 {
 	PropComponent::onContainerParameterChanged(p);
-	if (p == orientation) computeAngle();
-	else if (p == sendLevel)
+	//if (p == orientation) computeAngle();
+
+	if (p == sendLevel)
 	{
 		sendControl(p->shortName, (int)sendLevel->getValueData());
 	}
@@ -132,16 +130,12 @@ void IMUPropComponent::onContainerParameterChanged(Parameter* p)
 void IMUPropComponent::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
 	PropComponent::onControllableFeedbackUpdate(cc, c);
-	if (c == calibrate)
-	{
-		float tVal = orientation->x - 180;
-		if (tVal < -180) tVal += 360;
-		offset->setValue(tVal);
-	}
-	else if (c == orientationCalibrate) {
-		Parameter* p = orientationXOffset;
-		sendControl(p->shortName, p->value);
-	}
+	//if (c == calibrate)
+	//{
+	//	float tVal = orientation->x - 180;
+	//	if (tVal < -180) tVal += 360;
+	//	offset->setValue(tVal);
+	//}
 
 	if (cc == &throwConfigCC)
 	{
@@ -149,24 +143,24 @@ void IMUPropComponent::onControllableFeedbackUpdate(ControllableContainer* cc, C
 	}
 }
 
-void IMUPropComponent::computeAngle()
-{
-	if (!enabled->boolValue()) return;
-
-	Vector3D<float> euler = orientation->getVector();
-	euler.x += offset->floatValue();
-	Vector3D<float> eulerRadians = euler * MathConstants<float>::pi / 180;
-	Vector3D<float> lookAt(cosf(eulerRadians.y) * sinf(eulerRadians.x), sinf(eulerRadians.y), cosf(eulerRadians.y) * cosf(eulerRadians.x));
-
-	float result = atanf(lookAt.y / lookAt.z) - MathConstants<float>::pi / 2;
-
-	if (lookAt.z > 0) result += float_Pi;
-
-	result = (result / MathConstants<float>::pi) * .5 + .5;
-	result = fmodf(result + angleOffset->floatValue(), 1);
-	if (invert->boolValue()) result = 1 - result;
-	projectedAngle->setValue(result);
-}
+//²void IMUPropComponent::computeAngle()
+//{
+//	if (!enabled->boolValue()) return;
+//
+//	Vector3D<float> euler = orientation->getVector();
+//	euler.x += offset->floatValue();
+//	Vector3D<float> eulerRadians = euler * MathConstants<float>::pi / 180;
+//	Vector3D<float> lookAt(cosf(eulerRadians.y) * sinf(eulerRadians.x), sinf(eulerRadians.y), cosf(eulerRadians.y) * cosf(eulerRadians.x));
+//
+//	float result = atanf(lookAt.y / lookAt.z) - MathConstants<float>::pi / 2;
+//
+//	if (lookAt.z > 0) result += float_Pi;
+//
+//	result = (result / MathConstants<float>::pi) * .5 + .5;
+//	result = fmodf(result + angleOffset->floatValue(), 1);
+//	if (invert->boolValue()) result = 1 - result;
+//	projectedAngle->setValue(result);
+//}
 
 
 void IMUPropComponent::update()

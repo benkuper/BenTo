@@ -193,6 +193,12 @@ m3ApiRawFunction(m3_setProjectedAngleOffset)
     m3ApiSuccess();
 }
 
+m3ApiRawFunction(m3_calibrateIMU)
+{
+    MainManager::instance->imu.calibrate();
+    m3ApiSuccess();
+}
+
 m3ApiRawFunction(m3_setIMUEnabled)
 {
     m3ApiGetArg(uint32_t, en);
@@ -257,6 +263,21 @@ m3ApiRawFunction(m3_setBatterySendEnabled)
 {
     m3ApiGetArg(uint32_t, en);
     MainManager::instance->battery.setSendEnabled((bool)en);
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_setFXSpeed)
+{
+    m3ApiGetArg(float, sp);
+    MainManager::instance->leds.fxManager.offsetSpeed = sp;
+    m3ApiSuccess();
+}
+
+
+m3ApiRawFunction(m3_setFXIsoSpeed)
+{
+    m3ApiGetArg(float, sp);
+    MainManager::instance->leds.fxManager.isolationSpeed = sp;
     m3ApiSuccess();
 }
 
