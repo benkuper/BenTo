@@ -21,6 +21,7 @@ public:
 	FloatParameter* isolationSpeed;
 	FloatParameter* isolationSmoothing;
 	IntParameter* flipDebounce;
+	BoolParameter* showCalibration;
 
 	EnumParameter* isolationAxis; //0 = projectedAngle, 1 = yaw, 2 = pitch, 3 = roll
 

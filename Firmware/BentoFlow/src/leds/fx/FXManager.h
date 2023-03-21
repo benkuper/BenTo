@@ -30,6 +30,8 @@ public:
    int flipFrameCount;
    int flipDebounce;
 
+   bool showCalibration;
+
    void update();
    void reset();
 

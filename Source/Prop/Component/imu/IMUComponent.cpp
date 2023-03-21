@@ -49,11 +49,9 @@ IMUPropComponent::IMUPropComponent(Prop* prop, var params) :
 	activity->setControllableFeedbackOnly(true);
 
 	orientationCalibrate = addTrigger("Calibrate", "");
-	//projectedAngle = addFloatParameter("Projected Angle", "Normalized projected angle for ease of use", 0, 0, 1);
-	//projectedAngle->setControllableFeedbackOnly(true);
 
-	projectedAngleClub = addFloatParameter("Projected Angle on Prop", "Normalized projected angle for ease of use", 0, 0, 1);
-	projectedAngleClub->setControllableFeedbackOnly(true);
+	projectedAngle = addFloatParameter("Projected Angle", "Normalized projected angle for ease of use", 0, 0, 1);
+	projectedAngle->setControllableFeedbackOnly(true);
 
 	throwState = addEnumParameter("Throw State", "The current detected state of throw");
 	throwState->addOption("None", 0)->addOption("Flat", 1)->addOption("Single", 2)->addOption("Double", 3)->addOption("Semi-flat", 4)->addOption("Loftie", 5);

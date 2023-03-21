@@ -32,7 +32,6 @@ public:
 
     Trigger* orientationCalibrate;
     FloatParameter* projectedAngle;
-    FloatParameter* projectedAngleClub;
     EnumParameter* throwState;
 
 

@@ -21,6 +21,7 @@ FXPropComponent::FXPropComponent(Prop* prop, var params) :
 	isolationAxis->addOption("Projected Angle", 0)->addOption("Yaw", 1)->addOption("Pitch", 2)->addOption("Roll", 3);
 
 	flipDebounce = addIntParameter("Flip Debounce", "Denoising parameter, the number of flipped reading to get before considering the board actually flipped", 10, 1, 1000);
+	showCalibration = addBoolParameter("Show Calibration", "Show calibration pattern", false);
 	//sendValuesOnPropConnected.addArray(Array<Parameter*>{ offsetSpeed, isolationSpeed, isolationSmoothing, isolationAxis});
 }
 

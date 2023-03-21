@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngleClub", "spin"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngle", "spin"};
 IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),

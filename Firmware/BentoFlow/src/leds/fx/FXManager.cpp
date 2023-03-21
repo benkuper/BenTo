@@ -18,12 +18,21 @@ FXManager::FXManager(CRGB *leds, CRGB *outLeds) : Component("fx"),
                                                   swapOnFlip(FX_SWAP_UPSIDE_DOWN),
                                                   boardIsFlipped(false),
                                                   flipFrameCount(0),
-                                                  flipDebounce(10)
+                                                  flipDebounce(50),
+                                                  showCalibration(false)
 {
 }
 
 void FXManager::update()
 {
+    if (showCalibration)
+    {
+        LedHelpers::clear(outLeds, LED_COUNT);
+        outLeds[0] = CRGB::Red;
+        outLeds[LED_COUNT / 6] = CRGB::Green;
+        return;
+    }
+
     float t = millis() / 1000.0;
     float deltaTime = t - prevTime;
     prevTime = t;
@@ -63,9 +72,11 @@ void FXManager::update()
             bool flipped = boardIsUp != yawIsNormal;
             if (flipped != boardIsFlipped)
             {
+                DBG("Flip count > " + String(flipFrameCount) + " / " + String(flipFrameCount));
                 flipFrameCount++;
                 if (flipFrameCount >= flipDebounce)
                 {
+                    DBG("FLIP NOW !");
                     boardIsFlipped = flipped;
                     flipFrameCount = 0;
                 }
@@ -146,12 +157,17 @@ bool FXManager::handleCommand(String command, var *data, int numData)
     }
     else if (checkCommand(command, "flipDebounce", numData, 1))
     {
-        staticOffset = data[0].floatValue();
+        flipDebounce = data[0].floatValue();
         return true;
     }
     else if (checkCommand(command, "reset", numData, 0))
     {
         reset();
+        return true;
+    }
+    else if (checkCommand(command, "showCalibration", numData, 1))
+    {
+        showCalibration = (bool)data[0].intValue();
         return true;
     }
 
