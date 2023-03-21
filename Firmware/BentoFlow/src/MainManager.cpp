@@ -383,6 +383,19 @@ void MainManager::imuEvent(const IMUEvent &e)
     }
     break;
 
+    case IMUEvent::QuaternionUpdate:
+    {
+        var data[4];
+        for (int i = 0; i < e.numData; i++)
+        {
+            data[i].type = 'f';
+            data[i].value.f = e.data[i];
+        }
+
+        comm.sendMessage(imu.name, IMUEvent::eventNames[(int)e.type], data, 4);
+    }
+    break;
+
     case IMUEvent::ActivityUpdate:
     {
         var data[1];

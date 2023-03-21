@@ -1,6 +1,6 @@
 #include "IMUManager.h"
 
-const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngle", "spin"};
+const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "quaternion", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngle", "spin"};
 IMUManager *IMUManager::instance = NULL;
 
 IMUManager::IMUManager() : Component("imu"),
@@ -95,7 +95,7 @@ void IMUManager::init()
   loftieThreshold = prefs.getFloat("loftie", loftieThreshold);
   singleThreshold = prefs.getFloat("single", singleThreshold);
 
-  yawOffset = prefs.getFloat("xOffset", yawOffset);
+  yawOffset = prefs.getFloat("yawOffset", yawOffset);
   prefs.end();
 #endif
 
@@ -147,7 +147,7 @@ void IMUManager::update()
         sendEvent(IMUEvent(IMUEvent::ActivityUpdate));
         sendEvent(IMUEvent(IMUEvent::ProjectedAngleUpdate));
         sendEvent(IMUEvent(IMUEvent::SpinUpdate));
-        // sendEvent(IMUEvent(IMUEvent::Gravity, gravity, 3));
+        sendEvent(IMUEvent(IMUEvent::QuaternionUpdate, quaternion, 4));
       }
     }
 
@@ -194,6 +194,11 @@ void IMUManager::readIMU()
   // DBG("Read IMU");
 
   imu::Quaternion q = bno.getQuat();
+  quaternion[0] = q.x();
+  quaternion[1] = q.y();
+  quaternion[2] = q.z();
+  quaternion[3] = q.w();
+
   q.normalize();
 
   // float temp = q.x();  q.x() = -q.y();  q.y() = temp;
@@ -297,53 +302,6 @@ void IMUManager::computeProjectedAngle()
   float eulerRadians[3];
   float lookAt[3];
   float result;
-
-  // Recalculate x orientation for the projected angle, based on xOnCalibration
-  float xOrientation = orientation[0];
-  float newX = 0;
-  // if (xOnCalibration < 0)
-  // {
-  //   if (xOrientation > xOnCalibration)
-  //   {
-  //     if (xOrientation < 0)
-  //     {
-  //       newX = (xOnCalibration * -1) - (xOrientation * -1);
-  //     }
-  //     else
-  //     {
-  //       if (xOrientation + (xOnCalibration * -1) > 180.0f)
-  //       {
-  //         newX = (360.0f - xOrientation - (xOnCalibration * -1)) * -1;
-  //       }
-  //       else
-  //       {
-  //         newX = xOrientation + (xOnCalibration * -1);
-  //       }
-  //     }
-  //   }
-  //   else
-  //   {
-  //     newX = (xOnCalibration * -1) - (xOrientation * -1);
-  //   }
-  // }
-  // else
-  // {
-  //   if (xOrientation > xOnCalibration)
-  //   {
-  //     newX = xOrientation - xOnCalibration;
-  //   }
-  //   else
-  //   {
-  //     if ((xOrientation - xOnCalibration) < -180)
-  //     {
-  //       newX = (180.0f - xOnCalibration) + (180.0f - (xOrientation * -1));
-  //     }
-  //     else
-  //     {
-  //       newX = xOrientation - xOnCalibration;
-  //     }
-  //   }
-  // }
 
   eulerRadians[0] = orientation[0] * PI / 180.0f;
   eulerRadians[1] = orientation[1] * PI / 180.0f;
@@ -605,17 +563,10 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     prefs.end();
     return true;
   }
-  else if (checkCommand(command, "yawOffset", numData, 1))
-  {
-    yawOffset = data[0].floatValue();
-    prefs.begin(name.c_str());
-    prefs.putFloat("xOffset", yawOffset);
-    prefs.end();
-    return true;
-  }
   else if (checkCommand(command, "calibrate", numData, 0))
   {
     calibrate();
+    prefs.putFloat("yawOffset", yawOffset);
     return true;
   }
 #endif

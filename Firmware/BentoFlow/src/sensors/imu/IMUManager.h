@@ -10,7 +10,7 @@
 class IMUEvent
 {
 public:
-    enum Type { OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, ThrowState, CalibrationStatus, ActivityUpdate, Debug, ProjectedAngleUpdate, SpinUpdate, TYPES_MAX };
+    enum Type { OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate,QuaternionUpdate, Gravity, ThrowState, CalibrationStatus, ActivityUpdate, Debug, ProjectedAngleUpdate, SpinUpdate, TYPES_MAX };
     static const String eventNames[TYPES_MAX];
 
     IMUEvent(Type t, float * data = nullptr, int numData = 0) : type(t), data(data), numData(numData) {}
@@ -44,6 +44,7 @@ public:
 
     float calibration[4];
     
+    float quaternion[4];
     float orientation[3];
     float accel[3];
     float gyro[3];
