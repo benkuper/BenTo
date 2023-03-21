@@ -196,7 +196,7 @@ m3ApiRawFunction(m3_setProjectedAngleOffset)
 {
     m3ApiGetArg(float, yaw);
     m3ApiGetArg(float, angle);
-    MainManager::instance->imu.setProjectAngleOffset(yaw, angle);
+    // MainManager::instance->imu.setProjectAngleOffset(yaw, angle);
     m3ApiSuccess();
 }
 
@@ -287,6 +287,20 @@ m3ApiRawFunction(m3_getFXIsoSpeed)
     m3ApiReturn((float)v);
 }
 
+m3ApiRawFunction(m3_getFXStaticOffset)
+{
+    m3ApiReturnType(float);
+    float v = MainManager::instance->leds.fxManager.staticOffset;
+    m3ApiReturn((float)v);
+}
+
+m3ApiRawFunction(m3_getFXFlipped)
+{
+    m3ApiReturnType(uint32_t);
+    bool v = MainManager::instance->leds.fxManager.boardIsFlipped;
+    m3ApiReturn((uint32_t)v);
+}
+
 m3ApiRawFunction(m3_setFXSpeed)
 {
     m3ApiGetArg(float, sp);
@@ -298,6 +312,26 @@ m3ApiRawFunction(m3_setFXIsoSpeed)
 {
     m3ApiGetArg(float, sp);
     MainManager::instance->leds.fxManager.isolationSpeed = sp;
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_setFXIsoAxis)
+{
+    m3ApiGetArg(uint32_t, ax);
+    MainManager::instance->leds.fxManager.isolationAxis = ax;
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_setFXStaticOffset)
+{
+    m3ApiGetArg(float, sp);
+    MainManager::instance->leds.fxManager.staticOffset = sp;
+    m3ApiSuccess();
+}
+
+m3ApiRawFunction(m3_resetFX)
+{
+    MainManager::instance->leds.fxManager.reset();
     m3ApiSuccess();
 }
 

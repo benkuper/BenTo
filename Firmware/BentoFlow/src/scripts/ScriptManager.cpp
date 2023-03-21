@@ -210,6 +210,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "calibrateIMU", "v(*)", &m3_calibrateIMU);
 
     m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
+    m3_LinkRawFunction(module, arduino, "calibrateIMU", "v()", &m3_calibrateIMU);
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
     m3_LinkRawFunction(module, arduino, "getButtonState", "i(i)", &m3_getButtonState);
@@ -223,8 +224,13 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
 
     m3_LinkRawFunction(module, arduino, "getFXSpeed", "f()", &m3_getFXSpeed);
     m3_LinkRawFunction(module, arduino, "getFXIsoSpeed", "f()", &m3_getFXIsoSpeed);
+    m3_LinkRawFunction(module, arduino, "getFXStaticOffset", "f()", &m3_getFXStaticOffset);
+    m3_LinkRawFunction(module, arduino, "getFXFlipped", "i()", &m3_getFXFlipped);
     m3_LinkRawFunction(module, arduino, "setFXSpeed", "v(f)", &m3_setFXSpeed);
     m3_LinkRawFunction(module, arduino, "setFXIsoSpeed", "v(f)", &m3_setFXIsoSpeed);
+    m3_LinkRawFunction(module, arduino, "setFXIsoAxis", "v(i)", &m3_setFXIsoAxis);
+    m3_LinkRawFunction(module, arduino, "setFXStaticOffset", "v(f)", &m3_setFXStaticOffset);
+    m3_LinkRawFunction(module, arduino, "resetFX", "v()", &m3_resetFX);
 
     m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
     m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);

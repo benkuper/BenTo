@@ -22,6 +22,9 @@
 //out of 255
 #define LED_MAX_BRIGHTNESS 255
 
+//fx
+#define FX_SWAP_UPSIDE_DOWN 1
+
 //main power
 #define KEEP_SLEEP_PIN_HIGH
 #define SLEEP_PIN 12 // pin for turning the LDO on and off. LOW for off and HIGH for on. 

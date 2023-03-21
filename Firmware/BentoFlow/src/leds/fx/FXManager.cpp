@@ -2,15 +2,23 @@
 #include "FXManager.h"
 #include "../../MainManager.h"
 
+#ifndef FX_SWAP_UPSIDE_DOWN
+#define FX_SWAP_UPSIDE_DOWN 0
+#endif
+
 FXManager::FXManager(CRGB *leds, CRGB *outLeds) : Component("fx"),
                                                   leds(leds),
                                                   outLeds(outLeds),
                                                   curTime(0),
                                                   offsetSpeed(0),
                                                   isolationSpeed(0),
-                                                  isolationSmoothing(0),
+                                                  isolationSmoothing(.5f),
                                                   prevIsolationAngle(0),
-                                                  isolationAxis(0)
+                                                  isolationAxis(0),
+                                                  swapOnFlip(FX_SWAP_UPSIDE_DOWN),
+                                                  boardIsFlipped(false),
+                                                  flipFrameCount(0),
+                                                  flipDebounce(10)
 {
 }
 
@@ -47,11 +55,27 @@ void FXManager::update()
             break;
         }
 
-        bool boardIsUp = fabsf(MainManager::instance->imu.orientation[2]) > 90;   // roll is upsidown (hoop test)
-        bool yawIsNormal = fabsf(MainManager::instance->imu.orientation[0]) < 90; // yaw is whitin calibration pose range
+        if (swapOnFlip)
+        {
+            bool boardIsUp = fabsf(MainManager::instance->imu.orientation[2]) > 90;   // roll is upsidown (hoop test)
+            bool yawIsNormal = fabsf(MainManager::instance->imu.orientation[0]) < 90; // yaw is whitin calibration pose range
 
-        if (boardIsUp != yawIsNormal)
-            isoAngle = 1 - isoAngle;
+            bool flipped = boardIsUp != yawIsNormal;
+            if (flipped != boardIsFlipped)
+            {
+                flipFrameCount++;
+                if (flipFrameCount >= flipDebounce)
+                {
+                    boardIsFlipped = flipped;
+                    flipFrameCount = 0;
+                }
+            }
+
+            if (boardIsFlipped)
+            {
+                isoAngle += .5; // offset half, and the led loop will also reverse the source colors grab
+            }
+        }
 
         float targetIsoAngle = fmodf(isoAngle * isolationSpeed, 1);
         if (targetIsoAngle < 0)
@@ -63,23 +87,33 @@ void FXManager::update()
 
         prevIsolationAngle = targetIsoAngle;
         angleOffset = targetIsoAngle;
-
-        // NDBG("Update " + String(isoAngle)); // + ", " +String(isolationSmoothing)+", diff "+String(diff));
     }
 
-    angleOffset = fmodf(angleOffset + curTime, 1);
+    angleOffset = staticOffset + fmodf(angleOffset + curTime, 1);
     if (angleOffset < 0)
         angleOffset++;
 
-    if (angleOffset != 0)
+    if (angleOffset != 0 || boardIsFlipped)
     {
         memset(outLeds, 0, LED_COUNT * sizeof(CRGB));
+
         for (int i = 0; i < LED_COUNT; i++)
         {
-            int index = int(i + angleOffset * LED_COUNT) % LED_COUNT;
+            int ledIndex = boardIsFlipped ? LED_COUNT - 1 - i : i;
+            int index = int(ledIndex + angleOffset * LED_COUNT) % LED_COUNT;
+
             outLeds[i] = leds[index];
         }
     }
+}
+
+void FXManager::reset()
+{
+    NDBG("Reset FX");
+    curTime = 0;
+    staticOffset = 0;
+    offsetSpeed = 0;
+    isolationSpeed = 0;
 }
 
 bool FXManager::handleCommand(String command, var *data, int numData)
@@ -103,6 +137,21 @@ bool FXManager::handleCommand(String command, var *data, int numData)
     else if (checkCommand(command, "offsetSpeed", numData, 1))
     {
         offsetSpeed = data[0].floatValue();
+        return true;
+    }
+    else if (checkCommand(command, "staticOffset", numData, 1))
+    {
+        staticOffset = data[0].floatValue();
+        return true;
+    }
+    else if (checkCommand(command, "flipDebounce", numData, 1))
+    {
+        staticOffset = data[0].floatValue();
+        return true;
+    }
+    else if (checkCommand(command, "reset", numData, 0))
+    {
+        reset();
         return true;
     }
 

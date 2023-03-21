@@ -51,7 +51,7 @@ public:
     float gravity[3];
 
     float originalYaw; //for auto calibration
-    float orientationXOffset;
+    float yawOffset;
     
     int throwState; //0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
     float activity;
@@ -67,9 +67,9 @@ public:
     float singleThreshold;
 
     // Projected Angle
-    float angleOffset;
+    // float angleOffset;
     float projectedAngle;
-    float xOnCalibration;
+    // float xOnCalibration;
     int countNonDouble;
     
     // Spin Compute
@@ -101,8 +101,8 @@ public:
 
     void setEnabled(bool value);
 
-    void setOrientationXOffset(float offset);
-    void setProjectAngleOffset(float yaw, float angle);
+    // void setOrientationXOffset(float offset);
+    // void setProjectAngleOffset(float yaw, float angle);
 
     void calibrate();
 

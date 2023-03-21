@@ -39,8 +39,13 @@ m3ApiRawFunction(m3_setBatterySendEnabled);
 
 m3ApiRawFunction(m3_getFXSpeed);
 m3ApiRawFunction(m3_getFXIsoSpeed);
+m3ApiRawFunction(m3_getFXStaticOffset);
+m3ApiRawFunction(m3_getFXFlipped);
 m3ApiRawFunction(m3_setFXSpeed);
 m3ApiRawFunction(m3_setFXIsoSpeed);
+m3ApiRawFunction(m3_setFXIsoAxis);
+m3ApiRawFunction(m3_setFXStaticOffset);
+m3ApiRawFunction(m3_resetFX);
 
 m3ApiRawFunction(m3_randomInt);
 m3ApiRawFunction(m3_noise);

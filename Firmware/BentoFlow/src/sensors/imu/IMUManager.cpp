@@ -44,9 +44,9 @@ IMUManager::IMUManager() : Component("imu"),
 
   activity = .0;
   prevActivity = .0;
-  orientationXOffset = .0;
+  yawOffset = .0;
 
-  angleOffset = .0f;
+  // angleOffset = .0f;
   countNonDouble = 0;
 }
 
@@ -95,7 +95,7 @@ void IMUManager::init()
   loftieThreshold = prefs.getFloat("loftie", loftieThreshold);
   singleThreshold = prefs.getFloat("single", singleThreshold);
 
-  orientationXOffset = prefs.getFloat("xOffset", orientationXOffset);
+  yawOffset = prefs.getFloat("xOffset", yawOffset);
   prefs.end();
 #endif
 
@@ -111,7 +111,7 @@ void IMUManager::init()
   DBG("semiFlat threshold " + String(semiFlatThreshold));
   DBG("loftie threshold " + String(loftieThreshold));
   DBG("single threshold " + String(singleThreshold));
-  DBG("orientation x offset " + String(orientationXOffset));
+  DBG("orientation x offset " + String(yawOffset));
 
 #endif
 }
@@ -213,7 +213,7 @@ void IMUManager::readIMU()
 
   originalYaw = fmod(((euler.x() * 180 / PI) + 180.0f * 5), 360.0f) - 180.0f;
 
-  orientation[0] = fmod(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f;
+  orientation[0] = fmod(((euler.x() * 180 / PI) + yawOffset + 180.0f * 5), 360.0f) - 180.0f;
   orientation[1] = euler.y() * 180 / PI; // Pitch
   orientation[2] = euler.z() * 180 / PI; // Roll
 
@@ -301,51 +301,51 @@ void IMUManager::computeProjectedAngle()
   // Recalculate x orientation for the projected angle, based on xOnCalibration
   float xOrientation = orientation[0];
   float newX = 0;
-  if (xOnCalibration < 0)
-  {
-    if (xOrientation > xOnCalibration)
-    {
-      if (xOrientation < 0)
-      {
-        newX = (xOnCalibration * -1) - (xOrientation * -1);
-      }
-      else
-      {
-        if (xOrientation + (xOnCalibration * -1) > 180.0f)
-        {
-          newX = (360.0f - xOrientation - (xOnCalibration * -1)) * -1;
-        }
-        else
-        {
-          newX = xOrientation + (xOnCalibration * -1);
-        }
-      }
-    }
-    else
-    {
-      newX = (xOnCalibration * -1) - (xOrientation * -1);
-    }
-  }
-  else
-  {
-    if (xOrientation > xOnCalibration)
-    {
-      newX = xOrientation - xOnCalibration;
-    }
-    else
-    {
-      if ((xOrientation - xOnCalibration) < -180)
-      {
-        newX = (180.0f - xOnCalibration) + (180.0f - (xOrientation * -1));
-      }
-      else
-      {
-        newX = xOrientation - xOnCalibration;
-      }
-    }
-  }
+  // if (xOnCalibration < 0)
+  // {
+  //   if (xOrientation > xOnCalibration)
+  //   {
+  //     if (xOrientation < 0)
+  //     {
+  //       newX = (xOnCalibration * -1) - (xOrientation * -1);
+  //     }
+  //     else
+  //     {
+  //       if (xOrientation + (xOnCalibration * -1) > 180.0f)
+  //       {
+  //         newX = (360.0f - xOrientation - (xOnCalibration * -1)) * -1;
+  //       }
+  //       else
+  //       {
+  //         newX = xOrientation + (xOnCalibration * -1);
+  //       }
+  //     }
+  //   }
+  //   else
+  //   {
+  //     newX = (xOnCalibration * -1) - (xOrientation * -1);
+  //   }
+  // }
+  // else
+  // {
+  //   if (xOrientation > xOnCalibration)
+  //   {
+  //     newX = xOrientation - xOnCalibration;
+  //   }
+  //   else
+  //   {
+  //     if ((xOrientation - xOnCalibration) < -180)
+  //     {
+  //       newX = (180.0f - xOnCalibration) + (180.0f - (xOrientation * -1));
+  //     }
+  //     else
+  //     {
+  //       newX = xOrientation - xOnCalibration;
+  //     }
+  //   }
+  // }
 
-  eulerRadians[0] = newX * PI / 180.0f;
+  eulerRadians[0] = orientation[0] * PI / 180.0f;
   eulerRadians[1] = orientation[1] * PI / 180.0f;
   eulerRadians[2] = orientation[2] * PI / 180.0f;
 
@@ -361,7 +361,7 @@ void IMUManager::computeProjectedAngle()
   }
 
   result = (result / PI) * 0.5f + 0.5f;
-  result = fmod((result + angleOffset), 1.0f);
+  // result = fmod((result + angleOffset), 1.0f);
 
   if (result >= 0.5)
   {
@@ -502,20 +502,20 @@ void IMUManager::setEnabled(bool value)
   isEnabled = value;
 }
 
-void IMUManager::setOrientationXOffset(float offset = 0.0f)
-{
-  orientationXOffset = offset;
-}
+// void IMUManager::setyawOffset(float offset = 0.0f)
+// {
+//   yawOffset = offset;
+// }
 
-void IMUManager::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
-{
-  angleOffset = angle;
-  xOnCalibration = yaw;
-}
+// void IMUManager::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
+// {
+//   angleOffset = angle;
+//   xOnCalibration = yaw;
+// }
 
 void IMUManager::calibrate()
 {
-  orientationXOffset = -originalYaw;
+  yawOffset = -originalYaw;
 }
 
 void IMUManager::shutdown()
@@ -605,11 +605,11 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
     prefs.end();
     return true;
   }
-  else if (checkCommand(command, "orientationXOffset", numData, 1))
+  else if (checkCommand(command, "yawOffset", numData, 1))
   {
-    orientationXOffset = data[0].floatValue();
+    yawOffset = data[0].floatValue();
     prefs.begin(name.c_str());
-    prefs.putFloat("xOffset", orientationXOffset);
+    prefs.putFloat("xOffset", yawOffset);
     prefs.end();
     return true;
   }
