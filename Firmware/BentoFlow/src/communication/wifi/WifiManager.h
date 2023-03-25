@@ -46,7 +46,7 @@ public:
 
   const long timeBetweenTries = 500; //ms
 #ifdef ESP32
-  const long connectionTimeout = 5000; //ms
+  const long connectionTimeout = 10000; //ms
 #else
   const long connectionTimeout = 10000; //ms
 #endif
