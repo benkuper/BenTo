@@ -202,6 +202,8 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "setLedHSV", "v(iiii)", &m3_setLedHSV);
     m3_LinkRawFunction(module, arduino, "pointRGB", "v(ffiii)", &m3_pointRGB);
     m3_LinkRawFunction(module, arduino, "pointHSV", "v(ffiii)", &m3_pointHSV);
+    m3_LinkRawFunction(module, arduino, "setIR", "v(f)", &m3_setIR);
+
     m3_LinkRawFunction(module, arduino, "getOrientation", "f(i)", &m3_getOrientation);
     m3_LinkRawFunction(module, arduino, "getYaw", "f()", &m3_getYaw);
     m3_LinkRawFunction(module, arduino, "getPitch", "f()", &m3_getPitch);

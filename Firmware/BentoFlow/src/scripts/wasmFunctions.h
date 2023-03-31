@@ -21,6 +21,8 @@ m3ApiRawFunction(m3_setLedRGB);
 m3ApiRawFunction(m3_setLedHSV);
 m3ApiRawFunction(m3_pointRGB);
 m3ApiRawFunction(m3_pointHSV);
+m3ApiRawFunction(m3_setIR);
+
 m3ApiRawFunction(m3_getOrientation);
 m3ApiRawFunction(m3_getYaw);
 m3ApiRawFunction(m3_getPitch);

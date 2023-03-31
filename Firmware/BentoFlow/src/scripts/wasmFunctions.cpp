@@ -162,6 +162,14 @@ m3ApiRawFunction(m3_pointHSV)
     m3ApiSuccess();
 }
 
+m3ApiRawFunction(m3_setIR)
+{
+    m3ApiGetArg(float, v);
+    MainManager::instance->leds.irManager.setBrightness( v);
+
+    m3ApiSuccess();
+}
+
 m3ApiRawFunction(m3_getOrientation)
 {
     m3ApiReturnType(float);
