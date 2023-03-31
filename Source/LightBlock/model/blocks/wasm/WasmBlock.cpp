@@ -81,7 +81,7 @@ void WasmBlock::compile()
 	}
 
 	//String buildCommand = "npm run build";
-	String arguments = f.getFullPathName() + " -b " + folder.getChildFile(shortName + ".wasm").getFullPathName() + " " + /*" -t app.wat " +*/ options;
+	String arguments = "\"" + f.getFullPathName() + "\" -b \"" + folder.getChildFile(shortName + ".wasm").getFullPathName() + "\" " + /*" -t app.wat " +*/ options;
 
 	String command = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("Bento/wasm/wasmcompiler.exe").getFullPathName() + " " + arguments;
 
