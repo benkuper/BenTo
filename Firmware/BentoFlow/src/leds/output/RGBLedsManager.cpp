@@ -284,7 +284,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         if (numData >= 4)
             c.nscale8((int)(data[3].floatValue() * 255));
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
-        fillAll(c);
+        fillAll(c, true);
         return true;
     }
     else if (checkCommand(command, "range", numData, 5))
@@ -293,7 +293,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         CRGB c((int)(data[0].floatValue() * 255), (int)(data[1].floatValue() * 255), (int)(data[2].floatValue() * 255));
         if (hasAlpha)
             c.nscale8((int)(data[3].floatValue() * 255));
-        fillRange(c, data[hasAlpha ? 4 : 3].floatValue(), data[hasAlpha ? 5 : 4].floatValue());
+        fillRange(c, data[hasAlpha ? 4 : 3].floatValue(), data[hasAlpha ? 5 : 4].floatValue(), true);
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         return true;
     }
@@ -303,7 +303,7 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         CRGB c((int)(data[0].floatValue() * 255), (int)(data[1].floatValue() * 255), (int)(data[2].floatValue() * 255));
         if (hasAlpha)
             c.nscale8((int)(data[3].floatValue() * 255));
-        point(c, data[hasAlpha ? 4 : 3].floatValue(), data[hasAlpha ? 5 : 4].floatValue());
+        point(c, data[hasAlpha ? 4 : 3].floatValue(), data[hasAlpha ? 5 : 4].floatValue(), true);
         sendEvent(RGBLedsEvent(RGBLedsEvent::ASK_FOCUS));
         return true;
     }
@@ -343,9 +343,9 @@ void RGBLedsManager::dimLayer(float v, int layer) {
 }
 
 
-void RGBLedsManager::fillAll(CRGB c, int layer)
+void RGBLedsManager::fillAll(CRGB c, bool doClear, int layer)
 {
-    fillRange(c, 0, 1, false, layer);
+    fillRange(c, 0, 1, doClear, layer);
 }
 
 void RGBLedsManager::fillRange(CRGB c, float start, float end, bool doClear, int layer)

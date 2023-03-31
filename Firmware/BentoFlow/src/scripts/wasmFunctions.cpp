@@ -60,7 +60,7 @@ m3ApiRawFunction(m3_fillLeds)
 {
     m3ApiGetArg(uint32_t, color);
     // MainManager::instance->leds.setMode(LedManager::Mode::Stream);
-    MainManager::instance->leds.rgbManager.fillAll(CRGB(color), LED_SCRIPT_LAYER);
+    MainManager::instance->leds.rgbManager.fillAll(CRGB(color), false, LED_SCRIPT_LAYER);
 
     m3ApiSuccess();
 }
@@ -71,7 +71,7 @@ m3ApiRawFunction(m3_fillLedsRGB)
     m3ApiGetArg(uint32_t, g);
     m3ApiGetArg(uint32_t, b);
     // MainManager::instance->leds.setMode(LedManager::Mode::Stream);
-    MainManager::instance->leds.rgbManager.fillAll(CRGB((uint8_t)r, (uint8_t)g, (uint8_t)b), LED_SCRIPT_LAYER);
+    MainManager::instance->leds.rgbManager.fillAll(CRGB((uint8_t)r, (uint8_t)g, (uint8_t)b), false, LED_SCRIPT_LAYER);
 
     m3ApiSuccess();
 }
@@ -82,7 +82,7 @@ m3ApiRawFunction(m3_fillLedsHSV)
     m3ApiGetArg(uint32_t, s);
     m3ApiGetArg(uint32_t, v);
     // MainManager::instance->leds.setMode(LedManager::Mode::Stream);
-    MainManager::instance->leds.rgbManager.fillAll(CHSV((uint8_t)h, (uint8_t)s, (uint8_t)v), LED_SCRIPT_LAYER);
+    MainManager::instance->leds.rgbManager.fillAll(CHSV((uint8_t)h, (uint8_t)s, (uint8_t)v), false, LED_SCRIPT_LAYER);
 
     m3ApiSuccess();
 }

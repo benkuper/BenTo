@@ -9,9 +9,9 @@ void LedHelpers::clear(CRGB *leds, int numLeds)
 #endif
 }
 
-void LedHelpers::fillAll(CRGB *leds, int numLeds, CRGB c)
+void LedHelpers::fillAll(CRGB *leds, int numLeds, CRGB c, bool doClear)
 {
-    LedHelpers::fillRange(leds, numLeds, c, 0, 1);
+    LedHelpers::fillRange(leds, numLeds, c, 0, 1, doClear);
 }
 
 void LedHelpers::fillRange(CRGB *leds, int numLeds, CRGB c, float start, float end, bool doClear)
