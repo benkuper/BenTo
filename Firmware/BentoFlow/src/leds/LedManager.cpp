@@ -68,6 +68,11 @@ void LedManager::update()
 #endif
 }
 
+void LedManager::showBaseOnOutLayer() {
+    memcpy(rgbManager.leds[LED_OUT_LAYER], rgbManager.leds[LED_BASE_LAYER], LED_COUNT * sizeof(CRGB));
+    FastLED.show();
+}
+
 void LedManager::setMode(Mode m)
 {
     NDBG("LED Set mode " + String((int)m));

@@ -508,6 +508,7 @@ void MainManager::fileEvent(const FileEvent &e)
     {
 #ifdef LED_COUNT
         leds.sysLedMode.showUploadProgress(e.data.floatValue());
+        leds.showBaseOnOutLayer();
 #endif
     }
     else if (e.type == FileEvent::UploadComplete)

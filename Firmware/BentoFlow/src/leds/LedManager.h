@@ -53,4 +53,5 @@ public:
 
     bool handleCommand(String command, var *data, int numData) override;
     void timerEvent(const TimerEvent &e);
+    void showBaseOnOutLayer();
 };

@@ -103,12 +103,6 @@ void SystemLedMode::showUploadProgress(float value)
    else LedHelpers::clear(leds, numLeds);
    LedHelpers::fillRange(leds, numLeds, CHSV(curPage*40,255,255), 0, uploadProgress, false);
    LedHelpers::point(leds, numLeds, CRGB::White, uploadProgress, .1f, false);
-
-#if !defined LEDS_SEPARATE_CHANNELS && !defined LED_USE_DMX
-   FastLED.show(); //force here because no update in leds when uploading apparently
-   FastLED.delay(1);
-#endif
-
 #endif
 
 }
