@@ -48,6 +48,14 @@ m3ApiRawFunction(m3_clearLeds)
     m3ApiSuccess();
 }
 
+m3ApiRawFunction(m3_dimLeds)
+{
+    m3ApiGetArg(float, v);
+    MainManager::instance->leds.rgbManager.dimLayer(v, LED_SCRIPT_LAYER);
+
+    m3ApiSuccess();
+}
+
 m3ApiRawFunction(m3_fillLeds)
 {
     m3ApiGetArg(uint32_t, color);
@@ -103,6 +111,7 @@ m3ApiRawFunction(m3_getLed)
 
     m3ApiReturn(0)
 }
+
 
 m3ApiRawFunction(m3_setLedRGB)
 {

@@ -54,6 +54,7 @@ public:
 
     //Helpers
     void clear(int layer = LED_BASE_LAYER);
+    void dimLayer(float v, int layer = LED_BASE_LAYER);
     void fillAll(CRGB c, int layer = LED_BASE_LAYER);
     void fillRange(CRGB c, float start, float end, bool clear = true, int layer = LED_BASE_LAYER);
     void point(CRGB c, float pos, float radius, bool clear = true, int layer = LED_BASE_LAYER);

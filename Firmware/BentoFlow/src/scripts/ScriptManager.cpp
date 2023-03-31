@@ -191,6 +191,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "printInt", "v(i)", &m3_printInt);
 
     m3_LinkRawFunction(module, arduino, "clearLeds", "v()", &m3_clearLeds);
+    m3_LinkRawFunction(module, arduino, "dimLeds", "v(f)", &m3_dimLeds);
     m3_LinkRawFunction(module, arduino, "fillLeds", "v(i)", &m3_fillLeds);
     m3_LinkRawFunction(module, arduino, "fillLedsRGB", "v(iii)", &m3_fillLedsRGB);
     m3_LinkRawFunction(module, arduino, "fillLedsHSV", "v(iii)", &m3_fillLedsHSV);

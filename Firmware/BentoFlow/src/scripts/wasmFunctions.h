@@ -11,6 +11,7 @@ m3ApiRawFunction(m3_arduino_delay);
 m3ApiRawFunction(m3_printFloat);
 m3ApiRawFunction(m3_printInt);
 m3ApiRawFunction(m3_clearLeds);
+m3ApiRawFunction(m3_dimLeds);
 m3ApiRawFunction(m3_fillLeds);
 m3ApiRawFunction(m3_fillLedsRGB);
 m3ApiRawFunction(m3_fillLedsHSV);

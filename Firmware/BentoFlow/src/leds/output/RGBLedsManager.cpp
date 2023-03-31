@@ -334,6 +334,15 @@ void RGBLedsManager::clear(int layer)
 #endif // LED_COUNT
 }
 
+
+void RGBLedsManager::dimLayer(float v, int layer) {
+#ifdef LED_COUNT
+    for (int i = 0; i < LED_COUNT; i++)
+        leds[layer][i] = leds[layer][i].scale8((uint8_t)(v*255));
+#endif // LED_COUNT    
+}
+
+
 void RGBLedsManager::fillAll(CRGB c, int layer)
 {
     fillRange(c, 0, 1, false, layer);
@@ -361,7 +370,6 @@ void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear, int laye
 void RGBLedsManager::setLed(int index, CRGB c, int layer)
 {
 #ifdef LED_COUNT
-
     if (index < 0 || index >= LED_COUNT)
         return;
     leds[layer][index] = c;
