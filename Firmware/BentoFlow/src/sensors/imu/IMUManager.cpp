@@ -429,10 +429,13 @@ void IMUManager::computeThrow()
 void IMUManager::computeActivity()
 {
   float maxLinearAccel = max(max(abs(linearAccel[0]), abs(linearAccel[1])), abs(linearAccel[2]));
-  maxLinearAccel = (((maxLinearAccel - 0) * (1 - 0)) / (40 - 0)) + 0; // remap to 0..1 range
-  maxLinearAccel = min(maxLinearAccel, (float)1.0);
+  maxLinearAccel = (maxLinearAccel < 15) ? 0 : maxLinearAccel;
+  maxLinearAccel = (((maxLinearAccel - 15) * (1 - 0)) / (20 - 5)) + 0; // remap to 0..1 range
+  maxLinearAccel = max(maxLinearAccel, 0.0f);
+  maxLinearAccel = min(maxLinearAccel, 1.0f);
 
-  activity = prevActivity + (maxLinearAccel - prevActivity) * 0.1;
+  float smoothValue = (maxLinearAccel > prevActivity) ? 0.025 : 0.1;
+  activity = prevActivity + (maxLinearAccel - prevActivity) * smoothValue;
   prevActivity = activity;
 }
 
