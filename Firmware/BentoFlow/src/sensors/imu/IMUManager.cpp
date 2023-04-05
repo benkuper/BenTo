@@ -477,6 +477,10 @@ void IMUManager::setEnabled(bool value)
 void IMUManager::calibrate()
 {
   yawOffset = -originalYaw;
+
+  prefs.begin(name.c_str());
+  prefs.putFloat("yawOffset", yawOffset);
+  prefs.end();
 }
 
 void IMUManager::shutdown()
@@ -569,7 +573,6 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
   else if (checkCommand(command, "calibrate", numData, 0))
   {
     calibrate();
-    prefs.putFloat("yawOffset", yawOffset);
     return true;
   }
 #endif
