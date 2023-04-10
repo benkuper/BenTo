@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Timeline/TimelineIncludes.h"
+
 LightBlockClipManager::LightBlockClipManager(LightBlockLayer * layer) :
 	LayerBlockManager(layer),
 	lightBlockLayer(layer)
