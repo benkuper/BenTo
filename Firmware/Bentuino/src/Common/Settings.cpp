@@ -30,7 +30,7 @@ bool Settings::saveSettings()
     serializeJson(settings, test);
     DBG("SETTINGS Json serialized and packed : " + String(settingsSize));
     DBG(test);
-    
+
     prefs.clear();
     if (s == 0)
     {
@@ -42,6 +42,14 @@ bool Settings::saveSettings()
     prefs.putBytes("settings", bytes, s);
 
     DBG("Settings saved.");
+    return true;
+}
+
+bool Settings::clearSettings()
+{
+    prefs.clear();
+    settings.clear();
+    DBG("Settings cleared.");
     return true;
 }
 

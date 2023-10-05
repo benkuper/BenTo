@@ -7,13 +7,13 @@ bool initInternalMemory();
 
 SPIClass spiSD;
 bool useInternalMemory;
-Parameter * sdEnPin;
-Parameter * sdEnVal;
-Parameter * sdSCK;
-Parameter * sdMiso;
-Parameter * sdMosi;
-Parameter * sdCS;
-Parameter * sdSpeed;
+Parameter sdEnPin{ "sdEnPin", 0, var(), var(), true};
+Parameter sdEnVal{ "sdEnVal", 0, var(), var(), true};
+Parameter sdSCK{ "sdSCK", 0, var(), var(), true};
+Parameter sdMiso{ "sdMiso", 0, var(), var(), true};
+Parameter sdMosi{ "sdMosi", 0, var(), var(), true};
+Parameter sdCS{ "sdCS", 0, var(), var(), true};
+Parameter sdSpeed{ "sdSpeed", 27000000, var(), var(), true};
 
 File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
 void deleteFileIfExists(String path);

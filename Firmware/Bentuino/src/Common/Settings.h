@@ -10,6 +10,7 @@ public:
     
     static bool loadSettings();
     static bool saveSettings();
+    static bool clearSettings();
 
     static var getVal(JsonObject o, const String& name, var defaultVal);
 };

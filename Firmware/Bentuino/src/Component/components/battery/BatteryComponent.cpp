@@ -2,7 +2,7 @@ ImplementSingleton(BatteryComponent);
 
 bool BatteryComponent::initInternal(JsonObject o)
 {
-    sendFeedback = AddParameter("sendFeedback", true);
+    AddAndSetParameter(sendFeedback);
     return true;
 }
 

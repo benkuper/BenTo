@@ -14,8 +14,6 @@ ImplementSingleton(WebServerComponent)
 
 void WebServerComponent::updateInternal()
 {
-    if (!enabled->boolValue())
-        return;
     server.handleClient();
 }
 
@@ -31,7 +29,7 @@ void WebServerComponent::onEnabledChanged()
 
 void WebServerComponent::setupConnection()
 {
-    bool shouldConnect = enabled->boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
+    bool shouldConnect = enabled.boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
 
     if (shouldConnect)
     {

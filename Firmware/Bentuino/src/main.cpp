@@ -9,7 +9,10 @@ RootComponent root("root");
 void setup()
 {
 	root.init();
-	delay(1000);
+
+    DBG("Device is init, free heap " + String(ESP.getFreeHeap()) + " / " + String(ESP.getMinFreeHeap()));
+	delay(500);
+
 	//s.load("test");
 }
 
@@ -19,15 +22,15 @@ void loop()
 }
 
 
-#ifndef LED_PIN
-#define LED_PIN             13
-#endif
+// #ifndef LED_PIN
+// #define LED_PIN             13
+// #endif
 
-#define WASM_STACK_SLOTS    1024
-#define NATIVE_STACK_SIZE   (32*1024)
+// #define WASM_STACK_SLOTS    1024
+// #define NATIVE_STACK_SIZE   (32*1024)
 
-// For (most) devices that cannot allocate a 64KiB wasm page
-#define WASM_MEMORY_LIMIT   4096
+// // For (most) devices that cannot allocate a 64KiB wasm page
+// #define WASM_MEMORY_LIMIT   4096
 
 
 // unsigned char app_wasm[] = {

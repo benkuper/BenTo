@@ -1,16 +1,16 @@
 #pragma once
 
 #define TRAIL_MAX 20
-#define NATIVE_STACK_SIZE (32 * 1024)
+#define IMU_NATIVE_STACK_SIZE (32 * 1024)
 
 DeclareComponent(IMU, "imu", )
 
     Adafruit_BNO055 bno;
-Parameter *isConnected;
-Parameter *sendLevel;
-Parameter* orientationSendRate;
-Parameter *sdaPin;
-Parameter *sclPin;
+Parameter isConnected { "isConnected", false };
+Parameter sendLevel { "sendLevel", 0, 0, 3, true};
+Parameter orientationSendRate {"orientationSendRate", 50, var(), var(), true};
+Parameter sdaPin {"sdaPin", IMU_DEFAULT_SDA, var(), var(), true};
+Parameter sclPin {"sclPin", IMU_DEFAULT_SCL, var(), var(), true};
 
 long timeSinceOrientationLastSent;
 

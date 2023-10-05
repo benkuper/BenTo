@@ -1,50 +1,86 @@
 #pragma once
 
 #define LEDSTRIP_NUM_USER_LAYERS 3
+#define USE_BAKELAYER 0
+#define USE_STREAMLAYER 1
+#define USE_SCRIPTLAYER 0
+#define USE_SYSTEMLAYER 1
 
-DeclareComponent(LedStrip, "ledstrip", )
+// DeclareComponent(LedStrip, "ledstrip", )
+class LedStripComponent : public Component
+{
+public:
+    LedStripComponent(const String &name = "ledstrip", bool enabled = true) : Component(getTypeString(), enabled)
+#if USE_BAKELAYER
+                                                                              ,
+                                                                              bakeLayer(this)
+#endif
+#if USE_STREAMLAYER
+                                                                              ,
+                                                                              streamLayer(this)
+#endif
+#if USE_SCRIPTLAYER
+                                                                              ,
+                                                                              scriptLayer(this)
+#endif
+#if USE_SYSTEMLAYER
+                                                                              ,
+                                                                              systemLayer(this)
+#endif
+    {
+    }
 
-Parameter * dataPin;
-Parameter * count;
-Parameter * clkPin;
-Parameter * enPin;
+    ~LedStripComponent() {}
+    virtual String getTypeString() const override { return "ledstrip"; }
 
-Parameter * brightness;
+    Parameter count{"count", LED_DEFAULT_COUNT, var(), var(), true};
+    Parameter dataPin{"dataPin", LED_DEFAULT_DATA_PIN, var(), var(), true};
+    Parameter clkPin{"clkPin", LED_DEFAULT_CLK_PIN, var(), var(), true};
+    Parameter enPin{"enPin", LED_DEFAULT_EN_PIN, var(), var(), true};
 
-//mapping
-Parameter * invertStrip;
+    Parameter brightness{"brightness", LED_DEFAULT_BRIGHTNESS, 0, 1, true};
 
-Color *colors;
+    // mapping
+    Parameter invertStrip{"invertStrip", LED_DEFAULT_INVERT_DIRECTION, var(), var(), true};
 
-// user layers, may be more than one later
-LedStripBakeLayer *bakeLayer;
-LedStripStreamLayer *streamLayer;
-LedStripScriptLayer *scriptLayer;
 
-// on top of all
-LedStripSystemLayer *systemLayer;
+    Color colors[LED_MAX_COUNT];
 
-LedStripLayer *userLayers[LEDSTRIP_NUM_USER_LAYERS];
+    // user layers, may be more than one later
+#if USE_BAKELAYER
+    LedStripBakeLayer bakeLayer;
+#endif
+#if USE_STREAMLAYER
+    LedStripStreamLayer streamLayer;
+#endif
+#if USE_SCRIPTLAYER
+    LedStripScriptLayer scriptLayer;
+#endif
+#if USE_SYSTEMLAYER
+    LedStripSystemLayer systemLayer;
+#endif
 
-Adafruit_NeoPixel *neoPixelStrip;
-Adafruit_DotStar * dotStarStrip;
+    LedStripLayer *userLayers[LEDSTRIP_NUM_USER_LAYERS];
 
-bool initInternal(JsonObject o) override;
-void updateInternal() override;
-void clearInternal() override;
+    Adafruit_NeoPixel *neoPixelStrip;
+    Adafruit_DotStar *dotStarStrip;
 
-void onParameterEventInternal(const ParameterEvent &e) override;
-void onEnabledChanged() override;
+    bool initInternal(JsonObject o) override;
+    void updateInternal() override;
+    void clearInternal() override;
 
-void setStripPower(bool value);
+    void onParameterEventInternal(const ParameterEvent &e) override;
+    void onEnabledChanged() override;
 
-// Layer functions
-void processLayer(LedStripLayer *layer);
+    void setStripPower(bool value);
 
-// Color functions
-void clearColors();
-void showLeds();
+    // Layer functions
+    void processLayer(LedStripLayer *layer);
 
-int ledMap(int index) const;
+    // Color functions
+    void clearColors();
+    void showLeds();
 
-EndDeclareComponent
+    int ledMap(int index) const;
+
+    EndDeclareComponent

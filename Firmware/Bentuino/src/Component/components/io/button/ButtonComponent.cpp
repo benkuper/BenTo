@@ -2,7 +2,7 @@ bool ButtonComponent::initInternal(JsonObject o)
 {
     bool result = IOComponent::initInternal(o);
 
-    isSystem = addParameter("isSystem", false);
+    AddAndSetParameter(isSystem);
     
     debounceCount = 0;
     multiPressCount = 0;
@@ -17,7 +17,7 @@ void ButtonComponent::updateInternal()
 {
     IOComponent::updateInternal();
 
-    if (value->boolValue())
+    if (value.boolValue())
     {
         if (!isLongPressed && millis() > timeAtPress + LONGPRESS_TIME)
         {
@@ -47,12 +47,12 @@ void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
 {
     IOComponent::onParameterEventInternal(e);
 
-    if (e.parameter == value)
+    if (e.parameter == &value)
     {
         isLongPressed = false;
         isVeryLongPressed = false;
 
-        if (value->boolValue())
+        if (value.boolValue())
         {
             timeAtPress = millis();
             multiPressCount++;

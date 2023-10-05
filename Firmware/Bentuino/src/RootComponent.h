@@ -1,32 +1,34 @@
-//#define NUM_SYSTEM_COMPONENTS 6
+#pragma once
 
 DeclareComponentSingleton(Root, "root", )
 
-String deviceID;
+const String deviceID = getDeviceID();
+Parameter deviceName{"deviceName", deviceID, var(), var(), true};
 
 // system
-CommunicationComponent * comm;
-WifiComponent * wifi;
-FilesComponent * files;
-WebServerComponent * server;
-ScriptComponent *script;
+CommunicationComponent comm;
+WifiComponent wifi;
+FilesComponent files;
+WebServerComponent server;
+ScriptComponent script;
 
-BatteryComponent * battery;
-SequenceComponent * sequence;
+BatteryComponent battery;
+SequenceComponent sequence;
 
-//users
-ButtonComponent * button;
-IMUComponent * imu;
-LedStreamReceiverComponent * streamReceiver;
+LedStreamReceiverComponent streamReceiver;
+
+// users
 LedStripComponent *strip;
-ServoComponent * servo;
-StepperComponent * stepper;
+ButtonComponent *button;
+IMUComponent *imu;
+ServoComponent *servo;
+StepperComponent *stepper;
 
 // IOComponent * ioComponents[16];
 
-//Needs a single structure
+// Needs a single structure
 
-//Behaviour
+// Behaviour
 Timer<5> timer;
 long timeAtShutdown;
 
@@ -39,12 +41,16 @@ void restart();
 void powerdown();
 
 void saveSettings();
+void clearSettings();
 
 void onChildComponentEvent(const ComponentEvent &e) override;
 
-bool handleCommandInternal(const String & command, var * data, int numData) override;
+bool handleCommandInternal(const String &command, var *data, int numData) override;
 
 bool isShuttingDown() const { return timeAtShutdown > 0; }
-//const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};
+
+String getDeviceID() const;
+
+// const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};
 
 EndDeclareComponent

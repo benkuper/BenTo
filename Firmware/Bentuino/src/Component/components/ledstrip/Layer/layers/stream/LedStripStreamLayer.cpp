@@ -2,6 +2,9 @@ ImplementSingleton(LedStreamReceiverComponent);
 
 bool LedStripStreamLayer::initInternal(JsonObject o)
 {
+    LedStripLayer::initInternal(o);
+
+    delay(100);
     LedStreamReceiverComponent::instance->registerLayer(this);
 
     return true;
@@ -9,8 +12,6 @@ bool LedStripStreamLayer::initInternal(JsonObject o)
 
 void LedStripStreamLayer::updateInternal()
 {
-    if (!enabled->boolValue())
-        return;
 }
 
 void LedStripStreamLayer::clearInternal()
@@ -23,31 +24,30 @@ void LedStripStreamLayer::clearInternal()
 
 bool LedStreamReceiverComponent::initInternal(JsonObject o)
 {
-    udpIsInit = false;
-    receiveRate = addParameter("receiveRate", 50, 1, 200);
+    serverIsInit = false;
+    AddAndSetParameter(receiveRate);
     byteIndex = 0;
 
-    useArtnet = addParameter("useArtnet", false);
-
+    AddAndSetParameter(useArtnet);
     artnet.setArtDmxCallback(&LedStreamReceiverComponent::onDmxFrame);
     return true;
 }
 
 void LedStreamReceiverComponent::updateInternal()
 {
+    if(!serverIsInit) return;
 
-    if (!enabled->boolValue() || !udpIsInit)
-        return;
-
-    if (useArtnet->boolValue())
+    if (useArtnet.boolValue())
     {
+        // DBG("Artnet read");
         artnet.read();
     }
     else
     {
+        // DBG("UDP Read");
         long curTime = millis();
 
-        if (curTime > lastReceiveTime + (1000 / receiveRate->intValue()))
+        if (curTime > lastReceiveTime + (1000 / receiveRate.intValue()))
         {
             lastReceiveTime = curTime;
             receiveUDP();
@@ -107,29 +107,30 @@ void LedStreamReceiverComponent::onEnabledChanged()
 
 void LedStreamReceiverComponent::setupConnection()
 {
-    bool shouldConnect = enabled->boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
+    bool shouldConnect = enabled.boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
 
-    udpIsInit = false;
+    serverIsInit = false;
 
     if (shouldConnect)
     {
-        NDBG("Start Receive Led Stream on UDP " + String(LEDSTREAM_RECEIVE_PORT));
 
-        if (useArtnet->boolValue())
+        if (useArtnet.boolValue())
         {
+            NDBG("Start Receive Led Stream on Artnet");
             artnet.begin();
         }
         else
         {
-            udp.begin(8888);
+            NDBG("Start Receive Led Stream on UDP " + String(LEDSTREAM_RECEIVE_PORT));
+            udp.begin(LEDSTREAM_RECEIVE_PORT);
             udp.flush();
         }
 
-        udpIsInit = true;
+        serverIsInit = true;
     }
     else
     {
-        NDBG("Stop receiving UDP Led Stream");
+        NDBG("Stop receiving");
         udp.flush();
         udp.stop();
         // artnet.stop();
@@ -138,13 +139,13 @@ void LedStreamReceiverComponent::setupConnection()
 
 void LedStreamReceiverComponent::onParameterEventInternal(const ParameterEvent &e)
 {
-    if (e.parameter == useArtnet)
+    if (e.parameter == &useArtnet)
     {
-        if (enabled->boolValue())
+        if (enabled.boolValue())
         {
             NDBG("Start Receive Led Stream on UDP " + String(LEDSTREAM_RECEIVE_PORT));
 
-            if (useArtnet->boolValue())
+            if (useArtnet.boolValue())
             {
                 udp.flush();
                 udp.stop();
@@ -179,7 +180,8 @@ void LedStreamReceiverComponent::unregisterLayer(LedStripStreamLayer *layer)
 
 void LedStreamReceiverComponent::onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t *data)
 {
-    int stripIndex = universe;
+    // DBG("Received Artnet "+String(universe));
+    int stripIndex = universe - 1;
 
     if (stripIndex < instance->layers.size())
     {

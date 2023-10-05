@@ -1,9 +1,9 @@
 #pragma once
 
-DeclareComponent(Servo, "servo",)
+DeclareComponent(Servo, "servo", )
 
-Parameter * pin;
-Parameter * position;
+Parameter pin{"pin", 0, var(), var(), true};
+Parameter position{"position", 0.f, 0.f, 1.f};
 
 Servo servo;
 

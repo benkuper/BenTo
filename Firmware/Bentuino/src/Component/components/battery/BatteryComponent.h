@@ -1,7 +1,7 @@
 #pragma once
 DeclareComponentSingleton(Battery, "battery", )
 
-    Parameter *sendFeedback;
+DeclareConfigParameter(sendFeedback, true);
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;

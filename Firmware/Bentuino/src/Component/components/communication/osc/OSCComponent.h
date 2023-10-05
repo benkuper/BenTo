@@ -4,38 +4,38 @@
 #define OSC_REMOTE_PORT 10000
 #define OSC_PING_TIMEOUT 5000
 
-DeclareComponentSingleton(OSC, "osc",)
+DeclareComponentSingleton(OSC, "osc", )
 
     WiFiUDP udp;
-    bool udpIsInit;
-    Parameter * remoteHost;
+bool udpIsInit;
+Parameter remoteHost{"remoteHost", "", var(), var(), true};
 
-    //Ping
-    bool pingEnabled; //only activate ping check if received a first ping
-    long timeSinceLastReceivedPing;
-    Parameter * isAlive;
+// Ping
+bool pingEnabled; // only activate ping check if received a first ping
+long timeSinceLastReceivedPing;
+Parameter isAlive{"isAlive", false};
 
-    bool initInternal(JsonObject o) override;
-    void updateInternal() override;
-    void clearInternal() override;
+bool initInternal(JsonObject o) override;
+void updateInternal() override;
+void clearInternal() override;
 
-    void onEnabledChanged() override;
+void onEnabledChanged() override;
 
-    void setupConnection();
+void setupConnection();
 
-    void receiveOSC();
-    void processMessage(OSCMessage &m);
+void receiveOSC();
+void processMessage(OSCMessage &m);
 
-    void saveRemoteHost(String ip);
+void saveRemoteHost(String ip);
 
-    void sendMessage(OSCMessage &m);
-    void sendMessage(String address);
-    void sendMessage(const String &source, const String &command, var *data, int numData);
+void sendMessage(OSCMessage &m);
+void sendMessage(String address);
+void sendMessage(const String &source, const String &command, var *data, int numData);
 
-    //Helper
-    var OSCArgumentToVar(OSCMessage &m, int index);
+// Helper
+var OSCArgumentToVar(OSCMessage &m, int index);
 
-    DeclareComponentEventTypes(MessageReceived);
-    DeclareComponentEventNames("MessageReceived");    
-    
+DeclareComponentEventTypes(MessageReceived);
+DeclareComponentEventNames("MessageReceived");
+
 EndDeclareComponent

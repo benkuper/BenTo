@@ -4,8 +4,9 @@ ImplementSingleton(WifiComponent)
 {
     state = Off;
 
-    ssid = AddConfigParameter("ssid", "");
-    pass = AddConfigParameter("pass", "");
+    AddAndSetParameter(ssid);
+    AddAndSetParameter(pass);
+    AddAndSetParameter(apOnNoWifi);
 
     connect();
 
@@ -92,8 +93,8 @@ void WifiComponent::connect()
     WiFi.setTxPower(WIFI_POWER_19dBm);
 #endif
 
-    NDBG("Connecting to " + ssid->stringValue() + " : " + pass->stringValue() + "...");
-    WiFi.begin(ssid->stringValue().c_str(), pass->stringValue().c_str());
+    NDBG("Connecting to " + ssid.stringValue() + " : " + pass.stringValue() + "...");
+    WiFi.begin(ssid.stringValue().c_str(), pass.stringValue().c_str());
 
     setState(Connecting);
 }

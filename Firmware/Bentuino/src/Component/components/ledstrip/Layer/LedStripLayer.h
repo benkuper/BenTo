@@ -24,14 +24,14 @@ public:
     LedStripLayer(const String &name, Type t, LedStripComponent * strip);
     ~LedStripLayer();
 
-    void initColors();
+    virtual bool initInternal(JsonObject o) override;
 
     LedStripComponent * strip;
     int numLeds;
     Type type;
-    Parameter * blendMode;
+    Parameter blendMode {"blendMode", Add, var(), var(), true};
     
-    Color * colors;
+    Color colors[LED_MAX_COUNT];
 
     //Helper functions
     void clearColors();

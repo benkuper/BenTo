@@ -1,7 +1,7 @@
 #pragma once
 
 #define MAX_CHILD_COMPONENTS 16
-#define MAX_CHILD_CONTROLLABLES 16
+#define MAX_CHILD_PARAMETERS 16
 //#define MAX_EVENT_TYPES 16
 
 class Component : public EventBroadcaster<ComponentEvent>
@@ -13,7 +13,6 @@ public:
                                                           numComponents(0),
                                                           numParameters(0)
     {
-        enabled = addParameter("enabled", _enabled, var(), var(), true);
     }
 
     virtual ~Component() {}
@@ -22,14 +21,14 @@ public:
     String name;
 
     bool isInit;
-    Parameter *enabled;
+    Parameter enabled{"enabled", true,var(), var(),true};
 
     Component *parentComponent;
 
     Component *components[MAX_CHILD_COMPONENTS];
     uint8_t numComponents;
 
-    Parameter *parameters[MAX_CHILD_COMPONENTS];
+    Parameter *parameters[MAX_CHILD_PARAMETERS];
     uint8_t numParameters;
 
     virtual String getComponentEventName(uint8_t type) const { return "[noname]"; }
@@ -65,6 +64,7 @@ public:
 
     Component *getComponentWithName(const String &name);
 
+    void addParameter(Parameter* param);
     Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
     Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
     Parameter * getParameterWithName(const String &name);

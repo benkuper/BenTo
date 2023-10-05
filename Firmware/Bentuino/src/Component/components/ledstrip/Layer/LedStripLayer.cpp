@@ -1,26 +1,24 @@
 LedStripLayer::LedStripLayer(const String &name, Type t, LedStripComponent *strip) : Component(name),
                                                                                      strip(strip),
-                                                                                     type(t),
-                                                                                     colors(nullptr)
+                                                                                     type(t)
 {
-    blendMode = addParameter("blendMode", Add);
-    initColors();
 }
 
 LedStripLayer::~LedStripLayer()
 {
-    free(colors);
 }
 
-void LedStripLayer::initColors()
+bool LedStripLayer::initInternal(JsonObject o)
 {
-    if (colors != nullptr)
-        free(colors);
+    AddAndSetParameter(blendMode);
 
-    numLeds = strip->count->intValue();
-    colors = (Color *)malloc(numLeds * sizeof(Color));
+    memset(colors, 0, LED_MAX_COUNT * sizeof(Color));
+
+    numLeds = strip->count.intValue();
     for (int i = 0; i < numLeds; i++)
         colors[i] = Color(0, 0, 0, 0);
+
+    return true;
 }
 
 // Helpers

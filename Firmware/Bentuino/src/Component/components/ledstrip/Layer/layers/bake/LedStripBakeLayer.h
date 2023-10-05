@@ -3,7 +3,7 @@
 class LedStripBakeLayer : public LedStripLayer
 {
 public:
-    LedStripBakeLayer(const String &name, LedStripComponent *strip) : LedStripLayer(name, LedStripLayer::Bake, strip) {}
+    LedStripBakeLayer(LedStripComponent *strip) : LedStripLayer("bakeLayer", LedStripLayer::Bake, strip) {}
     ~LedStripBakeLayer() {}
 
     File curFile;
@@ -11,8 +11,8 @@ public:
     StaticJsonDocument<200> metaData;
 
     int frameSize;
-    
-    // info    
+
+    // info
     int fps;
     float totalTime;
     long totalFrames;
@@ -21,8 +21,8 @@ public:
     Color groupColor;
 
     // control
-    Parameter * idMode;
-    Parameter * loopShow;
+    Parameter idMode{"idMode", false, var(), var(), true};
+    Parameter loop{"loop", false, var(), var(), true};
 
     // playing
     bool isPlaying;
@@ -48,7 +48,7 @@ public:
     void stop();
     void togglePlayPause();
 
-    bool handleCommandInternal(const String& command, var *data, int numData) override;
+    bool handleCommandInternal(const String &command, var *data, int numData) override;
 
     // Time computation helpers
     long msToBytePos(long t) const { return msToFrame(t) * frameSize; } // rgba

@@ -1,27 +1,27 @@
 bool IMUComponent::initInternal(JsonObject o)
 {
-    isConnected = AddParameter("connected", false);
-    isConnected->readOnly = true;
+    AddParameter(isConnected);
+    isConnected.readOnly = true;
 
-    sendLevel = AddParameter("sendLevel", 0);
+    AddAndSetParameter(sendLevel);
 
-    orientationSendRate = AddConfigParameter("orientationSendRate", 50);
-    sdaPin = AddConfigParameter("sdaPin", 0);
-    sclPin = AddConfigParameter("sclPin", 0);
+    AddAndSetParameter(orientationSendRate);
+    AddAndSetParameter(sdaPin);
+    AddAndSetParameter(sclPin);
 
-    if (sdaPin->intValue() == 0 || sclPin->intValue() == 0)
+    if (sdaPin.intValue() == 0 || sclPin.intValue() == 0)
     {
         String npin;
-        if (sdaPin->intValue() == 0)
+        if (sdaPin.intValue() == 0)
             npin += "SDA,";
-        if (sclPin->intValue() == 0)
+        if (sclPin.intValue() == 0)
             npin += "SCL";
 
         NDBG(npin + " pins not defined, not using IMU");
         return false;
     }
 
-    Wire.begin(sdaPin->intValue(), sclPin->intValue());
+    Wire.begin(sdaPin.intValue(), sclPin.intValue());
 
     // Init values
     accelThresholds[0] = .8f;
@@ -59,16 +59,17 @@ void IMUComponent::updateInternal()
     imuLock = true;
 
     long curTime = millis();
-    int orientationSendMS = 1000 / orientationSendRate->intValue();
+    int orientationSendMS = 1000 / orientationSendRate.intValue();
 
     if (curTime > timeSinceOrientationLastSent + orientationSendMS)
     {
-        if ((int)sendLevel->intValue() >= 1)
+        int sLevel = (int)sendLevel.intValue();
+        if (sLevel >= 1)
         {
             // NDBG("Orientation send "+
             var oData[3] { orientation[0],orientation[1],orientation[2] };
             sendEvent(OrientationUpdate, oData, 3);
-            if ((int)sendLevel->val >= 2)
+            if (sLevel >= 2)
             {
                 var aData[3] { accel[0],accel[1],accel[2] };
                 sendEvent(AccelUpdate, aData, 3);
@@ -98,7 +99,7 @@ void IMUComponent::clearInternal()
 
 void IMUComponent::onEnabledChanged()
 {
-    if (enabled->boolValue())
+    if (enabled.boolValue())
         startIMUTask();
     else
         shouldStopRead = true;
@@ -109,7 +110,7 @@ void IMUComponent::startIMUTask()
     hasNewData = false,
     shouldStopRead = false;
     imuLock = false;
-    xTaskCreate(&IMUComponent::readIMUStatic, "imu", NATIVE_STACK_SIZE, this, 1, NULL);
+    xTaskCreate(&IMUComponent::readIMUStatic, "imu", IMU_NATIVE_STACK_SIZE, this, 1, NULL);
 }
 
 void IMUComponent::readIMUStatic(void *_imu)
@@ -165,7 +166,7 @@ bool IMUComponent::setupBNO()
 
 void IMUComponent::readIMU()
 {
-    if (!enabled->boolValue())
+    if (!enabled.boolValue())
         return;
 
     if (imuLock)

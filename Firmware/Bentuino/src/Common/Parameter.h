@@ -37,10 +37,10 @@ public:
     bool isConfig;
     bool readOnly;
 
-    bool boolValue();
-    int intValue();
-    float floatValue();
-    String stringValue();
+    bool boolValue() const;
+    int intValue() const;
+    float floatValue() const;
+    String stringValue() const;
 
     bool hasRange();
 

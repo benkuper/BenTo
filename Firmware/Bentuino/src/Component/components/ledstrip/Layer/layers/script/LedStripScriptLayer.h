@@ -3,10 +3,10 @@
 class LedStripScriptLayer : public LedStripLayer
 {
 public:
-    LedStripScriptLayer(const String &name, LedStripComponent *strip) : LedStripLayer(name, LedStripLayer::ScriptType, strip), script(this) {}
+    LedStripScriptLayer(LedStripComponent *strip) : LedStripLayer("scriptLayer", LedStripLayer::ScriptType, strip) {}
     ~LedStripScriptLayer() {}
 
-    Script script;
+    Script* script;
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;

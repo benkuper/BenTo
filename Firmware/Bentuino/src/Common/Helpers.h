@@ -24,6 +24,7 @@
 
 // Component Helpers
 #define AddComponent(name, comp, Type, enabled) comp = addComponent<Type##Component>(name, enabled, o["components"][name]);
+#define AddOwnedComponent(comp) addComponent(comp, o["components"][(comp)->name]);
 #define AddDefaultComponentListener(comp) comp->addListener(std::bind(&Component::onChildComponentEvent, this, std::placeholders::_1));
 
 // > Component Class definition
@@ -34,17 +35,17 @@
     {                                                        \
     public:
 
-#define DeclareSubComponent(ParentClass, ClassPrefix, Type, Derives)                                    \
-    DeclareComponentClass(ParentClass, ClassPrefix, Derives)                                            \
-        ClassPrefix##Component(const String &name, bool enabled = true) : ParentClass(name, enabled) {} \
-    ~ClassPrefix##Component() {}                                                                        \
+#define DeclareSubComponent(ParentClass, ClassPrefix, Type, Derives)                                                  \
+    DeclareComponentClass(ParentClass, ClassPrefix, Derives)                                                          \
+        ClassPrefix##Component(const String &name = Type, bool enabled = true) : ParentClass(name, enabled) {} \
+    ~ClassPrefix##Component() {}                                                                                      \
     virtual String getTypeString() const override { return Type; }
 
-#define DeclareComponentSingleton(ClassPrefix, Type, Derives)                                                              \
-    DeclareComponentClass(Component, ClassPrefix, Derives)                                                                 \
-        DeclareSingleton(ClassPrefix##Component)                                                                           \
-            ClassPrefix##Component(const String &name, bool enabled = true) : Component(name, enabled) { InitSingleton() } \
-    ~ClassPrefix##Component() { DeleteSingleton() }                                                                        \
+#define DeclareComponentSingleton(ClassPrefix, Type, Derives)                                                                            \
+    DeclareComponentClass(Component, ClassPrefix, Derives)                                                                               \
+        DeclareSingleton(ClassPrefix##Component)                                                                                         \
+            ClassPrefix##Component(const String &name = Type, bool enabled = true) : Component(name, enabled) { InitSingleton() } \
+    ~ClassPrefix##Component() { DeleteSingleton() }                                                                                      \
     virtual String getTypeString() const override { return Type; }
 
 #define DeclareComponent(ClassPrefix, Type, Derives) DeclareSubComponent(Component, ClassPrefix, Type, Derives)
@@ -84,15 +85,23 @@
 #define AddDefaultParameterListener(Class, param) param->addListener(std::bind(&Class::onParameterEvent, this, std::placeholders::_1));
 #define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
 
-#define AddParameter(name, val) addParameter(name, val)
-#define AddRangeParameter(name, val, minVal, maxVal, isConfig) addParameter(name, val, minVal, maxVal, false)
+#define DeclareParameter(param, val, isConfig) Parameter param {#param, val, var(), var(),isConfig}
+#define DeclareRangeParameter(param, val, min, max, isConfig) Parameter param {#param, val,  min, max,isConfig}
+#define DeclareConfigParameter(param, val) DeclareParameter(param, val, true)
+#define DeclareRangeConfigParameter(param, val) DeclareRangeParameter(param, val, min, max, true)
+
+#define AddParameter(param) addParameter(&param)
+#define AddAndSetParameter(param) { addParameter(&param); param.set(Settings::getVal(o, #param , param.val)); }
+
+// #define AddParameter(name, val) addParameter(name, val)
+// #define AddRangeParameter(name, val, minVal, maxVal, isConfig) addParameter(name, val, minVal, maxVal, false)
 // Only config parameters check the settings
-#define AddConfigParameter(name, val) addParameter(name, Settings::getVal(o, name, val), var(), var(), true)
-#define AddRangeConfigParameter(name, val, minVal, maxVal) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, true)
+// #define AddConfigParameter(name, val) addParameter(name, Settings::getVal(o, name, val), var(), var(), true)
+// #define AddRangeConfigParameter(name, val, minVal, maxVal) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, true)
 
 // Script
 
-#define LinkScriptFunctionsStart                                                                     \
+#define LinkScriptFunctionsStart                                                           \
     virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) override \
     {
 #define LinkScriptFunctionsEnd }

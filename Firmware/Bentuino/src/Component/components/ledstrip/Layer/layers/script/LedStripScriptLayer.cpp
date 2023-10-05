@@ -1,5 +1,7 @@
 bool LedStripScriptLayer::initInternal(JsonObject o)
 {
+    LedStripLayer::initInternal(o);
+    script = new Script(this);
     return true;
 }
 
@@ -14,16 +16,16 @@ void LedStripScriptLayer::clearInternal()
 
 bool LedStripScriptLayer::handleCommandInternal(const String &command, var *data, int numData)
 {
-    if (CheckCommand("load", 1))
-    {
-        script.load(data->stringValue());
-        return true;
-    }
-    else if (CheckCommand("stop", 0))
-    {
-        script.stop();
-        return true;
-    }
+    // if (CheckCommand("load", 1))
+    // {
+    //     script.load(data->stringValue());
+    //     return true;
+    // }
+    // else if (CheckCommand("stop", 0))
+    // {
+    //     script.stop();
+    //     return true;
+    // }
 
     return false;
 }

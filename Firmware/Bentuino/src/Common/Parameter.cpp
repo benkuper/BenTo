@@ -13,10 +13,10 @@ Parameter::Parameter(const String &name, var val, var _minVal, var _maxVal, bool
 
 Parameter::~Parameter() {}
 
-bool Parameter::boolValue() { return val.boolValue(); }
-int Parameter::intValue() { return val.intValue(); }
-float Parameter::floatValue() { return val.floatValue(); }
-String Parameter::stringValue() { return val.stringValue(); }
+bool Parameter::boolValue() const { return val.boolValue(); }
+int Parameter::intValue() const { return val.intValue(); }
+float Parameter::floatValue() const { return val.floatValue(); }
+String Parameter::stringValue() const { return val.stringValue(); }
 
 bool Parameter::hasRange()
 {

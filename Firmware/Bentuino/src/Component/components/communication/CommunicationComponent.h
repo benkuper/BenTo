@@ -1,8 +1,8 @@
 #pragma once
 DeclareComponentSingleton(Communication, "comm",)
 
-    SerialComponent * serial;
-    OSCComponent * osc;
+    SerialComponent serial;
+    OSCComponent osc;
     
     bool initInternal(JsonObject o) override;
 

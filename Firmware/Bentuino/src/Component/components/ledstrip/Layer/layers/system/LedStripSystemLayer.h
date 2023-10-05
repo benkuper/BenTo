@@ -3,7 +3,7 @@
 class LedStripSystemLayer : public LedStripLayer
 {
 public:
-    LedStripSystemLayer(const String &name, LedStripComponent *strip) : LedStripLayer(name, LedStripLayer::System, strip) {}
+    LedStripSystemLayer(LedStripComponent *strip) : LedStripLayer("systemLayer", LedStripLayer::System, strip) {}
     ~LedStripSystemLayer() {}
 
     bool initInternal(JsonObject o) override;

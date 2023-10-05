@@ -1,41 +1,35 @@
 ImplementSingleton(RootComponent);
 
-
 bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
 
     timeAtShutdown = 0;
 
-    // Generate deviceID
-    byte mac[6];
-    WiFi.macAddress(mac);
-
-    deviceID = "";
-    for (int i = 0; i < 6; i++)
-        deviceID += (i > 0 ? "-" : "") + String(mac[i], HEX);
-
-    deviceID.toUpperCase();
-
     Settings::loadSettings();
     JsonObject o = Settings::settings.as<JsonObject>();
+    
+    String test;
+    serializeJson(o, test);
+    DBG("init settings");
+    DBG(test);
 
-    AddComponent("comm", comm, Communication, true);
+    AddParameter(deviceName);
 
-    AddComponent("streamReceiver", streamReceiver, LedStreamReceiver, true);
-    AddComponent("strip", strip, LedStrip, true);
+    AddOwnedComponent(&comm);
 
-    AddComponent("battery", battery, Battery, true);
-    AddComponent("sequence", sequence, Sequence, true);
+    AddOwnedComponent(&battery);
+    AddOwnedComponent(&sequence);
 
+    AddOwnedComponent(&wifi);
+    AddOwnedComponent(&files);
+    AddOwnedComponent(&script);
+    AddOwnedComponent(&server);
+    AddOwnedComponent(&streamReceiver);
+
+    AddComponent("strip", strip, LedStrip, false);
+    // AddComponent("button", button, Button, false);
     AddComponent("imu", imu, IMU, false);
-
-    AddComponent("wifi", wifi, Wifi, true);
-    AddComponent("files", files, Files, true);
-    AddComponent("script", script, Script, true);
-    AddComponent("server", server, WebServer, true);
-
-    AddComponent("button", button, Button, false);
 
     // for(int i=0;i<16;i++)
     // {
@@ -44,7 +38,6 @@ bool RootComponent::initInternal(JsonObject)
 
     // AddComponent("servo", servo, Servo, true);
     // AddComponent("stepper", stepper, Stepper, true);
-
 
     return true;
 }
@@ -56,14 +49,14 @@ void RootComponent::updateInternal()
 
 void RootComponent::restart()
 {
-   // saveSettings();
+    // saveSettings();
 
     ESP.restart();
 }
 
 void RootComponent::shutdown()
 {
-   // saveSettings();
+    // saveSettings();
 
     timeAtShutdown = millis();
     timer.in(1000, [](void *) -> bool
@@ -74,7 +67,7 @@ void RootComponent::powerdown()
 {
     clear();
 
-    //NDBG("Sleep now, baby.");
+    // NDBG("Sleep now, baby.");
 
 #ifdef WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup((gpio_num_t)WAKEUP_BUTTON, WAKEUP_BUTTON_STATE);
@@ -98,12 +91,20 @@ void RootComponent::saveSettings()
     Settings::saveSettings();
 }
 
+void RootComponent::clearSettings()
+{
+    Settings::clearSettings();
+    NDBG("Settings cleared, will reboot now.");
+    delay(500);
+    restart();
+}
+
 void RootComponent::onChildComponentEvent(const ComponentEvent &e)
 {
     if (isShuttingDown())
         return;
 
-    if (e.component == comm)
+    if (e.component == &comm)
     {
         if (e.type == CommunicationComponent::MessageReceived)
         {
@@ -121,25 +122,25 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             return;
         }
     }
-    else if (e.component == wifi)
+    else if (e.component == &wifi)
     {
         if (e.type == WifiComponent::ConnectionStateChanged)
         {
-            comm->osc->setupConnection();
-            server->setupConnection();
-            // streamReceiver->setupConnection();
+            comm.osc.setupConnection();
+            server.setupConnection();
+            streamReceiver.setupConnection();
         }
     }
     else if (e.component == button)
     {
-        if (button->isSystem->boolValue())
+        if (button->isSystem.boolValue())
         {
             switch (e.type)
             {
             case ButtonComponent::ShortPress:
             {
-                if (wifi->state == WifiComponent::Connecting)
-                    wifi->disable();
+                if (wifi.state == WifiComponent::Connecting)
+                    wifi.disable();
             }
             break;
 
@@ -150,7 +151,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
         }
     }
 
-   comm->sendEventFeedback(e);
+    comm.sendEventFeedback(e);
 }
 
 bool RootComponent::handleCommandInternal(const String &command, var *data, int numData)
@@ -161,13 +162,17 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
         restart();
     else if (command == "stats")
     {
-        DBG("Heap "+String(ESP.getFreeHeap())+" free / "+String(ESP.getHeapSize())+" total");
-        DBG("Free Stack size  "+String((int)uxTaskGetStackHighWaterMark(NULL))+" free");
-        //comm->sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
+        DBG("Heap " + String(ESP.getFreeHeap()) + " free / " + String(ESP.getHeapSize()) + " total");
+        DBG("Free Stack size  " + String((int)uxTaskGetStackHighWaterMark(NULL)) + " free");
+        // comm->sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
     }
     else if (command == "saveSettings")
     {
         saveSettings();
+    }
+    else if (command == "factoryReset")
+    {
+        clearSettings();
     }
     else
     {
@@ -175,4 +180,17 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
     }
 
     return true;
+}
+
+String RootComponent::getDeviceID() const
+{
+    byte mac[6];
+    WiFi.macAddress(mac);
+
+    String d = "";
+    for (int i = 0; i < 6; i++)
+        d += (i > 0 ? "-" : "") + String(mac[i], HEX);
+
+    d.toUpperCase();
+    return d;
 }

@@ -1,18 +1,31 @@
 bool Component::init(JsonObject o)
 {
-    enabled->set(Settings::getVal(o, "enabled", enabled->boolValue()));
+    AddAndSetParameter(enabled);
 
     isInit = initInternal(o);
+
+     //init all parameters
+    // for (int i = 0; i < numParameters; i++)
+    // {
+    //     parameters[i]->set(Settings::getVal(o, parameters[i]->name, parameters[i]->val));
+    // }
+
     if (isInit)
         NDBG(F("Init OK"));
     else
         NDBG(F("Init Error."));
+
+   
 
     return isInit;
 }
 
 void Component::update()
 {
+    if (!enabled.boolValue())
+        return;
+
+    // NDBG("Update");
     for (int i = 0; i < numComponents; i++)
         components[i]->update();
 
@@ -36,12 +49,18 @@ void Component::clear()
     numParameters = 0;
 }
 
+void Component::addParameter(Parameter *p)
+{
+    parameters[numParameters] = p;
+    numParameters++;
+    AddDefaultParameterListener(Component, p);
+}
+
 Parameter *Component::addParameter(const String &name, var val, var minVal, var maxVal, bool isConfig)
 {
     Parameter *p = new Parameter(name, val, minVal, maxVal, isConfig);
-    parameters[numParameters] = p;
-    numParameters++;
-    AddDefaultParameterListener(Component, p) return p;
+    addParameter(p);
+    return p;
 }
 
 Parameter *Component::addConfigParameter(const String &name, var val, var minVal, var maxVal)
@@ -51,7 +70,7 @@ Parameter *Component::addConfigParameter(const String &name, var val, var minVal
 
 void Component::onParameterEvent(const ParameterEvent &e)
 {
-    if (e.parameter == enabled)
+    if (e.parameter == &enabled)
         onEnabledChanged();
 
     onParameterEventInternal(e);

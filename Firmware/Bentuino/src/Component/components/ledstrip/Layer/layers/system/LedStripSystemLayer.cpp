@@ -1,11 +1,12 @@
 bool LedStripSystemLayer::initInternal(JsonObject o)
 {
-    // blendMode = Alpha;
+    LedStripLayer::initInternal(o);
     return true;
 }
 
 void LedStripSystemLayer::updateInternal()
 {
+
     clearColors();
     updateWifiStatus();
     updateShutdown();
@@ -34,7 +35,7 @@ void LedStripSystemLayer::updateWifiStatus()
     float t = (millis() - WifiComponent::instance->timeAtConnect) / 1000.0f;
     float pos = cos((t + PI) * 5) * .5f + .5f;
 
-    if (strip->invertStrip)
+    if (strip->invertStrip.boolValue())
         pos = 1 - pos;
 
     float radius = .3 - (cos(pos * PI * 2) * .5f + .5f) * .25f;
@@ -90,7 +91,7 @@ void LedStripSystemLayer::updateShutdown()
     c = c.withMultipliedAlpha(min(t * 2, 1.f));
     float end = constrain((1 - t) * 2, 0, 1);
 
-    if (strip->invertStrip)
+    if (strip->invertStrip.boolValue())
         fillRange(c, 1-end, 1);
     else
         fillRange(c, 0, end);

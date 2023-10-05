@@ -6,35 +6,46 @@
 #include <ESP8266WiFi.h>
 #endif
 
-DeclareComponentSingleton(Wifi, "wifi",)
+DeclareComponentSingleton(Wifi, "wifi", )
 
-    enum ConnectionState { Off, Connecting, Connected, ConnectionError, Disabled, Hotspot, PingAlive, PingDead, CONNECTION_STATES_MAX };
-    const String connectionStateNames[CONNECTION_STATES_MAX] {"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot", "PingAlive","PingDead" };
+    enum ConnectionState { Off,
+                           Connecting,
+                           Connected,
+                           ConnectionError,
+                           Disabled,
+                           Hotspot,
+                           PingAlive,
+                           PingDead,
+                           CONNECTION_STATES_MAX };
+                           
+const String connectionStateNames[CONNECTION_STATES_MAX]{"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot", "PingAlive", "PingDead"};
 
-    const long timeBetweenTries = 500; //ms
-    const long connectionTimeout = 10000; //ms
-    long timeAtConnect;
-    long lastConnectTime;
-    long timeAtStateChange;
+const long timeBetweenTries = 500;    // ms
+const long connectionTimeout = 10000; // ms
+long timeAtConnect;
+long lastConnectTime;
+long timeAtStateChange;
 
-    ConnectionState state;
+ConnectionState state;
 
-    Parameter * ssid;
-    Parameter * pass;
+Parameter ssid{"ssid", "", var(), var(), true};
+Parameter pass{"pass", "", var(), var(), true};
+Parameter apOnNoWifi{"apOnNoWifi", true, var(), var(), true};
 
-    bool initInternal(JsonObject o) override;
-    void updateInternal() override;
-    void clearInternal() override;
+bool initInternal(JsonObject o) override;
+void updateInternal() override;
+void clearInternal() override;
 
-    void connect();
-    void disconnect();
+void connect();
+void disconnect();
+void setAP();
 
-    void disable();
-    void setState(ConnectionState s);
+void disable();
+void setState(ConnectionState s);
 
-    String getIP() const;
+String getIP() const;
 
-    DeclareComponentEventTypes(ConnectionStateChanged);
-    DeclareComponentEventNames("ConnectionStateChanged");
+DeclareComponentEventTypes(ConnectionStateChanged);
+DeclareComponentEventNames("ConnectionStateChanged");
 
 EndDeclareComponent

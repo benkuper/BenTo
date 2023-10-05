@@ -1,5 +1,7 @@
 bool LedStripBakeLayer::initInternal(JsonObject o)
 {
+    LedStripLayer::initInternal(o);
+
     frameSize = numLeds * 4;
 
     fps = 0;
@@ -7,8 +9,8 @@ bool LedStripBakeLayer::initInternal(JsonObject o)
     totalFrames = 0;
     groupID = -1;
     localID = -1;
-    idMode = AddParameter("idMode",false);
-    loopShow = AddParameter("loop", false);
+    AddAndSetParameter(idMode);
+    AddAndSetParameter(loop);
     isPlaying = false;
     curTimeMs = 0;
     prevTimeMs = 0;
@@ -23,7 +25,7 @@ void LedStripBakeLayer::updateInternal()
     if (!curFile)
         return;
 
-    if (idMode->boolValue())
+    if (idMode.boolValue())
     {
         showIdFrame();
         return;
@@ -54,7 +56,7 @@ bool LedStripBakeLayer::playFrame()
     if (curFile.available() < frameSize)
     {
         NDBG("End of show");
-        if (loopShow)
+        if (loop.boolValue())
         {
             sendEvent(Looped);
             play(0);
@@ -236,7 +238,7 @@ void LedStripBakeLayer::togglePlayPause()
         play();
 }
 
-bool LedStripBakeLayer::handleCommandInternal(const String& command, var *data, int numData)
+bool LedStripBakeLayer::handleCommandInternal(const String &command, var *data, int numData)
 {
     if (checkCommand(command, "load", numData, 1))
     {

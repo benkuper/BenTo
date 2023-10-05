@@ -11,7 +11,7 @@ class ButtonComponent : public IOComponent
 public:
     ButtonComponent(const String &name, bool _enabled) : IOComponent(name, _enabled) {}
 
-    Parameter *isSystem;
+    DeclareConfigParameter(isSystem, false);
 
     int debounceCount;
     long timeAtPress;
@@ -31,6 +31,6 @@ public:
     LinkScriptFunction(ButtonComponent, getMultipress, i, );
     LinkScriptFunctionsEnd
 
-    DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t) {  return isVeryLongPressed?3:isLongPressed?2:value->intValue(); }
+    DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t) {  return isVeryLongPressed?3:isLongPressed?2:value.intValue(); }
     DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) {  return multiPressCount; }
 };
