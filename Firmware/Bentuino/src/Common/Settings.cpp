@@ -1,5 +1,5 @@
 Preferences Settings::prefs;
-DynamicJsonDocument Settings::settings(32000);
+JsonDoc Settings::settings;
 
 bool Settings::loadSettings()
 {
@@ -16,16 +16,22 @@ bool Settings::loadSettings()
         return false;
     }
 
+    settings["test"] = "super";
+    DBG("Settings loaded "+String(settingsSize));
+
     return true;
 }
 
 bool Settings::saveSettings()
 {
-
+    DBG("Save settings");
     size_t settingsSize = measureMsgPack(settings);
+    DBG("malloc");
     char *bytes = (char *)malloc(settingsSize);
+    DBG("serialize");
     size_t s = serializeMsgPack(settings, bytes, settingsSize);
 
+    DBG("Test here");
     String test;
     serializeJson(settings, test);
     DBG("SETTINGS Json serialized and packed : " + String(settingsSize));

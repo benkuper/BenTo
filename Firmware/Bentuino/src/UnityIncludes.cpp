@@ -44,5 +44,3 @@
 #include "Component/components/servo/ServoComponent.cpp"
 #include "Component/components/stepper/StepperComponent.cpp"
 
-
-#include "RootComponent.cpp"

@@ -4,18 +4,10 @@ bool Component::init(JsonObject o)
 
     isInit = initInternal(o);
 
-     //init all parameters
-    // for (int i = 0; i < numParameters; i++)
-    // {
-    //     parameters[i]->set(Settings::getVal(o, parameters[i]->name, parameters[i]->val));
-    // }
-
     if (isInit)
         NDBG(F("Init OK"));
     else
         NDBG(F("Init Error."));
-
-   
 
     return isInit;
 }
@@ -39,13 +31,13 @@ void Component::clear()
     for (int i = 0; i < numComponents; i++)
     {
         components[i]->clear();
-        delete components[i];
+        // delete components[i];
     }
 
     numComponents = 0;
 
-    for (int i = 0; i < numParameters; i++)
-        delete parameters[i];
+    // for (int i = 0; i < numParameters; i++)
+        // delete parameters[i];
     numParameters = 0;
 }
 

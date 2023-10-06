@@ -2,13 +2,12 @@ bool ButtonComponent::initInternal(JsonObject o)
 {
     bool result = IOComponent::initInternal(o);
 
-    AddAndSetParameter(isSystem);
-    
     debounceCount = 0;
-    multiPressCount = 0;
     timeAtPress = 0;
-    isLongPressed = false;
-    isVeryLongPressed = false;
+
+    AddAndSetParameter(multiPressCount);
+    AddAndSetParameter(isLongPressed);
+    AddAndSetParameter(isVeryLongPressed);
 
     return result;
 }
@@ -19,25 +18,25 @@ void ButtonComponent::updateInternal()
 
     if (value.boolValue())
     {
-        if (!isLongPressed && millis() > timeAtPress + LONGPRESS_TIME)
+        if (!isLongPressed.boolValue() && millis() > timeAtPress + LONGPRESS_TIME)
         {
-            isLongPressed = true;
+            isLongPressed.set(true);
             sendEvent(LongPress);
         }
 
-        if (!isVeryLongPressed && millis() > timeAtPress + VERYLONGPRESS_TIME)
+        if (!isVeryLongPressed.boolValue() && millis() > timeAtPress + VERYLONGPRESS_TIME)
         {
-            isVeryLongPressed = true;
+            isVeryLongPressed.set(true);
             sendEvent(VeryLongPress);
         }
     }
 
     if (millis() > timeAtPress + MULTIPRESS_TIME)
     {
-        if (multiPressCount > 0)
+        if (multiPressCount.boolValue() > 0)
         {
-            multiPressCount = 0;
-            var data[1]{multiPressCount};
+            multiPressCount.set(0);
+            var data[1]{multiPressCount.boolValue()};
             sendEvent(MultiPress, data, 1);
         }
     }
@@ -49,14 +48,14 @@ void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
 
     if (e.parameter == &value)
     {
-        isLongPressed = false;
-        isVeryLongPressed = false;
+        isLongPressed.set(false);
+        isVeryLongPressed.set(false);
 
         if (value.boolValue())
         {
             timeAtPress = millis();
-            multiPressCount++;
-            var data[1]{multiPressCount};
+            multiPressCount.set(multiPressCount.boolValue() + 1);
+            var data[1]{multiPressCount.boolValue()};
             sendEvent(MultiPress, data, 1);
         }
         else

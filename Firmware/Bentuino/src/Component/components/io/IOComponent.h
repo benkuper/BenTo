@@ -7,9 +7,10 @@ DeclareComponent(IO, "io", )
                    D_OUTPUT,
                    A_OUTPUT };
 
-Parameter pin{"pin", 0, var(), var(), true};
-Parameter mode{"mode", D_INPUT, var(), var(), true};
-Parameter inverted{"inverted", false, var(), var(), true};
+DeclareConfigParameter(pin, 0);
+DeclareConfigParameter(mode, D_INPUT);
+DeclareConfigParameter(inverted, false);
+
 int pwmChannel;
 static int pwmChannelCount;
 
@@ -23,15 +24,15 @@ virtual void clearInternal() override;
 virtual void setupPin();
 void updatePin();
 
-LinkScriptFunctionsStart
-    LinkScriptFunction(IOComponent, get, f, );
-LinkScriptFunction(IOComponent, set, , f);
-LinkScriptFunctionsEnd
+// LinkScriptFunctionsStart
+//     LinkScriptFunction(IOComponent, get, f, );
+// LinkScriptFunction(IOComponent, set, , f);
+// LinkScriptFunctionsEnd
 
-DeclareScriptFunctionReturn0(IOComponent, get, float)
-{
-    return value.floatValue();
-}
-DeclareScriptFunctionVoid1(IOComponent, set, float) { return value.set(arg1); }
+// DeclareScriptFunctionReturn0(IOComponent, get, float)
+// {
+//     return value.floatValue();
+// }
+// DeclareScriptFunctionVoid1(IOComponent, set, float) { return value.set(arg1); }
 
 EndDeclareComponent

@@ -1,16 +1,19 @@
 #pragma once
 
+
 DeclareComponentSingleton(Root, "root", )
 
 const String deviceID = getDeviceID();
-Parameter deviceName{"deviceName", deviceID, var(), var(), true};
+DeclareConfigParameter(deviceName, deviceID);
+DeclareConfigParameter(wakeUpButton, POWER_WAKEUP_BUTTON);
+DeclareConfigParameter(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
 
 // system
 CommunicationComponent comm;
 WifiComponent wifi;
 FilesComponent files;
 WebServerComponent server;
-ScriptComponent script;
+// ScriptComponent script;
 
 BatteryComponent battery;
 SequenceComponent sequence;
@@ -18,13 +21,21 @@ SequenceComponent sequence;
 LedStreamReceiverComponent streamReceiver;
 
 // users
-LedStripComponent *strip;
-ButtonComponent *button;
-IMUComponent *imu;
-ServoComponent *servo;
-StepperComponent *stepper;
+LedStripComponent strips[LEDSTRIP_MAX_COUNT];
+ButtonComponent buttons[BUTTON_MAX_COUNT];
+IOComponent ios[IO_MAX_COUNT];
 
-// IOComponent * ioComponents[16];
+#ifdef USE_IMU
+IMUComponent imu;
+#endif
+
+#ifdef USE_SERVER
+ServoComponent *servo;
+#endif
+
+#ifdef USE_STEPPER
+StepperComponent *stepper;
+#endif
 
 // Needs a single structure
 

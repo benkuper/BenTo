@@ -11,8 +11,7 @@ void setup()
 	root.init();
 
     DBG("Device is init, free heap " + String(ESP.getFreeHeap()) + " / " + String(ESP.getMinFreeHeap()));
-	delay(500);
-
+	//delay(500);
 	//s.load("test");
 }
 

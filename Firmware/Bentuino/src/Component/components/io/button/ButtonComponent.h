@@ -9,15 +9,14 @@
 class ButtonComponent : public IOComponent
 {
 public:
-    ButtonComponent(const String &name, bool _enabled) : IOComponent(name, _enabled) {}
-
-    DeclareConfigParameter(isSystem, false);
+    ButtonComponent(const String &name = "button", bool _enabled = false) : IOComponent(name, _enabled) {}
 
     int debounceCount;
     long timeAtPress;
-    int multiPressCount;
-    bool isLongPressed;
-    bool isVeryLongPressed;
+
+    DeclareParameter(multiPressCount, 0, false);
+    DeclareParameter(isLongPressed, false, false);
+    DeclareParameter(isVeryLongPressed, false, false);
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
@@ -26,11 +25,11 @@ public:
     DeclareComponentEventTypes(ShortPress, LongPress, VeryLongPress, MultiPress);
     DeclareComponentEventNames("ShortPress", "LongPress", "VeryLongPress", "MultiPress");
 
-    LinkScriptFunctionsStart
-    LinkScriptFunction(ButtonComponent, getState, i, );
-    LinkScriptFunction(ButtonComponent, getMultipress, i, );
-    LinkScriptFunctionsEnd
+    // LinkScriptFunctionsStart
+    // LinkScriptFunction(ButtonComponent, getState, i, );
+    // LinkScriptFunction(ButtonComponent, getMultipress, i, );
+    // LinkScriptFunctionsEnd
 
-    DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t) {  return isVeryLongPressed?3:isLongPressed?2:value.intValue(); }
-    DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) {  return multiPressCount; }
+    // DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t) {  return isVeryLongPressed.boolValue()?3:isLongPressed.boolValue()?2:value.intValue(); }
+    // DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) {  return multiPressCount.boolValue(); }
 };

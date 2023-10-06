@@ -56,18 +56,18 @@ bool LedStripComponent::initInternal(JsonObject o)
         dotStarStrip = new Adafruit_DotStar(count.intValue(), dataPin.intValue(), clkPin.intValue(), DOTSTAR_BGR);
         dotStarStrip->begin();
         dotStarStrip->setBrightness(brightness.floatValue() * LED_MAX_BRIGHTNESS * 255);
-        dotStarStrip->fill(dotStarStrip->Color(50, 100, 150));
-        dotStarStrip->show();
-        delay(300);
+        // dotStarStrip->fill(dotStarStrip->Color(50, 100, 150));
+        // dotStarStrip->show();
+        // delay(300);
     }
     else
     {
         neoPixelStrip = new Adafruit_NeoPixel(count.intValue(), dataPin.intValue(), NEO_GRB + NEO_KHZ800);
         neoPixelStrip->begin();
         neoPixelStrip->setBrightness(brightness.floatValue() * LED_MAX_BRIGHTNESS * 255);
-        neoPixelStrip->fill(neoPixelStrip->Color(50, 100, 150));
-        neoPixelStrip->show();
-        delay(300);
+        // neoPixelStrip->fill(neoPixelStrip->Color(50, 100, 150));
+        // neoPixelStrip->show();
+        // delay(300);
     }
 
     return true;

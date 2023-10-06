@@ -1,3 +1,5 @@
+#include "UnityIncludes.h"
+
 ImplementSingleton(RootComponent);
 
 bool RootComponent::initInternal(JsonObject)
@@ -8,36 +10,46 @@ bool RootComponent::initInternal(JsonObject)
 
     Settings::loadSettings();
     JsonObject o = Settings::settings.as<JsonObject>();
-    
-    String test;
-    serializeJson(o, test);
-    DBG("init settings");
-    DBG(test);
-
-    AddParameter(deviceName);
 
     AddOwnedComponent(&comm);
+    AddParameter(deviceName);
 
     AddOwnedComponent(&battery);
     AddOwnedComponent(&sequence);
 
     AddOwnedComponent(&wifi);
     AddOwnedComponent(&files);
-    AddOwnedComponent(&script);
+    // AddOwnedComponent(&script);
     AddOwnedComponent(&server);
     AddOwnedComponent(&streamReceiver);
 
-    AddComponent("strip", strip, LedStrip, false);
-    // AddComponent("button", button, Button, false);
-    AddComponent("imu", imu, IMU, false);
+    for (int i = 0; i < LEDSTRIP_MAX_COUNT; i++)
+    {
+        strips[i].name = "strip" + String(i + 1);
+        AddOwnedComponent(&strips[i]);
+    }
+    for (int i = 0; i < BUTTON_MAX_COUNT; i++)
+    {
+        buttons[i].name ="button" + String(i + 1);
+        AddOwnedComponent(&buttons[i]);
+    }
 
-    // for(int i=0;i<16;i++)
-    // {
-    //     AddComponent("io"+String(i+1), ioComponents[i], IO, false);
-    // }
+    for (int i = 0; i < IO_MAX_COUNT; i++)
+    {
+        ios[i].name ="io" + String(i + 1);
+        AddOwnedComponent(&ios[i]);
+    }
+#if USE_IMU
+    AddOwnedComponent(&imu);
+#endif
 
-    // AddComponent("servo", servo, Servo, true);
-    // AddComponent("stepper", stepper, Stepper, true);
+#if USE_SERVO
+    AddOwnedComponent(&servo);
+#endif
+
+#if USE_STEPPER
+    AddOwnedComponent(&stepper);
+#endif
 
     return true;
 }
@@ -69,7 +81,7 @@ void RootComponent::powerdown()
 
     // NDBG("Sleep now, baby.");
 
-#ifdef WAKEUP_BUTTON
+#ifdef POWER_WAKEUP_BUTTON
     esp_sleep_enable_ext0_wakeup((gpio_num_t)WAKEUP_BUTTON, WAKEUP_BUTTON_STATE);
 #elif defined TOUCH_WAKEUP_PIN
     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
@@ -131,25 +143,26 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             streamReceiver.setupConnection();
         }
     }
-    else if (e.component == button)
-    {
-        if (button->isSystem.boolValue())
-        {
-            switch (e.type)
-            {
-            case ButtonComponent::ShortPress:
-            {
-                if (wifi.state == WifiComponent::Connecting)
-                    wifi.disable();
-            }
-            break;
+    // else if (e.component == &buttons[0])
+    // {
+    // Should move to behaviour system
+    //  if (button->isSystem.boolValue())
+    //  {
+    //      switch (e.type)
+    //      {
+    //      case ButtonComponent::ShortPress:
+    //      {
+    //          if (wifi.state == WifiComponent::Connecting)
+    //              wifi.disable();
+    //      }
+    //      break;
 
-            case ButtonComponent::VeryLongPress:
-                shutdown();
-                break;
-            }
-        }
-    }
+    //     case ButtonComponent::VeryLongPress:
+    //         shutdown();
+    //         break;
+    //     }
+    // }
+    // }
 
     comm.sendEventFeedback(e);
 }

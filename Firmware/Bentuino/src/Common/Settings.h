@@ -2,11 +2,13 @@
 
 #include <Preferences.h>
 
+typedef StaticJsonDocument<8000> JsonDoc;
+
 class Settings
 {
 public:
     static Preferences prefs;
-    static DynamicJsonDocument settings;
+    static JsonDoc settings;
     
     static bool loadSettings();
     static bool saveSettings();

@@ -4,7 +4,7 @@ bool LedStripStreamLayer::initInternal(JsonObject o)
 {
     LedStripLayer::initInternal(o);
 
-    delay(100);
+    // delay(100);
     LedStreamReceiverComponent::instance->registerLayer(this);
 
     return true;
