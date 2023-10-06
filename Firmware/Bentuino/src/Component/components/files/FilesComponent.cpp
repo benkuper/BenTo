@@ -51,7 +51,8 @@ bool FilesComponent::initInternal(JsonObject o)
        SD.mkdir("/scripts");
        SD.mkdir("/sequences");
        SD.mkdir("/bake");
-        // listDir("/", 0);
+       SD.mkdir("/server");
+       listDir("/", 1);
     }
     else
     {

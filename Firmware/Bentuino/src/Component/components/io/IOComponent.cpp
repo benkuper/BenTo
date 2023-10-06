@@ -32,7 +32,7 @@ void IOComponent::clearInternal()
 
 void IOComponent::setupPin()
 {
-    if (pin.intValue() != -1)
+    if (pin.intValue() > 0)
     {
         int m = mode.intValue();
 

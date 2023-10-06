@@ -7,7 +7,7 @@ DeclareComponent(IO, "io", )
                    D_OUTPUT,
                    A_OUTPUT };
 
-DeclareConfigParameter(pin, 0);
+DeclareConfigParameter(pin, -1);
 DeclareConfigParameter(mode, D_INPUT);
 DeclareConfigParameter(inverted, false);
 

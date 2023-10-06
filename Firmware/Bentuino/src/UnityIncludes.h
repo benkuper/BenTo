@@ -20,7 +20,8 @@
 #include <SPIFFS.h>
 #include <OSCMessage.h>
 #include <ESPmDNS.h>
-#include <WebServer.h>
+#include <AsyncTCP.h>
+#include <ESPAsyncWebServer.h>
 #include <arduino-timer.h>
 #include <SimplexNoise.h>
 #include <ESP32Servo.h>

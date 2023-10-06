@@ -8,6 +8,7 @@ bool RootComponent::initInternal(JsonObject)
 
     timeAtShutdown = 0;
 
+    // parameters.clear(); // remove enabled in root component
     Settings::loadSettings();
     JsonObject o = Settings::settings.as<JsonObject>();
 
@@ -81,12 +82,12 @@ void RootComponent::powerdown()
 
     // NDBG("Sleep now, baby.");
 
-#ifdef POWER_WAKEUP_BUTTON
-    esp_sleep_enable_ext0_wakeup((gpio_num_t)WAKEUP_BUTTON, WAKEUP_BUTTON_STATE);
-#elif defined TOUCH_WAKEUP_PIN
-    touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
-    esp_sleep_enable_touchpad_wakeup();
-#endif
+if(wakeUpButton.intValue() > 0)
+    esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton.intValue(), wakeUpState.boolValue());
+// #elif defined TOUCH_WAKEUP_PIN
+//     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
+//     esp_sleep_enable_touchpad_wakeup();
+// #endif
 
 #ifdef ESP8266
     ESP.deepSleep(5e6);

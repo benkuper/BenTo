@@ -5,9 +5,9 @@ bool ButtonComponent::initInternal(JsonObject o)
     debounceCount = 0;
     timeAtPress = 0;
 
-    AddAndSetParameter(multiPressCount);
-    AddAndSetParameter(isLongPressed);
-    AddAndSetParameter(isVeryLongPressed);
+    AddParameter(multiPressCount);
+    AddParameter(isLongPressed);
+    AddParameter(isVeryLongPressed);
 
     return result;
 }
