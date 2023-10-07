@@ -6,8 +6,13 @@ bool ButtonComponent::initInternal(JsonObject o)
     timeAtPress = 0;
 
     AddParameter(multiPressCount);
+    multiPressCount.readOnly = true;
+    
     AddParameter(isLongPressed);
+    isLongPressed.readOnly = true;
+
     AddParameter(isVeryLongPressed);
+    isVeryLongPressed.readOnly = true;
 
     return result;
 }
