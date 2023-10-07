@@ -8,7 +8,7 @@ RootComponent root("root");
 void setup()
 {
 	root.init();
-    DBG("Device is init, free heap " + String(ESP.getFreeHeap()) + " / " + String(ESP.getMinFreeHeap()));
+    DBG("Device is init");
 }
 
 void loop()

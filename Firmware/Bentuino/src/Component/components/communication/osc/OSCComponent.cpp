@@ -37,7 +37,7 @@ void OSCComponent::setupConnection()
     udpIsInit = false;
     if (shouldConnect)
     {
-        NDBG("Start OSC Receiver on " + String(OSC_LOCAL_PORT));
+        // NDBG("Start OSC Receiver on " + String(OSC_LOCAL_PORT));
         udp.begin(OSC_LOCAL_PORT);
         udp.flush();
         isAlive.set(true);
@@ -59,7 +59,7 @@ void OSCComponent::setupConnection()
     }
     else
     {
-        NDBG("Stopping Receiver");
+        // NDBG("Stopping Receiver");
         udp.flush();
         udp.stop();
         isAlive.set(false);
@@ -92,7 +92,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
         char hostData[32];
         msg.getString(0, hostData, 32);
 
-        NDBG("Yo received from : " + String(hostData));
+        // NDBG("Yo received from : " + String(hostData));
 
         remoteHost.set(hostData);
 
@@ -201,7 +201,7 @@ OSCMessage OSCComponent::createMessage(const String &source, const String &comma
         case 'b':
             msg.add(data[i].boolValue());
             break;
-            
+
         case 'T':
             msg.add(true);
             break;

@@ -91,12 +91,12 @@ void WebServerComponent::setupConnection()
     if (shouldConnect)
     {
         server.begin();
-        NDBG("HTTP server started");
+        // NDBG("HTTP server started");
     }
     else
     {
         // server.stop();
-        NDBG("HTTP server closed");
+        // NDBG("HTTP server closed");
     }
 }
 

@@ -14,7 +14,7 @@ bool FilesComponent::initInternal(JsonObject o)
 
     if (sdEnPin.intValue() > 0)
     {
-        NDBG("Setting SD En Pin " + String(sdEnPin.intValue()) + " to " + String(sdEnVal.intValue()));
+        // NDBG("Setting SD En Pin " + String(sdEnPin.intValue()) + " to " + String(sdEnVal.intValue()));
         pinMode(sdEnPin.intValue(), OUTPUT);
         digitalWrite(sdEnPin.intValue(), sdEnVal.intValue());
     }
@@ -35,7 +35,7 @@ bool FilesComponent::initInternal(JsonObject o)
         return initInternalMemory();
     }
 
-    NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : " + sdSCK.stringValue() + "," + sdMiso.stringValue() + "," + sdMosi.stringValue() + "," + sdCS.stringValue() + "," + sdSpeed.stringValue());
+    // NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : " + sdSCK.stringValue() + "," + sdMiso.stringValue() + "," + sdMosi.stringValue() + "," + sdCS.stringValue() + "," + sdSpeed.stringValue());
     pinMode(sdSCK.intValue(), INPUT_PULLUP);
     pinMode(sdMiso.intValue(), INPUT_PULLUP);
     pinMode(sdMosi.intValue(), INPUT_PULLUP);
@@ -47,12 +47,12 @@ bool FilesComponent::initInternal(JsonObject o)
     if (SD.begin((uint8_t)sdCS.intValue(), spiSD))
     {
       
-       NDBG("SD Card initialized.");
+    //    NDBG("SD Card initialized.");
        SD.mkdir("/scripts");
        SD.mkdir("/sequences");
        SD.mkdir("/bake");
        SD.mkdir("/server");
-       listDir("/", 1);
+    //    listDir("/", 1);
     }
     else
     {
@@ -71,7 +71,7 @@ bool FilesComponent::initInternalMemory()
         NDBG("Error initializing SPIFFS");
         return false;
     }
-    NDBG("SPIFFS initialized.");
+    // NDBG("SPIFFS initialized.");
     return true;
 }
 

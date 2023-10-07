@@ -33,7 +33,7 @@ bool LedStripComponent::initInternal(JsonObject o)
 
     if (enPin.intValue() != 0)
     {
-        NDBG("Setting Led Enable pin : " + String(enPin.intValue()));
+        // NDBG("Setting Led Enable pin : " + String(enPin.intValue()));
         pinMode(enPin.intValue(), OUTPUT);
         digitalWrite(enPin.intValue(), HIGH); // enable LEDs
     }
@@ -52,7 +52,7 @@ bool LedStripComponent::initInternal(JsonObject o)
 
     if (clkPin.intValue() > 0)
     {
-        NDBG("Setup dotstar");
+        // NDBG("Setup dotstar");
         dotStarStrip = new Adafruit_DotStar(count.intValue(), dataPin.intValue(), clkPin.intValue(), DOTSTAR_BGR);
         dotStarStrip->begin();
         dotStarStrip->setBrightness(brightness.floatValue() * LED_MAX_BRIGHTNESS * 255);

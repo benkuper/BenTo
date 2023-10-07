@@ -4,10 +4,10 @@ bool Component::init(JsonObject o)
 
     isInit = initInternal(o);
 
-    if (isInit)
-        NDBG(F("Init OK"));
-    else
+    if (!isInit)
         NDBG(F("Init Error."));
+    // else
+    //     NDBG(F("Init OK"));
 
     return isInit;
 }

@@ -13,7 +13,9 @@ bool RootComponent::initInternal(JsonObject)
     JsonObject o = Settings::settings.as<JsonObject>();
 
     AddOwnedComponent(&comm);
-    AddParameter(deviceName);
+    AddAndSetParameter(deviceName);
+    AddAndSetParameter(wakeUpButton);
+    AddAndSetParameter(wakeUpState);
 
     AddOwnedComponent(&battery);
     AddOwnedComponent(&sequence);

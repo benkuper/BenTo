@@ -33,7 +33,7 @@ void LedStripSystemLayer::updateWifiStatus()
 
     // default behavior (connecting) on which we will add animation for connected behavior
     float t = (millis() - WifiComponent::instance->timeAtConnect) / 1000.0f;
-    float pos = cos((t + PI) * 5) * .5f + .5f;
+    float pos = cos((t + PI/2 + .2f) * 5) * .5f + .5f;
 
     if (strip->invertStrip.boolValue())
         pos = 1 - pos;

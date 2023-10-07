@@ -9,7 +9,9 @@ bool BatteryComponent::initInternal(JsonObject o)
     AddAndSetParameter(sendFeedback);
 
     AddParameter(batteryLevel);
+    batteryLevel.readOnly = true;
     AddParameter(isCharging);
+    isCharging.readOnly = true;
 
     if (batteryPin.intValue() > 0)
     {
