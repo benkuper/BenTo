@@ -2,7 +2,7 @@
 DeclareComponentSingleton(WebServer, "server",)
 
 AsyncWebServer server = AsyncWebServer(80);
-AsyncWebSocket ws = AsyncWebSocket("/ws");
+AsyncWebSocket ws = AsyncWebSocket("/");
 
 class WSPrint : public Print
 {
@@ -22,6 +22,8 @@ WSPrint wsPrint;
 bool isUploading;
 int uploadedBytes;
 File uploadingFile;
+
+StaticJsonDocument<32000> oscQueryDoc;
 
 String tmpExcludeParam = "";//to change with client exclude when AsyncWebServer implements it
 

@@ -8,14 +8,40 @@ ImplementSingleton(WebServerComponent)
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
-    server.on("/", HTTP_GET, [](AsyncWebServerRequest *request)
+    server.addHandler(&ws);
+    server.on("/", HTTP_GET, [&](AsyncWebServerRequest *request)
               {
-        DynamicJsonDocument doc(32000);
-        JsonObject o = doc.to<JsonObject>();
-        RootComponent::instance->fillOSCQueryData(o);
+        oscQueryDoc.clear();
+        JsonObject o = oscQueryDoc.to<JsonObject>();
 
+        if (request->hasArg("HOST_INFO"))
+        {
+            JsonObject eo = o.createNestedObject("EXTENSIONS");
+            eo["ACCESS"] = true;
+            eo["CLIPMODE"] = false;
+            eo["CRITICAL"] = false;
+            eo["RANGE"] = true;
+            eo["TAGS"] = false;
+            eo["TYPE"] = true;
+            eo["UNIT"] = false;
+            eo["VALUE"] = true;
+            eo["LISTEN"] = true;
+            eo["PATH_ADDED"] = true;
+            eo["PATH_REMOVED"] = true;
+            eo["PATH_RENAMED"] = true;
+            eo["PATH_CHANGED"] = false;
+
+            o["NAME"] = RootComponent::instance->deviceName.stringValue();
+            o["OSC_PORT"] = OSC_LOCAL_PORT;
+            o["OSC_TRANSPORT"] = "UDP";
+      
+        }else
+        {
+            RootComponent::instance->fillOSCQueryData(o);
+        }
+                
         String jStr;
-        serializeJson(doc, jStr);
+        serializeJson(oscQueryDoc, jStr);
         request->send(200, "application/json", jStr); });
 
     // server.onNotFound(std::bind(&WebServerComponent::handleNotFound, this));
@@ -37,7 +63,7 @@ ImplementSingleton(WebServerComponent)
     ws.onEvent(std::bind(&WebServerComponent::onWSEvent,
                          this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 
-    server.addHandler(&ws);
+    
 
     return true;
 }

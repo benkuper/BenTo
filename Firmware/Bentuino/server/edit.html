@@ -107,16 +107,17 @@
 
         function initWebSocket() {
             oscWS = new osc.WebSocketPort({
-                url: "ws://" + ip + "/ws",
+                url: "ws://" + ip + "",
                 metadata: true
             });
 
             oscWS.on('message', function (oscMsg) {
-                var p = document.getElementById(oscMsg.address);
+
+                var pid = oscMsg.address.substring(1).replace(/\//g, "-");
+                var p = document.getElementById(pid);
                 // console.log("here", oscMsg, p);
                 var val = oscMsg.args[0].value;
-                if(p != undefined)
-                {
+                if (p != undefined) {
                     processParameterFeedback(p, val);
                 }
             });
@@ -170,29 +171,51 @@
 
         function createParameterEditor(item, level) {
 
+            item.id = item.FULL_PATH.substring(1).replace(/\//g, "-");
+
+            var paramDiv;
             //generate the parameter editor depending on its type
             switch (item.TYPE) {
                 case "i":
-                    return createIntParameterEditor(item, level);
+                    paramDiv = createIntParameterEditor(item, level);
+                    break;
+
                 case "f":
-                    return createFloatParameterEditor(item, level);
+                    paramDiv = createFloatParameterEditor(item, level);
+                    break;
+
                 case "s":
-                    return createStringParameterEditor(item, level);
+                    paramDiv = createStringParameterEditor(item, level);
+                    break;
+
                 case "b":
                 case "T":
                 case "F":
-                    return createBoolParameterEditor(item, level);
+                    paramDiv = createBoolParameterEditor(item, level);
+                    break;
+
 
                 default:
-                    return createDefaultParameterEditor(item, level);
+                    paramDiv = createDefaultParameterEditor(item, level);
+                    break;
+
+
             }
+            
+            if(item.ACCESS == 1) 
+            {
+                paramDiv.querySelector(`#${item.id}`).disabled = true;
+                var pVal = paramDiv.querySelector(`#${item.id}-value`);
+                if(pVal) pVal.disabled = true;
+            }
+            return paramDiv;
         }
 
         function createIntParameterEditor(item, level) {
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
             var range = item.RANGE != undefined ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}` : "";
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="number" ${range} id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "i", this.value)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="number" ${range} id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "i", this.value)'/>`;
             return paramDiv;
         }
 
@@ -201,15 +224,15 @@
             paramDiv.classList.add("parameter");
             var range = item.RANGE != null ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}"` : "";
             var inputType = item.RANGE != null ? "range" : "number";
-            var rangeText = item.RANGE != null? `<input type="text" class="sliderText" id="${item.FULL_PATH}-value" value="${item.VALUE[0]}">`:'';
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="${inputType}" ${range} step="any" id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='this.nextElementSibling.value = parseFloat(this.value).toFixed(3);sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
+            var rangeText = item.RANGE != null ? `<input type="text" class="sliderText" id="${item.id}-value" value="${item.VALUE[0]}">` : '';
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="${inputType}" ${range} step="any" id="${item.id}" value="${item.VALUE[0]}" oninput='this.nextElementSibling.value = parseFloat(this.value).toFixed(3);sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
             return paramDiv;
         }
 
         function createStringParameterEditor(item, level) {
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
             return paramDiv;
         }
 
@@ -217,14 +240,14 @@
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
             var checked = item.VALUE[0] ? "checked" : "";
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="checkbox" id="${item.FULL_PATH}" ${checked} oninput='sendParameterValue("${item.FULL_PATH}", "i", this.checked)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="checkbox" id="${item.id}" ${checked} oninput='sendParameterValue("${item.FULL_PATH}", "i", this.checked)'/>`;
             return paramDiv;
         }
 
         function createDefaultParameterEditor(item, level) {
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>`;
             return paramDiv;
         }
 
@@ -237,11 +260,10 @@
             oscWS.send({ address: command });
         }
 
-        function processParameterFeedback(p, val)
-        {
-            if(p.type == "checkbox") p.checked = val;
+        function processParameterFeedback(p, val) {
+            if (p.type == "checkbox") p.checked = val;
             else p.value = val;
-            if(p.type == "range") p.nextElementSibling.value = parseFloat(p.value).toFixed(3)
+            if (p.type == "range") p.nextElementSibling.value = parseFloat(p.value).toFixed(3)
         }
 
         //Helpers
