@@ -14,6 +14,8 @@
             font-family: system-ui;
             /* text-align: center; */
             padding: 20px;
+
+            color-scheme: dark;
         }
 
         .component-grid.level0 {}
@@ -73,6 +75,20 @@
             width: 80px;
         }
 
+        input[type="checkbox"],
+        input[type="range"] {
+            accent-color: limegreen;
+        }
+
+        input[type="checkbox"]:disabled {
+            accent-color: lightblue;
+        }
+
+        input:disabled
+        {
+            color:lightblue;
+        }
+
         .sliderText {
 
             width: 50px;
@@ -80,6 +96,8 @@
             margin-left: 10px;
         }
     </style>
+
+
 </head>
 
 
@@ -201,12 +219,11 @@
 
 
             }
-            
-            if(item.ACCESS == 1) 
-            {
+
+            if (item.ACCESS == 1) {
                 paramDiv.querySelector(`#${item.id}`).disabled = true;
                 var pVal = paramDiv.querySelector(`#${item.id}-value`);
-                if(pVal) pVal.disabled = true;
+                if (pVal) pVal.disabled = true;
             }
             return paramDiv;
         }
@@ -215,7 +232,7 @@
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
             var range = item.RANGE != undefined ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}` : "";
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="number" ${range} id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "i", this.value)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="number" ${range} id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "i", this.value)'/>`;
             return paramDiv;
         }
 
@@ -225,14 +242,14 @@
             var range = item.RANGE != null ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}"` : "";
             var inputType = item.RANGE != null ? "range" : "number";
             var rangeText = item.RANGE != null ? `<input type="text" class="sliderText" id="${item.id}-value" value="${item.VALUE[0]}">` : '';
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="${inputType}" ${range} step="any" id="${item.id}" value="${item.VALUE[0]}" oninput='this.nextElementSibling.value = parseFloat(this.value).toFixed(3);sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="${inputType}" ${range} step="any" id="${item.id}" value="${item.VALUE[0]}" oninput='this.nextElementSibling.value = parseFloat(this.value).toFixed(3);sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
             return paramDiv;
         }
 
         function createStringParameterEditor(item, level) {
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
             return paramDiv;
         }
 
@@ -240,14 +257,14 @@
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
             var checked = item.VALUE[0] ? "checked" : "";
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="checkbox" id="${item.id}" ${checked} oninput='sendParameterValue("${item.FULL_PATH}", "i", this.checked)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="checkbox" id="${item.id}" ${checked} oninput='sendParameterValue("${item.FULL_PATH}", "i", this.checked)'/>`;
             return paramDiv;
         }
 
         function createDefaultParameterEditor(item, level) {
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>`;
             return paramDiv;
         }
 
