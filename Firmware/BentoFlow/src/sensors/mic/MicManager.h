@@ -1,19 +1,18 @@
 #pragma once
 #include "../../common/Common.h"
 
-#if USE_MIC
+#ifdef HAS_MIC
+
 #include <M5StickCPlus.h>
 #include <driver/i2s.h>
 #include <arduinoFFT.h>
 
-#define PIN_CLK     0
-#define PIN_DATA    34
-#define READ_LEN    (2 * 256)
+#define PIN_CLK 0
+#define PIN_DATA 34
+#define READ_LEN (2 * 256)
 #define GAIN_FACTOR 3
 
 #define RMS_WINDOW 10
-
-#endif
 
 class MicEvent
 {
@@ -40,20 +39,19 @@ public:
     MicManager();
     ~MicManager() {}
 
-    static MicManager* instance;
-    
+    static MicManager *instance;
+
     bool isEnabled;
     bool shouldStopRead;
     float enveloppe;
 
-#if USE_MIC
     uint8_t BUFFER[READ_LEN] = {0};
     uint16_t oldy[160];
     int16_t *adcBuffer = NULL;
 
-    float envWindow[RMS_WINDOW] {0};
+    float envWindow[RMS_WINDOW]{0};
     int envIndex = 0;
-#endif
+
     void init();
     void update();
     void shutdown();
@@ -62,7 +60,8 @@ public:
     void showSignal();
     static void mic_record_task(void *arg);
 
-
     void setEnabled(bool value);
     bool handleCommand(String command, var *data, int numData) override;
 };
+
+#endif

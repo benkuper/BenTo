@@ -1,6 +1,8 @@
 #pragma once
 #include "../../common/Common.h"
 
+#ifdef HAS_TOUCH
+
 class TouchEvent
 {
 public:
@@ -63,3 +65,5 @@ private :
     int multiPressCount[TOUCH_COUNT];
     #endif
 };
+
+#endif

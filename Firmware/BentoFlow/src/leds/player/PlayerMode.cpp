@@ -1,6 +1,8 @@
 
 #include "PlayerMode.h"
+#if HAS_SCRIPTS
 #include "../../scripts/ScriptManager.h"
+#endif
 
 #ifdef LED_COUNT
 
@@ -131,6 +133,7 @@ bool PlayerMode::playFrame()
 
 void PlayerMode::playScripts()
 {
+#ifdef HAS_SCRIPTS
   float curT = curTimeMs / 1000.0f;
   // float prevT = prevTimeMs / 1000.0f;
 
@@ -148,7 +151,7 @@ void PlayerMode::playScripts()
     for (int i = 0; i < numScripts; i++)
     {
       // DBG("Check for script " + String(scriptStartTimes[i]))
-      if(curT >= scriptStartTimes[i] && curT < scriptEndTimes[i])
+      if (curT >= scriptStartTimes[i] && curT < scriptEndTimes[i])
       {
         ScriptManager::instance->launchScript(scripts[i]);
         activeScriptIndex = i;
@@ -156,6 +159,7 @@ void PlayerMode::playScripts()
       }
     }
   }
+#endif
 }
 
 void PlayerMode::showBlackFrame()
@@ -267,12 +271,11 @@ void PlayerMode::load(String path, bool playAfter)
 
 void PlayerMode::play(float atTime)
 {
-  
+
 #ifdef HAS_FILES
   DBG("Play " + String(atTime));
   if (!curFile)
     return;
-
 
   isPlaying = true;
 
@@ -326,11 +329,13 @@ void PlayerMode::stopPlaying()
   isPlaying = false;
   showBlackFrame();
 
+#ifdef HAS_SCRIPTS
   if (activeScriptIndex != -1)
   {
     ScriptManager::instance->stop();
     activeScriptIndex = -1;
   }
+#endif
 
   sendEvent(PlayerEvent(PlayerEvent::Stop));
 #endif

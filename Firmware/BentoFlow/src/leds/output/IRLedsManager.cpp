@@ -1,5 +1,6 @@
 #include "IRLedsManager.h"
 
+#ifdef HAS_IR
 IRLedsManager::IRLedsManager() : Component("ir"), brightness(0) {
     
 }
@@ -38,3 +39,5 @@ bool IRLedsManager::handleCommand(String command, var * data, int numData) {
 
     return false;
 }
+
+#endif

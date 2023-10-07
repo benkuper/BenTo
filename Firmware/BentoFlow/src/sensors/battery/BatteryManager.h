@@ -1,6 +1,7 @@
 #pragma once
 #include "../../common/Common.h"
 
+#ifdef HAS_BATTERY
 #define PREV_VALUES_SIZE 10
 
 class BatteryEvent
@@ -81,3 +82,5 @@ private:
     SettingsManager prefs;
 #endif
 };
+
+#endif

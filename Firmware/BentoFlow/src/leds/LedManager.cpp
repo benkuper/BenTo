@@ -1,28 +1,26 @@
 #include "LedManager.h"
+#ifdef LED_COUNT
 #include "../MainManager.h"
 
 LedManager::LedManager() : Component("leds"),
                            mode(Mode::Direct),
-#ifdef LED_COUNT
                            currentMode(nullptr),
                            sysLedMode(rgbManager.leds[LED_BASE_LAYER], LED_COUNT),
                            streamMode(rgbManager.leds[LED_BASE_LAYER], LED_COUNT),
                            playerMode(rgbManager.leds[LED_BASE_LAYER], LED_COUNT),
+#ifdef HAS_LED_FX
                            fxManager(rgbManager.leds[LED_SCRIPT_LAYER], rgbManager.leds[LED_OUT_LAYER]),
 #endif
                            connectedTimer(2000),
                            connectionIsAlive(false)
 {
 
-#ifdef LED_COUNT
     playerMode.addListener(std::bind(&LedManager::playerEvent, this, std::placeholders::_1));
     connectedTimer.addListener(std::bind(&LedManager::timerEvent, this, std::placeholders::_1));
-#endif
 }
 
 void LedManager::init()
 {
-#ifdef LED_COUNT
 
 #ifdef GENERATE_LED_INDEX_MAP
     generateLedIndexMap();
@@ -31,6 +29,8 @@ void LedManager::init()
     rgbManager.init();
     rgbManager.addListener(std::bind(&LedManager::rgbLedsEvent, this, std::placeholders::_1));
     sysLedMode.init();
+
+#if HAS_IR
     irManager.init();
 #endif
 
@@ -39,7 +39,6 @@ void LedManager::init()
 
 void LedManager::update()
 {
-#ifdef LED_COUNT
     // if (mode == System) rgbManager.clear();
 
     bool shouldUpdateLeds = true;
@@ -56,19 +55,26 @@ void LedManager::update()
     }
 
     memcpy(rgbManager.leds[LED_SCRIPT_LAYER], rgbManager.leds[LED_BASE_LAYER], LED_COUNT * sizeof(CRGB));
+#ifdef HAS_SCRIPTS
     MainManager::instance->scripts.update();
+#endif
     memcpy(rgbManager.leds[LED_OUT_LAYER], rgbManager.leds[LED_SCRIPT_LAYER], LED_COUNT * sizeof(CRGB));
+
+#ifdef HAS_LED_FX
     fxManager.update();
+#endif
 
     rgbManager.update();
 
+#ifdef HAS_IR
     irManager.update();
+#endif
 
     connectedTimer.update();
-#endif
 }
 
-void LedManager::showBaseOnOutLayer() {
+void LedManager::showBaseOnOutLayer()
+{
     memcpy(rgbManager.leds[LED_OUT_LAYER], rgbManager.leds[LED_BASE_LAYER], LED_COUNT * sizeof(CRGB));
     FastLED.show();
 }
@@ -77,7 +83,6 @@ void LedManager::setMode(Mode m)
 {
     NDBG("LED Set mode " + String((int)m));
 
-#ifdef LED_COUNT
     if (m == mode)
         return;
 
@@ -116,14 +121,12 @@ void LedManager::setMode(Mode m)
     {
         currentMode->start();
     }
-#endif
 }
 
 void LedManager::shutdown(CRGB color)
 {
 #ifndef NO_ANIMATIONS
 
-#ifdef LED_COUNT
     CRGB initLeds[LED_COUNT];
     memcpy(initLeds, rgbManager.leds[LED_OUT_LAYER], LED_COUNT * sizeof(CRGB));
 
@@ -151,8 +154,6 @@ void LedManager::shutdown(CRGB color)
     rgbManager.update();
     rgbManager.shutdown();
 
-#endif // LED_COUNT
-
 #endif // NO_ANIMATIONS
 
     delay(100);
@@ -160,7 +161,6 @@ void LedManager::shutdown(CRGB color)
 
 void LedManager::setConnectionState(ConnectionState state)
 {
-#ifdef LED_COUNT
     if (state == PingDead || state == PingAlive || state == Connected || state == Connecting)
     {
         connectionIsAlive = state == PingAlive || state == Connected || state == Connecting;
@@ -176,10 +176,8 @@ void LedManager::setConnectionState(ConnectionState state)
         connectedTimer.start();
     else
         connectedTimer.stop();
-#endif
 }
 
-#ifdef LED_COUNT
 void LedManager::rgbLedsEvent(const RGBLedsEvent &e)
 {
     if (e.type == RGBLedsEvent::ASK_FOCUS)
@@ -193,7 +191,6 @@ void LedManager::playerEvent(const PlayerEvent &e)
         setMode(Player);
     }
 }
-#endif
 
 void LedManager::timerEvent(const TimerEvent &e)
 {
@@ -205,7 +202,6 @@ void LedManager::timerEvent(const TimerEvent &e)
 
 bool LedManager::handleCommand(String command, var *data, int numData)
 {
-#ifdef LED_COUNT
     if (checkCommand(command, "mode", numData, 1))
     {
         if (data[0].type == 's')
@@ -234,12 +230,15 @@ bool LedManager::handleCommand(String command, var *data, int numData)
         }
         if (data[1].type == 'f')
         {
+#ifdef HAS_IR
             irManager.setBrightness(data[1].floatValue());
+#endif
         }
 
         return true;
     }
-#endif
 
     return false;
 }
+
+#endif

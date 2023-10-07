@@ -1,4 +1,8 @@
 #include "ScriptManager.h"
+
+#ifdef HAS_SCRIPTS
+
+
 #include "../files/FileManager.h"
 
 ScriptManager *ScriptManager::instance = nullptr;
@@ -190,6 +194,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "printFloat", "v(f)", &m3_printFloat);
     m3_LinkRawFunction(module, arduino, "printInt", "v(i)", &m3_printInt);
 
+#ifdef LED_COUNT
     m3_LinkRawFunction(module, arduino, "clearLeds", "v()", &m3_clearLeds);
     m3_LinkRawFunction(module, arduino, "dimLeds", "v(f)", &m3_dimLeds);
     m3_LinkRawFunction(module, arduino, "fillLeds", "v(i)", &m3_fillLeds);
@@ -203,6 +208,18 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "pointRGB", "v(ffiii)", &m3_pointRGB);
     m3_LinkRawFunction(module, arduino, "pointHSV", "v(ffiii)", &m3_pointHSV);
     m3_LinkRawFunction(module, arduino, "setIR", "v(f)", &m3_setIR);
+    m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
+
+    m3_LinkRawFunction(module, arduino, "getFXSpeed", "f()", &m3_getFXSpeed);
+    m3_LinkRawFunction(module, arduino, "getFXIsoSpeed", "f()", &m3_getFXIsoSpeed);
+    m3_LinkRawFunction(module, arduino, "getFXStaticOffset", "f()", &m3_getFXStaticOffset);
+    m3_LinkRawFunction(module, arduino, "getFXFlipped", "i()", &m3_getFXFlipped);
+    m3_LinkRawFunction(module, arduino, "setFXSpeed", "v(f)", &m3_setFXSpeed);
+    m3_LinkRawFunction(module, arduino, "setFXIsoSpeed", "v(f)", &m3_setFXIsoSpeed);
+    m3_LinkRawFunction(module, arduino, "setFXIsoAxis", "v(i)", &m3_setFXIsoAxis);
+    m3_LinkRawFunction(module, arduino, "setFXStaticOffset", "v(f)", &m3_setFXStaticOffset);
+    m3_LinkRawFunction(module, arduino, "resetFX", "v()", &m3_resetFX);
+#endif
 
     m3_LinkRawFunction(module, arduino, "getOrientation", "f(i)", &m3_getOrientation);
     m3_LinkRawFunction(module, arduino, "getYaw", "f()", &m3_getYaw);
@@ -215,7 +232,6 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
     m3_LinkRawFunction(module, arduino, "calibrateIMU", "v()", &m3_calibrateIMU);
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
-    m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
     m3_LinkRawFunction(module, arduino, "getButtonState", "i(i)", &m3_getButtonState);
     m3_LinkRawFunction(module, arduino, "getActivity", "f()", &m3_getActivity);
     m3_LinkRawFunction(module, arduino, "getSpin", "f()", &m3_getSpin);
@@ -224,16 +240,6 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getMicLevel", "f()", &m3_getMicLevel);
 
     m3_LinkRawFunction(module, arduino, "setBatterySendEnabled", "v(i)", &m3_setBatterySendEnabled);
-
-    m3_LinkRawFunction(module, arduino, "getFXSpeed", "f()", &m3_getFXSpeed);
-    m3_LinkRawFunction(module, arduino, "getFXIsoSpeed", "f()", &m3_getFXIsoSpeed);
-    m3_LinkRawFunction(module, arduino, "getFXStaticOffset", "f()", &m3_getFXStaticOffset);
-    m3_LinkRawFunction(module, arduino, "getFXFlipped", "i()", &m3_getFXFlipped);
-    m3_LinkRawFunction(module, arduino, "setFXSpeed", "v(f)", &m3_setFXSpeed);
-    m3_LinkRawFunction(module, arduino, "setFXIsoSpeed", "v(f)", &m3_setFXIsoSpeed);
-    m3_LinkRawFunction(module, arduino, "setFXIsoAxis", "v(i)", &m3_setFXIsoAxis);
-    m3_LinkRawFunction(module, arduino, "setFXStaticOffset", "v(f)", &m3_setFXStaticOffset);
-    m3_LinkRawFunction(module, arduino, "resetFX", "v()", &m3_resetFX);
 
     m3_LinkRawFunction(module, arduino, "randomInt", "i(ii)", &m3_randomInt);
     m3_LinkRawFunction(module, arduino, "noise", "f(ff)", &m3_noise);
@@ -282,3 +288,5 @@ bool ScriptManager::handleCommand(String command, var *data, int numData)
 
     return false;
 }
+
+#endif

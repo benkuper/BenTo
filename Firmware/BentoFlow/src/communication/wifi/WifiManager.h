@@ -65,7 +65,11 @@ public:
   void update();
 
 
+#ifdef ESP32
   void WiFiEvent(system_event_id_t event, system_event_info_t info);
+#elif defined ESP8266
+  // WiFiEventHandler gotIpEventHandler, disconnectedEventHandler;
+#endif
 
   void saveWifiConfig(String ssid, String pass);
   String getIP();

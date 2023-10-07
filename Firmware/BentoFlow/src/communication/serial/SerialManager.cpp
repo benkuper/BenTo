@@ -1,71 +1,78 @@
 #include "SerialManager.h"
 
-SerialManager::SerialManager() :
-    Component("serial"),
-    outputEnabled(false)
+SerialManager::SerialManager() : Component("serial"),
+                                 outputEnabled(false)
 {
     memset(buffer, 0, 512);
 }
 
 void SerialManager::init()
 {
+#ifdef SerialInit
+    SerialInit
+#else
     Serial.begin(115200);
-    NDBG("Init");
+#endif
+
+        NDBG("Init");
 }
 
 void SerialManager::update()
 {
+    // Serial.println("update serial");
     while (Serial.available())
     {
         char c = Serial.read();
+        // Serial.print(c);
         if (c == '\n')
         {
             processMessage(buffer);
             memset(buffer, 0, 512);
             bufferIndex = 0;
-        }else
+        }
+        else
         {
-            if(bufferIndex < 512) buffer[bufferIndex] = c;
+            if (bufferIndex < 512)
+                buffer[bufferIndex] = c;
             bufferIndex++;
         }
-        
     }
 }
 
 void SerialManager::processMessage(String buffer)
 {
-    if(buffer.substring(0,2) == "yo")
+    if (buffer.substring(0, 2) == "yo")
     {
-         Serial.println("wassup "+getDeviceID()+" \""+String(DEVICE_TYPE)+"\"");
+        Serial.println("wassup " + getDeviceID() + " \"" + String(DEVICE_TYPE) + "\"");
         return;
     }
 
     int splitIndex = buffer.indexOf(' ');
-    
+
     String tc = buffer.substring(0, splitIndex);
     int tcIndex = tc.indexOf('.');
-    String args = splitIndex != -1 ?buffer.substring(splitIndex + 1):"";
+    String args = splitIndex != -1 ? buffer.substring(splitIndex + 1) : "";
 
-    sendEvent(SerialEvent(SerialEvent::MessageReceived, tc.substring(0,tcIndex), tc.substring(tcIndex+1), args));
+    sendEvent(SerialEvent(SerialEvent::MessageReceived, tc.substring(0, tcIndex), tc.substring(tcIndex + 1), args));
 }
 
-
-void SerialManager::sendMessage(String source, String command, var * data, int numData)
+void SerialManager::sendMessage(String source, String command, var *data, int numData)
 {
-    if(!outputEnabled) return;
+    if (!outputEnabled)
+        return;
 
-    String msg = source+"."+command;
-    for(int i=0;i<numData;i++)
+    String msg = source + "." + command;
+    for (int i = 0; i < numData; i++)
     {
-        msg += " "+data[i].stringValue();
+        msg += " " + data[i].stringValue();
     }
 
     Serial.println(msg);
 }
 
-bool SerialManager::handleCommand(String command, var * data, int numData)
+bool SerialManager::handleCommand(String command, var *data, int numData)
 {
-    if(checkCommand(command,"outputEnabled", numData, 1))
+    if (checkCommand(command, "outputEnabled", numData, 1))
     {
         outputEnabled = data[0].intValue() == 1;
         return true;

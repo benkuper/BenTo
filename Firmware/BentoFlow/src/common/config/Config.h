@@ -84,7 +84,7 @@
 #include "config_aspi.h"
 #elif defined ARDUINO_BIKE
 #include "config_bike.h"
-#elif defined SIMPLE_ESP32
+#elif defined ARDUINO_SIMPLE_ESP32
 #include "config_simpleESP32.h"
 #elif defined ARDUINO_M5_TESTER
 #include "config_m5tester.h"
@@ -96,12 +96,21 @@
 #include "config_olimextester.h"
 #elif defined ARDUINO_OLIMEX_TUBE
 #include "config_olimextube.h"
+#elif defined ARDUINO_TAP_DANCE
+#include "config_tab_tap.h"
+#elif defined ARDUINO_WHACK_BUTTON
+#include "config_whackbutton..h"
 #endif
 
 #ifdef LED_INVERT_DIRECTION
     #define LEDMAP(index) (LED_COUNT-1-index)
 #elif !defined LEDMAP
     #define LEDMAP(index) index
+#endif
+
+
+#ifndef BoardPreInit
+#define BoardPreInit
 #endif
 
 #ifndef BoardInit

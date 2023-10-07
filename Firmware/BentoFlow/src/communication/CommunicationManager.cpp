@@ -23,7 +23,7 @@ void CommunicationManager::init()
 }
 
 void CommunicationManager::update()
-{    
+{
 #ifdef HAS_DISPLAY
     displayManager.update();
 #endif
@@ -40,10 +40,10 @@ void CommunicationManager::serialMessageEvent(const SerialEvent &e)
     case SerialEvent::MessageReceived:
     {
         const int maxData = 16;
-        var *data = (var *)malloc(maxData * sizeof(var)); //max 16 arguments
+        var *data = (var *)malloc(maxData * sizeof(var)); // max 16 arguments
         int index = 0;
 
-        //COUNT
+        // COUNT
         char *pch = strtok((char *)e.data.c_str(), ",");
         while (pch != NULL && index < maxData)
         {
@@ -110,7 +110,7 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
     if (e.type == OSCEvent::MessageReceived)
     {
         char addr[32];
-        e.msg->getAddress(addr, 1); //remove the first slash
+        e.msg->getAddress(addr, 1); // remove the first slash
         String tc(addr);
         int tcIndex = tc.indexOf('/');
 
@@ -118,7 +118,7 @@ void CommunicationManager::oscMessageEvent(const OSCEvent &e)
         var *data = (var *)malloc(numData * sizeof(var));
         int numUsedData = 0;
 
-        char tmpStr[32][32]; //contains potential strings
+        char tmpStr[32][32]; // contains potential strings
 
         for (int i = 0; i < e.msg->size(); i++)
         {
@@ -156,4 +156,8 @@ void CommunicationManager::sendMessage(String source, String command, var *data,
 {
     serialManager.sendMessage(source, command, data, numData);
     oscManager.sendMessage(source, command, data, numData);
+
+#ifdef HAS_DISPLAY
+    displayManager.sendMessage(source, command, data, numData);
+#endif
 }

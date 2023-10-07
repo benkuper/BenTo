@@ -11,6 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+#ifdef ESP32
+
 #ifndef _SD_H_
 #define _SD_H_
 
@@ -46,3 +49,5 @@ typedef fs::SDFS        SDFileSystemClass;
 #define SDFileSystem    SD
 
 #endif /* _SD_H_ */
+
+#endif

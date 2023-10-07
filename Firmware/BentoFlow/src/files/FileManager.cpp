@@ -1,33 +1,25 @@
 #include "FileManager.h"
 
+#ifdef HAS_FILES
+
 const String FileEvent::eventNames[FileEvent::TYPES_MAX]{"uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list"};
 
-#ifdef HAS_FILES
 bool FileManager::sdIsDetected = false;
 #ifndef FILES_USE_INTERNAL_MEMORY
 #ifndef USE_SD_MMC
 SPIClass FileManager::spiSD(HSPI);
 #endif
 #endif
-#endif
 
-FileManager::FileManager() : Component("files")
-#ifdef HAS_FILES
-                             ,serverIsEnabled(false)
-                             ,isUploading(false)
-                             ,
+FileManager::FileManager() : Component("files"), serverIsEnabled(false), isUploading(false),
                              server(80)
-#endif
 {
-#ifdef HAS_FILES
     server.onNotFound(std::bind(&FileManager::handleNotFound, this));
     server.on("/upload", HTTP_POST, std::bind(&FileManager::returnOK, this), std::bind(&FileManager::handleFileUpload, this));
-#endif
 }
 
 void FileManager::init()
 {
-#ifdef HAS_FILES
     if (sdIsDetected)
         return;
 
@@ -58,7 +50,7 @@ void FileManager::init()
 #endif
 
 #ifdef USE_SD_MMC
-    if(SD_MMC.begin())
+    if (SD_MMC.begin())
 #else
     pinMode(SD_SCK, INPUT_PULLUP);
     pinMode(SD_MISO, INPUT_PULLUP);
@@ -81,20 +73,15 @@ void FileManager::init()
 #endif // FILES_USE_INTERNAL_MEMORY
 
     initServer();
-
-#endif // HAS_FILES
 }
 
 void FileManager::update()
 {
-#ifdef HAS_FILES
     if (!serverIsEnabled)
         return;
     server.handleClient();
-#endif
 }
 
-#ifdef HAS_FILES
 File FileManager::openFile(String fileName, bool forWriting, bool deleteIfExists)
 {
 
@@ -196,30 +183,24 @@ String FileManager::listDir(const char *dirname, uint8_t levels)
 
     return result;
 }
-#endif // HAS_FILES
 
 // SERVER
 void FileManager::initServer()
 {
-#ifdef HAS_FILES
     server.begin();
     NDBG("HTTP server started");
     serverIsEnabled = true;
-#endif
 }
 
 void FileManager::closeServer()
 {
-#ifdef HAS_FILES
     server.close();
     NDBG("HTTP server closed");
     serverIsEnabled = false;
-#endif
 }
 
 void FileManager::handleFileUpload()
 {
-#ifdef HAS_FILES
     if (server.uri() != "/upload")
     {
         return;
@@ -299,30 +280,23 @@ void FileManager::handleFileUpload()
         uploadingFile.close();
         isUploading = false;
     }
-#endif
 }
 
 void FileManager::returnOK()
 {
-#ifdef HAS_FILES
     server.send(200, "text/plain", "ok");
-#endif
 }
 
 void FileManager::returnFail(String msg)
 {
-#ifdef HAS_FILES
     NDBG("Failed here");
     server.send(500, "text/plain", msg + "\r\n");
-#endif
 }
 
 void FileManager::handleNotFound()
 {
-#ifdef HAS_FILES
     NDBG("Not found here");
     server.send(404, "text/plain", "[notfound]");
-#endif
 }
 
 void FileManager::setSDEnabled(bool enable)
@@ -343,7 +317,6 @@ void FileManager::setSDEnabled(bool enable)
 
 bool FileManager::handleCommand(String command, var *data, int numData)
 {
-#ifdef HAS_FILES
 
     if (checkCommand(command, "delete", numData, 1))
     {
@@ -395,7 +368,8 @@ bool FileManager::handleCommand(String command, var *data, int numData)
         sendEvent(FileEvent(FileEvent::FileList, data));
         return true;
     }
-#endif // HAS_FILES
 
     return false;
 }
+
+#endif

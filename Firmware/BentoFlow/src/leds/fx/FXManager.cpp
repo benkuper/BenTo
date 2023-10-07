@@ -2,6 +2,10 @@
 #include "FXManager.h"
 #include "../../MainManager.h"
 
+#if HAS_LED_FX
+
+#ifdef LED_COUNT
+
 #ifndef FX_SWAP_UPSIDE_DOWN
 #define FX_SWAP_UPSIDE_DOWN 0
 #endif
@@ -173,3 +177,6 @@ bool FXManager::handleCommand(String command, var *data, int numData)
 
     return false;
 }
+#endif
+
+#endif

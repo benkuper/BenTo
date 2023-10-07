@@ -123,10 +123,21 @@ void WifiManager::connect()
     String pass = prefs.getString("pass");
 #endif
 
+#ifdef ESP8266
+    // gotIpEventHandler = WiFi.onStationModeGotIP([](const WiFiEventStationModeGotIP &event)
+    //                                             {
+    // Serial.print("Station connected, IP: ");
+    // Serial.println(WiFi.localIP()); });
+
+    // disconnectedEventHandler = WiFi.onStationModeDisconnected([](const WiFiEventStationModeDisconnected &event)
+    //                                                           { Serial.println("Station disconnected"); });
+
+#endif
+
     NDBG("Connecting to " + ssid + " : " + pass + "...");
     WiFi.begin(ssid.c_str(), pass.c_str());
 
-#endif //ETHERNET
+#endif // ETHERNET
 
     setState(Connecting);
 }
@@ -143,10 +154,11 @@ void WifiManager::disable()
     setState(Disabled);
 }
 
+#ifdef ESP32
 void WifiManager::WiFiEvent(system_event_id_t event, system_event_info_t info)
 {
- #ifdef USE_ETHERNET
-   switch (event)
+#ifdef USE_ETHERNET
+    switch (event)
     {
     case SYSTEM_EVENT_ETH_START:
         DBG("ETH Started");
@@ -182,6 +194,7 @@ void WifiManager::WiFiEvent(system_event_id_t event, system_event_info_t info)
     }
 #endif
 }
+#endif
 
 void WifiManager::saveWifiConfig(String ssid, String pass)
 {

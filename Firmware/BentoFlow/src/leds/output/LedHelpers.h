@@ -1,5 +1,9 @@
 #pragma once
 
+#include "common/Common.h"
+
+#ifdef LED_COUNT
+
 #ifdef LED_SEPARATE_CHANNELS
 #elif defined LED_USE_DMX
 #ifdef ESP8266
@@ -21,3 +25,5 @@ public:
     static void setLed(CRGB * leds, int index, CRGB c);
     static void show();
 };
+
+#endif

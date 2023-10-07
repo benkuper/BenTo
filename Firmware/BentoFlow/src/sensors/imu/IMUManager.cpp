@@ -1,5 +1,5 @@
 #include "IMUManager.h"
-
+#ifdef HAS_IMU
 const String IMUEvent::eventNames[IMUEvent::TYPES_MAX]{"orientation", "accel", "gyro", "linearAccel", "quaternion", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngle", "spin"};
 IMUManager *IMUManager::instance = NULL;
 
@@ -478,9 +478,11 @@ void IMUManager::calibrate()
 {
   yawOffset = -originalYaw;
 
+#ifdef HAS_PREFERENCES
   prefs.begin(name.c_str());
   prefs.putFloat("yawOffset", yawOffset);
   prefs.end();
+#endif
 }
 
 void IMUManager::shutdown()
@@ -578,3 +580,5 @@ bool IMUManager::handleCommand(String command, var *data, int numData)
 #endif
   return false;
 }
+
+#endif

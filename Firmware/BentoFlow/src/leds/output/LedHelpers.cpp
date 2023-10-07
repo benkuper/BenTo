@@ -2,11 +2,11 @@
 #include "../../common/DebugHelpers.h"
 #include "../../common/config/Config.h"
 
+#ifdef LED_COUNT
+
 void LedHelpers::clear(CRGB *leds, int numLeds)
 {
-#ifdef LED_COUNT
     memset(leds, 0, numLeds * sizeof(CRGB));
-#endif
 }
 
 void LedHelpers::fillAll(CRGB *leds, int numLeds, CRGB c, bool doClear)
@@ -16,7 +16,6 @@ void LedHelpers::fillAll(CRGB *leds, int numLeds, CRGB c, bool doClear)
 
 void LedHelpers::fillRange(CRGB *leds, int numLeds, CRGB c, float start, float end, bool doClear)
 {
-#ifdef LED_COUNT
     if (doClear)
         clear(leds, numLeds);
 
@@ -27,32 +26,28 @@ void LedHelpers::fillRange(CRGB *leds, int numLeds, CRGB c, float start, float e
     {
         leds[LEDMAP(i)] += c;
     }
-#endif
 }
 
 void LedHelpers::point(CRGB *leds, int numLeds, CRGB c, float pos, float radius, bool doClear)
 {
-#ifdef LED_COUNT
 
     if (doClear)
         clear(leds, numLeds);
 
     if (radius == 0)
         return;
-    
+
     for (int i = 0; i < numLeds; i++)
     {
-        float rel = i * 1.0f / max(numLeds - 1,1);
+        float rel = i * 1.0f / max(numLeds - 1, 1);
         float fac = max(1 - (std::abs((float)(pos - rel)) / radius), 0.f);
         leds[LEDMAP(i)] += CRGB(c.r * fac, c.g * fac, c.b * fac);
     }
-#endif
 }
-
 
 void LedHelpers::setLed(CRGB *leds, int index, CRGB c)
 {
-#ifdef LED_COUNT
     leds[LEDMAP(index)] = c;
-#endif
 }
+
+#endif

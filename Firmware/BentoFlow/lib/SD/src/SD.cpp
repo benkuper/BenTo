@@ -12,6 +12,7 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
+#ifdef ESP32
 #include "vfs_api.h"
 #include "sd_diskio.h"
 #include "ff.h"
@@ -104,3 +105,6 @@ uint64_t SDFS::usedBytes()
 }
 
 SDFS SD = SDFS(FSImplPtr(new VFSImpl()));
+
+
+#endif

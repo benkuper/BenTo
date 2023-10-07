@@ -62,8 +62,8 @@ class SettingsManager {
   // signed char getSChar(const char *key, const signed char defaultValue = '\0');
   // unsigned char getUChar(const char *key, const unsigned char defaultValue = '\0');
 
-  const char *getChar(const char *key, const char *defaultValue);
-  String getString(const char *key, const String defaultValue = "");
+  // const char *getChar(const char *key, const char *defaultValue);
+  String getString(const char *key, String defaultValue = "");
   float getFloat(const char *key, const float defaultValue = 0.0f);
   double getDouble(const char *key, const double defaultValue = (double)(0.0));
   bool getBool(const char *key, const bool defaultValue = false);
@@ -73,7 +73,7 @@ class SettingsManager {
   int setLong(const char *key, const signed long value, bool addIfMissing = 1);
   // int setCChar(const char *key, const char value, bool addIfMissing = 1);
   // int setChar(const char *key, const char *value, bool addIfMissing = 1);
-  int setString(const char *key, const String value, bool addIfMissing = 1);
+  int setString(const char *key, String value, bool addIfMissing = 1);
   int setFloat(const char *key, const float value, bool addIfMissing = 1);
   int setDouble(const char *key, const double value, bool addIfMissing = 1);
   int setBool(const char *key, const bool value, bool addIfMissing = 1);

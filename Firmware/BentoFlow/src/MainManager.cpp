@@ -11,9 +11,7 @@ MainManager::MainManager(String fwVersion) : Component("root"),
 void MainManager::init()
 {
 
-#ifdef HAS_DISPLAY
-    display.init();
-#endif
+    BoardPreInit;
 
 #ifdef GROUND_PIN_COUNT
     for (int i = 0; i < GROUND_PIN_COUNT; i++)
@@ -39,7 +37,9 @@ void MainManager::init()
     ((EventBroadcaster<ConnectionEvent> *)&comm)->addListener(std::bind(&MainManager::connectionEvent, this, std::placeholders::_1));
     comm.init();
 
+#ifdef LED_COUNT
     leds.init();
+#endif
 
 #ifdef SLEEP_PIN
 #ifdef KEEP_SLEEP_PIN_HIGH
@@ -48,30 +48,50 @@ void MainManager::init()
 #endif
 #endif
 
+#ifdef HAS_BATTERY
     battery.init();
     battery.addListener(std::bind(&MainManager::batteryEvent, this, std::placeholders::_1));
+#endif
 
+#if BUTTON_COUNT
     buttons.init();
     buttons.addListener(std::bind(&MainManager::buttonEvent, this, std::placeholders::_1));
+#endif
 
+#ifdef HAS_TOUCH
     touch.init();
     touch.addListener(std::bind(&MainManager::touchEvent, this, std::placeholders::_1));
+#endif
 
+#ifdef HAS_PWM
     pwm.init();
+#endif
 
+#ifdef HAS_IMU
     imu.addListener(std::bind(&MainManager::imuEvent, this, std::placeholders::_1));
+#endif
 
+#ifdef LED_COUNT
     leds.rgbManager.addListener(std::bind(&MainManager::rgbLedsEvent, this, std::placeholders::_1));
+#endif
 
+#ifdef HAS_CAPA
     cap.init();
     cap.addListener(std::bind(&MainManager::capacitiveEvent, this, std::placeholders::_1));
+#endif
 
+#ifdef HAS_MIC
     mic.init();
     mic.addListener(std::bind(&MainManager::micEvent, this, std::placeholders::_1));
+#endif
 
+#ifdef HAS_FILES
     files.addListener(std::bind(&MainManager::fileEvent, this, std::placeholders::_1));
+#endif
 
+#ifdef HAS_SCRIPTS
     scripts.init();
+#endif
 
     initTimer.addListener(std::bind(&MainManager::timerEvent, this, std::placeholders::_1));
 
@@ -88,32 +108,50 @@ void MainManager::update()
     // float a = analogRead(32);
     // DBG("Mic val " + String(a));
 
+    // Serial.println("update");
+
     initTimer.update();
 
-    files.update();
-
 #ifdef HAS_FILES
+    files.update();
     if (files.isUploading)
         return;
 #endif
 
     comm.update();
 
-    imu.update();
-
+#if BUTTON_COUNT
     buttons.update();
+#endif
+
+#ifdef HAS_BATTERY
     battery.update();
+#endif
+
+#ifdef HAS_TOUCH
     touch.update();
-    cap.update();
+#endif
 
-    mic.update();
-
-    // tmp call this from ledmanager, not used now : scripts.update();
-
+#ifdef HAS_PWM
     pwm.update();
+#endif
+
+#ifdef HAS_IMU
+    imu.update();
+#endif
+
+#ifdef HAS_CAPA
+    cap.update();
+#endif
+
+#ifdef HAS_MIC
+    mic.update();
+#endif
 
     // TSTART()
+#ifdef LED_COUNT
     leds.update();
+#endif
     // TFINISH("Leds")
 
 #ifdef POWEROFF_IF_NOTCONNECTED
@@ -134,16 +172,26 @@ void touchCallback() {}
 void MainManager::sleep(CRGB color)
 {
     NDBG("Sleep now ! ");
+#ifdef HAS_IMU
     imu.shutdown();
+#endif
 
     comm.sendMessage(name, "sleep", nullptr, 0);
+#ifdef LED_COUNT
     leds.shutdown(color); // to replace with battery color
+#endif
+
+#ifdef HAS_PWM
     pwm.shutdown();
+#endif
+
+#ifdef HAS_MIC
     mic.shutdown();
+#endif
 
-    BoardShutdown
+    BoardShutdown;
 
-        delay(500);
+    delay(500);
 
 #ifdef SLEEP_PIN
     pinMode(SLEEP_PIN, OUTPUT);
@@ -176,12 +224,13 @@ void MainManager::sleep(CRGB color)
 
 void MainManager::connectionEvent(const ConnectionEvent &e)
 {
-
     NDBG("Connection Event : " + connectionStateNames[e.type] + (e.type == Connected ? "(" + comm.wifiManager.getIP() + ")" : ""));
+#ifdef LED_COUNT
     if (!leds.playerMode.isPlaying)
     {
         leds.setConnectionState(e.type);
     }
+#endif
 
     if (e.source == "wifi")
     {
@@ -218,6 +267,7 @@ void MainManager::communicationEvent(const CommunicationEvent &e)
     }
 }
 
+#ifdef HAS_BATTERY
 void MainManager::batteryEvent(const BatteryEvent &e)
 {
     var data[1];
@@ -231,7 +281,9 @@ void MainManager::batteryEvent(const BatteryEvent &e)
         sleep(CRGB::Red);
     }
 }
+#endif
 
+#if BUTTON_COUNT
 void MainManager::buttonEvent(const ButtonEvent &e)
 {
     int numBTData = (e.type == ButtonEvent::MultiPress || e.type == ButtonEvent::Pressed) ? 2 : 1;
@@ -280,27 +332,37 @@ void MainManager::buttonEvent(const ButtonEvent &e)
         {
             if (e.value == 2)
             {
+#ifdef LED_COUNT
                 leds.playerMode.stop();
+#ifdef HAS_SCRIPTS
                 scripts.stop();
+#endif
+#endif
             }
             else if (e.value >= 3)
             {
                 if (e.id == 0)
                 {
+#ifdef LED_COUNT
                     leds.playerMode.load("demo" + String(e.value - 3));
                     leds.playerMode.loopShow = true;
                     leds.playerMode.play();
+#endif
                 }
                 else
                 {
+#ifdef HAS_SCRIPTS
                     scripts.launchScript("demo" + String(e.value - 3));
+#endif
                 }
             }
         }
         break;
     }
 }
+#endif
 
+#ifdef HAS_TOUCH
 void MainManager::touchEvent(const TouchEvent &e)
 {
     int numBTData = (e.type == TouchEvent::MultiPress || e.type == TouchEvent::Pressed) ? 2 : 1;
@@ -344,6 +406,7 @@ void MainManager::touchEvent(const TouchEvent &e)
     }
 
     case TouchEvent::MultiPress:
+#ifdef LED_COUNT
         if (comm.wifiManager.state == Disabled || comm.wifiManager.state == ConnectionError)
         {
             if (e.value == 2)
@@ -357,10 +420,13 @@ void MainManager::touchEvent(const TouchEvent &e)
                 leds.playerMode.play();
             }
         }
+#endif
         break;
     }
 }
+#endif
 
+#ifdef HAS_IMU
 void MainManager::imuEvent(const IMUEvent &e)
 {
     switch (e.type)
@@ -433,7 +499,9 @@ void MainManager::imuEvent(const IMUEvent &e)
     break;
     }
 }
+#endif
 
+#ifdef HAS_CAPA
 void MainManager::capacitiveEvent(const CapacitiveEvent &e)
 {
 #ifdef CAPACITIVE_COUNT
@@ -466,14 +534,18 @@ void MainManager::capacitiveEvent(const CapacitiveEvent &e)
     }
 #endif
 }
+#endif
 
+#ifdef HAS_MIC
 void MainManager::micEvent(const MicEvent &e)
 {
 #if USE_MIC
 
 #endif
 }
+#endif
 
+#ifdef LED_COUNT
 void MainManager::rgbLedsEvent(const RGBLedsEvent &e)
 {
     switch (e.type)
@@ -492,10 +564,11 @@ void MainManager::rgbLedsEvent(const RGBLedsEvent &e)
     break;
     }
 }
+#endif
 
+#ifdef HAS_FILES
 void MainManager::fileEvent(const FileEvent &e)
 {
-#ifdef HAS_FILES
     if (e.type == FileEvent::UploadStart)
     {
 #ifdef LED_COUNT
@@ -528,14 +601,19 @@ void MainManager::fileEvent(const FileEvent &e)
         comm.sendMessage(files.name, FileEvent::eventNames[(int)e.type], data, 1);
         NDBG("FileList Event in Main Manager");
     }
-#endif
 }
+#endif
 
 void MainManager::timerEvent(const TimerEvent &e)
 {
+#ifdef HAS_FILES
     NDBG("Timer Event, init fileSystem and IMU");
     files.init();
+#endif
+
+#ifdef HAS_IMU
     imu.init();
+#endif
 }
 
 bool MainManager::handleCommand(String command, var *data, int numData)

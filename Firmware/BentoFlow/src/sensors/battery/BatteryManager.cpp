@@ -1,5 +1,7 @@
 #include "BatteryManager.h"
 
+#ifdef HAS_BATTERY
+
 const String BatteryEvent::eventNames[BatteryEvent::TYPES_MAX]{"level", "voltage", "rawValue", "criticalLevel", "charging", "reset", "sendEnabled"};
 
 BatteryManager::BatteryManager() : Component("battery"),
@@ -213,3 +215,5 @@ bool BatteryManager::handleCommand(String command, var *data, int numData)
 
     return false;
 }
+
+#endif

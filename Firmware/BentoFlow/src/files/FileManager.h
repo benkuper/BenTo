@@ -22,8 +22,6 @@
 #include <ESP8266WebServer.h>
 #endif
 
-#endif
-
 class FileEvent
 {
 public:
@@ -50,7 +48,6 @@ public:
     FileManager();
     ~FileManager() {}
 
-#ifdef HAS_FILES
 
 #ifdef FILES_USE_INTERNAL_MEMORY
 
@@ -72,18 +69,16 @@ public:
 #elif defined ESP8266
     ESP8266WebServer server;
 #endif
-#endif
+
     void init();
     void update();
 
     //File manipulation
-#ifdef HAS_FILES
     static File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
     static void deleteFileIfExists(String path);
 
     static String listDir(const char *dirname, uint8_t levels);
 
-#endif
 
     //Server handling
     void initServer();
@@ -98,3 +93,5 @@ public:
 
     bool handleCommand(String command, var *data, int numData) override;
 };
+
+#endif

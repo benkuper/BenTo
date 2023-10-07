@@ -2,6 +2,8 @@
 #include "../common/Common.h"
 #include "output/LedHelpers.h"
 
+#ifdef LED_COUNT
+
 class LedMode : public Component
 {
 public:
@@ -19,3 +21,5 @@ public:
     virtual void start() { NDBG("Start"); isActive = true; }
     virtual void stop() { NDBG("Stop"); isActive = false; }
 };
+
+#endif

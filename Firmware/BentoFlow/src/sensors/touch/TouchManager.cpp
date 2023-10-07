@@ -1,6 +1,8 @@
 
 #include "TouchManager.h"
 
+#ifdef HAS_TOUCH
+
 const String TouchEvent::eventNames[TouchEvent::TYPES_MAX]{"pressed", "shortPress", "longPress", "veryLongPress", "multiPress"};
 
 TouchManager::TouchManager() : 
@@ -133,3 +135,5 @@ bool TouchManager::handleCommand(String command, var *data, int numData)
 #endif
     return false;
 }
+
+#endif

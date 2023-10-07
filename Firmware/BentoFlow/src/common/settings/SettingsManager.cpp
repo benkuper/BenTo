@@ -133,7 +133,7 @@ void SettingsManager::openSPIFFS() {
 JsonVariant SettingsManager::getJsonVariant(const char *key, bool addIfMissing) {
   // DBG("-> Searching for key: "+String(key));
   //Maybe i'm lucky ...
-  JsonVariant val = root.getMember(key);
+  JsonVariant val = root[key];
   if (!val.isNull()) {
     // DBG("Key found in root: "+String(key));
     return val;
@@ -146,7 +146,8 @@ JsonVariant SettingsManager::getJsonVariant(const char *key, bool addIfMissing) 
   if (k == nullptr) {
     if (addIfMissing) {
       // DBG("Adding not existing key: "+String(key));
-      return root.getOrAddMember(key);
+      JsonVariant result = root[key].to<JsonVariant>();
+      return result;
     } else {
       // DBG("Key not found "+String(key));
       return JsonVariant();
@@ -160,25 +161,25 @@ JsonVariant SettingsManager::getJsonVariant(const char *key, bool addIfMissing) 
     //replace the . with \0 to split the string
     k[0] = '\0';
     if (strlen(crs) > 0) {
-      if (!node.getMember(crs).isNull()) {
-        node = node.getMember(crs);
+      if (!node[crs].isNull()) {
+        node = node[crs];
       } else if (!addIfMissing) {
         // DBG("Key not found: "+String(crs));
         return JsonVariant();
       } else {
         // DBG("Adding not existing key: "+String(crs));
-        node = node.getOrAddMember(crs);
+        node = node[crs].to<JsonVariant>();
       }
     }
     k++;
     crs = k;
     k = strchr(crs, '.');
     if (k == nullptr) {
-      if (node.getMember(crs).isNull() && addIfMissing) {
+      if (node[crs].isNull() && addIfMissing) {
         // DBG("Adding not existing key: "+String(crs));
-        node = node.getOrAddMember(crs);
+        node = node[crs].to<JsonVariant>();
       } else {
-        node = node.getMember(crs);
+        node = node[crs];
       }
       break;
     }
@@ -194,7 +195,7 @@ JsonObject SettingsManager::getJsonObject(const char *key, bool addIfMissing) {
   if (!item.isNull()) {
     return item.as<JsonObject>();
   } else if (addIfMissing) {
-    return item.getOrAddMember(key);
+    return item[key].to<JsonVariant>();
   } else {
     return JsonObject();
   }
@@ -208,7 +209,7 @@ JsonArray SettingsManager::getJsonArray(const char *key, bool addIfMissing) {
   if (!item.isNull()) {
     return item.as<JsonArray>();
   } else if (addIfMissing) {
-    return item.getOrAddMember(key);
+    return item[key].to<JsonVariant>();
   } else {
     return JsonArray();
   }
@@ -296,16 +297,16 @@ unsigned long SettingsManager::getULong(const char *key, const unsigned long def
 //   }
 // }
 
-const char *SettingsManager::getChar(const char *key, const char *defaultValue) {
-  JsonVariant item = getJsonVariant(key);
-  if (!item.isNull()) {
-    return item.as<char *>();
-  } else {
-    return defaultValue;
-  }
-}
+// const char *SettingsManager::getChar(const char *key, const char *defaultValue) {
+//   JsonVariant item = getJsonVariant(key);
+//   if (!item.isNull()) {
+//     return item.as<char *>();
+//   } else {
+//     return defaultValue;
+//   }
+// }
 
-String SettingsManager::getString(const char *key, const String defaultValue) {
+String SettingsManager::getString(const char *key, String defaultValue) {
   JsonVariant item = getJsonVariant(key);
   if (!item.isNull()) {
     return item.as<String>();
@@ -392,7 +393,7 @@ int SettingsManager::setChar(const char *key, const char *value, bool addIfMissi
 }
 */
 
-int SettingsManager::setString(const char *key, const String value, bool addIfMissing) {
+int SettingsManager::setString(const char *key, String value, bool addIfMissing) {
   JsonVariant item = getJsonVariant(key, addIfMissing);
   if (addIfMissing || !item.isNull()) {
     return item.set(value) ? SM_SUCCESS : SM_ERROR;

@@ -1,18 +1,25 @@
 #pragma once
 
-#include "../../common/Common.h"
+#include "common/Common.h"
+
+#ifdef LED_COUNT
 #include "LedHelpers.h"
 
 class RGBLedsEvent
 {
 public:
-    enum Type { ASK_FOCUS, BrightnessStatus, TYPES_MAX };
+    enum Type
+    {
+        ASK_FOCUS,
+        BrightnessStatus,
+        TYPES_MAX
+    };
     static const String eventNames[TYPES_MAX];
 
-    RGBLedsEvent(Type t, float * data = nullptr, int numData = 0) : type(t), data(data), numData(numData) {}
+    RGBLedsEvent(Type t, float *data = nullptr, int numData = 0) : type(t), data(data), numData(numData) {}
 
     Type type;
-    float * data;
+    float *data;
     int intData;
     int numData;
 };
@@ -31,11 +38,11 @@ public:
 #define LED_OUT_LAYER 2
 
     CRGB leds[LED_NUM_LAYERS][LED_COUNT];
-    #ifdef LED_USE_DMX
-        DMXESPSerial dmx;
-        const int updateBreakTime = 20; //40ms break time
-        long timeSinceLastSend;
-    #endif
+#ifdef LED_USE_DMX
+    DMXESPSerial dmx;
+    const int updateBreakTime = 20; // 40ms break time
+    long timeSinceLastSend;
+#endif
 #endif
 
     float globalBrightness;
@@ -52,7 +59,7 @@ public:
 
     void setLedEnabled(bool val);
 
-    //Helpers
+    // Helpers
     void clear(int layer = LED_BASE_LAYER);
     void dimLayer(float v, int layer = LED_BASE_LAYER);
     void fillAll(CRGB c, bool clear = true, int layer = LED_BASE_LAYER);
@@ -68,3 +75,4 @@ private:
     SettingsManager prefs;
 #endif
 };
+#endif

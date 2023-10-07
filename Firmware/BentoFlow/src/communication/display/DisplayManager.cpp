@@ -9,7 +9,7 @@
 
 DisplayManager::DisplayManager() : Component("display"),
                                    outputEnabled(true),
-                                   display(0x3C, DISPLAY_SDA, DISPLAY_SCL),
+                                   // display(0x3C, DISPLAY_SDA, DISPLAY_SCL),
                                    messageIndex(0),
                                    timeAtLastUpdate(0)
 {
@@ -23,16 +23,23 @@ void DisplayManager::init()
     wifi = (WifiManager *)Component::getComponentForName("wifi");
     imu = (IMUManager *)Component::getComponentForName("imu");
 
-    pinMode(DISPLAY_RESET, OUTPUT);
-    digitalWrite(DISPLAY_RESET, LOW); // set GPIO16 low to reset OLED
-    delay(50);
-    digitalWrite(DISPLAY_RESET, HIGH);
-    delay(50);
+    // pinMode(DISPLAY_RESET, OUTPUT);
+    // digitalWrite(DISPLAY_RESET, LOW); // set GPIO16 low to reset OLED
+    // delay(50);
+    // digitalWrite(DISPLAY_RESET, HIGH);
+    // delay(50);
 
-    display.init();
-    display.flipScreenVertically();
-    display.setFont(ArialMT_Plain_10);
-    delay(50);
+    // display.init();
+    // display.flipScreenVertically();
+    // display.setFont(ArialMT_Plain_10);
+    // delay(50);
+
+    M5.begin();
+    // Lcd display
+    M5.Lcd.fillScreen(GREEN);
+    delay(100);
+    M5.Lcd.fillScreen(BLACK);
+    delay(0);
 
     NDBG("Init Display");
 }
@@ -52,23 +59,25 @@ void DisplayManager::update()
 
 void DisplayManager::updateInternal()
 {
-    display.clear();
+    M5.Lcd.fillScreen(BLACK);
     String ws = connectionStateNames[wifi->state];
-    if(wifi->state == ConnectionState::Connected) ws += " "+wifi->getIP();
+    if (wifi->state == ConnectionState::Connected)
+        ws += " " + wifi->getIP();
 
-    display.setTextAlignment(TEXT_ALIGN_RIGHT);
-    display.drawString(128, 50, ws);
+    M5.Lcd.setCursor(0, 10);
+    M5.Lcd.setTextColor(WHITE);
+    M5.Lcd.setTextSize(1);
+
+    M5.Lcd.printf(ws.c_str());
 
 #ifdef BUTTON_COUNT
     for (int i = 0; i < BUTTON_COUNT; i++)
     {
-        display.setColor(WHITE);
-        display.drawCircle(6+i*12, 6, 4);
-        if(buttons->isPressed[i]) display.fillCircle(6+i*12, 6, 2);
+        M5.Lcd.drawCircle(6 + i * 12, 6, 4, 0x333333);
+        if (buttons->isPressed[i])
+            M5.Lcd.fillCircle(6 + i * 12, 6, 2, GREEN);
     }
 #endif
-
-    display.display();
 }
 
 void DisplayManager::sendMessage(String source, String command, var *data, int numData)
@@ -80,7 +89,6 @@ void DisplayManager::sendMessage(String source, String command, var *data, int n
     for (int i = 0; i < numData; i++)
         msg += " " + data[i].stringValue();
 
-
     logMessage(msg);
 }
 
@@ -89,14 +97,13 @@ void DisplayManager::logMessage(String msg)
     messageIndex = (messageIndex + 1) % DISPLAY_LINES;
     messages[messageIndex] = msg;
 
-    display.clear();
+    M5.Lcd.fillScreen(BLACK);
     for (int i = 0; i < DISPLAY_LINES; i++)
     {
         int line = (i + messageIndex) % DISPLAY_LINES;
-        display.drawString(0, line * 15, messages[line]);
+        M5.Lcd.setCursor(0, line * 15);
+        M5.Lcd.printf(messages[line].c_str());
     }
-
-    display.display();
 }
 
 bool DisplayManager::handleCommand(String command, var *data, int numData)

@@ -11,6 +11,9 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
+
+#ifdef ESP32
+
 #include "sd_diskio.h"
 extern "C" {
     #include "diskio.h"
@@ -822,3 +825,5 @@ sdcard_type_t sdcard_type(uint8_t pdrv)
     }
     return card->type;
 }
+
+#endif

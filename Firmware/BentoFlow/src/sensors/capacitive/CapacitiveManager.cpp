@@ -1,5 +1,6 @@
 #include "CapacitiveManager.h"
 
+#ifdef HAS_CAPA
 const String CapacitiveEvent::eventNames[CapacitiveEvent::TYPES_MAX]{"touch", "values"};
 
 CapacitiveManager::CapacitiveManager() : Component("capacitive"),
@@ -110,3 +111,5 @@ bool CapacitiveManager::handleCommand(String command, var *data, int numData)
 #endif
     return false;
 }
+
+#endif

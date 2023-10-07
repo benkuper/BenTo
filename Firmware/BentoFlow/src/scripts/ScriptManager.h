@@ -1,6 +1,9 @@
 
 #pragma once
 #include "../common/Common.h"
+
+#ifdef HAS_SCRIPTS
+
 #include "wasmFunctions.h"
 
 #define SCRIPT_MAX_SIZE 32000
@@ -56,3 +59,5 @@ public:
     static M3Result LinkArduino(IM3Runtime runtime);
     bool handleCommand(String command, var *data, int numData) override;
 };
+
+#endif

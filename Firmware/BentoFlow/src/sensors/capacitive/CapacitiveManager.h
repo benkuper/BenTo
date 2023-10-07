@@ -1,5 +1,7 @@
 #include "../../common/Common.h"
 
+#ifdef HAS_CAPA
+
 #ifdef CAPACITIVE_COUNT
 #include "Adafruit_MPR121.h"
 #endif
@@ -55,3 +57,5 @@ public:
     Preferences prefs;
     #endif
 };
+
+#endif

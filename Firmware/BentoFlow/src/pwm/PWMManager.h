@@ -1,8 +1,7 @@
 #pragma once
-
-#pragma once
 #include "../common/Common.h"
 
+#ifdef HAS_PWM
 class PWMManager : public Component {
 public:
     PWMManager();
@@ -22,3 +21,5 @@ public:
     
     bool handleCommand(String command, var *data, int numData) override;
 };
+
+#endif

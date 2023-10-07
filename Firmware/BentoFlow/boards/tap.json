@@ -1,10 +1,10 @@
 {
   "build": {
-    "arduino": {
+    "arduino":{
       "ldscript": "esp32_out.ld"
     },
     "core": "esp32",
-    "extra_flags": "",
+    "extra_flags": "-DARDUINO_TAP_DANCE",
     "f_cpu": "240000000L",
     "f_flash": "40000000L",
     "flash_mode": "dio",
@@ -25,7 +25,7 @@
     "arduino",
     "espidf"
   ],
-  "name": "Flowtoys Creator",
+  "name": "Flowtoys Creator Superstaff",
   "upload": {
     "flash_size": "4MB",
     "maximum_ram_size": 327680,

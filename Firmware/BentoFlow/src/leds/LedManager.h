@@ -1,5 +1,9 @@
 #pragma once
 
+#include "common/Common.h"
+
+#ifdef LED_COUNT
+
 #include "system/SystemLedMode.h"
 #include "stream/StreamMode.h"
 #include "player/PlayerMode.h"
@@ -18,18 +22,20 @@ public:
     Mode mode;
 
     //source
-#ifdef LED_COUNT
     LedMode * currentMode;
     SystemLedMode sysLedMode;
     StreamMode streamMode;
     PlayerMode playerMode;
     //out
     RGBLedsManager rgbManager;
+
+#if HAS_LED_FX
+    FXManager fxManager;
 #endif
 
-    FXManager fxManager;
-    
+#if HAS_IR
     IRLedsManager irManager;
+#endif
 
     //timers
     Timer connectedTimer;
@@ -46,12 +52,12 @@ public:
 
     void setConnectionState(ConnectionState state);
 
-#ifdef LED_COUNT
     void rgbLedsEvent(const RGBLedsEvent &e);
     void playerEvent(const PlayerEvent &e);
-#endif
 
     bool handleCommand(String command, var *data, int numData) override;
     void timerEvent(const TimerEvent &e);
     void showBaseOnOutLayer();
 };
+
+#endif

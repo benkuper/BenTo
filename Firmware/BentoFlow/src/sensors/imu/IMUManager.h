@@ -1,11 +1,15 @@
 #include "../../common/Common.h"
 
+#ifdef HAS_IMU
+
 #include <Wire.h>
 #include <Adafruit_BNO055.h>
 
+#ifdef HAS_IMU
 #define TRAIL_MAX 20
 #define IMU_READ_ASYNC
 #define NATIVE_STACK_SIZE (32 * 1024)
+#endif
 
 class IMUEvent
 {
@@ -115,3 +119,5 @@ public:
     Preferences prefs;
     #endif
 };
+
+#endif

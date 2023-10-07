@@ -1,5 +1,6 @@
 #include "RGBLedsManager.h"
 
+#ifdef LED_COUNT
 const String RGBLedsEvent::eventNames[RGBLedsEvent::TYPES_MAX]{"askFocus", "brightnessStatus"};
 
 RGBLedsManager::RGBLedsManager() : Component("rgb"),
@@ -17,7 +18,6 @@ RGBLedsManager::RGBLedsManager() : Component("rgb"),
 
 void RGBLedsManager::init()
 {
-#ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
     for (int i = 0; i < LED_COUNT; i++)
     {
@@ -137,8 +137,6 @@ void RGBLedsManager::init()
     prefs.readSettings(String("/" + name + ".json").c_str());
     setBrightness(prefs.getFloat("brightness", globalBrightness), false);
 #endif
-
-#endif // LED_COUNT
 }
 
 void RGBLedsManager::update()
@@ -146,7 +144,6 @@ void RGBLedsManager::update()
     if (!ledEnabled)
         return;
 
-#ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
     for (int i = 0; i < LED_COUNT; i++)
     {
@@ -185,7 +182,6 @@ void RGBLedsManager::update()
     FastLED.show();
 
 #endif
-#endif // LED_COUNT
 }
 
 void RGBLedsManager::shutdown()
@@ -197,7 +193,6 @@ void RGBLedsManager::setBrightness(float value, bool save)
 {
     globalBrightness = min(max(value, 0.f), 1.f);
 
-#ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
 #elif defined LED_USE_DMX
 #else
@@ -211,18 +206,19 @@ void RGBLedsManager::setBrightness(float value, bool save)
         prefs.putFloat("brightness", globalBrightness);
         prefs.end();
 #elif defined USE_SETTINGS_MANAGER
-        prefs.readSettings(String("/" + name + ".json").c_str());
+
+        // prefs.readSettings(String("/" + name + ".json").c_str());
         prefs.setFloat("brightness", globalBrightness);
+        // Serial.println("After set");
+        // delay(1000);
 #endif
     }
-#endif // LED_COUNT
 }
 
 void RGBLedsManager::setTemperature(uint8_t r, uint8_t g, uint8_t b, bool save)
 {
     temperature = CRGB(r, g, b);
 
-#ifdef LED_COUNT
 #ifdef LED_SEPARATE_CHANNELS
 #elif defined LED_USE_DMX
 #else
@@ -240,7 +236,6 @@ void RGBLedsManager::setTemperature(uint8_t r, uint8_t g, uint8_t b, bool save)
 #elif defined USE_SETTINGS_MANAGER
 #endif
     }
-#endif // LED_COUNT
 }
 
 void RGBLedsManager::setLedEnabled(bool val)
@@ -263,7 +258,6 @@ void RGBLedsManager::setLedEnabled(bool val)
 
 bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 {
-#ifdef LED_COUNT
     if (checkCommand(command, "enabled", numData, 1))
     {
         setLedEnabled(data[0].intValue());
@@ -314,7 +308,6 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
         sendEvent(RGBLedsEvent(RGBLedsEvent::BrightnessStatus, msgData, 1));
         return true;
     }
-#endif
 
     return false;
 }
@@ -322,7 +315,6 @@ bool RGBLedsManager::handleCommand(String command, var *data, int numData)
 // Helpers
 void RGBLedsManager::clear(int layer)
 {
-#ifdef LED_COUNT
     memset(leds[layer], 0, LED_COUNT * sizeof(CRGB));
 
 #if defined LED_SEPARATE_CHANNELS || defined LED_USE_DMX
@@ -331,15 +323,12 @@ void RGBLedsManager::clear(int layer)
 #else
     FastLED.clear();
 #endif
-#endif // LED_COUNT
 }
 
 
 void RGBLedsManager::dimLayer(float v, int layer) {
-#ifdef LED_COUNT
     for (int i = 0; i < LED_COUNT; i++)
         leds[layer][i] = leds[layer][i].scale8((uint8_t)(v*255));
-#endif // LED_COUNT    
 }
 
 
@@ -350,28 +339,24 @@ void RGBLedsManager::fillAll(CRGB c, bool doClear, int layer)
 
 void RGBLedsManager::fillRange(CRGB c, float start, float end, bool doClear, int layer)
 {
-#ifdef LED_COUNT
     if (doClear)
         clear(layer);
 
     LedHelpers::fillRange(leds[layer], LED_COUNT, c, start, end, doClear);
-#endif
 }
 
 void RGBLedsManager::point(CRGB c, float pos, float fade, bool doClear, int layer)
 {
-#ifdef LED_COUNT
     if (doClear)
         clear(layer);
     LedHelpers::point(leds[layer], LED_COUNT, c, pos, fade, doClear);
-#endif
 }
 
 void RGBLedsManager::setLed(int index, CRGB c, int layer)
 {
-#ifdef LED_COUNT
     if (index < 0 || index >= LED_COUNT)
         return;
     leds[layer][index] = c;
-#endif
 }
+
+#endif //LEDCOUNT

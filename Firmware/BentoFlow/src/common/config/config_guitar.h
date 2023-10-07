@@ -21,6 +21,8 @@
 
 #define USE_MIC 1
 
+#define HAS_DISPLAY
+
 //battery
 /*#define BATTERY_CHARGE_PIN 34
 #define BATTERY_PIN 35

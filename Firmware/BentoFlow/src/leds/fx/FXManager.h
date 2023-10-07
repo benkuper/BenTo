@@ -2,6 +2,10 @@
 #pragma once;
 
 #include "common/Common.h"
+
+#if HAS_LED_FX
+
+#ifdef LED_COUNT
 #include <FastLED.h>
 
 class FXManager : public Component
@@ -37,3 +41,6 @@ public:
 
    bool handleCommand(String command, var *data, int numData) override;
 };
+#endif
+
+#endif

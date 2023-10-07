@@ -1,5 +1,7 @@
 #include "PWMManager.h"
 
+#ifdef HAS_PWM
+
 PWMManager::PWMManager() : Component("pwm")
 {
 
@@ -55,3 +57,5 @@ bool PWMManager::handleCommand(String command, var *data, int numData)
 
     return false;
 }
+
+#endif
