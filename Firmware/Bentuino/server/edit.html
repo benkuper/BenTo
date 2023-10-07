@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="http://192.168.1.162/server/osc-browser.min.js"></script>
+    <script type="text/javascript" src="/server/osc-browser.min.js"></script>
+    <title>Bentuino Settings</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: system-ui;
+            /* text-align: center; */
+            padding: 20px;
+        }
+
+        .component-grid.level0 {}
+
+        .component-grid.level1 {}
+
+        .component {
+            width: auto;
+            /* max-width: 400px; */
+            /* margin: 0 auto; */
+            padding: 12px;
+            background-color: rgba(255, 255, 255, .1);
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+            display: block;
+            /* margin: 10px 10px 0 0; */
+        }
+
+        .component.level0 {
+            width: auto;
+        }
+
+        .component.level1 {}
+
+        .component.level0 .components {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+            grid-gap: 0.5rem;
+            margin: 0;
+            padding: 2px;
+        }
+
+        .component.level1 .components {}
+
+        p.title {
+            font-size: 1.3em;
+            margin: 0em 0;
+            text-align: center;
+            font-weight: bold;
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        .parameter {
+            margin: 4px 0;
+        }
+
+        label {
+            width: 140px;
+            display: inline-block;
+        }
+
+        input {
+            margin: 0;
+        }
+
+        input[type=number] {
+            width: 80px;
+        }
+
+        .sliderText {
+
+            width: 50px;
+            vertical-align: bottom;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+
+
+<body>
+    <h1>Bentuino Settings</h1>
+    <input type="button" value="Save Settings"
+        onclick="sendCommand('/root/saveSettings');sendCommand('/root/restart');" />
+    <div id="editor"></div>
+
+    <script>
+
+        var local = window.location.hostname.startsWith("192");
+        var ip = local ? window.location.hostname : "192.168.1.162";
+        connectToServer();
+        var data = {};
+
+        var oscWS;
+
+        async function connectToServer() {
+            const response = await fetch("http://" + ip);
+            data = await response.json();
+            buildStructure();
+            initWebSocket();
+        }
+
+        function initWebSocket() {
+            oscWS = new osc.WebSocketPort({
+                url: "ws://" + ip + "/ws",
+                metadata: true
+            });
+
+            oscWS.on('message', function (oscMsg) {
+                var p = document.getElementById(oscMsg.address);
+                // console.log("here", oscMsg, p);
+                var val = oscMsg.args[0].value;
+                if(p != undefined)
+                {
+                    processParameterFeedback(p, val);
+                }
+            });
+
+            oscWS.on('error', function (error) {
+                console.log("Websocket Error", error);
+            });
+
+            oscWS.on('open', function () {
+                console.log("Websocket opened");
+            });
+
+
+            this.oscWS.open();
+        }
+
+
+        function buildStructure() {
+            const editorContainer = document.getElementById('editor');
+            editorContainer.innerHTML = '';
+            generateEditor(data, editorContainer, 0);
+        }
+
+        // Function to generate the editor interface
+        async function generateEditor(node, parentElement, level) {
+            var containerDiv = parentElement.appendChild(createContainerEditor(node, lowerCamelCaseToTitleCase(node.DESCRIPTION), level));
+
+            for (const key in node.CONTENTS) {
+                var item = node.CONTENTS[key];
+
+
+                if (item.TYPE) {
+                    // Handle parameters
+                    var paramsContainer = containerDiv.querySelector(".parameters");
+                    paramsContainer.appendChild(createParameterEditor(item, level + 1));
+                } else if (item.CONTENTS) {
+                    // Handle nested containers
+                    var componentsContainer = containerDiv.querySelector(".components");
+
+                    generateEditor(item, componentsContainer, level + 1);
+                }
+            }
+        }
+
+        function createContainerEditor(item, key, level) {
+            var itemDiv = document.createElement('div');
+            itemDiv.classList.add("component", "level" + level);
+            itemDiv.innerHTML = `<p class="title">${key}</p><div class="parameters"></div><div class="components"></div></div>`;
+            return itemDiv;
+        }
+
+        function createParameterEditor(item, level) {
+
+            //generate the parameter editor depending on its type
+            switch (item.TYPE) {
+                case "i":
+                    return createIntParameterEditor(item, level);
+                case "f":
+                    return createFloatParameterEditor(item, level);
+                case "s":
+                    return createStringParameterEditor(item, level);
+                case "b":
+                case "T":
+                case "F":
+                    return createBoolParameterEditor(item, level);
+
+                default:
+                    return createDefaultParameterEditor(item, level);
+            }
+        }
+
+        function createIntParameterEditor(item, level) {
+            var paramDiv = document.createElement('div');
+            paramDiv.classList.add("parameter");
+            var range = item.RANGE != undefined ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}` : "";
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="number" ${range} id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "i", this.value)'/>`;
+            return paramDiv;
+        }
+
+        function createFloatParameterEditor(item, level) {
+            var paramDiv = document.createElement('div');
+            paramDiv.classList.add("parameter");
+            var range = item.RANGE != null ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}"` : "";
+            var inputType = item.RANGE != null ? "range" : "number";
+            var rangeText = item.RANGE != null? `<input type="text" class="sliderText" id="${item.FULL_PATH}-value" value="${item.VALUE[0]}">`:'';
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="${inputType}" ${range} step="any" id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='this.nextElementSibling.value = parseFloat(this.value).toFixed(3);sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
+            return paramDiv;
+        }
+
+        function createStringParameterEditor(item, level) {
+            var paramDiv = document.createElement('div');
+            paramDiv.classList.add("parameter");
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
+            return paramDiv;
+        }
+
+        function createBoolParameterEditor(item, level) {
+            var paramDiv = document.createElement('div');
+            paramDiv.classList.add("parameter");
+            var checked = item.VALUE[0] ? "checked" : "";
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="checkbox" id="${item.FULL_PATH}" ${checked} oninput='sendParameterValue("${item.FULL_PATH}", "i", this.checked)'/>`;
+            return paramDiv;
+        }
+
+        function createDefaultParameterEditor(item, level) {
+            var paramDiv = document.createElement('div');
+            paramDiv.classList.add("parameter");
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}:</label><input type="text" id="${item.FULL_PATH}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>`;
+            return paramDiv;
+        }
+
+
+        function sendParameterValue(fullPath, type, value) {
+            oscWS.send({ address: fullPath, args: [{ "type": type, "value": value }] });
+        }
+
+        function sendCommand(command) {
+            oscWS.send({ address: command });
+        }
+
+        function processParameterFeedback(p, val)
+        {
+            if(p.type == "checkbox") p.checked = val;
+            else p.value = val;
+            if(p.type == "range") p.nextElementSibling.value = parseFloat(p.value).toFixed(3)
+        }
+
+        //Helpers
+
+        function lowerCamelCaseToTitleCase(inputString) {
+            // Split the input string into words based on uppercase letters
+            const words = inputString.split(/(?=[A-Z])/);
+
+            // Capitalize the first letter of each word and join them with spaces
+            const titleCaseString = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
+
+            return titleCaseString;
+        }
+
+    </script>
+</body>
+
+</html>
+</script>
+</body>
+
+
+
+</html>

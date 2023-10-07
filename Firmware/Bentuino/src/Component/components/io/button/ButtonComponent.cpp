@@ -33,10 +33,10 @@ void ButtonComponent::updateInternal()
 
     if (millis() > timeAtPress + MULTIPRESS_TIME)
     {
-        if (multiPressCount.boolValue() > 0)
+        if (multiPressCount.intValue() > 0)
         {
             multiPressCount.set(0);
-            var data[1]{multiPressCount.boolValue()};
+            var data[1]{multiPressCount.intValue()};
             sendEvent(MultiPress, data, 1);
         }
     }
@@ -54,8 +54,8 @@ void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
         if (value.boolValue())
         {
             timeAtPress = millis();
-            multiPressCount.set(multiPressCount.boolValue() + 1);
-            var data[1]{multiPressCount.boolValue()};
+            multiPressCount.set(multiPressCount.intValue() + 1);
+            var data[1]{multiPressCount.intValue()};
             sendEvent(MultiPress, data, 1);
         }
         else

@@ -1,6 +1,6 @@
 ImplementSingleton(OSCComponent)
 
-bool OSCComponent::initInternal(JsonObject o)
+    bool OSCComponent::initInternal(JsonObject o)
 {
     udpIsInit = false;
 
@@ -136,7 +136,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
         var data[numData];
         data[0] = tc;
         data[1] = cmd;
-        NDBG(data[0].stringValue() + "." + data[1].stringValue());
+        // NDBG(data[0].stringValue() + "." + data[1].stringValue());
 
         for (int i = 0; i < msg.size() && i < numData - 2; i++)
         {
@@ -149,10 +149,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(OSCMessage &msg)
 {
-    if (!enabled.boolValue())
-        return;
-
-    if (remoteHost.stringValue().length() == 0)
+    if (!enabled.boolValue() || remoteHost.stringValue().length() == 0)
         return;
 
     char addr[32];
@@ -165,7 +162,7 @@ void OSCComponent::sendMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(String address)
 {
-    if (!enabled.boolValue())
+    if (!enabled.boolValue() || remoteHost.stringValue().length() == 0)
         return;
 
     OSCMessage m(address.c_str());
@@ -174,11 +171,17 @@ void OSCComponent::sendMessage(String address)
 
 void OSCComponent::sendMessage(const String &source, const String &command, var *data, int numData)
 {
-    if (!enabled.boolValue())
+    if (!enabled.boolValue() || remoteHost.stringValue().length() == 0)
         return;
 
+    OSCMessage msg = createMessage(source, command, data, numData, true);
+    sendMessage(msg);
+}
+
+OSCMessage OSCComponent::createMessage(const String &source, const String &command, var *data, int numData, bool addID)
+{
     OSCMessage msg(("/" + source + "/" + command).c_str());
-    msg.add(DeviceID.c_str());
+    if(addID) msg.add(DeviceID.c_str());
     for (int i = 0; i < numData; i++)
     {
         switch (data[i].type)
@@ -194,9 +197,22 @@ void OSCComponent::sendMessage(const String &source, const String &command, var 
         case 's':
             msg.add(data[i].stringValue().c_str());
             break;
+
+        case 'b':
+            msg.add(data[i].boolValue());
+            break;
+            
+        case 'T':
+            msg.add(true);
+            break;
+
+        case 'F':
+            msg.add(false);
+            break;
         }
     }
-    sendMessage(msg);
+
+    return msg;
 }
 
 var OSCComponent::OSCArgumentToVar(OSCMessage &m, int index)

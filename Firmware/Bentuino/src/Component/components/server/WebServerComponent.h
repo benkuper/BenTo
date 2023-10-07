@@ -4,9 +4,26 @@ DeclareComponentSingleton(WebServer, "server",)
 AsyncWebServer server = AsyncWebServer(80);
 AsyncWebSocket ws = AsyncWebSocket("/ws");
 
+class WSPrint : public Print
+{
+public:
+    uint8_t data[128]; //max 128 chars, should be enough
+    int index = 0;
+    size_t write(uint8_t c) override
+    {
+        if(index < 128) data[index++] = c;
+        return 1;
+    }
+    void flush() { index = 0; }; 
+};
+
+WSPrint wsPrint;
+
 bool isUploading;
 int uploadedBytes;
 File uploadingFile;
+
+String tmpExcludeParam = "";//to change with client exclude when AsyncWebServer implements it
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
@@ -21,6 +38,9 @@ void handleFileUpload(AsyncWebServerRequest *request, String filename, size_t in
 void onWSEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
              void *arg, uint8_t *data, size_t len);
 void handleWebSocketMessage(void *arg, uint8_t *data, size_t len);
+
+
+void sendParameterFeedback(Component*c, Parameter* p);
 
 // void returnOK();
 // void returnFail(String msg);

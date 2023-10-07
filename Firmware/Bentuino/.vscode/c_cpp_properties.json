@@ -10,7 +10,6 @@
             "includePath": [
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/include",
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/src",
-                "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/lib/SD/src",
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/ESP Async WebServer/src",
                 "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/AsyncTCP/src",
@@ -116,6 +115,7 @@
                 "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/SimpleBLE/src",
                 "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src",
                 "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
+                "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                 "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                 "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                 ""
@@ -125,7 +125,6 @@
                 "path": [
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/include",
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/src",
-                    "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/lib/SD/src",
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/ESP Async WebServer/src",
                     "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/bentuino/AsyncTCP/src",
@@ -231,6 +230,7 @@
                     "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/SimpleBLE/src",
                     "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/Ticker/src",
                     "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/Update/src",
+                    "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WebServer/src",
                     "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WiFiClientSecure/src",
                     "C:/Users/bkupe/.platformio/packages/framework-arduinoespressif32/libraries/WiFiProv/src",
                     ""
@@ -253,10 +253,10 @@
                 "LED_DEFAULT_INVERT_DIRECTION=1",
                 "LED_DEFAULT_BRIGHTNESS=0.5f",
                 "LED_MAX_BRIGHTNESS=0.5f",
-                "LED_MAX_COUNT=1000",
-                "BUTTON_MAX_COUNT=4",
-                "BUTTON_DEFAULT_PIN=34",
-                "IO_MAX_COUNT=4",
+                "LED_MAX_COUNT=100",
+                "BUTTON_MAX_COUNT=1",
+                "BUTTON_DEFAULT_PIN=32",
+                "IO_MAX_COUNT=0",
                 "IMU_DEFAULT_SDA=23",
                 "IMU_DEFAULT_SCL=22",
                 "BATTERY_DEFAULT_PIN=35",

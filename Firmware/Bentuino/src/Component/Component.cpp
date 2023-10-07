@@ -86,7 +86,7 @@ bool Component::handleCommand(const String &command, var *data, int numData)
         if (numData > 0) // query for feedback
         {
             p->set(data[0]);
-            NDBG("Set Parameter " + p->name + " : " + data[0].stringValue() + " >> " + p->stringValue());
+            // NDBG("Set Parameter " + p->name + " : " + data[0].stringValue() + " >> " + p->stringValue());
         }
         else
         {

@@ -34,8 +34,8 @@ ImplementSingleton(WebServerComponent)
     server.serveStatic("/upload", SD, "/server/upload.html");
     server.serveStatic("/server/", SD, "/server");
 
-    ws.onEvent( std::bind(&WebServerComponent::onWSEvent,
-                  this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
+    ws.onEvent(std::bind(&WebServerComponent::onWSEvent,
+                         this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 
     server.addHandler(&ws);
 
@@ -45,7 +45,7 @@ ImplementSingleton(WebServerComponent)
 void WebServerComponent::updateInternal()
 {
     // server.handleClient();
-      ws.cleanupClients();
+    ws.cleanupClients();
 }
 
 void WebServerComponent::clearInternal()
@@ -122,21 +122,21 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
         // close the file handle as the upload is now done
         DBG("Upload Complete: " + String(filename) + ",size: " + String(index + len));
         request->_tempFile.close();
-        request->redirect("/");
+        // request->redirect("/");
     }
 }
 
 void WebServerComponent::onWSEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
-             void *arg, uint8_t *data, size_t len)
+                                   void *arg, uint8_t *data, size_t len)
 {
-    DBG("WS Event");
+    // DBG("WS Event");
     switch (type)
     {
     case WS_EVT_CONNECT:
         DBG("WebSocket client " + String(client->id()) + "connected from " + String(client->remoteIP().toString()));
         break;
     case WS_EVT_DISCONNECT:
-        DBG("WebSocket client "+String(client->id())+" disconnected");
+        DBG("WebSocket client " + String(client->id()) + " disconnected");
         break;
     case WS_EVT_DATA:
         handleWebSocketMessage(arg, data, len);
@@ -147,18 +147,54 @@ void WebServerComponent::onWSEvent(AsyncWebSocket *server, AsyncWebSocketClient 
     }
 }
 
-void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t len) {
-    
-  AwsFrameInfo *info = (AwsFrameInfo*)arg;
-  if (info->final && info->index == 0 && info->len == len && info->opcode == WS_TEXT) {
-    data[len] = 0;
-    // if (strcmp((char*)data, "toggle") == 0) {
-    //   ledState = !ledState;
-    //   notifyClients();
-    // }
+void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t len)
+{
 
-    DBG("Message : " + String((char*)data));
-  }
+    AwsFrameInfo *info = (AwsFrameInfo *)arg;
+    if (info->final && info->index == 0 && info->len == len)
+    {
+        data[len] = 0;
+        // if (strcmp((char*)data, "toggle") == 0) {
+        //   ledState = !ledState;
+        //   notifyClients();
+        // }
+
+        if (info->opcode == WS_TEXT)
+        {
+            DBG("Message : " + String((char *)data));
+        }
+        else if (info->opcode == WS_BINARY)
+        {
+            OSCMessage msg;
+            msg.fill(data, len);
+            if (!msg.hasError())
+            {
+                // DBG("Got websocket OSC message");
+
+                char addr[64];
+                msg.getAddress(addr);
+                tmpExcludeParam = String(addr);
+
+                OSCComponent::instance->processMessage(msg);
+
+                tmpExcludeParam = "";
+            }
+        }
+    }
+}
+
+void WebServerComponent::sendParameterFeedback(Component *c, Parameter *param)
+{
+    OSCMessage msg = OSCComponent::createMessage(c->name, param->name, &param->val, 1, false);
+
+    char addr[64];
+    msg.getAddress(addr);
+    if (String(addr) == tmpExcludeParam)
+        return;
+
+    wsPrint.flush();
+    msg.send(wsPrint);
+    ws.binaryAll(wsPrint.data, wsPrint.index);
 }
 
 // String dest = "";

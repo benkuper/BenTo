@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Upload</title>
+    <style>
+        body {
+            background-color: #222;
+            color: #fff;
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 20px;
+        }
+        .container {
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: #333;
+            border-radius: 10px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+        }
+        .input-group {
+            margin-bottom: 20px;
+        }
+        .input-group label {
+            display: block;
+            margin-bottom: 5px;
+        }
+        .input-group input[type="file"],
+        .input-group input[type="text"] {
+            border: none;
+            background-color: #555;
+            color: #fff;
+            padding: 10px;
+            border-radius: 5px;
+            width: 100%;
+        }
+        .btn {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+        .btn:hover {
+            background-color: #0056b3;
+        }
+        #progress-container {
+            display: none;
+            margin-top: 20px;
+        }
+        #progress-bar {
+            width: 0;
+            height: 20px;
+            background-color: #007bff;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File Upload</h1>
+        <form id="upload-form" enctype="multipart/form-data">
+            <div class="input-group">
+                <label for="file">Select File(s):</label>
+                <input type="file" id="file" name="file" multiple>
+            </div>
+            <div class="input-group">
+                <label for="folder">Folder Name:</label>
+                <input type="text" id="folder" name="folder">
+            </div>
+            <button class="btn" type="submit">Upload</button>
+        </form>
+        <div id="progress-container">
+            <div id="progress-bar"></div>
+        </div>
+    </div>
+
+    <script>
+        const form = document.getElementById('upload-form');
+        const progressBar = document.getElementById('progress-bar');
+        const progressContainer = document.getElementById('progress-container');
+        const folder = document.getElementById('folder');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const response = await fetch('/uploadFile?folder='+folder.value, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                alert('File(s) uploaded successfully!');
+            } else {
+                alert('File upload failed.');
+            }
+
+            // Reset the form and progress bar
+            form.reset();
+            progressContainer.style.display = 'none';
+            progressBar.style.width = '0';
+        });
+
+        // Show progress bar during file upload
+        form.addEventListener('change', () => {
+            progressContainer.style.display = 'block';
+        });
+    </script>
+</body>
+</html>
