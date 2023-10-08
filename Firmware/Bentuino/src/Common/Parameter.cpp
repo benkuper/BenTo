@@ -2,7 +2,10 @@
 Parameter::Parameter(const String &name, var val, var _minVal, var _maxVal, bool isConfig) : name(name),
                                                                                              val(val),
                                                                                              isConfig(isConfig),
-                                                                                             readOnly(false)
+                                                                                             readOnly(false),
+                                                                                             options(nullptr),
+                                                                                             optionsValues(nullptr),
+                                                                                             numOptions(0)
 {
     if (val.type == 'b')
         setRange(false, true);
@@ -23,8 +26,21 @@ bool Parameter::hasRange()
     return !minVal.isVoid() && !maxVal.isVoid();
 }
 
-void Parameter::set(const var &v, bool force)
+void Parameter::set(const var &v, bool force, bool skipEnumEval)
 {
+    if (!skipEnumEval && numOptions > 0)
+    {
+
+        const var ev = getValForEnumValue(v);
+        if (ev.isVoid())
+        {
+            DBG("Invalid enum value " + v.stringValue());
+            return;
+        }
+        set(ev, force, true);
+        return;
+    }
+
     switch (val.type)
     {
     case 'b':
@@ -76,6 +92,45 @@ void Parameter::set(const var &v, bool force)
     }
 
     sendEvent(ParameterEvent(this, ValueChanged, &val, 1));
+}
+
+var Parameter::getValForEnumValue(const var &v) const
+{
+    const String s = v.stringValue();
+    for (int i = 0; i < numOptions; i++)
+    {
+        if (s == options[i])
+        {
+            if (optionsValues != nullptr)
+                return optionsValues[i];
+            return var(i);
+        }
+    }
+
+    return var();
+}
+
+var Parameter::getEnumValueForVal(const var &v) const
+{
+    if (numOptions == 0)
+        return var();
+
+    if (optionsValues != nullptr)
+    {
+        for (int i = 0; i < numOptions; i++)
+        {
+            if (optionsValues[i] == v)
+                return var(options[i]);
+        }
+    }
+    else
+    {
+        int i = v.intValue();
+        if (i >= 0 && i < numOptions)
+            return var(options[i]);
+    }
+
+    return var();
 }
 
 void Parameter::setRange(var newMin, var newMax)
@@ -144,47 +199,77 @@ void Parameter::fillOSCQueryData(JsonObject o)
 
     JsonArray vArr = o.createNestedArray("VALUE");
 
-    switch (val.type)
-    {
-    case 'b':
-        vArr.add(val.boolValue());
-        break;
-
-    case 'i':
-        vArr.add(val.intValue());
-        break;
-
-    case 'f':
-        vArr.add(val.floatValue());
-        break;
-
-    case 's':
-        vArr.add(val.stringValue());
-        break;
-    }
-
-    if (hasRange())
+    if (options != nullptr && numOptions > 0)
     {
         JsonArray rArr = o.createNestedArray("RANGE");
-        JsonObject ro = rArr.createNestedObject();
+        JsonObject vals = rArr.createNestedObject();
+        JsonArray opt = vals.createNestedArray("VALS");
 
-        switch (val.type)
+        for (int i = 0; i < numOptions; i++)
         {
-        case 'b':
-        case 'i':
-            ro["MIN"] = minVal.intValue();
-            ro["MAX"] = maxVal.intValue();
-            break;
-
-        case 'f':
-            ro["MIN"] = minVal.floatValue();
-            ro["MAX"] = maxVal.floatValue();
-            break;
+            opt.add(options[i]);
         }
+
+        o["TYPE"] = "s"; // force string type
+        const var v = getEnumValueForVal(val);
+        if (!v.isVoid())
+            vArr.add(v.stringValue());
     }
     else
     {
+        switch (val.type)
+        {
+        case 'b':
+            vArr.add(val.boolValue());
+            break;
 
-        o["RANGE"] = nullptr;
+        case 'i':
+            vArr.add(val.intValue());
+            break;
+
+        case 'f':
+            vArr.add(val.floatValue());
+            break;
+
+        case 's':
+            vArr.add(val.stringValue());
+            break;
+        }
+
+        if (hasRange())
+        {
+            JsonArray rArr = o.createNestedArray("RANGE");
+            JsonObject ro = rArr.createNestedObject();
+
+            switch (val.type)
+            {
+            case 'b':
+            case 'i':
+                ro["MIN"] = minVal.intValue();
+                ro["MAX"] = maxVal.intValue();
+                break;
+
+            case 'f':
+                ro["MIN"] = minVal.floatValue();
+                ro["MAX"] = maxVal.floatValue();
+                break;
+            }
+        }
+        else
+        {
+            o["RANGE"] = nullptr;
+        }
     }
+}
+
+var Parameter::getOSCQueryFeedbackData() const
+{
+    if (numOptions > 0)
+    {
+        const var v = getEnumValueForVal(val);
+        if (!v.isVoid())
+            return v;
+    }
+
+    return val;
 }

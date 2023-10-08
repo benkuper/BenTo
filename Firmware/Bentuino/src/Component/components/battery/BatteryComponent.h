@@ -6,7 +6,7 @@
 
 DeclareComponentSingleton(Battery, "battery", )
 
-DeclareConfigParameter(batteryPin, -1);
+DeclareConfigParameter(batteryPin, BATTERY_DEFAULT_PIN);
 DeclareConfigParameter(chargePin, -1);
 DeclareConfigParameter(rawMin, BATTERY_DEFAUT_RAW_MIN);
 DeclareConfigParameter(rawMax, BATTERY_DEFAULT_RAW_MAX);

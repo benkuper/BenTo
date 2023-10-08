@@ -33,13 +33,17 @@ bool RootComponent::initInternal(JsonObject)
     }
     for (int i = 0; i < BUTTON_MAX_COUNT; i++)
     {
-        buttons[i].name ="button" + String(i + 1);
+        buttons[i].name = "button" + String(i + 1);
         AddOwnedComponent(&buttons[i]);
     }
 
+
+    //initialize static io here
+    memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
+
     for (int i = 0; i < IO_MAX_COUNT; i++)
     {
-        ios[i].name ="io" + String(i + 1);
+        ios[i].name = "io" + String(i + 1);
         AddOwnedComponent(&ios[i]);
     }
 #if USE_IMU
@@ -84,12 +88,12 @@ void RootComponent::powerdown()
 
     // NDBG("Sleep now, baby.");
 
-if(wakeUpButton.intValue() > 0)
-    esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton.intValue(), wakeUpState.boolValue());
-// #elif defined TOUCH_WAKEUP_PIN
-//     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
-//     esp_sleep_enable_touchpad_wakeup();
-// #endif
+    if (wakeUpButton.intValue() > 0)
+        esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton.intValue(), wakeUpState.boolValue());
+        // #elif defined TOUCH_WAKEUP_PIN
+        //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
+        //     esp_sleep_enable_touchpad_wakeup();
+        // #endif
 
 #ifdef ESP8266
     ESP.deepSleep(5e6);
@@ -185,6 +189,12 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
     else if (command == "saveSettings")
     {
         saveSettings();
+    }
+    else if (command == "showSettings")
+    {
+        String test;
+        serializeJson(Settings::settings, test);
+        DBG(test);
     }
     else if (command == "factoryReset")
     {

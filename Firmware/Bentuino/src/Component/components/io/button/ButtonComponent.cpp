@@ -1,7 +1,10 @@
 bool ButtonComponent::initInternal(JsonObject o)
 {
-    bool result = IOComponent::initInternal(o);
+    value.val.type = 'b'; //force boolean
+    value.set(false); 
 
+    bool result = IOComponent::initInternal(o);
+    
     debounceCount = 0;
     timeAtPress = 0;
 

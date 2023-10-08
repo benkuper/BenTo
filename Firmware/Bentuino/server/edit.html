@@ -13,9 +13,48 @@
             color: #fff;
             font-family: system-ui;
             /* text-align: center; */
-            padding: 20px;
-
+            font-size: 12px;
             color-scheme: dark;
+        }
+
+
+
+        div#controls {
+            margin: 10px;
+            text-align: center;
+            /* font-size: 12px; */
+        }
+
+        h1 {
+            text-align: center;
+        }
+
+        #controls input {
+            border-radius: 4px;
+            border: solid 1px #777;
+            padding: 5px;
+            background-color: #555;
+            cursor: pointer;
+            font-size: 12px;
+        }
+
+        .input-group {
+            display: inline-block;
+            margin: 0px 4px;
+        }
+
+        #controls .control-block {
+            display: inline-block;
+            margin-left: 10px;
+            /* font-size: 12px; */
+            background-color: #333;
+            padding: 8px;
+            border-radius: 6px;
+            border: solid 1px #444;
+        }
+
+        #controls input:hover {
+            background-color: #888;
         }
 
         .component-grid.level0 {}
@@ -28,7 +67,7 @@
             /* margin: 0 auto; */
             padding: 12px;
             background-color: rgba(255, 255, 255, .1);
-            border-radius: 10px;
+            border-radius: 6px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             display: block;
             /* margin: 10px 10px 0 0; */
@@ -38,20 +77,17 @@
             width: auto;
         }
 
-        .component.level1 {}
 
         .component.level0 .components {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(24rem, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
             grid-gap: 0.5rem;
             margin: 0;
             padding: 2px;
         }
 
-        .component.level1 .components {}
-
         p.title {
-            font-size: 1.3em;
+            font-size: 1.6em;
             margin: 0em 0;
             text-align: center;
             font-weight: bold;
@@ -62,37 +98,45 @@
             margin: 4px 0;
         }
 
-        label {
-            width: 140px;
+        .parameter label {
+            width: 9em;
             display: inline-block;
         }
 
         input {
             margin: 0;
+            /* width: auto; */
+            /* display: inline; */
         }
 
         input[type=number] {
-            width: 80px;
+            /* width: 80px; */
         }
 
         input[type="checkbox"],
         input[type="range"] {
             accent-color: limegreen;
-            width:29%;
         }
 
         input[type="checkbox"]:disabled {
             accent-color: lightblue;
         }
 
-        input:disabled
-        {
-            color:lightblue;
+        input:disabled {
+            color: lightblue;
+        }
+
+        input[type="text"],
+        input[type="number"] {
+            max-width: 8.6em;
+        }
+
+        input[type="range"] {
+            max-width: 5.5em;
         }
 
         .sliderText {
-
-            width: 50px;
+            max-width: 2.8em !important;
             vertical-align: bottom;
             margin-left: 10px;
         }
@@ -104,8 +148,33 @@
 
 <body>
     <h1>Bentuino Settings</h1>
-    <input type="button" value="Save Settings"
-        onclick="sendCommand('/root/saveSettings');sendCommand('/root/restart');" />
+    <div id="controls">
+        <div class="control-block">
+            <input type="button" value="Save Settings"
+                onclick="sendCommand('/root/saveSettings');sendCommand('/root/restart');" />
+            <input type="button" value="Shutdown" onclick="sendCommand('/root/shutdown')" />
+            <input type="button" value="Restart" onclick="sendCommand('/root/restart');" />
+            <input type="button" value="Test Mode" onclick="sendCommand('/root/test');" />
+        </div>
+
+        <form id="upload-form" class="control-block" enctype="multipart/form-data">
+            <div class="input-group">
+                <label for="file">Upload files : </label>
+                <input type="file" id="file" name="file" multiple>
+            </div>
+            <div class="input-group">
+                <label for="folder">Target :</label>
+                <select id="folder" name="folder">
+                    <option value="server">Server</option>
+                    <option value="scripts">Scripts</option>
+                    <option value="bake">Bake</option>
+                    <option value="sequences">Sequences</option>
+                </select>
+
+            </div>
+            <button class="btn" type="submit">Upload</button>
+        </form>
+    </div>
     <div id="editor"></div>
 
     <script>
@@ -143,10 +212,16 @@
 
             oscWS.on('error', function (error) {
                 console.log("Websocket Error", error);
+                initWebSocket();
             });
 
             oscWS.on('open', function () {
                 console.log("Websocket opened");
+            });
+
+            oscWS.on('close', function () {
+                console.log("Websocket closed");
+                initWebSocket();
             });
 
 
@@ -193,32 +268,38 @@
             item.id = item.FULL_PATH.substring(1).replace(/\//g, "-");
 
             var paramDiv;
-            //generate the parameter editor depending on its type
-            switch (item.TYPE) {
-                case "i":
-                    paramDiv = createIntParameterEditor(item, level);
-                    break;
 
-                case "f":
-                    paramDiv = createFloatParameterEditor(item, level);
-                    break;
+            if (item.RANGE != null && item.RANGE[0].VALS != null) {
 
-                case "s":
-                    paramDiv = createStringParameterEditor(item, level);
-                    break;
+                paramDiv = createEnumParameterEditor(item, level);
+            } else {
 
-                case "b":
-                case "T":
-                case "F":
-                    paramDiv = createBoolParameterEditor(item, level);
-                    break;
+                //generate the parameter editor depending on its type
+                switch (item.TYPE) {
+                    case "i":
+                        paramDiv = createIntParameterEditor(item, level);
+                        break;
+
+                    case "f":
+                        paramDiv = createFloatParameterEditor(item, level);
+                        break;
+
+                    case "s":
+                        paramDiv = createStringParameterEditor(item, level);
+                        break;
+
+                    case "b":
+                    case "T":
+                    case "F":
+                        paramDiv = createBoolParameterEditor(item, level);
+                        break;
 
 
-                default:
-                    paramDiv = createDefaultParameterEditor(item, level);
-                    break;
+                    default:
+                        paramDiv = createDefaultParameterEditor(item, level);
+                        break;
 
-
+                }
             }
 
             if (item.ACCESS == 1) {
@@ -242,7 +323,7 @@
             paramDiv.classList.add("parameter");
             var range = item.RANGE != null ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}"` : "";
             var inputType = item.RANGE != null ? "range" : "number";
-            var rangeText = item.RANGE != null ? `<input type="text" class="sliderText" id="${item.id}-value" value="${item.VALUE[0]}">` : '';
+            var rangeText = item.RANGE != null ? `<input type="text" class="sliderText" id="${item.id}-value" value="${item.VALUE[0].toFixed(3)}">` : '';
             paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="${inputType}" ${range} step="any" id="${item.id}" value="${item.VALUE[0]}" oninput='this.nextElementSibling.value = parseFloat(this.value).toFixed(3);sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
             return paramDiv;
         }
@@ -259,6 +340,19 @@
             paramDiv.classList.add("parameter");
             var checked = item.VALUE[0] ? "checked" : "";
             paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="checkbox" id="${item.id}" ${checked} oninput='sendParameterValue("${item.FULL_PATH}", "i", this.checked)'/>`;
+            return paramDiv;
+        }
+
+        function createEnumParameterEditor(item, level) {
+            var paramDiv = document.createElement('div');
+            paramDiv.classList.add("parameter");
+            var options = "";
+            for (const key in item.RANGE[0].VALS) {
+                console.log(item.RANGE[0].VALS[key], item.VALUE[0]);
+                var selected = item.RANGE[0].VALS[key] == item.VALUE[0] ? "selected" : "";
+                options += `<option value="${item.RANGE[0].VALS[key]}" ${selected}>${item.RANGE[0].VALS[key]}</option>`;
+            }
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><select id="${item.id}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'>${options}</select>`;
             return paramDiv;
         }
 
@@ -297,12 +391,37 @@
         }
 
     </script>
+
+
+    <script>
+
+        //UPLOAD FORM
+
+
+        const form = document.getElementById('upload-form');
+        const folder = document.getElementById('folder');
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+
+            const formData = new FormData(form);
+
+            const response = await fetch("http://" + ip + '/uploadFile?folder=' + folder.value, {
+                method: 'POST',
+                body: formData,
+            });
+
+            if (response.ok) {
+                alert('File(s) uploaded successfully!');
+            } else {
+                alert('File upload failed.');
+            }
+
+            // Reset the form and progress bar
+            form.reset();
+        });
+
+    </script>
+
 </body>
-
-</html>
-</script>
-</body>
-
-
 
 </html>

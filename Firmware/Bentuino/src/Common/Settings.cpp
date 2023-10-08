@@ -31,7 +31,6 @@ bool Settings::saveSettings()
     DBG("serialize");
     size_t s = serializeMsgPack(settings, bytes, settingsSize);
 
-    DBG("Test here");
     String test;
     serializeJson(settings, test);
     DBG("SETTINGS Json serialized and packed : " + String(settingsSize));

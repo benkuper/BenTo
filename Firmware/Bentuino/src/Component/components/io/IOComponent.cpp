@@ -1,4 +1,4 @@
-int IOComponent::pwmChannelCount = 0;
+bool IOComponent::availablePWMChannels[16] = {true};
 
 bool IOComponent::initInternal(JsonObject o)
 {
@@ -6,12 +6,15 @@ bool IOComponent::initInternal(JsonObject o)
 
     AddAndSetParameter(pin);
     AddAndSetParameter(mode);
+
+    mode.options = modeOptions;
+    mode.numOptions = PINMODE_MAX;
+
     AddAndSetParameter(inverted);
 
-    int m = mode.intValue();
-
     AddParameter(value);
-    value.readOnly = m == D_INPUT || m == D_INPUT_PULLUP || m == D_OUTPUT;
+    int m = mode.intValue();
+    value.readOnly = m == D_INPUT || m == D_INPUT_PULLUP || m == A_INPUT;
 
     prevValue = value.floatValue();
 
@@ -32,7 +35,16 @@ void IOComponent::clearInternal()
 
 void IOComponent::setupPin()
 {
-    if (pin.intValue() > 0)
+    if (curPin != -1 && pwmChannel != -1) // prevPin was a PWM pin
+    {
+        ledcDetachPin(curPin);
+        availablePWMChannels[pwmChannel] = true;
+        pwmChannel = -1;
+    }
+
+    curPin = pin.intValue();
+
+    if (curPin > 0)
     {
         int m = mode.intValue();
 
@@ -41,6 +53,7 @@ void IOComponent::setupPin()
         {
         case D_INPUT:
         case A_INPUT:
+
             pinm = INPUT;
             break;
 
@@ -58,19 +71,21 @@ void IOComponent::setupPin()
 
         if (pinm != -1)
         {
-            pinMode(pin.intValue(), pinm);
+
+            pinMode(curPin, pinm);
         }
         else if (m == A_OUTPUT)
         {
             if (m == A_OUTPUT)
             {
-                if (pwmChannelCount < 15)
+                int channel = getFirstAvailablePWMChannel();
+                if (channel >= 0)
                 {
-                    pwmChannel = pwmChannelCount;
+                    pwmChannel = channel;
                     ledcSetup(pwmChannel, 5000, 10); // 0-1024 at a 5khz resolution
-                    ledcAttachPin(pin.intValue(), pwmChannel);
-                    pwmChannelCount++;
-                    NDBG("Attach pin " + pin.stringValue() + " to " + String(pwmChannel));
+                    ledcAttachPin(curPin, pwmChannel);
+                    availablePWMChannels[pwmChannel] = false;
+                    // NDBG("Attach pin " + pin.stringValue() + " to " + String(pwmChannel));
                 }
                 else
                 {
@@ -95,6 +110,7 @@ void IOComponent::updatePin()
         bool val = digitalRead(pin.intValue());
         if (inverted.boolValue())
             val = !val;
+
         value.set(val);
     }
     break;
@@ -113,7 +129,7 @@ void IOComponent::updatePin()
                 if (pwmChannel != -1)
                 {
                     uint32_t v = value.floatValue() * 1024;
-                    NDBG("Set PWM with value " + String(v));
+                    // NDBG("Set PWM with value " + String(v));
                     ledcWrite(pwmChannel, v);
                 }
             }
@@ -132,4 +148,28 @@ void IOComponent::updatePin()
     }
     break;
     }
+}
+
+void IOComponent::onParameterEventInternal(const ParameterEvent &e)
+{
+    if (e.parameter == &mode)
+    {
+        int m = mode.intValue();
+        value.readOnly = m == D_INPUT || m == D_INPUT_PULLUP || m == A_INPUT;
+        setupPin();
+    }
+    else if (e.parameter == &pin)
+    {
+        setupPin();
+    }
+}
+
+int IOComponent::getFirstAvailablePWMChannel() const
+{
+    for (int i = 0; i < 16; i++)
+    {
+        if (availablePWMChannels[i])
+            return i;
+    }
+    return -1;
 }

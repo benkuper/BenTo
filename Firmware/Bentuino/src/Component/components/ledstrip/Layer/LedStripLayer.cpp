@@ -11,6 +11,8 @@ LedStripLayer::~LedStripLayer()
 bool LedStripLayer::initInternal(JsonObject o)
 {
     AddAndSetParameter(blendMode);
+    blendMode.options = blendModeOptions;
+    blendMode.numOptions = BlendModeMax;
 
     memset(colors, 0, LED_MAX_COUNT * sizeof(Color));
 

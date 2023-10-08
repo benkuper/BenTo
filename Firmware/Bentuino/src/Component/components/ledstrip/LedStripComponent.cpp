@@ -187,6 +187,10 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
             colors[i].b = colors[i].b + (c.b - colors[i].b) * a;
             colors[i].r = max(colors[i].a, c.a);
         }
+
+        default:
+        break;
+        
         break;
         }
     }

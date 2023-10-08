@@ -1,9 +1,9 @@
 #pragma once
 
 #define LEDSTRIP_NUM_USER_LAYERS 3
-#define USE_BAKELAYER 0
+#define USE_BAKELAYER 1
 #define USE_STREAMLAYER 1
-#define USE_SCRIPTLAYER 0
+#define USE_SCRIPTLAYER 1
 #define USE_SYSTEMLAYER 1
 
 // DeclareComponent(LedStrip, "ledstrip", )

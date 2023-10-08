@@ -5,17 +5,21 @@ DeclareComponent(IO, "io", )
                    D_INPUT_PULLUP,
                    A_INPUT,
                    D_OUTPUT,
-                   A_OUTPUT };
+                   A_OUTPUT,
+                   PINMODE_MAX };
+
 
 DeclareConfigParameter(pin, -1);
 DeclareConfigParameter(mode, D_INPUT);
 DeclareConfigParameter(inverted, false);
 
 int pwmChannel;
-static int pwmChannelCount;
+int curPin;
 
 Parameter value{"value", 0.f, 0.f, 1.f};
 float prevValue;
+
+const String modeOptions[PINMODE_MAX]{"Digital Input", "Digital Input Pullup", "Analog Input", "Digital Output", "Analog Output"};
 
 virtual bool initInternal(JsonObject o) override;
 virtual void updateInternal() override;
@@ -23,6 +27,11 @@ virtual void clearInternal() override;
 
 virtual void setupPin();
 void updatePin();
+
+void onParameterEventInternal(const ParameterEvent &e) override;
+
+static bool availablePWMChannels[16];
+int getFirstAvailablePWMChannel() const;
 
 // LinkScriptFunctionsStart
 //     LinkScriptFunction(IOComponent, get, f, );

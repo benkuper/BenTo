@@ -13,6 +13,7 @@ public:
 
     int debounceCount;
     long timeAtPress;
+    
 
     DeclareParameter(multiPressCount, 0, false);
     DeclareParameter(isLongPressed, false, false);

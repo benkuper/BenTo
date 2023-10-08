@@ -2,7 +2,7 @@ ImplementSingleton(FilesComponent);
 
 bool FilesComponent::initInternal(JsonObject o)
 {
-     useInternalMemory = false;
+    useInternalMemory = false;
 
     AddAndSetParameter(sdEnPin);
     AddAndSetParameter(sdEnVal);
@@ -46,13 +46,13 @@ bool FilesComponent::initInternal(JsonObject o)
 
     if (SD.begin((uint8_t)sdCS.intValue(), spiSD))
     {
-      
-    //    NDBG("SD Card initialized.");
-       SD.mkdir("/scripts");
-       SD.mkdir("/sequences");
-       SD.mkdir("/bake");
-       SD.mkdir("/server");
-    //    listDir("/", 1);
+
+        //    NDBG("SD Card initialized.");
+        SD.mkdir("/scripts");
+        SD.mkdir("/sequences");
+        SD.mkdir("/bake");
+        SD.mkdir("/server");
+        //    listDir("/", 1);
     }
     else
     {
@@ -194,11 +194,12 @@ bool FilesComponent::handleCommandInternal(const String &command, var *data, int
     }
     else if (checkCommand(command, "list", numData, 0))
     {
-        var data;
-        data.type = 's';
-        data = listDir("/", 0);
+        var filesData;
+        filesData.type = 's';
+        int level = numData == 1 ? data[0].intValue() : 0;
+        filesData = listDir("/", level);
 
-        sendEvent(FileList, &data, 1);
+        sendEvent(FileList, &filesData, 1);
         return true;
     }
 

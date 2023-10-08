@@ -116,20 +116,20 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
     {
         dest = request->hasArg("folder") ? request->arg("folder") : "";
     }
-
+    
     dest += "/" + filename;
 
     if (!index)
     {
         // open the file on first call and store the file handle in the request object
-        DBG("Upload Start: " + String(filename));
+        DBG("Upload Start: " + String(dest));
         request->_tempFile = FilesComponent::instance->openFile(dest, true, true);
     }
 
     if (len)
     {
         // stream the incoming chunk to the opened file
-        DBG("Writing file: " + String(filename) + " index=" + String(index) + " len=" + String(len));
+        DBG("Writing file: " + String(dest) + " index=" + String(index) + " len=" + String(len));
         request->_tempFile.write(data, len);
 
         // uploadedBytes += request->currentSize.currentSize;
@@ -146,7 +146,7 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
     if (final)
     {
         // close the file handle as the upload is now done
-        DBG("Upload Complete: " + String(filename) + ",size: " + String(index + len));
+        DBG("Upload Complete: " + String(dest) + ",size: " + String(index + len));
         request->_tempFile.close();
         // request->redirect("/");
     }
@@ -211,7 +211,8 @@ void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t
 
 void WebServerComponent::sendParameterFeedback(Component *c, Parameter *param)
 {
-    OSCMessage msg = OSCComponent::createMessage(c->name, param->name, &param->val, 1, false);
+    var v = param->getOSCQueryFeedbackData();
+    OSCMessage msg = OSCComponent::createMessage(c->name, param->name, &v, 1, false);
 
     char addr[64];
     msg.getAddress(addr);

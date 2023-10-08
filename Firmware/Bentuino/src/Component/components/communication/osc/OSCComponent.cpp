@@ -178,7 +178,7 @@ void OSCComponent::sendMessage(const String &source, const String &command, var 
     sendMessage(msg);
 }
 
-OSCMessage OSCComponent::createMessage(const String &source, const String &command, var *data, int numData, bool addID)
+OSCMessage OSCComponent::createMessage(const String &source, const String &command, const var *data, int numData, bool addID)
 {
     OSCMessage msg(("/" + source + "/" + command).c_str());
     if(addID) msg.add(DeviceID.c_str());

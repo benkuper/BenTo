@@ -46,7 +46,7 @@ struct var
     operator String() const { return stringValue(); }
     operator char *() const { return (char *)s.c_str(); }
 
-    bool isVoid() { return type == '?'; }
+    bool isVoid() const { return type == '?'; }
 
     bool boolValue() const
     {

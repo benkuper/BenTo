@@ -37,19 +37,26 @@ public:
     bool isConfig;
     bool readOnly;
 
+    const String * options;
+    const var* optionsValues;
+    int numOptions;
+
     bool boolValue() const;
     int intValue() const;
     float floatValue() const;
     String stringValue() const;
 
+    var getValForEnumValue(const var& v) const;
+    var getEnumValueForVal(const var& v) const;
     bool hasRange();
 
-    void set(const var &v, bool force = false);
+    void set(const var &v, bool force = false, bool skipEnumEval = false);
 
     void setRange(var newMin, var newMax);
 
     void fillSettingsData(JsonObject o, bool configOnly);
     void fillOSCQueryData(JsonObject o);
+    var getOSCQueryFeedbackData() const;
 
     DeclareEventTypes(ValueChanged);
 };

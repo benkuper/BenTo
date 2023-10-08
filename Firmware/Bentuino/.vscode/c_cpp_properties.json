@@ -250,7 +250,7 @@
                 "LED_DEFAULT_COUNT=32",
                 "LED_DEFAULT_TYPE=SK9822",
                 "LED_DEFAULT_COLOR_ORDER=BGR",
-                "LED_DEFAULT_INVERT_DIRECTION=1",
+                "LED_DEFAULT_INVERT_DIRECTION=false",
                 "LED_DEFAULT_BRIGHTNESS=0.5f",
                 "LED_MAX_BRIGHTNESS=0.5f",
                 "LED_MAX_COUNT=100",
