@@ -2,7 +2,7 @@
 
 #include <Preferences.h>
 
-typedef StaticJsonDocument<2000> JsonDoc;
+typedef StaticJsonDocument<6000> JsonDoc;
 
 class Settings
 {

@@ -324,14 +324,15 @@
             var range = item.RANGE != null ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}"` : "";
             var inputType = item.RANGE != null ? "range" : "number";
             var rangeText = item.RANGE != null ? `<input type="text" class="sliderText" id="${item.id}-value" value="${item.VALUE[0].toFixed(3)}">` : '';
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="${inputType}" ${range} step="any" id="${item.id}" value="${item.VALUE[0]}" oninput='this.nextElementSibling.value = parseFloat(this.value).toFixed(3);sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
+            var updateRange = item.RANGE != null ? 'this.nextElementSibling.value = parseFloat(this.value).toFixed(3)' : '';
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="${inputType}" ${range} step="any" id="${item.id}" value="${item.VALUE[0]}" oninput='${updateRange};sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
             return paramDiv;
         }
 
         function createStringParameterEditor(item, level) {
             var paramDiv = document.createElement('div');
             paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
+            paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" onchange='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
             return paramDiv;
         }
 
@@ -348,7 +349,6 @@
             paramDiv.classList.add("parameter");
             var options = "";
             for (const key in item.RANGE[0].VALS) {
-                console.log(item.RANGE[0].VALS[key], item.VALUE[0]);
                 var selected = item.RANGE[0].VALS[key] == item.VALUE[0] ? "selected" : "";
                 options += `<option value="${item.RANGE[0].VALS[key]}" ${selected}>${item.RANGE[0].VALS[key]}</option>`;
             }

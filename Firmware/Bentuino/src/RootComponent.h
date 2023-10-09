@@ -25,6 +25,8 @@ LedStripComponent strips[LEDSTRIP_MAX_COUNT];
 ButtonComponent buttons[BUTTON_MAX_COUNT];
 IOComponent ios[IO_MAX_COUNT];
 
+BehaviourManagerComponent behaviours;
+
 #ifdef USE_IMU
 IMUComponent imu;
 #endif

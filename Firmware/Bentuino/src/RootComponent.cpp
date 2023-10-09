@@ -37,8 +37,7 @@ bool RootComponent::initInternal(JsonObject)
         AddOwnedComponent(&buttons[i]);
     }
 
-
-    //initialize static io here
+    // initialize static io here
     memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
 
     for (int i = 0; i < IO_MAX_COUNT; i++)
@@ -57,6 +56,8 @@ bool RootComponent::initInternal(JsonObject)
 #if USE_STEPPER
     AddOwnedComponent(&stepper);
 #endif
+
+    AddOwnedComponent(&behaviours);
 
     return true;
 }
@@ -123,9 +124,9 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     if (isShuttingDown())
         return;
 
-    if (e.component == &comm)
+    if (e.component == &comm || e.component == &behaviours)
     {
-        if (e.type == CommunicationComponent::MessageReceived)
+        if ((e.component == &comm && e.type == CommunicationComponent::MessageReceived) || (e.component == &behaviours && e.type == BehaviourManagerComponent::CommandLaunched))
         {
             if (Component *targetComponent = getComponentWithName(e.data[0].stringValue()))
             {

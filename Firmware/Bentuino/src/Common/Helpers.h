@@ -83,12 +83,12 @@
 
 // Parameter Helpers
 #define AddDefaultParameterListener(Class, param) param->addListener(std::bind(&Class::onParameterEvent, this, std::placeholders::_1));
-#define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
+#define SendParameterFeedback(param)  CommunicationComponent::instance->sendParameterFeedback(this, param);
 
 #define DeclareParameter(param, val, isConfig) Parameter param {#param, val, var(), var(),isConfig}
 #define DeclareRangeParameter(param, val, min, max, isConfig) Parameter param {#param, val,  min, max,isConfig}
 #define DeclareConfigParameter(param, val) DeclareParameter(param, val, true)
-#define DeclareRangeConfigParameter(param, val) DeclareRangeParameter(param, val, min, max, true)
+#define DeclareRangeConfigParameter(param, val, min, max) DeclareRangeParameter(param, val, min, max, true)
 
 #define AddParameter(param) addParameter(&param)
 #define AddAndSetParameter(param) { addParameter(&param); param.set(Settings::getVal(o, #param , param.val)); }

@@ -6,26 +6,25 @@
 #define USE_SCRIPTLAYER 1
 #define USE_SYSTEMLAYER 1
 
-// DeclareComponent(LedStrip, "ledstrip", )
 class LedStripComponent : public Component
 {
 public:
-    LedStripComponent(const String &name = "ledstrip", bool enabled = true) : Component(getTypeString(), enabled)
+    LedStripComponent(bool enabled = true) : Component(getTypeString(), enabled)
 #if USE_BAKELAYER
-                                                                              ,
-                                                                              bakeLayer(this)
+                                             ,
+                                             bakeLayer(this)
 #endif
 #if USE_STREAMLAYER
-                                                                              ,
-                                                                              streamLayer(this)
+                                             ,
+                                             streamLayer(this)
 #endif
 #if USE_SCRIPTLAYER
-                                                                              ,
-                                                                              scriptLayer(this)
+                                             ,
+                                             scriptLayer(this)
 #endif
 #if USE_SYSTEMLAYER
-                                                                              ,
-                                                                              systemLayer(this)
+                                             ,
+                                             systemLayer(this)
 #endif
     {
     }
@@ -42,7 +41,6 @@ public:
 
     // mapping
     Parameter invertStrip{"invertStrip", LED_DEFAULT_INVERT_DIRECTION, var(), var(), true};
-
 
     Color colors[LED_MAX_COUNT];
 
@@ -82,5 +80,4 @@ public:
     void showLeds();
 
     int ledMap(int index) const;
-
-    EndDeclareComponent
+};

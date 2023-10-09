@@ -180,7 +180,7 @@ void OSCComponent::sendMessage(const String &source, const String &command, var 
 
 OSCMessage OSCComponent::createMessage(const String &source, const String &command, const var *data, int numData, bool addID)
 {
-    OSCMessage msg(("/" + source + "/" + command).c_str());
+    OSCMessage msg((source + "/" + command).c_str());
     if(addID) msg.add(DeviceID.c_str());
     for (int i = 0; i < numData; i++)
     {

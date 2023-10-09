@@ -24,9 +24,9 @@ void CommunicationComponent::sendParameterFeedback(Component *c, Parameter *para
 {
     var data[1]{param->val};
     serial.sendMessage(c->name, param->name, data, 1);
-    osc.sendMessage(c->name, param->name, data, 1);
+    osc.sendMessage("/" + c->name, param->name, data, 1);
 
-    //maybe should find away so calls are not crossed with websocket ?
+    // maybe should find away so calls are not crossed with websocket ?
     WebServerComponent::instance->sendParameterFeedback(c, param);
 }
 

@@ -11,11 +11,10 @@ ImplementSingleton(WebServerComponent)
     server.addHandler(&ws);
     server.on("/", HTTP_GET, [&](AsyncWebServerRequest *request)
               {
-        oscQueryDoc.clear();
-        JsonObject o = oscQueryDoc.to<JsonObject>();
-
         if (request->hasArg("HOST_INFO"))
         {
+            DynamicJsonDocument doc(1000);
+            JsonObject o = doc.to<JsonObject>();
             JsonObject eo = o.createNestedObject("EXTENSIONS");
             eo["ACCESS"] = true;
             eo["CLIPMODE"] = false;
@@ -34,15 +33,60 @@ ImplementSingleton(WebServerComponent)
             o["NAME"] = RootComponent::instance->deviceName.stringValue();
             o["OSC_PORT"] = OSC_LOCAL_PORT;
             o["OSC_TRANSPORT"] = "UDP";
-      
-        }else
-        {
-            RootComponent::instance->fillOSCQueryData(o);
+
+            String jStr;
+            serializeJson(doc, jStr);
+            request->send(200, "application/json", jStr);
         }
-                
-        String jStr;
-        serializeJson(oscQueryDoc, jStr);
-        request->send(200, "application/json", jStr); });
+        else
+        {
+            // RootComponent::instance->fillOSCQueryData(o);
+
+            std::shared_ptr<int> chunkCounter = std::make_shared<int>(0);
+            std::shared_ptr<int> componentCounter = std::make_shared<int>(0);
+                    AsyncWebServerResponse *response = request->beginChunkedResponse("application/json", [chunkCounter,componentCounter](uint8_t *buffer, size_t maxLen, size_t index) {
+                String s;
+                switch (*chunkCounter)
+                    {
+                    case Component::OSCQueryChunkType::Start:
+                    {
+                        s = RootComponent::instance->getChunkedOSCQueryData(Component::OSCQueryChunkType::Start);
+                        (*chunkCounter)++;
+                    }
+                    break;
+
+                    case Component::OSCQueryChunkType::Content:
+                    {
+                        s = RootComponent::instance->getChunkedOSCQueryData(Component::OSCQueryChunkType::Content, *componentCounter);
+                        (*componentCounter)++;
+
+                        if(*componentCounter >= RootComponent::instance->numComponents)
+                        {
+                            *componentCounter = 0;
+                            (*chunkCounter)++;
+                        }
+                    }
+                    break;
+
+                    case Component::OSCQueryChunkType::End:
+                    {
+                        s = RootComponent::instance->getChunkedOSCQueryData(Component::OSCQueryChunkType::End);
+                        (*chunkCounter)++;
+                    }
+                    break;
+
+                    case Component::OSCQueryChunkType::ChunkTypeMax:
+                        return 0;
+                    }
+
+                    sprintf((char*)buffer, s.c_str());
+                    return (int)s.length();
+        });
+
+        request->send(response);
+        //   RootComponent::instance->fillOSCQueryData(o);
+        //   request->send(200, "text/plain", "cool");
+        } });
 
     // server.onNotFound(std::bind(&WebServerComponent::handleNotFound, this));
 
@@ -62,8 +106,6 @@ ImplementSingleton(WebServerComponent)
 
     ws.onEvent(std::bind(&WebServerComponent::onWSEvent,
                          this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
-
-    
 
     return true;
 }
@@ -116,7 +158,7 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
     {
         dest = request->hasArg("folder") ? request->arg("folder") : "";
     }
-    
+
     dest += "/" + filename;
 
     if (!index)
@@ -175,7 +217,6 @@ void WebServerComponent::onWSEvent(AsyncWebSocket *server, AsyncWebSocketClient 
 
 void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t len)
 {
-
     AwsFrameInfo *info = (AwsFrameInfo *)arg;
     if (info->final && info->index == 0 && info->len == len)
     {
@@ -212,7 +253,7 @@ void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t
 void WebServerComponent::sendParameterFeedback(Component *c, Parameter *param)
 {
     var v = param->getOSCQueryFeedbackData();
-    OSCMessage msg = OSCComponent::createMessage(c->name, param->name, &v, 1, false);
+    OSCMessage msg = OSCComponent::createMessage(c->getFullPath(), param->name, &v, 1, false);
 
     char addr[64];
     msg.getAddress(addr);

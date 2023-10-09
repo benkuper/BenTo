@@ -1,3 +1,4 @@
+#include "Component.h"
 bool Component::init(JsonObject o)
 {
     AddAndSetParameter(enabled);
@@ -37,7 +38,7 @@ void Component::clear()
     numComponents = 0;
 
     // for (int i = 0; i < numParameters; i++)
-        // delete parameters[i];
+    // delete parameters[i];
     numParameters = 0;
 }
 
@@ -135,7 +136,7 @@ void Component::fillSettingsData(JsonObject o, bool configOnly)
     }
 }
 
-void Component::fillOSCQueryData(JsonObject o, bool includeConfig)
+void Component::fillOSCQueryData(JsonObject o, bool includeConfig, bool recursive)
 {
     String fullPath = getFullPath();
     o["DESCRIPTION"] = name;
@@ -154,18 +155,93 @@ void Component::fillOSCQueryData(JsonObject o, bool includeConfig)
         po["FULL_PATH"] = fullPath + "/" + p->name;
     }
 
-    for (int i = 0; i < numComponents; i++)
+    if (recursive)
     {
-        if (components[i] == nullptr)
-            continue;
+        for (int i = 0; i < numComponents; i++)
+        {
+            if (components[i] == nullptr)
+                continue;
 
-        Component *c = components[i];
-        JsonObject co = contents.createNestedObject(c->name);
-        c->fillOSCQueryData(co);
+            Component *c = components[i];
+            JsonObject co = contents.createNestedObject(c->name);
+            c->fillOSCQueryData(co);
+        }
     }
 }
 
-String Component::getFullPath(bool includeRoot, bool scriptMode)
+String Component::getChunkedOSCQueryData(OSCQueryChunkType type, int componentIndex) const
+{
+    DynamicJsonDocument doc(16000);
+    JsonObject o = doc.to<JsonObject>();
+
+    const String fullPath = getFullPath();
+
+    switch (type)
+    {
+    case Start:
+    {
+        o["DESCRIPTION"] = name;
+        o["FULL_PATH"] = fullPath;
+        o["ACCESS"] = 0;
+        JsonObject contents = o.createNestedObject("CONTENTS");
+        for (int i = 0; i < numParameters; i++)
+        {
+            Parameter *p = parameters[i];
+            JsonObject po = contents.createNestedObject(p->name);
+            p->fillOSCQueryData(po);
+            po["FULL_PATH"] = fullPath + "/" + p->name;
+        }
+
+        String str;
+        serializeJson(o, str);
+        str.remove(str.length() - 2); // remove CONTENTS } and end }
+
+        if (numParameters > 0)
+            str += ",";
+
+        return str;
+    }
+
+    case Content:
+    {
+        for (int i = 0; i < numComponents; i++)
+        {
+            if (componentIndex >= 0 && i != componentIndex)
+                continue;
+
+            if (components[i] == nullptr)
+                continue;
+
+            Component *c = components[i];
+            JsonObject co = o.createNestedObject(c->name);
+            c->fillOSCQueryData(co);
+        }
+
+        String str;
+        serializeJson(o, str);
+
+        str.remove(0, 1);
+        str.remove(str.length() - 1);
+
+        if (componentIndex == -1 || componentIndex == numComponents - 1)
+            str += "}";
+        else
+            str += ",";
+
+        return str;
+    }
+
+    case End:
+        return "}";
+
+    default:
+        break;
+    }
+
+    return "";
+}
+
+String Component::getFullPath(bool includeRoot, bool scriptMode) const
 {
     Component *pc = parentComponent;
     String s = name;

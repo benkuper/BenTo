@@ -78,9 +78,12 @@ public:
     bool checkCommand(const String &command, const String &ref, int numData, int expectedData);
 
     virtual void fillSettingsData(JsonObject o, bool configOnly = false);
-    virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true);
+    virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
 
-    String getFullPath(bool includeRoot = false, bool scriptMode = false);
+    enum OSCQueryChunkType { Start, Content, End, ChunkTypeMax};
+    virtual String getChunkedOSCQueryData(OSCQueryChunkType type, int componentIndex = -1) const;
+
+    String getFullPath(bool includeRoot = false, bool scriptMode = false) const;
 
     // void scripting
     virtual void linkScriptFunctions(IM3Module module, bool isLocal = false);

@@ -42,6 +42,7 @@
 #include "Common/EventBroadcaster.h"
 #include "Common/Parameter.h"
 #include "Common/Settings.h"
+#include "Common/ParsingHelper.h"
 
 #include "Common/script/Script.h"
 #include "Common/script/wasmFunctions.h"
@@ -74,5 +75,9 @@
 
 #include "Component/components/servo/ServoComponent.h"
 #include "Component/components/stepper/StepperComponent.h"
+
+
+#include "Component/components/behaviour/BehaviourComponent.h"
+#include "Component/components/behaviour/BehaviourManager.h"
 
 #include "RootComponent.h"

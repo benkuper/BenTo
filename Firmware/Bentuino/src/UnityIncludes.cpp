@@ -9,6 +9,7 @@
 
 #include "Common/Settings.cpp"
 #include "Common/Parameter.cpp"
+#include "Common/ParsingHelper.cpp"
 
 #include "Common/script/Script.cpp"
 #include "Common/script/utf16.cpp"
@@ -44,3 +45,5 @@
 #include "Component/components/servo/ServoComponent.cpp"
 #include "Component/components/stepper/StepperComponent.cpp"
 
+#include "Component/components/behaviour/BehaviourComponent.cpp"
+#include "Component/components/behaviour/BehaviourManager.cpp"
