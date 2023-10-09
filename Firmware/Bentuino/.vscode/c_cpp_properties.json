@@ -243,7 +243,7 @@
                 "POWER_KEEP_PIN=12",
                 "POWER_WAKEUP_BUTTON=32",
                 "POWER_WAKEUP_BUTTON_STATE=true",
-                "LEDSTRIP_MAX_COUNT=2",
+                "LEDSTRIP_MAX_COUNT=1",
                 "LED_DEFAULT_EN_PIN=27",
                 "LED_DEFAULT_DATA_PIN=25",
                 "LED_DEFAULT_CLK_PIN=26",

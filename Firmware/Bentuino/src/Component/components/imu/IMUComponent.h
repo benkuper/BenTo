@@ -6,11 +6,12 @@
 DeclareComponent(IMU, "imu", )
 
     Adafruit_BNO055 bno;
-Parameter isConnected { "isConnected", false };
-Parameter sendLevel { "sendLevel", 0, 0, 3, true};
-Parameter orientationSendRate {"orientationSendRate", 50, var(), var(), true};
-Parameter sdaPin {"sdaPin", IMU_DEFAULT_SDA, var(), var(), true};
-Parameter sclPin {"sclPin", IMU_DEFAULT_SCL, var(), var(), true};
+
+DeclareParameter(isConnected, false, false);
+DeclareRangeConfigParameter(sendLevel, 0, 0, 3);
+DeclareConfigParameter(orientationSendRate,50); 
+DeclareConfigParameter(sdaPin,IMU_DEFAULT_SDA); 
+DeclareConfigParameter(sclPin,IMU_DEFAULT_SCL);
 
 long timeSinceOrientationLastSent;
 
@@ -44,7 +45,6 @@ float xOnCalibration;
 bool hasNewData;
 bool imuLock;
 bool shouldStopRead;
-bool imuIsInit;
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;

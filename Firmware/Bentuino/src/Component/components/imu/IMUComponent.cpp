@@ -45,7 +45,11 @@ bool IMUComponent::initInternal(JsonObject o)
 
     timeSinceOrientationLastSent = 0;
     throwState = 0;
-    imuIsInit = false;
+
+    if(enabled.boolValue())
+    {
+        startIMUTask();
+    }
 
     return true;
 }
@@ -142,7 +146,7 @@ void IMUComponent::readIMUStatic(void *_imu)
 
 bool IMUComponent::setupBNO()
 {
-    if (imuIsInit)
+    if (isConnected.boolValue())
         return true;
 
     NDBG("Setup BNO...");
@@ -158,7 +162,7 @@ bool IMUComponent::setupBNO()
     bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
     bno.setExtCrystalUse(true);
 
-    imuIsInit = true;
+    isConnected.set(true);
     NDBG("BNO is setup");
 
     return true;
