@@ -22,6 +22,7 @@ LedStripManagerComponent strips;
 ButtonManagerComponent buttons;
 IOManagerComponent ios;
 BehaviourManagerComponent behaviours;
+DummyManagerComponent dummies;
 
 #ifdef USE_IMU
 IMUComponent imu;

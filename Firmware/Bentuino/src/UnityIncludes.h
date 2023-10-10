@@ -80,4 +80,7 @@
 #include "Component/components/behaviour/BehaviourComponent.h"
 #include "Component/components/behaviour/BehaviourManager.h"
 
+#include "Component/components/dummy/DummyComponent.h"
+
+
 #include "RootComponent.h"

@@ -8,7 +8,7 @@
     <script type="text/javascript" src="/server/osc-browser.min.js"></script>
     <title>Bentuino Settings</title>
     <style>
-         body {
+        body {
             background-color: #222;
             color: #fff;
             font-family: system-ui;
@@ -61,7 +61,7 @@
         .component {
             width: auto;
             margin: 2px 0;
-            padding: 2px;
+            padding: 2px 8px;
             background-color: rgba(255, 255, 255, .1);
             border-radius: 6px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
@@ -79,11 +79,10 @@
 
         .components {
             display: block;
-            margin: 4px;
-            /* padding: 4px; */
+            margin: 0;
         }
 
-        .component.level0 > .components {
+        .component.level0>.components {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
             grid-gap: 0.5rem;
@@ -156,9 +155,9 @@
     <div id="controls">
         <div class="control-block">
             <input type="button" value="Save Settings"
-                onclick="sendCommand('/root/saveSettings');sendCommand('/root/restart');" />
+                onclick="sendCommand('/root/saveSettings');restartDevice();" />
             <input type="button" value="Shutdown" onclick="sendCommand('/root/shutdown')" />
-            <input type="button" value="Restart" onclick="sendCommand('/root/restart');" />
+            <input type="button" value="Restart" onclick="restartDevice();" />
             <input type="button" value="Test Mode" onclick="sendCommand('/root/test');" />
         </div>
 
@@ -180,7 +179,7 @@
             <button class="btn" type="submit">Upload</button>
         </form>
     </div>
-    <div id="editor">Loading Data...</div>
+    <div id="editor"></div>
 
     <script>
 
@@ -192,6 +191,9 @@
         var oscWS;
 
         async function connectToServer() {
+            const editorContainer = document.getElementById('editor');
+            editorContainer.innerHTML = 'Connecting to server...';
+
             const response = await fetch("http://" + ip);
             data = await response.json();
             buildStructure();
@@ -217,16 +219,17 @@
 
             oscWS.on('error', function (error) {
                 console.log("Websocket Error", error);
-                initWebSocket();
+                connectToServer();
             });
 
             oscWS.on('open', function () {
                 console.log("Websocket opened");
+
             });
 
             oscWS.on('close', function () {
                 console.log("Websocket closed");
-                initWebSocket();
+                connectToServer();
             });
 
 
@@ -377,6 +380,12 @@
             oscWS.send({ address: command });
         }
 
+        function restartDevice()
+        {
+            sendCommand('/root/restart');
+            connectToServer();
+        }
+        
         function processParameterFeedback(p, val) {
             if (p.type == "checkbox") p.checked = val;
             else p.value = val;
@@ -417,6 +426,7 @@
 
             if (response.ok) {
                 alert('File(s) uploaded successfully!');
+
             } else {
                 alert('File upload failed.');
             }

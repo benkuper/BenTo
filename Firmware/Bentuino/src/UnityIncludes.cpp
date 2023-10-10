@@ -47,3 +47,5 @@
 
 #include "Component/components/behaviour/BehaviourComponent.cpp"
 #include "Component/components/behaviour/BehaviourManager.cpp"
+
+#include "Component/components/dummy/DummyComponent.cpp"
