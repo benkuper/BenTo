@@ -1,7 +1,8 @@
 #pragma once
 
-#define MAX_CHILD_COMPONENTS 32
-#define MAX_CHILD_PARAMETERS 32
+#define MAX_CHILD_COMPONENTS 16
+// #define MAX_CHILD_PARAMETERS 1
+#define MAX_CHILD_PARAMS 32
 // #define MAX_EVENT_TYPES 16
 
 class Component : public EventBroadcaster<ComponentEvent>
@@ -10,8 +11,8 @@ public:
     Component(const String &name, bool _enabled = true) : name(name),
                                                           isInit(false),
                                                           parentComponent(NULL),
-                                                          numComponents(0),
-                                                          numParameters(0)
+                                                          numComponents(0)
+                                                        //   numParameters(0)
     {
     }
 
@@ -19,19 +20,40 @@ public:
     virtual String getTypeString() const { return "[notype]"; }
 
     String name;
-
     bool isInit;
-    DeclareConfigParameter(enabled, true);
+
+    DeclareBoolParam(enabled, true);
 
     Component *parentComponent;
 
     Component *components[MAX_CHILD_COMPONENTS];
     uint8_t numComponents;
 
-    Parameter *parameters[MAX_CHILD_PARAMETERS];
-    uint8_t numParameters;
+    // Parameter *parameters[MAX_CHILD_PARAMETERS];
+    // uint8_t numParameters;
 
-    virtual String getComponentEventName(uint8_t type) const { return "[noname]"; }
+    enum ParamType
+    {
+        Trigger,
+        Bool,
+        Int,
+        Float,
+        Str,
+        P2D,
+        P3D,
+        ParamTypeMax
+    };
+    const String typeNames[ParamTypeMax]{"I", "b", "i", "f", "s", "ff", "fff"};
+
+    void *params[MAX_CHILD_PARAMS];
+    ParamType paramTypes[MAX_CHILD_PARAMS];
+
+    uint8_t numParams;
+
+    virtual String getComponentEventName(uint8_t type) const
+    {
+        return "[noname]";
+    }
 
     virtual void onChildComponentEvent(const ComponentEvent &e) {}
 
@@ -55,21 +77,33 @@ public:
 
     Component *getComponentWithName(const String &name);
 
-    void addParameter(Parameter *param);
-    // Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
-    // Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
-    Parameter *getParameterWithName(const String &name);
+    // void addParameter(Parameter *param);
+    // Parameter *getParameterWithName(const String &name);
 
-    virtual void onParameterEvent(const ParameterEvent &e);
+    void addParam(void *param, ParamType type);
+    void setParam(void *param, var* value, int nmData);
+    ParamType getParamType(void *param) const;
+    String getParamString(void *param) const;
+
+    // virtual void onParameterEvent(const ParameterEvent &e);
     virtual void onEnabledChanged() {}
-    virtual void onParameterEventInternal(const ParameterEvent &e) {}
+    // virtual void onParameterEventInternal(const ParameterEvent &e) {}
+
+    virtual void paramValueChanged(void* param);
 
     bool handleCommand(const String &command, var *data, int numData);
     virtual bool handleCommandInternal(const String &command, var *data, int numData) { return false; }
     bool checkCommand(const String &command, const String &ref, int numData, int expectedData);
 
-    virtual void fillSettingsData(JsonObject o, bool configOnly = false);
+    bool handleSetParam(const String &paramName, var *data, int numData);
+    virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) { return false; }
+
+    void fillSettingsData(JsonObject o, bool configOnly = false);
+    virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) {}
+
     virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
+    virtual void fillOSCQueryParamsInternal(JsonObject o,  const String& fullPath) {}
+    virtual void fillOSCQueryParam(JsonObject o,  const String& fullPath, const String& pName, ParamType t, void* param);
 
     enum OSCQueryChunkType
     {

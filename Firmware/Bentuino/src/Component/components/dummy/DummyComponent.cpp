@@ -1,24 +1,25 @@
 bool DummyComponent::initInternal(JsonObject o)
 {
-    AddAndSetParameter(dummyParam1);
-    AddAndSetParameter(dummyParam2);
-    AddAndSetParameter(dummyParam3);
-    // AddAndSetParameter(dummyParam4);
-    // AddAndSetParameter(dummyParam5);
-}
+    AddBoolParam(param1);
+    AddBoolParam(param2);
+    AddIntParam(param3);
+    AddFloatParam(param4);
+    AddStringParam(param5);
 
+    return true;
+}
 
 ImplementSingleton(DummyManagerComponent);
 
 bool DummyManagerComponent::initInternal(JsonObject o)
 {
-    AddAndSetParameter(numDummies);
+    AddIntParam(numItems);
 
-    for (int i = 0; i < numDummies.intValue(); i++)
+    for (int i = 0; i < numItems; i++)
     {
-        DBG("Add dummy " + String(i + 1) + " of " + String(numDummies.intValue()));
-        dummies[i].name = "dummy" + String(i + 1);
-        AddOwnedComponent(&dummies[i]);
+        NDBG("Add item " + String(i + 1));
+        items[i].name = "item" + String(i + 1);
+        AddOwnedComponent(&items[i]);
     }
 
     return true;

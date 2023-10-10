@@ -2,6 +2,7 @@
 
 #include "Arduino.h"
 #include <Wire.h>
+#include <String>
 
 // Declarations
 #define ARDUINOJSON_USE_LONG_LONG 0
@@ -22,14 +23,14 @@
 #include "Common/Settings.h"
 #include "Common/ParsingHelper.h"
 
-#ifdef USE_FILES
-#include "../lib/SD/src/SD.h" //really weird
-#include "Common/script/Script.h"
-#include "Common/script/wasmFunctions.h"
-#endif
 
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
+
+#ifdef USE_FILES
+#include "../lib/SD/src/SD.h" //really weird
+#include "Component/components/files/FilesComponent.h"
+#endif
 
 #ifdef USE_WIFI
 #include "Component/components/wifi/WifiComponent.h"
@@ -47,10 +48,6 @@
 
 #include "Component/components/communication/CommunicationComponent.h"
 
-#ifdef USE_FILES
-#include "Component/components/files/FilesComponent.h"
-#endif
-
 #ifdef USE_SERVER
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
@@ -61,6 +58,8 @@
 #include <wasm3.h>
 #include <m3_env.h>
 #include <SimplexNoise.h>
+#include "Common/script/Script.h"
+#include "Common/script/wasmFunctions.h"
 #include "Component/components/script/ScriptComponent.h"
 #endif
 

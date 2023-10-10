@@ -13,9 +13,9 @@ bool RootComponent::initInternal(JsonObject)
     JsonObject o = Settings::settings.as<JsonObject>();
 
     AddOwnedComponent(&comm);
-    AddAndSetParameter(deviceName);
-    AddAndSetParameter(wakeUpButton);
-    AddAndSetParameter(wakeUpState);
+    AddStringParam(deviceName);
+    AddIntParam(wakeUpButton);
+    AddBoolParam(wakeUpState);
 
 #ifdef USE_BATTERY
     AddOwnedComponent(&battery);
@@ -103,12 +103,13 @@ void RootComponent::powerdown()
 
     // NDBG("Sleep now, baby.");
 
-    if (wakeUpButton.intValue() > 0)
-        esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton.intValue(), wakeUpState.boolValue());
-        // #elif defined TOUCH_WAKEUP_PIN
-        //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
-        //     esp_sleep_enable_touchpad_wakeup();
-        // #endif
+    // if (wakeUpButton.intValue() > 0)
+    // esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton.intValue(), wakeUpState.boolValue());
+
+    // #elif defined TOUCH_WAKEUP_PIN
+    //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
+    //     esp_sleep_enable_touchpad_wakeup();
+    // #endif
 
 #ifdef ESP8266
     ESP.deepSleep(5e6);
@@ -154,7 +155,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             {
                 bool handled = targetComponent->handleCommand(e.data[1], &e.data[2], e.numData - 2);
                 if (!handled)
-                    NDBG("Command was not handled " + e.data[0].stringValue() + "." + e.data[1].stringValue());
+                    NDBG("Command was not handled " + e.data[0].stringValue() + " > " + e.data[1].stringValue());
             }
             else
             {
@@ -173,8 +174,14 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             {
                 NDBG("Setup connections now");
                 server.setupConnection();
+
+#if USE_STREAM
                 streamReceiver.setupConnection();
+#endif
+
+#if USE_OSC
                 comm.osc.setupConnection();
+#endif
             }
         }
     }

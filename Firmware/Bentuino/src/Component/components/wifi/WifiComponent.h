@@ -17,7 +17,7 @@ DeclareComponentSingleton(Wifi, "wifi", )
                            PingAlive,
                            PingDead,
                            CONNECTION_STATES_MAX };
-                           
+
 const String connectionStateNames[CONNECTION_STATES_MAX]{"Off", "Connecting", "Connected", "ConnectionError", "Disabled", "Hotspot", "PingAlive", "PingDead"};
 
 const long timeBetweenTries = 500;    // ms
@@ -28,9 +28,12 @@ long timeAtStateChange;
 
 ConnectionState state;
 
-Parameter ssid{"ssid", "", var(), var(), true};
-Parameter pass{"pass", "", var(), var(), true};
-Parameter apOnNoWifi{"apOnNoWifi", true, var(), var(), true};
+DeclareStringParam(ssid, "");
+DeclareStringParam(pass, "");
+
+// Parameter ssid{"ssid", "", var(), var(), true};
+// Parameter pass{"pass", "", var(), var(), true};
+// Parameter apOnNoWifi{"apOnNoWifi", true, var(), var(), true};
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
@@ -44,6 +47,21 @@ void disable();
 void setState(ConnectionState s);
 
 String getIP() const;
+
+HandleSetParamInternalStart
+    CheckAndSetParam(ssid);
+CheckAndSetParam(pass);
+HandleSetParamInternalEnd;
+
+FillSettingsInternalStart
+    FillSettingsParam(ssid);
+FillSettingsParam(pass);
+FillSettingsInternalEnd;
+
+FillOSCQueryInternalStart
+    FillOSCQueryStringParam(ssid);
+FillOSCQueryStringParam(pass);
+FillOSCQueryInternalEnd;
 
 DeclareComponentEventTypes(ConnectionStateChanged);
 DeclareComponentEventNames("ConnectionStateChanged");

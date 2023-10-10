@@ -58,27 +58,27 @@ bool Settings::clearSettings()
     return true;
 }
 
-var Settings::getVal(JsonObject o, const String &name, var defaultVal)
-{
-    // DBG("Get val " + name + "/" + String((int)o.containsKey(name)));
+// var Settings::getVal(JsonObject o, const String &name, var defaultVal)
+// {
+//     // DBG("Get val " + name + "/" + String((int)o.containsKey(name)));
 
-    if (!o.containsKey(name))
-        return defaultVal;
+//     if (!o.containsKey(name))
+//         return defaultVal;
 
-    JsonVariant val = o[name].containsKey("value") ? o[name]["value"].as<JsonVariant>() : o[name].as<JsonVariant>();
+//     JsonVariant val = o[name].containsKey("value") ? o[name]["value"].as<JsonVariant>() : o[name].as<JsonVariant>();
 
-    switch (defaultVal.type)
-    {
-    case 'b':
-        return val.as<bool>();
-    case 'i':
-        return val.as<int>();
-    case 'f':
-        return val.as<float>();
-    case 's':
-        return val.as<String>();
-    }
+//     switch (defaultVal.type)
+//     {
+//     case 'b':
+//         return val.as<bool>();
+//     case 'i':
+//         return val.as<int>();
+//     case 'f':
+//         return val.as<float>();
+//     case 's':
+//         return val.as<String>();
+//     }
 
-    NDBG("Type not found " + defaultVal.type);
-    return var();
-}
+//     NDBG("Type not found " + defaultVal.type);
+//     return var();
+// }

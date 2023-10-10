@@ -33,7 +33,7 @@ ImplementSingleton(WebServerComponent)
             eo["PATH_RENAMED"] = true;
             eo["PATH_CHANGED"] = false;
 
-            o["NAME"] = RootComponent::instance->deviceName.stringValue();
+            o["NAME"] = RootComponent::instance->deviceName;
             o["OSC_PORT"] = OSC_LOCAL_PORT;
             o["OSC_TRANSPORT"] = "UDP";
 
@@ -67,6 +67,7 @@ ImplementSingleton(WebServerComponent)
     // server.on("/settings", HTTP_ANY, std::bind(&WebServerComponent::handleSettings, this));
     // server.on("/uploadFile", HTTP_POST, std::bind(&WebServerComponent::returnOK, this), std::bind(&WebServerComponent::handleFileUpload, this));
 
+#if USE_FILES
     server.on(
         "/uploadFile", HTTP_POST, [](AsyncWebServerRequest *request)
         { request->send(200); },
@@ -76,6 +77,7 @@ ImplementSingleton(WebServerComponent)
     server.serveStatic("/edit", SD, "/server/edit.html");
     server.serveStatic("/upload", SD, "/server/upload.html");
     server.serveStatic("/server/", SD, "/server");
+#endif
 
     ws.onEvent(std::bind(&WebServerComponent::onWSEvent,
                          this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
@@ -101,7 +103,7 @@ void WebServerComponent::onEnabledChanged()
 
 void WebServerComponent::setupConnection()
 {
-    bool shouldConnect = enabled.boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
+    bool shouldConnect = enabled && WifiComponent::instance->state == WifiComponent::Connected;
 
     if (shouldConnect)
     {
@@ -120,6 +122,7 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
 {
     DBG("Server File upload Client:" + request->client()->remoteIP().toString() + " " + request->url());
 
+#if USE_FILES
     String dest = "";
     if (filename.endsWith(".wasm"))
         dest = "/scripts";
@@ -166,6 +169,7 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
         request->_tempFile.close();
         // request->redirect("/");
     }
+#endif
 }
 
 void WebServerComponent::onWSEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,

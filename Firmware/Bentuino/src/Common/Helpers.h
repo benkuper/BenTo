@@ -35,17 +35,17 @@
     {                                                        \
     public:
 
-#define DeclareSubComponent(ParentClass, ClassPrefix, Type, Derives)                                                  \
-    DeclareComponentClass(ParentClass, ClassPrefix, Derives)                                                          \
+#define DeclareSubComponent(ParentClass, ClassPrefix, Type, Derives)                                           \
+    DeclareComponentClass(ParentClass, ClassPrefix, Derives)                                                   \
         ClassPrefix##Component(const String &name = Type, bool enabled = true) : ParentClass(name, enabled) {} \
-    ~ClassPrefix##Component() {}                                                                                      \
+    ~ClassPrefix##Component() {}                                                                               \
     virtual String getTypeString() const override { return Type; }
 
-#define DeclareComponentSingleton(ClassPrefix, Type, Derives)                                                                            \
-    DeclareComponentClass(Component, ClassPrefix, Derives)                                                                               \
-        DeclareSingleton(ClassPrefix##Component)                                                                                         \
+#define DeclareComponentSingleton(ClassPrefix, Type, Derives)                                                                     \
+    DeclareComponentClass(Component, ClassPrefix, Derives)                                                                        \
+        DeclareSingleton(ClassPrefix##Component)                                                                                  \
             ClassPrefix##Component(const String &name = Type, bool enabled = true) : Component(name, enabled) { InitSingleton() } \
-    ~ClassPrefix##Component() { DeleteSingleton() }                                                                                      \
+    ~ClassPrefix##Component() { DeleteSingleton() }                                                                               \
     virtual String getTypeString() const override { return Type; }
 
 #define DeclareComponent(ClassPrefix, Type, Derives) DeclareSubComponent(Component, ClassPrefix, Type, Derives)
@@ -83,21 +83,59 @@
 
 // Parameter Helpers
 #define AddDefaultParameterListener(Class, param) param->addListener(std::bind(&Class::onParameterEvent, this, std::placeholders::_1));
-#define SendParameterFeedback(param)  CommunicationComponent::instance->sendParameterFeedback(this, param);
+#define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
 
-#define DeclareParameter(param, val, isConfig) Parameter param {#param, val, var(), var(),isConfig}
-#define DeclareRangeParameter(param, val, min, max, isConfig) Parameter param {#param, val,  min, max,isConfig}
+// Parameter class system
+#define DeclareParameter(param, val, isConfig) \
+    Parameter param { #param, val, var(), var(), isConfig }
+#define DeclareRangeParameter(param, val, min, max, isConfig) \
+    Parameter param { #param, val, min, max, isConfig }
 #define DeclareConfigParameter(param, val) DeclareParameter(param, val, true)
 #define DeclareRangeConfigParameter(param, val, min, max) DeclareRangeParameter(param, val, min, max, true)
 
-#define AddParameter(param) addParameter(&param)
-#define AddAndSetParameter(param) { addParameter(&param); param.set(Settings::getVal(o, #param , param.val)); }
+// #define AddParameter(param) addParameter(&param)
+// #define AddAndSetParameter(param)                          
+//     {                                                      
+//         addParameter(&param);                              
+//         param.set(Settings::getVal(o, #param, param.val)); 
+//     }
 
-// #define AddParameter(name, val) addParameter(name, val)
-// #define AddRangeParameter(name, val, minVal, maxVal, isConfig) addParameter(name, val, minVal, maxVal, false)
-// Only config parameters check the settings
-// #define AddConfigParameter(name, val) addParameter(name, Settings::getVal(o, name, val), var(), var(), true)
-// #define AddRangeConfigParameter(name, val, minVal, maxVal) addParameter(name, Settings::getVal(o, name, val), minVal, maxVal, true)
+// Class-less parameter system
+#define DeclareBoolParam(name, val) bool name = val;
+#define DeclareIntParam(name, val) int name = val;
+#define DeclareFloatParam(name, val) float name = val;
+#define DeclareStringParam(name, val) String name = val;
+#define DeclareP2DParam(name, val1, val2) float val[2]{val1, val2};
+#define DeclareP3DParam(name, val1, val2, val3) float val[3]{val1, val2, val3};
+
+#define AddBoolParam(param) addParam(&param, ParamType::Bool);  param = Settings::getVal<bool>(o, #param, param);
+#define AddIntParam(param) addParam(&param, ParamType::Int); param = Settings::getVal<int>(o, #param, param);
+#define AddFloatParam(param) addParam(&param, ParamType::Float);  param = Settings::getVal<float>(o, #param, param);
+#define AddStringParam(param) addParam(&param, ParamType::Str); param = Settings::getVal<String>(o, #param, param);
+#define AddP2DParam(param) addParam(&param, ParamType::P2D);
+#define AddP3DParam(param) addParam(&param, ParamType::P3D);
+
+#define SetParam(param, val) { var pData[1]; pData[0] = val; setParam(&param,pData,1); };
+#define SetParam2(param, val1, val2) { var pData[2]; pData[0] = val1; pData[1] = val2; setParam(&param,pData,2); };
+#define SetParam3(param, val, val2, val3) { var pData[3]; pData[0] = val1; pData[1] = val2; pData[2] = val3; setParam(&param,pData,3); };
+
+#define HandleSetParamInternalStart virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) override {
+#define HandleSetParamInternalEnd  return false; }
+
+#define CheckAndSetParam(param) { if(paramName == #param) { setParam(&param, data, numData); return true; } }
+
+
+
+#define FillSettingsParam(param) { o[#param] = param; }
+#define FillSettingsInternalStart virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) override {
+#define FillSettingsInternalEnd }
+
+#define FillOSCQueryBoolParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param);
+#define FillOSCQueryIntParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param);
+#define FillOSCQueryFloatParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param);
+#define FillOSCQueryStringParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param);
+#define FillOSCQueryInternalStart virtual void fillOSCQueryParamsInternal(JsonObject o,  const String& fullPath) {
+#define FillOSCQueryInternalEnd }
 
 // Script
 

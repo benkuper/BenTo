@@ -4,9 +4,13 @@
 DeclareComponentSingleton(Root, "root", )
 
 const String deviceID = getDeviceID();
-DeclareConfigParameter(deviceName, deviceID);
-DeclareConfigParameter(wakeUpButton, POWER_WAKEUP_BUTTON);
-DeclareConfigParameter(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
+DeclareStringParam(deviceName, deviceID);
+DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
+DeclareBoolParam(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
+
+// DeclareConfigParameter(deviceName, deviceID);
+// DeclareConfigParameter(wakeUpButton, POWER_WAKEUP_BUTTON);
+// DeclareConfigParameter(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
 
 // system
 CommunicationComponent comm;
@@ -57,7 +61,7 @@ DummyManagerComponent dummies;
 IMUComponent imu;
 #endif
 
-#ifdef USE_SERVER
+#ifdef USE_SERVO
 ServoComponent *servo;
 #endif
 
