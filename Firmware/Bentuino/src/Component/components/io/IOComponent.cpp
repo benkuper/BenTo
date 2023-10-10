@@ -173,3 +173,25 @@ int IOComponent::getFirstAvailablePWMChannel() const
     }
     return -1;
 }
+
+
+//Manager
+
+ImplementSingleton(IOManagerComponent);
+
+bool IOManagerComponent::initInternal(JsonObject o)
+{
+    AddAndSetParameter(numIOs);
+
+    for (int i = 0; i < numIOs.intValue(); i++)
+    {
+        DBG("Add io " + String(i + 1) + " of " + String(numIOs.intValue()));
+        ios[i].name = "io" + String(i + 1);
+        AddOwnedComponent(&ios[i]);
+    }
+
+     // initialize static io here
+    memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
+
+    return true;
+}

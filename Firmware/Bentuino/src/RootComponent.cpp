@@ -26,25 +26,10 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&server);
     AddOwnedComponent(&streamReceiver);
 
-    for (int i = 0; i < LEDSTRIP_MAX_COUNT; i++)
-    {
-        strips[i].name = "strip" + String(i + 1);
-        AddOwnedComponent(&strips[i]);
-    }
-    for (int i = 0; i < BUTTON_MAX_COUNT; i++)
-    {
-        buttons[i].name = "button" + String(i + 1);
-        AddOwnedComponent(&buttons[i]);
-    }
+    AddOwnedComponent(&strips);
+    AddOwnedComponent(&buttons);
+    AddOwnedComponent(&ios);
 
-    // initialize static io here
-    memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
-
-    for (int i = 0; i < IO_MAX_COUNT; i++)
-    {
-        ios[i].name = "io" + String(i + 1);
-        AddOwnedComponent(&ios[i]);
-    }
 #if USE_IMU
     AddOwnedComponent(&imu);
 #endif
@@ -146,9 +131,13 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     {
         if (e.type == WifiComponent::ConnectionStateChanged)
         {
-            comm.osc.setupConnection();
-            server.setupConnection();
-            streamReceiver.setupConnection();
+            if (wifi.state == WifiComponent::Connected)
+            {
+                NDBG("Setup connections now");
+                server.setupConnection();
+                streamReceiver.setupConnection();
+                comm.osc.setupConnection();
+            }
         }
     }
     // else if (e.component == &buttons[0])

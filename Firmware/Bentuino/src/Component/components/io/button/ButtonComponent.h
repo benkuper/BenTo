@@ -34,3 +34,14 @@ public:
     // DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t) {  return isVeryLongPressed.boolValue()?3:isLongPressed.boolValue()?2:value.intValue(); }
     // DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) {  return multiPressCount.boolValue(); }
 };
+
+
+DeclareComponentSingleton(ButtonManager, "buttons", )
+
+    DeclareRangeConfigParameter(numButtons, BUTTON_MAX_COUNT, 0, BUTTON_MAX_COUNT);
+
+ButtonComponent buttons[BUTTON_MAX_COUNT];
+
+bool initInternal(JsonObject o) override;
+
+EndDeclareComponent

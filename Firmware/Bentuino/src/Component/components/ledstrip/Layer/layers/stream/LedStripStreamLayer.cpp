@@ -118,6 +118,7 @@ void LedStreamReceiverComponent::setupConnection()
         {
             NDBG("Start Receive Led Stream on Artnet");
             artnet.begin();
+            NDBG("Artnet started");
         }
         else
         {

@@ -23,7 +23,6 @@ bool isUploading;
 int uploadedBytes;
 File uploadingFile;
 
-
 String tmpExcludeParam = "";//to change with client exclude when AsyncWebServer implements it
 
 bool initInternal(JsonObject o) override;

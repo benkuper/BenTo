@@ -236,3 +236,19 @@ int LedStripComponent::ledMap(int index) const
 {
     return (invertStrip.intValue() ? count.intValue() - 1 - index : index);
 }
+
+ImplementSingleton(LedStripManagerComponent);
+
+bool LedStripManagerComponent::initInternal(JsonObject o)
+{
+    AddAndSetParameter(numStrips);
+
+    for (int i = 0; i < numStrips.intValue(); i++)
+    {
+        DBG("Add strip " + String(i + 1) + " of " + String(numStrips.intValue()));
+        strips[i].name = "strip" + String(i + 1);
+        AddOwnedComponent(&strips[i]);
+    }
+
+    return true;
+}

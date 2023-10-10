@@ -1,8 +1,8 @@
 #pragma once
 
-#define MAX_CHILD_COMPONENTS 16
-#define MAX_CHILD_PARAMETERS 16
-//#define MAX_EVENT_TYPES 16
+#define MAX_CHILD_COMPONENTS 12
+#define MAX_CHILD_PARAMETERS 12
+// #define MAX_EVENT_TYPES 16
 
 class Component : public EventBroadcaster<ComponentEvent>
 {
@@ -21,7 +21,7 @@ public:
     String name;
 
     bool isInit;
-    Parameter enabled{"enabled", true,var(), var(),true};
+    DeclareConfigParameter(enabled, true);
 
     Component *parentComponent;
 
@@ -51,24 +51,15 @@ public:
     template <class T>
     T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return addComponent(new T(name, _enabled), o); };
 
-    template <class T>
-    T *addComponent(T *c, JsonObject o = JsonObject())
-    {
-        components[numComponents] = (Component *)c;
-        c->parentComponent = this;
-        AddDefaultComponentListener(c);
-        numComponents++;
-        c->init(o);
-        return c;
-    }
+    Component *addComponent(Component *c, JsonObject o = JsonObject());
 
     Component *getComponentWithName(const String &name);
 
-    void addParameter(Parameter* param);
-    Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
-    Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
-    Parameter * getParameterWithName(const String &name);
-    
+    void addParameter(Parameter *param);
+    // Parameter *addParameter(const String &name, var val, var minVal = var(), var maxVal = var(), bool isConfig = false);
+    // Parameter *addConfigParameter(const String &name, var val, var minVal = var(), var maxVal = var()); // helpers for non ranged config param declaration simplification
+    Parameter *getParameterWithName(const String &name);
+
     virtual void onParameterEvent(const ParameterEvent &e);
     virtual void onEnabledChanged() {}
     virtual void onParameterEventInternal(const ParameterEvent &e) {}
@@ -80,8 +71,24 @@ public:
     virtual void fillSettingsData(JsonObject o, bool configOnly = false);
     virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
 
-    enum OSCQueryChunkType { Start, Content, End, ChunkTypeMax};
-    virtual String getChunkedOSCQueryData(OSCQueryChunkType type, int componentIndex = -1) const;
+    enum OSCQueryChunkType
+    {
+        Start,
+        Content,
+        End,
+        ChunkTypeMax
+    };
+
+    struct OSCQueryChunk
+    {
+        OSCQueryChunk(Component* c, OSCQueryChunkType t = Start, String d = "") :nextComponent(c), nextType(t), data(d) {}
+        Component *nextComponent = nullptr;
+        OSCQueryChunkType nextType = Start;
+        String data = "";
+    };
+
+    void fillChunkedOSCQueryData(OSCQueryChunk *chunk);
+    void setupChunkAfterComponent(OSCQueryChunk *result, const Component *c);
 
     String getFullPath(bool includeRoot = false, bool scriptMode = false) const;
 

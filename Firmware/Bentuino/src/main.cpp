@@ -9,6 +9,7 @@ void setup()
 {
 	root.init();
     DBG("Device is init");
+	DBG("Size of component " + String(sizeof(Component)));
 }
 
 void loop()
