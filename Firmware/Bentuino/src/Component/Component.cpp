@@ -285,6 +285,7 @@ String Component::getFullPath(bool includeRoot, bool scriptMode) const
 }
 
 // Scripts
+#ifdef USE_OSC
 void Component::linkScriptFunctions(IM3Module module, bool isLocal)
 {
     const char *tName = isLocal ? "local" : getFullPath(false, true).c_str();
@@ -300,6 +301,7 @@ void Component::linkScriptFunctions(IM3Module module, bool isLocal)
         components[i]->linkScriptFunctions(module);
     }
 }
+#endif
 
 Component *Component::addComponent(Component *c, JsonObject o)
 {

@@ -81,7 +81,7 @@ public:
 
     struct OSCQueryChunk
     {
-        OSCQueryChunk(Component* c, OSCQueryChunkType t = Start, String d = "") :nextComponent(c), nextType(t), data(d) {}
+        OSCQueryChunk(Component *c, OSCQueryChunkType t = Start, String d = "") : nextComponent(c), nextType(t), data(d) {}
         Component *nextComponent = nullptr;
         OSCQueryChunkType nextType = Start;
         String data = "";
@@ -92,9 +92,10 @@ public:
 
     String getFullPath(bool includeRoot = false, bool scriptMode = false) const;
 
-    // void scripting
+// void scripting
+#ifdef USE_SCRIPT
     virtual void linkScriptFunctions(IM3Module module, bool isLocal = false);
     virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) {}
-
+#endif
     // DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
 };

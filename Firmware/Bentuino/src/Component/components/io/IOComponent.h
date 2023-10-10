@@ -32,6 +32,7 @@ void onParameterEventInternal(const ParameterEvent &e) override;
 static bool availablePWMChannels[16];
 int getFirstAvailablePWMChannel() const;
 
+#ifdef USE_SCRIPT
 LinkScriptFunctionsStart
     LinkScriptFunction(IOComponent, get, f, );
 LinkScriptFunction(IOComponent, set, , f);
@@ -42,6 +43,7 @@ DeclareScriptFunctionReturn0(IOComponent, get, float)
     return value.floatValue();
 }
 DeclareScriptFunctionVoid1(IOComponent, set, float) { return value.set(arg1); }
+#endif
 
 EndDeclareComponent;
 

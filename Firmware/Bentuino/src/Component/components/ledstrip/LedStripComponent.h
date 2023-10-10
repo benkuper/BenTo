@@ -2,7 +2,13 @@
 
 #define LEDSTRIP_NUM_USER_LAYERS 3
 #define USE_BAKELAYER 1
+
+#ifdef USE_STREAM
 #define USE_STREAMLAYER 1
+#else
+#define USE_STREAMLAYER 0
+#endif
+
 #define USE_SCRIPTLAYER 1
 #define USE_SYSTEMLAYER 1
 

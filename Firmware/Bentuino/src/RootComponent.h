@@ -10,19 +10,48 @@ DeclareConfigParameter(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
 
 // system
 CommunicationComponent comm;
+#ifdef USE_WIFI
 WifiComponent wifi;
-FilesComponent files;
-WebServerComponent server;
-// ScriptComponent script;
-BatteryComponent battery;
-SequenceComponent sequence;
-LedStreamReceiverComponent streamReceiver;
+#endif
 
+#ifdef USE_FILES
+FilesComponent files;
+#endif
+
+#ifdef USE_SERVER
+WebServerComponent server;
+#endif
+
+#ifdef USE_BATTERY
+BatteryComponent battery;
+#endif
+
+#ifdef USE_SEQUENCE
+SequenceComponent sequence;
+#endif
+
+#ifdef USE_STREAM
+LedStreamReceiverComponent streamReceiver;
+#endif
+
+#ifdef USE_LEDSTRIP
 LedStripManagerComponent strips;
-ButtonManagerComponent buttons;
+#endif
+
+#ifdef USE_IO
 IOManagerComponent ios;
+#ifdef USE_BUTTON
+ButtonManagerComponent buttons;
+#endif
+#endif
+
+#ifdef USE_BEHAVIOUR
 BehaviourManagerComponent behaviours;
+#endif
+
+#ifdef USE_DUMMY
 DummyManagerComponent dummies;
+#endif
 
 #ifdef USE_IMU
 IMUComponent imu;

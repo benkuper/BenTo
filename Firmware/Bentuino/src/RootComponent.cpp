@@ -17,18 +17,37 @@ bool RootComponent::initInternal(JsonObject)
     AddAndSetParameter(wakeUpButton);
     AddAndSetParameter(wakeUpState);
 
+#ifdef USE_BATTERY
     AddOwnedComponent(&battery);
-    AddOwnedComponent(&sequence);
+#endif
 
+#ifdef USE_WIFI
     AddOwnedComponent(&wifi);
-    AddOwnedComponent(&files);
-    // AddOwnedComponent(&script);
-    AddOwnedComponent(&server);
-    AddOwnedComponent(&streamReceiver);
+#endif
 
+#ifdef USE_FILES
+    AddOwnedComponent(&files);
+#endif
+
+    // AddOwnedComponent(&script);
+#ifdef USE_SERVER
+    AddOwnedComponent(&server);
+#endif
+
+#ifdef USE_STREAM
+    AddOwnedComponent(&streamReceiver);
+#endif
+
+#ifdef USE_LEDSTRIP
     AddOwnedComponent(&strips);
-    AddOwnedComponent(&buttons);
+#endif
+
+#ifdef USE_IO
     AddOwnedComponent(&ios);
+#ifdef USE_BUTTON
+    AddOwnedComponent(&buttons);
+#endif
+#endif
 
 #if USE_IMU
     AddOwnedComponent(&imu);
@@ -42,8 +61,17 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&stepper);
 #endif
 
+#ifdef USE_BEHAVIOUR
     AddOwnedComponent(&behaviours);
+#endif
+
+#ifdef USE_DUMMY
     AddOwnedComponent(&dummies);
+#endif
+
+#ifdef USE_SEQUENCE
+    AddOwnedComponent(&sequence);
+#endif
 
     return true;
 }
@@ -110,9 +138,17 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     if (isShuttingDown())
         return;
 
-    if (e.component == &comm || e.component == &behaviours)
+    if (e.component == &comm
+#ifdef USE_BEHAVIOUR
+        || e.component == &behaviours
+#endif
+    )
     {
-        if ((e.component == &comm && e.type == CommunicationComponent::MessageReceived) || (e.component == &behaviours && e.type == BehaviourManagerComponent::CommandLaunched))
+        if ((e.component == &comm && e.type == CommunicationComponent::MessageReceived)
+#ifdef USE_BEHAVIOUR
+            || (e.component == &behaviours && e.type == BehaviourManagerComponent::CommandLaunched)
+#endif
+        )
         {
             if (Component *targetComponent = getComponentWithName(e.data[0].stringValue()))
             {
@@ -128,6 +164,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             return;
         }
     }
+#ifdef USE_WIFI
     else if (e.component == &wifi)
     {
         if (e.type == WifiComponent::ConnectionStateChanged)
@@ -141,6 +178,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             }
         }
     }
+#endif
     // else if (e.component == &buttons[0])
     // {
     // Should move to behaviour system
@@ -201,8 +239,10 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
 
 String RootComponent::getDeviceID() const
 {
-    byte mac[6];
+    byte mac[6]{0, 0, 0, 0, 0, 0};
+#ifdef USE_WIFI
     WiFi.macAddress(mac);
+#endif
 
     String d = "";
     for (int i = 0; i < 6; i++)
