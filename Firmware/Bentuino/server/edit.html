@@ -8,7 +8,7 @@
     <script type="text/javascript" src="/server/osc-browser.min.js"></script>
     <title>Bentuino Settings</title>
     <style>
-        body {
+         body {
             background-color: #222;
             color: #fff;
             font-family: system-ui;
@@ -57,28 +57,33 @@
             background-color: #888;
         }
 
-        .component-grid.level0 {}
-
-        .component-grid.level1 {}
 
         .component {
             width: auto;
-            /* max-width: 400px; */
-            /* margin: 0 auto; */
-            padding: 12px;
+            margin: 2px 0;
+            padding: 2px;
             background-color: rgba(255, 255, 255, .1);
             border-radius: 6px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             display: block;
-            /* margin: 10px 10px 0 0; */
         }
 
         .component.level0 {
             width: auto;
         }
 
+        .component.level0,
+        .component.level1 {
+            margin: 0;
+        }
 
-        .component.level0 .components {
+        .components {
+            display: block;
+            margin: 4px;
+            /* padding: 4px; */
+        }
+
+        .component.level0 > .components {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
             grid-gap: 0.5rem;
@@ -181,7 +186,7 @@
 
         var local = window.location.hostname.startsWith("192");
         var ip = local ? window.location.hostname : "192.168.1.162";
-        setTimeout(() => {connectToServer();}, 100);
+        setTimeout(() => { connectToServer(); }, 100);
         var data = {};
 
         var oscWS;
