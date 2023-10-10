@@ -43,6 +43,7 @@ bool RootComponent::initInternal(JsonObject)
 #endif
 
     AddOwnedComponent(&behaviours);
+    AddOwnedComponent(&dummies);
 
     return true;
 }

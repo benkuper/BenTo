@@ -1,7 +1,7 @@
 #pragma once
 
-#define MAX_CHILD_COMPONENTS 12
-#define MAX_CHILD_PARAMETERS 12
+#define MAX_CHILD_COMPONENTS 32
+#define MAX_CHILD_PARAMETERS 32
 // #define MAX_EVENT_TYPES 16
 
 class Component : public EventBroadcaster<ComponentEvent>
