@@ -18,7 +18,6 @@ void Component::update()
     if (!enabled.boolValue())
         return;
 
-    // NDBG("Update");
     for (int i = 0; i < numComponents; i++)
         components[i]->update();
 
@@ -44,22 +43,30 @@ void Component::clear()
 
 void Component::addParameter(Parameter *p)
 {
+    if (numParameters >= MAX_CHILD_PARAMETERS)
+    {
+        NDBG("Parameter limit reached ! Trying to add " + p->name);
+        return;
+    }
+
     parameters[numParameters] = p;
     numParameters++;
     AddDefaultParameterListener(Component, p);
+    // DBG("Parameter added, size = " + String(sizeof(*p)) + " (" + String(sizeof(Parameter)) + ")");
 }
 
-Parameter *Component::addParameter(const String &name, var val, var minVal, var maxVal, bool isConfig)
-{
-    Parameter *p = new Parameter(name, val, minVal, maxVal, isConfig);
-    addParameter(p);
-    return p;
-}
+// Parameter *Component::addParameter(const String &name, var val, var minVal, var maxVal, bool isConfig)
+// {
+//     Parameter *p = new Parameter(name, val, minVal, maxVal, isConfig);
+//     addParameter(p);
 
-Parameter *Component::addConfigParameter(const String &name, var val, var minVal, var maxVal)
-{
-    return addParameter(name, val, minVal, maxVal, true);
-}
+//     return p;
+// }
+
+// Parameter *Component::addConfigParameter(const String &name, var val, var minVal, var maxVal)
+// {
+//     return addParameter(name, val, minVal, maxVal, true);
+// }
 
 void Component::onParameterEvent(const ParameterEvent &e)
 {
@@ -169,76 +176,91 @@ void Component::fillOSCQueryData(JsonObject o, bool includeConfig, bool recursiv
     }
 }
 
-String Component::getChunkedOSCQueryData(OSCQueryChunkType type, int componentIndex) const
+void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
 {
-    DynamicJsonDocument doc(16000);
-    JsonObject o = doc.to<JsonObject>();
 
     const String fullPath = getFullPath();
 
-    switch (type)
+    switch (chunk->nextType)
     {
     case Start:
     {
-        o["DESCRIPTION"] = name;
-        o["FULL_PATH"] = fullPath;
-        o["ACCESS"] = 0;
-        JsonObject contents = o.createNestedObject("CONTENTS");
+        chunk->data = "{\"DESCRIPTION\":\"" + name + "\"," +
+                      "\"FULL_PATH\":\"" + fullPath + "\"," +
+                      "\"ACCESS\":0," +
+                      "\"CONTENTS\":{";
+
         for (int i = 0; i < numParameters; i++)
         {
+            DynamicJsonDocument doc(500);
+            JsonObject o = doc.to<JsonObject>();
             Parameter *p = parameters[i];
-            JsonObject po = contents.createNestedObject(p->name);
-            p->fillOSCQueryData(po);
-            po["FULL_PATH"] = fullPath + "/" + p->name;
+            p->fillOSCQueryData(o);
+            o["FULL_PATH"] = fullPath + "/" + p->name;
+            String str;
+            serializeJson(o, str);
+            chunk->data += "\"" + p->name + "\":" + str;
+            if (i < numParameters - 1)
+                chunk->data += ",";
         }
 
-        String str;
-        serializeJson(o, str);
-        str.remove(str.length() - 2); // remove CONTENTS } and end }
-
-        if (numParameters > 0)
-            str += ",";
-
-        return str;
-    }
-
-    case Content:
-    {
-        for (int i = 0; i < numComponents; i++)
+        if (numComponents > 0)
         {
-            if (componentIndex >= 0 && i != componentIndex)
-                continue;
-
-            if (components[i] == nullptr)
-                continue;
-
-            Component *c = components[i];
-            JsonObject co = o.createNestedObject(c->name);
-            c->fillOSCQueryData(co);
+            chunk->nextType = Start;
+            chunk->nextComponent = components[0];
+            if (numParameters > 0)
+                chunk->data += ",";
+            chunk->data += "\""+components[0]->name + "\":";
         }
-
-        String str;
-        serializeJson(o, str);
-
-        str.remove(0, 1);
-        str.remove(str.length() - 1);
-
-        if (componentIndex == -1 || componentIndex == numComponents - 1)
-            str += "}";
         else
-            str += ",";
-
-        return str;
+        {
+            chunk->data += "}";
+            chunk->nextComponent = (Component *)this;
+            chunk->nextType = End;
+        }
     }
+    break;
 
     case End:
-        return "}";
+    {
+        chunk->data = "}";
+        if (parentComponent != nullptr)
+        {
+            parentComponent->setupChunkAfterComponent(chunk, this);
+        }
+        else
+            chunk->nextComponent = nullptr;
+    }
 
     default:
         break;
     }
+}
 
-    return "";
+void Component::setupChunkAfterComponent(OSCQueryChunk *chunk, const Component *c)
+{
+    int index = 0;
+    for (int i = 0; i < numComponents; i++)
+    {
+        if (components[i] == c)
+        {
+            index = i;
+            break;
+        }
+    }
+
+    if (index < numComponents - 1) // last one
+    {
+        chunk->data += ",\"" + components[index + 1]->name + "\":";
+        chunk->nextComponent = components[index + 1];
+        chunk->nextType = Start;
+    }
+    else
+    {
+        chunk->data += "}";
+        chunk->nextComponent = this;
+        chunk->nextType = End;
+    }
 }
 
 String Component::getFullPath(bool includeRoot, bool scriptMode) const
@@ -277,6 +299,23 @@ void Component::linkScriptFunctions(IM3Module module, bool isLocal)
             continue;
         components[i]->linkScriptFunctions(module);
     }
+}
+
+Component *Component::addComponent(Component *c, JsonObject o)
+{
+    if (numComponents >= MAX_CHILD_COMPONENTS)
+    {
+        NDBG("Component limit reached ! Trying to add " + c->name);
+        return nullptr;
+    }
+
+    components[numComponents] = (Component *)c;
+    c->parentComponent = this;
+    AddDefaultComponentListener(c);
+    numComponents++;
+    c->init(o);
+    // DBG("Component added, size = " + String(sizeof(*c)) + " (" + String(sizeof(Component)) + ")");
+    return c;
 }
 
 Component *Component::getComponentWithName(const String &name)

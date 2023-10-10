@@ -37,7 +37,7 @@ void OSCComponent::setupConnection()
     udpIsInit = false;
     if (shouldConnect)
     {
-        // NDBG("Start OSC Receiver on " + String(OSC_LOCAL_PORT));
+        NDBG("Start OSC Receiver on " + String(OSC_LOCAL_PORT));
         udp.begin(OSC_LOCAL_PORT);
         udp.flush();
         isAlive.set(true);

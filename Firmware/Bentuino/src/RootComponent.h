@@ -14,17 +14,13 @@ WifiComponent wifi;
 FilesComponent files;
 WebServerComponent server;
 // ScriptComponent script;
-
 BatteryComponent battery;
 SequenceComponent sequence;
-
 LedStreamReceiverComponent streamReceiver;
 
-// users
-LedStripComponent strips[LEDSTRIP_MAX_COUNT];
-ButtonComponent buttons[BUTTON_MAX_COUNT];
-IOComponent ios[IO_MAX_COUNT];
-
+LedStripManagerComponent strips;
+ButtonManagerComponent buttons;
+IOManagerComponent ios;
 BehaviourManagerComponent behaviours;
 
 #ifdef USE_IMU

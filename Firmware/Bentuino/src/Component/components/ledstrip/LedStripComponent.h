@@ -81,3 +81,13 @@ public:
 
     int ledMap(int index) const;
 };
+
+DeclareComponentSingleton(LedStripManager, "strips", )
+
+    DeclareRangeConfigParameter(numStrips, LEDSTRIP_MAX_COUNT, 0, LEDSTRIP_MAX_COUNT);
+
+LedStripComponent strips[LEDSTRIP_MAX_COUNT];
+
+bool initInternal(JsonObject o) override;
+
+EndDeclareComponent

@@ -83,7 +83,6 @@ void BehaviourComponent::onParameterEventInternal(const ParameterEvent &e)
 
 void BehaviourComponent::onTargetParameterChanged(const ParameterEvent &e)
 {
-    DBG("Target Parameter Changed");
     bool isValid = false;
 
     Comparator cmp = (Comparator)comparator.intValue();
@@ -114,7 +113,6 @@ void BehaviourComponent::onTargetParameterChanged(const ParameterEvent &e)
     {
         if (isValid)
         {
-            DBG("Behaviour " + name + " is valid");
             delayedValidation = false;
             timeAtValidation = millis() / 1000.0f;
             if (validationTime.floatValue() == 0)
@@ -129,8 +127,6 @@ void BehaviourComponent::onTargetParameterChanged(const ParameterEvent &e)
 
 void BehaviourComponent::trigger()
 {
-    DBG("Trigger Behaviour " + name);
-
     Action a = (Action)triggerAction.intValue();
     switch (a)
     {

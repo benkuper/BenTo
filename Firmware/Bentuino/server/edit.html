@@ -175,13 +175,13 @@
             <button class="btn" type="submit">Upload</button>
         </form>
     </div>
-    <div id="editor"></div>
+    <div id="editor">Loading Data...</div>
 
     <script>
 
         var local = window.location.hostname.startsWith("192");
         var ip = local ? window.location.hostname : "192.168.1.162";
-        connectToServer();
+        setTimeout(() => {connectToServer();}, 100);
         var data = {};
 
         var oscWS;

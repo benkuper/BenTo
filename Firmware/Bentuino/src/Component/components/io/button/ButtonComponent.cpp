@@ -75,3 +75,20 @@ void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
         }
     }
 }
+
+
+ImplementSingleton(ButtonManagerComponent);
+
+bool ButtonManagerComponent::initInternal(JsonObject o)
+{
+    AddAndSetParameter(numButtons);
+
+    for (int i = 0; i < numButtons.intValue(); i++)
+    {
+        DBG("Add button " + String(i + 1) + " of " + String(numButtons.intValue()));
+        buttons[i].name = "button" + String(i + 1);
+        AddOwnedComponent(&buttons[i]);
+    }
+
+    return true;
+}

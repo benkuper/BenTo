@@ -11,6 +11,9 @@ ImplementSingleton(WebServerComponent)
     server.addHandler(&ws);
     server.on("/", HTTP_GET, [&](AsyncWebServerRequest *request)
               {
+
+                DBG("Got Data request");
+                
         if (request->hasArg("HOST_INFO"))
         {
             DynamicJsonDocument doc(1000);
@@ -40,48 +43,19 @@ ImplementSingleton(WebServerComponent)
         }
         else
         {
-            // RootComponent::instance->fillOSCQueryData(o);
+            std::shared_ptr<OSCQueryChunk> chunk = std::make_shared<OSCQueryChunk>(OSCQueryChunk(RootComponent::instance));
+            AsyncWebServerResponse *response = request->beginChunkedResponse("application/json", [chunk](uint8_t *buffer, size_t maxLen, size_t index) {
+ 
+                if(chunk->nextComponent == nullptr) return 0;
 
-            std::shared_ptr<int> chunkCounter = std::make_shared<int>(0);
-            std::shared_ptr<int> componentCounter = std::make_shared<int>(0);
-                    AsyncWebServerResponse *response = request->beginChunkedResponse("application/json", [chunkCounter,componentCounter](uint8_t *buffer, size_t maxLen, size_t index) {
-                String s;
-                switch (*chunkCounter)
-                    {
-                    case Component::OSCQueryChunkType::Start:
-                    {
-                        s = RootComponent::instance->getChunkedOSCQueryData(Component::OSCQueryChunkType::Start);
-                        (*chunkCounter)++;
-                    }
-                    break;
-
-                    case Component::OSCQueryChunkType::Content:
-                    {
-                        s = RootComponent::instance->getChunkedOSCQueryData(Component::OSCQueryChunkType::Content, *componentCounter);
-                        (*componentCounter)++;
-
-                        if(*componentCounter >= RootComponent::instance->numComponents)
-                        {
-                            *componentCounter = 0;
-                            (*chunkCounter)++;
-                        }
-                    }
-                    break;
-
-                    case Component::OSCQueryChunkType::End:
-                    {
-                        s = RootComponent::instance->getChunkedOSCQueryData(Component::OSCQueryChunkType::End);
-                        (*chunkCounter)++;
-                    }
-                    break;
-
-                    case Component::OSCQueryChunkType::ChunkTypeMax:
-                        return 0;
-                    }
-
-                    sprintf((char*)buffer, s.c_str());
-                    return (int)s.length();
-        });
+                DBG("Fill chunk "+chunk->nextComponent->name+" : "+String(chunk->nextType));
+                chunk->nextComponent->fillChunkedOSCQueryData(chunk.get());
+                
+                
+                sprintf((char*)buffer, chunk->data.c_str());
+                return (int)chunk->data.length();
+                
+            });
 
         request->send(response);
         //   RootComponent::instance->fillOSCQueryData(o);
@@ -132,8 +106,9 @@ void WebServerComponent::setupConnection()
 
     if (shouldConnect)
     {
+        NDBG("Start HTTP Server");
         server.begin();
-        // NDBG("HTTP server started");
+        NDBG("HTTP server started");
     }
     else
     {

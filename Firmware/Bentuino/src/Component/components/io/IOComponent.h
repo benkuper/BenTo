@@ -8,7 +8,6 @@ DeclareComponent(IO, "io", )
                    A_OUTPUT,
                    PINMODE_MAX };
 
-
 DeclareConfigParameter(pin, -1);
 DeclareConfigParameter(mode, D_INPUT);
 DeclareConfigParameter(inverted, false);
@@ -33,15 +32,28 @@ void onParameterEventInternal(const ParameterEvent &e) override;
 static bool availablePWMChannels[16];
 int getFirstAvailablePWMChannel() const;
 
-// LinkScriptFunctionsStart
-//     LinkScriptFunction(IOComponent, get, f, );
-// LinkScriptFunction(IOComponent, set, , f);
-// LinkScriptFunctionsEnd
+LinkScriptFunctionsStart
+    LinkScriptFunction(IOComponent, get, f, );
+LinkScriptFunction(IOComponent, set, , f);
+LinkScriptFunctionsEnd
 
-// DeclareScriptFunctionReturn0(IOComponent, get, float)
-// {
-//     return value.floatValue();
-// }
-// DeclareScriptFunctionVoid1(IOComponent, set, float) { return value.set(arg1); }
+DeclareScriptFunctionReturn0(IOComponent, get, float)
+{
+    return value.floatValue();
+}
+DeclareScriptFunctionVoid1(IOComponent, set, float) { return value.set(arg1); }
+
+EndDeclareComponent;
+
+
+//Manager
+
+DeclareComponentSingleton(IOManager, "GPIO", )
+
+    DeclareRangeConfigParameter(numIOs, IO_MAX_COUNT, 0, IO_MAX_COUNT);
+
+IOComponent ios[IO_MAX_COUNT];
+
+bool initInternal(JsonObject o) override;
 
 EndDeclareComponent
