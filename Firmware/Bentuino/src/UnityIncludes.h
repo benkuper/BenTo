@@ -2,7 +2,6 @@
 
 #include "Arduino.h"
 #include <Wire.h>
-#include <String>
 
 // Declarations
 #define ARDUINOJSON_USE_LONG_LONG 0
