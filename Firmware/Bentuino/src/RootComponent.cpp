@@ -17,13 +17,14 @@ bool RootComponent::initInternal(JsonObject)
     AddIntParam(wakeUpButton);
     AddBoolParam(wakeUpState);
 
+#ifdef USE_LEDSTRIP
+    AddOwnedComponent(&strips);
+#endif
+
 #ifdef USE_BATTERY
     AddOwnedComponent(&battery);
 #endif
 
-#ifdef USE_WIFI
-    AddOwnedComponent(&wifi);
-#endif
 
 #ifdef USE_FILES
     AddOwnedComponent(&files);
@@ -38,9 +39,7 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&streamReceiver);
 #endif
 
-#ifdef USE_LEDSTRIP
-    AddOwnedComponent(&strips);
-#endif
+
 
 #ifdef USE_IO
     memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
@@ -73,6 +72,11 @@ bool RootComponent::initInternal(JsonObject)
 #ifdef USE_SEQUENCE
     AddOwnedComponent(&sequence);
 #endif
+
+#ifdef USE_WIFI
+    AddOwnedComponent(&wifi);
+#endif
+
 
     return true;
 }

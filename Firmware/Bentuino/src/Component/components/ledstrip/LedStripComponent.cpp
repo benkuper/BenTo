@@ -195,10 +195,10 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
         case LedStripLayer::Alpha:
         {
             float a = c.a / 255.0f;
-            colors[i].r = min(colors[i].r + (c.r - colors[i].r) * a, 255.f);
-            colors[i].g = min(colors[i].g + (c.g - colors[i].g) * a, 255.f);
-            colors[i].b = min(colors[i].b + (c.b - colors[i].b) * a, 255.f);
-            colors[i].r = max(colors[i].a, c.a);
+            colors[i].r = colors[i].r + ((int)c.r - colors[i].r) * a;
+            colors[i].g = colors[i].g + ((int)c.g - colors[i].g) * a;
+            colors[i].b = colors[i].b + ((int)c.b - colors[i].b) * a;
+            colors[i].a = max(colors[i].a, c.a);
         }
 
         default:
