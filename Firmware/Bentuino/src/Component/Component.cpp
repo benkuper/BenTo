@@ -252,81 +252,66 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
     }
 }
 
-void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param)
+void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool readOnly, const String *options, int numOptions, float vMin, float vMax)
 {
     JsonObject po = o.createNestedObject(pName);
     po["DESCRIPTION"] = pName;
-    po["ACCESS"] = 3; // readOnly ? 1 : 3;
+    po["ACCESS"] = readOnly ? 1 : 3;
     const String pType = t == Bool ? (*(bool *)param) ? "T" : "F" : typeNames[t];
     po["TYPE"] = pType;
     po["FULL_PATH"] = fullPath + "/" + pName;
 
     JsonArray vArr = po.createNestedArray("VALUE");
 
-    // if (options != nullptr && numOptions > 0)
-    // {
-    //     JsonArray rArr = o.createNestedArray("RANGE");
-    //     JsonObject vals = rArr.createNestedObject();
-    //     JsonArray opt = vals.createNestedArray("VALS");
-
-    //     for (int i = 0; i < numOptions; i++)
-    //     {
-    //         opt.add(options[i]);
-    //     }
-
-    //     o["TYPE"] = "s"; // force string type
-    //     const var v = getEnumValueForVal(val);
-    //     if (!v.isVoid())
-    //         vArr.add(v.stringValue());
-    // }
-    // else
-    // {
-    switch (t)
+    if (options != nullptr && numOptions > 0)
     {
-    case ParamType::Bool:
-        vArr.add((*(bool *)param));
-        break;
+        JsonArray rArr = po.createNestedArray("RANGE");
+        JsonObject vals = rArr.createNestedObject();
+        JsonArray opt = vals.createNestedArray("VALS");
 
-    case ParamType::Int:
-        vArr.add((*(int *)param));
-        break;
+        for (int i = 0; i < numOptions; i++)
+        {
+            opt.add(options[i]);
+        }
 
-    case ParamType::Float:
-        vArr.add((*(float *)param));
-        break;
+        po["TYPE"] = "s"; // force string type
+        int index = *(int *)param;
+        if (index >= 0 && index < numOptions)
+            vArr.add(options[index]);
+    }
+    else
+    {
+        switch (t)
+        {
+        case ParamType::Bool:
+            vArr.add((*(bool *)param));
+            break;
 
-    case ParamType::Str:
-        vArr.add((*(String *)param));
-        break;
+        case ParamType::Int:
+            vArr.add((*(int *)param));
+            break;
 
-    default:
-        break;
+        case ParamType::Float:
+            vArr.add((*(float *)param));
+            break;
+
+        case ParamType::Str:
+            vArr.add((*(String *)param));
+            break;
+
+        default:
+            break;
+        }
     }
 
-    // if (hasRange())
-    // {
-    //     JsonArray rArr = o.createNestedArray("RANGE");
-    //     JsonObject ro = rArr.createNestedObject();
+    if (vMin != 0 || vMax != 0)
+    {
+        JsonArray rArr = po.createNestedArray("RANGE");
+        JsonObject ro = rArr.createNestedObject();
 
-    //     switch (val.type)
-    //     {
-    //     case 'b':
-    //     case 'i':
-    //         ro["MIN"] = minVal.intValue();
-    //         ro["MAX"] = maxVal.intValue();
-    //         break;
-
-    //     case 'f':
-    //         ro["MIN"] = minVal.floatValue();
-    //         ro["MAX"] = maxVal.floatValue();
-    //         break;
-    //     }
-    // }
-    // else
-    // {
-    // o["RANGE"] = nullptr;²
-    // }
-    // }
+        ro["MIN"] = vMin;
+        ro["MAX"] = vMax;
+    }
 }
 
 void Component::setupChunkAfterComponent(OSCQueryChunk *chunk, const Component *c)
@@ -513,8 +498,6 @@ void Component::setParam(void *param, var *value, int numData)
 
     case ParamType::Str:
         hasChanged = *((String *)param) != value[0].stringValue();
-        DBG("Set String " + value[0].stringValue() + " > has Changed ? " + String(hasChanged));
-
         if (hasChanged)
             *((String *)param) = value[0].stringValue();
         break;

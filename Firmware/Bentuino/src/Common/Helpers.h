@@ -8,6 +8,8 @@
 #define NDBG(text) SerialComponent::instance->send("[" + name + "] " + text)
 
 #define DeviceID RootComponent::instance->deviceID
+#define DeviceType RootComponent::instance->deviceType
+#define DeviceName RootComponent::instance->deviceName
 
 // Class Helpers
 #define DeclareSingleton(Class) static Class *instance;
@@ -186,18 +188,43 @@
         }                                            \
     }
 
+#define CheckAndSetEnumParam(param, options, numOption) \
+    {                                                   \
+        if (paramName == #param)                        \
+        {                                               \
+            var newData[1];                             \
+            if (data[0].type == 's')                    \
+            {                                           \
+                String s = data[0].stringValue();       \
+                for (int i = 0; i < numOption; i++)     \
+                {                                       \
+                    if (s == options[i])                \
+                    {                                   \
+                        newData[0] = i;                 \
+                        break;                          \
+                    }                                   \
+                };                                      \
+            }                                           \
+            else                                        \
+                newData[0] = data[0].intValue();        \
+                                                        \
+            setParam((void *)&param, newData, 1);       \
+            return true;                                \
+        }                                               \
+    }
+
 #define HandleSetParamInternalEnd \
     return false;                 \
     }
 
 // Feedback
 
-#define CheckFeedbackParamInternalStart        \
-    virtual bool checkParamsFeedbackInternal(void* param) \
+#define CheckFeedbackParamInternalStart                   \
+    virtual bool checkParamsFeedbackInternal(void *param) \
     {
 
 #define CheckFeedbackParamInternalMotherClass(Class) \
-    if (Class::checkParamsFeedbackInternal(param))        \
+    if (Class::checkParamsFeedbackInternal(param))   \
         return true;
 
 #define CheckAndSendParamFeedback(p)                                 \
@@ -210,7 +237,7 @@
     }
 
 #define CheckFeedbackParamInternalEnd \
-    return false;                 \
+    return false;                     \
     }
 
 #define SendParamFeedback(comp, param, pName, type) CommunicationComponent::instance->sendParamFeedback(this, param, pName, type);
@@ -232,8 +259,18 @@
 // Fill OSCQuery
 #define FillOSCQueryBoolParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param);
 #define FillOSCQueryIntParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param);
+#define FillOSCQueryEnumParam(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, false, options, numOptions);
 #define FillOSCQueryFloatParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param);
+#define FillOSCQueryRangeParam(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, false, nullptr, 0, vMin, vMax);
 #define FillOSCQueryStringParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param);
+
+#define FillOSCQueryBoolParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param, true);
+#define FillOSCQueryIntParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, true);
+#define FillOSCQueryEnumParamReadOnly(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, true, options, numOptions);
+#define FillOSCQueryFloatParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, true);
+#define FillOSCQueryRangeParamReadOnly(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, true, nullptr, 0, vMin, vMax);
+#define FillOSCQueryStringParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param, true);
+
 #define FillOSCQueryInternalStart                                                 \
     virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath) \
     {

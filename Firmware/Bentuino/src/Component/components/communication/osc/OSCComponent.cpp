@@ -43,12 +43,19 @@ void OSCComponent::setupConnection()
         SetParam(isAlive, true);
         timeSinceLastReceivedPing = millis();
 
-        if (MDNS.begin((DeviceID).c_str()))
+        if (MDNS.begin((DeviceName).c_str()))
         {
-            MDNS.setInstanceName("Bentuino - " + DeviceID);
+            MDNS.setInstanceName("Bentuino - " + DeviceName);
             NDBG("OSC Zeroconf started");
             MDNS.addService("osc", "udp", 9000);
+            MDNS.addServiceTxt("osc", "udp", "deviceID", DeviceID.c_str());
+            MDNS.addServiceTxt("osc", "udp", "deviceName", DeviceName.c_str());
+            MDNS.addServiceTxt("osc", "udp", "deviceType", DeviceType.c_str());
+
             MDNS.addService("oscjson", "tcp", 80);
+            MDNS.addServiceTxt("oscjson", "tcp", "deviceID", DeviceID.c_str());
+            MDNS.addServiceTxt("oscjson", "tcp", "deviceName", DeviceName.c_str());
+            MDNS.addServiceTxt("oscjson", "tcp", "deviceType", DeviceType.c_str());
         }
         else
         {
@@ -100,7 +107,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
 
         msg.add(WifiComponent::instance->getIP().c_str());
         msg.add(DeviceID.c_str());
-        msg.add(ARDUINO_BOARD);
+        msg.add(DeviceType.c_str());
 
         sendMessage(msg);
     }

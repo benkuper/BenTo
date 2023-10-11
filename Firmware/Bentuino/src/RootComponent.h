@@ -1,9 +1,17 @@
 #pragma once
 
+#ifndef DEVICE_TYPE
+#define DEVICE_TYPE "Bento"
+#endif
+
 DeclareComponentSingleton(Root, "root", )
 
     const String deviceID = getDeviceID();
+
+DeclareStringParam(id, deviceID);
 DeclareStringParam(deviceName, deviceID);
+DeclareStringParam(deviceType, DEVICE_TYPE);
+
 DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
 DeclareBoolParam(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
 
@@ -40,7 +48,6 @@ LedStreamReceiverComponent streamReceiver;
 #ifdef USE_LEDSTRIP
 LedStripManagerComponent strips;
 #endif
-
 
 #ifdef USE_SCRIPT
 ScriptComponent script;
@@ -100,18 +107,22 @@ String getDeviceID() const;
 
 HandleSetParamInternalStart
     CheckAndSetParam(deviceName);
+CheckAndSetParam(deviceType);
 CheckAndSetParam(wakeUpButton);
 CheckAndSetParam(wakeUpState);
 HandleSetParamInternalEnd;
 
 FillSettingsInternalStart
     FillSettingsParam(deviceName);
+FillSettingsParam(deviceType);
 FillSettingsParam(wakeUpButton);
 FillSettingsParam(wakeUpState);
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
-    FillOSCQueryStringParam(deviceName);
+    FillOSCQueryStringParamReadOnly(id);
+FillOSCQueryStringParam(deviceName);
+FillOSCQueryStringParam(deviceType);
 FillOSCQueryIntParam(wakeUpButton);
 FillOSCQueryBoolParam(wakeUpState);
 FillOSCQueryInternalEnd

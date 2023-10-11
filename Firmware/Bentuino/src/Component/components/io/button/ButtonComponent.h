@@ -57,10 +57,10 @@ public:
     CheckFeedbackParamInternalEnd;
 
     FillOSCQueryInternalStart
-        FillOSCQueryInternalMotherClass(IOComponent)
-            FillOSCQueryIntParam(multiPressCount);
-    FillOSCQueryBoolParam(longPress);
-    FillOSCQueryBoolParam(veryLongPress);
+        FillOSCQueryInternalMotherClass(IOComponent);
+    FillOSCQueryIntParamReadOnly(multiPressCount);
+    FillOSCQueryBoolParamReadOnly(longPress);
+    FillOSCQueryBoolParamReadOnly(veryLongPress);
     FillOSCQueryInternalEnd
 };
 

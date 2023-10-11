@@ -10,6 +10,7 @@ DeclareComponentSingleton(OSC, "osc", )
 bool udpIsInit;
 DeclareStringParam(remoteHost, "");
 DeclareBoolParam(isAlive, "");
+DeclareBoolParam(sendFeedback, false);
 
 // Ping
 bool pingEnabled; // only activate ping check if received a first ping
@@ -42,17 +43,17 @@ DeclareComponentEventNames("MessageReceived");
 
     HandleSetParamInternalStart
         CheckAndSetParam(remoteHost);
-    CheckAndSetParam(isAlive);
     HandleSetParamInternalEnd;
 
     FillSettingsInternalStart
         FillSettingsParam(remoteHost);
-    FillSettingsParam(isAlive);
+        FillSettingsParam(sendFeedback);
     FillSettingsInternalEnd;
 
     FillOSCQueryInternalStart
         FillOSCQueryStringParam(remoteHost);
-    FillOSCQueryBoolParam(isAlive);
+    FillOSCQueryBoolParam(sendFeedback);
+    FillOSCQueryBoolParamReadOnly(isAlive);
     FillOSCQueryInternalEnd
 
 EndDeclareComponent

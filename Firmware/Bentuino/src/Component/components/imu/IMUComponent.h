@@ -46,6 +46,9 @@ bool hasNewData;
 bool imuLock;
 bool shouldStopRead;
 
+const String throwStateOptions[6] {"None", "Flat", "Single", "Double", "Flat Front", "Loftie"};
+const String sendLevelOptions[3] {"None", "Orientation", "All"};
+
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
@@ -96,10 +99,8 @@ DeclareScriptFunctionReturn0(IMUComponent, getActivity, float) { return activity
 DeclareScriptFunctionReturn0(IMUComponent, getThrowState, uint32_t) { return throwState; }
 #endif
 
-
-
 HandleSetParamInternalStart
-CheckAndSetParam(sendLevel);
+    CheckAndSetParam(sendLevel);
 CheckAndSetParam(orientationSendRate);
 CheckAndSetParam(sdaPin);
 CheckAndSetParam(sclPin);
@@ -115,13 +116,11 @@ CheckAndSetParam(xOnCalibration);
 HandleSetParamInternalEnd;
 
 FillSettingsInternalStart
-FillSettingsParam(sendLevel);
+    FillSettingsParam(sendLevel);
 FillSettingsParam(orientationSendRate);
 FillSettingsParam(sdaPin);
 FillSettingsParam(sclPin);
 FillSettingsParam(orientationXOffset);
-FillSettingsParam(throwState);
-FillSettingsParam(activity);
 // FillSettingsParam(flatThresholds);
 // FillSettingsParam(accelThresholds);
 FillSettingsParam(diffThreshold);
@@ -133,8 +132,8 @@ FillSettingsParam(xOnCalibration);
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
-FillOSCQueryBoolParam(connected);
-FillOSCQueryIntParam(sendLevel);
+    FillOSCQueryBoolParam(connected);
+FillOSCQueryEnumParam(sendLevel, sendLevelOptions, 6);
 FillOSCQueryIntParam(orientationSendRate);
 FillOSCQueryIntParam(sdaPin);
 FillOSCQueryIntParam(sclPin);
@@ -144,8 +143,8 @@ FillOSCQueryIntParam(sclPin);
 // FillOSCQueryP3DParam(linearAccel);
 // FillOSCQueryP3DParam(gravity);
 FillOSCQueryFloatParam(orientationXOffset);
-FillOSCQueryIntParam(throwState);
-FillOSCQueryFloatParam(activity);
+FillOSCQueryEnumParamReadOnly(throwState, throwStateOptions, 3);
+FillOSCQueryFloatParamReadOnly(activity);
 // FillOSCQueryP2DParam(flatThresholds);
 // FillOSCQueryP3DParam(accelThresholds);
 FillOSCQueryFloatParam(diffThreshold);
@@ -153,8 +152,8 @@ FillOSCQueryFloatParam(semiFlatThreshold);
 FillOSCQueryFloatParam(loftieThreshold);
 FillOSCQueryFloatParam(singleThreshold);
 FillOSCQueryFloatParam(angleOffset);
-FillOSCQueryFloatParam(projectedAngle);
+FillOSCQueryFloatParamReadOnly(projectedAngle);
 FillOSCQueryFloatParam(xOnCalibration);
 FillOSCQueryInternalEnd
 
-EndDeclareComponent
+    EndDeclareComponent

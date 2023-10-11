@@ -101,7 +101,7 @@ public:
 
     virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
     virtual void fillOSCQueryParamsInternal(JsonObject o,  const String& fullPath) {}
-    virtual void fillOSCQueryParam(JsonObject o,  const String& fullPath, const String& pName, ParamType t, void* param);
+    virtual void fillOSCQueryParam(JsonObject o,  const String& fullPath, const String& pName, ParamType t, void* param, bool readOnly = false, const String* options = nullptr,  int numOptions = 0, float vMin = 0, float vMax = 0);
 
     enum OSCQueryChunkType
     {

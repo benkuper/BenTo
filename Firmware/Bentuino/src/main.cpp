@@ -14,9 +14,6 @@ void setup()
 {
 	root.init();
     DBG("Device is init");
-
-	DBG("PSRAm size "+String(esp_spiram_get_size()));
-	DBG("Size of component " + String(sizeof(Component)));
 }
 
 void loop()

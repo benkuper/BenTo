@@ -118,7 +118,7 @@ public:
     FillOSCQueryIntParam(dataPin);
     FillOSCQueryIntParam(clkPin);
     FillOSCQueryIntParam(enPin);
-    FillOSCQueryFloatParam(brightness);
+    FillOSCQueryRangeParam(brightness, 0, 1);
     FillOSCQueryBoolParam(invertStrip);
     FillOSCQueryInternalEnd
 };

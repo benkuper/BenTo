@@ -51,8 +51,8 @@ FillOSCQueryIntParam(chargePin);
 FillOSCQueryIntParam(rawMin);
 FillOSCQueryIntParam(rawMax);
 FillOSCQueryBoolParam(sendFeedback);
-FillOSCQueryFloatParam(batteryLevel);
-FillOSCQueryBoolParam(charging);
+FillOSCQueryFloatParamReadOnly(batteryLevel);
+FillOSCQueryBoolParamReadOnly(charging);
 FillOSCQueryInternalEnd
 
     EndDeclareComponent

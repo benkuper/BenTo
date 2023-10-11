@@ -44,7 +44,7 @@ int getFirstAvailablePWMChannel() const;
 
 HandleSetParamInternalStart
     CheckAndSetParam(pin);
-CheckAndSetParam(mode);
+CheckAndSetEnumParam(mode, modeOptions, PINMODE_MAX);
 CheckAndSetParam(inverted);
 HandleSetParamInternalEnd;
 
@@ -60,9 +60,9 @@ FillSettingsInternalEnd
 
     FillOSCQueryInternalStart
         FillOSCQueryIntParam(pin);
-FillOSCQueryIntParam(mode);
+FillOSCQueryEnumParam(mode, modeOptions, PINMODE_MAX);
 FillOSCQueryBoolParam(inverted);
-FillOSCQueryFloatParam(value);
+FillOSCQueryRangeParamReadOnly(value, 0, 1);
 FillOSCQueryInternalEnd
 
     EndDeclareComponent;

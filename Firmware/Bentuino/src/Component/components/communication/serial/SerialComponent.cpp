@@ -37,7 +37,7 @@ void SerialComponent::processMessage(String buffer)
 {
     if (buffer.substring(0, 2) == "yo")
     {
-        Serial.println("wassup " + DeviceID + " \"" + String(ARDUINO_BOARD) + "\"");
+        Serial.println("wassup " + DeviceID + " \"" + String(DeviceType) + "\"");
         return;
     }
 

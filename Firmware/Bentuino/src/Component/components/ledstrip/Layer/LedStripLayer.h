@@ -47,7 +47,7 @@ public:
 
 
     HandleSetParamInternalStart
-        CheckAndSetParam(blendMode);
+        CheckAndSetEnumParam(blendMode, blendModeOptions, BlendModeMax);
     HandleSetParamInternalEnd;
 
     FillSettingsInternalStart
@@ -55,6 +55,6 @@ public:
     FillSettingsInternalEnd;
 
     FillOSCQueryInternalStart
-        FillOSCQueryIntParam(blendMode);
+        FillOSCQueryEnumParam(blendMode, blendModeOptions, BlendModeMax);
     FillOSCQueryInternalEnd
 };
