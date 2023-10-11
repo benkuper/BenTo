@@ -13,7 +13,8 @@ bool initInternal(JsonObject o) override;
 
 void onChildComponentEvent(const ComponentEvent &e) override;
 
-void sendParameterFeedback(Component *c, Parameter *param);
+// void sendParameterFeedback(Component *c, Parameter *param);
+void sendParamFeedback(Component *c, void* param, const String& pName, Component::ParamType pType);
 void sendMessage(Component *c, const String &mName, const String &val);
 void sendEventFeedback(const ComponentEvent &e);
 

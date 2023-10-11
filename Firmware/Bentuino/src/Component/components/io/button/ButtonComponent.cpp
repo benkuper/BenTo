@@ -3,16 +3,16 @@ ImplementManagerSingleton(Button);
 bool ButtonComponent::initInternal(JsonObject o)
 {
     // value.val.type = 'b'; //force boolean
-    // SetParam(value,false); 
+    // SetParam(value,false);
 
     bool result = IOComponent::initInternal(o);
-    
+
     debounceCount = 0;
     timeAtPress = 0;
 
     AddIntParam(multiPressCount);
     // multiPressCount.readOnly = true;
-    
+
     AddIntParam(longPress);
     // longPress.readOnly = true;
 
@@ -30,13 +30,13 @@ void ButtonComponent::updateInternal()
     {
         if (!longPress && millis() > timeAtPress + LONGPRESS_TIME)
         {
-            SetParam(longPress,true);
+            SetParam(longPress, true);
             sendEvent(LongPress);
         }
 
         if (!veryLongPress && millis() > timeAtPress + VERYLONGPRESS_TIME)
         {
-            SetParam(veryLongPress,true);
+            SetParam(veryLongPress, true);
             sendEvent(VeryLongPress);
         }
     }
@@ -45,37 +45,36 @@ void ButtonComponent::updateInternal()
     {
         if (multiPressCount > 0)
         {
-            SetParam(multiPressCount,0);
+            SetParam(multiPressCount, 0);
             var data[1]{multiPressCount};
             sendEvent(MultiPress, data, 1);
         }
     }
 }
 
-// void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
-// {
-//     IOComponent::onParameterEventInternal(e);
+void ButtonComponent::paramValueChangedInternal(void * param)
+{
+    IOComponent::paramValueChangedInternal(param);
 
-//     if (e.parameter == &value)
-//     {
-//         SetParam(longPress,false);
-//         SetParam(veryLongPress,false);
+    if (param == &value)
+    {
+        // NDBG("Reset long press and very long press");
+        SetParam(veryLongPress, false);
+        SetParam(longPress, false);
 
-//         if (value)
-//         {
-//             timeAtPress = millis();
-//             SetParam(multiPressCount,multiPressCount + 1);
-//             var data[1]{multiPressCount};
-//             sendEvent(MultiPress, data, 1);
-//         }
-//         else
-//         {
-//             if (millis() < timeAtPress + SHORTPRESS_TIME)
-//             {
-//                 sendEvent(ShortPress);
-//             }
-//         }
-//     }
-// }
-
-
+        if (value)
+        {
+            timeAtPress = millis();
+            SetParam(multiPressCount, multiPressCount + 1);
+            var data[1]{multiPressCount};
+            sendEvent(MultiPress, data, 1);
+        }
+        else
+        {
+            if (millis() < timeAtPress + SHORTPRESS_TIME)
+            {
+                sendEvent(ShortPress);
+            }
+        }
+    }
+}

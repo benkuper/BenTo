@@ -140,7 +140,7 @@ void LedStreamReceiverComponent::setupConnection()
     }
 }
 
-void LedStreamReceiverComponent::paramValueChanged(void* param)
+void LedStreamReceiverComponent::paramValueChangedInternal(void* param)
 {
     if (param == &useArtnet)
     {

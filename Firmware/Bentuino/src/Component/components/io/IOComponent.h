@@ -43,26 +43,29 @@ int getFirstAvailablePWMChannel() const;
 // #endif
 
 HandleSetParamInternalStart
-CheckAndSetParam(pin);
+    CheckAndSetParam(pin);
 CheckAndSetParam(mode);
 CheckAndSetParam(inverted);
 HandleSetParamInternalEnd;
 
+CheckFeedbackParamInternalStart
+CheckAndSendParamFeedback(value);
+CheckFeedbackParamInternalEnd;
+
 FillSettingsInternalStart
-FillSettingsParam(pin);
+    FillSettingsParam(pin);
 FillSettingsParam(mode);
 FillSettingsParam(inverted);
 FillSettingsInternalEnd
 
-FillOSCQueryInternalStart
-FillOSCQueryIntParam(pin);
+    FillOSCQueryInternalStart
+        FillOSCQueryIntParam(pin);
 FillOSCQueryIntParam(mode);
 FillOSCQueryBoolParam(inverted);
 FillOSCQueryFloatParam(value);
 FillOSCQueryInternalEnd
 
-EndDeclareComponent;
-
+    EndDeclareComponent;
 
 // Manager
 

@@ -549,7 +549,44 @@ bool Component::handleSetParam(const String &paramName, var *data, int numData)
 void Component::paramValueChanged(void *param)
 {
     DBG("Param value changed " + getParamString(param));
+
+    if (param == &enabled)
+        onEnabledChanged();
+
+    paramValueChangedInternal(param);
+    checkParamsFeedback(param);
 }
+
+bool Component::checkParamsFeedback(void *param)
+{
+    CheckAndSendParamFeedback(enabled);
+    return checkParamsFeedbackInternal(param);
+}
+
+// void Component::sendParamFeedback(void *param)
+// {
+//     ParamType t = getParamType(param);
+//     switch (t)
+//     {
+//     case ParamType::Bool:
+//     case ParamType::Int:
+//     case ParamType::Float:
+//     case ParamType::Str:
+//         SendParamFeedback1(param);
+//         break;
+
+//     case ParamType::P2D:
+//         SendParamFeedback2(param);
+//         break;
+
+//     case ParamType::P3D:
+//         SendParamFeedback3(param);
+//         break;
+
+//     default:
+//         break;
+//     }
+// }
 
 Component::ParamType Component::getParamType(void *param) const
 {

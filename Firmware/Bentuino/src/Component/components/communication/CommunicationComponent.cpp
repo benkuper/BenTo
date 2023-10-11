@@ -1,3 +1,4 @@
+#include "CommunicationComponent.h"
 ImplementSingleton(CommunicationComponent);
 
 bool CommunicationComponent::initInternal(JsonObject o)
@@ -34,21 +35,60 @@ void CommunicationComponent::onChildComponentEvent(const ComponentEvent &e)
 #endif
 }
 
-void CommunicationComponent::sendParameterFeedback(Component *c, Parameter *param)
+void CommunicationComponent::sendParamFeedback(Component *c, void *param, const String &pName, Component::ParamType pType)
 {
-    var data[1]{param->val};
+    int numData = 1;
+    var data[3];
+    switch (pType)
+    {
+    case Component::ParamType::Trigger:
+        break;
+
+    case Component::ParamType::Bool:
+        data[0] = (*(bool *)param);
+        break;
+
+    case Component::ParamType::Int:
+        data[0] = (*(int *)param);
+        break;
+
+    case Component::ParamType::Float:
+        data[0] = (*(float *)param);
+        break;
+
+    case Component::ParamType::Str:
+        data[0] = (*(String *)param);
+        break;
+
+    case Component::ParamType::P2D:
+    case Component::ParamType::P3D:
+    {
+        numData = Component::ParamType::P2D ? 2 : 3;
+
+        float *vals = (*(float **)param);
+        data[0] = vals[0];
+        data[1] = vals[1];
+
+        if (pType == Component::ParamType::P3D)
+            data[2] = vals[2];
+    }
+    break;
+
+    default:
+    break;
+    }
 
 #ifdef USE_SERIAL
-    serial.sendMessage(c->name, param->name, data, 1);
+    serial.sendMessage(c->name, pName, data, numData);
 #endif
 
 #ifdef USE_OSC
-    osc.sendMessage("/" + c->name, param->name, data, 1);
+    osc.sendMessage("/" + c->name, pName, data, numData);
 #endif
 
 #ifdef USE_SERVER
     // maybe should find away so calls are not crossed with websocket ?
-    WebServerComponent::instance->sendParameterFeedback(c, param);
+     WebServerComponent::instance->sendParamFeedback(c, pName, data, numData);
 #endif
 }
 

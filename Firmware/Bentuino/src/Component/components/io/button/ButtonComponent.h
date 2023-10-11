@@ -20,7 +20,7 @@ public:
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
-    // void onParameterEventInternal(const ParameterEvent &e) override;
+    void paramValueChangedInternal(void *param) override;
 
     DeclareComponentEventTypes(ShortPress, LongPress, VeryLongPress, MultiPress);
     DeclareComponentEventNames("ShortPress", "LongPress", "VeryLongPress", "MultiPress");
@@ -48,7 +48,15 @@ public:
     //     FillSettingsInternalMotherClass(IOComponent)
     //         FillSettingsInternalEnd
 
-        FillOSCQueryInternalStart
+    CheckFeedbackParamInternalStart
+        CheckFeedbackParamInternalMotherClass(IOComponent);
+    CheckAndSendParamFeedback(multiPressCount);
+    CheckAndSendParamFeedback(longPress);
+    CheckAndSendParamFeedback(veryLongPress);
+
+    CheckFeedbackParamInternalEnd;
+
+    FillOSCQueryInternalStart
         FillOSCQueryInternalMotherClass(IOComponent)
             FillOSCQueryIntParam(multiPressCount);
     FillOSCQueryBoolParam(longPress);

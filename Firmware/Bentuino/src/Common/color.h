@@ -60,22 +60,23 @@ struct Color
     }
     inline Color &operator*=(Color &c)
     {
-        r = min<uint8_t>(max<uint8_t>(r * c.r, 0), 255);
-        g = min<uint8_t>(max<uint8_t>(g * c.g, 0), 255);
-        b = min<uint8_t>(max<uint8_t>(b * c.b, 0), 255);
-        a = min<uint8_t>(max<uint8_t>(a * c.a, 0), 255);
+        r = constrain(r * (c.r/255.f), 0, 255);
+        g = constrain(g * (c.g/255.f), 0, 255);
+        b = constrain(b * (c.b/255.f), 0, 255);
+        a = constrain(a * (c.a/255.f), 0, 255);
         return *this;
     }
     inline Color &operator*=(const uint8_t &val)
     {
-        r = min<uint8_t>(max<uint8_t>(r * val, 0), 255);
-        g = min<uint8_t>(max<uint8_t>(g * val, 0), 255);
-        b = min<uint8_t>(max<uint8_t>(b * val, 0), 255);
+        r = constrain(r * val, 0, 255);
+        g = constrain(g * val, 0, 255);
+        b = constrain(b * val, 0, 255);
         a = min(a + val, 255);
         return *this;
     }
 
-    Color(uint8_t r = 0x00, uint8_t g = 0x00, uint8_t b = 0x00, uint8_t a = 0xff) : a(a), r(r), g(g), b(b)
+    Color(uint32_t v = 0xff000000) :value(v) {}
+    Color(uint8_t r, uint8_t g, uint8_t b, uint8_t a = 0xff) : a(a), r(r), g(g), b(b)
     {
     }
 

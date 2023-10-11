@@ -35,7 +35,7 @@ void onEnabledChanged() override;
 
 void setupConnection();
 
-void paramValueChanged(void* param) override;
+void paramValueChangedInternal(void* param) override;
 
 long lastReceiveTime;
 uint8_t streamBuffer[LEDSTREAM_MAX_PACKET_SIZE];

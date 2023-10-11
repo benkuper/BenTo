@@ -81,7 +81,7 @@ public:
     void updateInternal() override;
     void clearInternal() override;
 
-    void paramValueChanged(void *param) override;
+    void paramValueChangedInternal(void *param) override;
     void onEnabledChanged() override;
 
     void setStripPower(bool value);
@@ -136,7 +136,7 @@ LinkScriptFunction(LedStripManagerComponent, fillRGB, v, iii);
 LinkScriptFunction(LedStripManagerComponent, fillHSV, v, fff);
 
 LinkScriptFunction(LedStripManagerComponent, point, v, iff);
-LinkScriptFunction(LedStripManagerComponent, pointRGB, v, ffiii);
+LinkScriptFunction(LedStripManagerComponent, pointRGB, v, iiiff);
 LinkScriptFunction(LedStripManagerComponent, pointHSV, v, fffff);
 
 LinkScriptFunction(LedStripManagerComponent, set, v, ii);

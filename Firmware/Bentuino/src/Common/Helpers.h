@@ -64,7 +64,7 @@
     items[i].enabled = enabled;                          \
     AddOwnedComponent(&items[i]);
 #else
-#define DefineStaticItems(Type, MType) Type##Component* items[MType##_MAX_COUNT];
+#define DefineStaticItems(Type, MType) Type##Component *items[MType##_MAX_COUNT];
 #define AddStaticOrDynamicComponent(name, Type, enabled) AddComponent(items[i], name, Type, enabled);
 #endif
 
@@ -120,24 +120,7 @@
     }                   \
     }
 
-// Parameter Helpers
-#define AddDefaultParameterListener(Class, param) param->addListener(std::bind(&Class::onParameterEvent, this, std::placeholders::_1));
-#define SendParameterFeedback(param) CommunicationComponent::instance->sendParameterFeedback(this, param);
-
-// Parameter class system
-#define DeclareParameter(param, val, isConfig) \
-    Parameter param { #param, val, var(), var(), isConfig }
-#define DeclareRangeParameter(param, val, min, max, isConfig) \
-    Parameter param { #param, val, min, max, isConfig }
-#define DeclareConfigParameter(param, val) DeclareParameter(param, val, true)
-#define DeclareRangeConfigParameter(param, val, min, max) DeclareRangeParameter(param, val, min, max, true)
-
-// #define AddParameter(param) addParameter(&param)
-// #define AddAndSetParameter(param)
-//     {
-//         addParameter(&param);
-//         param.set(Settings::getVal(o, #param, param.val));
-//     }
+// Parameters
 
 // Class-less parameter system
 #define DeclareBoolParam(name, val) bool name = val;
@@ -184,12 +167,11 @@
         setParam(&param, pData, 3);       \
     };
 
+// Handle Check and Set
+
 #define HandleSetParamInternalStart                                                               \
     virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) override \
     {
-#define HandleSetParamInternalEnd \
-    return false;                 \
-    }
 
 #define HandleSetParamMotherClass(Class)                         \
     if (Class::handleSetParamInternal(paramName, data, numData)) \
@@ -204,17 +186,50 @@
         }                                            \
     }
 
+#define HandleSetParamInternalEnd \
+    return false;                 \
+    }
+
+// Feedback
+
+#define CheckFeedbackParamInternalStart        \
+    virtual bool checkParamsFeedbackInternal(void* param) \
+    {
+
+#define CheckFeedbackParamInternalMotherClass(Class) \
+    if (Class::checkParamsFeedbackInternal(param))        \
+        return true;
+
+#define CheckAndSendParamFeedback(p)                                 \
+    {                                                                \
+        if (param == (void *)&p)                                     \
+        {                                                            \
+            SendParamFeedback(this, param, #p, getParamType(param)); \
+            return true;                                             \
+        }                                                            \
+    }
+
+#define CheckFeedbackParamInternalEnd \
+    return false;                 \
+    }
+
+#define SendParamFeedback(comp, param, pName, type) CommunicationComponent::instance->sendParamFeedback(this, param, pName, type);
+
+// Fill Settings
+
 #define FillSettingsParam(param) \
     {                            \
         o[#param] = param;       \
     }
+
+#define FillSettingsInternalMotherClass(Class) Class::fillSettingsParamsInternal(o, configOnly);
+
 #define FillSettingsInternalStart                                                           \
     virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) override \
     {
 #define FillSettingsInternalEnd }
 
-#define FillSettingsInternalMotherClass(Class) Class::fillSettingsParamsInternal(o, configOnly);
-
+// Fill OSCQuery
 #define FillOSCQueryBoolParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param);
 #define FillOSCQueryIntParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param);
 #define FillOSCQueryFloatParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param);
@@ -261,7 +276,7 @@
 #define DeclareScriptFunctionVoid1(Class, FunctionName, Type1) DeclareScriptFunctionVoid(Class, FunctionName, arg1, CA(Type1, 1), SA(Type1, 1))
 #define DeclareScriptFunctionVoid2(Class, FunctionName, Type1, Type2) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2, CA(Type1, 1) COMMA CA(Type2, 2), SA(Type1, 1) SA(Type2, 2))
 #define DeclareScriptFunctionVoid3(Class, FunctionName, Type1, Type2, Type3) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3))
-#define DeclareScriptFunctionVoid4(Class, FunctionName, Type1, Type2, Type3, Type4) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3 COMMA arg4, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3) COMMA CA(Type4, 4), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3) SA(Type4, 4)) 
+#define DeclareScriptFunctionVoid4(Class, FunctionName, Type1, Type2, Type3, Type4) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3 COMMA arg4, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3) COMMA CA(Type4, 4), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3) SA(Type4, 4))
 #define DeclareScriptFunctionVoid5(Class, FunctionName, Type1, Type2, Type3, Type4, Type5) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3 COMMA arg4 COMMA arg5, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3) COMMA CA(Type4, 4) COMMA CA(Type5, 5), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3) SA(Type5, 4) SA(Type5, 5))
 #define DeclareScriptFunctionVoid6(Class, FunctionName, Type1, Type2, Type3, Type4, Type5, Type6) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3 COMMA arg4 COMMA arg5 COMMA arg6, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3) COMMA CA(Type4, 4) COMMA CA(Type5, 5) COMMA CA(Type6, 6), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3) SA(Type4, 4) SA(Type5, 5) SA(Type6, 6))
 

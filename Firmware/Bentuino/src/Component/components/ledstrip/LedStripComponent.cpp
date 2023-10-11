@@ -119,7 +119,7 @@ void LedStripComponent::clearInternal()
     setStripPower(false);
 }
 
-void LedStripComponent::paramValueChanged(void *param)
+void LedStripComponent::paramValueChangedInternal(void *param)
 {
     if (param == &brightness)
     {

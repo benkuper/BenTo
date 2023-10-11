@@ -83,7 +83,11 @@ public:
 
     virtual void onEnabledChanged() {}
 
-    virtual void paramValueChanged(void* param);
+    void paramValueChanged(void* param);
+    virtual void paramValueChangedInternal(void* param) {}
+    virtual bool checkParamsFeedback(void* param);
+    virtual bool checkParamsFeedbackInternal(void* param) { return false; }
+    // virtual void sendParamFeedback(void* param);
 
     bool handleCommand(const String &command, var *data, int numData);
     virtual bool handleCommandInternal(const String &command, var *data, int numData) { return false; }

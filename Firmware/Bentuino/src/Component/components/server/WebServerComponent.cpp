@@ -230,11 +230,28 @@ void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t
     }
 }
 
-void WebServerComponent::sendParameterFeedback(Component *c, Parameter *param)
+// void WebServerComponent::sendParameterFeedback(Component *c, Parameter *param)
+// {
+// #ifdef USE_OSC
+//     var v = param->getOSCQueryFeedbackData();
+//     OSCMessage msg = OSCComponent::createMessage(c->getFullPath(), param->name, &v, 1, false);
+
+//     char addr[64];
+//     msg.getAddress(addr);
+//     if (String(addr) == tmpExcludeParam)
+//         return;
+
+//     wsPrint.flush();
+//     msg.send(wsPrint);
+//     ws.binaryAll(wsPrint.data, wsPrint.index);
+// #endif
+// }
+
+void WebServerComponent::sendParamFeedback(Component *c, String pName, var *data, int numData)
 {
 #ifdef USE_OSC
-    var v = param->getOSCQueryFeedbackData();
-    OSCMessage msg = OSCComponent::createMessage(c->getFullPath(), param->name, &v, 1, false);
+    
+    OSCMessage msg = OSCComponent::createMessage(c->getFullPath(), pName, data, numData, false);
 
     char addr[64];
     msg.getAddress(addr);
