@@ -31,10 +31,6 @@ ConnectionState state;
 DeclareStringParam(ssid, "");
 DeclareStringParam(pass, "");
 
-// Parameter ssid{"ssid", "", var(), var(), true};
-// Parameter pass{"pass", "", var(), var(), true};
-// Parameter apOnNoWifi{"apOnNoWifi", true, var(), var(), true};
-
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;

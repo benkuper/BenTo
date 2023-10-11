@@ -2,25 +2,23 @@ ImplementSingleton(BatteryComponent);
 
 bool BatteryComponent::initInternal(JsonObject o)
 {
-    AddAndSetParameter(batteryPin);
-    AddAndSetParameter(chargePin);
-    AddAndSetParameter(rawMin);
-    AddAndSetParameter(rawMax);
-    AddAndSetParameter(sendFeedback);
+    AddIntParam(batteryPin);
+    AddIntParam(chargePin);
+    AddIntParam(rawMin);
+    AddIntParam(rawMax);
+    AddBoolParam(sendFeedback);
 
-    AddParameter(batteryLevel);
-    batteryLevel.readOnly = true;
-    AddParameter(isCharging);
-    isCharging.readOnly = true;
+    AddFloatParam(batteryLevel);
+    AddBoolParam(charging);
 
-    if (batteryPin.intValue() > 0)
+    if (batteryPin > 0)
     {
-        pinMode(batteryPin.intValue(), INPUT);
-        analogSetPinAttenuation(batteryPin.intValue(), ADC_0db);
+        pinMode(batteryPin, INPUT);
+        analogSetPinAttenuation(batteryPin, ADC_0db);
     }
 
-    if (chargePin.intValue() > 0)
-        pinMode(chargePin.intValue(), INPUT);
+    if (chargePin > 0)
+        pinMode(chargePin, INPUT);
 
     for (int i = 0; i < VALUES_SIZE; i++)
         values[i] = 0;
@@ -33,10 +31,10 @@ void BatteryComponent::updateInternal()
     if (millis() > lastBatteryCheck + BATTERY_CHECK_INTERVAL)
     {
 
-        if (batteryPin.intValue() > 0)
+        if (batteryPin > 0)
         {
 
-            values[valuesIndex] = analogRead(batteryPin.intValue());
+            values[valuesIndex] = analogRead(batteryPin);
             valuesIndex = (valuesIndex + 1) % VALUES_SIZE;
         }
 
@@ -45,12 +43,12 @@ void BatteryComponent::updateInternal()
 
     if (millis() > lastBatterySet + BATTERY_SET_INTERVAL)
     {
-        if (chargePin.intValue() > 0)
+        if (chargePin > 0)
         {
-            isCharging.set(digitalRead(chargePin.intValue())); // measuredVal == 0;
+            SetParam(charging,(digitalRead(chargePin))); // measuredVal == 0;
         }
 
-        if (batteryPin.intValue() > 0)
+        if (batteryPin > 0)
         {
 
             float sum = 0;
@@ -62,10 +60,10 @@ void BatteryComponent::updateInternal()
             const float maxVoltage = 4.2f;
             const float minVoltage = 3.5f;
 
-            float relVal = (val - rawMin.intValue()) / (rawMax.intValue() - rawMin.intValue());
+            float relVal = (val - rawMin) / (rawMax - rawMin);
             float voltage = minVoltage + relVal * (maxVoltage - minVoltage);
 
-            batteryLevel.set(voltage);
+            SetParam(batteryLevel,voltage);
         }
 
         lastBatterySet = millis();

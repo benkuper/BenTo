@@ -5,18 +5,45 @@ DeclareComponent(Stepper, "stepper", )
 static bool engineIsInit;
 FastAccelStepper *stepper = NULL;
 
-Parameter stepPin{"stepPin", 0, var(), var(), true};
-Parameter dirPin{"dirPin", 0, var(), var(), true};
-Parameter enPin{"enPin", 0, var(), var(), true};
-Parameter accel{"accel", 0, var(), var(), true};
+DeclareIntParam(stepPin, 0);
+DeclareIntParam(dirPin, 0);
+DeclareIntParam(enPin, 0);
 
-Parameter speed{"speed", 0.f};
-Parameter position{"position",0.f};
+DeclareFloatParam(accel, 0);
+DeclareFloatParam(speed, 0);
+DeclareFloatParam(position, 0);
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 
-void onParameterEventInternal(const ParameterEvent &e) override;
+// void onParameterEventInternal(const ParameterEvent &e) override;
 
-EndDeclareComponent
+HandleSetParamInternalStart
+    CheckAndSetParam(stepPin);
+CheckAndSetParam(dirPin);
+CheckAndSetParam(enPin);
+CheckAndSetParam(accel);
+CheckAndSetParam(speed);
+CheckAndSetParam(position);
+HandleSetParamInternalEnd;
+
+FillSettingsInternalStart
+    FillSettingsParam(stepPin);
+FillSettingsParam(dirPin);
+FillSettingsParam(enPin);
+FillSettingsParam(accel);
+FillSettingsParam(speed);
+FillSettingsParam(position);
+FillSettingsInternalEnd;
+
+FillOSCQueryInternalStart
+    FillOSCQueryIntParam(stepPin);
+FillOSCQueryIntParam(dirPin);
+FillOSCQueryIntParam(enPin);
+FillOSCQueryFloatParam(accel);
+FillOSCQueryFloatParam(speed);
+FillOSCQueryFloatParam(position);
+FillOSCQueryInternalEnd
+
+    EndDeclareComponent

@@ -1,9 +1,7 @@
 #pragma once
 
 #define MAX_CHILD_COMPONENTS 16
-// #define MAX_CHILD_PARAMETERS 1
-#define MAX_CHILD_PARAMS 32
-// #define MAX_EVENT_TYPES 16
+#define MAX_CHILD_PARAMS 20
 
 class Component : public EventBroadcaster<ComponentEvent>
 {
@@ -11,7 +9,8 @@ public:
     Component(const String &name, bool _enabled = true) : name(name),
                                                           isInit(false),
                                                           parentComponent(NULL),
-                                                          numComponents(0)
+                                                          numComponents(0),
+                                                          numParams(0)
                                                         //   numParameters(0)
     {
     }
@@ -71,7 +70,7 @@ public:
     }
 
     template <class T>
-    T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return addComponent(new T(name, _enabled), o); };
+    T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return (T*)addComponent(new T(name, _enabled), o); };
 
     Component *addComponent(Component *c, JsonObject o = JsonObject());
 

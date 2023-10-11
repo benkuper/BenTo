@@ -1,21 +1,23 @@
+ImplementManagerSingleton(Button);
+
 bool ButtonComponent::initInternal(JsonObject o)
 {
-    value.val.type = 'b'; //force boolean
-    value.set(false); 
+    // value.val.type = 'b'; //force boolean
+    // SetParam(value,false); 
 
     bool result = IOComponent::initInternal(o);
     
     debounceCount = 0;
     timeAtPress = 0;
 
-    AddParameter(multiPressCount);
-    multiPressCount.readOnly = true;
+    AddIntParam(multiPressCount);
+    // multiPressCount.readOnly = true;
     
-    AddParameter(isLongPressed);
-    isLongPressed.readOnly = true;
+    AddIntParam(longPress);
+    // longPress.readOnly = true;
 
-    AddParameter(isVeryLongPressed);
-    isVeryLongPressed.readOnly = true;
+    AddIntParam(veryLongPress);
+    // veryLongPress.readOnly = true;
 
     return result;
 }
@@ -24,71 +26,56 @@ void ButtonComponent::updateInternal()
 {
     IOComponent::updateInternal();
 
-    if (value.boolValue())
+    if (value)
     {
-        if (!isLongPressed.boolValue() && millis() > timeAtPress + LONGPRESS_TIME)
+        if (!longPress && millis() > timeAtPress + LONGPRESS_TIME)
         {
-            isLongPressed.set(true);
+            SetParam(longPress,true);
             sendEvent(LongPress);
         }
 
-        if (!isVeryLongPressed.boolValue() && millis() > timeAtPress + VERYLONGPRESS_TIME)
+        if (!veryLongPress && millis() > timeAtPress + VERYLONGPRESS_TIME)
         {
-            isVeryLongPressed.set(true);
+            SetParam(veryLongPress,true);
             sendEvent(VeryLongPress);
         }
     }
 
     if (millis() > timeAtPress + MULTIPRESS_TIME)
     {
-        if (multiPressCount.intValue() > 0)
+        if (multiPressCount > 0)
         {
-            multiPressCount.set(0);
-            var data[1]{multiPressCount.intValue()};
+            SetParam(multiPressCount,0);
+            var data[1]{multiPressCount};
             sendEvent(MultiPress, data, 1);
         }
     }
 }
 
-void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
-{
-    IOComponent::onParameterEventInternal(e);
+// void ButtonComponent::onParameterEventInternal(const ParameterEvent &e)
+// {
+//     IOComponent::onParameterEventInternal(e);
 
-    if (e.parameter == &value)
-    {
-        isLongPressed.set(false);
-        isVeryLongPressed.set(false);
+//     if (e.parameter == &value)
+//     {
+//         SetParam(longPress,false);
+//         SetParam(veryLongPress,false);
 
-        if (value.boolValue())
-        {
-            timeAtPress = millis();
-            multiPressCount.set(multiPressCount.intValue() + 1);
-            var data[1]{multiPressCount.intValue()};
-            sendEvent(MultiPress, data, 1);
-        }
-        else
-        {
-            if (millis() < timeAtPress + SHORTPRESS_TIME)
-            {
-                sendEvent(ShortPress);
-            }
-        }
-    }
-}
+//         if (value)
+//         {
+//             timeAtPress = millis();
+//             SetParam(multiPressCount,multiPressCount + 1);
+//             var data[1]{multiPressCount};
+//             sendEvent(MultiPress, data, 1);
+//         }
+//         else
+//         {
+//             if (millis() < timeAtPress + SHORTPRESS_TIME)
+//             {
+//                 sendEvent(ShortPress);
+//             }
+//         }
+//     }
+// }
 
 
-ImplementSingleton(ButtonManagerComponent);
-
-bool ButtonManagerComponent::initInternal(JsonObject o)
-{
-    AddAndSetParameter(numButtons);
-
-    for (int i = 0; i < numButtons.intValue(); i++)
-    {
-        DBG("Add button " + String(i + 1) + " of " + String(numButtons.intValue()));
-        buttons[i].name = "button" + String(i + 1);
-        AddOwnedComponent(&buttons[i]);
-    }
-
-    return true;
-}

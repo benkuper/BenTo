@@ -27,9 +27,9 @@ public:
     virtual bool initInternal(JsonObject o) override;
 
     LedStripComponent *strip;
-    int numLeds;
     Type type;
-    Parameter blendMode{"blendMode", Add, var(), var(), true};
+
+    DeclareIntParam(blendMode, Add);
     const String blendModeOptions[BlendModeMax] = {"Add", "Multiply", "Max", "Min", "Alpha"};
 
     Color colors[LED_MAX_COUNT];
@@ -48,9 +48,24 @@ public:
     LinkScriptFunction(LedStripLayer, point, v, iff);
     LinkScriptFunctionsEnd
 
-    DeclareScriptFunctionVoid0(LedStripLayer, clear){ clearColors(); }
+    DeclareScriptFunctionVoid0(LedStripLayer, clear)
+    {
+        clearColors();
+    }
     DeclareScriptFunctionVoid1(LedStripLayer, fillAll, uint32_t) { fillAll(arg1); }
     DeclareScriptFunctionVoid3(LedStripLayer, fillRange, uint32_t, float, float) { fillRange(arg1, arg2, arg3); }
     DeclareScriptFunctionVoid3(LedStripLayer, point, uint32_t, float, float) { point(arg1, arg2, arg3); }
 #endif
+
+    HandleSetParamInternalStart
+        CheckAndSetParam(blendMode);
+    HandleSetParamInternalEnd;
+
+    FillSettingsInternalStart
+        FillSettingsParam(blendMode);
+    FillSettingsInternalEnd;
+
+    FillOSCQueryInternalStart
+        FillOSCQueryIntParam(blendMode);
+    FillOSCQueryInternalEnd
 };

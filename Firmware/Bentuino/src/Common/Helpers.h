@@ -12,6 +12,7 @@
 // Class Helpers
 #define DeclareSingleton(Class) static Class *instance;
 #define ImplementSingleton(Class) Class *Class::instance = NULL;
+#define ImplementManagerSingleton(Class) Class##ManagerComponent *Class##ManagerComponent::instance = NULL;
 #define InitSingleton() instance = this;
 #define DeleteSingleton() instance = NULL;
 
@@ -23,7 +24,7 @@
 };
 
 // Component Helpers
-#define AddComponent(name, comp, Type, enabled) comp = addComponent<Type##Component>(name, enabled, o["components"][name]);
+#define AddComponent(name, Type, enabled) addComponent<Type##Component>(name, enabled, o["components"][name]);
 #define AddOwnedComponent(comp) addComponent(comp, o["components"][(comp)->name]);
 #define AddDefaultComponentListener(comp) comp->addListener(std::bind(&Component::onChildComponentEvent, this, std::placeholders::_1));
 
@@ -53,6 +54,32 @@
 #define EndDeclareComponent \
     }                       \
     ;
+
+// Manager
+
+#define DeclareComponentManager(Type, MType, mName, itemName) \
+    DeclareComponentSingleton(Type##Manager, #mName, )        \
+        DeclareIntParam(count, 1);                            \
+                                                              \
+    bool initInternal(JsonObject o) override                  \
+    {                                                         \
+        AddIntParam(count);                                   \
+        for (int i = 0; i < count; i++)                       \
+        {                                                     \
+            String n = #itemName + String(i + 1);             \
+            AddComponent(n, Type, i == 0);                    \
+        }                                                     \
+        return true;                                          \
+    }                                                         \
+    HandleSetParamInternalStart                               \
+        CheckAndSetParam(count);                              \
+    HandleSetParamInternalEnd;                                \
+    FillSettingsInternalStart                                 \
+        FillSettingsParam(count);                             \
+    FillSettingsInternalEnd;                                  \
+    FillOSCQueryInternalStart                                 \
+        FillOSCQueryIntParam(count);                          \
+    FillOSCQueryInternalEnd
 
 // > Events
 #define DeclareComponentEventTypes(...) enum ComponentEventTypes \
@@ -94,10 +121,10 @@
 #define DeclareRangeConfigParameter(param, val, min, max) DeclareRangeParameter(param, val, min, max, true)
 
 // #define AddParameter(param) addParameter(&param)
-// #define AddAndSetParameter(param)                          
-//     {                                                      
-//         addParameter(&param);                              
-//         param.set(Settings::getVal(o, #param, param.val)); 
+// #define AddAndSetParameter(param)
+//     {
+//         addParameter(&param);
+//         param.set(Settings::getVal(o, #param, param.val));
 //     }
 
 // Class-less parameter system
@@ -105,37 +132,87 @@
 #define DeclareIntParam(name, val) int name = val;
 #define DeclareFloatParam(name, val) float name = val;
 #define DeclareStringParam(name, val) String name = val;
-#define DeclareP2DParam(name, val1, val2) float val[2]{val1, val2};
-#define DeclareP3DParam(name, val1, val2, val3) float val[3]{val1, val2, val3};
+#define DeclareP2DParam(name, val1, val2) float name[2]{val1, val2};
+#define DeclareP3DParam(name, val1, val2, val3) float name[3]{val1, val2, val3};
 
-#define AddBoolParam(param) addParam(&param, ParamType::Bool);  param = Settings::getVal<bool>(o, #param, param);
-#define AddIntParam(param) addParam(&param, ParamType::Int); param = Settings::getVal<int>(o, #param, param);
-#define AddFloatParam(param) addParam(&param, ParamType::Float);  param = Settings::getVal<float>(o, #param, param);
-#define AddStringParam(param) addParam(&param, ParamType::Str); param = Settings::getVal<String>(o, #param, param);
+#define AddBoolParam(param)            \
+    addParam(&param, ParamType::Bool); \
+    param = Settings::getVal<bool>(o, #param, param);
+#define AddIntParam(param)            \
+    addParam(&param, ParamType::Int); \
+    param = Settings::getVal<int>(o, #param, param);
+#define AddFloatParam(param)            \
+    addParam(&param, ParamType::Float); \
+    param = Settings::getVal<float>(o, #param, param);
+#define AddStringParam(param)         \
+    addParam(&param, ParamType::Str); \
+    param = Settings::getVal<String>(o, #param, param);
 #define AddP2DParam(param) addParam(&param, ParamType::P2D);
 #define AddP3DParam(param) addParam(&param, ParamType::P3D);
 
-#define SetParam(param, val) { var pData[1]; pData[0] = val; setParam(&param,pData,1); };
-#define SetParam2(param, val1, val2) { var pData[2]; pData[0] = val1; pData[1] = val2; setParam(&param,pData,2); };
-#define SetParam3(param, val, val2, val3) { var pData[3]; pData[0] = val1; pData[1] = val2; pData[2] = val3; setParam(&param,pData,3); };
+#define SetParam(param, val)        \
+    {                               \
+        var pData[1];               \
+        pData[0] = val;             \
+        setParam(&param, pData, 1); \
+    };
+#define SetParam2(param, val1, val2) \
+    {                                \
+        var pData[2];                \
+        pData[0] = val1;             \
+        pData[1] = val2;             \
+        setParam(&param, pData, 2);  \
+    };
+#define SetParam3(param, val, val2, val3) \
+    {                                     \
+        var pData[3];                     \
+        pData[0] = val1;                  \
+        pData[1] = val2;                  \
+        pData[2] = val3;                  \
+        setParam(&param, pData, 3);       \
+    };
 
-#define HandleSetParamInternalStart virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) override {
-#define HandleSetParamInternalEnd  return false; }
+#define HandleSetParamInternalStart                                                               \
+    virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) override \
+    {
+#define HandleSetParamInternalEnd \
+    return false;                 \
+    }
 
-#define CheckAndSetParam(param) { if(paramName == #param) { setParam(&param, data, numData); return true; } }
+#define HandleSetParamMotherClass(Class)                         \
+    if (Class::handleSetParamInternal(paramName, data, numData)) \
+        return true;
 
+#define CheckAndSetParam(param)                      \
+    {                                                \
+        if (paramName == #param)                     \
+        {                                            \
+            setParam((void *)&param, data, numData); \
+            return true;                             \
+        }                                            \
+    }
 
-
-#define FillSettingsParam(param) { o[#param] = param; }
-#define FillSettingsInternalStart virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) override {
+#define FillSettingsParam(param) \
+    {                            \
+        o[#param] = param;       \
+    }
+#define FillSettingsInternalStart                                                           \
+    virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) override \
+    {
 #define FillSettingsInternalEnd }
+
+#define FillSettingsInternalMotherClass(Class) Class::fillSettingsParamsInternal(o, configOnly);
 
 #define FillOSCQueryBoolParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param);
 #define FillOSCQueryIntParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param);
 #define FillOSCQueryFloatParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param);
 #define FillOSCQueryStringParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param);
-#define FillOSCQueryInternalStart virtual void fillOSCQueryParamsInternal(JsonObject o,  const String& fullPath) {
+#define FillOSCQueryInternalStart                                                 \
+    virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath) \
+    {
 #define FillOSCQueryInternalEnd }
+
+#define FillOSCQueryInternalMotherClass(Class) Class::fillOSCQueryParamsInternal(o, fullPath);
 
 // Script
 

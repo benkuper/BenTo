@@ -9,31 +9,31 @@ bool StepperComponent::initInternal(JsonObject o)
         engine.init();
     }
 
-    AddAndSetParameter(stepPin);
-    AddAndSetParameter(dirPin);
-    AddAndSetParameter(enPin);
+    AddIntParam(stepPin);
+    AddIntParam(dirPin);
+    AddIntParam(enPin);
 
-    AddAndSetParameter(accel);
+    AddFloatParam(accel);
+    AddFloatParam(speed);
 
-    AddParameter(position);
-    AddParameter(speed);
+    AddFloatParam(position);
 
-    if (stepPin.intValue() > 0)
+    if (stepPin > 0)
     {
-        stepper = engine.stepperConnectToPin(stepPin.intValue());
+        stepper = engine.stepperConnectToPin(stepPin);
         if (stepper)
         {
-            stepper->setDirectionPin(dirPin.intValue());
-            stepper->setEnablePin(enPin.intValue());
+            stepper->setDirectionPin(dirPin);
+            stepper->setEnablePin(enPin);
             stepper->setAutoEnable(true);
 
-            stepper->setSpeedInHz(speed.intValue());    // 500 steps/s
-            stepper->setAcceleration(accel.intValue()); // 100 steps/s²
+            stepper->setSpeedInHz(speed);    // 500 steps/s
+            stepper->setAcceleration(accel); // 100 steps/s²
             stepper->move(1000);
         }
         else
         {
-            NDBG("Could not connect stepper on stepPin " + stepPin.stringValue());
+            NDBG("Could not connect stepper on stepPin " + String(stepPin));
             return false;
         }
     }
@@ -54,10 +54,10 @@ void StepperComponent::clearInternal()
 {
 }
 
-void StepperComponent::onParameterEventInternal(const ParameterEvent &e)
-{
-    if (e.parameter == &position)
-    {
-        stepper->moveTo(position.intValue());
-    }
-}
+// void StepperComponent::onParameterEventInternal(const ParameterEvent &e)
+// {
+//     if (e.parameter == &position)
+//     {
+//         stepper->moveTo(position);
+//     }
+// }

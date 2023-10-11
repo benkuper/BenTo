@@ -61,12 +61,14 @@
 
 #ifdef USE_LEDSTRIP
 #include "Component/components/ledstrip/Layer/LedStripLayer.cpp"
-#ifdef USE_STREAM
+#include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.cpp"
+#include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.cpp"
+#ifdef USE_STREAMING
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.cpp"
 #endif
-#include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.cpp"
+#ifdef USE_SCRIPT
 #include "Component/components/ledstrip/Layer/layers/script/LedStripScriptLayer.cpp"
-#include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.cpp"
+#endif
 #include "Component/components/ledstrip/LedStripComponent.cpp"
 #endif
 

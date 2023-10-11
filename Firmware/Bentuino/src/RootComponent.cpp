@@ -34,7 +34,7 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&server);
 #endif
 
-#ifdef USE_STREAM
+#ifdef USE_STREAMING
     AddOwnedComponent(&streamReceiver);
 #endif
 
@@ -43,6 +43,7 @@ bool RootComponent::initInternal(JsonObject)
 #endif
 
 #ifdef USE_IO
+    memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
     AddOwnedComponent(&ios);
 #ifdef USE_BUTTON
     AddOwnedComponent(&buttons);
@@ -103,8 +104,8 @@ void RootComponent::powerdown()
 
     // NDBG("Sleep now, baby.");
 
-    // if (wakeUpButton.intValue() > 0)
-    // esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton.intValue(), wakeUpState.boolValue());
+    if (wakeUpButton > 0)
+    esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton, wakeUpState);
 
     // #elif defined TOUCH_WAKEUP_PIN
     //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
@@ -175,7 +176,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
                 NDBG("Setup connections now");
                 server.setupConnection();
 
-#if USE_STREAM
+#if USE_STREAMING
                 streamReceiver.setupConnection();
 #endif
 

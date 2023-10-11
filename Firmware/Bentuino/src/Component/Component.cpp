@@ -2,6 +2,8 @@
 bool Component::init(JsonObject o)
 {
 
+    AddBoolParam(enabled);
+
     isInit = initInternal(o);
 
     if (!isInit)
@@ -189,7 +191,7 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
         if (numParams > 0)
         {
 
-            DynamicJsonDocument doc(3000);
+            StaticJsonDocument<6000> doc;
             JsonObject o = doc.to<JsonObject>();
 
             FillOSCQueryBoolParam(enabled);
@@ -465,21 +467,23 @@ void Component::setParam(void *param, var *value, int numData)
     bool hasChanged = false;
     ParamType t = getParamType(param);
 
-    if(numData == 0 && t != Trigger)
+    NDBG("Set Param " + String(t));
+
+    if (numData == 0 && t != Trigger)
     {
-        DBG("Expecting at least 1 parameter");
+        NDBG("Expecting at least 1 parameter");
         return;
     }
 
-    if(numData < 2 && t == P2D)
+    if (numData < 2 && t == P2D)
     {
-        DBG("Expecting at least 2 parameters");
+        NDBG("Expecting at least 2 parameters");
         return;
     }
 
-    if(numData < 3 && t == P3D)
+    if (numData < 3 && t == P3D)
     {
-        DBG("Expecting at least 3 parameters");
+        NDBG("Expecting at least 3 parameters");
         return;
     }
 
@@ -489,6 +493,8 @@ void Component::setParam(void *param, var *value, int numData)
         break;
 
     case ParamType::Bool:
+        NDBG("Bool : " + String(*((bool *)param)) + "  <> " + String(value[0].boolValue()));
+
         hasChanged = *((bool *)param) != value[0].boolValue();
         if (hasChanged)
             *((bool *)param) = value[0].boolValue();
@@ -521,6 +527,7 @@ void Component::setParam(void *param, var *value, int numData)
 
     if (hasChanged)
     {
+
         // notify here
         paramValueChanged(param);
     }
@@ -528,7 +535,7 @@ void Component::setParam(void *param, var *value, int numData)
 
 bool Component::handleSetParam(const String &paramName, var *data, int numData)
 {
-    DBG("Handle Set Param " + paramName + " : ");
+    NDBG("Handle Set Param " + paramName + " : ");
     for (int i = 0; i < numData; i++)
     {
         DBG("> " + data[i].stringValue());
@@ -536,6 +543,7 @@ bool Component::handleSetParam(const String &paramName, var *data, int numData)
 
     CheckAndSetParam(enabled);
 
+    NDBG("Handle Param Internal");
     return handleSetParamInternal(paramName, data, numData);
 }
 

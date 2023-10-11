@@ -1,4 +1,7 @@
-bool LedStripComponent::initInternal(JsonObject o)
+#include "LedStripComponent.h"
+ImplementManagerSingleton(LedStrip)
+
+    bool LedStripComponent::initInternal(JsonObject o)
 {
     // init
     neoPixelStrip = NULL;
@@ -6,71 +9,79 @@ bool LedStripComponent::initInternal(JsonObject o)
 
     for (int i = 0; i < LEDSTRIP_NUM_USER_LAYERS; i++)
         userLayers[i] = NULL;
-    
+
+    AddIntParam(count);
+    AddIntParam(dataPin);
+    AddIntParam(enPin);
+    AddIntParam(clkPin);
+    AddFloatParam(brightness);
+    AddBoolParam(invertStrip);
+
 #if USE_BAKELAYER
-    addComponent(&bakeLayer, o[bakeLayer.name]);
+    AddOwnedComponent(&bakeLayer);
     userLayers[0] = &bakeLayer;
 #endif
-#if USE_STREAMLAYER
-    addComponent(&streamLayer, o[streamLayer.name]);
+#if USE_STREAMINGLAYER
+    AddOwnedComponent(&streamLayer);
     userLayers[1] = &streamLayer;
 #endif
 #if USE_SCRIPTLAYER
-    addComponent(&scriptLayer, o[scriptLayer.name]);
+    AddOwnedComponent(&scriptLayer);
     userLayers[2] = &scriptLayer;
 #endif
 #if USE_SYSTEMLAYER
-    addComponent(&systemLayer, o[systemLayer.name]);
+    AddOwnedComponent(&systemLayer);
 #endif
 
+    setupLeds();
+    return true;
+}
 
-    AddAndSetParameter(count);
-    AddAndSetParameter(dataPin);
-    AddAndSetParameter(enPin);
-    AddAndSetParameter(clkPin);
-    AddAndSetParameter(brightness);
-    AddAndSetParameter(invertStrip);
+void LedStripComponent::setupLeds()
+{
+    if (!enabled)
+        return;
 
-    if (enPin.intValue() != 0)
+    if (enPin != 0)
     {
-        // NDBG("Setting Led Enable pin : " + String(enPin.intValue()));
-        pinMode(enPin.intValue(), OUTPUT);
-        digitalWrite(enPin.intValue(), HIGH); // enable LEDs
+        // NDBG("Setting Led Enable pin : " + String(enPin));
+        pinMode(enPin, OUTPUT);
+        digitalWrite(enPin, HIGH); // enable LEDs
     }
 
-
-    if (count.intValue() == 0 || dataPin.intValue() == 0)
+    if (count == 0 || dataPin == 0)
     {
         NDBG("Ledstrip pin and count have not been set");
-        return false;
+        return;
     }
 
-    // colors = (Color *)malloc(count.intValue() * sizeof(Color));
+    // colors = (Color *)malloc(count * sizeof(Color));
     memset(colors, 0, LED_MAX_COUNT * sizeof(Color));
-    for (int i = 0; i < count.intValue(); i++)
+    for (int i = 0; i < count; i++)
         colors[i] = Color(0, 0, 0, 0);
 
-    if (clkPin.intValue() > 0)
+    if (clkPin > 0)
     {
-        // NDBG("Setup dotstar");
-        dotStarStrip = new Adafruit_DotStar(count.intValue(), dataPin.intValue(), clkPin.intValue(), DOTSTAR_BGR);
+        NDBG("Setup dotstar");
+        dotStarStrip = new Adafruit_DotStar(count, dataPin, clkPin, DOTSTAR_BGR);
         dotStarStrip->begin();
-        dotStarStrip->setBrightness(brightness.floatValue() * LED_MAX_BRIGHTNESS * 255);
+        dotStarStrip->setBrightness(brightness * LED_MAX_BRIGHTNESS * 255);
         // dotStarStrip->fill(dotStarStrip->Color(50, 100, 150));
         // dotStarStrip->show();
         // delay(300);
     }
     else
     {
-        neoPixelStrip = new Adafruit_NeoPixel(count.intValue(), dataPin.intValue(), NEO_GRB + NEO_KHZ800);
+        neoPixelStrip = new Adafruit_NeoPixel(count, dataPin, NEO_GRB + NEO_KHZ800);
         neoPixelStrip->begin();
-        neoPixelStrip->setBrightness(brightness.floatValue() * LED_MAX_BRIGHTNESS * 255);
+        neoPixelStrip->setBrightness(brightness * LED_MAX_BRIGHTNESS * 255);
         // neoPixelStrip->fill(neoPixelStrip->Color(50, 100, 150));
         // neoPixelStrip->show();
+
         // delay(300);
     }
 
-    return true;
+    setStripPower(true);
 }
 
 void LedStripComponent::updateInternal()
@@ -108,35 +119,36 @@ void LedStripComponent::clearInternal()
     setStripPower(false);
 }
 
-void LedStripComponent::onParameterEventInternal(const ParameterEvent &e)
+void LedStripComponent::paramValueChanged(void *param)
 {
-    if (e.parameter == &brightness)
+    if (param == &brightness)
     {
         if (neoPixelStrip != NULL)
-            neoPixelStrip->setBrightness(brightness.floatValue() * 255);
+            neoPixelStrip->setBrightness(brightness * 255);
         else if (dotStarStrip != NULL)
-            dotStarStrip->setBrightness(brightness.floatValue() * 255);
+            dotStarStrip->setBrightness(brightness * 255);
     }
-    else if (e.parameter == &count)
+    else if (param == &count)
     {
         if (neoPixelStrip != NULL)
-            neoPixelStrip->updateLength(count.intValue());
+            neoPixelStrip->updateLength(count);
         else if (dotStarStrip != NULL)
-            dotStarStrip->setBrightness(count.intValue());
+            dotStarStrip->setBrightness(count);
     }
 }
 
 void LedStripComponent::onEnabledChanged()
 {
-    setStripPower(enabled.boolValue());
+    setStripPower(enabled);
 }
 
 void LedStripComponent::setStripPower(bool value)
 {
-    if (enPin.intValue() != 0)
-        digitalWrite(enPin.intValue(), value); // enable LEDs
+    DBG("Set Strip Power " + String(value));
+    if (enPin != 0)
+        digitalWrite(enPin, value); // enable LEDs
 
-    pinMode(dataPin.intValue(), value ? OUTPUT : OPEN_DRAIN);
+    pinMode(dataPin, value ? OUTPUT : OPEN_DRAIN);
 }
 
 // Layer functions
@@ -145,21 +157,22 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
     if (layer == NULL)
         return;
 
-    if (!layer->enabled.boolValue())
+    if (!layer->enabled)
         return;
 
-    for (int i = 0; i < count.intValue(); i++)
+    for (int i = 0; i < count; i++)
     {
         Color c = layer->colors[i];
 
-        LedStripLayer::BlendMode bm = (LedStripLayer::BlendMode)layer->blendMode.intValue();
+        LedStripLayer::BlendMode bm = (LedStripLayer::BlendMode)layer->blendMode;
 
         switch (bm)
         {
         case LedStripLayer::Add:
             colors[i] += c;
-            // if(i == 0) NDBG(" > "+colors[i].toString());
-            break;
+            // if (i == 0)
+                // NDBG(layer->name + " > " + colors[i].toString());
+                break;
 
         case LedStripLayer::Multiply:
             colors[i] *= c;
@@ -182,16 +195,16 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
         case LedStripLayer::Alpha:
         {
             float a = c.a / 255.0f;
-            colors[i].r = colors[i].r + (c.r - colors[i].r) * a;
-            colors[i].g = colors[i].g + (c.g - colors[i].g) * a;
-            colors[i].b = colors[i].b + (c.b - colors[i].b) * a;
+            colors[i].r = min(colors[i].r + (c.r - colors[i].r) * a, 255.f);
+            colors[i].g = min(colors[i].g + (c.g - colors[i].g) * a, 255.f);
+            colors[i].b = min(colors[i].b + (c.b - colors[i].b) * a, 255.f);
             colors[i].r = max(colors[i].a, c.a);
         }
 
         default:
-        break;
-        
-        break;
+            break;
+
+            break;
         }
     }
 }
@@ -200,15 +213,15 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
 
 void LedStripComponent::clearColors()
 {
-    // for(int i=0;i<count.intValue();i++) colors[i] = Color(0,0,0,0);
-    memset(colors, 0, sizeof(Color) * count.intValue());
+    // for(int i=0;i<count;i++) colors[i] = Color(0,0,0,0);
+    memset(colors, 0, sizeof(Color) * count);
 }
 
 void LedStripComponent::showLeds()
 {
     if (neoPixelStrip != NULL)
     {
-        for (int i = 0; i < count.intValue(); i++)
+        for (int i = 0; i < count; i++)
         {
             float a = colors[i].a / 255.0f;
             neoPixelStrip->setPixelColor(ledMap(i),
@@ -220,7 +233,7 @@ void LedStripComponent::showLeds()
     }
     else if (dotStarStrip != NULL)
     {
-        for (int i = 0; i < count.intValue(); i++)
+        for (int i = 0; i < count; i++)
         {
             float a = colors[i].a / 255.0f;
             dotStarStrip->setPixelColor(ledMap(i),
@@ -234,21 +247,5 @@ void LedStripComponent::showLeds()
 
 int LedStripComponent::ledMap(int index) const
 {
-    return (invertStrip.intValue() ? count.intValue() - 1 - index : index);
-}
-
-ImplementSingleton(LedStripManagerComponent);
-
-bool LedStripManagerComponent::initInternal(JsonObject o)
-{
-    AddAndSetParameter(numStrips);
-
-    for (int i = 0; i < numStrips.intValue(); i++)
-    {
-        DBG("Add strip " + String(i + 1) + " of " + String(numStrips.intValue()));
-        strips[i].name = "strip" + String(i + 1);
-        AddOwnedComponent(&strips[i]);
-    }
-
-    return true;
+    return (invertStrip ? count - 1 - index : index);
 }

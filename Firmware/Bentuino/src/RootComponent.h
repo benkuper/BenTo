@@ -1,9 +1,8 @@
 #pragma once
 
-
 DeclareComponentSingleton(Root, "root", )
 
-const String deviceID = getDeviceID();
+    const String deviceID = getDeviceID();
 DeclareStringParam(deviceName, deviceID);
 DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
 DeclareBoolParam(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
@@ -34,7 +33,7 @@ BatteryComponent battery;
 SequenceComponent sequence;
 #endif
 
-#ifdef USE_STREAM
+#ifdef USE_STREAMING
 LedStreamReceiverComponent streamReceiver;
 #endif
 
@@ -62,11 +61,11 @@ IMUComponent imu;
 #endif
 
 #ifdef USE_SERVO
-ServoComponent *servo;
+ServoComponent servo;
 #endif
 
 #ifdef USE_STEPPER
-StepperComponent *stepper;
+StepperComponent stepper;
 #endif
 
 // Needs a single structure
@@ -94,6 +93,22 @@ bool isShuttingDown() const { return timeAtShutdown > 0; }
 
 String getDeviceID() const;
 
-// const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};
+HandleSetParamInternalStart
+    CheckAndSetParam(deviceName);
+CheckAndSetParam(wakeUpButton);
+CheckAndSetParam(wakeUpState);
+HandleSetParamInternalEnd;
 
-EndDeclareComponent
+FillSettingsInternalStart
+    FillSettingsParam(deviceName);
+FillSettingsParam(wakeUpButton);
+FillSettingsParam(wakeUpState);
+FillSettingsInternalEnd;
+
+FillOSCQueryInternalStart
+    FillOSCQueryStringParam(deviceName);
+FillOSCQueryIntParam(wakeUpButton);
+FillOSCQueryBoolParam(wakeUpState);
+FillOSCQueryInternalEnd
+
+    EndDeclareComponent

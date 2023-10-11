@@ -23,6 +23,14 @@
 #include "Common/Settings.h"
 #include "Common/ParsingHelper.h"
 
+#ifdef USE_SCRIPT //needs pre declaration to be used by Component
+#include <wasm3.h>
+#include <m3_env.h>
+#include <SimplexNoise.h>
+#include "Common/script/Script.h"
+#include "Common/script/wasmFunctions.h"
+#endif
+
 
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
@@ -49,17 +57,14 @@
 #include "Component/components/communication/CommunicationComponent.h"
 
 #ifdef USE_SERVER
+// #define CONFIG_ASYNC_TCP_RUNNING_CORE -1 //any available core
+// #define CONFIG_ASYNC_TCP_USE_WDT 0
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
 #include "Component/components/server/WebServerComponent.h"
 #endif
 
 #ifdef USE_SCRIPT
-#include <wasm3.h>
-#include <m3_env.h>
-#include <SimplexNoise.h>
-#include "Common/script/Script.h"
-#include "Common/script/wasmFunctions.h"
 #include "Component/components/script/ScriptComponent.h"
 #endif
 
@@ -87,17 +92,20 @@
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_DotStar.h>
 
-#ifdef USE_ARTNET
-#include <ArtnetWifi.h>
-#endif //ARTNET
 
 #include "Component/components/ledstrip/Layer/LedStripLayer.h"
-#ifdef USE_STREAM
+#include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.h"
+#include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.h"
+
+#ifdef USE_STREAMING
+#include <ArtnetWifi.h>
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.h"
 #endif
-#include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.h"
+
+#if USE_SCRIPT
 #include "Component/components/ledstrip/Layer/layers/script/LedStripScriptLayer.h"
-#include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.h"
+#endif
+
 #include "Component/components/ledstrip/LedStripComponent.h"
 #endif //LEDSTRIP
 

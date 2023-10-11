@@ -1,5 +1,6 @@
 bool LedStripSystemLayer::initInternal(JsonObject o)
 {
+    blendMode = BlendMode::Alpha;
     LedStripLayer::initInternal(o);
     return true;
 }
@@ -29,13 +30,15 @@ void LedStripSystemLayer::updateWifiStatus()
     if (connectionState != WifiComponent::Connecting && relT > animTime)
         return;
 
+    
+    // NDBG("Wifi status : " + String(connectionState) + " " + String(relT));
     Color color = Color(0, 255, 255);
 
     // default behavior (connecting) on which we will add animation for connected behavior
     float t = (millis() - WifiComponent::instance->timeAtConnect) / 1000.0f;
     float pos = cos((t + PI/2 + .2f) * 5) * .5f + .5f;
 
-    if (strip->invertStrip.boolValue())
+    if (strip->invertStrip)
         pos = 1 - pos;
 
     float radius = .3 - (cos(pos * PI * 2) * .5f + .5f) * .25f;
@@ -91,7 +94,7 @@ void LedStripSystemLayer::updateShutdown()
     c = c.withMultipliedAlpha(min(t * 2, 1.f));
     float end = constrain((1 - t) * 2, 0, 1);
 
-    if (strip->invertStrip.boolValue())
+    if (strip->invertStrip)
         fillRange(c, 1-end, 1);
     else
         fillRange(c, 0, end);
