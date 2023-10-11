@@ -4,7 +4,10 @@ bool LedStripStreamLayer::initInternal(JsonObject o)
 {
     LedStripLayer::initInternal(o);
 
-    // delay(100);
+    AddIntParam(universe);
+    AddBoolParam(clearOnNoReception);
+    AddFloatParam(noReceptionTime);
+
     LedStreamReceiverComponent::instance->registerLayer(this);
 
     return true;
@@ -12,6 +15,11 @@ bool LedStripStreamLayer::initInternal(JsonObject o)
 
 void LedStripStreamLayer::updateInternal()
 {
+    if (!hasCleared && clearOnNoReception && millis() / 1000.0f - lastReceiveTime > noReceptionTime)
+    {
+        clearColors();
+        hasCleared = true;
+    }
 }
 
 void LedStripStreamLayer::clearInternal()
@@ -37,7 +45,8 @@ bool LedStreamReceiverComponent::initInternal(JsonObject o)
 
 void LedStreamReceiverComponent::updateInternal()
 {
-    if(!serverIsInit) return;
+    if (!serverIsInit)
+        return;
 
     if (useArtnet)
     {
@@ -49,9 +58,9 @@ void LedStreamReceiverComponent::updateInternal()
         // DBG("UDP Read");
         long curTime = millis();
 
-        if (curTime > lastReceiveTime + (1000 / receiveRate))
+        if (curTime > lastUDPReceiveTime + (1000 / receiveRate))
         {
-            lastReceiveTime = curTime;
+            lastUDPReceiveTime = curTime;
             receiveUDP();
         }
     }
@@ -65,7 +74,8 @@ void LedStreamReceiverComponent::clearInternal()
 
 void LedStreamReceiverComponent::receiveUDP()
 {
-    if(!udp.available()) return;
+    if (!udp.available())
+        return;
 
     while (udp.parsePacket())
     {
@@ -140,7 +150,7 @@ void LedStreamReceiverComponent::setupConnection()
     }
 }
 
-void LedStreamReceiverComponent::paramValueChangedInternal(void* param)
+void LedStreamReceiverComponent::paramValueChangedInternal(void *param)
 {
     if (param == &useArtnet)
     {
@@ -184,18 +194,16 @@ void LedStreamReceiverComponent::unregisterLayer(LedStripStreamLayer *layer)
 void LedStreamReceiverComponent::onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t *data)
 {
     // DBG("Received Artnet "+String(universe));
-    int stripIndex = universe - 1;
-
-    if (stripIndex < instance->layers.size())
+    for (auto &layer : instance->layers)
     {
-        LedStripStreamLayer *layer = instance->layers[stripIndex];
-
+        if (universe != layer->universe)
+            continue;
         // DBG("Received Artnet " + String(universe) + " " + String(length) + " " + String(sequence) + " " + String(stripIndex) + " " + String(layer->strip->count));
-        for (int i = 0; i < layer->strip->count && i < length; i++) layer->colors[i] = Color(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
+        for (int i = 0; i < layer->strip->count && i < length; i++)
+            layer->colors[i] = Color(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
+
+        layer->lastReceiveTime = millis() / 1000.0f;
+        layer->hasCleared = false;
         // memcpy((uint8_t *)layer->colors, streamBuffer + 1, byteIndex - 2);
-    }
-    else
-    {
-        DBG("Strip " + String(stripIndex) + " does not exist");
     }
 }

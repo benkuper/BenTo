@@ -75,31 +75,35 @@ void CommunicationComponent::sendParamFeedback(Component *c, void *param, const 
     break;
 
     default:
-    break;
+        break;
     }
 
 #ifdef USE_SERIAL
-    serial.sendMessage(c->name, pName, data, numData);
+    if (serial.sendFeedback)
+        serial.sendMessage(c->name, pName, data, numData);
 #endif
 
 #ifdef USE_OSC
-    osc.sendMessage("/" + c->name, pName, data, numData);
+    if (osc.sendFeedback)
+        osc.sendMessage("/" + c->name, pName, data, numData);
 #endif
 
 #ifdef USE_SERVER
     // maybe should find away so calls are not crossed with websocket ?
-     WebServerComponent::instance->sendParamFeedback(c, pName, data, numData);
+    WebServerComponent::instance->sendParamFeedback(c, pName, data, numData);
 #endif
 }
 
 void CommunicationComponent::sendEventFeedback(const ComponentEvent &e)
 {
 #ifdef USE_SERIAL
-    serial.sendMessage(e.component->name, e.getName(), e.data, e.numData);
+    if (serial.sendFeedback)
+        serial.sendMessage(e.component->name, e.getName(), e.data, e.numData);
 #endif
 
 #ifdef USE_OSC
-    osc.sendMessage(e.component->name, e.getName(), e.data, e.numData);
+    if (osc.sendFeedback)
+        osc.sendMessage(e.component->name, e.getName(), e.data, e.numData);
 #endif
 }
 

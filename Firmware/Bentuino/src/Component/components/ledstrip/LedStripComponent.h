@@ -31,7 +31,7 @@ public:
 #endif
 #if USE_SCRIPTLAYER
                                                                            ,
-                                                                           scriptLayer("script", LedStripLayer::Type::ScriptType, this)
+                                                                           scriptLayer("scriptLayer", LedStripLayer::Type::ScriptType, this)
 #endif
 #if USE_SYSTEMLAYER
                                                                            ,

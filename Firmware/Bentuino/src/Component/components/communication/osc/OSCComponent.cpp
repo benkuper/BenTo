@@ -9,6 +9,7 @@ ImplementSingleton(OSCComponent)
 
     AddStringParam(remoteHost);
     AddBoolParam(isAlive);
+    AddBoolParam(sendFeedback);
 
     return true;
 }

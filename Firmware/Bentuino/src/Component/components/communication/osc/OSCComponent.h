@@ -43,6 +43,7 @@ DeclareComponentEventNames("MessageReceived");
 
     HandleSetParamInternalStart
         CheckAndSetParam(remoteHost);
+        CheckAndSetParam(sendFeedback);
     HandleSetParamInternalEnd;
 
     FillSettingsInternalStart

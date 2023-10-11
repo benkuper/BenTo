@@ -1,23 +1,33 @@
 #pragma once
 
-DeclareComponentSingleton(Serial, "serial",)
+DeclareComponentSingleton(Serial, "serial", )
 
     char buffer[512];
-    byte bufferIndex;
+byte bufferIndex;
+DeclareBoolParam(sendFeedback, false);
 
-    // Parameter sendFeedback{"sendFeedback", false, var(), var(), true};
+bool initInternal(JsonObject o) override;
+void updateInternal() override;
+void clearInternal() override;
 
-    bool initInternal(JsonObject o) override;
-    void updateInternal() override;
-    void clearInternal() override;
+void processMessage(String buffer);
+void sendMessage(String source, String command, var *data, int numData);
 
-    
-    void processMessage(String buffer);
-    void sendMessage(String source, String command, var * data, int numData);
+void send(const String &message);
 
-    void send(const String &message);
+DeclareComponentEventTypes(MessageReceived);
+DeclareComponentEventNames("MessageReceived");
 
-    DeclareComponentEventTypes(MessageReceived);
-    DeclareComponentEventNames("MessageReceived");
+HandleSetParamInternalStart
+    CheckAndSetParam(sendFeedback);
+HandleSetParamInternalEnd;
 
-EndDeclareComponent
+FillSettingsInternalStart
+    FillSettingsParam(sendFeedback);
+FillSettingsInternalEnd;
+
+FillOSCQueryInternalStart
+    FillOSCQueryBoolParam(sendFeedback);
+FillOSCQueryInternalEnd
+
+    EndDeclareComponent

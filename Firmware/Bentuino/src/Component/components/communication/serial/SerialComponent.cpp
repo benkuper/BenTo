@@ -5,7 +5,9 @@ bool SerialComponent::initInternal(JsonObject o)
     bufferIndex = 0;
     memset(buffer, 0, 512);
     Serial.begin(115200);
-    // AddAndSetParameter(sendFeedback);
+
+    AddBoolParam(sendFeedback);
+
     return true;
 }
 
@@ -49,9 +51,6 @@ void SerialComponent::processMessage(String buffer)
 
 void SerialComponent::sendMessage(String source, String command, var *data, int numData)
 {
-    
-    // if (!sendFeedback.boolValue())
-    //     return;
 
     String msg = source + "." + command;
     for (int i = 0; i < numData; i++)

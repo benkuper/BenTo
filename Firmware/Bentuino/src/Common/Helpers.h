@@ -175,7 +175,7 @@
     virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) override \
     {
 
-#define HandleSetParamMotherClass(Class)                         \
+#define HandleSetParamInternalMotherClass(Class)                         \
     if (Class::handleSetParamInternal(paramName, data, numData)) \
         return true;
 

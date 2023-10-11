@@ -41,7 +41,7 @@ public:
     // #endif
 
     // HandleSetParamInternalStart
-    //     HandleSetParamMotherClass(IOComponent)
+    //     HandleSetParamInternalMotherClass(IOComponent)
     //         HandleSetParamInternalEnd;
 
     // FillSettingsInternalStart
