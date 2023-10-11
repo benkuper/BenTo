@@ -18,7 +18,6 @@
 #include "Common/var.h"
 #include "Common/color.h"
 #include "Common/EventBroadcaster.h"
-#include "Common/Parameter.h"
 #include "Common/Settings.h"
 #include "Common/ParsingHelper.h"
 

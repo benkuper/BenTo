@@ -2,7 +2,6 @@
 #include "UnityIncludes.h"
 
 #include "Common/Settings.cpp"
-#include "Common/Parameter.cpp"
 #include "Common/ParsingHelper.cpp"
 
 #include "Component/ComponentEvent.cpp"
