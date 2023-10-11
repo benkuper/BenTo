@@ -5,6 +5,9 @@
         return;                           \
     }
 
+
+float Script::timeAtLaunch = 0.f;
+
 Script::Script(Component *localComponent) : isRunning(false),
                                             localComponent(localComponent),
                                             runtime(NULL),
@@ -18,7 +21,7 @@ Script::Script(Component *localComponent) : isRunning(false),
 
 void Script::init()
 {
-    DBG("Script Manager init.");
+    DBG("Script init.");
     // env = m3_NewEnvironment();
 
     // if (!env)
@@ -138,6 +141,8 @@ void Script::launchWasmTask()
 
     isRunning = true;
     
+    timeAtLaunch = millis() / 1000.0f;
+
     if (initFunc != NULL)
     {
         DBG("Calling init");
@@ -241,18 +246,20 @@ M3Result Script::LinkArduino(IM3Runtime runtime)
     IM3Module module = runtime->modules;
     const char *util = "util";
 
-    m3_LinkRawFunction(module, util, "logUTF16", "v(*i)", &m3_logUTF16);
+    // m3_LinkRawFunction(module, util, "logUTF16", "v(*i)", &m3_logUTF16);
     m3_LinkRawFunction(module, util, "millis", "i()", &m3_arduino_millis);
+    m3_LinkRawFunction(module, util, "getTime", "f()", &m3_arduino_getTime);
     m3_LinkRawFunction(module, util, "delay", "v(i)", &m3_arduino_delay);
     m3_LinkRawFunction(module, util, "printFloat", "v(f)", &m3_printFloat);
     m3_LinkRawFunction(module, util, "printInt", "v(i)", &m3_printInt);
+    m3_LinkRawFunction(module, util, "print", "v(s)", &m3_printInt);
     m3_LinkRawFunction(module, util, "randomInt", "i(ii)", &m3_randomInt);
     m3_LinkRawFunction(module, util, "noise", "f(ff)", &m3_noise);
 
-    m3_LinkRawFunction(module, util, "getInt", "i(*i)", &m3_getIntUTF16);
-    m3_LinkRawFunction(module, util, "getFloat", "f(*i)", &m3_getFloatUTF16);
-    m3_LinkRawFunction(module, util, "setInt", "v(*ii)", &m3_setIntUTF16);
-    m3_LinkRawFunction(module, util, "setFloat", "v(*if)", &m3_setFloatUTF16);
+    // m3_LinkRawFunction(module, util, "getInt", "i(*i)", &m3_getIntUTF16);
+    // m3_LinkRawFunction(module, util, "getFloat", "f(*i)", &m3_getFloatUTF16);
+    // m3_LinkRawFunction(module, util, "setInt", "v(*ii)", &m3_setIntUTF16);
+    // m3_LinkRawFunction(module, util, "setFloat", "v(*if)", &m3_setFloatUTF16);
 
     if (localComponent != NULL)
         localComponent->linkScriptFunctions(module, true);

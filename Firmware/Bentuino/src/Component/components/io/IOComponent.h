@@ -32,15 +32,15 @@ void updatePin();
 static bool availablePWMChannels[16];
 int getFirstAvailablePWMChannel() const;
 
-#ifdef USE_SCRIPT
-LinkScriptFunctionsStart
-    LinkScriptFunction(IOComponent, get, f, );
-LinkScriptFunction(IOComponent, set, , f);
-LinkScriptFunctionsEnd
+// #ifdef USE_SCRIPT
+// LinkScriptFunctionsStart
+//     LinkScriptFunction(IOComponent, get, f, );
+// LinkScriptFunction(IOComponent, set, , f);
+// LinkScriptFunctionsEnd
 
-DeclareScriptFunctionReturn0(IOComponent, get, float) { return value; }
-DeclareScriptFunctionVoid1(IOComponent, set, float) { SetParam(value, arg1); }
-#endif
+// DeclareScriptFunctionReturn0(IOComponent, get, float) { return value; }
+// DeclareScriptFunctionVoid1(IOComponent, set, float) { SetParam(value, arg1); }
+// #endif
 
 HandleSetParamInternalStart
 CheckAndSetParam(pin);

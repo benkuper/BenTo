@@ -41,6 +41,11 @@ LedStreamReceiverComponent streamReceiver;
 LedStripManagerComponent strips;
 #endif
 
+
+#ifdef USE_SCRIPT
+ScriptComponent script;
+#endif
+
 #ifdef USE_IO
 IOManagerComponent ios;
 #ifdef USE_BUTTON

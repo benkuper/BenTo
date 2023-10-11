@@ -30,7 +30,10 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&files);
 #endif
 
-    // AddOwnedComponent(&script);
+#if USE_SCRIPT
+    AddOwnedComponent(&script);
+#endif
+
 #ifdef USE_SERVER
     AddOwnedComponent(&server);
 #endif

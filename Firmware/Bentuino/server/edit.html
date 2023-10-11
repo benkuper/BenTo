@@ -390,7 +390,7 @@
         function restartDevice()
         {
             sendCommand('/root/restart');
-            connectToServer();
+            setTimeout(() => connectToServer(), 1000);
         }
         
         function processParameterFeedback(p, val) {

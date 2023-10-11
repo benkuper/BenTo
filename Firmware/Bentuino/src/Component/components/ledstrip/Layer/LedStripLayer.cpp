@@ -1,3 +1,4 @@
+#include "LedStripLayer.h"
 LedStripLayer::LedStripLayer(const String &name, Type t, LedStripComponent *strip) : Component(name),
                                                                                      strip(strip),
                                                                                      type(t)
@@ -63,4 +64,17 @@ void LedStripLayer::point(Color c, float pos, float radius, bool doClear)
         Color tc = c.withMultipliedAlpha(fac);
         colors[i] += tc;
     }
+}
+void LedStripLayer::setLed(int index, Color c)
+{
+    if(index >= 0 && index < strip->count)
+        colors[index] = c;
+}
+
+Color LedStripLayer::getLed(int index)
+{
+    if(index >= 0 && index < strip->count)
+        return colors[index];
+
+    return Color(0,0,0,0);
 }

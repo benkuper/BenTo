@@ -24,7 +24,7 @@
 };
 
 // Component Helpers
-#define AddComponent(name, Type, enabled) addComponent<Type##Component>(name, enabled, o["components"][name]);
+#define AddComponent(comp, name, Type, enabled) comp = addComponent<Type##Component>(name, enabled, o["components"][name]);
 #define AddOwnedComponent(comp) addComponent(comp, o["components"][(comp)->name]);
 #define AddDefaultComponentListener(comp) comp->addListener(std::bind(&Component::onChildComponentEvent, this, std::placeholders::_1));
 
@@ -57,17 +57,29 @@
 
 // Manager
 
+#ifdef MANAGER_USE_STATIC_ITEMS
+#define DefineStaticItems(Type, MType) Type##Component items[MType##_MAX_COUNT];
+#define AddStaticOrDynamicComponent(name, Type, enabled) \
+    items[i].name = name;                                \
+    items[i].enabled = enabled;                          \
+    AddOwnedComponent(&items[i]);
+#else
+#define DefineStaticItems(Type, MType) Type##Component* items[MType##_MAX_COUNT];
+#define AddStaticOrDynamicComponent(name, Type, enabled) AddComponent(items[i], name, Type, enabled);
+#endif
+
 #define DeclareComponentManager(Type, MType, mName, itemName) \
     DeclareComponentSingleton(Type##Manager, #mName, )        \
         DeclareIntParam(count, 1);                            \
                                                               \
+    DefineStaticItems(Type, MType);                           \
     bool initInternal(JsonObject o) override                  \
     {                                                         \
         AddIntParam(count);                                   \
         for (int i = 0; i < count; i++)                       \
         {                                                     \
             String n = #itemName + String(i + 1);             \
-            AddComponent(n, Type, i == 0);                    \
+            AddStaticOrDynamicComponent(n, Type, i == 0);     \
         }                                                     \
         return true;                                          \
     }                                                         \
@@ -249,6 +261,9 @@
 #define DeclareScriptFunctionVoid1(Class, FunctionName, Type1) DeclareScriptFunctionVoid(Class, FunctionName, arg1, CA(Type1, 1), SA(Type1, 1))
 #define DeclareScriptFunctionVoid2(Class, FunctionName, Type1, Type2) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2, CA(Type1, 1) COMMA CA(Type2, 2), SA(Type1, 1) SA(Type2, 2))
 #define DeclareScriptFunctionVoid3(Class, FunctionName, Type1, Type2, Type3) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3))
+#define DeclareScriptFunctionVoid4(Class, FunctionName, Type1, Type2, Type3, Type4) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3 COMMA arg4, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3) COMMA CA(Type4, 4), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3) SA(Type4, 4)) 
+#define DeclareScriptFunctionVoid5(Class, FunctionName, Type1, Type2, Type3, Type4, Type5) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3 COMMA arg4 COMMA arg5, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3) COMMA CA(Type4, 4) COMMA CA(Type5, 5), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3) SA(Type5, 4) SA(Type5, 5))
+#define DeclareScriptFunctionVoid6(Class, FunctionName, Type1, Type2, Type3, Type4, Type5, Type6) DeclareScriptFunctionVoid(Class, FunctionName, arg1 COMMA arg2 COMMA arg3 COMMA arg4 COMMA arg5 COMMA arg6, CA(Type1, 1) COMMA CA(Type2, 2) COMMA CA(Type3, 3) COMMA CA(Type4, 4) COMMA CA(Type5, 5) COMMA CA(Type6, 6), SA(Type1, 1) SA(Type2, 2) SA(Type3, 3) SA(Type4, 4) SA(Type5, 5) SA(Type6, 6))
 
 #define DeclareScriptFunctionReturn0(Class, FunctionName, ReturnType) DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, , , )
 #define DeclareScriptFunctionReturn1(Class, FunctionName, ReturnType, Type1) DeclareScriptFunctionReturn(Class, FunctionName, ReturnType, arg1, CA(Type1, 1), SA(Type1, 1))

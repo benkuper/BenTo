@@ -76,17 +76,12 @@ public:
 
     Component *getComponentWithName(const String &name);
 
-    // void addParameter(Parameter *param);
-    // Parameter *getParameterWithName(const String &name);
-
     void addParam(void *param, ParamType type);
     void setParam(void *param, var* value, int nmData);
     ParamType getParamType(void *param) const;
     String getParamString(void *param) const;
 
-    // virtual void onParameterEvent(const ParameterEvent &e);
     virtual void onEnabledChanged() {}
-    // virtual void onParameterEventInternal(const ParameterEvent &e) {}
 
     virtual void paramValueChanged(void* param);
 
