@@ -1,5 +1,6 @@
 bool LedStripSystemLayer::initInternal(JsonObject o)
 {
+    blendMode = BlendMode::Alpha;
     LedStripLayer::initInternal(o);
     return true;
 }
@@ -19,26 +20,32 @@ void LedStripSystemLayer::clearInternal()
 
 void LedStripSystemLayer::updateWifiStatus()
 {
-    if(WifiComponent::instance == NULL) return;
+    if (WifiComponent::instance == NULL)
+        return;
 
     float relT = (millis() - WifiComponent::instance->timeAtStateChange) / 1000.0f;
     const float animTime = 1.0f;
 
     WifiComponent::ConnectionState connectionState = WifiComponent::instance->state;
 
+    // fillRange(Color(255, 255, 0), .25, .5f, false); // clear strip
+
     if (connectionState != WifiComponent::Connecting && relT > animTime)
         return;
 
     Color color = Color(0, 255, 255);
 
+    // NDBG("Wifi status : " + String(connectionState) + " " + String(relT));
+
     // default behavior (connecting) on which we will add animation for connected behavior
     float t = (millis() - WifiComponent::instance->timeAtConnect) / 1000.0f;
-    float pos = cos((t + PI/2 + .2f) * 5) * .5f + .5f;
+    float pos = cos((t + PI / 2 + .2f) * 5) * .5f + .5f;
 
-    if (strip->invertStrip.boolValue())
+    if (strip->invertStrip)
         pos = 1 - pos;
 
     float radius = .3 - (cos(pos * PI * 2) * .5f + .5f) * .25f;
+    float alpha = 1;
 
     if (connectionState != WifiComponent::Connecting)
     {
@@ -64,17 +71,19 @@ void LedStripSystemLayer::updateWifiStatus()
         }
 
         float blendFac = min(relT * 2, 1.f);
-        float alpha = constrain(2 * (1 - relT / animTime), 0, 1);
+        alpha = constrain(2 * (1 - relT / animTime), 0, 1);
         color = color.lerp(targetColor, blendFac).withMultipliedAlpha(alpha);
 
         radius = max(radius, relT * 3 / animTime); // increase radius to 1 in one second
     }
     else
     {
-        color = color.withMultipliedAlpha(min<float>(relT * 5 / animTime, 1));
+        // DBG("Rel T " + String(relT));
+        color = color.withMultipliedAlpha(constrain((relT - .05f) * 1 / animTime, 0, 1));
     }
 
-    point(color, pos, radius);
+    fillAll(Color(0, 0, 0, alpha * 255)); // clear strip
+    point(color, pos, radius, false);
 }
 
 void LedStripSystemLayer::updateShutdown()
@@ -91,8 +100,8 @@ void LedStripSystemLayer::updateShutdown()
     c = c.withMultipliedAlpha(min(t * 2, 1.f));
     float end = constrain((1 - t) * 2, 0, 1);
 
-    if (strip->invertStrip.boolValue())
-        fillRange(c, 1-end, 1);
+    if (strip->invertStrip)
+        fillRange(c, 1 - end, 1);
     else
         fillRange(c, 0, end);
 }

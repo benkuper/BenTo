@@ -2,15 +2,15 @@ bool LedStripBakeLayer::initInternal(JsonObject o)
 {
     LedStripLayer::initInternal(o);
 
-    frameSize = numLeds * 4;
+    frameSize = strip->count * 4;
 
     fps = 0;
     totalTime = 0;
     totalFrames = 0;
     groupID = -1;
     localID = -1;
-    AddAndSetParameter(idMode);
-    AddAndSetParameter(loop);
+    AddBoolParam(idMode);
+    AddBoolParam(loop);
     isPlaying = false;
     curTimeMs = 0;
     prevTimeMs = 0;
@@ -25,7 +25,7 @@ void LedStripBakeLayer::updateInternal()
     if (!curFile)
         return;
 
-    if (idMode.boolValue())
+    if (idMode)
     {
         showIdFrame();
         return;
@@ -56,7 +56,7 @@ bool LedStripBakeLayer::playFrame()
     if (curFile.available() < frameSize)
     {
         NDBG("End of show");
-        if (loop.boolValue())
+        if (loop)
         {
             sendEvent(Looped);
             play(0);
@@ -119,7 +119,7 @@ void LedStripBakeLayer::showIdFrame()
         return;
     fillRange(groupColor, .9f, 1);
     Color c = Color::HSV(localID / 12.f, 1, 1);
-    fillRange(c, 0, localID * 1.f / numLeds, false);
+    fillRange(c, 0, localID * 1.f / strip->count, false);
 }
 
 void LedStripBakeLayer::load(String path)

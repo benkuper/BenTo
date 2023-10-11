@@ -1,10 +1,10 @@
 bool ServoComponent::initInternal(JsonObject o)
 {
-    AddAndSetParameter(pin);
-    if (pin.intValue() > 0)
-        servo.attach(pin.intValue());
+    AddIntParam(pin);
+    if (pin > 0)
+        servo.attach(pin);
 
-    AddParameter(position);
+    AddFloatParam(position);
     return true;
 }
 
@@ -17,16 +17,16 @@ void ServoComponent::clearInternal()
     servo.detach();
 }
 
-void ServoComponent::onParameterEventInternal(const ParameterEvent &e)
-{
-    if (e.parameter == &pin)
-    {
-        servo.detach();
-        if (pin.intValue() > 0)
-            servo.attach(pin.intValue());
-    }
-    if (e.parameter == &position)
-    {
-        servo.write(position.intValue());
-    }
-}
+// void ServoComponent::onParameterEventInternal(const ParameterEvent &e)
+// {
+//     if (e.parameter == &pin)
+//     {
+//         servo.detach();
+//         if (pin > 0)
+//             servo.attach(pin);
+//     }
+//     if (e.parameter == &position)
+//     {
+//         servo.write(position);
+//     }
+// }

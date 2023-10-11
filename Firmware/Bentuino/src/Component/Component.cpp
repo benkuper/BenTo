@@ -1,7 +1,8 @@
 #include "Component.h"
 bool Component::init(JsonObject o)
 {
-    AddAndSetParameter(enabled);
+
+    AddBoolParam(enabled);
 
     isInit = initInternal(o);
 
@@ -15,7 +16,7 @@ bool Component::init(JsonObject o)
 
 void Component::update()
 {
-    if (!enabled.boolValue())
+    if (!enabled)
         return;
 
     for (int i = 0; i < numComponents; i++)
@@ -38,72 +39,59 @@ void Component::clear()
 
     // for (int i = 0; i < numParameters; i++)
     // delete parameters[i];
-    numParameters = 0;
+    numParams = 0;
 }
 
-void Component::addParameter(Parameter *p)
-{
-    if (numParameters >= MAX_CHILD_PARAMETERS)
-    {
-        NDBG("Parameter limit reached ! Trying to add " + p->name);
-        return;
-    }
-
-    parameters[numParameters] = p;
-    numParameters++;
-    AddDefaultParameterListener(Component, p);
-    // DBG("Parameter added, size = " + String(sizeof(*p)) + " (" + String(sizeof(Parameter)) + ")");
-}
-
-// Parameter *Component::addParameter(const String &name, var val, var minVal, var maxVal, bool isConfig)
+// void Component::addParameter(Parameter *p)
 // {
-//     Parameter *p = new Parameter(name, val, minVal, maxVal, isConfig);
-//     addParameter(p);
+//     if (numParameters >= MAX_CHILD_PARAMETERS)
+//     {
+//         NDBG("Parameter limit reached ! Trying to add " + p->name);
+//         return;
+//     }
 
-//     return p;
+//     parameters[numParameters] = p;
+//     numParameters++;
+//     AddDefaultParameterListener(Component, p);
 // }
 
-// Parameter *Component::addConfigParameter(const String &name, var val, var minVal, var maxVal)
+// void Component::onParameterEvent(const ParameterEvent &e)
 // {
-//     return addParameter(name, val, minVal, maxVal, true);
+//     // if (e.parameter == &enabled)
+//     // onEnabledChanged();
+
+//     onParameterEventInternal(e);
+
+//     SendParameterFeedback(e.parameter);
 // }
-
-void Component::onParameterEvent(const ParameterEvent &e)
-{
-    if (e.parameter == &enabled)
-        onEnabledChanged();
-
-    onParameterEventInternal(e);
-
-    SendParameterFeedback(e.parameter);
-}
 
 bool Component::handleCommand(const String &command, var *data, int numData)
 {
     if (handleCommandInternal(command, data, numData))
         return true;
 
-    if (Parameter *p = getParameterWithName(command))
-    {
-        if (p->readOnly)
-        {
-            NDBG("Parameter " + p->name + "is read only !");
-            return true;
-        }
+    // if (Parameter *p = getParameterWithName(command))
+    // {
+    //     if (p->readOnly)
+    //     {
+    //         NDBG("Parameter " + p->name + "is read only !");
+    //         return true;
+    //     }
 
-        if (numData > 0) // query for feedback
-        {
-            p->set(data[0]);
-            // NDBG("Set Parameter " + p->name + " : " + data[0].stringValue() + " >> " + p->stringValue());
-        }
-        else
-        {
-            SendParameterFeedback(p);
-        }
+    //     if (numData > 0) // query for feedback
+    //     {
+    //         p->set(data[0]);
+    //         // NDBG("Set Parameter " + p->name + " : " + data[0].stringValue() + " >> " + p->stringValue());
+    //     }
+    //     else
+    //     {
+    //         SendParameterFeedback(p);
+    //     }
 
-        return true;
-    }
-    return false;
+    //     return true;
+    // }
+
+    return handleSetParam(command, data, numData);
 }
 
 bool Component::checkCommand(const String &command, const String &ref, int numData, int expectedData)
@@ -122,14 +110,17 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
 
 void Component::fillSettingsData(JsonObject o, bool configOnly)
 {
-    for (int i = 0; i < numParameters; i++)
-    {
-        Parameter *p = parameters[i];
-        if (!p->isConfig && configOnly)
-            continue;
+    // for (int i = 0; i < numParams; i++)
+    // {
+    //     // Parameter *p = parameters[i];
+    //     // if (!p->isConfig && configOnly)
+    //     //     continue;
 
-        p->fillSettingsData(configOnly ? o : o.createNestedObject(p->name), configOnly);
-    }
+    //     p->fillSettingsData(configOnly ? o : o.createNestedObject(p->name), configOnly);
+    // }
+
+    FillSettingsParam(enabled);
+    fillSettingsParamsInternal(o, configOnly);
 
     if (numComponents > 0)
     {
@@ -150,17 +141,25 @@ void Component::fillOSCQueryData(JsonObject o, bool includeConfig, bool recursiv
     o["FULL_PATH"] = fullPath;
     o["ACCESS"] = 0;
 
+    FillOSCQueryBoolParam(enabled);
+    fillOSCQueryParamsInternal(o, fullPath);
+
+    // for (int i = 0; i < numParams; i++)
+    // {
+    //     fillOSCQueryParam(o, fullPath, paramNames[i], paramTypes[i], params[i]);
+    // }
+
     JsonObject contents = o.createNestedObject("CONTENTS");
 
-    for (int i = 0; i < numParameters; i++)
-    {
-        Parameter *p = parameters[i];
-        if (p->isConfig && !includeConfig)
-            continue;
-        JsonObject po = contents.createNestedObject(p->name);
-        p->fillOSCQueryData(po);
-        po["FULL_PATH"] = fullPath + "/" + p->name;
-    }
+    // for (int i = 0; i < numParams; i++)
+    // {
+    //     Parameter *p = parameters[i];
+    //     if (p->isConfig && !includeConfig)
+    //         continue;
+    //     JsonObject po = contents.createNestedObject(p->name);
+    //     p->fillOSCQueryData(po);
+    //     po["FULL_PATH"] = fullPath + "/" + p->name;
+    // }
 
     if (recursive)
     {
@@ -178,7 +177,6 @@ void Component::fillOSCQueryData(JsonObject o, bool includeConfig, bool recursiv
 
 void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
 {
-
     const String fullPath = getFullPath();
 
     switch (chunk->nextType)
@@ -188,29 +186,46 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
         chunk->data = "{\"DESCRIPTION\":\"" + name + "\"," +
                       "\"FULL_PATH\":\"" + fullPath + "\"," +
                       "\"ACCESS\":0," +
-                      "\"CONTENTS\":{";
+                      "\"CONTENTS\":";
 
-        for (int i = 0; i < numParameters; i++)
+        if (numParams > 0)
         {
-            DynamicJsonDocument doc(500);
+
+            StaticJsonDocument<6000> doc;
             JsonObject o = doc.to<JsonObject>();
-            Parameter *p = parameters[i];
-            p->fillOSCQueryData(o);
-            o["FULL_PATH"] = fullPath + "/" + p->name;
+
+            FillOSCQueryBoolParam(enabled);
+            fillOSCQueryParamsInternal(o, fullPath);
+
             String str;
             serializeJson(o, str);
-            chunk->data += "\"" + p->name + "\":" + str;
-            if (i < numParameters - 1)
-                chunk->data += ",";
+            str.remove(str.length() - 1);
+            chunk->data += str;
         }
+        else
+        {
+            chunk->data += "{";
+        }
+
+        // for (int i = 0; i < numParams; i++)
+        // {
+
+        //     fillOSCQueryParam(o, pNames[i], paramTypes[i], &params[i]);
+        //     // Parameter *p = parameters[i];
+        //     // p->fillOSCQueryData(o);
+
+        //     chunk->data += "\"" + pNames[i] + "\":" + str;
+        //     if (i < numParams - 1)
+        //         chunk->data += ",";
+        // }
 
         if (numComponents > 0)
         {
             chunk->nextType = Start;
             chunk->nextComponent = components[0];
-            if (numParameters > 0)
+            if (numParams > 0)
                 chunk->data += ",";
-            chunk->data += "\""+components[0]->name + "\":";
+            chunk->data += "\"" + components[0]->name + "\":";
         }
         else
         {
@@ -235,6 +250,83 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
     default:
         break;
     }
+}
+
+void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param)
+{
+    JsonObject po = o.createNestedObject(pName);
+    po["DESCRIPTION"] = pName;
+    po["ACCESS"] = 3; // readOnly ? 1 : 3;
+    const String pType = t == Bool ? (*(bool *)param) ? "T" : "F" : typeNames[t];
+    po["TYPE"] = pType;
+    po["FULL_PATH"] = fullPath + "/" + pName;
+
+    JsonArray vArr = po.createNestedArray("VALUE");
+
+    // if (options != nullptr && numOptions > 0)
+    // {
+    //     JsonArray rArr = o.createNestedArray("RANGE");
+    //     JsonObject vals = rArr.createNestedObject();
+    //     JsonArray opt = vals.createNestedArray("VALS");
+
+    //     for (int i = 0; i < numOptions; i++)
+    //     {
+    //         opt.add(options[i]);
+    //     }
+
+    //     o["TYPE"] = "s"; // force string type
+    //     const var v = getEnumValueForVal(val);
+    //     if (!v.isVoid())
+    //         vArr.add(v.stringValue());
+    // }
+    // else
+    // {
+    switch (t)
+    {
+    case ParamType::Bool:
+        vArr.add((*(bool *)param));
+        break;
+
+    case ParamType::Int:
+        vArr.add((*(int *)param));
+        break;
+
+    case ParamType::Float:
+        vArr.add((*(float *)param));
+        break;
+
+    case ParamType::Str:
+        vArr.add((*(String *)param));
+        break;
+
+    default:
+        break;
+    }
+
+    // if (hasRange())
+    // {
+    //     JsonArray rArr = o.createNestedArray("RANGE");
+    //     JsonObject ro = rArr.createNestedObject();
+
+    //     switch (val.type)
+    //     {
+    //     case 'b':
+    //     case 'i':
+    //         ro["MIN"] = minVal.intValue();
+    //         ro["MAX"] = maxVal.intValue();
+    //         break;
+
+    //     case 'f':
+    //         ro["MIN"] = minVal.floatValue();
+    //         ro["MAX"] = maxVal.floatValue();
+    //         break;
+    //     }
+    // }
+    // else
+    // {
+    // o["RANGE"] = nullptr;²
+    // }
+    // }
 }
 
 void Component::setupChunkAfterComponent(OSCQueryChunk *chunk, const Component *c)
@@ -285,12 +377,12 @@ String Component::getFullPath(bool includeRoot, bool scriptMode) const
 }
 
 // Scripts
+#ifdef USE_SCRIPT
 void Component::linkScriptFunctions(IM3Module module, bool isLocal)
 {
-    const char *tName = isLocal ? "local" : getFullPath(false, true).c_str();
+    const char *tName = isLocal ? "local" : name.c_str(); // getFullPath(false, true).c_str();
 
     // m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
-
     linkScriptFunctionsInternal(module, tName);
 
     for (int i = 0; i < numComponents; i++)
@@ -300,6 +392,7 @@ void Component::linkScriptFunctions(IM3Module module, bool isLocal)
         components[i]->linkScriptFunctions(module);
     }
 }
+#endif
 
 Component *Component::addComponent(Component *c, JsonObject o)
 {
@@ -346,11 +439,184 @@ Component *Component::getComponentWithName(const String &name)
     return NULL;
 }
 
-Parameter *Component::getParameterWithName(const String &name)
-{
-    for (int i = 0; i < numParameters; i++)
-        if (parameters[i]->name == name)
-            return parameters[i];
+// Parameter *Component::getParameterWithName(const String &name)
+// {
+//     for (int i = 0; i < numParameters; i++)
+//         if (parameters[i]->name == name)
+//             return parameters[i];
 
-    return NULL;
+//     return NULL;
+// }
+
+void Component::addParam(void *param, ParamType type)
+{
+    if (numParams >= MAX_CHILD_PARAMS)
+    {
+        NDBG("Param limit reached !");
+        return;
+    }
+
+    params[numParams] = param;
+    paramTypes[numParams] = type;
+    numParams++;
+}
+
+void Component::setParam(void *param, var *value, int numData)
+{
+    bool hasChanged = false;
+    ParamType t = getParamType(param);
+
+    NDBG("Set Param " + String(t));
+
+    if (numData == 0 && t != Trigger)
+    {
+        NDBG("Expecting at least 1 parameter");
+        return;
+    }
+
+    if (numData < 2 && t == P2D)
+    {
+        NDBG("Expecting at least 2 parameters");
+        return;
+    }
+
+    if (numData < 3 && t == P3D)
+    {
+        NDBG("Expecting at least 3 parameters");
+        return;
+    }
+
+    switch (t)
+    {
+    case ParamType::Trigger:
+        break;
+
+    case ParamType::Bool:
+        NDBG("Bool : " + String(*((bool *)param)) + "  <> " + String(value[0].boolValue()));
+
+        hasChanged = *((bool *)param) != value[0].boolValue();
+        if (hasChanged)
+            *((bool *)param) = value[0].boolValue();
+        break;
+
+    case ParamType::Int:
+        hasChanged = *((int *)param) != value[0].intValue();
+        if (hasChanged)
+            *((int *)param) = value[0].intValue();
+        break;
+
+    case ParamType::Float:
+        hasChanged = *((float *)param) != value[0].floatValue();
+        if (hasChanged)
+            *((float *)param) = value[0].floatValue();
+        break;
+
+    case ParamType::Str:
+        hasChanged = *((String *)param) != value[0].stringValue();
+        DBG("Set String " + value[0].stringValue() + " > has Changed ? " + String(hasChanged));
+
+        if (hasChanged)
+            *((String *)param) = value[0].stringValue();
+        break;
+
+    default:
+        // not handle
+        break;
+    }
+
+    if (hasChanged)
+    {
+
+        // notify here
+        paramValueChanged(param);
+    }
+}
+
+bool Component::handleSetParam(const String &paramName, var *data, int numData)
+{
+    NDBG("Handle Set Param " + paramName + " : ");
+    for (int i = 0; i < numData; i++)
+    {
+        DBG("> " + data[i].stringValue());
+    }
+
+    CheckAndSetParam(enabled);
+
+    NDBG("Handle Param Internal");
+    return handleSetParamInternal(paramName, data, numData);
+}
+
+void Component::paramValueChanged(void *param)
+{
+    DBG("Param value changed " + getParamString(param));
+
+    if (param == &enabled)
+        onEnabledChanged();
+
+    paramValueChangedInternal(param);
+    checkParamsFeedback(param);
+}
+
+bool Component::checkParamsFeedback(void *param)
+{
+    CheckAndSendParamFeedback(enabled);
+    return checkParamsFeedbackInternal(param);
+}
+
+// void Component::sendParamFeedback(void *param)
+// {
+//     ParamType t = getParamType(param);
+//     switch (t)
+//     {
+//     case ParamType::Bool:
+//     case ParamType::Int:
+//     case ParamType::Float:
+//     case ParamType::Str:
+//         SendParamFeedback1(param);
+//         break;
+
+//     case ParamType::P2D:
+//         SendParamFeedback2(param);
+//         break;
+
+//     case ParamType::P3D:
+//         SendParamFeedback3(param);
+//         break;
+
+//     default:
+//         break;
+//     }
+// }
+
+Component::ParamType Component::getParamType(void *param) const
+{
+    for (int i = 0; i < numParams; i++)
+        if (params[i] == param)
+            return paramTypes[i];
+
+    return ParamType::ParamTypeMax;
+}
+
+String Component::getParamString(void *param) const
+{
+    ParamType t = getParamType(param);
+    switch (t)
+    {
+    case ParamType::Bool:
+        return String(*((bool *)param));
+
+    case ParamType::Int:
+        return String(*((int *)param));
+
+    case ParamType::Float:
+        return String(*((float *)param));
+
+    case ParamType::Str:
+        return *((String *)param);
+
+    default:
+        break;
+    }
+
+    return String("[unknown]");
 }

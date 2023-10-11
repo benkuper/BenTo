@@ -1,52 +1,29 @@
 bool IMUComponent::initInternal(JsonObject o)
 {
-    AddParameter(isConnected);
-    isConnected.readOnly = true;
+    AddBoolParam(connected);
+    connected = false;
 
-    AddAndSetParameter(sendLevel);
+    AddIntParam(sendLevel);
 
-    AddAndSetParameter(orientationSendRate);
-    AddAndSetParameter(sdaPin);
-    AddAndSetParameter(sclPin);
+    AddIntParam(orientationSendRate);
+    AddIntParam(sdaPin);
+    AddIntParam(sclPin);
 
-    if (sdaPin.intValue() == 0 || sclPin.intValue() == 0)
+    if (sdaPin == 0 || sclPin == 0)
     {
         String npin;
-        if (sdaPin.intValue() == 0)
+        if (sdaPin == 0)
             npin += "SDA,";
-        if (sclPin.intValue() == 0)
+        if (sclPin == 0)
             npin += "SCL";
 
         NDBG(npin + " pins not defined, not using IMU");
         return false;
     }
 
-    Wire.begin(sdaPin.intValue(), sclPin.intValue());
+    Wire.begin(sdaPin, sclPin);
 
-    // Init values
-    accelThresholds[0] = .8f;
-    accelThresholds[1] = 2;
-    accelThresholds[2] = 4;
-
-    diffThreshold = 8;
-
-    flatThresholds[0] = .8f;
-    flatThresholds[1] = 2;
-
-    semiFlatThreshold = 2;
-    loftieThreshold = 12;
-    singleThreshold = 25;
-
-    activity = .0;
-    prevActivity = .0;
-    orientationXOffset = .0;
-
-    angleOffset = .0f;
-
-    timeSinceOrientationLastSent = 0;
-    throwState = 0;
-
-    if(enabled.boolValue())
+    if (enabled)
     {
         startIMUTask();
     }
@@ -56,6 +33,7 @@ bool IMUComponent::initInternal(JsonObject o)
 
 void IMUComponent::updateInternal()
 {
+    // NDBG("updateInternal " + String(hasNewData)); // + ", " + String(orientation[1]) + ", " + String(orientation[2]));
     if (!hasNewData)
         return;
 
@@ -63,27 +41,25 @@ void IMUComponent::updateInternal()
     imuLock = true;
 
     long curTime = millis();
-    int orientationSendMS = 1000 / orientationSendRate.intValue();
+    int orientationSendMS = 1000 / orientationSendRate;
 
     if (curTime > timeSinceOrientationLastSent + orientationSendMS)
     {
-        int sLevel = (int)sendLevel.intValue();
-        if (sLevel >= 1)
+        if (sendLevel >= 1)
         {
-            // NDBG("Orientation send "+
-            var oData[3] { orientation[0],orientation[1],orientation[2] };
+            var oData[3]{orientation[0], orientation[1], orientation[2]};
             sendEvent(OrientationUpdate, oData, 3);
-            if (sLevel >= 2)
+            if (sendLevel >= 2)
             {
-                var aData[3] { accel[0],accel[1],accel[2] };
+                var aData[3]{accel[0], accel[1], accel[2]};
                 sendEvent(AccelUpdate, aData, 3);
-                
-                var laData[3] { linearAccel[0],linearAccel[1],linearAccel[2] };
+
+                var laData[3]{linearAccel[0], linearAccel[1], linearAccel[2]};
                 sendEvent(LinearAccelUpdate, laData, 3);
-                
-                var gData[3] { gyro[0],gyro[1],gyro[2]};
+
+                var gData[3]{gyro[0], gyro[1], gyro[2]};
                 sendEvent(GyroUpdate, gData, 3);
-                
+
                 sendEvent(ActivityUpdate);
                 sendEvent(ProjectedAngleUpdate);
                 // sendEvent(Gravity, gravity, 3);
@@ -103,7 +79,7 @@ void IMUComponent::clearInternal()
 
 void IMUComponent::onEnabledChanged()
 {
-    if (enabled.boolValue())
+    if (enabled)
         startIMUTask();
     else
         shouldStopRead = true;
@@ -146,7 +122,7 @@ void IMUComponent::readIMUStatic(void *_imu)
 
 bool IMUComponent::setupBNO()
 {
-    if (isConnected.boolValue())
+    if (connected)
         return true;
 
     NDBG("Setup BNO...");
@@ -162,7 +138,7 @@ bool IMUComponent::setupBNO()
     bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
     bno.setExtCrystalUse(true);
 
-    isConnected.set(true);
+    SetParam(connected, true);
     NDBG("BNO is setup");
 
     return true;
@@ -170,12 +146,13 @@ bool IMUComponent::setupBNO()
 
 void IMUComponent::readIMU()
 {
-    if (!enabled.boolValue())
+    if (!enabled)
         return;
 
     if (imuLock)
         return;
 
+    // NDBG("ReadIMU " + String(hasNewData));
     imu::Quaternion q = bno.getQuat();
     q.normalize();
 
@@ -183,9 +160,10 @@ void IMUComponent::readIMU()
 
     if (isnan(euler.x()) || isnan(euler.y()) || isnan(euler.z()))
     {
-        // NDBG("Reading is sh*t (nan)");
+        //  NDBG("Reading is sh*t (nan)");
         return;
     }
+    // NDBG("Euler " + String(euler.x()));
 
     orientation[0] = (float)(fmodf(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f);
     orientation[1] = (float)(euler.y() * 180 / PI); // Pitch
@@ -399,11 +377,3 @@ bool IMUComponent::handleCommandInternal(const String &command, var *data, int n
 }
 
 // Script functions
-
-
-
-
-
-
-
-

@@ -21,10 +21,11 @@ DeclareComponentSingleton(LedStreamReceiver, "streamReceiver", )
 
     WiFiUDP udp;
 bool serverIsInit;
-Parameter receiveRate { "receiveRate", 50, var(), var(), true};
+DeclareIntParam(receiveRate, 50);
+DeclareBoolParam(useArtnet, true);
+
 ArtnetWifi artnet;
 
-Parameter useArtnet{"useArtNet", true, var(), var(), true};
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
@@ -34,7 +35,7 @@ void onEnabledChanged() override;
 
 void setupConnection();
 
-void onParameterEventInternal(const ParameterEvent &e) override;
+void paramValueChangedInternal(void* param) override;
 
 long lastReceiveTime;
 uint8_t streamBuffer[LEDSTREAM_MAX_PACKET_SIZE];
@@ -45,5 +46,21 @@ std::vector<LedStripStreamLayer *> layers;
 void registerLayer(LedStripStreamLayer *layer);
 void unregisterLayer(LedStripStreamLayer *layer);
 static void onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t *data);
+
+
+    HandleSetParamInternalStart
+        CheckAndSetParam(receiveRate);
+        CheckAndSetParam(useArtnet);
+    HandleSetParamInternalEnd;
+
+    FillSettingsInternalStart
+        FillSettingsParam(receiveRate);
+        FillSettingsParam(useArtnet);
+    FillSettingsInternalEnd;
+
+    FillOSCQueryInternalStart
+        FillOSCQueryIntParam(receiveRate);
+        FillOSCQueryBoolParam(useArtnet);
+    FillOSCQueryInternalEnd
 
 EndDeclareComponent

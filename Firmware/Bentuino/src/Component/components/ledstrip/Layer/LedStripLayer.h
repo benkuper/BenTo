@@ -1,3 +1,5 @@
+#pragma once
+
 class LedStripComponent;
 
 class LedStripLayer : public Component
@@ -27,9 +29,9 @@ public:
     virtual bool initInternal(JsonObject o) override;
 
     LedStripComponent *strip;
-    int numLeds;
     Type type;
-    Parameter blendMode{"blendMode", Add, var(), var(), true};
+
+    DeclareIntParam(blendMode, Add);
     const String blendModeOptions[BlendModeMax] = {"Add", "Multiply", "Max", "Min", "Alpha"};
 
     Color colors[LED_MAX_COUNT];
@@ -39,19 +41,20 @@ public:
     void fillAll(Color c);
     void fillRange(Color c, float start, float end, bool clear = true);
     void point(Color c, float pos, float radius, bool clear = true);
+    void setLed(int index, Color c);
+    Color getLed(int index);
 
-    LinkScriptFunctionsStart
-    LinkScriptFunction(LedStripLayer, clear, v, )
-        LinkScriptFunction(LedStripLayer, fillAll, v, i)
-            LinkScriptFunction(LedStripLayer, fillRange, v, iff)
-                LinkScriptFunction(LedStripLayer, point, v, iff)
-                    LinkScriptFunctionsEnd
 
-        DeclareScriptFunctionVoid0(LedStripLayer, clear)
-    {
-        clearColors();
-    }
-    DeclareScriptFunctionVoid1(LedStripLayer, fillAll, uint32_t) { fillAll(arg1); }
-    DeclareScriptFunctionVoid3(LedStripLayer, fillRange, uint32_t, float, float) { fillRange(arg1, arg2, arg3); }
-    DeclareScriptFunctionVoid3(LedStripLayer, point, uint32_t, float, float) { point(arg1, arg2, arg3); }
+
+    HandleSetParamInternalStart
+        CheckAndSetParam(blendMode);
+    HandleSetParamInternalEnd;
+
+    FillSettingsInternalStart
+        FillSettingsParam(blendMode);
+    FillSettingsInternalEnd;
+
+    FillOSCQueryInternalStart
+        FillOSCQueryIntParam(blendMode);
+    FillOSCQueryInternalEnd
 };

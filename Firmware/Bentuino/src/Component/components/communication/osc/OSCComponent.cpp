@@ -7,8 +7,8 @@ ImplementSingleton(OSCComponent)
     pingEnabled = false;
     timeSinceLastReceivedPing = 0;
 
-    AddAndSetParameter(remoteHost);
-    AddParameter(isAlive);
+    AddStringParam(remoteHost);
+    AddBoolParam(isAlive);
 
     return true;
 }
@@ -16,7 +16,7 @@ ImplementSingleton(OSCComponent)
 void OSCComponent::updateInternal()
 {
     if (pingEnabled && millis() > timeSinceLastReceivedPing + OSC_PING_TIMEOUT)
-        isAlive.set(false);
+        SetParam(isAlive, false);
 
     receiveOSC();
 }
@@ -32,7 +32,7 @@ void OSCComponent::onEnabledChanged()
 
 void OSCComponent::setupConnection()
 {
-    bool shouldConnect = enabled.boolValue() && WifiComponent::instance->state == WifiComponent::Connected;
+    bool shouldConnect = enabled && WifiComponent::instance->state == WifiComponent::Connected;
 
     udpIsInit = false;
     if (shouldConnect)
@@ -40,7 +40,7 @@ void OSCComponent::setupConnection()
         NDBG("Start OSC Receiver on " + String(OSC_LOCAL_PORT));
         udp.begin(OSC_LOCAL_PORT);
         udp.flush();
-        isAlive.set(true);
+        SetParam(isAlive, true);
         timeSinceLastReceivedPing = millis();
 
         if (MDNS.begin((DeviceID).c_str()))
@@ -62,7 +62,7 @@ void OSCComponent::setupConnection()
         // NDBG("Stopping Receiver");
         udp.flush();
         udp.stop();
-        isAlive.set(false);
+        SetParam(isAlive, false);
 
         MDNS.end();
     }
@@ -94,7 +94,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
 
         // NDBG("Yo received from : " + String(hostData));
 
-        remoteHost.set(hostData);
+        SetParam(remoteHost, hostData);
 
         OSCMessage msg("/wassup");
 
@@ -107,7 +107,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
     else if (msg.match("/ping"))
     {
         // NDBG("Received ping");
-        isAlive.set(true);
+        SetParam(isAlive, true);
         pingEnabled = true;
         timeSinceLastReceivedPing = millis();
 
@@ -115,7 +115,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
         {
             char hostData[32];
             msg.getString(0, hostData, 32);
-            remoteHost.set(hostData);
+            SetParam(remoteHost, hostData);
         }
 
         OSCMessage msg("/pong");
@@ -149,12 +149,12 @@ void OSCComponent::processMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(OSCMessage &msg)
 {
-    if (!enabled.boolValue() || remoteHost.stringValue().length() == 0)
+    if (!enabled || remoteHost.length() == 0)
         return;
 
     char addr[32];
     msg.getAddress(addr);
-    udp.beginPacket((char *)remoteHost.stringValue().c_str(), OSC_REMOTE_PORT);
+    udp.beginPacket((char *)remoteHost.c_str(), OSC_REMOTE_PORT);
     msg.send(udp);
     udp.endPacket();
     msg.empty();
@@ -162,7 +162,7 @@ void OSCComponent::sendMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(String address)
 {
-    if (!enabled.boolValue() || remoteHost.stringValue().length() == 0)
+    if (!enabled || remoteHost.length() == 0)
         return;
 
     OSCMessage m(address.c_str());
@@ -171,7 +171,7 @@ void OSCComponent::sendMessage(String address)
 
 void OSCComponent::sendMessage(const String &source, const String &command, var *data, int numData)
 {
-    if (!enabled.boolValue() || remoteHost.stringValue().length() == 0)
+    if (!enabled || remoteHost.length() == 0)
         return;
 
     OSCMessage msg = createMessage(source, command, data, numData, true);
@@ -181,7 +181,8 @@ void OSCComponent::sendMessage(const String &source, const String &command, var 
 OSCMessage OSCComponent::createMessage(const String &source, const String &command, const var *data, int numData, bool addID)
 {
     OSCMessage msg((source + "/" + command).c_str());
-    if(addID) msg.add(DeviceID.c_str());
+    if (addID)
+        msg.add(DeviceID.c_str());
     for (int i = 0; i < numData; i++)
     {
         switch (data[i].type)

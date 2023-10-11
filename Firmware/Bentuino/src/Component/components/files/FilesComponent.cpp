@@ -4,31 +4,31 @@ bool FilesComponent::initInternal(JsonObject o)
 {
     useInternalMemory = false;
 
-    AddAndSetParameter(sdEnPin);
-    AddAndSetParameter(sdEnVal);
-    AddAndSetParameter(sdSCK);
-    AddAndSetParameter(sdMiso);
-    AddAndSetParameter(sdMosi);
-    AddAndSetParameter(sdCS);
-    AddAndSetParameter(sdSpeed);
+    AddIntParam(sdEnPin);
+    AddBoolParam(sdEnVal);
+    AddIntParam(sdSCK);
+    AddIntParam(sdMiso);
+    AddIntParam(sdMosi);
+    AddIntParam(sdCS);
+    AddIntParam(sdSpeed);
 
-    if (sdEnPin.intValue() > 0)
+    if (sdEnPin > 0)
     {
-        // NDBG("Setting SD En Pin " + String(sdEnPin.intValue()) + " to " + String(sdEnVal.intValue()));
-        pinMode(sdEnPin.intValue(), OUTPUT);
-        digitalWrite(sdEnPin.intValue(), sdEnVal.intValue());
+        // NDBG("Setting SD En Pin " + String(sdEnPin) + " to " + String(sdEnVal));
+        pinMode(sdEnPin, OUTPUT);
+        digitalWrite(sdEnPin, sdEnVal);
     }
 
-    if (sdSCK.intValue() == 0 || sdMiso.intValue() == 0 || sdMosi.intValue() == 0 || sdCS.intValue() == 0)
+    if (sdSCK == 0 || sdMiso == 0 || sdMosi == 0 || sdCS == 0)
     {
         String npin;
-        if (sdSCK.intValue() == 0)
+        if (sdSCK == 0)
             npin += "SCK,";
-        if (sdMiso.intValue() == 0)
+        if (sdMiso == 0)
             npin += "MISO,";
-        if (sdMosi.intValue() == 0)
+        if (sdMosi == 0)
             npin += "MOSI,";
-        if (sdCS.intValue() == 0)
+        if (sdCS == 0)
             npin += "CS";
 
         NDBG(npin + " pins not defined, using internal memory");
@@ -36,15 +36,15 @@ bool FilesComponent::initInternal(JsonObject o)
     }
 
     // NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : " + sdSCK.stringValue() + "," + sdMiso.stringValue() + "," + sdMosi.stringValue() + "," + sdCS.stringValue() + "," + sdSpeed.stringValue());
-    pinMode(sdSCK.intValue(), INPUT_PULLUP);
-    pinMode(sdMiso.intValue(), INPUT_PULLUP);
-    pinMode(sdMosi.intValue(), INPUT_PULLUP);
-    pinMode(sdCS.intValue(), OUTPUT);
-    digitalWrite(sdCS.intValue(), LOW);
+    pinMode(sdSCK, INPUT_PULLUP);
+    pinMode(sdMiso, INPUT_PULLUP);
+    pinMode(sdMosi, INPUT_PULLUP);
+    pinMode(sdCS, OUTPUT);
+    digitalWrite(sdCS, LOW);
 
-    spiSD.begin((int8_t)sdSCK.intValue(), (int8_t)sdMiso.intValue(), (int8_t)sdMosi.intValue(), (int8_t)sdCS.intValue()); // SCK,MISO,MOSI,ss
+    spiSD.begin((int8_t)sdSCK, (int8_t)sdMiso, (int8_t)sdMosi, (int8_t)sdCS); // SCK,MISO,MOSI,ss
 
-    if (SD.begin((uint8_t)sdCS.intValue(), spiSD))
+    if (SD.begin((uint8_t)sdCS, spiSD))
     {
 
         //    NDBG("SD Card initialized.");

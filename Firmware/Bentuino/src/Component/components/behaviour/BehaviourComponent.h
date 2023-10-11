@@ -1,12 +1,6 @@
 #pragma once
 
-class BehaviourComponent : public Component
-{
-public:
-    BehaviourComponent(bool enabled = true) : Component(getTypeString(), enabled)
-    {
-    }
-    virtual String getTypeString() const override { return "behaviour"; }
+DeclareComponent(Behaviour, "behaviour", )
 
     enum Comparator
     {
@@ -25,12 +19,12 @@ public:
         "Less",
         "Less or Equal"};
 
-    DeclareConfigParameter(paramName, "");
-    DeclareConfigParameter(comparator, EQUAL);
-    DeclareConfigParameter(compareValue, 0.f);
-    DeclareRangeConfigParameter(validationTime, 0.f, 0.f, 10.f);
-    DeclareConfigParameter(alwaysTrigger, false);
-    DeclareParameter(valid, false, false);
+    DeclareStringParam(paramName, "");
+    DeclareIntParam(comparator, EQUAL);
+    DeclareFloatParam(compareValue, 0.f);
+    DeclareFloatParam(validationTime, 0.f);
+    DeclareBoolParam(alwaysTrigger, false);
+    DeclareBoolParam(valid, false);
 
     enum Action
     {
@@ -47,13 +41,12 @@ public:
         "Shutdown",
         "Launch Sequence",
         "Launch Script",
-        "Launch Command"
-        };
+        "Launch Command"};
 
-    DeclareConfigParameter(triggerAction, None);
-    DeclareConfigParameter(triggerValue, "");
+    DeclareIntParam(triggerAction, None);
+    DeclareStringParam(triggerValue, "");
 
-    Parameter *targetParam;
+    void *targetParam;
     int listenerIndex = -1;
     float timeAtValidation = 0.f;
     bool delayedValidation = false;
@@ -63,12 +56,50 @@ public:
 
     void updateTargetParameter();
 
-    void onParameterEventInternal(const ParameterEvent &e) override;
+    // void onParameterEventInternal(const ParameterEvent &e) override;
 
-    void onTargetParameterChanged(const ParameterEvent &e);
+    // void onTargetParameterChanged(const ParameterEvent &e);
 
     void trigger();
 
     DeclareComponentEventTypes(CommandLaunched);
     DeclareComponentEventNames("CommandLaunched");
+
+    HandleSetParamInternalStart
+        CheckAndSetParam(paramName);
+    CheckAndSetParam(comparator);
+    CheckAndSetParam(compareValue);
+    CheckAndSetParam(validationTime);
+    CheckAndSetParam(alwaysTrigger);
+    CheckAndSetParam(triggerAction);
+    CheckAndSetParam(triggerValue);
+    HandleSetParamInternalEnd;
+
+    FillSettingsInternalStart
+        FillSettingsParam(paramName);
+    FillSettingsParam(comparator);
+    FillSettingsParam(compareValue);
+    FillSettingsParam(validationTime);
+    FillSettingsParam(alwaysTrigger);
+     FillSettingsParam(triggerAction);
+    FillSettingsParam(triggerValue);
+    FillSettingsInternalEnd;
+
+    FillOSCQueryInternalStart
+        FillOSCQueryStringParam(paramName);
+    FillOSCQueryIntParam(comparator);
+    FillOSCQueryFloatParam(compareValue);
+    FillOSCQueryFloatParam(validationTime);
+    FillOSCQueryBoolParam(alwaysTrigger);
+    FillOSCQueryBoolParam(valid);
+    FillOSCQueryIntParam(triggerAction);
+    FillOSCQueryStringParam(triggerValue);
+    FillOSCQueryInternalEnd
 };
+
+DeclareComponentManager(Behaviour, BEHAVIOUR, behaviours, behaviour)
+
+    void onChildComponentEvent(const ComponentEvent &e) override;
+DeclareComponentEventTypes(CommandLaunched);
+DeclareComponentEventNames("CommandLaunched");
+EndDeclareComponent

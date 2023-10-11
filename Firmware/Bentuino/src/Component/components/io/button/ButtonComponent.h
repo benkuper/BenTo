@@ -13,35 +13,56 @@ public:
 
     int debounceCount;
     long timeAtPress;
-    
 
-    DeclareParameter(multiPressCount, 0, false);
-    DeclareParameter(isLongPressed, false, false);
-    DeclareParameter(isVeryLongPressed, false, false);
+    DeclareIntParam(multiPressCount, 0);
+    DeclareBoolParam(longPress, false);
+    DeclareBoolParam(veryLongPress, false);
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
-    void onParameterEventInternal(const ParameterEvent &e) override;
+    void paramValueChangedInternal(void *param) override;
 
     DeclareComponentEventTypes(ShortPress, LongPress, VeryLongPress, MultiPress);
     DeclareComponentEventNames("ShortPress", "LongPress", "VeryLongPress", "MultiPress");
 
-    // LinkScriptFunctionsStart
-    // LinkScriptFunction(ButtonComponent, getState, i, );
-    // LinkScriptFunction(ButtonComponent, getMultipress, i, );
-    // LinkScriptFunctionsEnd
+    // #if USE_SCRIPT
+    //     LinkScriptFunctionsStart
+    //         LinkScriptFunction(ButtonComponent, getState, i, );
+    //     LinkScriptFunction(ButtonComponent, getMultipress, i, );
+    //     LinkScriptFunctionsEnd
 
-    // DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t) {  return isVeryLongPressed.boolValue()?3:isLongPressed.boolValue()?2:value.intValue(); }
-    // DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) {  return multiPressCount.boolValue(); }
+    //     DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t)
+    //     {
+    //         return veryLongPress ? 3 : longPress ? 2
+    //                                              : value;
+    //     }
+
+    //     DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) { return multiPressCount; }
+    // #endif
+
+    // HandleSetParamInternalStart
+    //     HandleSetParamMotherClass(IOComponent)
+    //         HandleSetParamInternalEnd;
+
+    // FillSettingsInternalStart
+    //     FillSettingsInternalMotherClass(IOComponent)
+    //         FillSettingsInternalEnd
+
+    CheckFeedbackParamInternalStart
+        CheckFeedbackParamInternalMotherClass(IOComponent);
+    CheckAndSendParamFeedback(multiPressCount);
+    CheckAndSendParamFeedback(longPress);
+    CheckAndSendParamFeedback(veryLongPress);
+
+    CheckFeedbackParamInternalEnd;
+
+    FillOSCQueryInternalStart
+        FillOSCQueryInternalMotherClass(IOComponent)
+            FillOSCQueryIntParam(multiPressCount);
+    FillOSCQueryBoolParam(longPress);
+    FillOSCQueryBoolParam(veryLongPress);
+    FillOSCQueryInternalEnd
 };
 
-
-DeclareComponentSingleton(ButtonManager, "buttons", )
-
-    DeclareRangeConfigParameter(numButtons, BUTTON_MAX_COUNT, 0, BUTTON_MAX_COUNT);
-
-ButtonComponent buttons[BUTTON_MAX_COUNT];
-
-bool initInternal(JsonObject o) override;
-
-EndDeclareComponent
+DeclareComponentManager(Button, BUTTON, buttons, button)
+    EndDeclareComponent

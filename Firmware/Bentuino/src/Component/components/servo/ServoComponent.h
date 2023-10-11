@@ -2,8 +2,8 @@
 
 DeclareComponent(Servo, "servo", )
 
-Parameter pin{"pin", 0, var(), var(), true};
-Parameter position{"position", 0.f, 0.f, 1.f};
+DeclareIntParam(pin, 0);
+DeclareFloatParam(position, 0);
 
 Servo servo;
 
@@ -11,6 +11,21 @@ bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 
-void onParameterEventInternal(const ParameterEvent &e) override;
+// void onParameterEventInternal(const ParameterEvent &e) override;
+
+   HandleSetParamInternalStart
+        CheckAndSetParam(pin);
+    CheckAndSetParam(position);
+    HandleSetParamInternalEnd;
+
+    FillSettingsInternalStart
+        FillSettingsParam(pin);
+    FillSettingsParam(position);
+    FillSettingsInternalEnd
+
+        FillOSCQueryInternalStart
+            FillOSCQueryIntParam(pin);
+    FillOSCQueryFloatParam(position);
+    FillOSCQueryInternalEnd
 
 EndDeclareComponent

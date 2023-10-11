@@ -1,18 +1,24 @@
 #pragma once
-DeclareComponentSingleton(Communication, "comm",)
+DeclareComponentSingleton(Communication, "comm", )
 
+#ifdef USE_SERIAL
     SerialComponent serial;
-    OSCComponent osc;
-    
-    bool initInternal(JsonObject o) override;
+#endif
 
-    void onChildComponentEvent(const ComponentEvent &e) override;
+#ifdef USE_OSC
+OSCComponent osc;
+#endif
 
-    void sendParameterFeedback(Component * c, Parameter * param);
-    void sendMessage(Component * c, const String &mName, const String &val);
-    void sendEventFeedback(const ComponentEvent &e);
-    
-    DeclareComponentEventTypes(MessageReceived);
-    DeclareComponentEventNames("MessageReceived");
+bool initInternal(JsonObject o) override;
+
+void onChildComponentEvent(const ComponentEvent &e) override;
+
+// void sendParameterFeedback(Component *c, Parameter *param);
+void sendParamFeedback(Component *c, void* param, const String& pName, Component::ParamType pType);
+void sendMessage(Component *c, const String &mName, const String &val);
+void sendEventFeedback(const ComponentEvent &e);
+
+DeclareComponentEventTypes(MessageReceived);
+DeclareComponentEventNames("MessageReceived");
 
 EndDeclareComponent

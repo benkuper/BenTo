@@ -8,12 +8,12 @@ DeclareComponentSingleton(OSC, "osc", )
 
     WiFiUDP udp;
 bool udpIsInit;
-Parameter remoteHost{"remoteHost", "", var(), var(), true};
+DeclareStringParam(remoteHost, "");
+DeclareBoolParam(isAlive, "");
 
 // Ping
 bool pingEnabled; // only activate ping check if received a first ping
 long timeSinceLastReceivedPing;
-Parameter isAlive{"isAlive", false};
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
@@ -39,5 +39,20 @@ var OSCArgumentToVar(OSCMessage &m, int index);
 
 DeclareComponentEventTypes(MessageReceived);
 DeclareComponentEventNames("MessageReceived");
+
+    HandleSetParamInternalStart
+        CheckAndSetParam(remoteHost);
+    CheckAndSetParam(isAlive);
+    HandleSetParamInternalEnd;
+
+    FillSettingsInternalStart
+        FillSettingsParam(remoteHost);
+    FillSettingsParam(isAlive);
+    FillSettingsInternalEnd;
+
+    FillOSCQueryInternalStart
+        FillOSCQueryStringParam(remoteHost);
+    FillOSCQueryBoolParam(isAlive);
+    FillOSCQueryInternalEnd
 
 EndDeclareComponent

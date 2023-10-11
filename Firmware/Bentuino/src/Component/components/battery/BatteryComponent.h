@@ -6,16 +6,15 @@
 
 DeclareComponentSingleton(Battery, "battery", )
 
-DeclareConfigParameter(batteryPin, BATTERY_DEFAULT_PIN);
-DeclareConfigParameter(chargePin, -1);
-DeclareConfigParameter(rawMin, BATTERY_DEFAUT_RAW_MIN);
-DeclareConfigParameter(rawMax, BATTERY_DEFAULT_RAW_MAX);
+    DeclareIntParam(batteryPin, BATTERY_DEFAULT_PIN);
+DeclareIntParam(chargePin, -1);
+DeclareIntParam(rawMin, BATTERY_DEFAUT_RAW_MIN);
+DeclareIntParam(rawMax, BATTERY_DEFAULT_RAW_MAX);
 
-DeclareConfigParameter(sendFeedback, true);
+DeclareBoolParam(sendFeedback, true);
 
-DeclareRangeParameter(batteryLevel, 4.2f, 3.5f, 4.2f, false);
-DeclareParameter(isCharging, false, false);
-
+DeclareFloatParam(batteryLevel, 4.2f);
+DeclareBoolParam(charging, false);
 
 long lastBatteryCheck = 0;
 long lastBatterySet = 0;
@@ -26,4 +25,34 @@ bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 
-EndDeclareComponent
+HandleSetParamInternalStart
+    CheckAndSetParam(batteryPin);
+CheckAndSetParam(chargePin);
+CheckAndSetParam(rawMin);
+CheckAndSetParam(rawMax);
+CheckAndSetParam(sendFeedback);
+CheckAndSetParam(batteryLevel);
+CheckAndSetParam(charging);
+HandleSetParamInternalEnd;
+
+FillSettingsInternalStart
+    FillSettingsParam(batteryPin);
+FillSettingsParam(chargePin);
+FillSettingsParam(rawMin);
+FillSettingsParam(rawMax);
+FillSettingsParam(sendFeedback);
+FillSettingsParam(batteryLevel);
+FillSettingsParam(charging);
+FillSettingsInternalEnd;
+
+FillOSCQueryInternalStart
+    FillOSCQueryIntParam(batteryPin);
+FillOSCQueryIntParam(chargePin);
+FillOSCQueryIntParam(rawMin);
+FillOSCQueryIntParam(rawMax);
+FillOSCQueryBoolParam(sendFeedback);
+FillOSCQueryFloatParam(batteryLevel);
+FillOSCQueryBoolParam(charging);
+FillOSCQueryInternalEnd
+
+    EndDeclareComponent

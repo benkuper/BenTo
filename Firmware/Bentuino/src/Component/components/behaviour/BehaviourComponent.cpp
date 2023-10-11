@@ -1,22 +1,23 @@
-#include "BehaviourComponent.h"
+ImplementManagerSingleton(Behaviour)
+
 bool BehaviourComponent::initInternal(JsonObject o)
 {
-    AddAndSetParameter(paramName);
-    AddAndSetParameter(comparator);
-    comparator.options = operatorOptions;
-    comparator.numOptions = OPERATOR_MAX;
+    AddStringParam(paramName);
+    AddIntParam(comparator);
+    // comparator.options = operatorOptions;
+    // comparator.numOptions = OPERATOR_MAX;
 
-    AddAndSetParameter(compareValue);
-    AddAndSetParameter(validationTime);
-    AddAndSetParameter(alwaysTrigger);
-    AddParameter(valid);
-    valid.readOnly = true;
+    AddFloatParam(compareValue);
+    AddFloatParam(validationTime);
+    AddBoolParam(alwaysTrigger);
+    AddBoolParam(valid);
+    // valid.readOnly = true;
 
-    AddAndSetParameter(triggerAction);
-    triggerAction.options = triggerActionOptions;
-    triggerAction.numOptions = ActionMax;
+    AddIntParam(triggerAction);
+    // triggerAction.options = triggerActionOptions;
+    // triggerAction.numOptions = ActionMax;
 
-    AddAndSetParameter(triggerValue);
+    AddStringParam(triggerValue);
 
     updateTargetParameter();
 
@@ -25,9 +26,9 @@ bool BehaviourComponent::initInternal(JsonObject o)
 
 void BehaviourComponent::updateInternal()
 {
-    if (!delayedValidation && valid.boolValue() && validationTime.floatValue() > 0)
+    if (!delayedValidation && valid && validationTime > 0)
     {
-        if (millis() / 1000.0f - timeAtValidation >= validationTime.floatValue())
+        if (millis() / 1000.0f - timeAtValidation >= validationTime)
         {
             trigger();
             delayedValidation = true;
@@ -37,97 +38,97 @@ void BehaviourComponent::updateInternal()
 
 void BehaviourComponent::updateTargetParameter()
 {
-    DBG("Update target");
-    Parameter *newTarget = nullptr;
-    String pName = paramName.stringValue();
-    int tcIndex = pName.lastIndexOf('.');
+    // DBG("Update target");
+    // Parameter *newTarget = nullptr;
+    // String pName = paramName;
+    // int tcIndex = pName.lastIndexOf('.');
 
-    String tc = pName.substring(0, tcIndex);  // component name
-    String pn = pName.substring(tcIndex + 1); // parameter name
+    // String tc = pName.substring(0, tcIndex);  // component name
+    // String pn = pName.substring(tcIndex + 1); // parameter name
 
-    DBG("Target component: " + tc + " parameter: " + pn);
+    // DBG("Target component: " + tc + " parameter: " + pn);
 
-    if (Component *c = RootComponent::instance->getComponentWithName(tc))
-    {
-        Parameter *p = c->getParameterWithName(pn);
-        if (p)
-            newTarget = p;
-    }
+    // if (Component *c = RootComponent::instance->getComponentWithName(tc))
+    // {
+    //     Parameter *p = c->getParameterWithName(pn);
+    //     if (p)
+    //         newTarget = p;
+    // }
 
-    if (newTarget == targetParam)
-        return;
+    // if (newTarget == targetParam)
+    //     return;
 
-    if (targetParam != nullptr)
-    {
-        DBG("Target remove listener here");
-        targetParam->removeListener(listenerIndex);
-        listenerIndex = -1;
-    }
+    // if (targetParam != nullptr)
+    // {
+    //     DBG("Target remove listener here");
+    //     targetParam->removeListener(listenerIndex);
+    //     listenerIndex = -1;
+    // }
 
-    targetParam = newTarget;
+    // targetParam = newTarget;
 
-    if (targetParam != nullptr)
-    {
-        DBG("Add listener here on " + targetParam->name);
-        listenerIndex = targetParam->addListener(std::bind(&BehaviourComponent::onTargetParameterChanged, this, std::placeholders::_1));
-    }
+    // if (targetParam != nullptr)
+    // {
+    //     DBG("Add listener here on " + targetParam->name);
+    //     listenerIndex = targetParam->addListener(std::bind(&BehaviourComponent::onTargetParameterChanged, this, std::placeholders::_1));
+    // }
 }
 
-void BehaviourComponent::onParameterEventInternal(const ParameterEvent &e)
-{
-    if (e.parameter == &paramName)
-    {
-        updateTargetParameter();
-    }
-}
+// void BehaviourComponent::onParameterEventInternal(const ParameterEvent &e)
+// {
+//     if (e.parameter == &paramName)
+//     {
+//         updateTargetParameter();
+//     }
+// }
 
-void BehaviourComponent::onTargetParameterChanged(const ParameterEvent &e)
-{
-    bool isValid = false;
+// void BehaviourComponent::onTargetParameterChanged(const ParameterEvent &e)
+// {
+//     bool isValid = false;
 
-    Comparator cmp = (Comparator)comparator.intValue();
+//     Comparator cmp = (Comparator)comparator.intValue();
 
-    switch (cmp)
-    {
-    case EQUAL:
-        isValid = e.parameter->floatValue() == compareValue.floatValue();
-        break;
-    case GREATER:
-        isValid = e.parameter->floatValue() > compareValue.floatValue();
-        break;
-    case GREATER_EQUAL:
-        isValid = e.parameter->floatValue() >= compareValue.floatValue();
-        break;
-    case LESS:
-        isValid = e.parameter->floatValue() < compareValue.floatValue();
-        break;
-    case LESS_EQUAL:
-        isValid = e.parameter->floatValue() <= compareValue.floatValue();
-        break;
+//     switch (cmp)
+//     {
+//     case EQUAL:
+//         isValid = e.parameter == compareValue;
+//         break;
+//     case GREATER:
+//         isValid = e.parameter > compareValue;
+//         break;
+//     case GREATER_EQUAL:
+//         isValid = e.parameter >= compareValue;
+//         break;
+//     case LESS:
+//         isValid = e.parameter < compareValue;
+//         break;
+//     case LESS_EQUAL:
+//         isValid = e.parameter <= compareValue;
+//         break;
 
-    default:
-        break;
-    }
+//     default:
+//         break;
+//     }
 
-    if (valid.boolValue() != isValid || alwaysTrigger.boolValue())
-    {
-        if (isValid)
-        {
-            delayedValidation = false;
-            timeAtValidation = millis() / 1000.0f;
-            if (validationTime.floatValue() == 0)
-            {
-                trigger();
-            }
-        }
+//     if (valid != isValid || alwaysTrigger)
+//     {
+//         if (isValid)
+//         {
+//             delayedValidation = false;
+//             timeAtValidation = millis() / 1000.0f;
+//             if (validationTime == 0)
+//             {
+//                 trigger();
+//             }
+//         }
 
-        valid.set(isValid);
-    }
-}
+//         SetParam(valid, isValid);
+//     }
+// }
 
 void BehaviourComponent::trigger()
 {
-    Action a = (Action)triggerAction.intValue();
+    Action a = (Action)triggerAction;
     switch (a)
     {
     case None:
@@ -137,22 +138,30 @@ void BehaviourComponent::trigger()
         RootComponent::instance->shutdown();
         break;
     case LaunchSeq:
-        // SequenceComponent::instance->launchSequenceWithName(triggerValue.stringValue());
+        // SequenceComponent::instance->launchSequenceWithName(triggerValue);
         break;
     case LaunchScript:
-        // ScriptComponent::instance->launchScriptWithName(triggerValue.stringValue());
+        // ScriptComponent::instance->launchScriptWithName(triggerValue);
         break;
 
     case LaunchCommand:
     {
-        String cmd = triggerValue.stringValue();
-        cmd.replace("{value}", targetParam->stringValue());
-        ParsingHelper::processStringMessage(cmd, [this](var* data, int numData){
-            sendEvent(CommandLaunched, data, numData);});
+        String cmd = triggerValue;
+        cmd.replace("{value}", getParamString(targetParam));
+        ParsingHelper::processStringMessage(cmd, [this](var *data, int numData)
+                                            { sendEvent(CommandLaunched, data, numData); });
     }
     break;
 
     default:
         break;
+    }
+}
+
+void BehaviourManagerComponent::onChildComponentEvent(const ComponentEvent &e)
+{
+    if (e.type == BehaviourComponent::CommandLaunched)
+    {
+        sendEvent(CommandLaunched, e.data, e.numData);
     }
 }

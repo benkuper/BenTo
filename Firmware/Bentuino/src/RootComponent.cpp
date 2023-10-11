@@ -13,22 +13,44 @@ bool RootComponent::initInternal(JsonObject)
     JsonObject o = Settings::settings.as<JsonObject>();
 
     AddOwnedComponent(&comm);
-    AddAndSetParameter(deviceName);
-    AddAndSetParameter(wakeUpButton);
-    AddAndSetParameter(wakeUpState);
+    AddStringParam(deviceName);
+    AddIntParam(wakeUpButton);
+    AddBoolParam(wakeUpState);
 
-    AddOwnedComponent(&battery);
-    AddOwnedComponent(&sequence);
-
-    AddOwnedComponent(&wifi);
-    AddOwnedComponent(&files);
-    // AddOwnedComponent(&script);
-    AddOwnedComponent(&server);
-    AddOwnedComponent(&streamReceiver);
-
+#ifdef USE_LEDSTRIP
     AddOwnedComponent(&strips);
-    AddOwnedComponent(&buttons);
+#endif
+
+#ifdef USE_BATTERY
+    AddOwnedComponent(&battery);
+#endif
+
+
+#ifdef USE_FILES
+    AddOwnedComponent(&files);
+#endif
+
+#if USE_SCRIPT
+    AddOwnedComponent(&script);
+#endif
+
+#ifdef USE_SERVER
+    AddOwnedComponent(&server);
+#endif
+
+#ifdef USE_STREAMING
+    AddOwnedComponent(&streamReceiver);
+#endif
+
+
+
+#ifdef USE_IO
+    memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
     AddOwnedComponent(&ios);
+#ifdef USE_BUTTON
+    AddOwnedComponent(&buttons);
+#endif
+#endif
 
 #if USE_IMU
     AddOwnedComponent(&imu);
@@ -42,8 +64,22 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&stepper);
 #endif
 
+#ifdef USE_BEHAVIOUR
     AddOwnedComponent(&behaviours);
+#endif
+
+#ifdef USE_DUMMY
     AddOwnedComponent(&dummies);
+#endif
+
+#ifdef USE_SEQUENCE
+    AddOwnedComponent(&sequence);
+#endif
+
+#ifdef USE_WIFI
+    AddOwnedComponent(&wifi);
+#endif
+
 
     return true;
 }
@@ -75,12 +111,13 @@ void RootComponent::powerdown()
 
     // NDBG("Sleep now, baby.");
 
-    if (wakeUpButton.intValue() > 0)
-        esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton.intValue(), wakeUpState.boolValue());
-        // #elif defined TOUCH_WAKEUP_PIN
-        //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
-        //     esp_sleep_enable_touchpad_wakeup();
-        // #endif
+    if (wakeUpButton > 0)
+    esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton, wakeUpState);
+
+    // #elif defined TOUCH_WAKEUP_PIN
+    //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
+    //     esp_sleep_enable_touchpad_wakeup();
+    // #endif
 
 #ifdef ESP8266
     ESP.deepSleep(5e6);
@@ -110,15 +147,23 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     if (isShuttingDown())
         return;
 
-    if (e.component == &comm || e.component == &behaviours)
+    if (e.component == &comm
+#ifdef USE_BEHAVIOUR
+        || e.component == &behaviours
+#endif
+    )
     {
-        if ((e.component == &comm && e.type == CommunicationComponent::MessageReceived) || (e.component == &behaviours && e.type == BehaviourManagerComponent::CommandLaunched))
+        if ((e.component == &comm && e.type == CommunicationComponent::MessageReceived)
+#ifdef USE_BEHAVIOUR
+            || (e.component == &behaviours && e.type == BehaviourManagerComponent::CommandLaunched)
+#endif
+        )
         {
             if (Component *targetComponent = getComponentWithName(e.data[0].stringValue()))
             {
                 bool handled = targetComponent->handleCommand(e.data[1], &e.data[2], e.numData - 2);
                 if (!handled)
-                    NDBG("Command was not handled " + e.data[0].stringValue() + "." + e.data[1].stringValue());
+                    NDBG("Command was not handled " + e.data[0].stringValue() + " > " + e.data[1].stringValue());
             }
             else
             {
@@ -128,6 +173,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             return;
         }
     }
+#ifdef USE_WIFI
     else if (e.component == &wifi)
     {
         if (e.type == WifiComponent::ConnectionStateChanged)
@@ -136,11 +182,18 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             {
                 NDBG("Setup connections now");
                 server.setupConnection();
+
+#if USE_STREAMING
                 streamReceiver.setupConnection();
+#endif
+
+#if USE_OSC
                 comm.osc.setupConnection();
+#endif
             }
         }
     }
+#endif
     // else if (e.component == &buttons[0])
     // {
     // Should move to behaviour system
@@ -201,8 +254,10 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
 
 String RootComponent::getDeviceID() const
 {
-    byte mac[6];
+    byte mac[6]{0, 0, 0, 0, 0, 0};
+#ifdef USE_WIFI
     WiFi.macAddress(mac);
+#endif
 
     String d = "";
     for (int i = 0; i < 6; i++)

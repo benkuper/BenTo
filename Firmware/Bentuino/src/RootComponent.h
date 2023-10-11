@@ -1,39 +1,76 @@
 #pragma once
 
-
 DeclareComponentSingleton(Root, "root", )
 
-const String deviceID = getDeviceID();
-DeclareConfigParameter(deviceName, deviceID);
-DeclareConfigParameter(wakeUpButton, POWER_WAKEUP_BUTTON);
-DeclareConfigParameter(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
+    const String deviceID = getDeviceID();
+DeclareStringParam(deviceName, deviceID);
+DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
+DeclareBoolParam(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
+
+// DeclareConfigParameter(deviceName, deviceID);
+// DeclareConfigParameter(wakeUpButton, POWER_WAKEUP_BUTTON);
+// DeclareConfigParameter(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
 
 // system
 CommunicationComponent comm;
+#ifdef USE_WIFI
 WifiComponent wifi;
-FilesComponent files;
-WebServerComponent server;
-// ScriptComponent script;
-BatteryComponent battery;
-SequenceComponent sequence;
-LedStreamReceiverComponent streamReceiver;
+#endif
 
+#ifdef USE_FILES
+FilesComponent files;
+#endif
+
+#ifdef USE_SERVER
+WebServerComponent server;
+#endif
+
+#ifdef USE_BATTERY
+BatteryComponent battery;
+#endif
+
+#ifdef USE_SEQUENCE
+SequenceComponent sequence;
+#endif
+
+#ifdef USE_STREAMING
+LedStreamReceiverComponent streamReceiver;
+#endif
+
+#ifdef USE_LEDSTRIP
 LedStripManagerComponent strips;
-ButtonManagerComponent buttons;
+#endif
+
+
+#ifdef USE_SCRIPT
+ScriptComponent script;
+#endif
+
+#ifdef USE_IO
 IOManagerComponent ios;
+#ifdef USE_BUTTON
+ButtonManagerComponent buttons;
+#endif
+#endif
+
+#ifdef USE_BEHAVIOUR
 BehaviourManagerComponent behaviours;
+#endif
+
+#ifdef USE_DUMMY
 DummyManagerComponent dummies;
+#endif
 
 #ifdef USE_IMU
 IMUComponent imu;
 #endif
 
-#ifdef USE_SERVER
-ServoComponent *servo;
+#ifdef USE_SERVO
+ServoComponent servo;
 #endif
 
 #ifdef USE_STEPPER
-StepperComponent *stepper;
+StepperComponent stepper;
 #endif
 
 // Needs a single structure
@@ -61,6 +98,22 @@ bool isShuttingDown() const { return timeAtShutdown > 0; }
 
 String getDeviceID() const;
 
-// const Component *systemComponents[NUM_SYSTEM_COMPONENTS]{comm, wifi, files, server, sequence, battery};
+HandleSetParamInternalStart
+    CheckAndSetParam(deviceName);
+CheckAndSetParam(wakeUpButton);
+CheckAndSetParam(wakeUpState);
+HandleSetParamInternalEnd;
 
-EndDeclareComponent
+FillSettingsInternalStart
+    FillSettingsParam(deviceName);
+FillSettingsParam(wakeUpButton);
+FillSettingsParam(wakeUpState);
+FillSettingsInternalEnd;
+
+FillOSCQueryInternalStart
+    FillOSCQueryStringParam(deviceName);
+FillOSCQueryIntParam(wakeUpButton);
+FillOSCQueryBoolParam(wakeUpState);
+FillOSCQueryInternalEnd
+
+    EndDeclareComponent

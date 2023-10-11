@@ -21,8 +21,8 @@ public:
     Color groupColor;
 
     // control
-    Parameter idMode{"idMode", false, var(), var(), true};
-    Parameter loop{"loop", false, var(), var(), true};
+    DeclareBoolParam(idMode, false);
+    DeclareBoolParam(loop, false);
 
     // playing
     bool isPlaying;
@@ -64,4 +64,19 @@ public:
 
     DeclareComponentEventTypes(Loaded, LoadError, Playing, Paused, Stopped, Seek, Looped);
     DeclareComponentEventNames("Loaded", "LoadError", "Playing", "Paused", "Stopped", "Seek", "Looped");
+
+    HandleSetParamInternalStart
+        CheckAndSetParam(idMode);
+    CheckAndSetParam(loop);
+    HandleSetParamInternalEnd;
+
+    FillSettingsInternalStart
+        FillSettingsParam(idMode);
+    FillSettingsParam(loop);
+    FillSettingsInternalEnd;
+
+    FillOSCQueryInternalStart
+        FillOSCQueryBoolParam(idMode);
+    FillOSCQueryBoolParam(loop);
+    FillOSCQueryInternalEnd
 };

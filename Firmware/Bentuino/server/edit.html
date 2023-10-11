@@ -5,7 +5,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script type="text/javascript" src="http://192.168.1.162/server/osc-browser.min.js"></script>
+    <script type="text/javascript" src="http://192.168.1.162/server/jquery.min.js"></script>
     <script type="text/javascript" src="/server/osc-browser.min.js"></script>
+    <script type="text/javascript" src="/server/jquery.min.js"></script>
     <title>Bentuino Settings</title>
     <style>
         body {
@@ -190,14 +192,20 @@
 
         var oscWS;
 
-        async function connectToServer() {
+        function connectToServer() {
             const editorContainer = document.getElementById('editor');
             editorContainer.innerHTML = 'Connecting to server...';
 
-            const response = await fetch("http://" + ip);
-            data = await response.json();
-            buildStructure();
-            initWebSocket();
+            $.get("http://" + ip, function (_data) {
+                data = _data;
+                console.log(data);
+                buildStructure();
+                initWebSocket();
+            });
+            // const response = await fetch("http://" + ip);
+            // data = await response.json();
+            // buildStructure();
+            // initWebSocket();
         }
 
         function initWebSocket() {
@@ -249,7 +257,6 @@
 
             for (const key in node.CONTENTS) {
                 var item = node.CONTENTS[key];
-
 
                 if (item.TYPE) {
                     // Handle parameters
@@ -383,7 +390,7 @@
         function restartDevice()
         {
             sendCommand('/root/restart');
-            connectToServer();
+            setTimeout(() => connectToServer(), 1000);
         }
         
         function processParameterFeedback(p, val) {

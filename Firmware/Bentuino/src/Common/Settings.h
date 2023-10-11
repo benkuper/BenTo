@@ -14,5 +14,18 @@ public:
     static bool saveSettings();
     static bool clearSettings();
 
-    static var getVal(JsonObject o, const String& name, var defaultVal);
+    template<class T>
+    static T getVal(JsonObject o, const String &name, T defaultVal)
+    {
+        if (o.containsKey(name))
+        {
+            return o[name].as<T>();
+        }
+        else
+        {
+            return defaultVal;
+        }
+    }
+
+    // static var getVal(JsonObject o, const String& name, var defaultVal);
 };

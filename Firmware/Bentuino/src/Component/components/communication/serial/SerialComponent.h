@@ -5,7 +5,7 @@ DeclareComponentSingleton(Serial, "serial",)
     char buffer[512];
     byte bufferIndex;
 
-    Parameter sendFeedback{"sendFeedback", false, var(), var(), true};
+    // Parameter sendFeedback{"sendFeedback", false, var(), var(), true};
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
