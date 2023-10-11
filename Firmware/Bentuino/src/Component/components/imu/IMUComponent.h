@@ -99,19 +99,11 @@ DeclareScriptFunctionReturn0(IMUComponent, getThrowState, uint32_t) { return thr
 
 
 HandleSetParamInternalStart
-CheckAndSetParam(connected);
 CheckAndSetParam(sendLevel);
 CheckAndSetParam(orientationSendRate);
 CheckAndSetParam(sdaPin);
 CheckAndSetParam(sclPin);
-CheckAndSetParam(orientation);
-CheckAndSetParam(accel);
-CheckAndSetParam(gyro);
-CheckAndSetParam(linearAccel);
-CheckAndSetParam(gravity);
 CheckAndSetParam(orientationXOffset);
-CheckAndSetParam(throwState);
-CheckAndSetParam(activity);
 CheckAndSetParam(flatThresholds);
 CheckAndSetParam(accelThresholds);
 CheckAndSetParam(diffThreshold);
@@ -119,21 +111,14 @@ CheckAndSetParam(semiFlatThreshold);
 CheckAndSetParam(loftieThreshold);
 CheckAndSetParam(singleThreshold);
 CheckAndSetParam(angleOffset);
-CheckAndSetParam(projectedAngle);
 CheckAndSetParam(xOnCalibration);
 HandleSetParamInternalEnd;
 
 FillSettingsInternalStart
-FillSettingsParam(connected);
 FillSettingsParam(sendLevel);
 FillSettingsParam(orientationSendRate);
 FillSettingsParam(sdaPin);
 FillSettingsParam(sclPin);
-// FillSettingsParam(orientation);
-// FillSettingsParam(accel);
-// FillSettingsParam(gyro);
-// FillSettingsParam(linearAccel);
-// FillSettingsParam(gravity);
 FillSettingsParam(orientationXOffset);
 FillSettingsParam(throwState);
 FillSettingsParam(activity);
@@ -144,7 +129,6 @@ FillSettingsParam(semiFlatThreshold);
 FillSettingsParam(loftieThreshold);
 FillSettingsParam(singleThreshold);
 FillSettingsParam(angleOffset);
-FillSettingsParam(projectedAngle);
 FillSettingsParam(xOnCalibration);
 FillSettingsInternalEnd;
 

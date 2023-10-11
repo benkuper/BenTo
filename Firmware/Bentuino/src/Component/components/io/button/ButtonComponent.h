@@ -25,38 +25,32 @@ public:
     DeclareComponentEventTypes(ShortPress, LongPress, VeryLongPress, MultiPress);
     DeclareComponentEventNames("ShortPress", "LongPress", "VeryLongPress", "MultiPress");
 
-// #if USE_SCRIPT
-//     LinkScriptFunctionsStart
-//         LinkScriptFunction(ButtonComponent, getState, i, );
-//     LinkScriptFunction(ButtonComponent, getMultipress, i, );
-//     LinkScriptFunctionsEnd
+    // #if USE_SCRIPT
+    //     LinkScriptFunctionsStart
+    //         LinkScriptFunction(ButtonComponent, getState, i, );
+    //     LinkScriptFunction(ButtonComponent, getMultipress, i, );
+    //     LinkScriptFunctionsEnd
 
-//     DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t)
-//     {
-//         return veryLongPress ? 3 : longPress ? 2
-//                                              : value;
-//     }
+    //     DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t)
+    //     {
+    //         return veryLongPress ? 3 : longPress ? 2
+    //                                              : value;
+    //     }
 
-//     DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) { return multiPressCount; }
-// #endif
+    //     DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) { return multiPressCount; }
+    // #endif
 
-    HandleSetParamInternalStart
-        HandleSetParamMotherClass(IOComponent)
-            CheckAndSetParam(multiPressCount);
-    CheckAndSetParam(longPress);
-    CheckAndSetParam(veryLongPress);
-    HandleSetParamInternalEnd;
+    // HandleSetParamInternalStart
+    //     HandleSetParamMotherClass(IOComponent)
+    //         HandleSetParamInternalEnd;
 
-    FillSettingsInternalStart
-        FillSettingsInternalMotherClass(IOComponent)
-            FillSettingsParam(multiPressCount);
-    FillSettingsParam(longPress);
-    FillSettingsParam(veryLongPress);
-    FillSettingsInternalEnd
+    // FillSettingsInternalStart
+    //     FillSettingsInternalMotherClass(IOComponent)
+    //         FillSettingsInternalEnd
 
         FillOSCQueryInternalStart
-            FillOSCQueryInternalMotherClass(IOComponent)
-                FillOSCQueryIntParam(multiPressCount);
+        FillOSCQueryInternalMotherClass(IOComponent)
+            FillOSCQueryIntParam(multiPressCount);
     FillOSCQueryBoolParam(longPress);
     FillOSCQueryBoolParam(veryLongPress);
     FillOSCQueryInternalEnd

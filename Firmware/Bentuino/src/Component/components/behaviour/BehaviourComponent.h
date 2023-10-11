@@ -71,7 +71,6 @@ DeclareComponent(Behaviour, "behaviour", )
     CheckAndSetParam(compareValue);
     CheckAndSetParam(validationTime);
     CheckAndSetParam(alwaysTrigger);
-    CheckAndSetParam(valid);
     CheckAndSetParam(triggerAction);
     CheckAndSetParam(triggerValue);
     HandleSetParamInternalEnd;
@@ -82,7 +81,6 @@ DeclareComponent(Behaviour, "behaviour", )
     FillSettingsParam(compareValue);
     FillSettingsParam(validationTime);
     FillSettingsParam(alwaysTrigger);
-    FillSettingsParam(valid);
      FillSettingsParam(triggerAction);
     FillSettingsParam(triggerValue);
     FillSettingsInternalEnd;

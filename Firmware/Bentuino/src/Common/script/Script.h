@@ -3,7 +3,7 @@
 #define SCRIPT_MAX_SIZE 16000
 #define WASM_STACK_SLOTS 2000
 #define SCRIPT_NATIVE_STACK_SIZE (16 * 1024)
-// #define WASM_MEMORY_LIMIT 4096
+#define WASM_MEMORY_LIMIT 4096
 #define WASM_ASYNC 0
 
 class Component;
@@ -21,7 +21,7 @@ public:
     Component *localComponent;
 
     IM3Runtime runtime;
-    // IM3Environment env;
+    IM3Environment env;
 
     IM3Function initFunc;
     IM3Function updateFunc;

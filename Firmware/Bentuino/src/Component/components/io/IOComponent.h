@@ -58,6 +58,7 @@ FillOSCQueryInternalStart
 FillOSCQueryIntParam(pin);
 FillOSCQueryIntParam(mode);
 FillOSCQueryBoolParam(inverted);
+FillOSCQueryFloatParam(value);
 FillOSCQueryInternalEnd
 
 EndDeclareComponent;

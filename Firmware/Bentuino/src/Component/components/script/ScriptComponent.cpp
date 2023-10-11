@@ -1,5 +1,6 @@
 bool ScriptComponent::initInternal(JsonObject o)
 {
+    script.init();
     return true;
 }
 
@@ -10,6 +11,7 @@ void ScriptComponent::updateInternal()
 
 void ScriptComponent::clearInternal()
 {
+    script.shutdown();
 }
 
 bool ScriptComponent::handleCommandInternal(const String &command, var *data, int numData)
