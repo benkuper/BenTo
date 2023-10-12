@@ -14,7 +14,7 @@
 PropFlasherPanel::PropFlasherPanel() :
 	ShapeShifterContentComponent("Firmware Uploader")
 {
-
+	filterKnownDevicesUI.reset(PropFlasher::getInstance()->filterKnownDevices->createToggle());
 	firmwareToUploadUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwType->createDefaultUI());
 	firmwareCustomFileUI.reset((StringParameterFileUI*)PropFlasher::getInstance()->fwFileParam->createStringParameterFileUI());
 	setWifiAfterFlashUI.reset(PropFlasher::getInstance()->setWifiAfterFlash->createToggle());
@@ -35,6 +35,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	wifiPassUI->customBGColor = BG_COLOR;
 	wifiPassUI->updateUIParams();
 
+	addAndMakeVisible(filterKnownDevicesUI.get());
 	addAndMakeVisible(firmwareToUploadUI.get());
 	addAndMakeVisible(firmwareCustomFileUI.get());
 	addAndMakeVisible(setWifiAfterFlashUI.get());
@@ -42,10 +43,17 @@ PropFlasherPanel::PropFlasherPanel() :
 	addAndMakeVisible(wifiPassUI.get());
 	addAndMakeVisible(flashAllUI.get());
 	addAndMakeVisible(progressUI.get());
+
+	SerialManager::getInstance()->addSerialManagerListener(this);
+	PropFlasher::getInstance()->filterKnownDevices->addAsyncCoalescedParameterListener(this);
+
+	updateInfos();
 }
 
 PropFlasherPanel::~PropFlasherPanel()
 {
+	if (SerialManager::getInstanceWithoutCreating()) SerialManager::getInstance()->removeSerialManagerListener(this);
+	if (PropFlasher::getInstanceWithoutCreating()) PropFlasher::getInstance()->filterKnownDevices->removeAsyncParameterListener(this);
 }
 
 void PropFlasherPanel::paint(Graphics& g)
@@ -71,19 +79,19 @@ void PropFlasherPanel::paint(Graphics& g)
 	g.drawText("2. Set Wifi Informations", wifiRect.withHeight(24), Justification::centred);
 	g.drawText("3. Upload Firmware", flashRect.withHeight(24), Justification::centred);
 
-
-
-	int numDevices = SerialManager::getInstance()->portInfos.size();
+	int numDevices = infos.size();
 
 	Rectangle<int> r = propInfosRect.reduced(10);
 	g.setColour(TEXT_COLOR);
 	g.setFont(16);
-	g.drawText(String(numDevices) + " Connected Devices", r.removeFromTop(20).toFloat(), Justification::centred);
-	g.setFont(12);
+	g.drawText(String(numDevices) + " Connected Devices", r.removeFromTop(30).toFloat(), Justification::centred);
 
-	for (auto& portInfo : SerialManager::getInstance()->portInfos)
+	r.removeFromTop(10);
+
+	g.setFont(12);
+	for (auto& info : infos)
 	{
-		g.drawText(portInfo->uniqueDescription, r.removeFromTop(14).toFloat(), Justification::centredLeft);
+		g.drawText(info->uniqueDescription, r.removeFromTop(16).toFloat(), Justification::centredLeft);
 	};
 }
 
@@ -92,7 +100,10 @@ void PropFlasherPanel::resized()
 	Rectangle<int> r = getLocalBounds().reduced(10);
 	r.removeFromTop(40);
 
-	propInfosRect = r.withWidth(400);
+	propInfosRect = r.withWidth(jmin<int>(400, r.getWidth() * .3f));
+
+	filterKnownDevicesUI->setBounds(propInfosRect.removeFromBottom(30).withSizeKeepingCentre(160, 20));
+
 	controlRect = r.withLeft(propInfosRect.getRight() + 10);
 
 	Rectangle<int> cr = controlRect.reduced(10);
@@ -120,6 +131,37 @@ void PropFlasherPanel::resized()
 	flashRect = cr.removeFromTop(140);
 	Rectangle<int> fr = flashRect.reduced(10);
 	fr.removeFromTop(20);
-	flashAllUI->setBounds(fr.removeFromTop(70).withSizeKeepingCentre(400, 50));
+	flashAllUI->setBounds(fr.removeFromTop(70).withSizeKeepingCentre(jmin(fr.getWidth(), 400), 50));
 	progressUI->setBounds(fr.removeFromBottom(40));
 }
+
+
+void PropFlasherPanel::updateInfos()
+{
+	infos = PropFlasher::getInstance()->getDevicesToFlash();
+}
+
+
+void PropFlasherPanel::portAdded(SerialDeviceInfo* info)
+{
+	updateInfos();
+	repaint();
+}
+
+
+
+void PropFlasherPanel::portRemoved(SerialDeviceInfo* info)
+{
+	updateInfos();
+	repaint();
+}
+
+void PropFlasherPanel::newMessage(const Parameter::ParameterEvent& e)
+{
+	if (e.parameter == PropFlasher::getInstance()->filterKnownDevices)
+	{
+		updateInfos();
+		repaint();
+	}
+}
+

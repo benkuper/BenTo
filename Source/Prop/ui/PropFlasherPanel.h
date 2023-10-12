@@ -11,7 +11,9 @@
 #pragma once
 
 class PropFlasherPanel :
-	public ShapeShifterContentComponent
+	public ShapeShifterContentComponent,
+	public SerialManager::SerialManagerListener,
+	public Parameter::AsyncListener
 {
 public:
 	PropFlasherPanel();
@@ -23,6 +25,10 @@ public:
 	Rectangle<int> wifiRect;
 	Rectangle<int> flashRect;
 
+	Array<SerialDeviceInfo*> infos;
+
+	std::unique_ptr<BoolToggleUI> filterKnownDevicesUI;
+
 	std::unique_ptr<EnumParameterUI> firmwareToUploadUI;
 	std::unique_ptr<StringParameterFileUI> firmwareCustomFileUI;
 	std::unique_ptr<BoolToggleUI> setWifiAfterFlashUI;
@@ -30,11 +36,14 @@ public:
 	std::unique_ptr<StringParameterUI> wifiPassUI;
 
 	std::unique_ptr<TriggerButtonUI> flashAllUI;
-
 	std::unique_ptr<FloatSliderUI> progressUI;
 
+	virtual void portAdded(SerialDeviceInfo* info) override;
+	virtual void portRemoved(SerialDeviceInfo* info) override;
 
+	virtual void newMessage(const Parameter::ParameterEvent& e) override;
 
+	void updateInfos();
 
 	void paint(Graphics& g) override;
 	void resized() override;

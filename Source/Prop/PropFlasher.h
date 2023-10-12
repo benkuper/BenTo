@@ -20,6 +20,8 @@ public:
 	PropFlasher();
 	~PropFlasher();
 
+	BoolParameter* filterKnownDevices;
+
 	EnumParameter* fwType;
 	File firmwareFile;
 	File partitionsFile;
@@ -41,8 +43,12 @@ public:
 
 	int numFlashingProps;
 
+	var availableFirmwares;
+
 	void onContainerParameterChanged(Parameter* p) override;
 	void onContainerTriggerTriggered(Trigger* t) override;
+
+	Array<SerialDeviceInfo*> getDevicesToFlash();
 
 	void flash();
 	void setAllWifi();

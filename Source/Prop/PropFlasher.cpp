@@ -17,6 +17,10 @@ PropFlasher::PropFlasher() :
 	ControllableContainer("Firmware Uploader"),
 	Thread("Firmware Uploader")
 {
+
+	filterKnownDevices = addBoolParameter("Filter Known Devices", "Only upload firmware on devices that are compatible. If you don't see your connect props on the list, try disabling this option.", true);
+
+
 	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
 	for (auto& def : PropManager::getInstance()->factory.defs)
 	{
@@ -50,6 +54,24 @@ PropFlasher::PropFlasher() :
 	{
 		firmwareFile = File(fwType->getValueData().toString());
 	}
+
+
+	//testing here, should come from internet
+
+	var fwData(new DynamicObject());
+	fwData.getDynamicObject()->setProperty("name", "Flowtoys Creators Club");
+	var vids;
+	vids.append(0x10c4);
+	var pids;
+	pids.append(0xea60);
+	fwData.getDynamicObject()->setProperty("vids", vids);
+	fwData.getDynamicObject()->setProperty("pids", pids);
+	fwData.getDynamicObject()->setProperty("version", "1.0.0");
+	fwData.getDynamicObject()->setProperty("date", "2021-01-01");
+	fwData.getDynamicObject()->setProperty("firmware", "");
+	fwData.getDynamicObject()->setProperty("filename", "creatorclub");
+
+	availableFirmwares.append(fwData);
 }
 
 PropFlasher::~PropFlasher()
@@ -89,6 +111,53 @@ void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 	//else if (t == setWifiTrigger) setAllWifi();
 }
 
+Array<SerialDeviceInfo*> PropFlasher::getDevicesToFlash()
+{
+	Array<SerialDeviceInfo*> infos;
+
+
+	if (filterKnownDevices->boolValue())
+	{
+		for (auto& info : SerialManager::getInstance()->portInfos)
+		{
+			bool foundVID = false;
+			bool foundPID = false;
+
+			for (int i = 0; i < availableFirmwares.size(); i++)
+			{
+				var vids = availableFirmwares[i].getDynamicObject()->getProperty("vids");
+				var pids = availableFirmwares[i].getDynamicObject()->getProperty("pids");
+
+				for (int n = 0; n < vids.size(); n++)
+				{
+					if ((int)vids[n] == info->vid)
+					{
+						foundVID = true;
+						break;
+					}
+				}
+
+				for (int n = 0; n < pids.size(); n++)
+				{
+					if ((int)pids[n] == info->pid)
+					{
+						foundPID = true;
+						break;
+					}
+				}
+			}
+
+			if (foundVID && foundPID) infos.addIfNotAlreadyThere(info);
+		}
+	}
+	else
+	{
+		infos.addArray(SerialManager::getInstance()->portInfos);
+	}
+
+	return infos;
+}
+
 void PropFlasher::flash()
 {
 	stopThread(1000);
@@ -121,7 +190,7 @@ void PropFlasher::flash()
 	flasher = espFolder.getChildFile("esptool");
 	app0Bin = espFolder.getChildFile("boot_app0.bin");
 	bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
-    
+
 #endif
 
 	if (!flasher.existsAsFile())
@@ -129,12 +198,12 @@ void PropFlasher::flash()
 		LOGERROR("Flasher file not found. It should be a file \"esptool\" inside Bento's Application folder. Expecting : " << flasher.getFullPathName());
 		return;
 	}
-    
-    if (!app0Bin.existsAsFile() || !bootloaderBin.existsAsFile())
-    {
-        LOGERROR("Bootloader files not found :\n" << app0Bin.getFullPathName() << "\n"<< bootloaderBin.getFullPathName());
-        return;
-    }
+
+	if (!app0Bin.existsAsFile() || !bootloaderBin.existsAsFile())
+	{
+		LOGERROR("Bootloader files not found :\n" << app0Bin.getFullPathName() << "\n" << bootloaderBin.getFullPathName());
+		return;
+	}
 
 	startThread();
 #else
@@ -178,7 +247,7 @@ void PropFlasher::setAllWifi()
 		s->writeString(wifiStr);
 		s->port->flush();
 		//s->close(); //no need to close
-		
+
 	}
 
 
@@ -192,25 +261,7 @@ void PropFlasher::setAllWifi()
 
 void PropFlasher::run()
 {
-	Array<SerialDeviceInfo*> infos;
-
-	for (auto& info : SerialManager::getInstance()->portInfos)
-	{
-		for (auto& vp : PropManager::getInstance()->vidpids)
-		{
-			if (info->vid == vp.vid && info->pid == vp.pid)
-			{
-				//SerialDevice* d = SerialManager::getInstance()->getPort(info, true, 115200);
-				//if (d == nullptr)
-				//{
-				//	LOGWARNING("Could not open port " << info->uniqueDescription);
-				//	continue;
-				//}
-
-				infos.addIfNotAlreadyThere(info);
-			}
-		}
-	}
+	Array<SerialDeviceInfo*> infos = getDevicesToFlash();
 
 	LOG("Flashing " << infos.size() << " devices...");
 
@@ -248,21 +299,21 @@ void PropFlasher::run()
 void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)
 {
 	//LOG("Flasher Data Received :\n" << data.toString());
-    if(data.toString().contains(wifiSSID->stringValue()+" : "+wifiPass->stringValue()))
-    {
-        LOG("Wifi is set for " << s->info->uniqueDescription);
-    }
+	if (data.toString().contains(wifiSSID->stringValue() + " : " + wifiPass->stringValue()))
+	{
+		LOG("Wifi is set for " << s->info->uniqueDescription);
+	}
 }
 
 bool PropFlasher::flashProp(const String& port)
 {
 	float startProgression = progression->floatValue();
 
-    String quotes = "\"";
+	String quotes = "\"";
 #if JUCE_MAC
-    quotes = "";
+	quotes = "";
 #endif
-    
+
 	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
 	parameters += " 0xe000 " + quotes + app0Bin.getFullPathName() + quotes;
 	parameters += " 0x1000 " + quotes + bootloaderBin.getFullPathName() + quotes;
@@ -276,8 +327,8 @@ bool PropFlasher::flashProp(const String& port)
 	cp.start(flasher.getFullPathName() + parameters);
 
 	bool errored = false;
-    
-    bool got100 = false;
+
+	bool got100 = false;
 	String buffer;
 	while (!errored && cp.isRunning())
 	{
@@ -296,8 +347,8 @@ bool PropFlasher::flashProp(const String& port)
 			}
 
 			StringArray prog = RegexFunctions::getFirstMatch("Writing.+\\(([0-9]+) %\\)", lines[i]);
-            
-            //LOG(lines[i]);
+
+			//LOG(lines[i]);
 			if (prog.size() > 1)
 			{
 				float relProg = prog[1].getFloatValue() / 100.0f;
@@ -306,25 +357,26 @@ bool PropFlasher::flashProp(const String& port)
 				{
 					progression->setValue(tProg); //not using 1 to avoid double 100% log from partitions and firmware.
 					LOG("Flashing... " << (int)(relProg * 100) << "%");
-				}else
-                {
-                    got100 = true;
-                }
+				}
+				else
+				{
+					got100 = true;
+				}
 			}
 			buffer = lines[lines.size() - 1];
 			wait(10);
 		}
 	}
-    
-    LOG(buffer);
-    
-    if(!got100)
-    {
-        LOGERROR("Something got wrong");
-        LOGERROR(cp.readAllProcessOutput());
-        errored = true;
-        
-    }
+
+	LOG(buffer);
+
+	if (!got100)
+	{
+		LOGERROR("Something got wrong");
+		LOGERROR(cp.readAllProcessOutput());
+		errored = true;
+
+	}
 	progression->setValue(startProgression + 1.0f / numFlashingProps);
 
 	if (errored || cp.readAllProcessOutput().toLowerCase().contains("error"))
