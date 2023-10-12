@@ -32,14 +32,19 @@
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
       <GROUP id="{46E5FDF7-71F8-AEEB-CF03-501B0190C17C}" name="WebAssembly">
         <GROUP id="{F6899AD0-CCDA-F91E-535C-DF42792C122B}" name="ui">
-          <FILE id="G7PlyO" name="WasmManagerUI.cpp" compile="1" resource="0"
-                file="Source/WebAssembly/ui/WasmManagerUI.cpp"/>
-          <FILE id="ySCMkq" name="WasmManagerUI.h" compile="0" resource="0" file="Source/WebAssembly/ui/WasmManagerUI.h"/>
+          <FILE id="G7PlyO" name="EmbeddedScriptManagerUI.cpp" compile="1" resource="0"
+                file="Source/WebAssembly/ui/EmbeddedScriptManagerUI.cpp"/>
+          <FILE id="ySCMkq" name="EmbeddedScriptManagerUI.h" compile="0" resource="0"
+                file="Source/WebAssembly/ui/EmbeddedScriptManagerUI.h"/>
         </GROUP>
-        <FILE id="Z536IZ" name="WasmManager.cpp" compile="1" resource="0" file="Source/WebAssembly/WasmManager.cpp"/>
-        <FILE id="oIKBnc" name="WasmManager.h" compile="0" resource="0" file="Source/WebAssembly/WasmManager.h"/>
-        <FILE id="xHpf6Q" name="WasmScript.cpp" compile="1" resource="0" file="Source/WebAssembly/WasmScript.cpp"/>
-        <FILE id="EvI5IS" name="WasmScript.h" compile="0" resource="0" file="Source/WebAssembly/WasmScript.h"/>
+        <FILE id="Z536IZ" name="EmbeddedScriptManager.cpp" compile="1" resource="0"
+              file="Source/WebAssembly/EmbeddedScriptManager.cpp"/>
+        <FILE id="oIKBnc" name="EmbeddedScriptManager.h" compile="0" resource="0"
+              file="Source/WebAssembly/EmbeddedScriptManager.h"/>
+        <FILE id="xHpf6Q" name="EmbeddedScript.cpp" compile="1" resource="0"
+              file="Source/WebAssembly/EmbeddedScript.cpp"/>
+        <FILE id="EvI5IS" name="EmbeddedScript.h" compile="0" resource="0"
+              file="Source/WebAssembly/EmbeddedScript.h"/>
       </GROUP>
       <GROUP id="{6904D42F-2293-0320-A5A4-5AE3259D75F7}" name="Identification">
         <FILE id="s6Jv8B" name="IdentificationRule.cpp" compile="1" resource="0"
@@ -124,71 +129,71 @@
               file="Source/Video/VideoIncludes.cpp"/>
         <FILE id="F8uF0S" name="VideoIncludes.h" compile="0" resource="0" file="Source/Video/VideoIncludes.h"/>
       </GROUP>
-      <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Timeline">
-        <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
-          <GROUP id="{23F1BF42-F3AE-5D51-2965-25B23F9D4FCF}" name="VideoLayer">
-            <GROUP id="{E5D80CDA-116E-3B37-6E0B-8F191EC18795}" name="ui">
-              <FILE id="tqI7dU" name="VideoClipUI.cpp" compile="0" resource="0" file="Source/Timeline/layers/Video/ui/VideoClipUI.cpp"/>
-              <FILE id="OSLf4P" name="VideoClipUI.h" compile="0" resource="0" file="Source/Timeline/layers/Video/ui/VideoClipUI.h"/>
-              <FILE id="wCPplq" name="VideoLayerTimeline.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Video/ui/VideoLayerTimeline.cpp"/>
-              <FILE id="y8N0W4" name="VideoLayerTimeline.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Video/ui/VideoLayerTimeline.h"/>
+      <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Sequence">
+        <GROUP id="{55372100-8F51-FE9C-964C-BB7E22D9A52F}" name="layers">
+          <GROUP id="{078AFBB6-1C8F-2918-4505-DEFF1727BD0E}" name="Block">
+            <GROUP id="{259C5B2F-9230-F133-BB88-C1F0CD0E2ADE}" name="ui">
+              <FILE id="qzZvuJ" name="LightBlockClipManagerUI.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipManagerUI.cpp"/>
+              <FILE id="Em1eCh" name="LightBlockClipManagerUI.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipManagerUI.h"/>
+              <FILE id="a6fxIF" name="LightBlockClipUI.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipUI.cpp"/>
+              <FILE id="iQER9y" name="LightBlockClipUI.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipUI.h"/>
+              <FILE id="xmWBet" name="LightBlockLayerPanel.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerPanel.cpp"/>
+              <FILE id="PkE5Qw" name="LightBlockLayerPanel.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerPanel.h"/>
+              <FILE id="YSARUz" name="LightBlockLayerTimeline.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerTimeline.cpp"/>
+              <FILE id="gLniQk" name="LightBlockLayerTimeline.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerTimeline.h"/>
             </GROUP>
-            <FILE id="MbTp6E" name="VideoClip.cpp" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoClip.cpp"/>
-            <FILE id="FjLOAO" name="VideoClip.h" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoClip.h"/>
-            <FILE id="gZZ9wM" name="VideoLayer.cpp" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoLayer.cpp"/>
-            <FILE id="prYSX4" name="VideoLayer.h" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoLayer.h"/>
+            <FILE id="yjoced" name="LightBlockClip.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClip.cpp"/>
+            <FILE id="NzOxX4" name="LightBlockClip.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClip.h"/>
+            <FILE id="ijaJVq" name="LightBlockClipManager.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClipManager.cpp"/>
+            <FILE id="qNTR3m" name="LightBlockClipManager.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClipManager.h"/>
+            <FILE id="OEjyL9" name="LightBlockEffect.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockEffect.cpp"/>
+            <FILE id="P5f0qR" name="LightBlockEffect.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockEffect.h"/>
+            <FILE id="WzhMCD" name="LightBlockLayer.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockLayer.cpp"/>
+            <FILE id="Wf8pOF" name="LightBlockLayer.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockLayer.h"/>
           </GROUP>
-          <GROUP id="{A00ED23C-4B48-75CB-7911-E2C659ADA7F6}" name="BlockLayer">
-            <GROUP id="{8B8B8A4A-F021-600B-344E-0D211A44C9D8}" name="ui">
-              <FILE id="YvFGK0" name="LightBlockClipManagerUI.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp"/>
-              <FILE id="K8SGh7" name="LightBlockClipManagerUI.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.h"/>
-              <FILE id="pdpqJ7" name="LightBlockClipUI.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipUI.cpp"/>
-              <FILE id="Bubcp9" name="LightBlockClipUI.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipUI.h"/>
-              <FILE id="tSDDee" name="LightBlockLayerPanel.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp"/>
-              <FILE id="owrELj" name="LightBlockLayerPanel.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h"/>
-              <FILE id="djPcg4" name="LightBlockLayerTimeline.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.cpp"/>
-              <FILE id="gxLhFE" name="LightBlockLayerTimeline.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.h"/>
+          <GROUP id="{73DD235E-2A34-48E3-F815-5FFF5476072D}" name="Video">
+            <GROUP id="{8C6013BA-62BC-4BAD-CA77-F2631737559A}" name="ui">
+              <FILE id="Zp8z7Q" name="VideoClipUI.cpp" compile="0" resource="0" file="Source/Sequence/layers/Video/ui/VideoClipUI.cpp"/>
+              <FILE id="YX3HKn" name="VideoClipUI.h" compile="0" resource="0" file="Source/Sequence/layers/Video/ui/VideoClipUI.h"/>
+              <FILE id="dq5vDW" name="VideoLayerTimeline.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Video/ui/VideoLayerTimeline.cpp"/>
+              <FILE id="SQ1Ar1" name="VideoLayerTimeline.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Video/ui/VideoLayerTimeline.h"/>
             </GROUP>
-            <FILE id="wEJXJP" name="LightBlockClip.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClip.cpp"/>
-            <FILE id="VxyeHG" name="LightBlockClip.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClip.h"/>
-            <FILE id="R5TU19" name="LightBlockClipManager.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClipManager.cpp"/>
-            <FILE id="c5NS7j" name="LightBlockClipManager.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClipManager.h"/>
-            <FILE id="ihqs03" name="LightBlockEffect.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockEffect.cpp"/>
-            <FILE id="Wouh1m" name="LightBlockEffect.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockEffect.h"/>
-            <FILE id="t8NxFM" name="LightBlockLayer.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockLayer.cpp"/>
-            <FILE id="lOb1Wl" name="LightBlockLayer.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockLayer.h"/>
+            <FILE id="kRzoij" name="VideoClip.cpp" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoClip.cpp"/>
+            <FILE id="afUgbp" name="VideoClip.h" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoClip.h"/>
+            <FILE id="YdrCia" name="VideoLayer.cpp" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoLayer.cpp"/>
+            <FILE id="fTjiT2" name="VideoLayer.h" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoLayer.h"/>
           </GROUP>
         </GROUP>
-        <FILE id="GGKa6S" name="TimelineBlockSequence.cpp" compile="0" resource="0"
-              file="Source/Timeline/TimelineBlockSequence.cpp"/>
-        <FILE id="gsgndr" name="TimelineBlockSequence.h" compile="0" resource="0"
-              file="Source/Timeline/TimelineBlockSequence.h"/>
-        <FILE id="TrhEoc" name="TimelineEditor.cpp" compile="0" resource="0"
-              file="Source/Timeline/TimelineEditor.cpp"/>
-        <FILE id="xhjR6g" name="TimelineEditor.h" compile="0" resource="0"
-              file="Source/Timeline/TimelineEditor.h"/>
-        <FILE id="kLD7ZB" name="TimelineIncludes.cpp" compile="1" resource="0"
-              file="Source/Timeline/TimelineIncludes.cpp"/>
-        <FILE id="cR2T7P" name="TimelineIncludes.h" compile="0" resource="0"
-              file="Source/Timeline/TimelineIncludes.h"/>
+        <FILE id="mRagx6" name="SequenceBlockSequence.cpp" compile="0" resource="0"
+              file="Source/Sequence/SequenceBlockSequence.cpp"/>
+        <FILE id="Wgrg9p" name="SequenceBlockSequence.h" compile="0" resource="0"
+              file="Source/Sequence/SequenceBlockSequence.h"/>
+        <FILE id="oDmH3o" name="BentoSequenceEditor.cpp" compile="0" resource="0"
+              file="Source/Sequence/BentoSequenceEditor.cpp"/>
+        <FILE id="cOYZSX" name="BentoSequenceEditor.h" compile="0" resource="0"
+              file="Source/Sequence/BentoSequenceEditor.h"/>
+        <FILE id="KdIeor" name="SequenceIncludes.cpp" compile="1" resource="0"
+              file="Source/Sequence/SequenceIncludes.cpp"/>
+        <FILE id="YuAyPK" name="SequenceIncludes.h" compile="0" resource="0"
+              file="Source/Sequence/SequenceIncludes.h"/>
       </GROUP>
       <GROUP id="{B442BAE5-1BDF-4D74-47E1-DC8E4A866FEF}" name="Node">
         <FILE id="ZalxzQ" name="NodeIncludes.cpp" compile="1" resource="0"
@@ -293,14 +298,6 @@
       </GROUP>
       <GROUP id="{102A14FE-203D-7048-FD34-335BF3C28E15}" name="LightBlock">
         <GROUP id="{048BDCCA-51F2-B1DF-AC0B-49ECF3B81664}" name="model">
-          <FILE id="jOUL4M" name="LightBlockModelGroup.cpp" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockModelGroup.cpp"/>
-          <FILE id="VPjW7n" name="LightBlockModelGroup.h" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockModelGroup.h"/>
-          <FILE id="K7pG3d" name="LightBlockColorProvider.cpp" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockColorProvider.cpp"/>
-          <FILE id="h3OveU" name="LightBlockColorProvider.h" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockColorProvider.h"/>
           <GROUP id="{D095B248-F9F6-57FA-ADF5-9C28C09825C8}" name="preset">
             <FILE id="UJIOru" name="LightBlockModelPreset.cpp" compile="0" resource="0"
                   file="Source/LightBlock/model/preset/LightBlockModelPreset.cpp"/>
@@ -312,6 +309,10 @@
                   resource="0" file="Source/LightBlock/model/preset/LightBlockModelPresetManager.h"/>
           </GROUP>
           <GROUP id="{CE00199C-474B-BD58-0F61-5FF5F410A6CD}" name="ui">
+            <FILE id="K3xW1L" name="LightBlockColorProviderEditor.cpp" compile="0"
+                  resource="0" file="Source/LightBlock/model/ui/LightBlockColorProviderEditor.cpp"/>
+            <FILE id="go7TrD" name="LightBlockColorProviderEditor.h" compile="0"
+                  resource="0" file="Source/LightBlock/model/ui/LightBlockColorProviderEditor.h"/>
             <FILE id="zc95pL" name="LightBlockModelGroupUI.cpp" compile="0" resource="0"
                   file="Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp"/>
             <FILE id="M4rmmU" name="LightBlockModelGroupUI.h" compile="0" resource="0"
@@ -338,10 +339,11 @@
                   file="Source/LightBlock/model/ui/LightBlockModelUI.h"/>
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
-            <GROUP id="{EE5C0264-0254-0301-E4F8-139423483011}" name="wasm">
-              <FILE id="hCW9le" name="WasmBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/wasm/WasmBlock.cpp"
-                    xcodeResource="0"/>
-              <FILE id="aHyxRW" name="WasmBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/wasm/WasmBlock.h"/>
+            <GROUP id="{EE5C0264-0254-0301-E4F8-139423483011}" name="embeddedscript">
+              <FILE id="tGiwQF" name="EmbeddedScriptBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/embeddedscript/EmbeddedScriptBlock.cpp"/>
+              <FILE id="pC9M6J" name="EmbeddedScriptBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/embeddedscript/EmbeddedScriptBlock.h"/>
             </GROUP>
             <GROUP id="{D937E358-C3AF-2A4E-107D-7B9701E30F09}" name="shape">
               <FILE id="FO2Ik9" name="PropShapeBlock.h" compile="0" resource="0"
@@ -354,12 +356,6 @@
                     file="Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp"/>
               <FILE id="CKtIqA" name="LightBlockFilter.h" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/filters/LightBlockFilter.h"/>
-              <GROUP id="{1E09FF80-0519-21FD-56A2-C7F7A294CF88}" name="script">
-                <FILE id="QMkX5k" name="ScriptBlockFilter.cpp" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.cpp"/>
-                <FILE id="cqWnRz" name="ScriptBlockFilter.h" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.h"/>
-              </GROUP>
               <GROUP id="{54983641-858F-4D3C-1698-66878E9EF55F}" name="generic">
                 <GROUP id="{6F459FB5-88B1-3AF9-62EA-A9BC94718E1C}" name="brightnesscontrast">
                   <FILE id="cY9bTK" name="BrightnessContrastBlockFilter.cpp" compile="0"
@@ -398,35 +394,37 @@
             </GROUP>
             <GROUP id="{40CD7123-FB3D-52B3-808A-2429C88F4ADF}" name="video">
               <GROUP id="{9264E4A8-3C60-EAC1-E633-8E38B9D6AC31}" name="ui">
-                <FILE id="Zle69A" name="LiveFeedBlockUI.cpp" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/video/ui/LiveFeedBlockUI.cpp"/>
-                <FILE id="sFzGot" name="LiveFeedBlockUI.h" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/video/ui/LiveFeedBlockUI.h"/>
+                <FILE id="Zle69A" name="SharedTextureBlockUI.cpp" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/video/ui/SharedTextureBlockUI.cpp"/>
+                <FILE id="sFzGot" name="SharedTextureBlockUI.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/video/ui/SharedTextureBlockUI.h"/>
               </GROUP>
-              <FILE id="fNmZwX" name="LiveFeedBlock.cpp" compile="0" resource="0"
-                    file="Source/LightBlock/model/blocks/video/LiveFeedBlock.cpp"/>
-              <FILE id="FSizg9" name="LiveFeedBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/LiveFeedBlock.h"/>
-              <FILE id="Dqo2jj" name="TextureBlock.cpp" compile="0" resource="0"
-                    file="Source/LightBlock/model/blocks/video/TextureBlock.cpp"/>
-              <FILE id="DlbLE0" name="TextureBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/TextureBlock.h"/>
-              <FILE id="ntFSJH" name="VideoBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
-              <FILE id="eocegK" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
+              <FILE id="fNmZwX" name="SharedTextureBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/SharedTextureBlock.cpp"/>
+              <FILE id="FSizg9" name="SharedTextureBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/SharedTextureBlock.h"/>
+              <FILE id="Dqo2jj" name="VideoBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
+              <FILE id="DlbLE0" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
+              <FILE id="ntFSJH" name="VideoFileBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/VideoFileBlock.cpp"/>
+              <FILE id="eocegK" name="VideoFileBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/VideoFileBlock.h"/>
             </GROUP>
             <GROUP id="{C3E304E5-69B5-CD46-F35F-67763032BEA6}" name="pattern">
               <FILE id="RcwkQf" name="PatternBlock.cpp" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/pattern/PatternBlock.cpp"/>
               <FILE id="qnd4Dp" name="PatternBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PatternBlock.h"/>
             </GROUP>
-            <GROUP id="{44802627-FF3C-1EE6-7861-1A5D57732488}" name="timeline">
-              <GROUP id="{243F0BA7-213E-1A5E-0ED9-E6892C4F0A08}" name="ui">
-                <FILE id="ldHNpi" name="TimelineBlockUI.cpp" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp"/>
-                <FILE id="TfnA1b" name="TimelineBlockUI.h" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h"/>
+            <GROUP id="{44802627-FF3C-1EE6-7861-1A5D57732488}" name="sequence">
+              <GROUP id="{FA40B911-1153-9327-5B1E-65A05AE492FC}" name="ui">
+                <FILE id="ZctWGU" name="SequenceBlockUI.cpp" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/sequence/ui/SequenceBlockUI.cpp"/>
+                <FILE id="N9zRTU" name="SequenceBlockUI.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/sequence/ui/SequenceBlockUI.h"/>
               </GROUP>
-              <FILE id="gDwEqG" name="TimelineBlock.cpp" compile="0" resource="0"
-                    file="Source/LightBlock/model/blocks/timeline/TimelineBlock.cpp"/>
-              <FILE id="LU8ewB" name="TimelineBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/timeline/TimelineBlock.h"/>
+              <FILE id="inYxhw" name="SequenceBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/sequence/SequenceBlock.cpp"/>
+              <FILE id="sjsC45" name="SequenceBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/sequence/SequenceBlock.h"/>
             </GROUP>
             <GROUP id="{65EF9CB3-D01F-96FC-4333-04140ECFDA46}" name="node">
               <GROUP id="{29B62111-FFD9-CC84-8FD5-B10C2394A2E9}" name="ui">
@@ -436,11 +434,21 @@
               <FILE id="N7GTzt" name="NodeBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.cpp"/>
               <FILE id="dbYEkI" name="NodeBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.h"/>
             </GROUP>
-            <GROUP id="{5F6001C4-8152-D9AB-3AB2-916147B8D27B}" name="script">
-              <FILE id="qs3dXw" name="ScriptBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/script/ScriptBlock.cpp"/>
-              <FILE id="ylGCjQ" name="ScriptBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/script/ScriptBlock.h"/>
+            <GROUP id="{5F6001C4-8152-D9AB-3AB2-916147B8D27B}" name="streamingscript">
+              <FILE id="Uckekd" name="StreamingScriptBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/streamingscript/StreamingScriptBlock.cpp"/>
+              <FILE id="H6O24S" name="StreamingScriptBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/streamingscript/StreamingScriptBlock.h"/>
             </GROUP>
           </GROUP>
+          <FILE id="jOUL4M" name="LightBlockModelGroup.cpp" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModelGroup.cpp"/>
+          <FILE id="VPjW7n" name="LightBlockModelGroup.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModelGroup.h"/>
+          <FILE id="K7pG3d" name="LightBlockColorProvider.cpp" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockColorProvider.cpp"/>
+          <FILE id="h3OveU" name="LightBlockColorProvider.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockColorProvider.h"/>
           <FILE id="VHwqee" name="LightBlockModel.cpp" compile="0" resource="0"
                 file="Source/LightBlock/model/LightBlockModel.cpp"/>
           <FILE id="Ajpb7J" name="LightBlockModel.h" compile="0" resource="0"

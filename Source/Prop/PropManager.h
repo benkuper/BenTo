@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    PropManager.h
-    Created: 10 Apr 2018 6:59:29pm
-    Author:  Ben
+	PropManager.h
+	Created: 10 Apr 2018 6:59:29pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -28,8 +28,8 @@ class PropManager :
 {
 public:
 	juce_DeclareSingleton(PropManager, true)
-	
-	PropManager();
+
+		PropManager();
 	~PropManager();
 
 
@@ -37,12 +37,12 @@ public:
 	OSCReceiver receiver;
 
 	ControllableContainer familiesCC;
-	Array<PropFamily *> families;
+	Array<PropFamily*> families;
 	Factory<Prop> factory;
-	
+
 	const int localPort = 10000;
 
-	Trigger * autoAssignIdTrigger;
+	Trigger* autoAssignIdTrigger;
 	Trigger* clearAll;
 	BoolParameter* disablePreview;
 
@@ -82,25 +82,27 @@ public:
 	void setupReceiver();
 
 	Prop* createPropIfNotExist(const String& type, const String& host, const String& id);
-	Prop * getPropWithHardwareId(const String &hardwareId);
-	Prop * getPropWithId(int id, Prop * excludeProp = nullptr);
+	Prop* getPropWithHardwareId(const String& hardwareId);
+	Prop* getPropWithId(int id, Prop* excludeProp = nullptr);
 
-	PropFamily * getFamilyWithName(StringRef familyName);
+	PropFamily* getFamilyWithName(StringRef familyName);
 
-	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
+	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
-	void addItemInternal(Prop * p, var) override;
-	void removeItemInternal(Prop * p) override;
+	void addItemInternal(Prop* p, var) override;
+	void addItemsInternal(Array<Prop*> props, var) override;
+	void removeItemInternal(Prop* p) override;
+	void removeItemsInternal(Array<Prop*> props) override;
 
 	void clear() override;
 
 	int getFirstAvailableID();
-	void propIDChanged(Prop * p, int previousID) override;
+	void propIDChanged(Prop* p, int previousID) override;
 
 	// Inherited via Listener
-	virtual void oscMessageReceived(const OSCMessage & message) override;
+	virtual void oscMessageReceived(const OSCMessage& message) override;
 
-	void serviceAdded(ZeroconfManager::ServiceInfo * s) override;
+	void serviceAdded(ZeroconfManager::ServiceInfo* s) override;
 
 	void updatePropsAndFamiliesDefinitions();
 

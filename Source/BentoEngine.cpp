@@ -19,8 +19,8 @@
 #include "Common/Serial/SerialManager.h"
 //#include "WebServer/BentoWebServer.h"
 #include "BentoSettings.h"
-#include "WebAssembly/WasmManager.h"
-#include "Timeline/TimelineBlockSequence.h"
+#include "WebAssembly/EmbeddedScriptManager.h"
+#include "Sequence/SequenceIncludes.h"
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento"),
@@ -31,7 +31,7 @@ BentoEngine::BentoEngine() :
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
 	addChildControllableContainer(Spatializer::getInstance());
-	addChildControllableContainer(WasmManager::getInstance());
+	addChildControllableContainer(EmbeddedScriptManager::getInstance());
 
 	remoteHost = ioCC.addStringParameter("Remote Host", "Global remote host to send OSC to", "127.0.0.1");
 	remotePort = ioCC.addIntParameter("Remote port", "Remote port to send OSC to", 43001, 1024, 65535);
@@ -74,7 +74,7 @@ BentoEngine::~BentoEngine()
 	Spatializer::deleteInstance();
 
 	ZeroconfManager::deleteInstance();
-	WasmManager::deleteInstance();
+	EmbeddedScriptManager::deleteInstance();
 
 	PropFlasher::deleteInstance();
 }
@@ -84,7 +84,7 @@ void BentoEngine::clearInternal()
 	PropManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
 	Spatializer::getInstance()->clear();
-	WasmManager::getInstance()->clear();
+	EmbeddedScriptManager::getInstance()->clear();
 
 	projectName->resetValue();
 }
@@ -182,7 +182,7 @@ void BentoEngine::processMessage(const OSCMessage& m)
 		String modelName = OSCHelpers::getStringArg(m[0]);
 		LightBlockModel* lm = LightBlockModelLibrary::getInstance()->getModelWithName(modelName);
 
-		if (TimelineBlock* b = dynamic_cast<TimelineBlock*>(lm))
+		if (BentoSequenceBlock* b = dynamic_cast<BentoSequenceBlock*>(lm))
 		{
 			Array<Prop*> props;
 			if (m.size() == 1) props.addArray(PropManager::getInstance()->items);
@@ -202,9 +202,9 @@ void BentoEngine::processMessage(const OSCMessage& m)
 	}
 	else if (aList[1] == "stopAllSequences")
 	{
-		for (auto& b : LightBlockModelLibrary::getInstance()->timelineBlocks.items)
+		for (auto& b : LightBlockModelLibrary::getInstance()->sequenceBlocks.items)
 		{
-			if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(b)) tb->sequence->stopTrigger->trigger();
+			if (BentoSequenceBlock* tb = dynamic_cast<BentoSequenceBlock*>(b)) tb->sequence->stopTrigger->trigger();
 		}
 	}
 }
@@ -221,8 +221,8 @@ var BentoEngine::getJSONData()
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
 
-	var wasmData = WasmManager::getInstance()->getJSONData();
-	if (!wasmData.isVoid() && wasmData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(WasmManager::getInstance()->shortName, wasmData);
+	var wasmData = EmbeddedScriptManager::getInstance()->getJSONData();
+	if (!wasmData.isVoid() && wasmData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(EmbeddedScriptManager::getInstance()->shortName, wasmData);
 
 	return data;
 }
@@ -245,7 +245,7 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask
 	propTask->setProgress(1);
 	propTask->end();
 
-	WasmManager::getInstance()->loadJSONData(data.getProperty(WasmManager::getInstance()->shortName, var()));
+	EmbeddedScriptManager::getInstance()->loadJSONData(data.getProperty(EmbeddedScriptManager::getInstance()->shortName, var()));
 
 
 }

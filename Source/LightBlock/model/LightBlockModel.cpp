@@ -15,7 +15,7 @@ LightBlockModel::LightBlockModel(const String &name, var params, ProviderType pr
 	modelNotifier(5)
 {
 	setHasCustomColor(true);
-	itemColor->hideInEditor = false;
+	//itemColor->hideInEditor = true;
 
 	itemDataType = "LightBlockModel";
 	paramsContainer.reset(new ControllableContainer("Parameters"));

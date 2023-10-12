@@ -8,25 +8,28 @@
   ==============================================================================
 */
 
-juce_ImplementSingleton(LightBlockModelLibrary)
 
+#include "LightBlock/LightBlockIncludes.h"
+
+juce_ImplementSingleton(LightBlockModelLibrary)
 
 LightBlockModelLibrary::LightBlockModelLibrary() :
 	ControllableContainer("Library"),
-	genericBlocks("Generic"),
-	liveFeedBlocks("Live Feed", UserLightBlockModelManager::LIVE_FEED),
+	patternBlocks("Patterns"),
+	//videoBlocks("Live Feed", UserLightBlockModelManager::LIVE_FEED),
 	videoBlocks("Video", UserLightBlockModelManager::VIDEO),
 	pictureBlocks("Pictures", UserLightBlockModelManager::PICTURE),
 	nodeBlocks("Nodes", UserLightBlockModelManager::NODE),
-	scriptBlocks("Scripts", UserLightBlockModelManager::SCRIPT),
-	timelineBlocks("Timeline", UserLightBlockModelManager::TIMELINE),
-	genericFilterBlocks("Generic Filters")
+	streamingScriptBlocks("Streaming Scripts", UserLightBlockModelManager::STREAMING_SCRIPT),
+	embeddedScriptBlocks("Embedded Scripts", UserLightBlockModelManager::EMBEDDED_SCRIPT),
+	sequenceBlocks("Sequences", UserLightBlockModelManager::SEQUENCE)
+	//genericFilterBlocks("Generic Filters")
 {
 
-	scriptBlocks.itemDataType = "Script";
-	scriptBlocks.itemDataType = "Wasm";
+	streamingScriptBlocks.itemDataType = "StreaminScript";
+	embeddedScriptBlocks.itemDataType = "EmbeddedScript";
 	pictureBlocks.itemDataType = "Picture";
-	liveFeedBlocks.itemDataType = "LiveFeed";
+	//videoBlocks.itemDataType = "SharedTexture";
 	videoBlocks.itemDataType = "Video";
 	nodeBlocks.itemDataType = "Node";
 
@@ -39,44 +42,43 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	multiPointBlock.reset(new MultiPointPattern());
 	rangeBlock.reset(new RangePattern());
 
-	//videoBlock.reset(new VideoBlock());;
+	//VideoFileBlock.reset(new VideoFileBlock());;
 	//shapeBlock.reset(new ShapeEditorBlock());;
 	//dmxBlock.reset(new DMXBlock());
 
-	genericBlocks.addChildControllableContainer(solidColorBlock.get());
-	genericBlocks.addChildControllableContainer(rainbowBlock.get());
-	genericBlocks.addChildControllableContainer(strobeBlock.get());
-	genericBlocks.addChildControllableContainer(noiseBlock.get());
-	genericBlocks.addChildControllableContainer(pointBlock.get());
-	genericBlocks.addChildControllableContainer(multiPointBlock.get());
-	genericBlocks.addChildControllableContainer(rangeBlock.get());
+	patternBlocks.addChildControllableContainer(solidColorBlock.get());
+	patternBlocks.addChildControllableContainer(rainbowBlock.get());
+	patternBlocks.addChildControllableContainer(strobeBlock.get());
+	patternBlocks.addChildControllableContainer(noiseBlock.get());
+	patternBlocks.addChildControllableContainer(pointBlock.get());
+	patternBlocks.addChildControllableContainer(multiPointBlock.get());
+	patternBlocks.addChildControllableContainer(rangeBlock.get());
 
-	addChildControllableContainer(&genericBlocks);
+	addChildControllableContainer(&patternBlocks);
 
-	//liveFeedBlocks.addChildControllableContainer(videoBlock.get());
-	//liveFeedBlocks.addChildControllableContainer(shapeBlock.get());
-	//liveFeedBlocks.addChildControllableContainer(dmxBlock.get());
-	addChildControllableContainer(&liveFeedBlocks);
+	//videoBlocks.addChildControllableContainer(VideoFileBlock.get());
+	//videoBlocks.addChildControllableContainer(shapeBlock.get());
+	//videoBlocks.addChildControllableContainer(dmxBlock.get());
+	//addChildControllableContainer(&videoBlocks);
 	addChildControllableContainer(&videoBlocks);
 
 	addChildControllableContainer(&pictureBlocks);
 	addChildControllableContainer(&nodeBlocks);
-	addChildControllableContainer(&scriptBlocks);
-	addChildControllableContainer(&wasmBlocks);
-	addChildControllableContainer(&timelineBlocks);
+	addChildControllableContainer(&streamingScriptBlocks);
+	addChildControllableContainer(&embeddedScriptBlocks);
+	addChildControllableContainer(&sequenceBlocks);
 
-
-
-	remapBlock.reset(new RemapBlockFilter());
+	/*remapBlock.reset(new RemapBlockFilter());
 	hsvBlock.reset(new HSVBlockFilter());
-	brightContrastBlock.reset(new BrightnessContrastBlockFilter());
+	brightContrastBlock.reset(new BrightnessContrastBlockFilter());*/
 
-	addChildControllableContainer(&genericFilterBlocks);
-	genericFilterBlocks.addChildControllableContainer(remapBlock.get());
-	genericFilterBlocks.addChildControllableContainer(hsvBlock.get());
-	genericFilterBlocks.addChildControllableContainer(brightContrastBlock.get());
+	//addChildControllableContainer(&genericFilterBlocks);
+	//genericFilterBlocks.addChildControllableContainer(remapBlock.get());
+	//genericFilterBlocks.addChildControllableContainer(hsvBlock.get());
+	//genericFilterBlocks.addChildControllableContainer(brightContrastBlock.get());
 
 	iconSize = addIntParameter("Icon size", "Size of library icons", 70, 16, 120);
+	iconSize->hideInEditor = true;
 }
 
 LightBlockModelLibrary::~LightBlockModelLibrary()
@@ -87,12 +89,11 @@ LightBlockModelLibrary::~LightBlockModelLibrary()
 
 void LightBlockModelLibrary::clear()
 {
-	Array<LightBlockModel *> models = getAllModels(false);
-	timelineBlocks.clear();
-	liveFeedBlocks.clear();
+	Array<LightBlockModel*> models = getAllModels(false);
+	sequenceBlocks.clear();
 	videoBlocks.clear();
-	scriptBlocks.clear();
-	for (auto &m : models) m->clear();
+	streamingScriptBlocks.clear();
+	for (auto& m : models) m->clear();
 	pictureBlocks.clear();
 	nodeBlocks.clear();
 }
@@ -101,51 +102,47 @@ var LightBlockModelLibrary::getJSONData()
 {
 	var data = ControllableContainer::getJSONData();
 
-	var gData = genericBlocks.getJSONData();
-	if(gData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("generic", gData);
-	
+	var gData = patternBlocks.getJSONData();
+	if (gData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(patternBlocks.shortName, gData);
+
 	var uData = pictureBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("pictures", uData);
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(pictureBlocks.shortName, uData);
 	uData = nodeBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("nodes", uData);
-	uData = scriptBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("scripts", uData);
-	uData = wasmBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("wasm", uData);
-	uData = timelineBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("timelines", uData);
-	uData = liveFeedBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("liveFeeds", uData);
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(nodeBlocks.shortName, uData);
+	uData = streamingScriptBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(streamingScriptBlocks.shortName, uData);
+	uData = embeddedScriptBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(embeddedScriptBlocks.shortName, uData);
+	uData = sequenceBlocks.getJSONData();
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(sequenceBlocks.shortName, uData);
 	uData = videoBlocks.getJSONData();
-	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("video", uData);
-
-
-	var fData = genericFilterBlocks.getJSONData();
-	if (fData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("genericFilters", fData);
+	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(videoBlocks.shortName, uData);
+	
+	/*var fData = genericFilterBlocks.getJSONData();
+	if (fData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("genericFilters", fData);*/
 
 	return data;
 }
 
 void LightBlockModelLibrary::loadJSONDataInternal(var data)
 {
-	genericBlocks.loadJSONData(data.getProperty("generic", var()));
-	liveFeedBlocks.loadJSONData(data.getProperty("liveFeeds", var()));
-	videoBlocks.loadJSONData(data.getProperty("video", var()));
-	pictureBlocks.loadJSONData(data.getProperty("pictures", var()));
-	nodeBlocks.loadJSONData(data.getProperty("nodes", var()));
-	scriptBlocks.loadJSONData(data.getProperty("scripts", var()));
-	wasmBlocks.loadJSONData(data.getProperty("wasm", var()));
-	timelineBlocks.loadJSONData(data.getProperty("timelines", var()));
-	genericFilterBlocks.loadJSONData(data.getProperty("genericFilters", var()));
+	patternBlocks.loadJSONData(data.getProperty(patternBlocks.shortName, var()));
+	videoBlocks.loadJSONData(data.getProperty(videoBlocks.shortName, var()));
+	pictureBlocks.loadJSONData(data.getProperty(pictureBlocks.shortName, var()));
+	nodeBlocks.loadJSONData(data.getProperty(nodeBlocks.shortName, var()));
+	streamingScriptBlocks.loadJSONData(data.getProperty(streamingScriptBlocks.shortName, var()));
+	embeddedScriptBlocks.loadJSONData(data.getProperty(embeddedScriptBlocks.shortName, var()));
+	sequenceBlocks.loadJSONData(data.getProperty(sequenceBlocks.shortName, var()));
+	//genericFilterBlocks.loadJSONData(data.getProperty("genericFilters", var()));
 }
 
 Array<LightBlockModel*> LightBlockModelLibrary::getAllModels(bool includeUserModels)
 {
 	Array<LightBlockModel*> result;
 
-	for (auto &cc : genericBlocks.controllableContainers)
+	for (auto& cc : patternBlocks.controllableContainers)
 	{
-		LightBlockModel * m = dynamic_cast<LightBlockModel *>(cc.get());
+		LightBlockModel* m = dynamic_cast<LightBlockModel*>(cc.get());
 		if (m == nullptr) continue;
 		result.add(m);
 	}
@@ -153,13 +150,13 @@ Array<LightBlockModel*> LightBlockModelLibrary::getAllModels(bool includeUserMod
 
 	if (includeUserModels)
 	{
-		for (auto & m : pictureBlocks.items) result.add(m);
-		for (auto & m : nodeBlocks.items) result.add(m);
-		for (auto& m : scriptBlocks.items) result.add(m);
-		for (auto & m : wasmBlocks.items) result.add(m);
-		for (auto& m : timelineBlocks.items) result.add(m);
-		for (auto& m : liveFeedBlocks.items) result.add(m);
-		for (auto & m : videoBlocks.items) result.add(m);
+		for (auto& m : pictureBlocks.items) result.add(m);
+		for (auto& m : nodeBlocks.items) result.add(m);
+		for (auto& m : streamingScriptBlocks.items) result.add(m);
+		for (auto& m : embeddedScriptBlocks.items) result.add(m);
+		for (auto& m : sequenceBlocks.items) result.add(m);
+		for (auto& m : videoBlocks.items) result.add(m);
+		for (auto& m : videoBlocks.items) result.add(m);
 	}
 
 	return result;
@@ -169,20 +166,20 @@ Array<LightBlockModel*> LightBlockModelLibrary::getAllFilters(bool includeUserMo
 {
 	Array<LightBlockModel*> result;
 
-	for (auto& cc : genericFilterBlocks.controllableContainers)
-	{
-		LightBlockModel* m = dynamic_cast<LightBlockModel*>(cc.get());
-		if (m == nullptr) continue;
-		result.add(m);
-	}
+	//for (auto& cc : genericFilterBlocks.controllableContainers)
+	//{
+	//	LightBlockModel* m = dynamic_cast<LightBlockModel*>(cc.get());
+	//	if (m == nullptr) continue;
+	//	result.add(m);
+	//}
 
 	return result;
 }
 
-LightBlockModel * LightBlockModelLibrary::getModelWithName(const String & modelName)
+LightBlockModel* LightBlockModelLibrary::getModelWithName(const String& modelName)
 {
-	Array<LightBlockModel *> models = getAllModels();
-	for (auto &m : models) if (m->shortName == modelName || m->niceName == modelName) return m;
+	Array<LightBlockModel*> models = getAllModels();
+	for (auto& m : models) if (m->shortName == modelName || m->niceName == modelName) return m;
 	return nullptr;
 }
 
@@ -196,8 +193,8 @@ LightBlockModel* LightBlockModelLibrary::getFilterWithName(const String& modelNa
 void LightBlockModelLibrary::showSourcesAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
-	Array<LightBlockColorProvider *> mList = fillProvidersMenu(menu, true, true, false);
-	
+	Array<LightBlockColorProvider*> mList = fillProvidersMenu(menu, true, true, false);
+
 	menu.showMenuAsync(PopupMenu::Options(), [&mList, returnFunc](int result)
 		{
 			if (result > 0) returnFunc(mList[result - 1]);
@@ -222,7 +219,7 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupM
 	PopupMenu genericMenu;
 	PopupMenu userMenu;
 
-	Array<LightBlockColorProvider *> mList;
+	Array<LightBlockColorProvider*> mList;
 
 
 	int index = startIndex;
@@ -230,7 +227,7 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupM
 	if (includeSources)
 	{
 
-		for (auto& cc : LightBlockModelLibrary::getInstance()->genericBlocks.controllableContainers)
+		for (auto& cc : LightBlockModelLibrary::getInstance()->patternBlocks.controllableContainers)
 		{
 			LightBlockModel* m = dynamic_cast<LightBlockModel*>(cc.get());
 			if (m == nullptr) continue;
@@ -260,7 +257,7 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupM
 			}
 		}
 
-		//for (auto& cc : LightBlockModelLibrary::getInstance()->liveFeedBlocks.controllableContainers)
+		//for (auto& cc : LightBlockModelLibrary::getInstance()->videoBlocks.controllableContainers)
 		//{
 		//	LightBlockModel* m = dynamic_cast<LightBlockModel*>(cc.get());
 		//	if (m == nullptr) continue;
@@ -280,24 +277,24 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupM
 		//			index++;
 		//		}
 
-		//		liveFeedMenu.addSubMenu(m->niceName, modelMenu);
+		//		SharedTextureMenu.addSubMenu(m->niceName, modelMenu);
 		//	}
 		//	else
 		//	{
-		//		liveFeedMenu.addItem(index, m->niceName);
+		//		SharedTextureMenu.addItem(index, m->niceName);
 		//		mList.add(m);
 		//		index++;
 		//	}
 		//}
 
 
-		menu.addSubMenu(LightBlockModelLibrary::getInstance()->genericBlocks.niceName, genericMenu);
+		menu.addSubMenu(LightBlockModelLibrary::getInstance()->patternBlocks.niceName, genericMenu);
 
-		PopupMenu liveFeedsMenu;
-		Array<LightBlockColorProvider*> pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->liveFeedBlocks, liveFeedsMenu, includePresets, index);
+		PopupMenu SharedTexturesMenu;
+		Array<LightBlockColorProvider*> pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->videoBlocks, SharedTexturesMenu, includePresets, index);
 		index += pa.size();
 		mList.addArray(pa);
-		menu.addSubMenu(LightBlockModelLibrary::getInstance()->pictureBlocks.niceName, liveFeedsMenu);
+		menu.addSubMenu(LightBlockModelLibrary::getInstance()->pictureBlocks.niceName, SharedTexturesMenu);
 
 		PopupMenu videoMenu;
 		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->videoBlocks, videoMenu, includePresets, index);
@@ -319,68 +316,68 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupM
 		menu.addSubMenu(LightBlockModelLibrary::getInstance()->nodeBlocks.niceName, nodesMenu);
 
 		PopupMenu scriptsMenu;
-		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->scriptBlocks, scriptsMenu, includePresets, index);
+		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->streamingScriptBlocks, scriptsMenu, includePresets, index);
 		index += pa.size();
 		mList.addArray(pa);
-		menu.addSubMenu(LightBlockModelLibrary::getInstance()->scriptBlocks.niceName, scriptsMenu);
+		menu.addSubMenu(LightBlockModelLibrary::getInstance()->streamingScriptBlocks.niceName, scriptsMenu);
 
 		PopupMenu wasmMenu;
-		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->wasmBlocks, wasmMenu, includePresets, index);
+		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->embeddedScriptBlocks, wasmMenu, includePresets, index);
 		index += pa.size();
 		mList.addArray(pa);
-		menu.addSubMenu(LightBlockModelLibrary::getInstance()->wasmBlocks.niceName, wasmMenu);
+		menu.addSubMenu(LightBlockModelLibrary::getInstance()->embeddedScriptBlocks.niceName, wasmMenu);
 
 
 		PopupMenu timelinesMenu;
-		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->timelineBlocks, timelinesMenu, includePresets, index);
+		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->sequenceBlocks, timelinesMenu, includePresets, index);
 		index += pa.size();
 		mList.addArray(pa);
-		menu.addSubMenu(LightBlockModelLibrary::getInstance()->timelineBlocks.niceName, timelinesMenu);
+		menu.addSubMenu(LightBlockModelLibrary::getInstance()->sequenceBlocks.niceName, timelinesMenu);
 	}
 
-	if (includeFilters)
-	{
-		for (auto& cc : LightBlockModelLibrary::getInstance()->genericFilterBlocks.controllableContainers)
-		{
-			LightBlockModel* m = dynamic_cast<LightBlockModel*>(cc.get());
-			if (m == nullptr) continue;
+	//if (includeFilters)
+	//{
+	//	for (auto& cc : LightBlockModelLibrary::getInstance()->genericFilterBlocks.controllableContainers)
+	//	{
+	//		LightBlockModel* m = dynamic_cast<LightBlockModel*>(cc.get());
+	//		if (m == nullptr) continue;
 
-			if (includePresets)
-			{
-				PopupMenu modelMenu;
+	//		if (includePresets)
+	//		{
+	//			PopupMenu modelMenu;
 
-				modelMenu.addItem(index, "Default");
-				mList.add(m);
-				index++;
+	//			modelMenu.addItem(index, "Default");
+	//			mList.add(m);
+	//			index++;
 
-				for (auto& mp : m->presetManager.items)
-				{
-					modelMenu.addItem(index, mp->niceName);
-					mList.add(mp);
-					index++;
-				}
+	//			for (auto& mp : m->presetManager.items)
+	//			{
+	//				modelMenu.addItem(index, mp->niceName);
+	//				mList.add(mp);
+	//				index++;
+	//			}
 
-				genericMenu.addSubMenu(m->niceName, modelMenu);
-			}
-			else
-			{
-				genericMenu.addItem(index, m->niceName);
-				mList.add(m);
-				index++;
-			}
-		}
+	//			genericMenu.addSubMenu(m->niceName, modelMenu);
+	//		}
+	//		else
+	//		{
+	//			genericMenu.addItem(index, m->niceName);
+	//			mList.add(m);
+	//			index++;
+	//		}
+	//	}
 
-	}
+	//}
 
 	return mList;
 }
 
-Array<LightBlockColorProvider*> LightBlockModelLibrary::fillUserLightBlockManagerMenu(UserLightBlockModelManager * manager, PopupMenu & menu, bool includePresets, int startIndex)
+Array<LightBlockColorProvider*> LightBlockModelLibrary::fillUserLightBlockManagerMenu(UserLightBlockModelManager* manager, PopupMenu& menu, bool includePresets, int startIndex)
 {
 	Array<LightBlockColorProvider*> mList;
 
 	int index = startIndex;
-	for (auto & m : manager->items)
+	for (auto& m : manager->items)
 	{
 		if (includePresets)
 		{
@@ -389,7 +386,7 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillUserLightBlockManage
 			modelMenu.addItem(index, "Default");
 			mList.add(m);
 			index++;
-			for (auto &mp : m->presetManager.items)
+			for (auto& mp : m->presetManager.items)
 			{
 				modelMenu.addItem(index, mp->niceName);
 				mList.add(mp);
@@ -397,7 +394,8 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillUserLightBlockManage
 			}
 
 			menu.addSubMenu(m->niceName, modelMenu);
-		} else
+		}
+		else
 		{
 			menu.addItem(index, m->niceName);
 			mList.add(m);

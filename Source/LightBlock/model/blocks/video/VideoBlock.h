@@ -1,32 +1,55 @@
 /*
   ==============================================================================
 
-    VideoBlock.h
-    Created: 21 May 2021 8:01:27am
-    Author:  bkupe
+	VideoBlock.h
+	Created: 10 Apr 2018 6:58:49pm
+	Author:  Ben
 
   ==============================================================================
 */
 
 #pragma once
 
+class Spatializer;
 
 class VideoBlock :
-	public TextureBlock,
-	public SharedTextureReceiver::Listener
+	public LightBlockModel,
+	public BaseManager<SpatLayout>::ManagerListener
 {
 public:
-	VideoBlock(var params = var());
+	VideoBlock(const String & name= "", var params = var());
 	~VideoBlock();
 
-	FileParameter * videoPath;
-	Image getImage() override;
+	EnumParameter* currentLayout;
+	BoolParameter* inputIsLive;
 
-	void setupVideo();
+	void clear() override;
+	void setSelectedInternal(bool value) override;
 
-	void onContainerParameterChangedInternal(Parameter* p) override;
+	virtual Image getImage() { return Image(); }
 
-	String getTypeString() const override { return "Video"; }
+	void updateLayoutOptions();
 
-	static VideoBlock* create(var params) { return new VideoBlock(params); }
+	Array<Colour> getColors(Prop* p, double time, var params) override;
+
+	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+	void itemAdded(SpatLayout*) override;
+	void itemsAdded(Array<SpatLayout*>) override;
+	void itemRemoved(SpatLayout*) override;
+	void itemsRemoved(Array<SpatLayout*>) override;
+
+	//Listener
+	class  TextureListener
+	{
+	public:
+		/** Destructor. */
+		virtual ~TextureListener() {}
+		virtual void textureUpdated(VideoBlock*) {}
+		virtual void connectionChanged(VideoBlock*) {}
+	};
+
+	ListenerList<TextureListener> textureListeners;
+	void addTextureListener(TextureListener* newListener) { textureListeners.add(newListener); }
+	void removeTextureListener(TextureListener* listener) { textureListeners.remove(listener); }
 };

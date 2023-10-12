@@ -27,8 +27,10 @@ public:
 
 	Array<Colour> getColors(Prop * p, double time, var params) override;
 
-	void itemAdded(Node *) override;
-	void itemRemoved(Node *) override;
+	void itemAdded(Node*) override;
+	void itemsAdded(Array<Node *>) override;
+	void itemRemoved(Node*) override;
+	void itemsRemoved(Array<Node*>) override;
 
 	void childAddressChanged(ControllableContainer * cc) override;
 	

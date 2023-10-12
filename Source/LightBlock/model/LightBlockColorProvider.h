@@ -78,6 +78,9 @@ public:
 	void addColorProviderListener(ProviderListener* newListener) { providerListeners.add(newListener); }
 	void removeColorProviderListener(ProviderListener* listener) { providerListeners.remove(listener); }
 
+
+	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables) override;
+
 private:
 	WeakReference<LightBlockColorProvider>::Master masterReference;
 	friend class WeakReference<LightBlockColorProvider>;

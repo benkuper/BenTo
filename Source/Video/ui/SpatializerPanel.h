@@ -10,7 +10,7 @@
 
 #pragma once
 
-class TextureBlock;
+class VideoBlock;
 
 class SpatLayoutView :
 	public BaseManagerShapeShifterUI<BaseManager<SpatItem>, SpatItem, SpatItemUI>
@@ -40,14 +40,14 @@ public:
 	SpatializerPanel(const String &name);
 	~SpatializerPanel();
 
-	TextureBlock * textureBlock;
+	VideoBlock * videoBlock;
 	Image bgImage;
 	bool needsRepaint;
 
 	std::unique_ptr<SpatLayoutView> currentLayoutView;
 	void setCurrentLayoutView(SpatLayout * newView);
 
-	void setTextureBlock(TextureBlock* b);
+	void setVideoBlock(VideoBlock* b);
 
 	void paint(Graphics &g) override;
 	void resized() override;

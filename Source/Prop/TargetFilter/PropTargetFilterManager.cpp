@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Prop/PropIncludes.h"
+
 PropTargetFilterManager::PropTargetFilterManager(PropClusterGroupManager* clusterGroupManager) :
 	BaseManager<PropTargetFilter>("Prop Filters"),
 	clusterGroupManager(clusterGroupManager)
@@ -64,7 +66,17 @@ void PropTargetFilterManager::addItemInternal(PropTargetFilter*, var)
 	filerManagerListeners.call(&FilterManagerListener::filtersChanged);
 }
 
+void PropTargetFilterManager::addItemsInternal(Array<PropTargetFilter*>, var data)
+{
+	filerManagerListeners.call(&FilterManagerListener::filtersChanged);
+}
+
 void PropTargetFilterManager::removeItemInternal(PropTargetFilter*)
+{
+	filerManagerListeners.call(&FilterManagerListener::filtersChanged);
+}
+
+void PropTargetFilterManager::removeItemsInternal(Array<PropTargetFilter*>)
 {
 	filerManagerListeners.call(&FilterManagerListener::filtersChanged);
 }

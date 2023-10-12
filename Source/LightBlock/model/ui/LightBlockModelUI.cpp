@@ -8,9 +8,12 @@
   ==============================================================================
 */
 
+#include "LightBlock/LightBlockIncludes.h"
+#include "Prop/PropIncludes.h"
+
 LightBlockModelUI::LightBlockModelUI(LightBlockModel* model) :
 	BaseItemMinimalUI(model),
-	timelineBlock(dynamic_cast<TimelineBlock*>(model))
+	sequenceBlock(dynamic_cast<BentoSequenceBlock*>(model))
 {
 
 	updateThumbnail();
@@ -32,9 +35,9 @@ void LightBlockModelUI::paint(Graphics& g)
 {
 	Colour bc = item->itemColor->getColor();
 	bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bc;
-	
+
 	Colour bgC = bgColor;
-	if (timelineBlock != nullptr && timelineBlock->sequence->isPlaying->boolValue()) bgC = GREEN_COLOR.darker();
+	if (sequenceBlock != nullptr && sequenceBlock->sequence->isPlaying->boolValue()) bgC = GREEN_COLOR.darker();
 	g.setColour(bgC.brighter(isMouseOver() ? .2f : 0));
 	g.fillRoundedRectangle(getLocalBounds().toFloat(), 2);
 	g.setColour(Colours::white);// .withAlpha(isMouseOver() ? .2f : 1.f));
@@ -142,7 +145,7 @@ void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent& e)
 
 void LightBlockModelUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (timelineBlock != nullptr && c == timelineBlock->sequence->isPlaying)
+	if (sequenceBlock != nullptr && c == sequenceBlock->sequence->isPlaying)
 	{
 		repaint();
 	}

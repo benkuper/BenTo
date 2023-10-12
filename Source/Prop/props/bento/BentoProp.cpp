@@ -466,11 +466,11 @@ void BentoProp::sendControlToPropInternal(String control, var value)
 	OSCMessage m("/" + control.replaceCharacter('.', '/'));
 	if (value.isArray())
 	{
-		for (int i = 0; i < value.size(); i++) m.addArgument(OSCHelpers::varToArgument(value[i]));
+		for (int i = 0; i < value.size(); i++) m.addArgument(OSCHelpers::varToArgument(value[i], OSCHelpers::BoolMode::Int));
 	}
 	else if (!value.isVoid())
 	{
-		m.addArgument(OSCHelpers::varToArgument(value));
+		m.addArgument(OSCHelpers::varToArgument(value, OSCHelpers::BoolMode::Int));
 	}
 
 	sendMessageToProp(m);
@@ -498,7 +498,7 @@ var BentoProp::sendMessageToPropFromScript(const var::NativeFunctionArgs& a)
 	OSCMessage m(a.arguments[0].toString());
 	for (int i = 1; i < a.numArguments; i++)
 	{
-		m.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
+		m.addArgument(OSCHelpers::varToArgument(a.arguments[i], OSCHelpers::BoolMode::Int));
 	}
 
 	p->sendMessageToProp(m);
@@ -600,7 +600,7 @@ void BentoProp::Flasher::run()
 			}
 		}
 		buffer = lines[lines.size() - 1];
-			}
+	}
 	//#endif
 
 #else
@@ -609,4 +609,4 @@ void BentoProp::Flasher::run()
 
 	prop->flashingProgression->setValue(1);
 	prop->isFlashing->setValue(false);
-		}
+}

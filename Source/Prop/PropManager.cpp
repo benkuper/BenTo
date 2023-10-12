@@ -11,6 +11,7 @@
 
 #include "BentoEngine.h"
 #include "Prop/PropIncludes.h"
+#include "PropManager.h"
 
 juce_ImplementSingleton(PropManager)
 
@@ -277,9 +278,26 @@ void PropManager::addItemInternal(Prop* p, var)
 	if (items.size() > 1) p->globalID->setValue(getFirstAvailableID());
 }
 
+void PropManager::addItemsInternal(Array<Prop*> props, var)
+{
+	for (auto& p : props)
+	{
+		p->addPropListener(this);
+
+		if (Engine::mainEngine->isLoadingFile) continue;
+		if (items.size() > 1) p->globalID->setValue(getFirstAvailableID());
+	}
+}
+
+
 void PropManager::removeItemInternal(Prop* p)
 {
 	p->removePropListener(this);
+}
+
+void PropManager::removeItemsInternal(Array<Prop*> props)
+{
+	for (auto& p : props) p->removePropListener(this);
 }
 
 void PropManager::clear()

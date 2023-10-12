@@ -8,11 +8,15 @@
   ==============================================================================
 */
 
-LightBlockColorProvider::LightBlockColorProvider(const String & name, bool canBeDisabled, bool canHaveScripts, ProviderType providerType) :
+#include "LightBlock/LightBlockIncludes.h"
+#include "Prop/PropIncludes.h"
+
+LightBlockColorProvider::LightBlockColorProvider(const String& name, bool canBeDisabled, bool canHaveScripts, ProviderType providerType) :
 	BaseItem(name, canBeDisabled, canHaveScripts),
 	providerType(providerType)
 {
 	assignToAll = addTrigger("Assign To All", "Assign this Model or Preset to all props");
+	assignToAll->hideInEditor = true;
 	viewUISize->isSavable = false;
 }
 
@@ -21,22 +25,27 @@ LightBlockColorProvider::~LightBlockColorProvider() {
 }
 
 
-BakeData LightBlockColorProvider::getBakeDataForProp(Prop *)
+BakeData LightBlockColorProvider::getBakeDataForProp(Prop*)
 {
 	return BakeData();
 }
 
-void LightBlockColorProvider::onContainerTriggerTriggered(Trigger * t)
+void LightBlockColorProvider::onContainerTriggerTriggered(Trigger* t)
 {
 	BaseItem::onContainerTriggerTriggered(t);
 	if (t == assignToAll)
 	{
-		for (auto & p : PropManager::getInstance()->items)
+		for (auto& p : PropManager::getInstance()->items)
 		{
 			p->activeProvider->setValueFromTarget(this);
 		}
 	}
 
+}
+
+InspectableEditor* LightBlockColorProvider::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
+{
+	return new LightBlockColorProviderEditor(this, isRoot);
 }
 
 Array<Colour> LightBlockColorProvider::getColors(Prop* p, double time, var params)

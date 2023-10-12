@@ -11,6 +11,7 @@
 #pragma once
 
 #include "JuceHeader.h"
+
 #include "Node/NodeIncludes.h"
 #include "Video/VideoIncludes.h"
 
@@ -33,7 +34,6 @@
 #include "model/blocks/filters/generic/brightnesscontrast/BrightnessContrastBlockFilter.h"
 #include "model/blocks/filters/generic/hsv/HSVBlockFilter.h"
 #include "model/blocks/filters/generic/remap/RemapBlockFilter.h"
-#include "model/blocks/filters/script/ScriptBlockFilter.h"
 
 #include "model/blocks/dmx/DMXBlock.h"
 
@@ -43,34 +43,30 @@
 
 #include "model/blocks/picture/PictureBlock.h"
 
-#include "model/blocks/script/ScriptBlock.h"
-#include "model/blocks/wasm/WasmBlock.h"
+#include "model/blocks/streamingscript/StreamingScriptBlock.h"
+#include "model/blocks/embeddedscript/EmbeddedScriptBlock.h"
 
 #include "model/blocks/shape/PropShapeBlock.h"
 
-#include "model/blocks/timeline/TimelineBlock.h"
+#include "model/blocks/sequence/SequenceBlock.h"
 
-#include "model/blocks/video/TextureBlock.h"
-#include "model/blocks/video/LiveFeedBlock.h"
 #include "model/blocks/video/VideoBlock.h"
+#include "model/blocks/video/SharedTextureBlock.h"
+#include "model/blocks/video/VideoFileBlock.h"
 
 #include "model/LightBlockModelLibrary.h"
 
 #include "model/ui/LightBlockModelUI.h"
 #include "model/ui/LightBlockModelManagerUI.h"
 
-#include "model/blocks/video/ui/LiveFeedBlockUI.h"
-#include "model/blocks/timeline/ui/TimelineBlockUI.h"
+#include "model/blocks/video/ui/SharedTextureBlockUI.h"
+#include "model/blocks/sequence/ui/SequenceBlockUI.h"
 #include "model/blocks/node/ui/NodeBlockUI.h"
 #include "model/blocks/picture/ui/PictureBlockUI.h"
 
 #include "model/ui/LightBlockModelParameterEditor.h"
 #include "model/ui/LightBlockModelParameterManagerEditor.h"
-
-
-
-
-
+#include "model/ui/LightBlockColorProviderEditor.h"
 
 #include "model/ui/LightBlockModelGroupUI.h"
 #include "model/ui/LightBlockModelLibraryUI.h"

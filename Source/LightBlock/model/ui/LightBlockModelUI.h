@@ -19,7 +19,7 @@ public:
 	~LightBlockModelUI();
 
 	Image modelImage;
-	TimelineBlock* timelineBlock;
+	BentoSequenceBlock* sequenceBlock;
 
 	//static const Identifier dragAndDropID;
 

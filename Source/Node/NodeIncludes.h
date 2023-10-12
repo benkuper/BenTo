@@ -10,6 +10,7 @@
 
 #pragma once
 #include "JuceHeader.h"
+using namespace juce;
 
 #include "NodeConnectionSlot.h"
 #include "Node.h"

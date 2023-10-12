@@ -56,23 +56,23 @@
     <Filter Include="BenTo\Source\Video">
       <UniqueIdentifier>{871EB0F9-7C2C-9AC7-2172-59ED2441BD4F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\VideoLayer\ui">
-      <UniqueIdentifier>{280DBE22-3D3A-8E2F-1226-D4BF788EA185}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\Sequence\layers\Block\ui">
+      <UniqueIdentifier>{4EDB0323-E312-0CD6-3AD6-BA2563EF786D}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\VideoLayer">
-      <UniqueIdentifier>{36AE759B-781F-165F-EF49-00CA96D4049F}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\Sequence\layers\Block">
+      <UniqueIdentifier>{AABB53FA-9F8F-97C0-CA8C-C40B46150CA0}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\BlockLayer\ui">
-      <UniqueIdentifier>{0582B79D-D7E8-BFFC-6CC8-D525FCDA1785}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\Sequence\layers\Video\ui">
+      <UniqueIdentifier>{93FC52DF-A04E-9944-804C-0849ECA10E83}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers\BlockLayer">
-      <UniqueIdentifier>{1D180609-0410-FDB8-8035-2B3646361230}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\Sequence\layers\Video">
+      <UniqueIdentifier>{4A784481-3ADA-137C-738F-DDD916C705D7}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline\layers">
-      <UniqueIdentifier>{6EB5F6FF-FC23-E102-1E7A-00CB7E575EDD}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\Sequence\layers">
+      <UniqueIdentifier>{36A595E1-6940-B717-422B-33594773235F}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Timeline">
-      <UniqueIdentifier>{145767DB-1E7B-DD51-89C5-C8CC196CBA0A}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\Sequence">
+      <UniqueIdentifier>{587BA3A0-2D29-22BF-6868-A5762919330F}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Node\nodes\colorRemap">
       <UniqueIdentifier>{42CBB6D4-E397-8984-CB57-09BC25960679}</UniqueIdentifier>
@@ -116,14 +116,11 @@
     <Filter Include="BenTo\Source\LightBlock\model\ui">
       <UniqueIdentifier>{B383C455-EF1C-7AEC-66DF-D469CE5E13A6}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\LightBlock\model\blocks\wasm">
-      <UniqueIdentifier>{A4927C05-8F3A-18E1-114A-E034370646ED}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\embeddedscript">
+      <UniqueIdentifier>{2309BA42-FD01-D90A-4AC7-E676A43E2FDA}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\shape">
       <UniqueIdentifier>{E5517CF7-7EE0-BCAE-B9D5-0AB2C64316EA}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\script">
-      <UniqueIdentifier>{C3943C21-6376-0C6F-3A53-A74B1559EC2B}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast">
       <UniqueIdentifier>{A495B3B2-E31B-8762-DB71-1E7F741870E6}</UniqueIdentifier>
@@ -158,11 +155,11 @@
     <Filter Include="BenTo\Source\LightBlock\model\blocks\pattern">
       <UniqueIdentifier>{E3D77349-6113-E7B5-DE62-25E5117D4571}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\LightBlock\model\blocks\timeline\ui">
-      <UniqueIdentifier>{BB267AB1-56A3-EE87-AD21-98B780D58BEA}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\sequence\ui">
+      <UniqueIdentifier>{4C8005E0-7AC1-672B-C8C3-B5D28128A5CB}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\LightBlock\model\blocks\timeline">
-      <UniqueIdentifier>{05A888CC-BB88-7EDC-0429-A4A17669C68C}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\sequence">
+      <UniqueIdentifier>{B00B08A4-FC8E-5823-88FA-F82B61D0CBC7}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\node\ui">
       <UniqueIdentifier>{42800BE1-FA5D-90B7-8765-C675A846B713}</UniqueIdentifier>
@@ -170,8 +167,8 @@
     <Filter Include="BenTo\Source\LightBlock\model\blocks\node">
       <UniqueIdentifier>{463D9DDE-461C-14F5-DEDE-73726063657A}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\LightBlock\model\blocks\script">
-      <UniqueIdentifier>{9A461E71-58AC-475E-D6F9-9483002CA126}</UniqueIdentifier>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\streamingscript">
+      <UniqueIdentifier>{C5ACF510-FEE3-2C3B-19A4-6839FDD41CDC}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks">
       <UniqueIdentifier>{317597BC-3D54-AAEF-DA4D-83BC441B1DA5}</UniqueIdentifier>
@@ -539,11 +536,29 @@
     <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces">
       <UniqueIdentifier>{DAF30656-5915-0E45-C4E4-54439617D525}</UniqueIdentifier>
     </Filter>
+    <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\samples\vst-utilities\moduleinfotool\source">
+      <UniqueIdentifier>{600076D4-829D-CE7A-272C-832A4BBC40AB}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\samples\vst-utilities\moduleinfotool">
+      <UniqueIdentifier>{C02D05C7-CD20-9901-2F02-95A9BD7FA797}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\samples\vst-utilities">
+      <UniqueIdentifier>{47771136-6D29-90C7-2C6E-1728E7D1C485}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\samples">
+      <UniqueIdentifier>{3E938566-9812-78C0-9E81-75858F44C51F}</UniqueIdentifier>
+    </Filter>
     <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\common">
       <UniqueIdentifier>{9266EA90-6A0A-5DDB-9CB7-966BEF03BA5C}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting">
       <UniqueIdentifier>{9C713CBA-A9E2-5F4E-F83C-2CAB8533913C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo">
+      <UniqueIdentifier>{D5B5DC1F-B81B-0449-5E26-15D1367B0C8C}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility">
+      <UniqueIdentifier>{2741675A-628F-4473-FF8D-45CD2C214CDA}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst">
       <UniqueIdentifier>{63571A07-9AA3-5BB0-1103-0B42A2E6BC9E}</UniqueIdentifier>
@@ -778,9 +793,6 @@
     </Filter>
     <Filter Include="JUCE Modules\juce_gui_basics\native\accessibility">
       <UniqueIdentifier>{C0E5DD5D-F8F1-DD25-67D7-291946AB3828}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="JUCE Modules\juce_gui_basics\native\x11">
-      <UniqueIdentifier>{FE7E6CD5-C7A0-DB20-4E7E-D6E7F08C4578}</UniqueIdentifier>
     </Filter>
     <Filter Include="JUCE Modules\juce_gui_basics\native">
       <UniqueIdentifier>{895C2D33-E08D-B1BA-BB36-FC4CA65090C8}</UniqueIdentifier>
@@ -1255,13 +1267,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\Source\WebAssembly\ui\WasmManagerUI.cpp">
+    <ClCompile Include="..\..\Source\WebAssembly\ui\EmbeddedScriptManagerUI.cpp">
       <Filter>BenTo\Source\WebAssembly\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\WebAssembly\WasmManager.cpp">
+    <ClCompile Include="..\..\Source\WebAssembly\EmbeddedScriptManager.cpp">
       <Filter>BenTo\Source\WebAssembly</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\WebAssembly\WasmScript.cpp">
+    <ClCompile Include="..\..\Source\WebAssembly\EmbeddedScript.cpp">
       <Filter>BenTo\Source\WebAssembly</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Identification\IdentificationRule.cpp">
@@ -1327,50 +1339,50 @@
     <ClCompile Include="..\..\Source\Video\VideoIncludes.cpp">
       <Filter>BenTo\Source\Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.cpp">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\ui\LightBlockClipManagerUI.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.cpp">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\ui\LightBlockClipUI.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoClip.cpp">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\ui\LightBlockLayerPanel.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Video\VideoLayer.cpp">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\ui\LightBlockLayerTimeline.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\LightBlockClip.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\LightBlockClipManager.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\LightBlockEffect.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerTimeline.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Block\LightBlockLayer.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClip.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Video\ui\VideoClipUI.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Video\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Video\ui\VideoLayerTimeline.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Video\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockEffect.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Video\VideoClip.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.cpp">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClCompile Include="..\..\Source\Sequence\layers\Video\VideoLayer.cpp">
+      <Filter>BenTo\Source\Sequence\layers\Video</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\TimelineBlockSequence.cpp">
-      <Filter>BenTo\Source\Timeline</Filter>
+    <ClCompile Include="..\..\Source\Sequence\SequenceBlockSequence.cpp">
+      <Filter>BenTo\Source\Sequence</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\TimelineEditor.cpp">
-      <Filter>BenTo\Source\Timeline</Filter>
+    <ClCompile Include="..\..\Source\Sequence\BentoSequenceEditor.cpp">
+      <Filter>BenTo\Source\Sequence</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Timeline\TimelineIncludes.cpp">
-      <Filter>BenTo\Source\Timeline</Filter>
+    <ClCompile Include="..\..\Source\Sequence\SequenceIncludes.cpp">
+      <Filter>BenTo\Source\Sequence</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\NodeIncludes.cpp">
       <Filter>BenTo\Source\Node</Filter>
@@ -1444,17 +1456,14 @@
     <ClCompile Include="..\..\Source\BlockViz\BlockVizPanel.cpp">
       <Filter>BenTo\Source\BlockViz</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelGroup.cpp">
-      <Filter>BenTo\Source\LightBlock\model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockColorProvider.cpp">
-      <Filter>BenTo\Source\LightBlock\model</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\preset\LightBlockModelPreset.cpp">
       <Filter>BenTo\Source\LightBlock\model\preset</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\preset\LightBlockModelPresetManager.cpp">
       <Filter>BenTo\Source\LightBlock\model\preset</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockColorProviderEditor.cpp">
+      <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelGroupUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
@@ -1474,17 +1483,14 @@
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\wasm\WasmBlock.cpp">
-      <Filter>BenTo\Source\LightBlock\model\blocks\wasm</Filter>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\EmbeddedScriptBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.cpp">
-      <Filter>BenTo\Source\LightBlock\model\blocks\filters\script</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast</Filter>
@@ -1504,26 +1510,26 @@
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\dmx</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\LiveFeedBlockUI.cpp">
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\ui\SharedTextureBlockUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\video\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\LiveFeedBlock.cpp">
-      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\TextureBlock.cpp">
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\SharedTextureBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\video\VideoFileBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\pattern</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\timeline\ui\TimelineBlockUI.cpp">
-      <Filter>BenTo\Source\LightBlock\model\blocks\timeline\ui</Filter>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\sequence\ui\SequenceBlockUI.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\sequence\ui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\timeline\TimelineBlock.cpp">
-      <Filter>BenTo\Source\LightBlock\model\blocks\timeline</Filter>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\sequence\SequenceBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\sequence</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\node\ui\NodeBlockUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\node\ui</Filter>
@@ -1531,8 +1537,14 @@
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\node\NodeBlock.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\node</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\LightBlock\model\blocks\script\ScriptBlock.cpp">
-      <Filter>BenTo\Source\LightBlock\model\blocks\script</Filter>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\streamingscript\StreamingScriptBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\streamingscript</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModelGroup.cpp">
+      <Filter>BenTo\Source\LightBlock\model</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\LightBlockColorProvider.cpp">
+      <Filter>BenTo\Source\LightBlock\model</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\LightBlockModel.cpp">
       <Filter>BenTo\Source\LightBlock\model</Filter>
@@ -1999,49 +2011,49 @@
     <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\oboe\src\opensles\OutputMixerOpenSLES.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe\src\opensles</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_android_Audio.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_ALSA_linux.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_android_Midi.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_ASIO_windows.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_android_Oboe.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Audio_android.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_android_OpenSL.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Audio_ios.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_ios_Audio.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Bela_linux.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_linux_ALSA.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_CoreAudio_mac.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_linux_Bela.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_CoreMidi_mac.mm">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_linux_JackAudio.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_DirectSound_windows.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_linux_Midi.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_JackAudio_linux.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_mac_CoreAudio.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Midi_android.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_mac_CoreMidi.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Midi_linux.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_win32_ASIO.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Midi_windows.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_win32_DirectSound.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Oboe_android.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_win32_Midi.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_OpenSL_android.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_win32_WASAPI.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\native\juce_WASAPI_windows.cpp">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_audio_devices\sources\juce_AudioSourcePlayer.cpp">
@@ -2392,6 +2404,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\ustring.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\samples\vst-utilities\moduleinfotool\source\main.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\samples\vst-utilities\moduleinfotool\source</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\common\memorystream.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\common</Filter>
     </ClCompile>
@@ -2401,8 +2416,29 @@
     <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\hostclasses.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\module.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\module_linux.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\module_mac.mm">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\module_win32.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\pluginterfacesupport.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\moduleinfocreator.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\moduleinfoparser.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility\stringconvert.cpp">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstbus.cpp">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst</Filter>
@@ -2578,34 +2614,34 @@
     <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\gui\juce_MPEKeyboardComponent.cpp">
       <Filter>JUCE Modules\juce_audio_utils\gui</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_android_BluetoothMidiDevicePairingDialogue.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_AudioCDBurner_mac.mm">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_ios_BluetoothMidiDevicePairingDialogue.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_AudioCDBurner_windows.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_linux_AudioCDReader.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_AudioCDReader_linux.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_linux_BluetoothMidiDevicePairingDialogue.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_AudioCDReader_mac.mm">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_mac_AudioCDBurner.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_AudioCDReader_windows.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_mac_AudioCDReader.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_BluetoothMidiDevicePairingDialogue_android.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_mac_BluetoothMidiDevicePairingDialogue.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_BluetoothMidiDevicePairingDialogue_ios.mm">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_win_BluetoothMidiDevicePairingDialogue.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_BluetoothMidiDevicePairingDialogue_linux.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_win32_AudioCDBurner.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_BluetoothMidiDevicePairingDialogue_mac.mm">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_win32_AudioCDReader.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\native\juce_BluetoothMidiDevicePairingDialogue_windows.cpp">
       <Filter>JUCE Modules\juce_audio_utils\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_audio_utils\players\juce_AudioProcessorPlayer.cpp">
@@ -2716,6 +2752,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_core\misc\juce_ConsoleApplication.cpp">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_core\misc\juce_EnumHelpers_test.cpp">
+      <Filter>JUCE Modules\juce_core\misc</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\misc\juce_Result.cpp">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClCompile>
@@ -2725,82 +2764,82 @@
     <ClCompile Include="..\..\JUCE\modules\juce_core\misc\juce_Uuid.cpp">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_AndroidDocument.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_AndroidDocument_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_Files.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_CommonFile_linux.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_JNIHelpers.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Files_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_Misc.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Files_linux.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_Network.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Files_mac.mm">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_RuntimePermissions.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Files_windows.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_SystemStats.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_JNIHelpers_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_android_Threads.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Misc_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_curl_Network.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_NamedPipe_posix.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_linux_CommonFile.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Network_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_linux_Files.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Network_curl.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_linux_Network.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Network_linux.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_linux_SystemStats.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Network_mac.mm">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_linux_Threads.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Network_windows.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_mac_Files.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Registry_windows.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_mac_Network.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_RuntimePermissions_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_mac_Strings.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Strings_mac.mm">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_mac_SystemStats.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_SystemStats_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_mac_Threads.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_SystemStats_linux.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_posix_NamedPipe.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_SystemStats_mac.mm">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_wasm_SystemStats.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_SystemStats_wasm.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_win32_Files.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_SystemStats_windows.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_win32_Network.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Threads_android.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_win32_Registry.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Threads_linux.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_win32_SystemStats.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Threads_mac.mm">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_win32_Threads.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_core\native\juce_Threads_windows.cpp">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_core\network\juce_IPAddress.cpp">
@@ -3028,6 +3067,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_events\broadcasters\juce_ChangeBroadcaster.cpp">
       <Filter>JUCE Modules\juce_events\broadcasters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_events\broadcasters\juce_LockingAsyncUpdater.cpp">
+      <Filter>JUCE Modules\juce_events\broadcasters</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_events\interprocess\juce_ConnectedChildProcess.cpp">
       <Filter>JUCE Modules\juce_events\interprocess</Filter>
     </ClCompile>
@@ -3052,25 +3094,25 @@
     <ClCompile Include="..\..\JUCE\modules\juce_events\messages\juce_MessageManager.cpp">
       <Filter>JUCE Modules\juce_events\messages</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_android_Messaging.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_MessageManager_ios.mm">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_ios_MessageManager.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_MessageManager_mac.mm">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_linux_Messaging.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_Messaging_android.cpp">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_mac_MessageManager.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_Messaging_linux.cpp">
+      <Filter>JUCE Modules\juce_events\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_Messaging_windows.cpp">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_ScopedLowPowerModeDisabler.cpp">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_win32_Messaging.cpp">
-      <Filter>JUCE Modules\juce_events\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_win32_WinRTWrapper.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_events\native\juce_WinRTWrapper_windows.cpp">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_events\timers\juce_MultiTimer.cpp">
@@ -3352,46 +3394,46 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\images\juce_ImageFileFormat.cpp">
       <Filter>JUCE Modules\juce_graphics\images</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_android_Fonts.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_CoreGraphicsContext_mac.mm">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_android_GraphicsContext.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_Direct2DGraphicsContext_windows.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_android_IconHelpers.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_DirectWriteTypeface_windows.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_freetype_Fonts.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_DirectWriteTypeLayout_windows.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_linux_Fonts.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_Fonts_android.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_linux_IconHelpers.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_Fonts_freetype.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_mac_CoreGraphicsContext.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_Fonts_linux.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_mac_Fonts.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_Fonts_mac.mm">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_mac_IconHelpers.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_Fonts_windows.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_win32_Direct2DGraphicsContext.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_GraphicsContext_android.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_win32_DirectWriteTypeface.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_IconHelpers_android.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_win32_DirectWriteTypeLayout.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_IconHelpers_linux.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_win32_Fonts.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_IconHelpers_mac.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_win32_IconHelpers.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\native\juce_IconHelpers_windows.cpp">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\placement\juce_RectanglePlacement.cpp">
@@ -3667,103 +3709,103 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_Accessibility.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_Accessibility_android.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_Accessibility_ios.mm">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_Accessibility_mac.mm">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_Accessibility_windows.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_AccessibilityElement_windows.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_AccessibilitySharedCode_mac.mm">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_AccessibilityTextHelpers_test.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_android_Accessibility.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_ios_Accessibility.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_mac_Accessibility.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_mac_AccessibilitySharedCode.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_Accessibility.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_AccessibilityElement.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_X11_DragAndDrop.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native\x11</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_X11_Symbols.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native\x11</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_XWindowSystem.cpp">
-      <Filter>JUCE Modules\juce_gui_basics\native\x11</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_android_ContentSharer.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ContentSharer_android.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_android_FileChooser.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ContentSharer_ios.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_android_NativeMessageBox.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_DragAndDrop_linux.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_android_Windowing.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_DragAndDrop_windows.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ios_ContentSharer.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_FileChooser_android.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ios_FileChooser.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_FileChooser_ios.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ios_NativeMessageBox.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_FileChooser_linux.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ios_UIViewComponentPeer.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_FileChooser_mac.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ios_Windowing.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_FileChooser_windows.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_linux_FileChooser.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_MainMenu_mac.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_linux_NativeMessageBox.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_MouseCursor_mac.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_linux_Windowing.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NativeMessageBox_android.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_FileChooser.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NativeMessageBox_ios.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_MainMenu.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NativeMessageBox_linux.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_MouseCursor.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NativeMessageBox_mac.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_NativeMessageBox.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NativeMessageBox_windows.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_NSViewComponentPeer.mm">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_Windowing.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NSViewComponentPeer_mac.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ScopedDPIAwarenessDisabler.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_win32_DragAndDrop.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_UIViewComponentPeer_ios.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_win32_FileChooser.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Windowing_android.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_win32_NativeMessageBox.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Windowing_ios.mm">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_win32_Windowing.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Windowing_linux.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Windowing_mac.mm">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_Windowing_windows.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_XSymbols_linux.cpp">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\native\juce_XWindowSystem_linux.cpp">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_basics\positioning\juce_MarkerList.cpp">
@@ -3946,55 +3988,55 @@
     <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.cpp">
       <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_android_PushNotifications.cpp">
-      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_android_WebBrowserComponent.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_ActiveXComponent_windows.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_AndroidViewComponent.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_ios_PushNotifications.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_AppleRemote_mac.mm">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_ios_UIViewComponent.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_HWNDComponent_windows.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_linux_X11_SystemTrayIcon.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_NSViewComponent_mac.mm">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_linux_X11_WebBrowserComponent.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_PushNotifications_android.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_linux_XEmbedComponent.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_PushNotifications_ios.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_AppleRemote.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_PushNotifications_mac.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_NSViewComponent.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_SystemTrayIcon_linux.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_PushNotifications.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_SystemTrayIcon_mac.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_SystemTrayIcon.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_SystemTrayIcon_windows.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_WebBrowserComponent.mm">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_UIViewComponent_ios.mm">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_win32_ActiveXComponent.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_WebBrowserComponent_android.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_win32_HWNDComponent.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_WebBrowserComponent_linux.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_win32_SystemTrayIcon.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_WebBrowserComponent_mac.mm">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_win32_WebBrowserComponent.cpp">
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_WebBrowserComponent_windows.cpp">
+      <Filter>JUCE Modules\juce_gui_extra\native</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\native\juce_XEmbedComponent_linux.cpp">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_gui_extra\juce_gui_extra.cpp">
@@ -5064,13 +5106,13 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\Source\WebAssembly\ui\WasmManagerUI.h">
+    <ClInclude Include="..\..\Source\WebAssembly\ui\EmbeddedScriptManagerUI.h">
       <Filter>BenTo\Source\WebAssembly\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\WebAssembly\WasmManager.h">
+    <ClInclude Include="..\..\Source\WebAssembly\EmbeddedScriptManager.h">
       <Filter>BenTo\Source\WebAssembly</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\WebAssembly\WasmScript.h">
+    <ClInclude Include="..\..\Source\WebAssembly\EmbeddedScript.h">
       <Filter>BenTo\Source\WebAssembly</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Identification\IdentificationRule.h">
@@ -5121,50 +5163,50 @@
     <ClInclude Include="..\..\Source\Video\VideoIncludes.h">
       <Filter>BenTo\Source\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoClipUI.h">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\ui\LightBlockClipManagerUI.h">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Video\ui\VideoLayerTimeline.h">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer\ui</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\ui\LightBlockClipUI.h">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoClip.h">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\ui\LightBlockLayerPanel.h">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Video\VideoLayer.h">
-      <Filter>BenTo\Source\Timeline\layers\VideoLayer</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\ui\LightBlockLayerTimeline.h">
+      <Filter>BenTo\Source\Sequence\layers\Block\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipManagerUI.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\LightBlockClip.h">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockClipUI.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\LightBlockClipManager.h">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerPanel.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\LightBlockEffect.h">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\ui\LightBlockLayerTimeline.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer\ui</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Block\LightBlockLayer.h">
+      <Filter>BenTo\Source\Sequence\layers\Block</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockClip.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Video\ui\VideoClipUI.h">
+      <Filter>BenTo\Source\Sequence\layers\Video\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockClipManager.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Video\ui\VideoLayerTimeline.h">
+      <Filter>BenTo\Source\Sequence\layers\Video\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockEffect.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Video\VideoClip.h">
+      <Filter>BenTo\Source\Sequence\layers\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\layers\Block\LightBlockLayer.h">
-      <Filter>BenTo\Source\Timeline\layers\BlockLayer</Filter>
+    <ClInclude Include="..\..\Source\Sequence\layers\Video\VideoLayer.h">
+      <Filter>BenTo\Source\Sequence\layers\Video</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\TimelineBlockSequence.h">
-      <Filter>BenTo\Source\Timeline</Filter>
+    <ClInclude Include="..\..\Source\Sequence\SequenceBlockSequence.h">
+      <Filter>BenTo\Source\Sequence</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\TimelineEditor.h">
-      <Filter>BenTo\Source\Timeline</Filter>
+    <ClInclude Include="..\..\Source\Sequence\BentoSequenceEditor.h">
+      <Filter>BenTo\Source\Sequence</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Timeline\TimelineIncludes.h">
-      <Filter>BenTo\Source\Timeline</Filter>
+    <ClInclude Include="..\..\Source\Sequence\SequenceIncludes.h">
+      <Filter>BenTo\Source\Sequence</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\NodeIncludes.h">
       <Filter>BenTo\Source\Node</Filter>
@@ -5238,17 +5280,14 @@
     <ClInclude Include="..\..\Source\BlockViz\BlockVizPanel.h">
       <Filter>BenTo\Source\BlockViz</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelGroup.h">
-      <Filter>BenTo\Source\LightBlock\model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\LightBlockColorProvider.h">
-      <Filter>BenTo\Source\LightBlock\model</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\preset\LightBlockModelPreset.h">
       <Filter>BenTo\Source\LightBlock\model\preset</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\preset\LightBlockModelPresetManager.h">
       <Filter>BenTo\Source\LightBlock\model\preset</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockColorProviderEditor.h">
+      <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelGroupUI.h">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
@@ -5268,17 +5307,14 @@
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\wasm\WasmBlock.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks\wasm</Filter>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\EmbeddedScriptBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\shape</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\script\ScriptBlockFilter.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks\filters\script</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast</Filter>
@@ -5298,26 +5334,26 @@
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\dmx\DMXBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\dmx</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\LiveFeedBlockUI.h">
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\ui\SharedTextureBlockUI.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\video\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\LiveFeedBlock.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\TextureBlock.h">
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\SharedTextureBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\video\VideoFileBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\video</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\pattern\PatternBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\pattern</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\timeline\ui\TimelineBlockUI.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks\timeline\ui</Filter>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\sequence\ui\SequenceBlockUI.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\sequence\ui</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\timeline\TimelineBlock.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks\timeline</Filter>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\sequence\SequenceBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\sequence</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\node\ui\NodeBlockUI.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\node\ui</Filter>
@@ -5325,8 +5361,14 @@
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\node\NodeBlock.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\node</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\LightBlock\model\blocks\script\ScriptBlock.h">
-      <Filter>BenTo\Source\LightBlock\model\blocks\script</Filter>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\streamingscript\StreamingScriptBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\streamingscript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModelGroup.h">
+      <Filter>BenTo\Source\LightBlock\model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\LightBlockColorProvider.h">
+      <Filter>BenTo\Source\LightBlock\model</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\LightBlockModel.h">
       <Filter>BenTo\Source\LightBlock\model</Filter>
@@ -5607,10 +5649,10 @@
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\mpe\juce_MPEZoneLayout.h">
       <Filter>JUCE Modules\juce_audio_basics\mpe</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\native\juce_mac_CoreAudioLayouts.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\native\juce_CoreAudioLayouts_mac.h">
       <Filter>JUCE Modules\juce_audio_basics\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\native\juce_mac_CoreAudioTimeConversions.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\native\juce_CoreAudioTimeConversions_mac.h">
       <Filter>JUCE Modules\juce_audio_basics\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_basics\sources\juce_AudioSource.h">
@@ -5895,10 +5937,10 @@
     <ClInclude Include="..\..\JUCE\modules\juce_audio_devices\native\oboe\src\opensles\OutputMixerOpenSLES.h">
       <Filter>JUCE Modules\juce_audio_devices\native\oboe\src\opensles</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_audio_devices\native\juce_android_HighPerformanceAudioHelpers.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_devices\native\juce_Audio_ios.h">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_audio_devices\native\juce_ios_Audio.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_devices\native\juce_HighPerformanceAudioHelpers_android.h">
       <Filter>JUCE Modules\juce_audio_devices\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_devices\sources\juce_AudioSourcePlayer.h">
@@ -6429,6 +6471,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\base\source\fbuffer.h">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\base\source</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\base\source\fcommandline.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\base\source</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\base\source\fdebug.h">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\base\source</Filter>
     </ClInclude>
@@ -6484,6 +6529,9 @@
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\ipluginbase.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\iplugincompatibility.h">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\base\istringresult.h">
@@ -6597,8 +6645,35 @@
     <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\hostclasses.h">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\module.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting\pluginterfacesupport.h">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\hosting</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\json.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\jsoncxx.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\moduleinfo.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\moduleinfocreator.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\moduleinfoparser.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility\optional.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility\stringconvert.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility\uid.h">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\utility</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\vstbus.h">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst</Filter>
@@ -6990,6 +7065,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_ConsoleApplication.h">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_EnumHelpers.h">
+      <Filter>JUCE Modules\juce_core\misc</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Functional.h">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
@@ -7005,31 +7083,31 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_WindowsRegistry.h">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_android_JNIHelpers.h">
-      <Filter>JUCE Modules\juce_core\native</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_BasicNativeHeaders.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_intel_SharedCode.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_CFHelpers_mac.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_mac_CFHelpers.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_ComSmartPtr_windows.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_mac_ObjCHelpers.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_IPAddress_posix.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_native_ThreadPriorities.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_JNIHelpers_android.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_posix_IPAddress.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_ObjCHelpers_mac.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_posix_SharedCode.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_SharedCode_intel.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_win32_ComSmartPtr.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_SharedCode_posix.h">
+      <Filter>JUCE Modules\juce_core\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\native\juce_ThreadPriorities_native.h">
       <Filter>JUCE Modules\juce_core\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\network\juce_IPAddress.h">
@@ -7323,6 +7401,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_events\broadcasters\juce_ChangeListener.h">
       <Filter>JUCE Modules\juce_events\broadcasters</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_events\broadcasters\juce_LockingAsyncUpdater.h">
+      <Filter>JUCE Modules\juce_events\broadcasters</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_events\interprocess\juce_ConnectedChildProcess.h">
       <Filter>JUCE Modules\juce_events\interprocess</Filter>
     </ClInclude>
@@ -7362,22 +7443,25 @@
     <ClInclude Include="..\..\JUCE\modules\juce_events\messages\juce_NotificationType.h">
       <Filter>JUCE Modules\juce_events\messages</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_linux_EventLoop.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_EventLoop_linux.h">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_linux_EventLoopInternal.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_EventLoopInternal_linux.h">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_osx_MessageQueue.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_HiddenMessageWindow_windows.h">
+      <Filter>JUCE Modules\juce_events\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_MessageQueue_mac.h">
+      <Filter>JUCE Modules\juce_events\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_RunningInUnity.h">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_ScopedLowPowerModeDisabler.h">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_win32_HiddenMessageWindow.h">
-      <Filter>JUCE Modules\juce_events\native</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_win32_WinRTWrapper.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_events\native\juce_WinRTWrapper_windows.h">
       <Filter>JUCE Modules\juce_events\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_events\timers\juce_MultiTimer.h">
@@ -7548,16 +7632,16 @@
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\images\juce_ScaledImage.h">
       <Filter>JUCE Modules\juce_graphics\images</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\native\juce_mac_CoreGraphicsContext.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_graphics\native\juce_CoreGraphicsContext_mac.h">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\native\juce_mac_CoreGraphicsHelpers.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_graphics\native\juce_CoreGraphicsHelpers_mac.h">
+      <Filter>JUCE Modules\juce_graphics\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_graphics\native\juce_Direct2DGraphicsContext_windows.h">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\native\juce_RenderingHelpers.h">
-      <Filter>JUCE Modules\juce_graphics\native</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\native\juce_win32_Direct2DGraphicsContext.h">
       <Filter>JUCE Modules\juce_graphics\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\placement\juce_Justification.h">
@@ -7699,6 +7783,12 @@
       <Filter>JUCE Modules\juce_gui_basics\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\detail\juce_ScalingHelpers.h">
+      <Filter>JUCE Modules\juce_gui_basics\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\detail\juce_ScopedContentSharerImpl.h">
+      <Filter>JUCE Modules\juce_gui_basics\detail</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\detail\juce_ScopedContentSharerInterface.h">
       <Filter>JUCE Modules\juce_gui_basics\detail</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\detail\juce_ScopedMessageBoxImpl.h">
@@ -7953,82 +8043,85 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\mouse\juce_TooltipClient.h">
       <Filter>JUCE Modules\juce_gui_basics\mouse</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_AccessibilityElement_windows.h">
+      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_AccessibilityTextHelpers.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_AccessibilityElement.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_ComInterfaces_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_ComInterfaces.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAExpandCollapseProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAExpandCollapseProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAGridItemProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAGridItemProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAGridProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAGridProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAHelpers_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAHelpers.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAInvokeProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAInvokeProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAProviderBase_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAProviderBase.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAProviders_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAProviders.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIARangeValueProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIARangeValueProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIASelectionProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIASelectionProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIATextProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIATextProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAToggleProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAToggleProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIATransformProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIATransformProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAValueProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAValueProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_UIAWindowProvider_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_UIAWindowProvider.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_WindowsUIAWrapper_windows.h">
       <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\accessibility\juce_win32_WindowsUIAWrapper.h">
-      <Filter>JUCE Modules\juce_gui_basics\native\accessibility</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_ScopedWindowAssociation.h">
-      <Filter>JUCE Modules\juce_gui_basics\native\x11</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_X11_Symbols.h">
-      <Filter>JUCE Modules\juce_gui_basics\native\x11</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\x11\juce_linux_XWindowSystem.h">
-      <Filter>JUCE Modules\juce_gui_basics\native\x11</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_CGMetalLayerRenderer.h">
-      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_mac_PerScreenDisplayLinks.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_CGMetalLayerRenderer_mac.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_MultiTouchMapper.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_NativeModalWrapperComponent_ios.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_PerScreenDisplayLinks_mac.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ScopedDPIAwarenessDisabler.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_win32_ScopedThreadDPIAwarenessSetter.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ScopedThreadDPIAwarenessSetter_windows.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_ScopedWindowAssociation_linux.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_XSymbols_linux.h">
+      <Filter>JUCE Modules\juce_gui_basics\native</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\native\juce_XWindowSystem_linux.h">
       <Filter>JUCE Modules\juce_gui_basics\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_gui_basics\positioning\juce_MarkerList.h">
@@ -8238,7 +8331,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\misc\juce_WebBrowserComponent.h">
       <Filter>JUCE Modules\juce_gui_extra\misc</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_mac_NSViewFrameWatcher.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_gui_extra\native\juce_NSViewFrameWatcher_mac.h">
       <Filter>JUCE Modules\juce_gui_extra\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\..\..\..\..\Softwares\JUCE\modules\juce_gui_extra\juce_gui_extra.h">
@@ -8262,13 +8355,13 @@
     <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGL_ios.h">
       <Filter>JUCE Modules\juce_opengl\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGL_linux_X11.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGL_linux.h">
       <Filter>JUCE Modules\juce_opengl\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGL_osx.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGL_mac.h">
       <Filter>JUCE Modules\juce_opengl\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGL_win32.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGL_windows.h">
       <Filter>JUCE Modules\juce_opengl\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_opengl\native\juce_OpenGLExtensions.h">
@@ -11982,28 +12075,28 @@
     <ClInclude Include="..\..\JUCE\modules\juce_video\capture\juce_CameraDevice.h">
       <Filter>JUCE Modules\juce_video\capture</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_android_CameraDevice.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_android.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_android_Video.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_ios.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_ios_CameraDevice.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_mac.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_mac_CameraDevice.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_CameraDevice_windows.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_mac_Video.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_ComTypes_windows.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_win32_CameraDevice.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_Video_android.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_win32_ComTypes.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_Video_mac.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_win32_Video.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_video\native\juce_Video_windows.h">
       <Filter>JUCE Modules\juce_video\native</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_video\playback\juce_VideoComponent.h">
@@ -12106,6 +12199,9 @@
     </None>
     <None Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces\README.md">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\pluginterfaces</Filter>
+    </None>
+    <None Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo\ReadMe.md">
+      <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\source\vst\moduleinfo</Filter>
     </None>
     <None Include="..\..\JUCE\modules\juce_audio_processors\format_types\VST3_SDK\public.sdk\LICENSE.txt">
       <Filter>JUCE Modules\juce_audio_processors\format_types\VST3_SDK\public.sdk</Filter>

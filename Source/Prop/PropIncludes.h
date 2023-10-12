@@ -10,7 +10,8 @@
 
 #pragma once
 
-//#include "JuceHeader.h"
+#include "JuceHeader.h"
+
 #include "LightBlock/LightBlockIncludes.h"
 
 #include "Component/PropComponent.h"

@@ -11,7 +11,7 @@
 #include "VideoPreviewPanel.h"
 
 #include "LightBlock/LightBlockIncludes.h"
-#include "Timeline/TimelineIncludes.h"
+#include "Sequence/SequenceIncludes.h"
 
 #include "Audio/AudioManager.h"
 

@@ -10,7 +10,7 @@
 
 #include "BentoEngine.h"
 #include "Prop/PropIncludes.h"
-#include "Timeline/TimelineIncludes.h"
+#include "Sequence/SequenceIncludes.h"
 
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
@@ -212,7 +212,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 
 
 
-		if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(currentBlock->provider.get()))
+		if (BentoSequenceBlock* tb = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
 		{
 			if (tb->autoSetPropEnabled->boolValue())
 			{

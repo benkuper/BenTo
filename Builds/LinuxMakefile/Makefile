@@ -72,9 +72,9 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
-  $(JUCE_OBJDIR)/WasmManagerUI_2f57d580.o \
-  $(JUCE_OBJDIR)/WasmManager_efaa0975.o \
-  $(JUCE_OBJDIR)/WasmScript_cd27320d.o \
+  $(JUCE_OBJDIR)/EmbeddedScriptManagerUI_86e1324f.o \
+  $(JUCE_OBJDIR)/EmbeddedScriptManager_c34c26c4.o \
+  $(JUCE_OBJDIR)/EmbeddedScript_c18645f3.o \
   $(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o \
   $(JUCE_OBJDIR)/IdentificationRuleManager_8bd0c2cb.o \
   $(JUCE_OBJDIR)/serial_82f97e54.o \
@@ -91,7 +91,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/AudioManagerHardwareEditor_ce81cbaf.o \
   $(JUCE_OBJDIR)/AudioManager_d6082e39.o \
   $(JUCE_OBJDIR)/VideoIncludes_4f736913.o \
-  $(JUCE_OBJDIR)/TimelineIncludes_a63c4bb.o \
+  $(JUCE_OBJDIR)/SequenceIncludes_1f9bb4bb.o \
   $(JUCE_OBJDIR)/NodeIncludes_261ff85b.o \
   $(JUCE_OBJDIR)/BlockVizPanel_f0c2e5be.o \
   $(JUCE_OBJDIR)/LightBlockIncludes_4bd1d97b.o \
@@ -147,19 +147,19 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(JUCE_OBJDIR)/execinfo.cmd $
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
 
-$(JUCE_OBJDIR)/WasmManagerUI_2f57d580.o: ../../Source/WebAssembly/ui/WasmManagerUI.cpp
+$(JUCE_OBJDIR)/EmbeddedScriptManagerUI_86e1324f.o: ../../Source/WebAssembly/ui/EmbeddedScriptManagerUI.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling WasmManagerUI.cpp"
+	@echo "Compiling EmbeddedScriptManagerUI.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WasmManager_efaa0975.o: ../../Source/WebAssembly/WasmManager.cpp
+$(JUCE_OBJDIR)/EmbeddedScriptManager_c34c26c4.o: ../../Source/WebAssembly/EmbeddedScriptManager.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling WasmManager.cpp"
+	@echo "Compiling EmbeddedScriptManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WasmScript_cd27320d.o: ../../Source/WebAssembly/WasmScript.cpp
+$(JUCE_OBJDIR)/EmbeddedScript_c18645f3.o: ../../Source/WebAssembly/EmbeddedScript.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling WasmScript.cpp"
+	@echo "Compiling EmbeddedScript.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o: ../../Source/Identification/IdentificationRule.cpp
@@ -242,9 +242,9 @@ $(JUCE_OBJDIR)/VideoIncludes_4f736913.o: ../../Source/Video/VideoIncludes.cpp
 	@echo "Compiling VideoIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimelineIncludes_a63c4bb.o: ../../Source/Timeline/TimelineIncludes.cpp
+$(JUCE_OBJDIR)/SequenceIncludes_1f9bb4bb.o: ../../Source/Sequence/SequenceIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling TimelineIncludes.cpp"
+	@echo "Compiling SequenceIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/NodeIncludes_261ff85b.o: ../../Source/Node/NodeIncludes.cpp
