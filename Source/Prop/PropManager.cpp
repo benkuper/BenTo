@@ -39,8 +39,8 @@ PropManager::PropManager() :
 	disablePreview = controlsCC.addBoolParameter("Disable preview", "If checked, this will disable preview in prop UI, it reduces considerably the cpu/gpu consumption.", false);
 	addChildControllableContainer(&controlsCC);
 
-	bakeAll = showCC.addTrigger("Bake All", "Bake all props");
-	bakeMode = showCC.addBoolParameter("Bake Mode", "Bake Mode", false);
+	uploadAll = showCC.addTrigger("Upload All", "Generate playback and upload to all props");
+	playbackMode = showCC.addBoolParameter("Playback Mode", "Switch between live stream from the software, or playback from the prop's uploaded playback file.", false);
 	powerOffAll = showCC.addTrigger("Poweroff All", "");
 	resetAll = showCC.addTrigger("Reset All", "");
 	fileName = showCC.addStringParameter("Show filename", "Filename of the show", "timeline");
@@ -211,9 +211,9 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		checkSerialDevices();
 
 	}
-	else if (c == bakeAll)
+	else if (c == uploadAll)
 	{
-		for (auto& p : items) p->bakeAndUploadTrigger->trigger();
+		for (auto& p : items) p->uploadPlaybackTrigger->trigger();
 	}
 	else if (c == powerOffAll)
 	{
@@ -235,15 +235,15 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		{
 			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 			{
-				if (c == loadAll) bp->loadBake(fileName->stringValue());
-				else if (c == playAll) bp->playBake(0, loop->boolValue());
-				else if (c == stopAll) bp->stopBakePlaying();
+				if (c == loadAll) bp->loadPlayback(fileName->stringValue());
+				else if (c == playAll) bp->playPlayback(0, loop->boolValue());
+				else if (c == stopAll) bp->stopPlaybackPlaying();
 			}
 		}
 	}
-	else if (c == bakeMode)
+	else if (c == playbackMode)
 	{
-		for (auto& pr : items) pr->bakeMode->setValue(bakeMode->boolValue());
+		for (auto& pr : items) pr->playbackMode->setValue(playbackMode->boolValue());
 	}
 	else
 	{

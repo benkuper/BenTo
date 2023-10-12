@@ -57,31 +57,31 @@ public:
 	HashMap<String, PropComponent*> components;
 	RGBPropComponent* rgbComponent;
 
-	ControllableContainer bakingCC;
-	FloatParameter* bakeStartTime;
-	FloatParameter* bakeEndTime;
-	IntParameter* bakeFrequency;
-	Trigger* bakeAndUploadTrigger;
-	Trigger* bakeAndExportTrigger;
-	StringParameter* bakeFileName;
-	BoolParameter* bakeMode;
+	ControllableContainer playbackCC;
+	FloatParameter* playbackStartTime;
+	FloatParameter* playbackEndTime;
+	IntParameter* playbackFrequency;
+	Trigger* uploadPlaybackTrigger;
+	Trigger* exportPlaybackTrigger;
+	StringParameter* playbackFileName;
+	BoolParameter* playbackMode;
 
 	BoolParameter* sendCompressedFile;
-	BoolParameter* isBaking;
+	BoolParameter* isGeneratingPlayback;
 
 	BoolParameter* isUploading;
-	FloatParameter* bakingProgress;
+	FloatParameter* playbackGenProgress;
 	FloatParameter* uploadProgress;
 
 	BoolParameter* isFlashing;
 	FloatParameter* flashingProgression;
 
-	enum AfterBakeAction { UPLOAD, EXPORT, NOTHING };
-	AfterBakeAction afterBake;
+	enum AfterPlaybackGenAction { UPLOAD, EXPORT, NOTHING };
+	AfterPlaybackGenAction afterGeneratePlayback;
 
-	BaseColorProvider* providerToBake;
+	BaseColorProvider* playbackProvider;
 
-	float seekBakeTime;
+	float seekPlaybackTime;
 
 	File exportFile;
 
@@ -116,24 +116,24 @@ public:
 
 	static void fillTypeOptions(EnumParameter* p);
 
-	virtual void initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction);
-	virtual BakeData bakeBlock();
+	virtual void initGeneratePlayback(BaseColorProvider* block, AfterPlaybackGenAction afterPlaybackGenAction);
+	virtual PlaybackData generatePlayback();
 
-	virtual void uploadBakedData(BakeData data);
-	virtual void exportBakedData(BakeData data);
+	virtual void uploadPlaybackData(PlaybackData data);
+	virtual void exportPlaybackData(PlaybackData data);
 	virtual void addFileToUpload(File f);
 	virtual void uploadFileQueue();
 	virtual void uploadFile(File f);
 
-	virtual void loadBake(StringRef /*fileName*/, bool /*autoPlay*/) {}
-	virtual void playBake(float /*time */ = 0, bool /* loop */ = false) {}
-	virtual void pauseBakePlaying() {}
-	virtual void resumeBakePlaying() {}
-	virtual void seekBakePlaying(float /*time */) {}
-	virtual void stopBakePlaying() {}
+	virtual void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/) {}
+	virtual void playPlayback(float /*time */ = 0, bool /* loop */ = false) {}
+	virtual void pausePlaybackPlaying() {}
+	virtual void resumePlaybackPlaying() {}
+	virtual void seekPlaybackPlaying(float /*time */) {}
+	virtual void stopPlaybackPlaying() {}
 	virtual void sendShowPropID(bool value) {}
 
-	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
+	void providerPlaybackGenControlUpdate(LightBlockColorProvider::PlaybackGenControl control, var data) override;
 
 	void sendControlToProp(String message, var value = var());
 	virtual void sendControlToPropInternal(String message, var value = var()) {} //to be overriden

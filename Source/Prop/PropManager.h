@@ -55,8 +55,8 @@ public:
 	Trigger* resetAll;
 
 	ControllableContainer showCC;
-	Trigger* bakeAll;
-	BoolParameter* bakeMode;
+	Trigger* uploadAll;
+	BoolParameter* playbackMode;
 	StringParameter* fileName;
 	Trigger* loadAll;
 	Trigger* playAll;

@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "LightBlock/LightBlockIncludes.h"
+
 LightBlockModelManagerUI::LightBlockModelManagerUI(const String &name, UserLightBlockModelManager * m) :
 	BaseManagerUI(name, m,false)
 {
@@ -30,7 +32,7 @@ void LightBlockModelManagerUI::paint(Graphics & g)
 	g.setColour(BG_COLOR.brighter(.1f));
 	g.fillRoundedRectangle(hr.toFloat(), 2);
 	g.setColour(TEXT_COLOR);
-	g.drawFittedText(manager->niceName, hr, Justification::centred, 1);
+	g.drawFittedText(managerUIName, hr, Justification::centred, 1);
 
 	if (isDraggingOver)
 	{

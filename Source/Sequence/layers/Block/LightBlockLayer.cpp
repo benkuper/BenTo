@@ -128,7 +128,7 @@ void LightBlockLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bo
 	if (!enabled->boolValue()) return;
 	if (Engine::mainEngine->isClearing) return;
 	if (PropManager::getInstanceWithoutCreating() == nullptr) return;
-	if (PropManager::getInstance()->bakeMode->boolValue()) return;
+	if (PropManager::getInstance()->playbackMode->boolValue()) return;
 
 	for (auto& c : blockClipManager.items)
 	{

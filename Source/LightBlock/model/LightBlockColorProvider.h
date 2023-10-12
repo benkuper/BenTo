@@ -14,9 +14,9 @@ class LightBlock;
 class Prop;
 
 //Baking
-struct BakeData
+struct PlaybackData
 {
-	BakeData(StringRef name = "default", float startTime = 0, float endTime = 10, int fps = 100, var metaData = new DynamicObject()) :
+	PlaybackData(StringRef name = "default", float startTime = 0, float endTime = 10, int fps = 100, var metaData = new DynamicObject()) :
 		name(String(name)), startTime(startTime), endTime(endTime), numFrames(0), fps(fps), metaData(metaData)
 	{
 
@@ -36,7 +36,7 @@ class BaseColorProvider
 public:
 	virtual ~BaseColorProvider() {}
 	virtual Array<Colour> getColors(Prop* p, double time, var params) = 0;
-	virtual BakeData getBakeDataForProp(Prop*) = 0;
+	virtual PlaybackData getPlaybackDataForProp(Prop*) = 0;
 };
 
 class LightBlockColorProvider : 
@@ -54,12 +54,12 @@ public:
 	Trigger * assignToAll;
 
 	//Bake info
-	enum BakeControl { PLAY, PAUSE, STOP, SEEK, SHOW_ID };
+	enum PlaybackGenControl { PLAY, PAUSE, STOP, SEEK, SHOW_ID };
 	
 	virtual Array<WeakReference<Controllable>> getModelParameters() = 0;
 
 	virtual Array<Colour> getColors(Prop* p, double time, var params) override;
-	virtual BakeData getBakeDataForProp(Prop*) override;
+	virtual PlaybackData getPlaybackDataForProp(Prop*) override;
 
 	void onContainerTriggerTriggered(Trigger *) override;
 
@@ -71,7 +71,7 @@ public:
 		virtual ~ProviderListener() {}
 		virtual void providerParametersChanged(LightBlockColorProvider *) {}
 		virtual void providerParameterValueUpdated(LightBlockColorProvider *, Parameter *) {}
-		virtual void providerBakeControlUpdate(BakeControl control, var data = var()) {}
+		virtual void providerPlaybackGenControlUpdate(PlaybackGenControl control, var data = var()) {}
 	};
 
 	ListenerList<ProviderListener> providerListeners;

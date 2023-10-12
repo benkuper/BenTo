@@ -1798,7 +1798,7 @@
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;
@@ -1904,7 +1904,7 @@
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(SRCROOT)/../../JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
-				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -weak_framework Metal -weak_framework MetalKit";
+				OTHER_LDFLAGS = "-lServus -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
 				USE_HEADERMAP = NO;

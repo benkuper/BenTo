@@ -29,7 +29,7 @@ public:
 	void filterColors(Array<Colour>* result, Prop* p, double time, var params);
 	var getLocalParams(Prop* p, double time, var params);
 
-	BakeData getBakeDataForProp(Prop* prop) override;
+	PlaybackData getPlaybackDataForProp(Prop* prop) override;
 
 	void rebuildArgsFromModel();
 

@@ -19,13 +19,13 @@ PropManagerUI::PropManagerUI(const String &name, PropManager * m) :
 
 	autoDetectUI.reset(manager->detectProps->createButtonUI());
 	autoAssignUI.reset(manager->autoAssignIdTrigger->createButtonUI());
-	bakeAllUI.reset(manager->bakeAll->createButtonUI());
-	bakeModeUI.reset(manager->bakeMode->createToggle());
+	uploadAllUI.reset(manager->uploadAll->createButtonUI());
+	playbackModeUI.reset(manager->playbackMode->createToggle());
 
 	addAndMakeVisible(autoDetectUI.get());
 	addAndMakeVisible(autoAssignUI.get());
-	addAndMakeVisible(bakeAllUI.get());
-	addAndMakeVisible(bakeModeUI.get());
+	addAndMakeVisible(uploadAllUI.get());
+	addAndMakeVisible(playbackModeUI.get());
 }
 
 PropManagerUI::~PropManagerUI()
@@ -41,9 +41,9 @@ void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
 	hr.removeFromTop(2);
 	autoDetectUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(2);
-	bakeAllUI->setBounds(hr.removeFromTop(20));
+	uploadAllUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(2);
-	bakeModeUI->setBounds(hr.removeFromTop(20));
+	playbackModeUI->setBounds(hr.removeFromTop(20));
 }
 
 void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos)

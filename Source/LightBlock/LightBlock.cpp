@@ -181,9 +181,9 @@ void LightBlock::handleEnterExit(bool enter, Array<Prop*> props)
 	if (provider != nullptr && !provider.wasObjectDeleted()) provider->handleEnterExit(enter, props);
 }
 
-BakeData LightBlock::getBakeDataForProp(Prop * p)
+PlaybackData LightBlock::getPlaybackDataForProp(Prop * p)
 {
-	BakeData result = (!provider.wasObjectDeleted() && provider != nullptr) ? provider->getBakeDataForProp(p) : BakeData(shortName);
+	PlaybackData result = (!provider.wasObjectDeleted() && provider != nullptr) ? provider->getPlaybackDataForProp(p) : PlaybackData(shortName);
 	result.metaData.getDynamicObject()->setProperty("blockName", niceName);
 	return result;
 }

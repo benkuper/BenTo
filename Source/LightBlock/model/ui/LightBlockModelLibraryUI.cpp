@@ -19,7 +19,7 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String& contentName, Li
 	pictureBlocksManagerUI("Pictures", &library->pictureBlocks),
 	streamingScriptBlocksManagerUI("Streaming Scripts", &library->streamingScriptBlocks),
 	embeddedScriptBlocksManagerUI("Embedded Scripts (Experimental)", &library->embeddedScriptBlocks),
-	videoManagerUI("Video (Experimental)", &library->videoBlocks)
+	videoManagerUI("Videos (Experimental)", &library->videoBlocks)
 	//genericFilterGroupUI(&library->genericFilterBlocks)
 {
 	iconSizeUI.reset(library->iconSize->createSlider());

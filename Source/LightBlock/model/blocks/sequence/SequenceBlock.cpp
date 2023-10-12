@@ -17,7 +17,7 @@ BentoSequenceBlock::BentoSequenceBlock(var params) :
 {
 	itemDataType = getTypeString();
 
-	bakeToProps = addTrigger("Bake to props", "");
+	uploadPlaybackToProps = addTrigger("Upload Playback", "");
 
 	autoSetPropEnabled = addBoolParameter("Auto Set enabled", "If checked, this will automatically enable / disable prop based on whether they are filtered by the sequence", false);
 
@@ -55,7 +55,7 @@ Array<Colour> BentoSequenceBlock::getColors(Prop* p, double time, var params)
 
 }
 
-BakeData BentoSequenceBlock::getBakeDataForProp(Prop* p)
+PlaybackData BentoSequenceBlock::getPlaybackDataForProp(Prop* p)
 {
 	var metaData = new DynamicObject();
 
@@ -76,14 +76,14 @@ BakeData BentoSequenceBlock::getBakeDataForProp(Prop* p)
 	metaData.getDynamicObject()->setProperty("group", groupID);
 	metaData.getDynamicObject()->setProperty("scripts", sequence->getWasmTimingsDataForProp(p));
 
-	return BakeData(shortName, 0, sequence->totalTime->floatValue(), sequence->fps->intValue(), metaData);
+	return PlaybackData(shortName, 0, sequence->totalTime->floatValue(), sequence->fps->intValue(), metaData);
 }
 
 void BentoSequenceBlock::sequenceCurrentTimeChanged(Sequence*, float prevTime, bool)
 {
 	if (sequence->isSeeking)
 	{
-		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SEEK, sequence->currentTime->floatValue());
+		providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, SEEK, sequence->currentTime->floatValue());
 	}
 
 	OSCMessage msg("/" + shortName + "/currentTime");
@@ -95,7 +95,7 @@ void BentoSequenceBlock::sequenceCurrentTimeChanged(Sequence*, float prevTime, b
 
 void BentoSequenceBlock::sequencePlayStateChanged(Sequence* s)
 {
-	providerListeners.call(&ProviderListener::providerBakeControlUpdate, sequence->isPlaying->boolValue() ? PLAY : PAUSE, sequence->currentTime->floatValue());
+	providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, sequence->isPlaying->boolValue() ? PLAY : PAUSE, sequence->currentTime->floatValue());
 }
 
 void BentoSequenceBlock::sequenceEditingStateChanged(Sequence* s)
@@ -105,16 +105,16 @@ void BentoSequenceBlock::sequenceEditingStateChanged(Sequence* s)
 
 void BentoSequenceBlock::sequenceLooped(Sequence* s)
 {
-	providerListeners.call(&ProviderListener::providerBakeControlUpdate, PLAY, 0);
+	providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, PLAY, 0);
 }
 
 void BentoSequenceBlock::onContainerTriggerTriggered(Trigger* t)
 {
 	LightBlockModel::onContainerTriggerTriggered(t);
 
-	if (t == bakeToProps)
+	if (t == uploadPlaybackToProps)
 	{
-		for (auto& p : PropManager::getInstance()->items) p->initBaking(this, Prop::AfterBakeAction::UPLOAD);
+		for (auto& p : PropManager::getInstance()->items) p->initGeneratePlayback(this, Prop::AfterPlaybackGenAction::UPLOAD);
 	}
 }
 
@@ -123,7 +123,7 @@ void BentoSequenceBlock::onControllableFeedbackUpdateInternal(ControllableContai
 	LightBlockModel::onControllableFeedbackUpdateInternal(cc, c);
 	if (c == sequence->identityMode)
 	{
-		providerListeners.call(&ProviderListener::providerBakeControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
+		providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
 	} 
 }
 

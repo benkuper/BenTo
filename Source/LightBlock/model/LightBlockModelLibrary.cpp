@@ -93,6 +93,7 @@ void LightBlockModelLibrary::clear()
 	sequenceBlocks.clear();
 	videoBlocks.clear();
 	streamingScriptBlocks.clear();
+	embeddedScriptBlocks.clear();
 	for (auto& m : models) m->clear();
 	pictureBlocks.clear();
 	nodeBlocks.clear();

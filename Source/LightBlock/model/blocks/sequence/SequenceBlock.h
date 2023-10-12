@@ -21,14 +21,14 @@ public:
 	BentoSequenceBlock(var params = var());
 	~BentoSequenceBlock();
 
-	Trigger* bakeToProps;
+	Trigger* uploadPlaybackToProps;
 	BoolParameter* autoSetPropEnabled;
 
 	std::unique_ptr<SequenceBlockSequence> sequence;
 
 	Array<Colour> getColors(Prop * p, double time, var params) override;
 
-	BakeData getBakeDataForProp(Prop * p) override;
+	PlaybackData getPlaybackDataForProp(Prop * p) override;
 
 
 	void sequenceCurrentTimeChanged(Sequence *, float /*prevTime*/, bool /*evaluateSkippedData*/) override;

@@ -51,12 +51,12 @@ PropUI::~PropUI()
 void PropUI::paintOverChildren(Graphics& g)
 {
 	BaseItemUI::paintOverChildren(g);
-	if (item->isBaking->boolValue())
+	if (item->isGeneratingPlayback->boolValue())
 	{
 		g.fillAll(Colours::black.withAlpha(.3f));
 
 		g.setColour(Colours::orange.darker().withAlpha(.2f));
-		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->bakingProgress->floatValue() * viz.getHeight()).toFloat(), 2);
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->playbackGenProgress->floatValue() * viz.getHeight()).toFloat(), 2);
 
 		g.setColour(Colours::limegreen.darker().withAlpha(.2f));
 		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->uploadProgress->floatValue() * viz.getHeight()).toFloat(), 2);
@@ -139,7 +139,7 @@ void PropUI::resizedInternalContent(Rectangle<int>& r)
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef || c == item->isFlashing || c == item->flashingProgression) repaint();
+	if (c == item->isGeneratingPlayback || c == item->playbackGenProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef || c == item->isFlashing || c == item->flashingProgression) repaint();
 	else if (c == item->type)
 	{
 		Prop::Shape shape = item->type->getValueDataAsEnum<Prop::Shape>();

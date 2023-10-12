@@ -76,12 +76,12 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Prop::onControllableFeedbackUpdateInternal(cc, c);
-	if (c == bakeMode)
+	if (c == playbackMode)
 	{
-		if (bakeMode->boolValue())
+		if (playbackMode->boolValue())
 		{
-			String filename = currentBlock != nullptr ? currentBlock->shortName : (bakeFileName->enabled ? bakeFileName->stringValue() : "");
-			if (filename.isNotEmpty()) loadBake(filename);
+			String filename = currentBlock != nullptr ? currentBlock->shortName : (playbackFileName->enabled ? playbackFileName->stringValue() : "");
+			if (filename.isNotEmpty()) loadPlayback(filename);
 		}
 		else
 		{
@@ -171,7 +171,7 @@ void BentoProp::sendColorsToPropInternal()
 	if (numPacketSent > 1) sleep(10);
 }
 
-void BentoProp::uploadBakedData(BakeData data)
+void BentoProp::uploadPlaybackData(PlaybackData data)
 {
 	String target = "http://" + remoteHost->stringValue() + "/upload";
 	//String target = "http://benjamin.kuperberg.fr/chataigne/releases/uploadTest.php";
@@ -240,7 +240,7 @@ void BentoProp::uploadBakedData(BakeData data)
 	}
 }
 
-void BentoProp::exportBakedData(BakeData data)
+void BentoProp::exportPlaybackData(PlaybackData data)
 {
 	MemoryInputStream is(data.data, true);
 	if (exportFile.existsAsFile()) exportFile.deleteFile();
@@ -289,7 +289,7 @@ void BentoProp::uploadFile(File f)
 	}
 }
 
-void BentoProp::loadBake(StringRef fileName, bool autoPlay)
+void BentoProp::loadPlayback(StringRef fileName, bool autoPlay)
 {
 	if (serialDevice != nullptr)
 	{
@@ -304,7 +304,7 @@ void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 	}
 }
 
-void BentoProp::playBake(float time, bool loop)
+void BentoProp::playPlayback(float time, bool loop)
 {
 	if (serialDevice != nullptr)
 	{
@@ -320,7 +320,7 @@ void BentoProp::playBake(float time, bool loop)
 	}
 }
 
-void BentoProp::pauseBakePlaying()
+void BentoProp::pausePlaybackPlaying()
 {
 	if (serialDevice != nullptr)
 	{
@@ -333,7 +333,7 @@ void BentoProp::pauseBakePlaying()
 	}
 }
 
-void BentoProp::seekBakePlaying(float time)
+void BentoProp::seekPlaybackPlaying(float time)
 {
 	if (serialDevice != nullptr)
 	{
@@ -347,7 +347,7 @@ void BentoProp::seekBakePlaying(float time)
 	}
 }
 
-void BentoProp::stopBakePlaying()
+void BentoProp::stopPlaybackPlaying()
 {
 	if (serialDevice != nullptr)
 	{

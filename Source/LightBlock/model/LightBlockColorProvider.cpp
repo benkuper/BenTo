@@ -25,9 +25,9 @@ LightBlockColorProvider::~LightBlockColorProvider() {
 }
 
 
-BakeData LightBlockColorProvider::getBakeDataForProp(Prop*)
+PlaybackData LightBlockColorProvider::getPlaybackDataForProp(Prop*)
 {
-	return BakeData();
+	return PlaybackData();
 }
 
 void LightBlockColorProvider::onContainerTriggerTriggered(Trigger* t)

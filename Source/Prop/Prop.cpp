@@ -20,10 +20,10 @@ Prop::Prop(var params) :
 	connectionCC("Connection"),
 	controlsCC("Controls"),
 	rgbComponent(nullptr),
-	bakingCC("Bake and Upload"),
+	playbackCC("Playback"),
 	pingEnabled(true),
 	receivedPongSinceLastPingSent(false),
-	providerToBake(nullptr),
+	playbackProvider(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
 	updateRate(50),
@@ -76,43 +76,43 @@ Prop::Prop(var params) :
 
 	addChildControllableContainer(&controlsCC);
 
-	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
-	bakeStartTime->defaultUI = FloatParameter::TIME;
-	bakeStartTime->canBeDisabledByUser = true;
-	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1, 1, INT32_MAX, false);
-	bakeEndTime->defaultUI = FloatParameter::TIME;
-	bakeEndTime->canBeDisabledByUser = true;
-	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 50000, false);
-	bakeFrequency->canBeDisabledByUser = true;
+	playbackStartTime = playbackCC.addFloatParameter("Playback Start Time", "Set the start time of playback", 0, 0, INT32_MAX, false);
+	playbackStartTime->defaultUI = FloatParameter::TIME;
+	playbackStartTime->canBeDisabledByUser = true;
+	playbackEndTime = playbackCC.addFloatParameter("Playback End Time", "Set the end time of playback", 1, 1, INT32_MAX, false);
+	playbackEndTime->defaultUI = FloatParameter::TIME;
+	playbackEndTime->canBeDisabledByUser = true;
+	playbackFrequency = playbackCC.addIntParameter("Playback Frequency", "The frequency at which the playback is generate", 100, 1, 50000, false);
+	playbackFrequency->canBeDisabledByUser = true;
 
-	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
-	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
+	uploadPlaybackTrigger = playbackCC.addTrigger("Playback and Upload", "Playback the current assigned block and upload it to the prop");
+	exportPlaybackTrigger = playbackCC.addTrigger("Playback and Export", "Playback the current assigned block and export it to a file");
 
-	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "", false);
-	bakeFileName->canBeDisabledByUser = true;
+	playbackFileName = playbackCC.addStringParameter("Playback file name", "Name of the playback file to send and to play", "", false);
+	playbackFileName->canBeDisabledByUser = true;
 
-	bakeMode = bakingCC.addBoolParameter("Bake Mode", "Play the bake file with name set above, or revert to streaming", false);
+	playbackMode = playbackCC.addBoolParameter("Playback Mode", "Play the playback file with name set above, or revert to streaming", false);
 
-	sendCompressedFile = bakingCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
+	sendCompressedFile = playbackCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
 
-	isBaking = bakingCC.addBoolParameter("Is Baking", "Is this prop currently baking ?", false);
-	isBaking->hideInEditor = true;
-	isBaking->setControllableFeedbackOnly(true);
-	isBaking->isSavable = false;
+	isGeneratingPlayback = playbackCC.addBoolParameter("Is Generating", "Is this prop currently generating ?", false);
+	isGeneratingPlayback->hideInEditor = true;
+	isGeneratingPlayback->setControllableFeedbackOnly(true);
+	isGeneratingPlayback->isSavable = false;
 
 
-	isUploading = bakingCC.addBoolParameter("Is Uploading", "Upload after bake", false);
+	isUploading = playbackCC.addBoolParameter("Is Uploading", "Is currently uploading", false);
 	isUploading->hideInEditor = true;
 	isUploading->setControllableFeedbackOnly(true);
 	isUploading->isSavable = false;
 
-	bakingProgress = bakingCC.addFloatParameter("Baking progress", "", 0, 0, 1);
-	bakingProgress->setControllableFeedbackOnly(true);
-	uploadProgress = bakingCC.addFloatParameter("Upload progress", "", 0, 0, 1);
+	playbackGenProgress = playbackCC.addFloatParameter("Generation progress", "", 0, 0, 1);
+	playbackGenProgress->setControllableFeedbackOnly(true);
+	uploadProgress = playbackCC.addFloatParameter("Upload progress", "", 0, 0, 1);
 	uploadProgress->setControllableFeedbackOnly(true);
 
-	bakingCC.editorIsCollapsed = true;
-	addChildControllableContainer(&bakingCC);
+	playbackCC.editorIsCollapsed = true;
+	addChildControllableContainer(&playbackCC);
 
 
 	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
@@ -179,7 +179,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 {
 	if (currentBlock == nullptr && model == nullptr) return;
 	if (model != nullptr && currentBlock != nullptr && currentBlock->provider == model) return;
-	if (isBaking->boolValue()) return;
+	if (isGeneratingPlayback->boolValue()) return;
 
 	if (currentBlock != nullptr)
 	{
@@ -278,17 +278,17 @@ void Prop::update()
 	}
 
 
-	if (!bakeMode->boolValue()
-		&& !isBaking->boolValue()
+	if (!playbackMode->boolValue()
+		&& !isGeneratingPlayback->boolValue()
 		&& !isUploading->boolValue()
 		&& (rgbComponent != nullptr && rgbComponent->streamEnable->boolValue()))
 	{
 		sendColorsToProp();
 	}
-	else if (seekBakeTime != -1)
+	else if (seekPlaybackTime != -1)
 	{
-		seekBakePlaying(seekBakeTime);
-		seekBakeTime = -1;
+		seekPlaybackPlaying(seekPlaybackTime);
+		seekPlaybackTime = -1;
 	}
 }
 
@@ -319,9 +319,9 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 		propListeners.call(&PropListener::propIDChanged, this, previousID);
 		previousID = globalID->intValue();
 	}
-	else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
+	else if (c == uploadPlaybackTrigger || c == exportPlaybackTrigger)
 	{
-		initBaking(currentBlock.get(), c == bakeAndUploadTrigger ? UPLOAD : EXPORT);
+		initGeneratePlayback(currentBlock.get(), c == uploadPlaybackTrigger ? UPLOAD : EXPORT);
 	}
 	else if (c == findPropMode)
 	{
@@ -375,18 +375,18 @@ void Prop::fillTypeOptions(EnumParameter* p)
 	p->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP)->addOption("Ring", RING)->addOption("Buggeng", BUGGENG)->addOption("Box", BOX)->addOption("Custom", CUSTOM);
 }
 
-void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
+void Prop::initGeneratePlayback(BaseColorProvider* block, AfterPlaybackGenAction afterPlaybackGenAction)
 {
 	if (block == nullptr)
 	{
-		NLOGWARNING(niceName, "Current block not assigned, cannot bake");
+		NLOGWARNING(niceName, "Current block not assigned, cannot generate playback");
 		return;
 	}
 
-	afterBake = afterBakeAction;
-	providerToBake = block;
+	afterGeneratePlayback = afterPlaybackGenAction;
+	playbackProvider = block;
 
-	if (afterBake == EXPORT)
+	if (afterGeneratePlayback == EXPORT)
 	{
 		FileChooser* fc(new FileChooser("Export a block"));
 		fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
@@ -396,34 +396,34 @@ void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
 				if (f == File()) return;
 
 				exportFile = f;
-				bakingProgress->setValue(0);
+				playbackGenProgress->setValue(0);
 				uploadProgress->setValue(0);
-				isBaking->setValue(true);
+				isGeneratingPlayback->setValue(true);
 			}
 		);
 	}
 	else
 	{
-		bakingProgress->setValue(0);
+		playbackGenProgress->setValue(0);
 		uploadProgress->setValue(0);
-		isBaking->setValue(true);
+		isGeneratingPlayback->setValue(true);
 	}
 }
 
-BakeData Prop::bakeBlock()
+PlaybackData Prop::generatePlayback()
 {
-	if (providerToBake == nullptr) return BakeData();
+	if (playbackProvider == nullptr) return PlaybackData();
 
 
-	BakeData result = providerToBake->getBakeDataForProp(this);
-	NLOG(niceName, "Baking block " << result.name);
+	PlaybackData result = playbackProvider->getPlaybackDataForProp(this);
+	NLOG(niceName, "Generating playback for block " << result.name);
 
 
 	//overrides
-	if (bakeFileName->enabled && bakeFileName->stringValue().isNotEmpty()) result.name = bakeFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
-	if (bakeStartTime->enabled) result.startTime = bakeStartTime->floatValue();
-	if (bakeEndTime->enabled) result.endTime = bakeEndTime->floatValue();
-	if (bakeFrequency->enabled) result.fps = bakeFrequency->intValue();
+	if (playbackFileName->enabled && playbackFileName->stringValue().isNotEmpty()) result.name = playbackFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
+	if (playbackStartTime->enabled) result.startTime = playbackStartTime->floatValue();
+	if (playbackEndTime->enabled) result.endTime = playbackEndTime->floatValue();
+	if (playbackFrequency->enabled) result.fps = playbackFrequency->intValue();
 
 	if (!result.metaData.hasProperty("id"))
 	{
@@ -452,8 +452,8 @@ BakeData Prop::bakeBlock()
 	{
 		if (threadShouldExit()) return result;
 
-		if (providerToBake == nullptr) return result;
-		Array<Colour> cols = providerToBake->getColors(this, curTime, params);
+		if (playbackProvider == nullptr) return result;
+		Array<Colour> cols = playbackProvider->getColors(this, curTime, params);
 
 		for (int i = startIndex; i != endIndex; i += step)
 		{
@@ -464,7 +464,7 @@ BakeData Prop::bakeBlock()
 		}
 		result.numFrames++;
 
-		bakingProgress->setValue(jmap<float>(curTime, result.startTime, result.endTime, 0, 1));
+		playbackGenProgress->setValue(jmap<float>(curTime, result.startTime, result.endTime, 0, 1));
 	}
 
 	os.flush();
@@ -473,14 +473,14 @@ BakeData Prop::bakeBlock()
 }
 
 
-void Prop::uploadBakedData(BakeData bakedColors)
+void Prop::uploadPlaybackData(PlaybackData playbackColors)
 {
-	NLOG(niceName, "Uploading here... " << bakedColors.numFrames << " frames");
+	NLOG(niceName, "Uploading here... " << playbackColors.numFrames << " frames");
 }
 
-void Prop::exportBakedData(BakeData data)
+void Prop::exportPlaybackData(PlaybackData data)
 {
-	NLOG(niceName, "Export bake data " << data.name);
+	NLOG(niceName, "Export playback data " << data.name);
 }
 
 void Prop::addFileToUpload(File f)
@@ -505,30 +505,30 @@ void Prop::uploadFile(File f)
 }
 
 
-void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data)
+void Prop::providerPlaybackGenControlUpdate(LightBlockColorProvider::PlaybackGenControl control, var data)
 {
-	if (!bakeMode->boolValue()) return;
+	if (!playbackMode->boolValue()) return;
 
 	switch (control)
 	{
-	case LightBlockColorProvider::BakeControl::PLAY:
-		playBake((float)data);
+	case LightBlockColorProvider::PlaybackGenControl::PLAY:
+		playPlayback((float)data);
 		break;
 
-	case LightBlockColorProvider::BakeControl::PAUSE:
-		pauseBakePlaying();
+	case LightBlockColorProvider::PlaybackGenControl::PAUSE:
+		pausePlaybackPlaying();
 		break;
 
-	case LightBlockColorProvider::BakeControl::SEEK:
-		seekBakeTime = (float)data;
-		//if(seekBakeTime == -1) seekBakePlaying((float)data);
+	case LightBlockColorProvider::PlaybackGenControl::SEEK:
+		seekPlaybackTime = (float)data;
+		//if(seekPlaybackTime == -1) seekPlaybackPlaying((float)data);
 		break;
 
-	case LightBlockColorProvider::BakeControl::STOP:
-		stopBakePlaying();
+	case LightBlockColorProvider::PlaybackGenControl::STOP:
+		stopPlaybackPlaying();
 		break;
 
-	case LightBlockColorProvider::BakeControl::SHOW_ID:
+	case LightBlockColorProvider::PlaybackGenControl::SHOW_ID:
 		sendShowPropID((bool)data);
 		break;
 	}
@@ -687,32 +687,32 @@ void Prop::run()
 
 	while (!threadShouldExit())
 	{
-		if (isBaking->boolValue())
+		if (isGeneratingPlayback->boolValue())
 		{
-			BakeData data = bakeBlock();
+			PlaybackData data = generatePlayback();
 
 			if (threadShouldExit()) return;
 
-			switch (afterBake)
+			switch (afterGeneratePlayback)
 			{
 			case UPLOAD:
 				isUploading->setValue(true);
-				uploadBakedData(data);
+				uploadPlaybackData(data);
 				if (threadShouldExit()) return;
 				isUploading->setValue(false);
 
-				bakeMode->setValue(bakeMode->value, false, true); //force resend bakeMode
+				playbackMode->setValue(playbackMode->value, false, true); //force resend playbackMode
 				break;
 
 			case EXPORT:
-				exportBakedData(data);
+				exportPlaybackData(data);
 				break;
 
 			default:
 				break;
 			}
 
-			isBaking->setValue(false);
+			isGeneratingPlayback->setValue(false);
 		}
 		else if (filesToUpload.size() > 0)
 		{
