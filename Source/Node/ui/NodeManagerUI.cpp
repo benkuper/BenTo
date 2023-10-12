@@ -15,6 +15,7 @@ NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 {
 	animateItemOnAdd = false;
 	canZoom = true;
+	updatePositionOnDragMove = true;
 
 	removeMouseListener(this);
 	addMouseListener(this, true);
@@ -177,6 +178,7 @@ void NodeManagerUI::mouseEnter(const MouseEvent & e)
 
 void NodeManagerUI::itemDragEnter(const SourceDetails & source)
 {
+	BaseManagerViewUI::itemDragEnter(source);
 	dragPosition = getViewMousePosition().toFloat();
 	dragType = source.description.getProperty("dataType", "");
 	repaint();
@@ -184,12 +186,14 @@ void NodeManagerUI::itemDragEnter(const SourceDetails & source)
 
 void NodeManagerUI::itemDragExit(const SourceDetails & source)
 {
+	BaseManagerViewUI::itemDragExit(source);
 	dragPosition = Point<float>();
 	repaint();
 }
 
 void NodeManagerUI::itemDragMove(const SourceDetails & source)
 {
+	BaseManagerViewUI::itemDragMove(source);
 	dragPosition = getViewMousePosition().toFloat();
 	repaint();
 }

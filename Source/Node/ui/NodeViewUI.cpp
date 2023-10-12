@@ -8,12 +8,17 @@
   ==============================================================================
 */
 
+#include "Node/NodeIncludes.h"
+
 NodeViewUI::NodeViewUI(Node * node, Direction direction) :
 	BaseItemUI(node, direction)
 {
 	for (auto & s : node->inSlots) addConnector(true, s, false);
 	for (auto & s : node->outSlots) addConnector(false, s, false);
 	
+	autoHideWhenDragging = false;
+	drawEmptyDragIcon = true;
+
 	node->addAsynNodeListener(this);
 }
 

@@ -25,7 +25,7 @@ public:
 	UserLightBlockModelManager pictureBlocks;
 	UserLightBlockModelManager nodeBlocks;
 	UserLightBlockModelManager streamingScriptBlocks;
-	EmbeddedScriptBlockManager embeddedScriptBlocks;
+	UserLightBlockModelManager embeddedScriptBlocks;
 	UserLightBlockModelManager sequenceBlocks;
 
 

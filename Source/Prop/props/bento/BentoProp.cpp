@@ -27,7 +27,7 @@ BentoProp::BentoProp(var params) :
 	indexPrefix = generalCC.addIntParameter("Index Prefix", "If enabled, this prepends a byte corresponding to the strip index it's addressing.", 1, 1, 255, false);
 	indexPrefix->canBeDisabledByUser = true;
 
-	scriptObject.setMethod("send", &BentoProp::sendMessageToPropFromScript);
+	scriptObject.getDynamicObject()->setMethod("send", &BentoProp::sendMessageToPropFromScript);
 
 	connectionCC.addParameter(serialParam);
 
