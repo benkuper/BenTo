@@ -329,11 +329,11 @@ Array<LightBlockColorProvider*> LightBlockModelLibrary::fillProvidersMenu(PopupM
 		menu.addSubMenu(LightBlockModelLibrary::getInstance()->embeddedScriptBlocks.niceName, wasmMenu);
 
 
-		PopupMenu timelinesMenu;
-		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->sequenceBlocks, timelinesMenu, includePresets, index);
+		PopupMenu sequencesMenu;
+		pa = fillUserLightBlockManagerMenu(&LightBlockModelLibrary::getInstance()->sequenceBlocks, sequencesMenu, includePresets, index);
 		index += pa.size();
 		mList.addArray(pa);
-		menu.addSubMenu(LightBlockModelLibrary::getInstance()->sequenceBlocks.niceName, timelinesMenu);
+		menu.addSubMenu(LightBlockModelLibrary::getInstance()->sequenceBlocks.niceName, sequencesMenu);
 	}
 
 	//if (includeFilters)

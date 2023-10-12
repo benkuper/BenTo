@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Sequence/SequenceIncludes.h"
+
 LightBlockClipManagerUI::LightBlockClipManagerUI(LightBlockLayerTimeline * _timeline, LightBlockClipManager * manager) :
 	LayerBlockManagerUI(_timeline, manager),
 	clipManager(manager),

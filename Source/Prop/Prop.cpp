@@ -85,10 +85,10 @@ Prop::Prop(var params) :
 	playbackFrequency = playbackCC.addIntParameter("Playback Frequency", "The frequency at which the playback is generate", 100, 1, 50000, false);
 	playbackFrequency->canBeDisabledByUser = true;
 
-	uploadPlaybackTrigger = playbackCC.addTrigger("Playback and Upload", "Playback the current assigned block and upload it to the prop");
-	exportPlaybackTrigger = playbackCC.addTrigger("Playback and Export", "Playback the current assigned block and export it to a file");
+	uploadPlaybackTrigger = playbackCC.addTrigger("Generate and Upload", "Generate a playback of the current assigned block and upload it to the prop");
+	exportPlaybackTrigger = playbackCC.addTrigger("Generate and Export", "Generate a playback the current assigned block and export it to a file");
 
-	playbackFileName = playbackCC.addStringParameter("Playback file name", "Name of the playback file to send and to play", "", false);
+	playbackFileName = playbackCC.addStringParameter("Playback File Name", "Name of the playback file to send and to play", "", false);
 	playbackFileName->canBeDisabledByUser = true;
 
 	playbackMode = playbackCC.addBoolParameter("Playback Mode", "Play the playback file with name set above, or revert to streaming", false);

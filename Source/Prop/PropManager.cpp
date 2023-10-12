@@ -21,7 +21,7 @@ PropManager::PropManager() :
 	familiesCC("Families"),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
-	showCC("Show")
+	playbackCC("Playback")
 {
 	saveAndLoadRecursiveData = true;
 
@@ -39,16 +39,16 @@ PropManager::PropManager() :
 	disablePreview = controlsCC.addBoolParameter("Disable preview", "If checked, this will disable preview in prop UI, it reduces considerably the cpu/gpu consumption.", false);
 	addChildControllableContainer(&controlsCC);
 
-	uploadAll = showCC.addTrigger("Upload All", "Generate playback and upload to all props");
-	playbackMode = showCC.addBoolParameter("Playback Mode", "Switch between live stream from the software, or playback from the prop's uploaded playback file.", false);
-	powerOffAll = showCC.addTrigger("Poweroff All", "");
-	resetAll = showCC.addTrigger("Reset All", "");
-	fileName = showCC.addStringParameter("Show filename", "Filename of the show", "timeline");
-	loadAll = showCC.addTrigger("Load all", "Load show on all devices that can play");
-	playAll = showCC.addTrigger("Play all", "Play show on all devices that can play");
-	stopAll = showCC.addTrigger("Stop all", "Stop show on all devices that can stop");
-	loop = showCC.addBoolParameter("Loop show", "If checked, this will tell the player to loop the playing", false);
-	addChildControllableContainer(&showCC);
+	uploadAll = playbackCC.addTrigger("Upload All", "Generate playback and upload to all props");
+	playbackMode = playbackCC.addBoolParameter("Playback Mode", "Switch between live stream from the software, or playback from the prop's uploaded playback file.", false);
+	powerOffAll = playbackCC.addTrigger("Poweroff All", "");
+	resetAll = playbackCC.addTrigger("Reset All", "");
+	fileName = playbackCC.addStringParameter("Playback Filename", "Filename of the playback", "sequence");
+	loadAll = playbackCC.addTrigger("Load All", "Load playback on all devices that can play");
+	playAll = playbackCC.addTrigger("Play All", "Play playback on all devices that can play");
+	stopAll = playbackCC.addTrigger("Stop All", "Stop playback on all devices that can stop");
+	loop = playbackCC.addBoolParameter("Loop Playback", "If checked, this will tell the player to loop the playing", false);
+	addChildControllableContainer(&playbackCC);
 
 
 

@@ -54,7 +54,7 @@ public:
 	Trigger* powerOffAll;
 	Trigger* resetAll;
 
-	ControllableContainer showCC;
+	ControllableContainer playbackCC;
 	Trigger* uploadAll;
 	BoolParameter* playbackMode;
 	StringParameter* fileName;

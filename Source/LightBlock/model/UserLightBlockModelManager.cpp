@@ -109,7 +109,7 @@ void UserLightBlockModelManager::loadJSONDataInternal(var data)
 			if (ne != nullptr) ne->setNodeBlock(nb);
 		}else if(SequenceBlock * t = dynamic_cast<SequenceBlock *>(m))
 		{
-			DBG("Edit timeline block"); 
+			DBG("Edit sequence block"); 
 			TimelineEditor * te = (TimelineEditor *)ShapeShifterManager::getInstance()->getContentForName(TimelineEditor::getTypeStringStatic());
 			if (te != nullptr) te->setSequence(&t->sequence);
 		}
