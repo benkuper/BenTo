@@ -21,8 +21,11 @@ BentoProp::BentoProp(var params) :
 
 	serialParam = new SerialDeviceParameter("USB Device", "For connecting props trhough USB", true);
 	serialParam->openBaudRate = 115200;
-	if (params.hasProperty("vid")) serialParam->vidFilter = (int)params.getProperty("vid", 0);
-	if (params.hasProperty("pid")) serialParam->pidFilter = (int)params.getProperty("pid", 0);
+
+#if !JUCE_MAC
+	if (params.hasProperty("vid")) serialParam->vidFilters.add((int)params.getProperty("vid", 0));
+	if (params.hasProperty("pid")) serialParam->pidFilters.add((int)params.getProperty("pid", 0));
+#endif
 
 	indexPrefix = generalCC.addIntParameter("Index Prefix", "If enabled, this prepends a byte corresponding to the strip index it's addressing.", 1, 1, 255, false);
 	indexPrefix->canBeDisabledByUser = true;
@@ -563,7 +566,7 @@ void BentoProp::Flasher::run()
 
 	String port = prop->serialDevice->info->port;
 
-	prop->serialParam->setValueForDevice(nullptr); //close device to let the flasher use it
+	prop->serialParam->setValueFromDevice(nullptr); //close device to let the flasher use it
 
 	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
 	parameters += " 0xe000 \"" + app0Bin.getFullPathName() + "\"";

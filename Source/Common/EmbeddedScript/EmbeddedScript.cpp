@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "WebAssembly/EmbeddedScript.h"
+#include "Common/CommonIncludes.h"
 #include "Prop/PropIncludes.h"
 
 EmbeddedScript::EmbeddedScript() :

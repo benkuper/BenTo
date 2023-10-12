@@ -12,8 +12,7 @@
 
 #include "Prop.h"
 #include "PropFamily.h"
-#include "Common/Zeroconf/ZeroconfManager.h"
-#include "Common/Serial/SerialManager.h"
+#include "Common/CommonIncludes.h"
 
 class PropManager :
 	public BaseManager<Prop>,

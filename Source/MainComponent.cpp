@@ -13,10 +13,8 @@
 #include "Video/VideoIncludes.h"
 #include "Node/NodeIncludes.h"
 #include "Sequence/SequenceIncludes.h"
-
-#include "BlockViz/BlockVizPanel.h"
 #include "VideoPreview/VideoPreviewPanel.h"
-#include "WebAssembly/ui/EmbeddedScriptManagerUI.h"
+#include "Common/CommonIncludes.h"
 
 //==============================================================================
 MainComponent::MainComponent() :

@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "EmbeddedScriptManager.h"
+#include "Common/CommonIncludes.h"
 
 juce_ImplementSingleton(EmbeddedScriptManager)
 

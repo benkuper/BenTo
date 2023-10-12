@@ -506,14 +506,14 @@ Prop* PropManager::addPropForHardwareID(SerialDevice* device, String hardwareId,
 		if (p != nullptr)
 		{
 			p->deviceID = hardwareId;
-			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueForDevice(device);
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueFromDevice(device);
 			PropManager::getInstance()->addItem(p);
 		}
 	}
 	else
 	{
 		LOG(p->deviceID << " already there, updating prop's serial device");
-		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueForDevice(device);
+		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueFromDevice(device);
 	}
 
 	return p;

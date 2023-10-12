@@ -16,10 +16,8 @@
 #include "Node/NodeIncludes.h"
 
 #include "Audio/AudioManager.h"
-#include "Common/Serial/SerialManager.h"
-//#include "WebServer/BentoWebServer.h"
 #include "BentoSettings.h"
-#include "WebAssembly/EmbeddedScriptManager.h"
+#include "Common/CommonIncludes.h"
 #include "Sequence/SequenceIncludes.h"
 
 BentoEngine::BentoEngine() :

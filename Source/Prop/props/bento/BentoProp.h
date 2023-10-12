@@ -10,8 +10,6 @@
 
 #pragma once
 
-#include "Common/Serial/SerialDeviceParameter.h"
-
 class BentoProp :
 	public Prop,
 	public SerialDevice::SerialDeviceListener

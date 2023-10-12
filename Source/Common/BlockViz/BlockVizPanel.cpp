@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "BlockVizPanel.h"
+#include "Common/CommonIncludes.h"
 #include "Prop/PropIncludes.h"
 
 BlockViz::BlockViz(const String & contentName) :
