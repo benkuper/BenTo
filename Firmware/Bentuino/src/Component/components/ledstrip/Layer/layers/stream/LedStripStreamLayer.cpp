@@ -48,21 +48,14 @@ void LedStreamReceiverComponent::updateInternal()
     if (!serverIsInit)
         return;
 
-    if (useArtnet)
+    long curTime = millis();
+    if (curTime > lastUDPReceiveTime + (1000 / receiveRate))
     {
-        // DBG("Artnet read");
-        artnet.read();
-    }
-    else
-    {
-        // DBG("UDP Read");
-        long curTime = millis();
-
-        if (curTime > lastUDPReceiveTime + (1000 / receiveRate))
-        {
-            lastUDPReceiveTime = curTime;
+        lastUDPReceiveTime = curTime;
+        if (useArtnet)
+            artnet.read();
+        else
             receiveUDP();
-        }
     }
 }
 

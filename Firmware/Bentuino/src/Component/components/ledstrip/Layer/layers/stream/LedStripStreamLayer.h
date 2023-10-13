@@ -53,7 +53,7 @@ DeclareComponentSingleton(LedStreamReceiver, "streamReceiver", )
 bool serverIsInit;
 float lastUDPReceiveTime = 0;
 
-DeclareIntParam(receiveRate, 50);
+DeclareIntParam(receiveRate, 60);
 DeclareBoolParam(useArtnet, true);
 
 ArtnetWifi artnet;
