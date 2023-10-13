@@ -223,6 +223,7 @@ void PropFlasher::setAllWifi()
 	String wifiStr = "wifi.ssid " + wifiSSID->stringValue() + "\nwifi.pass " + wifiPass->stringValue() + "\nroot.saveSettings\nroot.restart\n";
 
 	LOG("Setting Wifi infos to prop...");
+	wait(2000);
 
 	Array<SerialDevice*> devices;
 	for (auto& f : flashedDevices)
@@ -238,7 +239,6 @@ void PropFlasher::setAllWifi()
 		devices.add(s);
 	}
 
-	wait(1000);
 
 	for (auto& s : devices)
 	{
