@@ -38,7 +38,7 @@ public:
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 
-	String getTypeString() const override { return "Rainbow"; }
+	DECLARE_TYPE("Rainbow")
 };
 
 class NoisePattern :
@@ -61,7 +61,7 @@ public:
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 
-	String getTypeString() const override { return "Noise"; }
+	DECLARE_TYPE("Noise")
 };
 
 class SolidColorPattern :
@@ -78,7 +78,7 @@ public:
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 
-	String getTypeString() const override { return "Solid Color"; }
+	DECLARE_TYPE("Solid Color")
 };
 
 class StrobePattern :
@@ -100,7 +100,7 @@ public:
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 
-	String getTypeString() const override { return "Strobe"; }
+	DECLARE_TYPE("Strobe")
 };
 
 
@@ -126,7 +126,7 @@ public:
 
 	void fillPoint(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params);
 
-	String getTypeString() const override { return "Point"; }
+	DECLARE_TYPE("Point")
 };
 
 class RangePattern :
@@ -148,7 +148,7 @@ public:
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 
-	String getTypeString() const override { return "Range"; }
+	DECLARE_TYPE("Range")
 };
 
 class MultiPointPattern :
@@ -170,5 +170,5 @@ public:
 
 	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
 
-	String getTypeString() const override { return "Multipoint"; }
+	DECLARE_TYPE("Multipoint")
 };

@@ -140,7 +140,11 @@ void EmbeddedScriptBlock::onContainerParameterChangedInternal(Parameter* p)
 	if (p == scriptFile)
 	{
 		File f = scriptFile->getFile();
-		if (f.existsAsFile()) lastModTime = f.getLastModificationTime();
+		if (f.existsAsFile())
+		{
+			lastModTime = f.getLastModificationTime();
+			setNiceName(f.getFileNameWithoutExtension());
+		}
 	}
 }
 

@@ -35,7 +35,6 @@ public:
 	virtual void receiverRemoved(SharedTextureReceiver* r) override;
 
 	LightBlockModelUI * createUI() override;
-	String getTypeString() const override { return "SharedTexture"; }
 
-	static SharedTextureBlock * create(var params) { return new SharedTextureBlock(params); }
+	DECLARE_TYPE("Shared Texture")
 };

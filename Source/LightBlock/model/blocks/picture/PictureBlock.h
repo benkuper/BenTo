@@ -33,8 +33,7 @@ public:
 
 	var getJSONData() override;
 
-	String getTypeString() const override { return "Picture"; }
+	DECLARE_TYPE("Picture")
 
-	static PictureBlock * create(var params) { return new PictureBlock(params); }
 
 };

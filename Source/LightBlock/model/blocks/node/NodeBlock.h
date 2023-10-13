@@ -40,8 +40,8 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
-	String getTypeString() const override { return "Node"; }
-	static NodeBlock * create(var params) { return new NodeBlock(params); }
+	DECLARE_TYPE("Node")
+
 
 	LightBlockModelUI * createUI() override;
 };

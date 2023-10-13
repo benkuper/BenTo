@@ -26,7 +26,5 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 
-	String getTypeString() const override { return "Video"; }
-
-	static VideoFileBlock* create(var params) { return new VideoFileBlock(params); }
+	DECLARE_TYPE("Video File")
 };

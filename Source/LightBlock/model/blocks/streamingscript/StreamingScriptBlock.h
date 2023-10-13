@@ -65,6 +65,6 @@ public:
 	
 	void newMessage(const Script::ScriptEvent &e) override;
 
-	String getTypeString() const override { return "Script"; }
-	static StreamingScriptBlock * create(var params) { return new StreamingScriptBlock(params); }
+	DECLARE_TYPE("Streaming Script")
+
 };

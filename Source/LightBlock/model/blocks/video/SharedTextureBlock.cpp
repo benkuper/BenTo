@@ -1,4 +1,3 @@
-#include "SharedTextureBlock.h"
 /*
   ==============================================================================
 
@@ -8,6 +7,9 @@
 
   ==============================================================================
 */
+
+
+#include "LightBlock/LightBlockIncludes.h"
 
 SharedTextureBlock::SharedTextureBlock(var params) :
 	VideoBlock(getTypeString(), params),

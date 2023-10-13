@@ -43,8 +43,7 @@ public:
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
 
+	LightBlockModelUI* createUI() override;
+	DECLARE_TYPE("Sequence")
 
-	String getTypeString() const override { return "Timeline"; }
-	LightBlockModelUI * createUI() override;
-	static BentoSequenceBlock * create(var params) { return new BentoSequenceBlock(params); }
 };

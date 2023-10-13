@@ -1,4 +1,3 @@
-#include "VideoFileBlock.h"
 /*
   ==============================================================================
 
@@ -8,6 +7,8 @@
 
   ==============================================================================
 */
+
+#include "LightBlock/LightBlockIncludes.h"
 
 VideoFileBlock::VideoFileBlock(var params) :
 	VideoBlock(getTypeString(), params)
