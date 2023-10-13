@@ -286,6 +286,7 @@ void PropManager::addItemsInternal(Array<Prop*> props, var)
 {
 	for (auto& p : props)
 	{
+		if (p == nullptr) continue;
 		p->addPropListener(this);
 
 		if (Engine::mainEngine->isLoadingFile) continue;
@@ -334,10 +335,10 @@ void PropManager::oscMessageReceived(const OSCMessage& m)
 	{
 		String pHost = OSCHelpers::getStringArg(m[0]);
 		String pid = OSCHelpers::getStringArg(m[1]);
-		String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Flowtoys Creator Club";
+		//String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Bento";
 
 		//DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
-		createPropIfNotExist(pType, pHost, pid);
+		createPropIfNotExist(BentoProp::getTypeStringStatic(), pHost, pid);
 	}
 	//else  if (m.size() > 0 && m[0].isString())
 	//{
