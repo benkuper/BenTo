@@ -20,8 +20,7 @@ ApplicationCommandManager& getCommandManager();
     your controls and content.
 */
 class MainComponent :
-	public OrganicMainContentComponent,
-	public OpenGLRenderer
+	public OrganicMainContentComponent
 {
 public:
     //==============================================================================
@@ -29,22 +28,12 @@ public:
     ~MainComponent();
 
 	void init() override;
-	
-	void setupOpenGLInternal() override;
 private:
     //==============================================================================
     // Your private member variables go here...
 
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR (MainComponent)
-
-
-	virtual void newOpenGLContextCreated() override;
-
-	virtual void renderOpenGL() override;
-
-	virtual void openGLContextClosing() override;
-
 
 public:
 	void getAllCommands(Array<CommandID>& commands) override;

@@ -416,51 +416,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\LightBlockIncludes.cpp"/>
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp"/>
-    <ClCompile Include="..\..\Source\Prop\PropFlasher.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -491,6 +446,48 @@
     <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\PropGenericComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropEditor.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -504,6 +501,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropViz.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropFlasher.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Prop.cpp">
@@ -3823,21 +3826,6 @@
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlockIncludes.h"/>
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h"/>
-    <ClInclude Include="..\..\Source\Prop\PropFlasher.h"/>
-    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h"/>
-    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h"/>
-    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h"/>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShape.h"/>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurve.h"/>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.h"/>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeGroup.h"/>
-    <ClInclude Include="..\..\Source\Prop\PropFamily.h"/>
-    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h"/>
-    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h"/>
-    <ClInclude Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.h"/>
-    <ClInclude Include="..\..\Source\Prop\Cluster\PropCluster.h"/>
-    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h"/>
-    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\fx\FXComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\touch\TouchComponent.h"/>
@@ -3848,11 +3836,27 @@
     <ClInclude Include="..\..\Source\Prop\Component\imu\IMUComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\rgb\RGBComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Component\PropGenericComponent.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShape.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurve.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.h"/>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeGroup.h"/>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h"/>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h"/>
+    <ClInclude Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.h"/>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropCluster.h"/>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h"/>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropEditor.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropFlasherPanel.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropManagerUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropUI.h"/>
     <ClInclude Include="..\..\Source\Prop\ui\PropViz.h"/>
+    <ClInclude Include="..\..\Source\Prop\PropFlasher.h"/>
+    <ClInclude Include="..\..\Source\Prop\PropFamily.h"/>
     <ClInclude Include="..\..\Source\Prop\Prop.h"/>
     <ClInclude Include="..\..\Source\Prop\PropManager.h"/>
     <ClInclude Include="..\..\Source\Prop\PropIncludes.h"/>
@@ -6132,10 +6136,14 @@
     <None Include="..\..\Modules\juce_timeline\resources\timeline_resources\JuceLibraryCode\ReadMe.txt"/>
     <None Include="..\..\Modules\juce_timeline\README.md"/>
     <None Include=".\icon.ico"/>
+    <None Include="packages.config"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc"/>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets"/>
-  <ImportGroup Label="ExtensionTargets"/>
+  <ImportGroup Label="ExtensionTargets">
+    <Import Project="packages\Microsoft.Web.WebView2.1.0.902.49\build\native\Microsoft.Web.WebView2.targets"
+            Condition="Exists('packages\Microsoft.Web.WebView2.1.0.902.49\build\native\Microsoft.Web.WebView2.targets')"/>
+  </ImportGroup>
 </Project>

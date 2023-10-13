@@ -27,6 +27,10 @@
 #ifndef AVUTIL_MATHEMATICS_H
 #define AVUTIL_MATHEMATICS_H
 
+#ifdef _MSC_VER
+#define _USE_MATH_DEFINES
+#endif
+
 #include <stdint.h>
 #include <math.h>
 #include "attributes.h"

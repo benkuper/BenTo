@@ -164,21 +164,6 @@
     <Filter Include="BenTo\Source\VideoPreview">
       <UniqueIdentifier>{CF096546-AF93-6C52-E6F0-B104402458D9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Prop\Shape\ui">
-      <UniqueIdentifier>{92FA12E6-6A6E-84CD-1C95-9572ACEFA3C7}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Shape">
-      <UniqueIdentifier>{161BE3AF-5FB1-716F-5DB3-CF6938320196}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\TargetFilter">
-      <UniqueIdentifier>{A70E970E-2CC8-081F-AE46-444773171B53}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Cluster\ui">
-      <UniqueIdentifier>{AF461CAA-9BBA-2F1B-BF1A-845F6B878D25}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Cluster">
-      <UniqueIdentifier>{F32AE84B-651D-BFC6-096C-2A59DD39A244}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Prop\props\bento">
       <UniqueIdentifier>{E839EA69-D9C2-6463-CF90-72329177C01B}</UniqueIdentifier>
     </Filter>
@@ -214,6 +199,21 @@
     </Filter>
     <Filter Include="BenTo\Source\Prop\Component">
       <UniqueIdentifier>{6B745C7F-3143-9DC1-DC95-E328ECD6C137}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Shape\ui">
+      <UniqueIdentifier>{92FA12E6-6A6E-84CD-1C95-9572ACEFA3C7}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Shape">
+      <UniqueIdentifier>{161BE3AF-5FB1-716F-5DB3-CF6938320196}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\TargetFilter">
+      <UniqueIdentifier>{A70E970E-2CC8-081F-AE46-444773171B53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Cluster\ui">
+      <UniqueIdentifier>{AF461CAA-9BBA-2F1B-BF1A-845F6B878D25}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Prop\Cluster">
+      <UniqueIdentifier>{F32AE84B-651D-BFC6-096C-2A59DD39A244}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Prop\ui">
       <UniqueIdentifier>{326CEE57-0676-79E2-34BA-CE6C84E59CA4}</UniqueIdentifier>
@@ -1561,51 +1561,6 @@
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\PropFlasher.cpp">
-      <Filter>BenTo\Source\Prop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
-      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp">
-      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp">
-      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
-      <Filter>BenTo\Source\Prop</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp">
-      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp">
-      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.cpp">
-      <Filter>BenTo\Source\Prop\Cluster\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp">
-      <Filter>BenTo\Source\Prop\Cluster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp">
-      <Filter>BenTo\Source\Prop\Cluster</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
-      <Filter>BenTo\Source\Prop\Cluster</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClCompile>
@@ -1636,6 +1591,48 @@
     <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp">
       <Filter>BenTo\Source\Prop\Component</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Component\PropGenericComponent.cpp">
+      <Filter>BenTo\Source\Prop\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapePanel.cpp">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeView.cpp">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShape.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurve.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Shape\PropShapeGroup.cpp">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.cpp">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.cpp">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.cpp">
+      <Filter>BenTo\Source\Prop\Cluster\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropCluster.cpp">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroup.cpp">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.cpp">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropEditor.cpp">
       <Filter>BenTo\Source\Prop\ui</Filter>
     </ClCompile>
@@ -1650,6 +1647,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\ui\PropViz.cpp">
       <Filter>BenTo\Source\Prop\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropFlasher.cpp">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\PropFamily.cpp">
+      <Filter>BenTo\Source\Prop</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Prop.cpp">
       <Filter>BenTo\Source\Prop</Filter>
@@ -5445,51 +5448,6 @@
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\PropFlasher.h">
-      <Filter>BenTo\Source\Prop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h">
-      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h">
-      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h">
-      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShape.h">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurve.h">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.h">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeGroup.h">
-      <Filter>BenTo\Source\Prop\Shape</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\PropFamily.h">
-      <Filter>BenTo\Source\Prop</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h">
-      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h">
-      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.h">
-      <Filter>BenTo\Source\Prop\Cluster\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Cluster\PropCluster.h">
-      <Filter>BenTo\Source\Prop\Cluster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h">
-      <Filter>BenTo\Source\Prop\Cluster</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h">
-      <Filter>BenTo\Source\Prop\Cluster</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClInclude>
@@ -5520,6 +5478,48 @@
     <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h">
       <Filter>BenTo\Source\Prop\Component</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Component\PropGenericComponent.h">
+      <Filter>BenTo\Source\Prop\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h">
+      <Filter>BenTo\Source\Prop\Shape\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShape.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurve.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeCurveEasing.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Shape\PropShapeGroup.h">
+      <Filter>BenTo\Source\Prop\Shape</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilterManager.h">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\TargetFilter\PropTargetFilter.h">
+      <Filter>BenTo\Source\Prop\TargetFilter</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Cluster\ui\PropClusterGroupManagerUI.h">
+      <Filter>BenTo\Source\Prop\Cluster\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropCluster.h">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroup.h">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\Cluster\PropClusterGroupManager.h">
+      <Filter>BenTo\Source\Prop\Cluster</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\ui\PropEditor.h">
       <Filter>BenTo\Source\Prop\ui</Filter>
     </ClInclude>
@@ -5534,6 +5534,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\ui\PropViz.h">
       <Filter>BenTo\Source\Prop\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\PropFlasher.h">
+      <Filter>BenTo\Source\Prop</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\PropFamily.h">
+      <Filter>BenTo\Source\Prop</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Prop.h">
       <Filter>BenTo\Source\Prop</Filter>
@@ -12368,6 +12374,7 @@
     <None Include=".\icon.ico">
       <Filter>JUCE Library Code</Filter>
     </None>
+    <None Include="packages.config"/>
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include=".\resources.rc">

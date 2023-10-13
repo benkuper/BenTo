@@ -455,68 +455,6 @@
               file="Source/VideoPreview/VideoPreviewPanel.h"/>
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
-        <FILE id="yBPkNV" name="PropFlasher.cpp" compile="0" resource="0" file="Source/Prop/PropFlasher.cpp"/>
-        <FILE id="Pucsvn" name="PropFlasher.h" compile="0" resource="0" file="Source/Prop/PropFlasher.h"/>
-        <GROUP id="{D40B9824-1B5B-6FA5-B249-175979B439C7}" name="Shape">
-          <GROUP id="{8334483F-C7CD-CCBB-F1CF-4555459226ED}" name="ui">
-            <FILE id="ZTyQbn" name="PropShapeCurveEasingUI.cpp" compile="0" resource="0"
-                  file="Source/Prop/Shape/ui/PropShapeCurveEasingUI.cpp"/>
-            <FILE id="A48bQa" name="PropShapeCurveEasingUI.h" compile="0" resource="0"
-                  file="Source/Prop/Shape/ui/PropShapeCurveEasingUI.h"/>
-            <FILE id="JWQL1Z" name="PropShapePanel.cpp" compile="0" resource="0"
-                  file="Source/Prop/Shape/ui/PropShapePanel.cpp"/>
-            <FILE id="alR6ag" name="PropShapePanel.h" compile="0" resource="0"
-                  file="Source/Prop/Shape/ui/PropShapePanel.h"/>
-            <FILE id="TqECKE" name="PropShapeView.cpp" compile="0" resource="0"
-                  file="Source/Prop/Shape/ui/PropShapeView.cpp"/>
-            <FILE id="A6ThJI" name="PropShapeView.h" compile="0" resource="0" file="Source/Prop/Shape/ui/PropShapeView.h"/>
-          </GROUP>
-          <FILE id="DGBGhk" name="PropShape.cpp" compile="0" resource="0" file="Source/Prop/Shape/PropShape.cpp"/>
-          <FILE id="hq1Byn" name="PropShape.h" compile="0" resource="0" file="Source/Prop/Shape/PropShape.h"/>
-          <FILE id="PmEfOn" name="PropShapeCurve.cpp" compile="0" resource="0"
-                file="Source/Prop/Shape/PropShapeCurve.cpp"/>
-          <FILE id="dDfLFa" name="PropShapeCurve.h" compile="0" resource="0"
-                file="Source/Prop/Shape/PropShapeCurve.h"/>
-          <FILE id="KMeMRs" name="PropShapeCurveEasing.cpp" compile="0" resource="0"
-                file="Source/Prop/Shape/PropShapeCurveEasing.cpp"/>
-          <FILE id="svKZLE" name="PropShapeCurveEasing.h" compile="0" resource="0"
-                file="Source/Prop/Shape/PropShapeCurveEasing.h"/>
-          <FILE id="ZAvWlh" name="PropShapeGroup.cpp" compile="0" resource="0"
-                file="Source/Prop/Shape/PropShapeGroup.cpp"/>
-          <FILE id="loKohm" name="PropShapeGroup.h" compile="0" resource="0"
-                file="Source/Prop/Shape/PropShapeGroup.h"/>
-        </GROUP>
-        <FILE id="WR3mnT" name="PropFamily.cpp" compile="0" resource="0" file="Source/Prop/PropFamily.cpp"/>
-        <FILE id="p2GnSz" name="PropFamily.h" compile="0" resource="0" file="Source/Prop/PropFamily.h"/>
-        <GROUP id="{2C9EC421-B4F2-97F6-B5FC-EB3BC810C022}" name="TargetFilter">
-          <GROUP id="{30C8E5B1-F574-BA99-E16B-80CDE5072A7A}" name="filters"/>
-          <FILE id="y0NGDg" name="PropTargetFilterManager.cpp" compile="0" resource="0"
-                file="Source/Prop/TargetFilter/PropTargetFilterManager.cpp"/>
-          <FILE id="ZilGWj" name="PropTargetFilterManager.h" compile="0" resource="0"
-                file="Source/Prop/TargetFilter/PropTargetFilterManager.h"/>
-          <FILE id="pidyXr" name="PropTargetFilter.cpp" compile="0" resource="0"
-                file="Source/Prop/TargetFilter/PropTargetFilter.cpp"/>
-          <FILE id="fUKBib" name="PropTargetFilter.h" compile="0" resource="0"
-                file="Source/Prop/TargetFilter/PropTargetFilter.h"/>
-        </GROUP>
-        <GROUP id="{040643BC-C9E7-5F04-A78D-BB61F846D9B5}" name="Cluster">
-          <GROUP id="{45871F31-3228-CA05-4A3B-EA16F30EE621}" name="ui">
-            <FILE id="oBlfNB" name="PropClusterGroupManagerUI.cpp" compile="0"
-                  resource="0" file="Source/Prop/Cluster/ui/PropClusterGroupManagerUI.cpp"/>
-            <FILE id="MkmIbL" name="PropClusterGroupManagerUI.h" compile="0" resource="0"
-                  file="Source/Prop/Cluster/ui/PropClusterGroupManagerUI.h"/>
-          </GROUP>
-          <FILE id="xdvyo2" name="PropCluster.cpp" compile="0" resource="0" file="Source/Prop/Cluster/PropCluster.cpp"/>
-          <FILE id="Cdl4DJ" name="PropCluster.h" compile="0" resource="0" file="Source/Prop/Cluster/PropCluster.h"/>
-          <FILE id="Pt55nI" name="PropClusterGroup.cpp" compile="0" resource="0"
-                file="Source/Prop/Cluster/PropClusterGroup.cpp"/>
-          <FILE id="jzSeUi" name="PropClusterGroup.h" compile="0" resource="0"
-                file="Source/Prop/Cluster/PropClusterGroup.h"/>
-          <FILE id="NvJmi1" name="PropClusterGroupManager.cpp" compile="0" resource="0"
-                file="Source/Prop/Cluster/PropClusterGroupManager.cpp"/>
-          <FILE id="eC7Fz0" name="PropClusterGroupManager.h" compile="0" resource="0"
-                file="Source/Prop/Cluster/PropClusterGroupManager.h"/>
-        </GROUP>
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
           <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
             <FILE id="e7lkEF" name="BentoProp.cpp" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
@@ -573,6 +511,68 @@
           <FILE id="uwUmvQ" name="PropComponent.cpp" compile="0" resource="0"
                 file="Source/Prop/Component/PropComponent.cpp" skipPCH="0"/>
           <FILE id="oD40jg" name="PropComponent.h" compile="0" resource="0" file="Source/Prop/Component/PropComponent.h"/>
+          <FILE id="wMuWdK" name="PropGenericComponent.cpp" compile="0" resource="0"
+                file="Source/Prop/Component/PropGenericComponent.cpp"/>
+          <FILE id="PJ9a6j" name="PropGenericComponent.h" compile="0" resource="0"
+                file="Source/Prop/Component/PropGenericComponent.h"/>
+        </GROUP>
+        <GROUP id="{D40B9824-1B5B-6FA5-B249-175979B439C7}" name="Shape">
+          <GROUP id="{8334483F-C7CD-CCBB-F1CF-4555459226ED}" name="ui">
+            <FILE id="ZTyQbn" name="PropShapeCurveEasingUI.cpp" compile="0" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapeCurveEasingUI.cpp"/>
+            <FILE id="A48bQa" name="PropShapeCurveEasingUI.h" compile="0" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapeCurveEasingUI.h"/>
+            <FILE id="JWQL1Z" name="PropShapePanel.cpp" compile="0" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapePanel.cpp"/>
+            <FILE id="alR6ag" name="PropShapePanel.h" compile="0" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapePanel.h"/>
+            <FILE id="TqECKE" name="PropShapeView.cpp" compile="0" resource="0"
+                  file="Source/Prop/Shape/ui/PropShapeView.cpp"/>
+            <FILE id="A6ThJI" name="PropShapeView.h" compile="0" resource="0" file="Source/Prop/Shape/ui/PropShapeView.h"/>
+          </GROUP>
+          <FILE id="DGBGhk" name="PropShape.cpp" compile="0" resource="0" file="Source/Prop/Shape/PropShape.cpp"/>
+          <FILE id="hq1Byn" name="PropShape.h" compile="0" resource="0" file="Source/Prop/Shape/PropShape.h"/>
+          <FILE id="PmEfOn" name="PropShapeCurve.cpp" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeCurve.cpp"/>
+          <FILE id="dDfLFa" name="PropShapeCurve.h" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeCurve.h"/>
+          <FILE id="KMeMRs" name="PropShapeCurveEasing.cpp" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeCurveEasing.cpp"/>
+          <FILE id="svKZLE" name="PropShapeCurveEasing.h" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeCurveEasing.h"/>
+          <FILE id="ZAvWlh" name="PropShapeGroup.cpp" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeGroup.cpp"/>
+          <FILE id="loKohm" name="PropShapeGroup.h" compile="0" resource="0"
+                file="Source/Prop/Shape/PropShapeGroup.h"/>
+        </GROUP>
+        <GROUP id="{2C9EC421-B4F2-97F6-B5FC-EB3BC810C022}" name="TargetFilter">
+          <GROUP id="{30C8E5B1-F574-BA99-E16B-80CDE5072A7A}" name="filters"/>
+          <FILE id="y0NGDg" name="PropTargetFilterManager.cpp" compile="0" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilterManager.cpp"/>
+          <FILE id="ZilGWj" name="PropTargetFilterManager.h" compile="0" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilterManager.h"/>
+          <FILE id="pidyXr" name="PropTargetFilter.cpp" compile="0" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilter.cpp"/>
+          <FILE id="fUKBib" name="PropTargetFilter.h" compile="0" resource="0"
+                file="Source/Prop/TargetFilter/PropTargetFilter.h"/>
+        </GROUP>
+        <GROUP id="{040643BC-C9E7-5F04-A78D-BB61F846D9B5}" name="Cluster">
+          <GROUP id="{45871F31-3228-CA05-4A3B-EA16F30EE621}" name="ui">
+            <FILE id="oBlfNB" name="PropClusterGroupManagerUI.cpp" compile="0"
+                  resource="0" file="Source/Prop/Cluster/ui/PropClusterGroupManagerUI.cpp"/>
+            <FILE id="MkmIbL" name="PropClusterGroupManagerUI.h" compile="0" resource="0"
+                  file="Source/Prop/Cluster/ui/PropClusterGroupManagerUI.h"/>
+          </GROUP>
+          <FILE id="xdvyo2" name="PropCluster.cpp" compile="0" resource="0" file="Source/Prop/Cluster/PropCluster.cpp"/>
+          <FILE id="Cdl4DJ" name="PropCluster.h" compile="0" resource="0" file="Source/Prop/Cluster/PropCluster.h"/>
+          <FILE id="Pt55nI" name="PropClusterGroup.cpp" compile="0" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroup.cpp"/>
+          <FILE id="jzSeUi" name="PropClusterGroup.h" compile="0" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroup.h"/>
+          <FILE id="NvJmi1" name="PropClusterGroupManager.cpp" compile="0" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroupManager.cpp"/>
+          <FILE id="eC7Fz0" name="PropClusterGroupManager.h" compile="0" resource="0"
+                file="Source/Prop/Cluster/PropClusterGroupManager.h"/>
         </GROUP>
         <GROUP id="{2D4445E7-66E2-A651-74EF-D1FC94C498A0}" name="ui">
           <FILE id="LK4Os9" name="PropEditor.cpp" compile="0" resource="0" file="Source/Prop/ui/PropEditor.cpp"/>
@@ -589,6 +589,10 @@
           <FILE id="CmrKhv" name="PropViz.cpp" compile="0" resource="0" file="Source/Prop/ui/PropViz.cpp"/>
           <FILE id="NC7SlZ" name="PropViz.h" compile="0" resource="0" file="Source/Prop/ui/PropViz.h"/>
         </GROUP>
+        <FILE id="yBPkNV" name="PropFlasher.cpp" compile="0" resource="0" file="Source/Prop/PropFlasher.cpp"/>
+        <FILE id="Pucsvn" name="PropFlasher.h" compile="0" resource="0" file="Source/Prop/PropFlasher.h"/>
+        <FILE id="WR3mnT" name="PropFamily.cpp" compile="0" resource="0" file="Source/Prop/PropFamily.cpp"/>
+        <FILE id="p2GnSz" name="PropFamily.h" compile="0" resource="0" file="Source/Prop/PropFamily.h"/>
         <FILE id="uU9x0j" name="Prop.cpp" compile="0" resource="0" file="Source/Prop/Prop.cpp"/>
         <FILE id="Z57bbm" name="Prop.h" compile="0" resource="0" file="Source/Prop/Prop.h"/>
         <FILE id="e3SfwF" name="PropManager.cpp" compile="0" resource="0" file="Source/Prop/PropManager.cpp"/>
@@ -863,5 +867,6 @@
   <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" JUCE_USE_MP3AUDIOFORMAT="1"
                JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
-               ORGANICUI_USE_WEBSERVER="1" JUCE_IP_AND_PORT_DETECTION="1"/>
+               ORGANICUI_USE_WEBSERVER="1" JUCE_IP_AND_PORT_DETECTION="1" JUCE_USE_WIN_WEBVIEW2="1"
+               ORGANICUI_USE_SHAREDTEXTURE="1"/>
 </JUCERPROJECT>

@@ -48,23 +48,3 @@ void MainComponent::init()
 
 	OrganicMainContentComponent::init();
 }
-
-void MainComponent::setupOpenGLInternal()
-{
-	openGLContext->setRenderer(this);
-}
-
-void MainComponent::newOpenGLContextCreated()
-{
-	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->initGL();
-}
-
-void MainComponent::renderOpenGL()
-{
-	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->renderGL();
-}
-
-void MainComponent::openGLContextClosing()
-{
-	if (SharedTextureManager::getInstanceWithoutCreating() != nullptr) SharedTextureManager::getInstance()->clearGL();
-}
