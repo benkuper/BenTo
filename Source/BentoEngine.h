@@ -21,10 +21,6 @@ public:
 	~BentoEngine();
 
 
-	ControllableContainer ioCC;
-	StringParameter * remoteHost;
-	IntParameter * remotePort;
-	OSCSender globalSender;
 	StringParameter* projectName;
 
 	void clearInternal() override;

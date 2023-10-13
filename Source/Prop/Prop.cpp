@@ -512,30 +512,30 @@ void Prop::uploadFile(File f)
 }
 
 
-void Prop::providerPlaybackGenControlUpdate(LightBlockColorProvider::PlaybackGenControl control, var data)
+void Prop::providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data)
 {
 	if (!playbackMode->boolValue()) return;
 
 	switch (control)
 	{
-	case LightBlockColorProvider::PlaybackGenControl::PLAY:
+	case LightBlockColorProvider::PlaybackControl::PLAY:
 		playPlayback((float)data);
 		break;
 
-	case LightBlockColorProvider::PlaybackGenControl::PAUSE:
+	case LightBlockColorProvider::PlaybackControl::PAUSE:
 		pausePlaybackPlaying();
 		break;
 
-	case LightBlockColorProvider::PlaybackGenControl::SEEK:
+	case LightBlockColorProvider::PlaybackControl::SEEK:
 		seekPlaybackTime = (float)data;
 		//if(seekPlaybackTime == -1) seekPlaybackPlaying((float)data);
 		break;
 
-	case LightBlockColorProvider::PlaybackGenControl::STOP:
+	case LightBlockColorProvider::PlaybackControl::STOP:
 		stopPlaybackPlaying();
 		break;
 
-	case LightBlockColorProvider::PlaybackGenControl::SHOW_ID:
+	case LightBlockColorProvider::PlaybackControl::SHOW_ID:
 		sendShowPropID((bool)data);
 		break;
 	}

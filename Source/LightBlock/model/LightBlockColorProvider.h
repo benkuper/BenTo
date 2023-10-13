@@ -54,7 +54,7 @@ public:
 	Trigger * assignToAll;
 
 	//Bake info
-	enum PlaybackGenControl { PLAY, PAUSE, STOP, SEEK, SHOW_ID };
+	enum PlaybackControl { PLAY, PAUSE, STOP, SEEK, SHOW_ID };
 	
 	virtual Array<WeakReference<Controllable>> getModelParameters() = 0;
 
@@ -71,7 +71,7 @@ public:
 		virtual ~ProviderListener() {}
 		virtual void providerParametersChanged(LightBlockColorProvider *) {}
 		virtual void providerParameterValueUpdated(LightBlockColorProvider *, Parameter *) {}
-		virtual void providerPlaybackGenControlUpdate(PlaybackGenControl control, var data = var()) {}
+		virtual void providerPlaybackControlUpdate(PlaybackControl control, var data = var()) {}
 	};
 
 	ListenerList<ProviderListener> providerListeners;

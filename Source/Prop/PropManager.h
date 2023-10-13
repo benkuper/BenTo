@@ -19,8 +19,6 @@ class PropManager :
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
 	public Prop::PropListener,
 	public ZeroconfManager::ZeroconfSearcher::SearcherListener,
-	//public Thread,
-	//public URL::DownloadTask::Listener,
 	public SerialManager::SerialManagerListener,
 	public SerialDevice::SerialDeviceListener,
 	public MultiTimer
@@ -28,15 +26,12 @@ class PropManager :
 public:
 	juce_DeclareSingleton(PropManager, true)
 
-		PropManager();
+	PropManager();
 	~PropManager();
-
 
 	OSCSender sender;
 	OSCReceiver receiver;
 
-	//ControllableContainer familiesCC;
-	//Array<PropFamily*> families;
 	Factory<Prop> factory;
 
 	const int localPort = 10000;
@@ -49,7 +44,6 @@ public:
 	Trigger* detectProps;
 
 	ControllableContainer controlsCC;
-	BoolParameter* sendFeedback;
 	Trigger* powerOffAll;
 	Trigger* resetAll;
 
@@ -66,9 +60,6 @@ public:
 	BoolParameter* autoAddUSBProps;
 	ZeroconfManager::ZeroconfSearcher* zeroconfSearcher;
 
-	std::unique_ptr<URL::DownloadTask> propDownloadTask;
-
-
 	//usb
 	struct VidPid
 	{
@@ -83,8 +74,6 @@ public:
 	Prop* createPropIfNotExist(const String& type, const String& host, const String& id);
 	Prop* getPropWithDeviceID(const String& deviceID);
 	Prop* getPropWithId(int id, Prop* excludeProp = nullptr);
-
-	//PropFamily* getFamilyWithName(StringRef familyName);
 
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
@@ -103,14 +92,7 @@ public:
 
 	void serviceAdded(ZeroconfManager::ServiceInfo* s) override;
 
-	//void updatePropsAndFamiliesDefinitions();
-
 	void afterLoadJSONDataInternal() override;
-
-	//void run() override;
-
-	// Inherited via Listener
-	//virtual void finished(URL::DownloadTask* task, bool success) override;
 
 	//USB connection
 	void portAdded(SerialDeviceInfo* d) override;

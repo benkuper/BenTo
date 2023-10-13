@@ -220,12 +220,11 @@ void PropFlasher::setAllWifi()
 		return;
 	}
 
-	String wifiStr = "wifi.setCredentials " + wifiSSID->stringValue() + "," + wifiPass->stringValue() + "\nroot.restart\n";
+	String wifiStr = "wifi.ssid " + wifiSSID->stringValue() + "\nwifi.pass " + wifiPass->stringValue() + "\nroot.saveSettings\nroot.restart\n";
 
 	LOG("Setting Wifi infos to prop...");
 
 	Array<SerialDevice*> devices;
-	wait(500);
 	for (auto& f : flashedDevices)
 	{
 		SerialDevice* s = SerialManager::getInstance()->getPort(f, true, 115200);
@@ -293,7 +292,6 @@ void PropFlasher::run()
 	}
 
 	if (setWifiAfterFlash->boolValue()) setAllWifi();
-
 }
 
 void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)

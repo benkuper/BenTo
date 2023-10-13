@@ -38,7 +38,7 @@ PropManager::PropManager() :
 	addChildControllableContainer(&connectionCC);
 
 	autoAssignIdTrigger = controlsCC.addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
-	sendFeedback = controlsCC.addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
+	//sendFeedback = controlsCC.addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
 	clearAll = controlsCC.addTrigger("Clear all props", "Remove all props from manager");
 	disablePreview = controlsCC.addBoolParameter("Disable preview", "If checked, this will disable preview in prop UI, it reduces considerably the cpu/gpu consumption.", false);
 	addChildControllableContainer(&controlsCC);

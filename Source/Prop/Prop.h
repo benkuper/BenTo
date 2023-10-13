@@ -134,7 +134,7 @@ public:
 	virtual void stopPlaybackPlaying() {}
 	virtual void sendShowPropID(bool value) {}
 
-	void providerPlaybackGenControlUpdate(LightBlockColorProvider::PlaybackGenControl control, var data) override;
+	void providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data) override;
 
 	void sendControlToProp(String message, var value = var());
 	virtual void sendControlToPropInternal(String message, var value = var()) {} //to be overriden

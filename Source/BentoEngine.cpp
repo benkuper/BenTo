@@ -21,8 +21,7 @@
 #include "Sequence/SequenceIncludes.h"
 
 BentoEngine::BentoEngine() :
-	Engine("BenTo", ".bento"),
-	ioCC("Input - Output")
+	Engine("BenTo", ".bento")
 {
 	Engine::mainEngine = this;
 
@@ -30,13 +29,6 @@ BentoEngine::BentoEngine() :
 	addChildControllableContainer(PropManager::getInstance());
 	addChildControllableContainer(Spatializer::getInstance());
 	addChildControllableContainer(EmbeddedScriptManager::getInstance());
-
-	remoteHost = ioCC.addStringParameter("Remote Host", "Global remote host to send OSC to", "127.0.0.1");
-	remotePort = ioCC.addIntParameter("Remote port", "Remote port to send OSC to", 43001, 1024, 65535);
-	globalSender.connect("0.0.0.0", 1024);
-
-	ProjectSettings::getInstance()->addChildControllableContainer(&ioCC);
-	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 
 	projectName = ProjectSettings::getInstance()->addStringParameter("Project name", "This name will be used to identify the project when uploaded to the props", "project", true);
 
@@ -148,13 +140,13 @@ void BentoEngine::processMessage(const OSCMessage& m)
 	}
 	else if (aList[1] == "prop")
 	{
-		int id = aList[2] == "all" ? -1 : aList[2].getIntValue();
+		//int id = aList[2] == "all" ? -1 : aList[2].getIntValue();
 
-		String localAddress = "/" + aList.joinIntoString("/", 3);
-		OSCMessage lm(localAddress);
-		lm.addString(""); //fake ID
-		for (auto& a : m) lm.addArgument(a);
-		lm.setAddressPattern(localAddress);
+		//String localAddress = "/" + aList.joinIntoString("/", 3);
+		//OSCMessage lm(localAddress);
+		//lm.addString(""); //fake ID
+		//for (auto& a : m) lm.addArgument(a);
+		//lm.setAddressPattern(localAddress);
 
 		//if (id == -1)
 		//{

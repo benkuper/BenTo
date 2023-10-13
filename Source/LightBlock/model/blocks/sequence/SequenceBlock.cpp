@@ -83,19 +83,19 @@ void BentoSequenceBlock::sequenceCurrentTimeChanged(Sequence*, float prevTime, b
 {
 	if (sequence->isSeeking)
 	{
-		providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, SEEK, sequence->currentTime->floatValue());
+		providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, SEEK, sequence->currentTime->floatValue());
 	}
 
-	OSCMessage msg("/" + shortName + "/currentTime");
-	msg.addFloat32(sequence->currentTime->floatValue());
-	BentoEngine* be = (BentoEngine*)Engine::mainEngine;
-	be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
+	//OSCMessage msg("/" + shortName + "/currentTime");
+	//msg.addFloat32(sequence->currentTime->floatValue());
+	//BentoEngine* be = (BentoEngine*)Engine::mainEngine;
+	//be->globalSender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), msg);
 	//updateColorsForBlock(block);
 }
 
 void BentoSequenceBlock::sequencePlayStateChanged(Sequence* s)
 {
-	providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, sequence->isPlaying->boolValue() ? PLAY : PAUSE, sequence->currentTime->floatValue());
+	providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, sequence->isPlaying->boolValue() ? PLAY : PAUSE, sequence->currentTime->floatValue());
 }
 
 void BentoSequenceBlock::sequenceEditingStateChanged(Sequence* s)
@@ -105,7 +105,7 @@ void BentoSequenceBlock::sequenceEditingStateChanged(Sequence* s)
 
 void BentoSequenceBlock::sequenceLooped(Sequence* s)
 {
-	providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, PLAY, 0);
+	providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, PLAY, 0);
 }
 
 void BentoSequenceBlock::onContainerTriggerTriggered(Trigger* t)
@@ -123,7 +123,7 @@ void BentoSequenceBlock::onControllableFeedbackUpdateInternal(ControllableContai
 	LightBlockModel::onControllableFeedbackUpdateInternal(cc, c);
 	if (c == sequence->identityMode)
 	{
-		providerListeners.call(&ProviderListener::providerPlaybackGenControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
+		providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
 	} 
 }
 
