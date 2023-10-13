@@ -13,8 +13,8 @@
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
-	serialDevice(nullptr),
-	flasher(this)
+	serialDevice(nullptr)
+	//flasher(this)
 {
 	updateRate = params.getProperty("updateRate", 50);
 	remoteHost = connectionCC.addStringParameter("Prop IP", "IP of the prop on the network", "192.168.0.100");
@@ -102,10 +102,10 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		sendYo();
 	}
-	else if (c == uploadFirmwareTrigger)
-	{
-		uploadFirmware();
-	}
+	//else if (c == uploadFirmwareTrigger)
+	//{
+	//	uploadFirmware();
+	//}
 }
 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
@@ -133,14 +133,14 @@ void BentoProp::sendColorsToPropInternal()
 		data.add(indexPrefix->intValue());
 	}
 
-	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection->boolValue());
+	bool invert = false;// (rgbComponent != nullptr && rgbComponent->invertDirection->boolValue());
 	int startIndex = invert ? numLeds - 1 : 0;
 	int endIndex = invert ? -1 : numLeds;
 	int step = invert ? -1 : 1;
 
 	for (int i = startIndex; i != endIndex; i += step)
 	{
-		int index = (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
+		int index = i;// (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
 		float a = colors[index].getFloatAlpha();
 		data.add(jmin<int>(colors[index].getRed() * a, 254));
 		data.add(jmin<int>(colors[index].getGreen() * a, 254));
@@ -457,12 +457,12 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 	}
 }
 
-void BentoProp::uploadFirmware()
-{
-	isFlashing->setValue(true);
-	flasher.startThread();
-
-}
+//void BentoProp::uploadFirmware()
+//{
+//	isFlashing->setValue(true);
+//	flasher.startThread();
+//
+//}
 
 void BentoProp::sendControlToPropInternal(String control, var value)
 {
@@ -510,106 +510,106 @@ var BentoProp::sendMessageToPropFromScript(const var::NativeFunctionArgs& a)
 }
 
 
-BentoProp::Flasher::Flasher(BentoProp* prop) :
-	Thread("Bento Flasher"),
-	prop(prop)
-{
-}
-
-void BentoProp::Flasher::run()
-{
-	prop->flashingProgression->setValue(0);
-#if JUCE_WINDOWS || JUCE_MAC
-	if (!prop->firmwareFile.existsAsFile())
-	{
-		NLOGERROR(prop->niceName, "Firmware file not found. It should be a file called firmware.bin aside the prop json definition file.");
-		return;
-
-	}
-
-	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
-#if JUCE_WINDOWS
-	File flasher = appFolder.getChildFile("esptool.exe");
-	File app0Bin = appFolder.getChildFile("boot_app0.bin");
-	File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
-#elif JUCE_MAC
-	File bundle = juce::File::getSpecialLocation(juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
-	File espFolder = bundle.getChildFile("Resources").getChildFile("esptool");
-
-	File flasher = espFolder.getChildFile("esptool");
-	File app0Bin = espFolder.getChildFile("boot_app0.bin");
-	File bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
-#endif
-
-
-
-	if (!flasher.existsAsFile())
-	{
-		NLOGERROR(prop->niceName, "Flasher file not found. It should be a file esptool.exe inside Bento's Application folder");
-		return;
-	}
-
-
-	File partitionsFile = prop->firmwareFile.getChildFile("../partitions.bin");
-
-	if (!partitionsFile.exists())
-	{
-		NLOGERROR(prop->niceName, "Partitions file not found. It should be a file called partitions.bin aside the firmware.bin file");
-		return;
-	}
-
-	if (prop->serialDevice == nullptr)
-	{
-		NLOGERROR(prop->niceName, "Serial device is not connected. Please connect the prop and select from the serial device dropdown menu the right one.");
-		return;
-	}
-
-	String port = prop->serialDevice->info->port;
-
-	prop->serialParam->setValueFromDevice(nullptr); //close device to let the flasher use it
-
-	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
-	parameters += " 0xe000 \"" + app0Bin.getFullPathName() + "\"";
-	parameters += " 0x1000 \"" + bootloaderBin.getFullPathName() + "\"";
-	parameters += " 0x10000 \"" + prop->firmwareFile.getFullPathName() + "\"";
-	parameters += " 0x8000 \"" + partitionsFile.getFullPathName() + "\"";
-
-	NLOG(prop->niceName, "Flashing firmware...");
-	//NLOG(prop->niceName, "Launch with parameters " + parameters);
-
-	//#if JUCE_WINDOWS
-		//flasher.startAsProcess(parameters);
-	//#else
-	ChildProcess cp;
-	cp.start(flasher.getFullPathName() + parameters);
-
-	String buffer;
-	while (cp.isRunning())
-	{
-		char buf[8];
-		memset(buf, 0, 8);
-		int numRead = cp.readProcessOutput(buf, 8);
-		buffer += String(buf, numRead);
-		StringArray lines;
-		lines.addLines(buffer);
-		for (int i = 0; i < lines.size() - 1; i++)
-		{
-			if (prop->logIncoming->boolValue()) NLOG(prop->niceName, lines[i]);
-			StringArray prog = RegexFunctions::getFirstMatch("Writing.+\\(([0-9]+) %\\)", lines[i]);
-			if (prog.size() > 1)
-			{
-				float relProg = prog[1].getFloatValue() / 100.0f;
-				if (relProg != 1) prop->flashingProgression->setValue(relProg); //not using 1 to avoid double 100% log from partitions and firmware.
-			}
-		}
-		buffer = lines[lines.size() - 1];
-	}
-	//#endif
-
-#else
-	LOGWARNING("Flashing only supported on Windows and mac for now");
-#endif
-
-	prop->flashingProgression->setValue(1);
-	prop->isFlashing->setValue(false);
-}
+//BentoProp::Flasher::Flasher(BentoProp* prop) :
+//	Thread("Bento Flasher"),
+//	prop(prop)
+//{
+//}
+//
+//void BentoProp::Flasher::run()
+//{
+//	prop->flashingProgression->setValue(0);
+//#if JUCE_WINDOWS || JUCE_MAC
+//	if (!prop->firmwareFile.existsAsFile())
+//	{
+//		NLOGERROR(prop->niceName, "Firmware file not found. It should be a file called firmware.bin aside the prop json definition file.");
+//		return;
+//
+//	}
+//
+//	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
+//#if JUCE_WINDOWS
+//	File flasher = appFolder.getChildFile("esptool.exe");
+//	File app0Bin = appFolder.getChildFile("boot_app0.bin");
+//	File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
+//#elif JUCE_MAC
+//	File bundle = juce::File::getSpecialLocation(juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
+//	File espFolder = bundle.getChildFile("Resources").getChildFile("esptool");
+//
+//	File flasher = espFolder.getChildFile("esptool");
+//	File app0Bin = espFolder.getChildFile("boot_app0.bin");
+//	File bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
+//#endif
+//
+//
+//
+//	if (!flasher.existsAsFile())
+//	{
+//		NLOGERROR(prop->niceName, "Flasher file not found. It should be a file esptool.exe inside Bento's Application folder");
+//		return;
+//	}
+//
+//
+//	File partitionsFile = prop->firmwareFile.getChildFile("../partitions.bin");
+//
+//	if (!partitionsFile.exists())
+//	{
+//		NLOGERROR(prop->niceName, "Partitions file not found. It should be a file called partitions.bin aside the firmware.bin file");
+//		return;
+//	}
+//
+//	if (prop->serialDevice == nullptr)
+//	{
+//		NLOGERROR(prop->niceName, "Serial device is not connected. Please connect the prop and select from the serial device dropdown menu the right one.");
+//		return;
+//	}
+//
+//	String port = prop->serialDevice->info->port;
+//
+//	prop->serialParam->setValueFromDevice(nullptr); //close device to let the flasher use it
+//
+//	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
+//	parameters += " 0xe000 \"" + app0Bin.getFullPathName() + "\"";
+//	parameters += " 0x1000 \"" + bootloaderBin.getFullPathName() + "\"";
+//	parameters += " 0x10000 \"" + prop->firmwareFile.getFullPathName() + "\"";
+//	parameters += " 0x8000 \"" + partitionsFile.getFullPathName() + "\"";
+//
+//	NLOG(prop->niceName, "Flashing firmware...");
+//	//NLOG(prop->niceName, "Launch with parameters " + parameters);
+//
+//	//#if JUCE_WINDOWS
+//		//flasher.startAsProcess(parameters);
+//	//#else
+//	ChildProcess cp;
+//	cp.start(flasher.getFullPathName() + parameters);
+//
+//	String buffer;
+//	while (cp.isRunning())
+//	{
+//		char buf[8];
+//		memset(buf, 0, 8);
+//		int numRead = cp.readProcessOutput(buf, 8);
+//		buffer += String(buf, numRead);
+//		StringArray lines;
+//		lines.addLines(buffer);
+//		for (int i = 0; i < lines.size() - 1; i++)
+//		{
+//			if (prop->logIncoming->boolValue()) NLOG(prop->niceName, lines[i]);
+//			StringArray prog = RegexFunctions::getFirstMatch("Writing.+\\(([0-9]+) %\\)", lines[i]);
+//			if (prog.size() > 1)
+//			{
+//				float relProg = prog[1].getFloatValue() / 100.0f;
+//				if (relProg != 1) prop->flashingProgression->setValue(relProg); //not using 1 to avoid double 100% log from partitions and firmware.
+//			}
+//		}
+//		buffer = lines[lines.size() - 1];
+//	}
+//	//#endif
+//
+//#else
+//	LOGWARNING("Flashing only supported on Windows and mac for now");
+//#endif
+//
+//	prop->flashingProgression->setValue(1);
+//	prop->isFlashing->setValue(false);
+//}

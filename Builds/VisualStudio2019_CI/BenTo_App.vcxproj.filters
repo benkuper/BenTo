@@ -170,33 +170,6 @@
     <Filter Include="BenTo\Source\Prop\props">
       <UniqueIdentifier>{ABEFE2FE-02B2-87E2-62A2-5CA00196BE46}</UniqueIdentifier>
     </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\fx">
-      <UniqueIdentifier>{D0FA5C1C-2420-0846-5DB2-CEE73E5778FF}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\touch">
-      <UniqueIdentifier>{E6503478-F0BF-90AD-F096-CCEE68CB328E}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\ir">
-      <UniqueIdentifier>{F964A9A9-0332-EBCF-AAEC-23ED2F8F52C2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\battery">
-      <UniqueIdentifier>{09A72236-D00D-7B96-8310-ECFE27F1A41F}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\buttons">
-      <UniqueIdentifier>{AA5CA89B-9072-B31E-55E4-85ECF574442B}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\files">
-      <UniqueIdentifier>{BD542B31-9340-1C14-DCEC-C0DF7D8E7982}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\imu">
-      <UniqueIdentifier>{37C00CAD-ED5C-B856-1BE2-ED6D7E97D5CB}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components\rgb">
-      <UniqueIdentifier>{5F104E96-7B64-3A9A-4183-E2E304971389}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Prop\Component\components">
-      <UniqueIdentifier>{8FE0D59A-0774-371D-915B-3FDB9FD7B645}</UniqueIdentifier>
-    </Filter>
     <Filter Include="BenTo\Source\Prop\Component">
       <UniqueIdentifier>{6B745C7F-3143-9DC1-DC95-E328ECD6C137}</UniqueIdentifier>
     </Filter>
@@ -1561,37 +1534,13 @@
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.cpp">
+      <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\fx\FXComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\fx</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\touch\TouchComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\touch</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\ir</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\battery\BatteryComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\battery</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\buttons</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\files\FilesComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\imu\IMUComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\imu</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\rgb\RGBComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component\components\rgb</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp">
-      <Filter>BenTo\Source\Prop\Component</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\PropGenericComponent.cpp">
       <Filter>BenTo\Source\Prop\Component</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
@@ -5448,37 +5397,13 @@
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.h">
+      <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\fx\FXComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\fx</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\touch\TouchComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\touch</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\ir\IRPropComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\ir</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\battery\BatteryComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\battery</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\buttons</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\files\FilesComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\imu\IMUComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\imu</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\rgb\RGBComponent.h">
-      <Filter>BenTo\Source\Prop\Component\components\rgb</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h">
-      <Filter>BenTo\Source\Prop\Component</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\Component\PropGenericComponent.h">
       <Filter>BenTo\Source\Prop\Component</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h">

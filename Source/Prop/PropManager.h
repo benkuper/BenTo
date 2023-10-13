@@ -19,8 +19,8 @@ class PropManager :
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
 	public Prop::PropListener,
 	public ZeroconfManager::ZeroconfSearcher::SearcherListener,
-	public Thread,
-	public URL::DownloadTask::Listener,
+	//public Thread,
+	//public URL::DownloadTask::Listener,
 	public SerialManager::SerialManagerListener,
 	public SerialDevice::SerialDeviceListener,
 	public MultiTimer
@@ -35,8 +35,8 @@ public:
 	OSCSender sender;
 	OSCReceiver receiver;
 
-	ControllableContainer familiesCC;
-	Array<PropFamily*> families;
+	//ControllableContainer familiesCC;
+	//Array<PropFamily*> families;
 	Factory<Prop> factory;
 
 	const int localPort = 10000;
@@ -81,10 +81,10 @@ public:
 	void setupReceiver();
 
 	Prop* createPropIfNotExist(const String& type, const String& host, const String& id);
-	Prop* getPropWithHardwareId(const String& hardwareId);
+	Prop* getPropWithDeviceID(const String& deviceID);
 	Prop* getPropWithId(int id, Prop* excludeProp = nullptr);
 
-	PropFamily* getFamilyWithName(StringRef familyName);
+	//PropFamily* getFamilyWithName(StringRef familyName);
 
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 
@@ -103,22 +103,22 @@ public:
 
 	void serviceAdded(ZeroconfManager::ServiceInfo* s) override;
 
-	void updatePropsAndFamiliesDefinitions();
+	//void updatePropsAndFamiliesDefinitions();
 
 	void afterLoadJSONDataInternal() override;
 
-	void run() override;
+	//void run() override;
 
 	// Inherited via Listener
-	virtual void finished(URL::DownloadTask* task, bool success) override;
+	//virtual void finished(URL::DownloadTask* task, bool success) override;
 
 	//USB connection
 	void portAdded(SerialDeviceInfo* d) override;
 	void portRemoved(SerialDeviceInfo* d) override;
 
 	void checkSerialDevices();
-	void checkDeviceHardwareID(SerialDeviceInfo* d);
-	Prop* addPropForHardwareID(SerialDevice* d, String firmware, String type);
+	void checkDeviceDeviceID(SerialDeviceInfo* d);
+	Prop* addPropForHardwareID(SerialDevice* d, String deviceID, String type);
 
 	void serialDataReceived(SerialDevice* d, const var& data) override;
 	void timerCallback(int timerID) override;

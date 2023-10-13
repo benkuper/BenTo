@@ -156,14 +156,14 @@ void BentoEngine::processMessage(const OSCMessage& m)
 		for (auto& a : m) lm.addArgument(a);
 		lm.setAddressPattern(localAddress);
 
-		if (id == -1)
-		{
-			for (auto& p : PropManager::getInstance()->items)  p->handleOSCMessage(lm);
-		}
-		else
-		{
-			if (Prop* p = PropManager::getInstance()->getPropWithId(id)) p->handleOSCMessage(lm);
-		}
+		//if (id == -1)
+		//{
+		//	for (auto& p : PropManager::getInstance()->items)  p->handleOSCMessage(lm);
+		//}
+		//else
+		//{
+		//	if (Prop* p = PropManager::getInstance()->getPropWithId(id)) p->handleOSCMessage(lm);
+		//}
 	}
 	else if (aList[1] == "enableList")
 	{

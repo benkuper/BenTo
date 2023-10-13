@@ -19,7 +19,7 @@ Prop::Prop(var params) :
 	generalCC("General"),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
-	rgbComponent(nullptr),
+	//rgbComponent(nullptr), //proprefactor
 	playbackCC("Playback"),
 	pingEnabled(true),
 	receivedPongSinceLastPingSent(false),
@@ -29,7 +29,7 @@ Prop::Prop(var params) :
 	updateRate(50),
 	propNotifier(50)
 {
-	registerFamily(params.getProperty("family", "Mistery Family").toString());
+	//registerFamily(params.getProperty("family", "Mistery Family").toString());
 
 	firmwareFile = File(params.getProperty("firmware", ""));
 
@@ -66,13 +66,13 @@ Prop::Prop(var params) :
 
 	powerOffTrigger = controlsCC.addTrigger("Power Off", "Power Off the prop");
 	restartTrigger = controlsCC.addTrigger("Restart", "Restart the prop");
-	uploadFirmwareTrigger = controlsCC.addTrigger("Upload Firmware", "Upload firmware. The props needs to be connected with usb");
-	isFlashing = controlsCC.addBoolParameter("Is Flashing", "Is currently flashing a firmware", false);
-	isFlashing->hideInEditor = true;
-	isFlashing->setControllableFeedbackOnly(true);
-	isFlashing->isSavable = false;
-	flashingProgression = controlsCC.addFloatParameter("Flashing Progression", "Progression of the flashing process", 0, 0, 1);
-	flashingProgression->setControllableFeedbackOnly(true);
+	//uploadFirmwareTrigger = controlsCC.addTrigger("Upload Firmware", "Upload firmware. The props needs to be connected with usb");
+	//isFlashing = controlsCC.addBoolParameter("Is Flashing", "Is currently flashing a firmware", false);
+	//isFlashing->hideInEditor = true;
+	//isFlashing->setControllableFeedbackOnly(true);
+	//isFlashing->isSavable = false;
+	//flashingProgression = controlsCC.addFloatParameter("Flashing Progression", "Progression of the flashing process", 0, 0, 1);
+	//flashingProgression->setControllableFeedbackOnly(true);
 
 	addChildControllableContainer(&controlsCC);
 
@@ -120,7 +120,8 @@ Prop::Prop(var params) :
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showSourcesAndGet;
 	activeProvider->hideInEditor = true;
 
-	setupComponentsJSONDefinition(params.getProperty("components", var()));
+	//proprefactor
+	//setupComponentsJSONDefinition(params.getProperty("components", var()));
 
 	var scriptsData = params.getProperty("scripts", var());
 	for (int i = 0; i < scriptsData.size(); i++)
@@ -157,23 +158,23 @@ void Prop::clearItem()
 	colors.fill(Colours::black);
 	sendColorsToProp();
 	setBlockFromProvider(nullptr);
-	if (!Engine::mainEngine->isClearing && family != nullptr) family->unregisterProp(this);
+	//if (!Engine::mainEngine->isClearing && family != nullptr) family->unregisterProp(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(1000);
 	setBlockFromProvider(nullptr);
 }
 
-void Prop::registerFamily(StringRef familyName)
-{
-	if (familyName.isEmpty()) return;
-
-	PropFamily* f = PropManager::getInstance()->getFamilyWithName(familyName);
-	if (f != nullptr)
-	{
-		family = f;
-		family->registerProp(this);
-	}
-}
+//void Prop::registerFamily(StringRef familyName)
+//{
+//	if (familyName.isEmpty()) return;
+//
+//	PropFamily* f = PropManager::getInstance()->getFamilyWithName(familyName);
+//	if (f != nullptr)
+//	{
+//		family = f;
+//		family->registerProp(this);
+//	}
+//}
 
 void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 {
@@ -249,8 +250,9 @@ void Prop::update()
 {
 	if (!enabled->boolValue()) return;
 
-	HashMap<String, PropComponent*>::Iterator it(components);
-	while (it.next()) it.getValue()->update();
+	//proprefactor
+	//HashMap<String, PropComponent*>::Iterator it(components);
+	//while (it.next()) it.getValue()->update();
 
 	if (findPropMode->boolValue())
 	{
@@ -281,7 +283,9 @@ void Prop::update()
 	if (!playbackMode->boolValue()
 		&& !isGeneratingPlayback->boolValue()
 		&& !isUploading->boolValue()
-		&& (rgbComponent != nullptr && rgbComponent->streamEnable->boolValue()))
+		//proprefactor
+		//&& (rgbComponent != nullptr && rgbComponent->streamEnable->boolValue())
+		)
 	{
 		sendColorsToProp();
 	}
@@ -336,24 +340,26 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		restartProp();
 	}
-	else if (PropComponent* pc = dynamic_cast<PropComponent*>(cc)) //just do 1 level dynamic_cast<PropComponent*>(cc))
-	{
-		if (PropManager::getInstance()->sendFeedback->boolValue() && pc->feedbackEnabled)
-		{
-			OSCMessage m("/prop/" + globalID->stringValue() + c->getControlAddress(this));
-			if (c->type != Controllable::TRIGGER) OSCHelpers::addArgumentsForParameter(m, (Parameter*)c);//PropManager::getInstance());
+	//proprefactor
+	//else if (PropComponent* pc = dynamic_cast<PropComponent*>(cc)) //just do 1 level dynamic_cast<PropComponent*>(cc))
+	//{
+	//	if (PropManager::getInstance()->sendFeedback->boolValue())
+	//	{
+	//		OSCMessage m("/prop/" + globalID->stringValue() + c->getControlAddress(this));
+	//		if (c->type != Controllable::TRIGGER) OSCHelpers::addArgumentsForParameter(m, (Parameter*)c);//PropManager::getInstance());
 
-			BentoEngine* be = (BentoEngine*)Engine::mainEngine;
-			PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
-		}
-	}
+	//		BentoEngine* be = (BentoEngine*)Engine::mainEngine;
+	//		PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
+	//	}
+	//}
 	else if (c == isConnected)
 	{
-		if (isConnected->boolValue())
-		{
-			HashMap<String, PropComponent*>::Iterator it(components);
-			while (it.next()) it.getValue()->handlePropConnected();
-		}
+		//proprefactor
+			//if (isConnected->boolValue())
+		//{
+		//	HashMap<String, PropComponent*>::Iterator it(components);
+		//	while (it.next()) it.getValue()->handlePropConnected();
+		//}
 	}
 }
 
@@ -442,7 +448,8 @@ PlaybackData Prop::generatePlayback()
 	MemoryOutputStream os(result.data, false);
 
 	const int numLeds = resolution->intValue();
-	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection);
+
+	bool invert = false; //proprefactor (rgbComponent != nullptr && rgbComponent->invertDirection);
 	int startIndex = invert ? numLeds - 1 : 0;
 	int endIndex = invert ? -1 : numLeds;
 	int step = invert ? -1 : 1;
@@ -457,7 +464,7 @@ PlaybackData Prop::generatePlayback()
 
 		for (int i = startIndex; i != endIndex; i += step)
 		{
-			int index = (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
+			int index = i;//proprefactor (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
 			os.writeByte(cols[index].getRed());
 			os.writeByte(cols[index].getGreen());
 			os.writeByte(cols[index].getBlue());
@@ -545,65 +552,65 @@ void Prop::sendControlToProp(String message, var value)
 }
 
 
-void Prop::handleOSCMessage(const OSCMessage& m)
-{
-	if (m.getAddressPattern().toString() == "/pong") handlePong();
-	else if (m.getAddressPattern().toString() == "/enabled")
-	{
-		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
-	}
-	else if (m.getAddressPattern().toString() == "/model")
-	{
-		if (m.size() > 1)
-		{
-			if (LightBlockModel* p = dynamic_cast<LightBlockModel*>(LightBlockModelLibrary::getInstance()->getControllableContainerForAddress(OSCHelpers::getStringArg(m[1]))))
-			{
-				if (m.size() > 2)
-				{
-					if (LightBlockModelPreset* pr = p->presetManager.getItemWithName(OSCHelpers::getStringArg(m[2])))
-					{
-						activeProvider->setValueFromTarget(pr);
-					}
-				}
-				else
-				{
-					activeProvider->setValueFromTarget(p);
-				}
-			}
-		}
-	}
-	else
-	{
-		if (logIncoming->boolValue())
-		{
-			String s = "Received : " + m.getAddressPattern().toString() + ", ";
-			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
-			NLOG(niceName, s);
-		}
-
-		StringArray mSplit;
-		mSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
-
-		if (mSplit[1] == "block")
-		{
-			if (currentBlock != nullptr && mSplit.size() > 2)
-			{
-				if (Controllable* c = currentBlock->paramsContainer.getControllableByName(mSplit[2]))
-				{
-					OSCHelpers::handleControllableForOSCMessage(c, m, 1);
-				}
-			}
-		}
-		else
-		{
-			PropComponent* pc = getComponent(mSplit[1]);
-			var value;
-			for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
-			if (pc != nullptr) pc->handleMessage(mSplit[2], value);
-		}
-
-	}
-}
+//void Prop::handleOSCMessage(const OSCMessage& m)
+//{
+//	if (m.getAddressPattern().toString() == "/pong") handlePong();
+//	else if (m.getAddressPattern().toString() == "/enabled")
+//	{
+//		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
+//	}
+//	else if (m.getAddressPattern().toString() == "/model")
+//	{
+//		if (m.size() > 1)
+//		{
+//			if (LightBlockModel* p = dynamic_cast<LightBlockModel*>(LightBlockModelLibrary::getInstance()->getControllableContainerForAddress(OSCHelpers::getStringArg(m[1]))))
+//			{
+//				if (m.size() > 2)
+//				{
+//					if (LightBlockModelPreset* pr = p->presetManager.getItemWithName(OSCHelpers::getStringArg(m[2])))
+//					{
+//						activeProvider->setValueFromTarget(pr);
+//					}
+//				}
+//				else
+//				{
+//					activeProvider->setValueFromTarget(p);
+//				}
+//			}
+//		}
+//	}
+//	else
+//	{
+//		if (logIncoming->boolValue())
+//		{
+//			String s = "Received : " + m.getAddressPattern().toString() + ", ";
+//			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
+//			NLOG(niceName, s);
+//		}
+//
+//		StringArray mSplit;
+//		mSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
+//
+//		if (mSplit[1] == "block")
+//		{
+//			if (currentBlock != nullptr && mSplit.size() > 2)
+//			{
+//				if (Controllable* c = currentBlock->paramsContainer.getControllableByName(mSplit[2]))
+//				{
+//					OSCHelpers::handleControllableForOSCMessage(c, m, 1);
+//				}
+//			}
+//		}
+		//proprefactor
+		//else
+		//{
+		//	PropComponent* pc = getComponent(mSplit[1]);
+		//	var value;
+		//	for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
+		//	if (pc != nullptr) pc->handleMessage(mSplit[2], value);
+		//}
+//	}
+//}
 
 void Prop::handlePong()
 {
@@ -631,24 +638,25 @@ void Prop::timerCallback(int timerID)
 	}
 }
 
-void Prop::setupComponentsJSONDefinition(var def)
-{
-	if (def.hasProperty("rgb"))
-	{
-		rgbComponent = new RGBPropComponent(this, def.getProperty("rgb", var()));
-		addComponent(rgbComponent);
-		resolution->setValue(rgbComponent->resolution);
-		updateRate = rgbComponent->updateRate;
-	}
+//proprefactor
+//void Prop::setupComponentsJSONDefinition(var def)
+//{
+	//if (def.hasProperty("rgb"))
+	//{
+	//	rgbComponent = new RGBPropComponent(this, def.getProperty("rgb", var()));
+	//	addComponent(rgbComponent);
+	//	resolution->setValue(rgbComponent->resolution);
+	//	updateRate = rgbComponent->updateRate;
+	//}
 
-	if (def.hasProperty("fx")) addComponent(new FXPropComponent(this, def.getProperty("fx", var())));
-	if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));
-	if (def.hasProperty("touch")) addComponent(new TouchPropComponent(this, def.getProperty("touch", var())));
-	if (def.hasProperty("imu")) addComponent(new IMUPropComponent(this, def.getProperty("imu", var())));
-	if (def.hasProperty("ir")) addComponent(new IRPropComponent(this, def.getProperty("ir", var())));
-	if (def.hasProperty("battery")) addComponent(new BatteryPropComponent(this, def.getProperty("battery", var())));
-	if (def.hasProperty("files")) addComponent(new FilesPropComponent(this, def.getProperty("files", var())));
-}
+	//if (def.hasProperty("fx")) addComponent(new FXPropComponent(this, def.getProperty("fx", var())));
+	//if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));
+	//if (def.hasProperty("touch")) addComponent(new TouchPropComponent(this, def.getProperty("touch", var())));
+	//if (def.hasProperty("imu")) addComponent(new IMUPropComponent(this, def.getProperty("imu", var())));
+	//if (def.hasProperty("ir")) addComponent(new IRPropComponent(this, def.getProperty("ir", var())));
+	//if (def.hasProperty("battery")) addComponent(new BatteryPropComponent(this, def.getProperty("battery", var())));
+	//if (def.hasProperty("files")) addComponent(new FilesPropComponent(this, def.getProperty("files", var())));
+//}
 
 void Prop::addComponent(PropComponent* pc)
 {

@@ -40,20 +40,20 @@ public:
 	static PropTargetFilter * create(var) { return new PropFilterGlobalID(); }
 };
 
-class PropFilterPropFamily :
-	PropTargetFilter
-{
-public:
-	PropFilterPropFamily();
-	~PropFilterPropFamily();
-
-	TargetParameter * family;
-
-	int getTargetIDForProp(Prop * p) override;
-
-	String getTypeString() const override { return "Family"; }
-	static PropTargetFilter * create(var) { return new PropFilterPropFamily(); }
-};
+//class PropFilterPropFamily :
+//	PropTargetFilter
+//{
+//public:
+//	PropFilterPropFamily();
+//	~PropFilterPropFamily();
+//
+//	TargetParameter * family;
+//
+//	int getTargetIDForProp(Prop * p) override;
+//
+//	String getTypeString() const override { return "Family"; }
+//	static PropTargetFilter * create(var) { return new PropFilterPropFamily(); }
+//};
 
 class PropFilterPropType :
 	PropTargetFilter

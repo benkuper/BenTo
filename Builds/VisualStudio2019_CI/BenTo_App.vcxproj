@@ -416,37 +416,13 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\LightBlockIncludes.cpp"/>
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\fx\FXComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\touch\TouchComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\ir\IRPropComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\battery\BatteryComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\files\FilesComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\imu\IMUComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\rgb\RGBComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Component\PropComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\Component\PropGenericComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.cpp">
@@ -3826,17 +3802,9 @@
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlockIncludes.h"/>
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h"/>
+    <ClInclude Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\fx\FXComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\touch\TouchComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\ir\IRPropComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\battery\BatteryComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\buttons\ButtonsComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\files\FilesComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\imu\IMUComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\rgb\RGBComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h"/>
-    <ClInclude Include="..\..\Source\Prop\Component\PropGenericComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapePanel.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeView.h"/>

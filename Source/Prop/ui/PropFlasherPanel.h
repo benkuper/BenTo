@@ -49,5 +49,6 @@ public:
 	void resized() override;
 
 
+	static String getTypeStringStatic() { return "Firmware Uploader"; }
 	static PropFlasherPanel* create(const String& name) { return new PropFlasherPanel(); }
 };

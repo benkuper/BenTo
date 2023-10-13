@@ -28,9 +28,6 @@ int PropTargetFilter::getTargetIDForProp(Prop * p)
 	return -1;
 }
 
-
-
-
 PropFilterGlobalID::PropFilterGlobalID() :
 	PropTargetFilter(getTypeString())
 {
@@ -47,21 +44,21 @@ int PropFilterGlobalID::getTargetIDForProp(Prop * p)
 }
 
 
-PropFilterPropFamily::PropFilterPropFamily() :
-	PropTargetFilter(getTypeString())
-{
-	family = addTargetParameter("Family", "Family to filter", &PropManager::getInstance()->familiesCC);
-	family->targetType = TargetParameter::CONTAINER;
-}
+//PropFilterPropFamily::PropFilterPropFamily() :
+//	PropTargetFilter(getTypeString())
+//{
+//	family = addTargetParameter("Family", "Family to filter", &PropManager::getInstance()->familiesCC);
+//	family->targetType = TargetParameter::CONTAINER;
+//}
 
-PropFilterPropFamily::~PropFilterPropFamily()
-{
-}
-
-int PropFilterPropFamily::getTargetIDForProp(Prop * p)
-{
-	return p->family == family->targetContainer ? p->globalID->intValue() : -1;
-}
+//PropFilterPropFamily::~PropFilterPropFamily()
+//{
+//}
+//
+//int PropFilterPropFamily::getTargetIDForProp(Prop * p)
+//{
+//	return p->family == family->targetContainer ? p->globalID->intValue() : -1;
+//}
 
 PropFilterPropType::PropFilterPropType() :
 	PropTargetFilter(getTypeString())

@@ -457,64 +457,19 @@
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
           <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
+            <FILE id="FrN3p5" name="BentoPropGenericComponent.cpp" compile="0"
+                  resource="0" file="Source/Prop/props/bento/BentoPropGenericComponent.cpp"/>
+            <FILE id="iEx3EN" name="BentoPropGenericComponent.h" compile="0" resource="0"
+                  file="Source/Prop/props/bento/BentoPropGenericComponent.h"/>
             <FILE id="e7lkEF" name="BentoProp.cpp" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
             <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>
           </GROUP>
         </GROUP>
         <GROUP id="{8E4ED156-FAC3-B69B-D00B-42398B54E32F}" name="Component">
-          <GROUP id="{96B6B97F-243C-2E0E-1B3D-9482FBFB37B6}" name="components">
-            <GROUP id="{062D34D2-8CE6-36BB-644F-13D8FDA44D96}" name="fx">
-              <FILE id="H56yai" name="FXComponent.cpp" compile="0" resource="0" file="Source/Prop/Component/fx/FXComponent.cpp"/>
-              <FILE id="zb4GlC" name="FXComponent.h" compile="0" resource="0" file="Source/Prop/Component/fx/FXComponent.h"/>
-            </GROUP>
-            <GROUP id="{4393D381-241C-E5DB-874A-9F8C40AA3899}" name="touch">
-              <FILE id="C3YSwv" name="TouchComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/touch/TouchComponent.cpp"/>
-              <FILE id="bv63IY" name="TouchComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/touch/TouchComponent.h"/>
-            </GROUP>
-            <GROUP id="{E7E01D5E-99F9-820C-D396-1D880223BFEE}" name="ir">
-              <FILE id="j8Lq3y" name="IRPropComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/ir/IRPropComponent.cpp"/>
-              <FILE id="B5iWVm" name="IRPropComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/ir/IRPropComponent.h"/>
-            </GROUP>
-            <GROUP id="{6C61C5FA-B783-C5C5-39CA-B1AB17F45C52}" name="battery">
-              <FILE id="RD2USN" name="BatteryComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/battery/BatteryComponent.cpp"/>
-              <FILE id="CB9yZf" name="BatteryComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/battery/BatteryComponent.h"/>
-            </GROUP>
-            <GROUP id="{84FB84DA-5AD5-97EF-6383-7D492E76900D}" name="buttons">
-              <FILE id="NhZPbo" name="ButtonsComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/buttons/ButtonsComponent.cpp"/>
-              <FILE id="tMsmgE" name="ButtonsComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/buttons/ButtonsComponent.h"/>
-            </GROUP>
-            <GROUP id="{44518473-18ED-63D9-31D4-55726C7D6B14}" name="files">
-              <FILE id="Tv3ZFE" name="FilesComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/files/FilesComponent.cpp"/>
-              <FILE id="n6IqVO" name="FilesComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/files/FilesComponent.h"/>
-            </GROUP>
-            <GROUP id="{D0797117-8561-FE57-3185-EBE36DDB8B7A}" name="imu">
-              <FILE id="dI2fBY" name="IMUComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/imu/IMUComponent.cpp"/>
-              <FILE id="u5jusy" name="IMUComponent.h" compile="0" resource="0" file="Source/Prop/Component/imu/IMUComponent.h"/>
-            </GROUP>
-            <GROUP id="{CE3BD012-D672-F337-0C0E-C3726E1188BC}" name="rgb">
-              <FILE id="xgqzsY" name="RGBComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/rgb/RGBComponent.cpp"/>
-              <FILE id="WXzhgz" name="RGBComponent.h" compile="0" resource="0" file="Source/Prop/Component/rgb/RGBComponent.h"/>
-            </GROUP>
-          </GROUP>
+          <GROUP id="{96B6B97F-243C-2E0E-1B3D-9482FBFB37B6}" name="components"/>
           <FILE id="uwUmvQ" name="PropComponent.cpp" compile="0" resource="0"
                 file="Source/Prop/Component/PropComponent.cpp" skipPCH="0"/>
           <FILE id="oD40jg" name="PropComponent.h" compile="0" resource="0" file="Source/Prop/Component/PropComponent.h"/>
-          <FILE id="wMuWdK" name="PropGenericComponent.cpp" compile="0" resource="0"
-                file="Source/Prop/Component/PropGenericComponent.cpp"/>
-          <FILE id="PJ9a6j" name="PropGenericComponent.h" compile="0" resource="0"
-                file="Source/Prop/Component/PropGenericComponent.h"/>
         </GROUP>
         <GROUP id="{D40B9824-1B5B-6FA5-B249-175979B439C7}" name="Shape">
           <GROUP id="{8334483F-C7CD-CCBB-F1CF-4555459226ED}" name="ui">

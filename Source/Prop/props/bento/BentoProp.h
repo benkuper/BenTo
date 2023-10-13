@@ -28,19 +28,6 @@ public:
 
 	IntParameter* indexPrefix;
     
-    
-    class Flasher :
-        public Thread
-    {
-    public:
-        Flasher(BentoProp* prop);
-        BentoProp * prop;
-
-        void run() override;
-    };
-    
-    Flasher flasher;
-    
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);
@@ -74,13 +61,11 @@ public:
 	virtual void restartProp() override;
 	virtual void sendWiFiCredentials(String ssid, String pass);
 
-	virtual void uploadFirmware() override;
-
 	virtual void sendControlToPropInternal(String control, var value = var()) override;
 	virtual void sendMessageToProp(const OSCMessage& m);
 
 
 	static var sendMessageToPropFromScript(const var::NativeFunctionArgs& a);
 
-	static BentoProp* create(var params) { return new BentoProp(params); }
+	DECLARE_TYPE("Bento Prop");
 };

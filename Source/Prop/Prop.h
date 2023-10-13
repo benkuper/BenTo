@@ -52,10 +52,11 @@ public:
 	ControllableContainer controlsCC;
 	Trigger* powerOffTrigger;
 	Trigger* restartTrigger;
-	Trigger* uploadFirmwareTrigger;
+	//Trigger* uploadFirmwareTrigger;
 
 	HashMap<String, PropComponent*> components;
-	RGBPropComponent* rgbComponent;
+	//proprefactor
+	//RGBPropComponent* rgbComponent;
 
 	ControllableContainer playbackCC;
 	FloatParameter* playbackStartTime;
@@ -73,8 +74,8 @@ public:
 	FloatParameter* playbackGenProgress;
 	FloatParameter* uploadProgress;
 
-	BoolParameter* isFlashing;
-	FloatParameter* flashingProgression;
+	//BoolParameter* isFlashing;
+	//FloatParameter* flashingProgression;
 
 	enum AfterPlaybackGenAction { UPLOAD, EXPORT, NOTHING };
 	AfterPlaybackGenAction afterGeneratePlayback;
@@ -101,7 +102,7 @@ public:
 	//ping
 	virtual void clearItem() override;
 
-	void registerFamily(StringRef familyName);
+	//void registerFamily(StringRef familyName);
 
 	void setBlockFromProvider(LightBlockColorProvider* model);
 
@@ -141,16 +142,16 @@ public:
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
 
-	virtual void uploadFirmware() {}
+	//virtual void uploadFirmware() {}
 
-	virtual void handleOSCMessage(const OSCMessage& m);
+	//virtual void handleOSCMessage(const OSCMessage& m);
 
 	virtual void handlePong();
 	void sendPing();
 	virtual void sendPingInternal() {}
 	virtual void timerCallback(int timerID) override;
 
-	void setupComponentsJSONDefinition(var def);
+	//void setupComponentsJSONDefinition(var def);
 	void addComponent(PropComponent* pc);
 
 	PropComponent* getComponent(const String& name);
@@ -199,8 +200,7 @@ public:
 
 	virtual void run() override;
 
-	virtual String getTypeString() const { return customType; }
-	static Prop* create(var params) { return new Prop(params); }
+	DECLARE_TYPE("Prop");
 
 private:
 	WeakReference<Prop>::Master masterReference;

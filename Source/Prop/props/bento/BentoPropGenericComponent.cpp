@@ -1,11 +1,10 @@
 /*
   ==============================================================================
 
-    PropGenericComponent.cpp
-    Created: 13 Oct 2023 9:06:32am
+    BentoPropGenericComponent.cpp
+    Created: 13 Oct 2023 10:49:28am
     Author:  bkupe
 
   ==============================================================================
 */
 
-#include "PropGenericComponent.h"

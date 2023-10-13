@@ -1,8 +1,8 @@
 /*
   ==============================================================================
 
-    FilesComponent.h
-    Created: 8 May 2020 3:08:44pm
+    BentoPropGenericComponent.h
+    Created: 13 Oct 2023 10:49:28am
     Author:  bkupe
 
   ==============================================================================
@@ -10,10 +10,9 @@
 
 #pragma once
 
-class FilesPropComponent :
+class BentoPropGenericComponent :
     public PropComponent
 {
 public:
-    FilesPropComponent(Prop * prop, var params);
-    ~FilesPropComponent();
+
 };
