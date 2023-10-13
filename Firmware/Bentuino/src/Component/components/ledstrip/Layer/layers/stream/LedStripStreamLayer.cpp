@@ -49,7 +49,7 @@ void LedStreamReceiverComponent::updateInternal()
         return;
 
     long curTime = millis();
-    if (curTime > lastUDPReceiveTime + (1000 / receiveRate))
+    if (curTime > lastUDPReceiveTime + (1000 / max(receiveRate,1)))
     {
         lastUDPReceiveTime = curTime;
         if (useArtnet)

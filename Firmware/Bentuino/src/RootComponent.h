@@ -84,6 +84,7 @@ StepperComponent stepper;
 
 // Behaviour
 Timer<5> timer;
+long timeAtStart;
 long timeAtShutdown;
 
 bool initInternal(JsonObject o) override;

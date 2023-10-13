@@ -6,6 +6,7 @@ bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
 
+    timeAtStart = millis();
     timeAtShutdown = 0;
 
     // parameters.clear(); // remove enabled in root component
@@ -193,6 +194,16 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
             }
         }
     }
+#endif
+
+#if USE_BATTERY
+else if (e.component == &battery)
+{
+    if(e.type == BatteryComponent::CriticalBattery)
+    {
+        shutdown();
+    }
+}
 #endif
     // else if (e.component == &buttons[0])
     // {

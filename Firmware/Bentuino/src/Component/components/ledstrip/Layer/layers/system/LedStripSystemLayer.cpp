@@ -33,12 +33,12 @@ void LedStripSystemLayer::updateWifiStatus()
     if (connectionState != WifiComponent::Connecting && relT > animTime)
         return;
 
-    Color color = Color(0, 255, 255);
+    Color color = BatteryComponent::instance->getBatteryColor();
 
     // NDBG("Wifi status : " + String(connectionState) + " " + String(relT));
 
     // default behavior (connecting) on which we will add animation for connected behavior
-    float t = (millis() - WifiComponent::instance->timeAtConnect) / 1000.0f;
+    float t = (millis() - RootComponent::instance->timeAtStart) / 1000.0f;
     float pos = cos((t + PI / 2 + .2f) * 5) * .5f + .5f;
 
     if (strip->invertStrip)
@@ -96,7 +96,7 @@ void LedStripSystemLayer::updateShutdown()
 
     float t = relT / animTime;
 
-    Color c(0, 255, 255);
+    Color c = BatteryComponent::instance->getBatteryColor();
     c = c.withMultipliedAlpha(min(t * 2, 1.f));
     float end = constrain((1 - t) * 2, 0, 1);
 

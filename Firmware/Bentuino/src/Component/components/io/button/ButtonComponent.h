@@ -53,7 +53,6 @@ public:
     CheckAndSendParamFeedback(multiPressCount);
     CheckAndSendParamFeedback(longPress);
     CheckAndSendParamFeedback(veryLongPress);
-
     CheckFeedbackParamInternalEnd;
 
     FillOSCQueryInternalStart
