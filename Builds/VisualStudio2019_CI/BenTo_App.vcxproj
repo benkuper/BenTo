@@ -6059,6 +6059,7 @@
   <ItemGroup>
     <None Include="..\..\Resources\models\patterns\noise.png"/>
     <None Include="..\..\Resources\models\patterns\rainbow.png"/>
+    <None Include="..\..\Resources\models\patterns\range.png"/>
     <None Include="..\..\Resources\models\patterns\solidColor.png"/>
     <None Include="..\..\Resources\models\patterns\strobe.png"/>
     <None Include="..\..\Resources\models\dmx.png"/>

@@ -402,6 +402,7 @@
 		F36ABE11C3B014EB8870CE8A /* AudioManagerHardwareEditor.cpp */ /* AudioManagerHardwareEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AudioManagerHardwareEditor.cpp; path = ../../Source/Audio/ui/AudioManagerHardwareEditor.cpp; sourceTree = SOURCE_ROOT; };
 		F5297DDABB66A420EC9905FB /* NodeIncludes.h */ /* NodeIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeIncludes.h; path = ../../Source/Node/NodeIncludes.h; sourceTree = SOURCE_ROOT; };
 		F6613236CF1EA0CB6F14B9CE /* PropShapeView.h */ /* PropShapeView.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropShapeView.h; path = ../../Source/Prop/Shape/ui/PropShapeView.h; sourceTree = SOURCE_ROOT; };
+		F77FC2B0A28B53A2CC059C49 /* range.png */ /* range.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = range.png; path = ../../Resources/models/patterns/range.png; sourceTree = SOURCE_ROOT; };
 		F7DAA1025C2FF266D1125C8B /* juce_opengl */ /* juce_opengl */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_opengl; path = ../../JUCE/modules/juce_opengl; sourceTree = SOURCE_ROOT; };
 		F7E3FF07FC6575EC54E3D408 /* NodeBlock.h */ /* NodeBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeBlock.h; path = ../../Source/LightBlock/model/blocks/node/NodeBlock.h; sourceTree = SOURCE_ROOT; };
 		F80D5AF0C69B7197391A4E1C /* include_juce_gui_basics.mm */ /* include_juce_gui_basics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_gui_basics.mm; path = ../../JuceLibraryCode/include_juce_gui_basics.mm; sourceTree = SOURCE_ROOT; };
@@ -569,6 +570,7 @@
 			children = (
 				5E3ED034F5CF78BB19EEA5EC,
 				8E2D9DF2881733CADA59D8E0,
+				F77FC2B0A28B53A2CC059C49,
 				69CBB9B1FD8EE80262A02244,
 				808AAC0DA10E0C307350A7F1,
 			);

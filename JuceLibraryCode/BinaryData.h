@@ -14,6 +14,9 @@ namespace BinaryData
     extern const char*   rainbow_png;
     const int            rainbow_pngSize = 4481;
 
+    extern const char*   range_png;
+    const int            range_pngSize = 2400;
+
     extern const char*   solidColor_png;
     const int            solidColor_pngSize = 4514;
 
@@ -63,7 +66,7 @@ namespace BinaryData
     const int            shader_fragSize = 975;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 18;
+    const int namedResourceListSize = 19;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

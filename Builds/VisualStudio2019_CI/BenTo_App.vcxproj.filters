@@ -12164,6 +12164,9 @@
     <None Include="..\..\Resources\models\patterns\rainbow.png">
       <Filter>BenTo\Resources\models\patterns</Filter>
     </None>
+    <None Include="..\..\Resources\models\patterns\range.png">
+      <Filter>BenTo\Resources\models\patterns</Filter>
+    </None>
     <None Include="..\..\Resources\models\patterns\solidColor.png">
       <Filter>BenTo\Resources\models\patterns</Filter>
     </None>
