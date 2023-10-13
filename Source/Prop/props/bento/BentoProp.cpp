@@ -13,13 +13,16 @@
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
-	serialDevice(nullptr)
+	serialDevice(nullptr),
+	universe(0)
 	//flasher(this)
 {
-	updateRate = params.getProperty("updateRate", 50);
-	remoteHost = connectionCC.addStringParameter("Prop IP", "IP of the prop on the network", "192.168.0.100");
+	updateRate = 100;
+	remoteHost = connectionCC.addStringParameter("Network IP", "IP of the prop on the network", "192.168.0.100");
 
-	serialParam = new SerialDeviceParameter("USB Device", "For connecting props trhough USB", true);
+	artnet.inputCC->enabled->setValue(false);
+
+	serialParam = new SerialDeviceParameter("USB Port", "For connecting props through USB", true);
 	serialParam->openBaudRate = 115200;
 
 #if !JUCE_MAC
@@ -27,14 +30,15 @@ BentoProp::BentoProp(var params) :
 	if (params.hasProperty("pid")) serialParam->pidFilters.add((int)params.getProperty("pid", 0));
 #endif
 
-	indexPrefix = generalCC.addIntParameter("Index Prefix", "If enabled, this prepends a byte corresponding to the strip index it's addressing.", 1, 1, 255, false);
-	indexPrefix->canBeDisabledByUser = true;
-
 	scriptObject.getDynamicObject()->setMethod("send", &BentoProp::sendMessageToPropFromScript);
 
 	connectionCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
+
+	data.resize(DMX_NUM_CHANNELS);
+	data.fill(0);
+
 }
 
 BentoProp::~BentoProp()
@@ -100,7 +104,8 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	}
 	else if (c == remoteHost)
 	{
-		sendYo();
+		//sendYo();
+		artnet.remoteHost->setValue(remoteHost->stringValue());
 	}
 	//else if (c == uploadFirmwareTrigger)
 	//{
@@ -125,53 +130,21 @@ void BentoProp::portRemoved(SerialDevice* d)
 
 void BentoProp::sendColorsToPropInternal()
 {
-	const int numLeds = resolution->intValue();
+	int numChannels = colors.size() * 3;
 
-	Array<uint8> data;
-	if (indexPrefix->enabled)
+	for (int i = 0; i < colors.size(); i++)
 	{
-		data.add(indexPrefix->intValue());
+		int index = i * 3;
+		if (index >= DMX_NUM_CHANNELS - 2) break;
+		Colour c = colors[i];
+		float a = c.getFloatAlpha();
+		data.set(index, jmin<int>(c.getRed() * a, 255));
+		data.set(index + 1, jmin<int>(c.getGreen() * a, 255));
+		data.set(index + 2, jmin<int>(c.getBlue() * a, 255));
 	}
+	universe.updateValues(data);
+	if (universe.isDirty) artnet.sendDMXValues(&universe, numChannels);
 
-	bool invert = false;// (rgbComponent != nullptr && rgbComponent->invertDirection->boolValue());
-	int startIndex = invert ? numLeds - 1 : 0;
-	int endIndex = invert ? -1 : numLeds;
-	int step = invert ? -1 : 1;
-
-	for (int i = startIndex; i != endIndex; i += step)
-	{
-		int index = i;// (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
-		float a = colors[index].getFloatAlpha();
-		data.add(jmin<int>(colors[index].getRed() * a, 254));
-		data.add(jmin<int>(colors[index].getGreen() * a, 254));
-		data.add(jmin<int>(colors[index].getBlue() * a, 254));
-	}
-
-	data.add(255);
-
-	const int maxPacketSize = 1000; //1500 bytes on ESP32
-	const int dataSize = data.size();
-	int offset = 0;
-	int numPacketSent = 0;
-
-	while (offset < dataSize)
-	{
-		int length = jmin(maxPacketSize, dataSize - offset);
-
-		int dataSent = sender.write(remoteHost->stringValue(), remotePort, data.getRawDataPointer() + offset, length);
-
-		if (dataSent == -1)
-		{
-			LOGWARNING("Error sending data");
-			break;
-		}
-
-		numPacketSent++;
-		offset += dataSent;
-		sleep(2);
-	}
-
-	if (numPacketSent > 1) sleep(10);
 }
 
 void BentoProp::uploadPlaybackData(PlaybackData data)

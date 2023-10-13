@@ -51,6 +51,7 @@ BentoEngine::~BentoEngine()
 	PropManager::deleteInstance();
 	PropShapeLibrary::deleteInstance();
 	SerialManager::deleteInstance();
+	DMXManager::deleteInstance();
 
 	NodeFactory::deleteInstance();
 	LightBlockModelLibrary::deleteInstance();

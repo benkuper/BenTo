@@ -26,8 +26,10 @@ public:
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
 
-	IntParameter* indexPrefix;
-    
+	DMXArtNetDevice artnet;
+	DMXUniverse universe;
+	Array<uint8> data;
+
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);
