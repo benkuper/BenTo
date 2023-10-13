@@ -9,6 +9,7 @@
         <GROUP id="{AA53C9C4-83BE-D8AE-2509-C14F27B31F7B}" name="patterns">
           <FILE id="KrzbHq" name="noise.png" compile="0" resource="1" file="Resources/models/patterns/noise.png"/>
           <FILE id="dcD1tm" name="rainbow.png" compile="0" resource="1" file="Resources/models/patterns/rainbow.png"/>
+          <FILE id="FnBqcK" name="range.png" compile="0" resource="1" file="Resources/models/patterns/range.png"/>
           <FILE id="Dr7vTV" name="solidColor.png" compile="0" resource="1" file="Resources/models/patterns/solidColor.png"/>
           <FILE id="WOljwS" name="strobe.png" compile="0" resource="1" file="Resources/models/patterns/strobe.png"/>
         </GROUP>
