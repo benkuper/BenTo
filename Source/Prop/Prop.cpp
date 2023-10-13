@@ -26,7 +26,7 @@ Prop::Prop(var params) :
 	playbackProvider(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
-	updateRate(50),
+	updateRate(10),
 	propNotifier(50)
 {
 	//registerFamily(params.getProperty("family", "Mistery Family").toString());
@@ -266,7 +266,7 @@ void Prop::update()
 	}
 	else if (currentBlock != nullptr)
 	{
-		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
+		double time = fmod(Time::getMillisecondCounterHiRes(), (int)1e9) / 1000.0;
 
 		colorLock.enter();
 		colors = currentBlock->getColors(this, time, var());
@@ -691,10 +691,12 @@ InspectableEditor* Prop::getEditorInternal(bool isRoot, Array<Inspectable*> insp
 
 void Prop::run()
 {
-	sleep(100);
+	sleep(50);
 
 	while (!threadShouldExit())
 	{
+		double timeBeforeUpdate = Time::getMillisecondCounterHiRes();
+
 		if (isGeneratingPlayback->boolValue())
 		{
 			PlaybackData data = generatePlayback();
@@ -731,7 +733,11 @@ void Prop::run()
 		else
 		{
 			if (enabled->boolValue()) update();
-			sleep(1000.0f / updateRate); //50fps
+
+			double diffTime = Time::getMillisecondCounterHiRes() - timeBeforeUpdate;
+			double sleepTime = 1000.0 / updateRate - diffTime;
+			//DBG("Sleep time " << sleepTime << " ms, diffTime " << diffTime << " ms");
+			if (sleepTime >= 1) sleep(sleepTime); //50fps
 		}
 	}
 }
