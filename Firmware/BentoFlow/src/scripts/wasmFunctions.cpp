@@ -253,6 +253,26 @@ m3ApiRawFunction(m3_setBatterySendEnabled)
     m3ApiSuccess();
 }
 
+m3ApiRawFunction(m3_playVariant)
+{
+    m3ApiGetArg(uint32_t, v);
+    String name = MainManager::instance->leds.playerMode.fileName;
+    float time = MainManager::instance->leds.playerMode.curTimeMs;
+    uint32_t start = millis();
+    char l = name.charAt(name.length()-1);
+
+    if (l >= '0' && l <= '9') {
+        name.remove(name.length()-1);
+    } 
+
+    name = name + String(v);
+
+    MainManager::instance->leds.playerMode.load(name, false);
+
+    time = (time + (millis() - start)) / 1000;
+    MainManager::instance->leds.playerMode.play(time);
+    m3ApiSuccess();
+}
 
 m3ApiRawFunction(m3_getOrientation)
 {

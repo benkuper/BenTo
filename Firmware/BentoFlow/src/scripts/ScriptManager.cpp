@@ -208,6 +208,7 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "pointRGB", "v(ffiii)", &m3_pointRGB);
     m3_LinkRawFunction(module, arduino, "pointHSV", "v(ffiii)", &m3_pointHSV);
     m3_LinkRawFunction(module, arduino, "setIR", "v(f)", &m3_setIR);
+    m3_LinkRawFunction(module, arduino, "playVariant", "v(i)", &m3_playVariant);
     m3_LinkRawFunction(module, arduino, "updateLeds", "v()", &m3_updateLeds);
 
     m3_LinkRawFunction(module, arduino, "getFXSpeed", "f()", &m3_getFXSpeed);
@@ -227,8 +228,6 @@ M3Result ScriptManager::LinkArduino(IM3Runtime runtime)
     m3_LinkRawFunction(module, arduino, "getRoll", "f()", &m3_getRoll);
     m3_LinkRawFunction(module, arduino, "getProjectedAngle", "f()", &m3_getProjectedAngle);
     m3_LinkRawFunction(module, arduino, "setProjectedAngleOffset", "v(ff)", &m3_setProjectedAngleOffset);
-    m3_LinkRawFunction(module, arduino, "calibrateIMU", "v(*)", &m3_calibrateIMU);
-
     m3_LinkRawFunction(module, arduino, "setIMUEnabled", "v(i)", &m3_setIMUEnabled);
     m3_LinkRawFunction(module, arduino, "calibrateIMU", "v()", &m3_calibrateIMU);
     m3_LinkRawFunction(module, arduino, "getThrowState", "i()", &m3_getThrowState);
