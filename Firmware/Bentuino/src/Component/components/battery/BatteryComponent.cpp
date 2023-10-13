@@ -23,7 +23,7 @@ bool BatteryComponent::initInternal(JsonObject o)
         pinMode(chargePin, INPUT);
 
     for (int i = 0; i < VALUES_SIZE; i++)
-        values[i] = 0;
+        values[i] = analogRead(batteryPin);
 
     return true;
 }

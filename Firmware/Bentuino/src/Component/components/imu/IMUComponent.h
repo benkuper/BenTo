@@ -46,8 +46,8 @@ bool hasNewData;
 bool imuLock;
 bool shouldStopRead;
 
-const String throwStateOptions[6] {"None", "Flat", "Single", "Double", "Flat Front", "Loftie"};
-const String sendLevelOptions[3] {"None", "Orientation", "All"};
+const String throwStateOptions[6]{"None", "Flat", "Single", "Double", "Flat Front", "Loftie"};
+const String sendLevelOptions[3]{"None", "Orientation", "All"};
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
@@ -98,6 +98,8 @@ DeclareScriptFunctionVoid2(IMUComponent, setProjectedAngleOffset, float, float) 
 DeclareScriptFunctionReturn0(IMUComponent, getActivity, float) { return activity; }
 DeclareScriptFunctionReturn0(IMUComponent, getThrowState, uint32_t) { return throwState; }
 #endif
+
+
 
 HandleSetParamInternalStart
     CheckAndSetParam(sendLevel);

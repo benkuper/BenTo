@@ -14,6 +14,7 @@ public:
     int debounceCount;
     long timeAtPress;
 
+    DeclareBoolParam(canShutDown, true);
     DeclareIntParam(multiPressCount, 0);
     DeclareBoolParam(longPress, false);
     DeclareBoolParam(veryLongPress, false);
@@ -22,31 +23,30 @@ public:
     void updateInternal() override;
     void paramValueChangedInternal(void *param) override;
 
-    DeclareComponentEventTypes(ShortPress, LongPress, VeryLongPress, MultiPress);
-    DeclareComponentEventNames("ShortPress", "LongPress", "VeryLongPress", "MultiPress");
+#if USE_SCRIPT
+    LinkScriptFunctionsStart
+        LinkScriptFunction(ButtonComponent, getState, i, );
+    LinkScriptFunction(ButtonComponent, getMultipress, i, );
+    LinkScriptFunctionsEnd
 
-    // #if USE_SCRIPT
-    //     LinkScriptFunctionsStart
-    //         LinkScriptFunction(ButtonComponent, getState, i, );
-    //     LinkScriptFunction(ButtonComponent, getMultipress, i, );
-    //     LinkScriptFunctionsEnd
+    DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t)
+    {
+        return veryLongPress ? 3 : longPress ? 2
+                                             : value;
+    }
 
-    //     DeclareScriptFunctionReturn0(ButtonComponent, getState, uint32_t)
-    //     {
-    //         return veryLongPress ? 3 : longPress ? 2
-    //                                              : value;
-    //     }
+    DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) { return multiPressCount; }
+#endif
 
-    //     DeclareScriptFunctionReturn0(ButtonComponent, getMultipress, uint32_t) { return multiPressCount; }
-    // #endif
+    HandleSetParamInternalStart
+        HandleSetParamInternalMotherClass(IOComponent);
+    CheckAndSetParam(canShutDown);
+    HandleSetParamInternalEnd;
 
-    // HandleSetParamInternalStart
-    //     HandleSetParamInternalMotherClass(IOComponent)
-    //         HandleSetParamInternalEnd;
-
-    // FillSettingsInternalStart
-    //     FillSettingsInternalMotherClass(IOComponent)
-    //         FillSettingsInternalEnd
+    FillSettingsInternalStart
+        FillSettingsInternalMotherClass(IOComponent);
+    FillSettingsParam(canShutDown);
+    FillSettingsInternalEnd;
 
     CheckFeedbackParamInternalStart
         CheckFeedbackParamInternalMotherClass(IOComponent);
@@ -60,7 +60,8 @@ public:
     FillOSCQueryIntParamReadOnly(multiPressCount);
     FillOSCQueryBoolParamReadOnly(longPress);
     FillOSCQueryBoolParamReadOnly(veryLongPress);
-    FillOSCQueryInternalEnd
+    FillOSCQueryBoolParam(canShutDown);
+    FillOSCQueryInternalEnd;
 };
 
 DeclareComponentManager(Button, BUTTON, buttons, button)

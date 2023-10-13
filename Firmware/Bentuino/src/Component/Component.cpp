@@ -451,7 +451,7 @@ void Component::setParam(void *param, var *value, int numData)
     bool hasChanged = false;
     ParamType t = getParamType(param);
 
-    NDBG("Set Param " + String(t));
+    // NDBG("Set Param " + String(t));
 
     if (numData == 0 && t != Trigger)
     {
@@ -477,7 +477,7 @@ void Component::setParam(void *param, var *value, int numData)
         break;
 
     case ParamType::Bool:
-        NDBG("Bool : " + String(*((bool *)param)) + "  <> " + String(value[0].boolValue()));
+        // NDBG("Bool : " + String(*((bool *)param)) + "  <> " + String(value[0].boolValue()));
 
         hasChanged = *((bool *)param) != value[0].boolValue();
         if (hasChanged)
@@ -517,27 +517,37 @@ void Component::setParam(void *param, var *value, int numData)
 
 bool Component::handleSetParam(const String &paramName, var *data, int numData)
 {
-    NDBG("Handle Set Param " + paramName + " : ");
-    for (int i = 0; i < numData; i++)
-    {
-        DBG("> " + data[i].stringValue());
-    }
+    // NDBG("Handle Set Param " + paramName + " : ");
+    // for (int i = 0; i < numData; i++)
+    // {
+    //     DBG("> " + data[i].stringValue());
+    // }
 
     CheckAndSetParam(enabled);
 
-    NDBG("Handle Param Internal");
+    // NDBG("Handle Param Internal");
     return handleSetParamInternal(paramName, data, numData);
 }
 
 void Component::paramValueChanged(void *param)
 {
-    DBG("Param value changed " + getParamString(param));
+    // DBG("Param value changed " + getParamString(param));
 
     if (param == &enabled)
         onEnabledChanged();
 
     paramValueChangedInternal(param);
     checkParamsFeedback(param);
+
+    if (parentComponent != nullptr)
+        parentComponent->childParamValueChanged(this, this, param);
+}
+
+void Component::childParamValueChanged(Component *caller, Component *comp, void *param)
+{
+    // NDBG("Child param value changed : "+caller->name + " > " + comp->name);
+    if (parentComponent != nullptr)
+        parentComponent->childParamValueChanged(this, comp, param);
 }
 
 bool Component::checkParamsFeedback(void *param)
@@ -545,31 +555,6 @@ bool Component::checkParamsFeedback(void *param)
     CheckAndSendParamFeedback(enabled);
     return checkParamsFeedbackInternal(param);
 }
-
-// void Component::sendParamFeedback(void *param)
-// {
-//     ParamType t = getParamType(param);
-//     switch (t)
-//     {
-//     case ParamType::Bool:
-//     case ParamType::Int:
-//     case ParamType::Float:
-//     case ParamType::Str:
-//         SendParamFeedback1(param);
-//         break;
-
-//     case ParamType::P2D:
-//         SendParamFeedback2(param);
-//         break;
-
-//     case ParamType::P3D:
-//         SendParamFeedback3(param);
-//         break;
-
-//     default:
-//         break;
-//     }
-// }
 
 Component::ParamType Component::getParamType(void *param) const
 {

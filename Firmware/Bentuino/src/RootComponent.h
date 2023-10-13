@@ -99,7 +99,8 @@ void saveSettings();
 void clearSettings();
 
 void onChildComponentEvent(const ComponentEvent &e) override;
-
+void childParamValueChanged(Component* caller, Component* comp, void* param);
+ 
 bool handleCommandInternal(const String &command, var *data, int numData) override;
 
 bool isShuttingDown() const { return timeAtShutdown > 0; }

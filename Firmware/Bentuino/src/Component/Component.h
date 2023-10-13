@@ -11,7 +11,7 @@ public:
                                                           parentComponent(NULL),
                                                           numComponents(0),
                                                           numParams(0)
-                                                        //   numParameters(0)
+    //   numParameters(0)
     {
     }
 
@@ -70,23 +70,24 @@ public:
     }
 
     template <class T>
-    T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return (T*)addComponent(new T(name, _enabled), o); };
+    T *addComponent(const String &name, bool _enabled, JsonObject o = JsonObject()) { return (T *)addComponent(new T(name, _enabled), o); };
 
     Component *addComponent(Component *c, JsonObject o = JsonObject());
 
     Component *getComponentWithName(const String &name);
 
     void addParam(void *param, ParamType type);
-    void setParam(void *param, var* value, int nmData);
+    void setParam(void *param, var *value, int nmData);
     ParamType getParamType(void *param) const;
     String getParamString(void *param) const;
 
     virtual void onEnabledChanged() {}
 
-    void paramValueChanged(void* param);
-    virtual void paramValueChangedInternal(void* param) {}
-    virtual bool checkParamsFeedback(void* param);
-    virtual bool checkParamsFeedbackInternal(void* param) { return false; }
+    void paramValueChanged(void *param);
+    virtual void paramValueChangedInternal(void *param) {}
+    virtual void childParamValueChanged(Component *caller, Component *comp, void *param);
+    virtual bool checkParamsFeedback(void *param);
+    virtual bool checkParamsFeedbackInternal(void *param) { return false; }
     // virtual void sendParamFeedback(void* param);
 
     bool handleCommand(const String &command, var *data, int numData);
@@ -100,8 +101,8 @@ public:
     virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) {}
 
     virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
-    virtual void fillOSCQueryParamsInternal(JsonObject o,  const String& fullPath) {}
-    virtual void fillOSCQueryParam(JsonObject o,  const String& fullPath, const String& pName, ParamType t, void* param, bool readOnly = false, const String* options = nullptr,  int numOptions = 0, float vMin = 0, float vMax = 0);
+    virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath) {}
+    virtual void fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool readOnly = false, const String *options = nullptr, int numOptions = 0, float vMin = 0, float vMax = 0);
 
     enum OSCQueryChunkType
     {

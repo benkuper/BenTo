@@ -1,4 +1,5 @@
 #include "UnityIncludes.h"
+#include "RootComponent.h"
 
 ImplementSingleton(RootComponent);
 
@@ -26,7 +27,6 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&battery);
 #endif
 
-
 #ifdef USE_FILES
     AddOwnedComponent(&files);
 #endif
@@ -42,8 +42,6 @@ bool RootComponent::initInternal(JsonObject)
 #ifdef USE_STREAMING
     AddOwnedComponent(&streamReceiver);
 #endif
-
-
 
 #ifdef USE_IO
     memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
@@ -81,7 +79,6 @@ bool RootComponent::initInternal(JsonObject)
     AddOwnedComponent(&wifi);
 #endif
 
-
     return true;
 }
 
@@ -113,12 +110,12 @@ void RootComponent::powerdown()
     // NDBG("Sleep now, baby.");
 
     if (wakeUpButton > 0)
-    esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton, wakeUpState);
+        esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton, wakeUpState);
 
-    // #elif defined TOUCH_WAKEUP_PIN
-    //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
-    //     esp_sleep_enable_touchpad_wakeup();
-    // #endif
+        // #elif defined TOUCH_WAKEUP_PIN
+        //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
+        //     esp_sleep_enable_touchpad_wakeup();
+        // #endif
 
 #ifdef ESP8266
     ESP.deepSleep(5e6);
@@ -197,36 +194,29 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
 #endif
 
 #if USE_BATTERY
-else if (e.component == &battery)
-{
-    if(e.type == BatteryComponent::CriticalBattery)
+    else if (e.component == &battery)
     {
-        shutdown();
+        if (e.type == BatteryComponent::CriticalBattery)
+        {
+            shutdown();
+        }
     }
-}
 #endif
-    // else if (e.component == &buttons[0])
-    // {
-    // Should move to behaviour system
-    //  if (button->isSystem.boolValue())
-    //  {
-    //      switch (e.type)
-    //      {
-    //      case ButtonComponent::ShortPress:
-    //      {
-    //          if (wifi.state == WifiComponent::Connecting)
-    //              wifi.disable();
-    //      }
-    //      break;
-
-    //     case ButtonComponent::VeryLongPress:
-    //         shutdown();
-    //         break;
-    //     }
-    // }
-    // }
 
     comm.sendEventFeedback(e);
+}
+
+void RootComponent::childParamValueChanged(Component *caller, Component *comp, void *param)
+{
+#if USE_BUTTON
+    if (caller == &buttons)
+    {
+        ButtonComponent *bc = (ButtonComponent *)comp;
+        // DBG("Root param value changed " + bc->name+" > "+String(param == &bc->veryLongPress) + " / " + String(bc->veryLongPress)+" can sd : "+String(bc->canShutDown)+" / "+String(buttons.items[0]->canShutDown));
+        if (param == &bc->veryLongPress && bc->veryLongPress && bc->canShutDown)
+            shutdown();
+    }
+#endif
 }
 
 bool RootComponent::handleCommandInternal(const String &command, var *data, int numData)

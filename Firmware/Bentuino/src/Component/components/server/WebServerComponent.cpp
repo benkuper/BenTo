@@ -48,7 +48,7 @@ ImplementSingleton(WebServerComponent)
  
                 if(chunk->nextComponent == nullptr) return 0;
 
-                DBG("Fill chunk "+chunk->nextComponent->name+" : "+String(chunk->nextType));
+                // DBG("Fill chunk "+chunk->nextComponent->name+" : "+String(chunk->nextType));
                 chunk->nextComponent->fillChunkedOSCQueryData(chunk.get());
                 
                 
