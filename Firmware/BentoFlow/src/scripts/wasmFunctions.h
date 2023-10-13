@@ -26,6 +26,7 @@ m3ApiRawFunction(m3_setLedHSV);
 m3ApiRawFunction(m3_pointRGB);
 m3ApiRawFunction(m3_pointHSV);
 m3ApiRawFunction(m3_setIR);
+m3ApiRawFunction(m3_playVariant);
 m3ApiRawFunction(m3_updateLeds);
 
 m3ApiRawFunction(m3_getFXSpeed);
