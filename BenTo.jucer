@@ -14,12 +14,15 @@
           <FILE id="WOljwS" name="strobe.png" compile="0" resource="1" file="Resources/models/patterns/strobe.png"/>
         </GROUP>
         <FILE id="S1AUx7" name="dmx.png" compile="0" resource="1" file="Resources/models/dmx.png"/>
+        <FILE id="JG5C78" name="embeddedScript.png" compile="0" resource="1"
+              file="Resources/models/embeddedScript.png"/>
         <FILE id="qD4otD" name="multipoint.png" compile="0" resource="1" file="Resources/models/multipoint.png"/>
         <FILE id="OO6Nta" name="node.png" compile="0" resource="1" file="Resources/models/node.png"/>
         <FILE id="MQHQlQ" name="picture.png" compile="0" resource="1" file="Resources/models/picture.png"/>
         <FILE id="BZoVed" name="point.png" compile="0" resource="1" file="Resources/models/point.png"/>
-        <FILE id="a1DDEw" name="script.png" compile="0" resource="1" file="Resources/models/script.png"/>
-        <FILE id="Rlqbru" name="timeline.png" compile="0" resource="1" file="Resources/models/timeline.png"/>
+        <FILE id="XxXIDd" name="sequence.png" compile="0" resource="1" file="Resources/models/sequence.png"/>
+        <FILE id="d0F62O" name="streamingScript.png" compile="0" resource="1"
+              file="Resources/models/streamingScript.png"/>
         <FILE id="ZghcER" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>
       </GROUP>
       <FILE id="jaq4JI" name="default.btlayout" compile="0" resource="1"

@@ -26,6 +26,9 @@ namespace BinaryData
     extern const char*   dmx_png;
     const int            dmx_pngSize = 3170;
 
+    extern const char*   embeddedScript_png;
+    const int            embeddedScript_pngSize = 2804;
+
     extern const char*   multipoint_png;
     const int            multipoint_pngSize = 3119;
 
@@ -38,17 +41,17 @@ namespace BinaryData
     extern const char*   point_png;
     const int            point_pngSize = 2756;
 
-    extern const char*   script_png;
-    const int            script_pngSize = 2116;
+    extern const char*   sequence_png;
+    const int            sequence_pngSize = 1253;
 
-    extern const char*   timeline_png;
-    const int            timeline_pngSize = 1253;
+    extern const char*   streamingScript_png;
+    const int            streamingScript_pngSize = 2116;
 
     extern const char*   video_png;
     const int            video_pngSize = 6004;
 
     extern const char*   default_btlayout;
-    const int            default_btlayoutSize = 2458;
+    const int            default_btlayoutSize = 2561;
 
     extern const char*   fadeIn_png;
     const int            fadeIn_pngSize = 1868;
@@ -63,10 +66,10 @@ namespace BinaryData
     const int            new_pngSize = 675;
 
     extern const char*   shader_frag;
-    const int            shader_fragSize = 975;
+    const int            shader_fragSize = 1012;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 19;
+    const int namedResourceListSize = 20;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];
