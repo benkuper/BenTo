@@ -49,7 +49,7 @@ void PropViz::paint(Graphics& g)
 		float ratio = getWidth() * 1.0f / getHeight();
 		int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 2);
 
-		Rectangle<int> lr(getLocalBounds().reduced(0,ledSize));
+		Rectangle<int> lr(getLocalBounds().reduced(0, ledSize));
 
 		Rectangle<int> ls = lr.withCentre(lr.getCentre()).withSizeKeepingCentre(ledSize, ledSize);
 		//lr = lr.withSizeKeepingCentre(ledSize, ledSize * numLeds);
@@ -57,7 +57,7 @@ void PropViz::paint(Graphics& g)
 		for (int i = 0; i < numLeds; i++)
 		{
 			float p = i * 1.0f / (numLeds - 1);
-			Rectangle<float> ledR = ls.withY(lr.getY() + p * lr.getHeight() - ledSize / 2.0f).toFloat();
+			Rectangle<float> ledR = ls.withY(lr.getY() + (1 - p) * lr.getHeight() - ledSize / 2.0f).toFloat();
 			g.setColour(Colours::white.withAlpha(.2f));
 			g.drawEllipse(ledR, .5f);
 			g.setColour(prop->colors[numLeds - 1 - i]);
@@ -72,7 +72,7 @@ void PropViz::paint(Graphics& g)
 		Rectangle<int> r = getLocalBounds().withSizeKeepingCentre(size, size);
 
 		float radius = r.getWidth() / 2;
-		float angle = MathConstants<float>::pi  * 2 / numLeds;
+		float angle = MathConstants<float>::pi * 2 / numLeds;
 
 		for (int i = 0; i < numLeds; i++)
 		{
@@ -85,9 +85,9 @@ void PropViz::paint(Graphics& g)
 		}
 	}
 	break;
-            
-        default:
-            break;
+
+	default:
+		break;
 	}
 
 }
@@ -115,10 +115,10 @@ void PropViz::handleRepaint()
 	{
 		//if (prop->colorLock.tryEnter())
 	//	{
-			repaint();
-			shouldRepaint = false;
-			//prop->colorLock.exit();
-	//	}
+		repaint();
+		shouldRepaint = false;
+		//prop->colorLock.exit();
+//	}
 	}
 }
 
