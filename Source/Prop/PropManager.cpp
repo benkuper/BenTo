@@ -40,6 +40,9 @@ PropManager::PropManager() :
 	autoAssignIdTrigger = controlsCC.addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
 	//sendFeedback = controlsCC.addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
 	clearAll = controlsCC.addTrigger("Clear all props", "Remove all props from manager");
+	enableAll = controlsCC.addTrigger("Enable All", "");
+	disableAll = controlsCC.addTrigger("Disable All", "");
+	globalBrightness = controlsCC.addFloatParameter("Brightness", "Global Brightness of all props", .3f, 0, 1);
 	disablePreview = controlsCC.addBoolParameter("Disable preview", "If checked, this will disable preview in prop UI, it reduces considerably the cpu/gpu consumption.", false);
 	addChildControllableContainer(&controlsCC);
 
@@ -47,6 +50,8 @@ PropManager::PropManager() :
 	playbackMode = playbackCC.addBoolParameter("Playback Mode", "Switch between live stream from the software, or playback from the prop's uploaded playback file.", false);
 	powerOffAll = playbackCC.addTrigger("Poweroff All", "");
 	resetAll = playbackCC.addTrigger("Reset All", "");
+
+
 	fileName = playbackCC.addStringParameter("Playback Filename", "Filename of the playback", "sequence");
 	loadAll = playbackCC.addTrigger("Load All", "Load playback on all devices that can play");
 	playAll = playbackCC.addTrigger("Play All", "Play playback on all devices that can play");
@@ -113,20 +118,25 @@ void PropManager::setupReceiver()
 	NLOG(niceName, s);
 }
 
-Prop* PropManager::createPropIfNotExist(const String& type, const String& host, const String& id)
+Prop* PropManager::createPropIfNotExist(const String& type, const String& host, const String& id, const String& name)
 {
 	Prop* p = getPropWithDeviceID(id);
 	if (p == nullptr)
 	{
 		p = static_cast<Prop*>(managerFactory->create(type));
+		if (p == nullptr)
+		{
+			p = new BentoProp();
+		}
 		if (p != nullptr)
 		{
+			if (name.isNotEmpty()) p->setNiceName(name);
 			p->deviceID = id;
 
 			BentoProp* bp = dynamic_cast<BentoProp*>(p);
 			if (bp != nullptr) bp->remoteHost->setValue(host);
 
-			LOG("Found " << p->type->getValueKey() << " with ID : " << p->deviceID);
+			LOG("Found " << p->shape->getValueKey() << " with ID : " << p->deviceID);
 
 			addItem(p);
 			autoAssignIdTrigger->trigger();
@@ -233,6 +243,15 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		itemsToRemove.addArray(items);
 		removeItems(itemsToRemove);
 	}
+	else if (c == enableAll || c == disableAll)
+	{
+		for (auto& p : items) p->enabled->setValue(c == enableAll);
+
+	}
+	else if (c == globalBrightness)
+	{
+		for (auto& p : items) p->brightness->setValue(globalBrightness->floatValue());
+	}
 	else if (c == loadAll || c == playAll || c == stopAll)
 	{
 		for (auto& p : items)
@@ -335,10 +354,12 @@ void PropManager::oscMessageReceived(const OSCMessage& m)
 	{
 		String pHost = OSCHelpers::getStringArg(m[0]);
 		String pid = OSCHelpers::getStringArg(m[1]);
+		String pType = m.size() > 2 ? OSCHelpers::getStringArg(m[2]) : BentoProp::getTypeStringStatic();
+		String pName = m.size() > 3 ? OSCHelpers::getStringArg(m[3]) : "Prop";
 		//String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Bento";
 
 		//DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
-		createPropIfNotExist(BentoProp::getTypeStringStatic(), pHost, pid);
+		createPropIfNotExist(pType, pHost, pid, pName);
 	}
 	//else  if (m.size() > 0 && m[0].isString())
 	//{

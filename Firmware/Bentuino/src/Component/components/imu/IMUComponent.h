@@ -134,7 +134,7 @@ FillSettingsParam(xOnCalibration);
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
-    FillOSCQueryBoolParam(connected);
+    FillOSCQueryBoolParamReadOnly(connected);
 FillOSCQueryEnumParam(sendLevel, sendLevelOptions, 6);
 FillOSCQueryIntParam(orientationSendRate);
 FillOSCQueryIntParam(sdaPin);

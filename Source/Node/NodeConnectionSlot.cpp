@@ -37,7 +37,7 @@ Array<Colour> ColorSlot::getColors(Prop * p, double time, var params)
 	}
 	
 	Array<Colour> result;
-	result.resize(p->resolution->intValue());
+	result.resize(p->getResolution());
 	result.fill(Colours::transparentBlack);
 
 	return result;

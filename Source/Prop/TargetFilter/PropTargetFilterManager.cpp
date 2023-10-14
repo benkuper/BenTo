@@ -19,11 +19,10 @@ PropTargetFilterManager::PropTargetFilterManager(PropClusterGroupManager* cluste
 
 	selectItemWhenCreated = false;
 	managerFactory = &factory;
-	factory.defs.add(Factory<PropTargetFilter>::Definition::createDef("", "Global ID", PropFilterGlobalID::create));
-	//factory.defs.add(Factory<PropTargetFilter>::Definition::createDef("", "Family", PropFilterPropFamily::create));
-	factory.defs.add(Factory<PropTargetFilter>::Definition::createDef("", "Type", PropFilterPropType::create));
+	factory.defs.add(Factory<PropTargetFilter>::Definition::createDef<PropFilterGlobalID>(""));
+	factory.defs.add(Factory<PropTargetFilter>::Definition::createDef<PropFilterPropShape>(""));
 	if (clusterGroupManager != nullptr) factory.defs.add(new PropFilterCluster::PropFilterClusterDefinition("", "Cluster", PropFilterCluster::create, clusterGroupManager));
-	factory.defs.add(Factory<PropTargetFilter>::Definition::createDef("", "Script", PropFilterScript::create));
+	factory.defs.add(Factory<PropTargetFilter>::Definition::createDef<PropFilterScript>(""));
 }
 
 PropTargetFilterManager::~PropTargetFilterManager()

@@ -461,6 +461,10 @@
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
         <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
           <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
+            <FILE id="GktRO6" name="BentoComponentContainer.cpp" compile="0" resource="0"
+                  file="Source/Prop/props/bento/BentoComponentContainer.cpp"/>
+            <FILE id="t0MEZa" name="BentoComponentContainer.h" compile="0" resource="0"
+                  file="Source/Prop/props/bento/BentoComponentContainer.h"/>
             <FILE id="FrN3p5" name="BentoPropGenericComponent.cpp" compile="0"
                   resource="0" file="Source/Prop/props/bento/BentoPropGenericComponent.cpp"/>
             <FILE id="iEx3EN" name="BentoPropGenericComponent.h" compile="0" resource="0"

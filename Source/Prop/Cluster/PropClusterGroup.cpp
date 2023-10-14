@@ -59,7 +59,7 @@ int PropClusterGroup::getClusterIDForProp(Prop* p)
 
 Array<Colour> PropClusterGroup::getColorsForProp(Prop* p)
 {
-	int numPixels = p->resolution->intValue();
+	int numPixels = p->getResolution();
 	Array<Colour> result;
 	result.resize(numPixels);
 	result.fill(Colours::transparentBlack);

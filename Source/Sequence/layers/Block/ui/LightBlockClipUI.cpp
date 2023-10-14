@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Sequence/SequenceIncludes.h"
+
 LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	LayerBlockUI(_clip),
 	Thread(_clip->niceName + "_preview"),

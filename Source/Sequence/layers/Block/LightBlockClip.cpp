@@ -79,7 +79,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var params)
 {
 
-	int resolution = p->resolution->intValue();
+	int resolution = p->getResolution();
 
 	if (currentBlock == nullptr)
 	{

@@ -6,7 +6,7 @@ bool SerialComponent::initInternal(JsonObject o)
     memset(buffer, 0, 512);
     Serial.begin(115200);
 
-    AddBoolParam(sendFeedback);
+    AddBoolParamConfig(sendFeedback);
 
     return true;
 }

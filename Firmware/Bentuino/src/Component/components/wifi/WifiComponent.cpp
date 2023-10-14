@@ -8,8 +8,8 @@ ImplementSingleton(WifiComponent)
     // AddAndSetParameter(pass);
     // AddAndSetParameter(apOnNoWifi);
 
-    AddStringParam(ssid);
-    AddStringParam(pass);
+    AddStringParamConfig(ssid);
+    AddStringParamConfig(pass);
 
     connect();
 

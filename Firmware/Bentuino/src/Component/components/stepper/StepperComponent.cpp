@@ -9,13 +9,12 @@ bool StepperComponent::initInternal(JsonObject o)
         engine.init();
     }
 
-    AddIntParam(stepPin);
-    AddIntParam(dirPin);
-    AddIntParam(enPin);
+    AddIntParamConfig(stepPin);
+    AddIntParamConfig(dirPin);
+    AddIntParamConfig(enPin);
 
     AddFloatParam(accel);
     AddFloatParam(speed);
-
     AddFloatParam(position);
 
     if (stepPin > 0)

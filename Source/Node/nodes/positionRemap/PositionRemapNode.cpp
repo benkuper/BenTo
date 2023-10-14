@@ -37,7 +37,7 @@ PositionRemapNode::~PositionRemapNode()
 Array<Colour> PositionRemapNode::getColorsInternal(Prop * p, double time, var params, var localParams)
 {
 	int id = params.getProperty("forceID", p->globalID->intValue());
-	int resolution = p->resolution->intValue();
+	int resolution = p->getResolution();
 	float bPosition = (float)getParameterValue(position, localParams);
 	float bSize = (float)getParameterValue(size, localParams);
 	int bExtend = jmax((int)getParameterValue(extendNum, localParams), 1);

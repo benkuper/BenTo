@@ -18,7 +18,7 @@ bool ButtonComponent::initInternal(JsonObject o)
 
     AddIntParam(veryLongPress);
     
-    AddBoolParam(canShutDown);
+    AddBoolParamConfig(canShutDown);
     // veryLongPress.readOnly = true;
 
     return result;

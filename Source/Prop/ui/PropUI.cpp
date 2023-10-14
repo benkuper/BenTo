@@ -39,7 +39,7 @@ PropUI::PropUI(Prop* p) :
 
 	viz.setInterceptsMouseClicks(false, false);
 
-	Prop::Shape shape = p->type->getValueDataAsEnum<Prop::Shape>();
+	Prop::Shape shape = p->shape->getValueDataAsEnum<Prop::Shape>();
 
 	setSize(shape == Prop::HOOP ? 100 : 50, 100);
 }
@@ -140,9 +140,9 @@ void PropUI::resizedInternalContent(Rectangle<int>& r)
 void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
 	if (c == item->isGeneratingPlayback || c == item->playbackGenProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef /*|| c == item->isFlashing || c == item->flashingProgression*/) repaint();
-	else if (c == item->type)
+	else if (c == item->shape)
 	{
-		Prop::Shape shape = item->type->getValueDataAsEnum<Prop::Shape>();
+		Prop::Shape shape = item->shape->getValueDataAsEnum<Prop::Shape>();
 		setSize(shape == Prop::HOOP ? 100 : 50, 100);
 	}
 }

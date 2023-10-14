@@ -23,5 +23,5 @@ void LightBlockFilter::filterColors(Array<Colour>* result, Prop* p, double time,
 {
     if (!enabled->boolValue()) return;
     int id = params.getProperty("forceID", p->globalID->intValue());
-    getColorsInternal(result, p, time, id, p->resolution->intValue(), params);
+    getColorsInternal(result, p, time, id, p->getResolution(), params);
 }

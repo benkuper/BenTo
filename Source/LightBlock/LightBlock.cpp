@@ -34,7 +34,7 @@ Array<Colour> LightBlock::getColors(Prop * p, double time, var params)
 	if (provider.wasObjectDeleted())
 	{
 		Array<Colour> result;
-		result.resize(p->resolution->intValue());
+		result.resize(p->getResolution());
 		result.fill(Colours::transparentBlack);
 		return result;
 	}
@@ -48,7 +48,7 @@ void LightBlock::filterColors(Array<Colour>* result, Prop* p, double time, var p
 	
 	var localParams = getLocalParams(p, time, params);
 	int id = params.getProperty("forceID", p->globalID->intValue());
-	((LightBlockModel *)provider.get())->getColorsInternal(result, p, time, id, p->resolution->intValue(), localParams);
+	((LightBlockModel *)provider.get())->getColorsInternal(result, p, time, id, p->getResolution(), localParams);
 }
 
 var LightBlock::getLocalParams(Prop* p, double time, var params)

@@ -132,20 +132,30 @@
 #define DeclareP2DParam(name, val1, val2) float name[2]{val1, val2};
 #define DeclareP3DParam(name, val1, val2, val3) float name[3]{val1, val2, val3};
 
-#define AddBoolParam(param)            \
-    addParam(&param, ParamType::Bool); \
-    param = Settings::getVal<bool>(o, #param, param);
-#define AddIntParam(param)            \
-    addParam(&param, ParamType::Int); \
-    param = Settings::getVal<int>(o, #param, param);
-#define AddFloatParam(param)            \
-    addParam(&param, ParamType::Float); \
-    param = Settings::getVal<float>(o, #param, param);
-#define AddStringParam(param)         \
-    addParam(&param, ParamType::Str); \
-    param = Settings::getVal<String>(o, #param, param);
-#define AddP2DParam(param) addParam(&param, ParamType::P2D);
-#define AddP3DParam(param) addParam(&param, ParamType::P3D);
+#define AddParamWithTag(type, class, param, tag) \
+    addParam(&param, ParamType::type, tag);      \
+    param = Settings::getVal<class>(o, #param, param);
+
+#define AddBoolParamWithTag(param, tag) AddParamWithTag(Bool, bool, param, tag)
+#define AddIntParamWithTag(param, tag) AddParamWithTag(Int, int, param, tag)
+#define AddFloatParamWithTag(param, tag) AddParamWithTag(Float, float, param, tag)
+#define AddStringParamWithTag(param, tag) AddParamWithTag(Str, String, param, tag)
+#define AddP2DParamWithTag(param, tag) addParam(&param, ParamType::P2D, tag);
+#define AddP3DParamWithTag(param, tag) addParam(&param, ParamType::P3D, tag);
+
+#define AddBoolParam(param) AddBoolParamWithTag(param, TagNone)
+#define AddIntParam(param) AddIntParamWithTag(param, TagNone)
+#define AddFloatParam(param) AddFloatParamWithTag(param, TagNone)
+#define AddStringParam(param) AddStringParamWithTag(param, TagNone)
+#define AddP2DParam(param) AddP2DParamWithTag(param, TagNone)
+#define AddP3DParam(param) AddP3DParamWithTag(param, TagNone)
+
+#define AddBoolParamConfig(param) AddBoolParamWithTag(param, TagConfig)
+#define AddIntParamConfig(param) AddIntParamWithTag(param, TagConfig)
+#define AddFloatParamConfig(param) AddFloatParamWithTag(param, TagConfig)
+#define AddStringParamConfig(param) AddStringParamWithTag(param, TagConfig)
+#define AddP2DParamConfig(param) AddP2DParamWithTag(param, TagConfig)
+#define AddP3DParamConfig(param) AddP3DParamWithTag(param, TagConfig)
 
 #define SetParam(param, val)        \
     {                               \
@@ -175,7 +185,7 @@
     virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) override \
     {
 
-#define HandleSetParamInternalMotherClass(Class)                         \
+#define HandleSetParamInternalMotherClass(Class)                 \
     if (Class::handleSetParamInternal(paramName, data, numData)) \
         return true;
 
@@ -249,34 +259,34 @@
         o[#param] = param;       \
     }
 
-#define FillSettingsInternalMotherClass(Class) Class::fillSettingsParamsInternal(o, configOnly);
+#define FillSettingsInternalMotherClass(Class) Class::fillSettingsParamsInternal(o, showConfig);
 
 #define FillSettingsInternalStart                                                           \
-    virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) override \
+    virtual void fillSettingsParamsInternal(JsonObject o, bool showConfig = false) override \
     {
 #define FillSettingsInternalEnd }
 
 // Fill OSCQuery
-#define FillOSCQueryBoolParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param);
-#define FillOSCQueryIntParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param);
-#define FillOSCQueryEnumParam(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, false, options, numOptions);
-#define FillOSCQueryFloatParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param);
-#define FillOSCQueryRangeParam(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, false, nullptr, 0, vMin, vMax);
-#define FillOSCQueryStringParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param);
+#define FillOSCQueryBoolParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param, showConfig);
+#define FillOSCQueryIntParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig);
+#define FillOSCQueryEnumParam(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig, false, options, numOptions);
+#define FillOSCQueryFloatParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig);
+#define FillOSCQueryRangeParam(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig, false, nullptr, 0, vMin, vMax);
+#define FillOSCQueryStringParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param, showConfig);
 
-#define FillOSCQueryBoolParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param, true);
-#define FillOSCQueryIntParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, true);
-#define FillOSCQueryEnumParamReadOnly(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, true, options, numOptions);
-#define FillOSCQueryFloatParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, true);
-#define FillOSCQueryRangeParamReadOnly(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, true, nullptr, 0, vMin, vMax);
-#define FillOSCQueryStringParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param, true);
+#define FillOSCQueryBoolParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param, showConfig, true);
+#define FillOSCQueryIntParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig, true);
+#define FillOSCQueryEnumParamReadOnly(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig, true, options, numOptions);
+#define FillOSCQueryFloatParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig, true);
+#define FillOSCQueryRangeParamReadOnly(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig, true, nullptr, 0, vMin, vMax);
+#define FillOSCQueryStringParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param, showConfig, true);
 
 #define FillOSCQueryInternalStart                                                 \
-    virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath) \
+    virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath, bool showConfig = true) \
     {
 #define FillOSCQueryInternalEnd }
 
-#define FillOSCQueryInternalMotherClass(Class) Class::fillOSCQueryParamsInternal(o, fullPath);
+#define FillOSCQueryInternalMotherClass(Class) Class::fillOSCQueryParamsInternal(o, fullPath, showConfig);
 
 // Script
 

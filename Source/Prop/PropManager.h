@@ -44,8 +44,11 @@ public:
 	Trigger* detectProps;
 
 	ControllableContainer controlsCC;
+	Trigger* enableAll;
+	Trigger* disableAll;
 	Trigger* powerOffAll;
 	Trigger* resetAll;
+	FloatParameter* globalBrightness;
 
 	ControllableContainer playbackCC;
 	Trigger* uploadAll;
@@ -71,7 +74,7 @@ public:
 
 	void setupReceiver();
 
-	Prop* createPropIfNotExist(const String& type, const String& host, const String& id);
+	Prop* createPropIfNotExist(const String& type, const String& host, const String& id, const String& name = "");
 	Prop* getPropWithDeviceID(const String& deviceID);
 	Prop* getPropWithId(int id, Prop* excludeProp = nullptr);
 

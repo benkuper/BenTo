@@ -10,16 +10,10 @@
 
 #pragma once
 
-class PropFamily;
-class RGBPropComponent;
-
-#define PROP_PING_TIMERID 0
-
 class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
 	public Thread,
-	public MultiTimer,
 	public LightBlockColorProvider::ProviderListener
 {
 public:
@@ -30,33 +24,27 @@ public:
 
 
 	String deviceID;
-	PropFamily* family;
-	String customType;
+	IntParameter* globalID;
+
 
 	BoolParameter* logIncoming;
 	BoolParameter* logOutgoing;
 
 	ControllableContainer generalCC;
-	IntParameter* globalID;
 	IntParameter* resolution;
-	EnumParameter* type;
+	FloatParameter* brightness;
+
+	IntParameter* resolutionRef;
+	EnumParameter* shape;
 
 	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
-
-	bool pingEnabled;
-	bool receivedPongSinceLastPingSent;
 
 	BoolParameter* findPropMode;
 
 	ControllableContainer controlsCC;
 	Trigger* powerOffTrigger;
 	Trigger* restartTrigger;
-	//Trigger* uploadFirmwareTrigger;
-
-	HashMap<String, PropComponent*> components;
-	//proprefactor
-	//RGBPropComponent* rgbComponent;
 
 	ControllableContainer playbackCC;
 	FloatParameter* playbackStartTime;
@@ -73,9 +61,6 @@ public:
 	BoolParameter* isUploading;
 	FloatParameter* playbackGenProgress;
 	FloatParameter* uploadProgress;
-
-	//BoolParameter* isFlashing;
-	//FloatParameter* flashingProgression;
 
 	enum AfterPlaybackGenAction { UPLOAD, EXPORT, NOTHING };
 	AfterPlaybackGenAction afterGeneratePlayback;
@@ -97,15 +82,11 @@ public:
 
 	Array<File, CriticalSection> filesToUpload;
 
-	File firmwareFile;
 
-	//ping
 	virtual void clearItem() override;
 
-	//void registerFamily(StringRef familyName);
-
 	void setBlockFromProvider(LightBlockColorProvider* model);
-
+	int getResolution();
 	void update();
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
@@ -136,25 +117,8 @@ public:
 
 	void providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data) override;
 
-	void sendControlToProp(String message, var value = var());
-	virtual void sendControlToPropInternal(String message, var value = var()) {} //to be overriden
-
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
-
-	//virtual void uploadFirmware() {}
-
-	//virtual void handleOSCMessage(const OSCMessage& m);
-
-	virtual void handlePong();
-	void sendPing();
-	virtual void sendPingInternal() {}
-	virtual void timerCallback(int timerID) override;
-
-	//void setupComponentsJSONDefinition(var def);
-	void addComponent(PropComponent* pc);
-
-	PropComponent* getComponent(const String& name);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;

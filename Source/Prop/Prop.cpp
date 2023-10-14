@@ -15,14 +15,11 @@
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
 	Thread("Prop"),
-	family(nullptr),
-	generalCC("General"),
+	generalCC("Main Parameters"),
+	resolutionRef(nullptr),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
-	//rgbComponent(nullptr), //proprefactor
 	playbackCC("Playback"),
-	pingEnabled(true),
-	receivedPongSinceLastPingSent(false),
 	playbackProvider(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
@@ -31,9 +28,7 @@ Prop::Prop(var params) :
 {
 	//registerFamily(params.getProperty("family", "Mistery Family").toString());
 
-	firmwareFile = File(params.getProperty("firmware", ""));
-
-	customType = params.getProperty("type", "");
+	hideInEditor = true;
 
 	logIncoming = addBoolParameter("Log Incoming", "Log all incoming messages from the prop", false);
 	logOutgoing = addBoolParameter("Log Outgoing", "Log all outgoing messages to the prop", false);
@@ -44,15 +39,14 @@ Prop::Prop(var params) :
 	editorIsCollapsed = true;
 	saveAndLoadRecursiveData = true;
 
-	addChildControllableContainer(&generalCC);
 	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
+	shape = generalCC.addEnumParameter("Type", "The type of the prop");
+	fillTypeOptions(shape);
+	shape->setValueWithKey(params.getProperty("shape", shape->getValueKey()));
+	resolution = generalCC.addIntParameter("Resolution", "The resolution of the prop", 50, 1, 500);
+	addChildControllableContainer(&generalCC);
 
-	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", params.getProperty("resolution", 1), 1);
-	type = generalCC.addEnumParameter("Type", "The type of the prop");
-	fillTypeOptions(type);
-	type->setValueWithKey(params.getProperty("shape", type->getValueKey()));
-
-	colors.resize(resolution->intValue());
+	colors.resize(getResolution());
 
 	isConnected = connectionCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
@@ -66,13 +60,6 @@ Prop::Prop(var params) :
 
 	powerOffTrigger = controlsCC.addTrigger("Power Off", "Power Off the prop");
 	restartTrigger = controlsCC.addTrigger("Restart", "Restart the prop");
-	//uploadFirmwareTrigger = controlsCC.addTrigger("Upload Firmware", "Upload firmware. The props needs to be connected with usb");
-	//isFlashing = controlsCC.addBoolParameter("Is Flashing", "Is currently flashing a firmware", false);
-	//isFlashing->hideInEditor = true;
-	//isFlashing->setControllableFeedbackOnly(true);
-	//isFlashing->isSavable = false;
-	//flashingProgression = controlsCC.addFloatParameter("Flashing Progression", "Progression of the flashing process", 0, 0, 1);
-	//flashingProgression->setControllableFeedbackOnly(true);
 
 	addChildControllableContainer(&controlsCC);
 
@@ -140,9 +127,6 @@ Prop::Prop(var params) :
 	}
 
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
-
-	pingEnabled = params.getProperty("ping", pingEnabled);
-	if (pingEnabled) startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
 
 	startThread();
 }
@@ -246,6 +230,11 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 	}
 }
 
+int Prop::getResolution()
+{
+	return resolution->intValue(); //may have something else
+}
+
 void Prop::update()
 {
 	if (!enabled->boolValue()) return;
@@ -316,7 +305,7 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 {
 	if (c == resolution)
 	{
-		colors.resize(resolution->intValue());
+		colors.resize(getResolution());
 	}
 	else if (c == globalID)
 	{
@@ -420,10 +409,8 @@ PlaybackData Prop::generatePlayback()
 {
 	if (playbackProvider == nullptr) return PlaybackData();
 
-
 	PlaybackData result = playbackProvider->getPlaybackDataForProp(this);
 	NLOG(niceName, "Generating playback for block " << result.name);
-
 
 	//overrides
 	if (playbackFileName->enabled && playbackFileName->stringValue().isNotEmpty()) result.name = playbackFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
@@ -431,7 +418,7 @@ PlaybackData Prop::generatePlayback()
 	if (playbackEndTime->enabled) result.endTime = playbackEndTime->floatValue();
 	if (playbackFrequency->enabled) result.fps = playbackFrequency->intValue();
 
-	if (!result.metaData.hasProperty("id"))
+	if (globalID != nullptr && !result.metaData.hasProperty("id"))
 	{
 		DBG("No ID set, default to global ID ");
 		result.metaData.getDynamicObject()->setProperty("id", globalID->intValue());
@@ -447,7 +434,7 @@ PlaybackData Prop::generatePlayback()
 
 	MemoryOutputStream os(result.data, false);
 
-	const int numLeds = resolution->intValue();
+	const int numLeds = getResolution();
 
 	bool invert = false; //proprefactor (rgbComponent != nullptr && rgbComponent->invertDirection);
 	int startIndex = invert ? numLeds - 1 : 0;
@@ -539,134 +526,6 @@ void Prop::providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackContro
 		sendShowPropID((bool)data);
 		break;
 	}
-}
-
-void Prop::sendControlToProp(String message, var value)
-{
-	if (!enabled->boolValue()) return;
-	if (logOutgoing->boolValue())
-	{
-		NLOG(niceName, "Sending " + message + " : " + value.toString());
-	}
-	sendControlToPropInternal(message, value);
-}
-
-
-//void Prop::handleOSCMessage(const OSCMessage& m)
-//{
-//	if (m.getAddressPattern().toString() == "/pong") handlePong();
-//	else if (m.getAddressPattern().toString() == "/enabled")
-//	{
-//		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
-//	}
-//	else if (m.getAddressPattern().toString() == "/model")
-//	{
-//		if (m.size() > 1)
-//		{
-//			if (LightBlockModel* p = dynamic_cast<LightBlockModel*>(LightBlockModelLibrary::getInstance()->getControllableContainerForAddress(OSCHelpers::getStringArg(m[1]))))
-//			{
-//				if (m.size() > 2)
-//				{
-//					if (LightBlockModelPreset* pr = p->presetManager.getItemWithName(OSCHelpers::getStringArg(m[2])))
-//					{
-//						activeProvider->setValueFromTarget(pr);
-//					}
-//				}
-//				else
-//				{
-//					activeProvider->setValueFromTarget(p);
-//				}
-//			}
-//		}
-//	}
-//	else
-//	{
-//		if (logIncoming->boolValue())
-//		{
-//			String s = "Received : " + m.getAddressPattern().toString() + ", ";
-//			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
-//			NLOG(niceName, s);
-//		}
-//
-//		StringArray mSplit;
-//		mSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
-//
-//		if (mSplit[1] == "block")
-//		{
-//			if (currentBlock != nullptr && mSplit.size() > 2)
-//			{
-//				if (Controllable* c = currentBlock->paramsContainer.getControllableByName(mSplit[2]))
-//				{
-//					OSCHelpers::handleControllableForOSCMessage(c, m, 1);
-//				}
-//			}
-//		}
-		//proprefactor
-		//else
-		//{
-		//	PropComponent* pc = getComponent(mSplit[1]);
-		//	var value;
-		//	for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
-		//	if (pc != nullptr) pc->handleMessage(mSplit[2], value);
-		//}
-//	}
-//}
-
-void Prop::handlePong()
-{
-	if (!pingEnabled) return;
-	receivedPongSinceLastPingSent = true;
-	isConnected->setValue(true);
-}
-
-void Prop::sendPing()
-{
-	if (!pingEnabled) return;
-	receivedPongSinceLastPingSent = false;
-	sendPingInternal();
-}
-
-void Prop::timerCallback(int timerID)
-{
-	switch (timerID)
-	{
-	case PROP_PING_TIMERID:
-		if (!pingEnabled) return;
-		if (!receivedPongSinceLastPingSent) isConnected->setValue(false);
-		sendPing();
-		break;
-	}
-}
-
-//proprefactor
-//void Prop::setupComponentsJSONDefinition(var def)
-//{
-	//if (def.hasProperty("rgb"))
-	//{
-	//	rgbComponent = new RGBPropComponent(this, def.getProperty("rgb", var()));
-	//	addComponent(rgbComponent);
-	//	resolution->setValue(rgbComponent->resolution);
-	//	updateRate = rgbComponent->updateRate;
-	//}
-
-	//if (def.hasProperty("fx")) addComponent(new FXPropComponent(this, def.getProperty("fx", var())));
-	//if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));
-	//if (def.hasProperty("touch")) addComponent(new TouchPropComponent(this, def.getProperty("touch", var())));
-	//if (def.hasProperty("imu")) addComponent(new IMUPropComponent(this, def.getProperty("imu", var())));
-	//if (def.hasProperty("ir")) addComponent(new IRPropComponent(this, def.getProperty("ir", var())));
-	//if (def.hasProperty("battery")) addComponent(new BatteryPropComponent(this, def.getProperty("battery", var())));
-	//if (def.hasProperty("files")) addComponent(new FilesPropComponent(this, def.getProperty("files", var())));
-//}
-
-void Prop::addComponent(PropComponent* pc)
-{
-	addChildControllableContainer(pc, true);
-	components.set(pc->shortName, pc);
-}
-
-PropComponent* Prop::getComponent(const String& name)
-{
-	return components.contains(name) ? components[name] : nullptr;
 }
 
 var Prop::getJSONData()

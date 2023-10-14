@@ -1534,6 +1534,9 @@
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp">
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\Prop\props\bento\BentoComponentContainer.cpp">
+      <Filter>BenTo\Source\Prop\props\bento</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClCompile>
@@ -5396,6 +5399,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h">
       <Filter>BenTo\Source\VideoPreview</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Prop\props\bento\BentoComponentContainer.h">
+      <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
@@ -12176,6 +12182,9 @@
     <None Include="..\..\Resources\models\dmx.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
+    <None Include="..\..\Resources\models\embeddedScript.png">
+      <Filter>BenTo\Resources\models</Filter>
+    </None>
     <None Include="..\..\Resources\models\multipoint.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
@@ -12188,10 +12197,10 @@
     <None Include="..\..\Resources\models\point.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
-    <None Include="..\..\Resources\models\script.png">
+    <None Include="..\..\Resources\models\sequence.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
-    <None Include="..\..\Resources\models\timeline.png">
+    <None Include="..\..\Resources\models\streamingScript.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
     <None Include="..\..\Resources\models\video.png">

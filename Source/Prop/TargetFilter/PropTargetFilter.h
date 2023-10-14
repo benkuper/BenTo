@@ -26,52 +26,36 @@ public:
 
 
 class PropFilterGlobalID :
-	PropTargetFilter
+	public PropTargetFilter
 {
 public:
-	PropFilterGlobalID();
+	PropFilterGlobalID(var params = var());
 	~PropFilterGlobalID();
 
 	IntParameter * id;
 
 	int getTargetIDForProp(Prop * p) override;
 
-	String getTypeString() const override { return "Global ID"; }
-	static PropTargetFilter * create(var) { return new PropFilterGlobalID(); }
+	DECLARE_TYPE("ID")
+
 };
 
-//class PropFilterPropFamily :
-//	PropTargetFilter
-//{
-//public:
-//	PropFilterPropFamily();
-//	~PropFilterPropFamily();
-//
-//	TargetParameter * family;
-//
-//	int getTargetIDForProp(Prop * p) override;
-//
-//	String getTypeString() const override { return "Family"; }
-//	static PropTargetFilter * create(var) { return new PropFilterPropFamily(); }
-//};
-
-class PropFilterPropType :
-	PropTargetFilter
+class PropFilterPropShape :
+	public PropTargetFilter
 {
 public:
-	PropFilterPropType();
-	~PropFilterPropType();
+	PropFilterPropShape(var params = var());
+	~PropFilterPropShape();
 	
-	EnumParameter * type;
+	EnumParameter * shape;
 
 	int getTargetIDForProp(Prop * p) override;
 
-	String getTypeString() const override { return "Type"; }
-	static PropTargetFilter * create(var) { return new PropFilterPropType(); }
+	DECLARE_TYPE("Shape")
 };
 
 class PropFilterCluster :
-	PropTargetFilter
+	public PropTargetFilter
 {
 public:
 	PropFilterCluster(PropClusterGroupManager * manager = nullptr);
@@ -114,10 +98,10 @@ public:
 
 
 class PropFilterScript :
-	PropTargetFilter
+	public PropTargetFilter
 {
 public:
-	PropFilterScript();
+	PropFilterScript(var params = var());
 	~PropFilterScript();
 
 	Script script;
@@ -127,6 +111,6 @@ public:
 	var getJSONData() override;
 	void loadJSONDataItemInternal(var data) override;
 
-	String getTypeString() const override { return "Script"; }
-	static PropTargetFilter * create(var) { return new PropFilterScript(); }
+	DECLARE_TYPE("Script")
+
 };

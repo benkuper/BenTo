@@ -1,13 +1,32 @@
 bool IMUComponent::initInternal(JsonObject o)
 {
-    AddBoolParam(connected);
+    AddBoolParamConfig(connected);
     connected = false;
 
     AddIntParam(sendLevel);
 
-    AddIntParam(orientationSendRate);
-    AddIntParam(sdaPin);
-    AddIntParam(sclPin);
+    AddIntParamConfig(orientationSendRate);
+    AddIntParamConfig(sdaPin);
+    AddIntParamConfig(sclPin);
+
+    AddP3DParam(orientation);
+    AddP3DParam(accel);
+    AddP3DParam(gyro);
+    AddP3DParam(linearAccel);
+    AddP3DParam(gravity);
+
+    AddFloatParamConfig(orientationXOffset);
+    AddIntParamConfig(throwState);
+    AddFloatParamConfig(activity);
+    AddP2DParamConfig(flatThresholds);
+    AddP3DParamConfig(accelThresholds);
+    AddFloatParamConfig(diffThreshold);
+    AddFloatParamConfig(semiFlatThreshold);
+    AddFloatParamConfig(loftieThreshold);
+    AddFloatParamConfig(singleThreshold);
+    AddFloatParamConfig(angleOffset);
+    AddFloatParam(projectedAngle);
+    AddFloatParamConfig(xOnCalibration);
 
     if (sdaPin == 0 || sclPin == 0)
     {

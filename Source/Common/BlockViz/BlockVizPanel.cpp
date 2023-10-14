@@ -11,28 +11,28 @@
 #include "Common/CommonIncludes.h"
 #include "Prop/PropIncludes.h"
 
-BlockViz::BlockViz(const String & contentName) :
+BlockViz::BlockViz(const String& contentName) :
 	ShapeShifterContentComponent(contentName)
 {
 	vizProp.reset(new Prop());
 	vizProp->resolution->setValue(32);
-	vizProp->type->setValueWithData(Prop::CLUB);
+	vizProp->shape->setValueWithData(Prop::CLUB);
 
 	idUI.reset(vizProp->globalID->createStepper());
 	resolutionUI.reset(vizProp->resolution->createStepper());
-	shapeUI.reset(vizProp->type->createUI());
+	shapeUI.reset(vizProp->shape->createUI());
 
 	addAndMakeVisible(idUI.get());
 	addAndMakeVisible(resolutionUI.get());
 	addAndMakeVisible(shapeUI.get());
 
-	
+
 	InspectableSelectionManager::mainSelectionManager->addAsyncSelectionManagerListener(this);
 }
 
 BlockViz::~BlockViz()
 {
-	if(InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeAsyncSelectionManagerListener(this);
+	if (InspectableSelectionManager::mainSelectionManager != nullptr) InspectableSelectionManager::mainSelectionManager->removeAsyncSelectionManagerListener(this);
 }
 
 void BlockViz::resized()
@@ -48,14 +48,14 @@ void BlockViz::resized()
 	resolutionUI->setBounds(hr2.removeFromLeft(100));
 
 	r.removeFromTop(2);
-	if(propViz != nullptr) propViz->setBounds(r);
+	if (propViz != nullptr) propViz->setBounds(r);
 }
 
-void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
+void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent& e)
 {
 	if (e.type == InspectableSelectionManager::SelectionEvent::SELECTION_CHANGED)
 	{
-		LightBlockColorProvider * m = InspectableSelectionManager::mainSelectionManager->getInspectableAs<LightBlockColorProvider>();
+		LightBlockColorProvider* m = InspectableSelectionManager::mainSelectionManager->getInspectableAs<LightBlockColorProvider>();
 		if (m != nullptr)
 		{
 			idUI->setVisible(true);
@@ -69,7 +69,7 @@ void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 			return;
 		}
 
-		Prop * p = InspectableSelectionManager::mainSelectionManager->getInspectableAs<Prop>();
+		Prop* p = InspectableSelectionManager::mainSelectionManager->getInspectableAs<Prop>();
 		if (p != nullptr)
 		{
 			idUI->setVisible(false);
@@ -83,5 +83,5 @@ void BlockViz::newMessage(const InspectableSelectionManager::SelectionEvent & e)
 			return;
 		}
 	}
-	
+
 }

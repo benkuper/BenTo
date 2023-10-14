@@ -416,6 +416,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\LightBlockIncludes.cpp"/>
     <ClCompile Include="..\..\Source\VideoPreview\VideoPreviewPanel.cpp"/>
+    <ClCompile Include="..\..\Source\Prop\props\bento\BentoComponentContainer.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3802,6 +3805,7 @@
     <ClInclude Include="..\..\Source\LightBlock\LightBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\LightBlockIncludes.h"/>
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h"/>
+    <ClInclude Include="..\..\Source\Prop\props\bento\BentoComponentContainer.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h"/>
@@ -6063,12 +6067,13 @@
     <None Include="..\..\Resources\models\patterns\solidColor.png"/>
     <None Include="..\..\Resources\models\patterns\strobe.png"/>
     <None Include="..\..\Resources\models\dmx.png"/>
+    <None Include="..\..\Resources\models\embeddedScript.png"/>
     <None Include="..\..\Resources\models\multipoint.png"/>
     <None Include="..\..\Resources\models\node.png"/>
     <None Include="..\..\Resources\models\picture.png"/>
     <None Include="..\..\Resources\models\point.png"/>
-    <None Include="..\..\Resources\models\script.png"/>
-    <None Include="..\..\Resources\models\timeline.png"/>
+    <None Include="..\..\Resources\models\sequence.png"/>
+    <None Include="..\..\Resources\models\streamingScript.png"/>
     <None Include="..\..\Resources\models\video.png"/>
     <None Include="..\..\Resources\default.btlayout"/>
     <None Include="..\..\Resources\fadeIn.png"/>

@@ -31,7 +31,7 @@ Array<Colour> CompositeNode::getColorsInternal(Prop * p, double time, var params
 	BlendMode b = (BlendMode)(int)getParameterValue(blendMode, localParams);
 
 	Array<Colour> result;
-	int resolution = p->resolution->intValue();
+	int resolution = p->getResolution();
 	for (int i = 0; i < resolution; i++)
 	{
 

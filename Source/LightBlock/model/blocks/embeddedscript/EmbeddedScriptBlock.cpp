@@ -121,12 +121,12 @@ File EmbeddedScriptBlock::getWasmFile()
 
 void EmbeddedScriptBlock::loadScriptOnProp(Prop* p)
 {
-	p->sendControlToProp("scripts.load", shortName);
+	if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.load", shortName);
 }
 
 void EmbeddedScriptBlock::stopScriptOnProp(Prop* p)
 {
-	p->sendControlToProp("scripts.stop", shortName);
+	if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.stop", shortName);
 }
 
 void EmbeddedScriptBlock::run()
@@ -162,21 +162,21 @@ void EmbeddedScriptBlock::onContainerTriggerTriggered(Trigger* t)
 
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			p->addFileToUpload(f);
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->addFileToUpload(f);
 		}
 	}
 	else if (t == loadOnPropsTrigger)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			p->sendControlToProp("scripts.load", shortName);
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.load", shortName);
 		}
 	}
 	else if (t == stopOnPropsTrigger)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			p->sendControlToProp("scripts.stop", shortName);
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.stop", shortName);
 		}
 	}
 }

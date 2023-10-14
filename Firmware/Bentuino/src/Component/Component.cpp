@@ -1,7 +1,6 @@
 #include "Component.h"
 bool Component::init(JsonObject o)
 {
-
     AddBoolParam(enabled);
 
     isInit = initInternal(o);
@@ -108,19 +107,19 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
 
 // Save / Load
 
-void Component::fillSettingsData(JsonObject o, bool configOnly)
+void Component::fillSettingsData(JsonObject o, bool showConfig)
 {
     // for (int i = 0; i < numParams; i++)
     // {
     //     // Parameter *p = parameters[i];
-    //     // if (!p->isConfig && configOnly)
+    //     // if (!p->isConfig && showConfig)
     //     //     continue;
 
-    //     p->fillSettingsData(configOnly ? o : o.createNestedObject(p->name), configOnly);
+    //     p->fillSettingsData(showConfig ? o : o.createNestedObject(p->name), showConfig);
     // }
 
     FillSettingsParam(enabled);
-    fillSettingsParamsInternal(o, configOnly);
+    fillSettingsParamsInternal(o, showConfig);
 
     if (numComponents > 0)
     {
@@ -129,53 +128,53 @@ void Component::fillSettingsData(JsonObject o, bool configOnly)
         {
             Component *c = components[i];
             JsonObject co = comps.createNestedObject(c->name);
-            c->fillSettingsData(co, configOnly);
+            c->fillSettingsData(co, showConfig);
         }
     }
 }
 
-void Component::fillOSCQueryData(JsonObject o, bool includeConfig, bool recursive)
-{
-    String fullPath = getFullPath();
-    o["DESCRIPTION"] = name;
-    o["FULL_PATH"] = fullPath;
-    o["ACCESS"] = 0;
+// void Component::fillOSCQueryData(JsonObject o, bool includeConfig, bool recursive)
+// {
+//     String fullPath = getFullPath();
+//     o["DESCRIPTION"] = name;
+//     o["FULL_PATH"] = fullPath;
+//     o["ACCESS"] = 0;
 
-    FillOSCQueryBoolParam(enabled);
-    fillOSCQueryParamsInternal(o, fullPath);
+//     FillOSCQueryBoolParam(enabled);
+//     fillOSCQueryParamsInternal(o, fullPath);
 
-    // for (int i = 0; i < numParams; i++)
-    // {
-    //     fillOSCQueryParam(o, fullPath, paramNames[i], paramTypes[i], params[i]);
-    // }
+//     // for (int i = 0; i < numParams; i++)
+//     // {
+//     //     fillOSCQueryParam(o, fullPath, paramNames[i], paramTypes[i], params[i]);
+//     // }
 
-    JsonObject contents = o.createNestedObject("CONTENTS");
+//     JsonObject contents = o.createNestedObject("CONTENTS");
 
-    // for (int i = 0; i < numParams; i++)
-    // {
-    //     Parameter *p = parameters[i];
-    //     if (p->isConfig && !includeConfig)
-    //         continue;
-    //     JsonObject po = contents.createNestedObject(p->name);
-    //     p->fillOSCQueryData(po);
-    //     po["FULL_PATH"] = fullPath + "/" + p->name;
-    // }
+//     // for (int i = 0; i < numParams; i++)
+//     // {
+//     //     Parameter *p = parameters[i];
+//     //     if (p->isConfig && !includeConfig)
+//     //         continue;
+//     //     JsonObject po = contents.createNestedObject(p->name);
+//     //     p->fillOSCQueryData(po);
+//     //     po["FULL_PATH"] = fullPath + "/" + p->name;
+//     // }
 
-    if (recursive)
-    {
-        for (int i = 0; i < numComponents; i++)
-        {
-            if (components[i] == nullptr)
-                continue;
+//     if (recursive)
+//     {
+//         for (int i = 0; i < numComponents; i++)
+//         {
+//             if (components[i] == nullptr)
+//                 continue;
 
-            Component *c = components[i];
-            JsonObject co = contents.createNestedObject(c->name);
-            c->fillOSCQueryData(co);
-        }
-    }
-}
+//             Component *c = components[i];
+//             JsonObject co = contents.createNestedObject(c->name);
+//             c->fillOSCQueryData(co);
+//         }
+//     }
+// }
 
-void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
+void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk, bool showConfig)
 {
     const String fullPath = getFullPath();
 
@@ -195,7 +194,7 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
             JsonObject o = doc.to<JsonObject>();
 
             FillOSCQueryBoolParam(enabled);
-            fillOSCQueryParamsInternal(o, fullPath);
+            fillOSCQueryParamsInternal(o, fullPath, showConfig);
 
             String str;
             serializeJson(o, str);
@@ -252,14 +251,25 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk)
     }
 }
 
-void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool readOnly, const String *options, int numOptions, float vMin, float vMax)
+void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool showConfig, bool readOnly, const String *options, int numOptions, float vMin, float vMax)
 {
+    ParamTag tag = getParamTag(param);
+
+    if (!showConfig && tag == TagConfig)
+        return;
+
     JsonObject po = o.createNestedObject(pName);
     po["DESCRIPTION"] = pName;
     po["ACCESS"] = readOnly ? 1 : 3;
     const String pType = t == Bool ? (*(bool *)param) ? "T" : "F" : typeNames[t];
     po["TYPE"] = pType;
     po["FULL_PATH"] = fullPath + "/" + pName;
+
+    if (tag != TagNone)
+    {
+        JsonArray to = po.createNestedArray("TAGS");
+        to.add(tagNames[tag]);
+    }
 
     JsonArray vArr = po.createNestedArray("VALUE");
 
@@ -433,7 +443,7 @@ Component *Component::getComponentWithName(const String &name)
 //     return NULL;
 // }
 
-void Component::addParam(void *param, ParamType type)
+void Component::addParam(void *param, ParamType type, ParamTag tag)
 {
     if (numParams >= MAX_CHILD_PARAMS)
     {
@@ -443,6 +453,7 @@ void Component::addParam(void *param, ParamType type)
 
     params[numParams] = param;
     paramTypes[numParams] = type;
+    paramTags[numParams] = tag;
     numParams++;
 }
 
@@ -563,6 +574,15 @@ Component::ParamType Component::getParamType(void *param) const
             return paramTypes[i];
 
     return ParamType::ParamTypeMax;
+}
+
+Component::ParamTag Component::getParamTag(void *param) const
+{
+    for (int i = 0; i < numParams; i++)
+        if (params[i] == param)
+            return paramTags[i];
+
+    return ParamTag::TagNone;
 }
 
 String Component::getParamString(void *param) const

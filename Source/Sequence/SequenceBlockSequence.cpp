@@ -62,7 +62,7 @@ Array<Colour> SequenceBlockSequence::getColors(Prop* p, double time, var params)
 		return layers[0]->getColors(p, t, params); //use sequence's time instead of prop time
 	}
 
-	int resolution = p->resolution->intValue();
+	int resolution = p->getResolution();
 
 	Array<Colour> result;
 	result.resize(resolution);

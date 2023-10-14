@@ -4,13 +4,13 @@ bool FilesComponent::initInternal(JsonObject o)
 {
     useInternalMemory = false;
 
-    AddIntParam(sdEnPin);
-    AddBoolParam(sdEnVal);
-    AddIntParam(sdSCK);
-    AddIntParam(sdMiso);
-    AddIntParam(sdMosi);
-    AddIntParam(sdCS);
-    AddIntParam(sdSpeed);
+    AddIntParamConfig(sdEnPin);
+    AddBoolParamConfig(sdEnVal);
+    AddIntParamConfig(sdSCK);
+    AddIntParamConfig(sdMiso);
+    AddIntParamConfig(sdMosi);
+    AddIntParamConfig(sdCS);
+    AddIntParamConfig(sdSpeed);
 
     if (sdEnPin > 0)
     {

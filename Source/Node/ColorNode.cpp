@@ -27,7 +27,7 @@ Array<Colour> ColorNode::getColors(Prop * p, double time, var params)
 Array<Colour> ColorNode::getColorsInternal(Prop * p, double time, var params, var localParams)
 {
 	Array<Colour> result;
-	result.resize(p->resolution->intValue());
+	result.resize(p->getResolution());
 	result.fill(Colours::transparentBlack);
 	return result;
 }

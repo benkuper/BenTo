@@ -155,14 +155,14 @@ void EmbeddedScript::onContainerTriggerTriggered(Trigger* t)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			p->sendControlToProp("scripts.load", shortName);
+			if(BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.load", shortName);
 		}
 	}
 	else if (t == stopOnPropsTrigger)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			p->sendControlToProp("scripts.stop", shortName);
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.stop", shortName);
 		}
 	}
 }

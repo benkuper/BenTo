@@ -43,13 +43,15 @@ ImplementSingleton(WebServerComponent)
         }
         else
         {
+            std::shared_ptr<bool> showConfig = std::make_shared<bool>(request->hasArg("config")?request->arg("config")=="1":true);
             std::shared_ptr<OSCQueryChunk> chunk = std::make_shared<OSCQueryChunk>(OSCQueryChunk(RootComponent::instance));
-            AsyncWebServerResponse *response = request->beginChunkedResponse("application/json", [chunk](uint8_t *buffer, size_t maxLen, size_t index) {
+            AsyncWebServerResponse *response = request->beginChunkedResponse("application/json", [chunk, showConfig](uint8_t *buffer, size_t maxLen, size_t index) {
  
                 if(chunk->nextComponent == nullptr) return 0;
 
-                // DBG("Fill chunk "+chunk->nextComponent->name+" : "+String(chunk->nextType));
-                chunk->nextComponent->fillChunkedOSCQueryData(chunk.get());
+                // DBG("Fill chunk, config = " + String(*showConfig));
+
+                chunk->nextComponent->fillChunkedOSCQueryData(chunk.get(), *showConfig);
                 
                 
                 sprintf((char*)buffer, chunk->data.c_str());
@@ -93,6 +95,7 @@ void WebServerComponent::updateInternal()
 
 void WebServerComponent::clearInternal()
 {
+    ws.closeAll();
 }
 
 // SERVER
@@ -250,7 +253,7 @@ void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t
 void WebServerComponent::sendParamFeedback(Component *c, String pName, var *data, int numData)
 {
 #ifdef USE_OSC
-    
+
     OSCMessage msg = OSCComponent::createMessage(c->getFullPath(), pName, data, numData, false);
 
     char addr[64];

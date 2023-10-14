@@ -42,10 +42,20 @@ public:
         P3D,
         ParamTypeMax
     };
+
+    enum ParamTag
+    {
+        TagNone,
+        TagConfig,
+        TagNameMax
+    };
+    
     const String typeNames[ParamTypeMax]{"I", "b", "i", "f", "s", "ff", "fff"};
+    const String tagNames[TagNameMax]{"", "config"};
 
     void *params[MAX_CHILD_PARAMS];
     ParamType paramTypes[MAX_CHILD_PARAMS];
+    ParamTag paramTags[MAX_CHILD_PARAMS];
 
     uint8_t numParams;
 
@@ -76,9 +86,10 @@ public:
 
     Component *getComponentWithName(const String &name);
 
-    void addParam(void *param, ParamType type);
+    void addParam(void *param, ParamType type, ParamTag tag = TagNone);
     void setParam(void *param, var *value, int nmData);
     ParamType getParamType(void *param) const;
+    ParamTag getParamTag(void *param) const;
     String getParamString(void *param) const;
 
     virtual void onEnabledChanged() {}
@@ -97,12 +108,12 @@ public:
     bool handleSetParam(const String &paramName, var *data, int numData);
     virtual bool handleSetParamInternal(const String &paramName, var *data, int numData) { return false; }
 
-    void fillSettingsData(JsonObject o, bool configOnly = false);
-    virtual void fillSettingsParamsInternal(JsonObject o, bool configOnly = false) {}
+    void fillSettingsData(JsonObject o, bool showConfig = true);
+    virtual void fillSettingsParamsInternal(JsonObject o, bool showConfig = true) {}
 
-    virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
-    virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath) {}
-    virtual void fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool readOnly = false, const String *options = nullptr, int numOptions = 0, float vMin = 0, float vMax = 0);
+    // virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
+    virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath, bool showConfig = true) {}
+    virtual void fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool showConfig = true, bool readOnly = false, const String *options = nullptr, int numOptions = 0, float vMin = 0, float vMax = 0);
 
     enum OSCQueryChunkType
     {
@@ -120,7 +131,7 @@ public:
         String data = "";
     };
 
-    void fillChunkedOSCQueryData(OSCQueryChunk *chunk);
+    void fillChunkedOSCQueryData(OSCQueryChunk *chunk, bool showConfig = true);
     void setupChunkAfterComponent(OSCQueryChunk *result, const Component *c);
 
     String getFullPath(bool includeRoot = false, bool scriptMode = false) const;

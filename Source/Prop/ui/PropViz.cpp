@@ -36,11 +36,11 @@ void PropViz::paint(Graphics& g)
 
 	if (PropManager::getInstance()->disablePreview->boolValue()) return;
 
-	int numLeds = prop->resolution->intValue();
+	int numLeds = prop->getResolution();
 
 	if (numLeds == 0) return;
 
-	Prop::Shape shape = prop->type->getValueDataAsEnum<Prop::Shape>();
+	Prop::Shape shape = prop->shape->getValueDataAsEnum<Prop::Shape>();
 
 	switch (shape)
 	{

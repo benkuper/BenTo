@@ -16,8 +16,9 @@ bool RootComponent::initInternal(JsonObject)
 
     AddOwnedComponent(&comm);
     AddStringParam(deviceName);
-    AddIntParam(wakeUpButton);
-    AddBoolParam(wakeUpState);
+    AddStringParamConfig(deviceType);
+    AddIntParamConfig(wakeUpButton);
+    AddBoolParamConfig(wakeUpState);
 
 #ifdef USE_LEDSTRIP
     AddOwnedComponent(&strips);
@@ -106,8 +107,10 @@ void RootComponent::shutdown()
 void RootComponent::powerdown()
 {
     clear();
-
+    
     // NDBG("Sleep now, baby.");
+
+    delay(500);
 
     if (wakeUpButton > 0)
         esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton, wakeUpState);

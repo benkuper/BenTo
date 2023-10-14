@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Prop/PropIncludes.h"
+
 PropTargetFilter::PropTargetFilter(StringRef name) :
 	BaseItem(name)
 {
@@ -18,17 +20,17 @@ PropTargetFilter::~PropTargetFilter()
 {
 }
 
-bool PropTargetFilter::isPropValid(Prop * p)
+bool PropTargetFilter::isPropValid(Prop* p)
 {
 	return getTargetIDForProp(p) >= 0;
 }
 
-int PropTargetFilter::getTargetIDForProp(Prop * p)
+int PropTargetFilter::getTargetIDForProp(Prop* p)
 {
 	return -1;
 }
 
-PropFilterGlobalID::PropFilterGlobalID() :
+PropFilterGlobalID::PropFilterGlobalID(var params) :
 	PropTargetFilter(getTypeString())
 {
 	id = addIntParameter("ID", "Global ID to filter", 0);
@@ -38,45 +40,29 @@ PropFilterGlobalID::~PropFilterGlobalID()
 {
 }
 
-int PropFilterGlobalID::getTargetIDForProp(Prop * p)
+int PropFilterGlobalID::getTargetIDForProp(Prop* p)
 {
 	return p->globalID->intValue() == id->intValue() ? id->intValue() : -1;
 }
 
 
-//PropFilterPropFamily::PropFilterPropFamily() :
-//	PropTargetFilter(getTypeString())
-//{
-//	family = addTargetParameter("Family", "Family to filter", &PropManager::getInstance()->familiesCC);
-//	family->targetType = TargetParameter::CONTAINER;
-//}
-
-//PropFilterPropFamily::~PropFilterPropFamily()
-//{
-//}
-//
-//int PropFilterPropFamily::getTargetIDForProp(Prop * p)
-//{
-//	return p->family == family->targetContainer ? p->globalID->intValue() : -1;
-//}
-
-PropFilterPropType::PropFilterPropType() :
+PropFilterPropShape::PropFilterPropShape(var params) :
 	PropTargetFilter(getTypeString())
 {
-	type = addEnumParameter("Type", "The type of prop to filter");
-	Prop::fillTypeOptions(type);
+	shape = addEnumParameter("Type", "The type of prop to filter");
+	Prop::fillTypeOptions(shape);
 }
 
-PropFilterPropType::~PropFilterPropType()
+PropFilterPropShape::~PropFilterPropShape()
 {
 }
 
-int PropFilterPropType::getTargetIDForProp(Prop * p)
+int PropFilterPropShape::getTargetIDForProp(Prop* p)
 {
-	return p->type->getValueData() == type->getValueData() ? p->globalID->intValue() : -1;
+	return p->shape->getValueData() == shape->getValueData() ? p->globalID->intValue() : -1;
 }
 
-PropFilterCluster::PropFilterCluster(PropClusterGroupManager * manager) :
+PropFilterCluster::PropFilterCluster(PropClusterGroupManager* manager) :
 	PropTargetFilter(getTypeString()),
 	manager(manager)
 {
@@ -106,25 +92,25 @@ PropFilterCluster::~PropFilterCluster()
 {
 }
 
-int PropFilterCluster::getTargetIDForProp(Prop * p)
+int PropFilterCluster::getTargetIDForProp(Prop* p)
 {
 	int targetID = -1;
 
 	if (specificClusterGroup->boolValue())
 	{
-		PropClusterGroup * cg = dynamic_cast<PropClusterGroup *>(clusterGroup->targetContainer.get());
+		PropClusterGroup* cg = dynamic_cast<PropClusterGroup*>(clusterGroup->targetContainer.get());
 		if (cg == nullptr) return -1;
 		targetID = cg->getLocalPropID(p);
 	}
 	else if (specificCluster->boolValue())
 	{
-		PropCluster * c = dynamic_cast<PropCluster *>(cluster->targetContainer.get());
+		PropCluster* c = dynamic_cast<PropCluster*>(cluster->targetContainer.get());
 		if (c == nullptr) return -1;
 		targetID = c->getLocalPropID(p);
 	}
 	else
 	{
-		for (auto &cg : manager->items)
+		for (auto& cg : manager->items)
 		{
 			int localID = cg->getLocalPropID(p);
 			if (localID >= 0 && (!specificID->boolValue() || localID == id->intValue()))
@@ -141,7 +127,7 @@ int PropFilterCluster::getTargetIDForProp(Prop * p)
 	return targetID;
 }
 
-void PropFilterCluster::onContainerParameterChangedInternal(Parameter * p)
+void PropFilterCluster::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == specificClusterGroup)
 	{
@@ -159,16 +145,16 @@ void PropFilterCluster::onContainerParameterChangedInternal(Parameter * p)
 	}
 }
 
-bool PropFilterCluster::targetIsCluster(ControllableContainer * cc)
+bool PropFilterCluster::targetIsCluster(ControllableContainer* cc)
 {
-	return dynamic_cast<PropCluster *>(cc) != nullptr;
+	return dynamic_cast<PropCluster*>(cc) != nullptr;
 }
 
 
 
 
 
-PropFilterScript::PropFilterScript() :
+PropFilterScript::PropFilterScript(var params) :
 	PropTargetFilter("Script")
 {
 	addChildControllableContainer(&script);
@@ -181,7 +167,7 @@ PropFilterScript::~PropFilterScript()
 {
 }
 
-int PropFilterScript::getTargetIDForProp(Prop * p)
+int PropFilterScript::getTargetIDForProp(Prop* p)
 {
 	Array<var> args;
 	args.add(p->getScriptObject(), p->globalID->intValue());

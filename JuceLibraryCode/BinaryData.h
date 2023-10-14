@@ -51,7 +51,7 @@ namespace BinaryData
     const int            video_pngSize = 6004;
 
     extern const char*   default_btlayout;
-    const int            default_btlayoutSize = 2561;
+    const int            default_btlayoutSize = 2458;
 
     extern const char*   fadeIn_png;
     const int            fadeIn_pngSize = 1868;
@@ -66,7 +66,7 @@ namespace BinaryData
     const int            new_pngSize = 675;
 
     extern const char*   shader_frag;
-    const int            shader_fragSize = 1012;
+    const int            shader_fragSize = 975;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 20;

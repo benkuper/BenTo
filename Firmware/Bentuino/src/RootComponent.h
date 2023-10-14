@@ -9,7 +9,7 @@ DeclareComponentSingleton(Root, "root", )
     const String deviceID = getDeviceID();
 
 DeclareStringParam(id, deviceID);
-DeclareStringParam(deviceName, deviceID);
+DeclareStringParam(deviceName, DEVICE_TYPE);
 DeclareStringParam(deviceType, DEVICE_TYPE);
 
 DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
@@ -99,8 +99,8 @@ void saveSettings();
 void clearSettings();
 
 void onChildComponentEvent(const ComponentEvent &e) override;
-void childParamValueChanged(Component* caller, Component* comp, void* param);
- 
+void childParamValueChanged(Component *caller, Component *comp, void *param);
+
 bool handleCommandInternal(const String &command, var *data, int numData) override;
 
 bool isShuttingDown() const { return timeAtShutdown > 0; }

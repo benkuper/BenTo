@@ -3,12 +3,12 @@ ImplementSingleton(BatteryComponent);
 
 bool BatteryComponent::initInternal(JsonObject o)
 {
-    AddIntParam(batteryPin);
-    AddIntParam(chargePin);
-    AddIntParam(rawMin);
-    AddIntParam(rawMax);
+    AddIntParamConfig(batteryPin);
+    AddIntParamConfig(chargePin);
+    AddIntParamConfig(rawMin);
+    AddIntParamConfig(rawMax);
     AddBoolParam(sendFeedback);
-    AddFloatParam(lowBatteryThreshold);
+    AddFloatParamConfig(lowBatteryThreshold);
 
     AddFloatParam(batteryLevel);
     AddBoolParam(charging);

@@ -25,7 +25,7 @@ void ColorNodeViewUI::paint(Graphics & g)
 	
 	if (propToPreview == nullptr || cn == nullptr) return;
 
-	int numLeds = propToPreview->resolution->intValue();
+	int numLeds = propToPreview->getResolution();
 	float ratio = getWidth()*1.0f / getHeight();
 	
 	Rectangle<int> lr(getFeedbackBounds());

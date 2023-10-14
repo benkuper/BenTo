@@ -11,7 +11,7 @@ LedStripLayer::~LedStripLayer()
 
 bool LedStripLayer::initInternal(JsonObject o)
 {
-    AddIntParam(blendMode);
+    AddIntParamConfig(blendMode);
     // blendMode.options = blendModeOptions;
     // blendMode.numOptions = BlendModeMax;
 
