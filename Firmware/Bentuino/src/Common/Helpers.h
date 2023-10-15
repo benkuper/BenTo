@@ -134,14 +134,33 @@
 
 #define AddParamWithTag(type, class, param, tag) \
     addParam(&param, ParamType::type, tag);      \
-    param = Settings::getVal<class>(o, #param, param);
+    SetParam(param, Settings::getVal<class>(o, #param, param));
+
+#define AddMultiParamWithTag(type, class, param, tag, numData)            \
+    {                                                                     \
+                                                                          \
+        DBG(String("Add multi param ") + #param);                         \
+        addParam(&param, ParamType::type, tag);                           \
+        if (o.containsKey(#param))                                        \
+        {                                                                 \
+            JsonArray vArr = o[#param].as<JsonArray>();                   \
+            DBG(" >  " + String(vArr.size()) + " <> " + String(numData)); \
+            var dataV[numData];                                           \
+            dataV[0] = vArr[0].as<class>();                               \
+            dataV[1] = vArr[1].as<class>();                               \
+            if (numData > 2)                                              \
+                dataV[2] = vArr[2].as<class>();                           \
+            DBG(" Data V is set");                                        \
+            setParam(param, dataV, numData);                              \
+        }                                                                 \
+    }
 
 #define AddBoolParamWithTag(param, tag) AddParamWithTag(Bool, bool, param, tag)
 #define AddIntParamWithTag(param, tag) AddParamWithTag(Int, int, param, tag)
 #define AddFloatParamWithTag(param, tag) AddParamWithTag(Float, float, param, tag)
 #define AddStringParamWithTag(param, tag) AddParamWithTag(Str, String, param, tag)
-#define AddP2DParamWithTag(param, tag) addParam(&param, ParamType::P2D, tag);
-#define AddP3DParamWithTag(param, tag) addParam(&param, ParamType::P3D, tag);
+#define AddP2DParamWithTag(param, tag) AddMultiParamWithTag(P2D, float, param, tag, 2);
+#define AddP3DParamWithTag(param, tag) AddMultiParamWithTag(P3D, float, param, tag, 3);
 
 #define AddBoolParam(param) AddBoolParamWithTag(param, TagNone)
 #define AddIntParam(param) AddIntParamWithTag(param, TagNone)
@@ -168,15 +187,15 @@
         var pData[2];                \
         pData[0] = val1;             \
         pData[1] = val2;             \
-        setParam(&param, pData, 2);  \
+        setParam(param, pData, 2);   \
     };
-#define SetParam3(param, val, val2, val3) \
-    {                                     \
-        var pData[3];                     \
-        pData[0] = val1;                  \
-        pData[1] = val2;                  \
-        pData[2] = val3;                  \
-        setParam(&param, pData, 3);       \
+#define SetParam3(param, val1, val2, val3) \
+    {                                      \
+        var pData[3];                      \
+        pData[0] = val1;                   \
+        pData[1] = val2;                   \
+        pData[2] = val3;                   \
+        setParam(param, pData, 3);         \
     };
 
 // Handle Check and Set
@@ -193,6 +212,7 @@
     {                                                \
         if (paramName == #param)                     \
         {                                            \
+            Serial.println("Set param : " + String(paramName)); \
             setParam((void *)&param, data, numData); \
             return true;                             \
         }                                            \
@@ -237,26 +257,42 @@
     if (Class::checkParamsFeedbackInternal(param))   \
         return true;
 
-#define CheckAndSendParamFeedback(p)                                 \
-    {                                                                \
-        if (param == (void *)&p)                                     \
-        {                                                            \
-            SendParamFeedback(this, param, #p, getParamType(param)); \
-            return true;                                             \
-        }                                                            \
+#define CheckAndSendParamFeedback(p) \
+    {                                \
+        if (param == (void *)&p)     \
+        {                            \
+            SendParamFeedback(p);    \
+            return true;             \
+        }                            \
     }
 
 #define CheckFeedbackParamInternalEnd \
     return false;                     \
     }
 
-#define SendParamFeedback(comp, param, pName, type) CommunicationComponent::instance->sendParamFeedback(this, param, pName, type);
+#define SendParamFeedback(param) CommunicationComponent::instance->sendParamFeedback(this, &param, #param, getParamType(&param));
+#define SendMultiParamFeedback(param) CommunicationComponent::instance->sendParamFeedback(this, param, #param, getParamType(&param));
 
 // Fill Settings
 
 #define FillSettingsParam(param) \
     {                            \
         o[#param] = param;       \
+    }
+
+#define FillSettingsParam2(param)                     \
+    {                                                 \
+        JsonArray pArr = o.createNestedArray(#param); \
+        pArr[0] = param[0];                           \
+        pArr[1] = param[1];                           \
+    }
+
+#define FillSettingsParam3(param)                     \
+    {                                                 \
+        JsonArray pArr = o.createNestedArray(#param); \
+        pArr[0] = param[0];                           \
+        pArr[1] = param[1];                           \
+        pArr[2] = param[2];                           \
     }
 
 #define FillSettingsInternalMotherClass(Class) Class::fillSettingsParamsInternal(o, showConfig);
@@ -273,6 +309,8 @@
 #define FillOSCQueryFloatParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig);
 #define FillOSCQueryRangeParam(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig, false, nullptr, 0, vMin, vMax);
 #define FillOSCQueryStringParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param, showConfig);
+#define FillOSCQueryP2DParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::P2D, param, showConfig);
+#define FillOSCQueryP3DParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::P2D, param, showConfig);
 
 #define FillOSCQueryBoolParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param, showConfig, true);
 #define FillOSCQueryIntParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig, true);
@@ -280,8 +318,11 @@
 #define FillOSCQueryFloatParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig, true);
 #define FillOSCQueryRangeParamReadOnly(param, vMin, vMax) fillOSCQueryParam(o, fullPath, #param, ParamType::Float, &param, showConfig, true, nullptr, 0, vMin, vMax);
 #define FillOSCQueryStringParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Str, &param, showConfig, true);
+#define FillOSCQueryP2DParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::P2D, param, showConfig, true);
+#define FillOSCQueryP3DParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::P3D, param, showConfig, true);
+#define FillOSCQueryP3DRangeParamReadOnly(param, min1, max1, min2, max2, min3, max3) fillOSCQueryParam(o, fullPath, #param, ParamType::P3D, param, showConfig, true, nullptr, 0, min1, max1, min2, max2, min3, max3);
 
-#define FillOSCQueryInternalStart                                                 \
+#define FillOSCQueryInternalStart                                                                         \
     virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath, bool showConfig = true) \
     {
 #define FillOSCQueryInternalEnd }

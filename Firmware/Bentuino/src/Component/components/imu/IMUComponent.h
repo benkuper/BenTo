@@ -20,7 +20,6 @@ DeclareP3DParam(orientation, 0, 0, 0);
 DeclareP3DParam(accel, 0, 0, 0);
 DeclareP3DParam(gyro, 0, 0, 0);
 DeclareP3DParam(linearAccel, 0, 0, 0);
-DeclareP3DParam(gravity, 0, 0, 0);
 DeclareFloatParam(orientationXOffset, 0);
 
 DeclareIntParam(throwState, 0); // 0 = none, 1 = flat, 2 = single, 3 = double+, 4 = flat-front, 5 = loftie
@@ -46,8 +45,8 @@ bool hasNewData;
 bool imuLock;
 bool shouldStopRead;
 
-const String throwStateOptions[6]{"None", "Flat", "Single", "Double", "Flat Front", "Loftie"};
 const String sendLevelOptions[3]{"None", "Orientation", "All"};
+const String throwStateOptions[6]{"None", "Flat", "Single", "Double", "Flat Front", "Loftie"};
 
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
@@ -71,8 +70,8 @@ void onEnabledChanged() override;
 
 bool handleCommandInternal(const String &command, var *data, int numData) override;
 
-DeclareComponentEventTypes(OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, Gravity, ThrowState, CalibrationStatus, ActivityUpdate, Debug, ProjectedAngleUpdate);
-DeclareComponentEventNames("orientation", "accel", "gyro", "linearAccel", "gravity", "throwState", "calibration", "activity", "debug", "projectedAngle");
+DeclareComponentEventTypes(OrientationUpdate, AccelUpdate, GyroUpdate, LinearAccelUpdate, ThrowState, CalibrationStatus, ActivityUpdate, Debug, ProjectedAngleUpdate);
+DeclareComponentEventNames("orientation", "accel", "gyro", "linearAccel", "throwState", "calibration", "activity", "debug", "projectedAngle");
 
 #ifdef USE_SCRIPT
 LinkScriptFunctionsStart
@@ -99,10 +98,17 @@ DeclareScriptFunctionReturn0(IMUComponent, getActivity, float) { return activity
 DeclareScriptFunctionReturn0(IMUComponent, getThrowState, uint32_t) { return throwState; }
 #endif
 
-
+// CheckFeedbackParamInternalStart
+//     CheckAndSendParamFeedback(orientation);
+// CheckAndSendParamFeedback(accel);
+// CheckAndSendParamFeedback(gyro);
+// CheckAndSendParamFeedback(linearAccel);
+// CheckAndSendParamFeedback(gravity);
+// CheckAndSendParamFeedback(projectedAngle);
+// CheckFeedbackParamInternalEnd;
 
 HandleSetParamInternalStart
-    CheckAndSetParam(sendLevel);
+    CheckAndSetEnumParam(sendLevel, sendLevelOptions, 3);
 CheckAndSetParam(orientationSendRate);
 CheckAndSetParam(sdaPin);
 CheckAndSetParam(sclPin);
@@ -123,8 +129,8 @@ FillSettingsParam(orientationSendRate);
 FillSettingsParam(sdaPin);
 FillSettingsParam(sclPin);
 FillSettingsParam(orientationXOffset);
-// FillSettingsParam(flatThresholds);
-// FillSettingsParam(accelThresholds);
+FillSettingsParam2(flatThresholds);
+FillSettingsParam3(accelThresholds);
 FillSettingsParam(diffThreshold);
 FillSettingsParam(semiFlatThreshold);
 FillSettingsParam(loftieThreshold);
@@ -135,20 +141,19 @@ FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
     FillOSCQueryBoolParamReadOnly(connected);
-FillOSCQueryEnumParam(sendLevel, sendLevelOptions, 6);
+FillOSCQueryEnumParam(sendLevel, sendLevelOptions, 3);
 FillOSCQueryIntParam(orientationSendRate);
 FillOSCQueryIntParam(sdaPin);
 FillOSCQueryIntParam(sclPin);
-// FillOSCQueryP3DParam(orientation);
-// FillOSCQueryP3DParam(accel);
-// FillOSCQueryP3DParam(gyro);
-// FillOSCQueryP3DParam(linearAccel);
-// FillOSCQueryP3DParam(gravity);
+FillOSCQueryP3DRangeParamReadOnly(orientation, -180, 180, -90, 90, -180, 180);
+FillOSCQueryP3DParamReadOnly(accel);
+FillOSCQueryP3DParamReadOnly(gyro);
+FillOSCQueryP3DParamReadOnly(linearAccel);
 FillOSCQueryFloatParam(orientationXOffset);
-FillOSCQueryEnumParamReadOnly(throwState, throwStateOptions, 3);
+FillOSCQueryEnumParamReadOnly(throwState, throwStateOptions, 6);
 FillOSCQueryFloatParamReadOnly(activity);
-// FillOSCQueryP2DParam(flatThresholds);
-// FillOSCQueryP3DParam(accelThresholds);
+FillOSCQueryP2DParam(flatThresholds);
+FillOSCQueryP3DParam(accelThresholds);
 FillOSCQueryFloatParam(diffThreshold);
 FillOSCQueryFloatParam(semiFlatThreshold);
 FillOSCQueryFloatParam(loftieThreshold);
@@ -157,5 +162,4 @@ FillOSCQueryFloatParam(angleOffset);
 FillOSCQueryFloatParamReadOnly(projectedAngle);
 FillOSCQueryFloatParam(xOnCalibration);
 FillOSCQueryInternalEnd
-
     EndDeclareComponent

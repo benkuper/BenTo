@@ -13,7 +13,7 @@ bool IMUComponent::initInternal(JsonObject o)
     AddP3DParam(accel);
     AddP3DParam(gyro);
     AddP3DParam(linearAccel);
-    AddP3DParam(gravity);
+    // AddP3DParam(gravity);
 
     AddFloatParamConfig(orientationXOffset);
     AddIntParamConfig(throwState);
@@ -66,21 +66,18 @@ void IMUComponent::updateInternal()
     {
         if (sendLevel >= 1)
         {
-            var oData[3]{orientation[0], orientation[1], orientation[2]};
-            sendEvent(OrientationUpdate, oData, 3);
+            DBG("Send orientation");
+            SendMultiParamFeedback(orientation);
+
             if (sendLevel >= 2)
             {
-                var aData[3]{accel[0], accel[1], accel[2]};
-                sendEvent(AccelUpdate, aData, 3);
+                SendMultiParamFeedback(accel);
+                SendMultiParamFeedback(gyro);
+                SendMultiParamFeedback(linearAccel);
+                SendParamFeedback(projectedAngle);
 
-                var laData[3]{linearAccel[0], linearAccel[1], linearAccel[2]};
-                sendEvent(LinearAccelUpdate, laData, 3);
-
-                var gData[3]{gyro[0], gyro[1], gyro[2]};
-                sendEvent(GyroUpdate, gData, 3);
-
-                sendEvent(ActivityUpdate);
-                sendEvent(ProjectedAngleUpdate);
+                // sendEvent(ActivityUpdate);
+                // sendEvent(ProjectedAngleUpdate);
                 // sendEvent(Gravity, gravity, 3);
             }
         }
@@ -184,24 +181,19 @@ void IMUComponent::readIMU()
     }
     // NDBG("Euler " + String(euler.x()));
 
-    orientation[0] = (float)(fmodf(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f);
-    orientation[1] = (float)(euler.y() * 180 / PI); // Pitch
-    orientation[2] = (float)(euler.z() * 180 / PI); // Roll
+    SetParam3(orientation,
+              (float)(fmodf(((euler.x() * 180 / PI) + orientationXOffset + 180.0f * 5), 360.0f) - 180.0f),
+              (float)(euler.y() * 180 / PI),
+              (float)(euler.z() * 180 / PI));
 
     imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-    accel[0] = (float)acc.x();
-    accel[1] = (float)acc.y();
-    accel[2] = (float)acc.z();
+    // SetParam3(accel, (float)acc.x(), (float)acc.y(), (float)acc.z());
 
     imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-    linearAccel[0] = (float)laccel.x();
-    linearAccel[1] = (float)laccel.y();
-    linearAccel[2] = (float)laccel.z();
+    // SetParam3(linearAccel, (float)laccel.x(), (float)laccel.y(), (float)laccel.z());
 
     imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-    gyro[0] = (float)gyr.x();
-    gyro[1] = (float)gyr.y();
-    gyro[2] = (float)gyr.z();
+    // SetParam3(gyro, (float)gyr.x(), (float)gyr.y(), (float)gyr.z());
 
     // imu::Vector<3> grav = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
     // gravity[0] = grav.x();

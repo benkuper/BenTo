@@ -1,7 +1,7 @@
 #pragma once
 
 #define MAX_CHILD_COMPONENTS 16
-#define MAX_CHILD_PARAMS 20
+#define MAX_CHILD_PARAMS 32
 
 class Component : public EventBroadcaster<ComponentEvent>
 {
@@ -49,7 +49,7 @@ public:
         TagConfig,
         TagNameMax
     };
-    
+
     const String typeNames[ParamTypeMax]{"I", "b", "i", "f", "s", "ff", "fff"};
     const String tagNames[TagNameMax]{"", "config"};
 
@@ -113,7 +113,9 @@ public:
 
     // virtual void fillOSCQueryData(JsonObject o, bool includeConfig = true, bool recursive = true);
     virtual void fillOSCQueryParamsInternal(JsonObject o, const String &fullPath, bool showConfig = true) {}
-    virtual void fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool showConfig = true, bool readOnly = false, const String *options = nullptr, int numOptions = 0, float vMin = 0, float vMax = 0);
+    virtual void fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param,
+                                   bool showConfig = true, bool readOnly = false, const String *options = nullptr, int numOptions = 0,
+                                   float vMin = 0, float vMax = 0, float vMin2 = 0, float vMax2 = 0, float vMin3 = 0, float vMax3 = 0);
 
     enum OSCQueryChunkType
     {

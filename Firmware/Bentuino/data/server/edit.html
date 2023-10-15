@@ -68,7 +68,7 @@
             border-radius: 6px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
             display: block;
-            position:relative;
+            position: relative;
         }
 
         .component.level0 {
@@ -236,7 +236,7 @@
 
                 var pid = oscMsg.address.substring(1).replace(/\//g, "-");
                 var p = document.getElementById(pid);
-                // console.log("here", oscMsg, p);
+                console.log("feedback", oscMsg, p);
                 var val = oscMsg.args[0].value;
                 if (p != undefined) {
                     processParameterFeedback(p, val);
@@ -400,6 +400,8 @@
             paramDiv.innerHTML = `<label>${lowerCamelCaseToTitleCase(item.DESCRIPTION)}</label><select id="${item.id}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'>${options}</select>`;
             return paramDiv;
         }
+
+
 
         function createDefaultParameterEditor(item, level) {
             var paramDiv = document.createElement('div');

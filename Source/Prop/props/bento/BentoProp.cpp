@@ -26,7 +26,7 @@ BentoProp::BentoProp(var params) :
 	artnet.inputCC->enabled->setValue(false);
 
 	serialParam = new SerialDeviceParameter("USB Port", "For connecting props through USB", true);
-	serialParam->openBaudRate = 115200;
+	serialParam->setBaudrate(115200);
 
 #if !JUCE_MAC
 	if (params.hasProperty("vid")) serialParam->vidFilters.add((int)params.getProperty("vid", 0));

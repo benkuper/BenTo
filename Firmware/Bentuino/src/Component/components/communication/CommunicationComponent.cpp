@@ -63,12 +63,10 @@ void CommunicationComponent::sendParamFeedback(Component *c, void *param, const 
     case Component::ParamType::P2D:
     case Component::ParamType::P3D:
     {
-        numData = Component::ParamType::P2D ? 2 : 3;
-
-        float *vals = (*(float **)param);
+        numData = pType == Component::ParamType::P2D ? 2 : 3;
+        float *vals = (float *)param;
         data[0] = vals[0];
         data[1] = vals[1];
-
         if (pType == Component::ParamType::P3D)
             data[2] = vals[2];
     }

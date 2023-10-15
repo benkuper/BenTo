@@ -251,7 +251,9 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk, bool showConfig)
     }
 }
 
-void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param, bool showConfig, bool readOnly, const String *options, int numOptions, float vMin, float vMax)
+void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const String &pName, ParamType t, void *param,
+                                  bool showConfig, bool readOnly, const String *options, int numOptions,
+                                  float vMin1, float vMax1, float vMin2, float vMax2, float vMin3, float vMax3)
 {
     ParamTag tag = getParamTag(param);
 
@@ -309,18 +311,42 @@ void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const St
             vArr.add((*(String *)param));
             break;
 
+        case ParamType::P2D:
+            vArr.add(((float *)param)[0]);
+            vArr.add(((float *)param)[1]);
+            break;
+
+        case ParamType::P3D:
+            vArr.add(((float *)param)[0]);
+            vArr.add(((float *)param)[1]);
+            vArr.add(((float *)param)[2]);
+            break;
+
         default:
             break;
         }
     }
 
-    if (vMin != 0 || vMax != 0)
+    if (vMin1 != 0 || vMax1 != 0)
     {
         JsonArray rArr = po.createNestedArray("RANGE");
-        JsonObject ro = rArr.createNestedObject();
+        JsonObject r1 = rArr.createNestedObject();
+        r1["MIN"] = vMin1;
+        r1["MAX"] = vMax1;
+        if (t == ParamType::P2D || t == ParamType::P3D)
+        {
+            JsonObject r2 = rArr.createNestedObject();
 
-        ro["MIN"] = vMin;
-        ro["MAX"] = vMax;
+            r2["MIN"] = vMin2;
+            r2["MAX"] = vMax2;
+
+            if (t == ParamType::P3D)
+            {
+                JsonObject r3 = rArr.createNestedObject();
+                r3["MIN"] = vMin3;
+                r3["MAX"] = vMax3;
+            }
+        }
     }
 }
 
@@ -511,6 +537,25 @@ void Component::setParam(void *param, var *value, int numData)
         hasChanged = *((String *)param) != value[0].stringValue();
         if (hasChanged)
             *((String *)param) = value[0].stringValue();
+        break;
+
+    case ParamType::P2D:
+        hasChanged = ((float *)param)[0] != value[0].floatValue() && ((float *)param)[1] != value[1].floatValue();
+        if (hasChanged)
+        {
+            ((float *)param)[0] = value[0].floatValue();
+            ((float *)param)[1] = value[1].floatValue();
+        }
+        break;
+
+    case ParamType::P3D:
+        hasChanged = ((float *)param)[0] != value[0].floatValue() && ((float *)param)[1] != value[1].floatValue() && ((float *)param)[2] != value[2].floatValue();
+        if (hasChanged)
+        {
+            ((float *)param)[0] = value[0].floatValue();
+            ((float *)param)[1] = value[1].floatValue();
+            ((float *)param)[2] = value[2].floatValue();
+        }
         break;
 
     default:
