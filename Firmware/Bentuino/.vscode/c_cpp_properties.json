@@ -269,6 +269,7 @@
                 "LED_MAX_BRIGHTNESS=0.4f",
                 "LED_MAX_COUNT=300",
                 "PLAYBACK_USE_ALPHA",
+                "PLAYBACK_MAX_SCRIPTS=32",
                 "USE_BUTTON",
                 "BUTTON_MAX_COUNT=4",
                 "BUTTON_DEFAULT_PIN=32",

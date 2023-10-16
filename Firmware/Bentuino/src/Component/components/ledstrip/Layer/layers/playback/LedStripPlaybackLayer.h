@@ -30,6 +30,12 @@ public:
     long timeSinceLastSeek;
     float timeToSeek; // used to limit seeking
 
+    int numScripts;
+    String scripts[PLAYBACK_MAX_SCRIPTS];
+    float scriptStartTimes[PLAYBACK_MAX_SCRIPTS];
+    float scriptEndTimes[PLAYBACK_MAX_SCRIPTS];
+    int activeScriptIndex;
+
     bool initInternal(JsonObject o) override;
     void updateInternal() override;
     void clearInternal() override;
@@ -39,6 +45,8 @@ public:
     void showIdFrame();
     void showCurrentFrame();
 
+    void playScripts();
+
     // play control
     void load(String path);
     void play(float atTime = 0);
@@ -47,9 +55,8 @@ public:
     void stop();
     void togglePlayPause();
 
-
     void onEnabledChanged() override;
-    void paramValueChangedInternal(void* param) override;
+    void paramValueChangedInternal(void *param) override;
 
     bool handleCommandInternal(const String &command, var *data, int numData) override;
 

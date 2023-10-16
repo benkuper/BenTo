@@ -21,6 +21,7 @@ bool LedStripPlaybackLayer::initInternal(JsonObject o)
     prevTimeMs = 0;
     timeSinceLastSeek = 0;
     timeToSeek = 0;
+    activeScriptIndex = -1;
 
     return true;
 }
@@ -59,7 +60,7 @@ void LedStripPlaybackLayer::clearInternal()
 
 bool LedStripPlaybackLayer::playFrame()
 {
-    NDBG("Play frame");
+    // NDBG("Play frame");
     if (curFile.available() < frameSize)
     {
         NDBG("End of show");
@@ -85,6 +86,8 @@ bool LedStripPlaybackLayer::playFrame()
         return false;
     if (pos < fPos)
         return false; // waiting for frame
+
+    playScripts();
 
     int skippedFrames = 0;
     while (fPos < pos)
@@ -131,6 +134,40 @@ void LedStripPlaybackLayer::showIdFrame()
     fillRange(c, 0, localID * 1.f / strip->count, false);
 }
 
+void LedStripPlaybackLayer::playScripts()
+{
+#if USE_SCRIPT
+    float curT = curTimeMs / 1000.0f;
+    // float prevT = prevTimeMs / 1000.0f;
+
+    // DBG("Play Script " + String(curT));
+    if (activeScriptIndex != -1)
+    {
+        // DBG("Active script index " + String(activeScriptIndex));
+        if (scriptEndTimes[activeScriptIndex] < curT)
+        {
+            // NDBG("Start script");
+            ScriptComponent::instance->script.stop();
+            activeScriptIndex = -1;
+        }
+    }
+    else
+    {
+        for (int i = 0; i < numScripts; i++)
+        {
+            // DBG("Check for script " + String(scriptStartTimes[i]));
+            if (curT >= scriptStartTimes[i] && curT < scriptEndTimes[i])
+            {
+                // NDBG("Stop script");
+                ScriptComponent::instance->script.load(scripts[i]);
+                activeScriptIndex = i;
+                break;
+            }
+        }
+    }
+#endif
+}
+
 void LedStripPlaybackLayer::load(String path)
 {
     showBlackFrame();
@@ -164,7 +201,15 @@ void LedStripPlaybackLayer::load(String path)
                                (float)(metaData["groupColor"][1]) * 255,
                                (float)(metaData["groupColor"][2]) * 255);
 
-            Serial.println("Loaded meta, id " + String(groupID) + ":" + String(localID) + " at " + String(fps) + " fps.");
+            numScripts = metaData["scripts"].size();
+            for (int i = 0; i < numScripts; i++)
+            {
+                scripts[i] = metaData["scripts"][i]["name"].as<String>();
+                scriptStartTimes[i] = (float)metaData["scripts"][i]["start"];
+                scriptEndTimes[i] = (float)metaData["scripts"][i]["end"];
+            }
+
+            NDBG("Loaded meta, id " + String(groupID) + ":" + String(localID) + " at " + String(fps) + " fps, " + String(numScripts) + " scripts");
         }
 
         metaDataFile.close();
@@ -186,9 +231,9 @@ void LedStripPlaybackLayer::load(String path)
         isPlaying = false;
         NDBG("File loaded, " + String(totalBytes) + " bytes" + ", " + String(totalFrames) + " frames, " + String(totalTime) + " time");
 
-        if(idMode) showIdFrame();
+        if (idMode)
+            showIdFrame();
     }
-
 
     // play(0);
 }
@@ -245,6 +290,8 @@ void LedStripPlaybackLayer::stop()
     curTimeMs = 0;
     prevTimeMs = 0;
     // showBlackFrame();
+    activeScriptIndex = -1;
+
     sendEvent(Stopped);
 }
 
