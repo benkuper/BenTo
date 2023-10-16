@@ -15,6 +15,7 @@ BentoComponentContainer::BentoComponentContainer(BentoProp* prop) :
 	ControllableContainer("Components"),
 	Thread("Bento OSCQuery"),
 	prop(prop),
+	wsPort(80),
 	isUpdatingStructure(false)
 {
 	startThread();
@@ -39,7 +40,8 @@ void BentoComponentContainer::setupWSClient()
 	wsClient->addWebSocketListener(this);
 
 	String host = prop->remoteHost->stringValue();
-	String url = host + "/";
+	String url = host + ":81/";
+	DBG("Setting up client at " << url);
 	wsClient->start(url);
 }
 
@@ -52,9 +54,33 @@ void BentoComponentContainer::onControllableFeedbackUpdate(ControllableContainer
 	if (isCurrentlyLoadingData) return;
 	if (noFeedbackList.contains(c)) return;
 
+	OSCMessage m = OSCHelpers::getOSCMessageForControllable(c, this);
+	prop->sendMessageToProp(m);
 
-	prop->sendMessageToProp(OSCHelpers::getOSCMessageForControllable(c, this));
+}
 
+void BentoComponentContainer::onContainerParameterChanged(Parameter* p)
+{
+	if (!prop->enabled->boolValue()) return;
+	if (isUpdatingStructure) return;
+	if (isCurrentlyLoadingData) return;
+	if (noFeedbackList.contains(p)) return;
+
+	OSCMessage m = OSCHelpers::getOSCMessageForControllable(p, this);
+	m.setAddressPattern("/root" + m.getAddressPattern().toString());
+	prop->sendMessageToProp(m);
+}
+
+void BentoComponentContainer::onContainerTriggerTriggered(Trigger* t)
+{
+	if (!prop->enabled->boolValue()) return;
+	if (isUpdatingStructure) return;
+	if (isCurrentlyLoadingData) return;
+	if (noFeedbackList.contains(t)) return;
+
+	OSCMessage m = OSCHelpers::getOSCMessageForControllable(t, this);
+	m.setAddressPattern("/root" + m.getAddressPattern().toString());
+	prop->sendMessageToProp(m);
 }
 
 
@@ -122,7 +148,7 @@ void BentoComponentContainer::messageReceived(const String& message)
 
 void BentoComponentContainer::timerCallback()
 {
-	if (!prop->isConnected->boolValue()) setupWSClient();
+	if (!prop->isConnected->boolValue()) requestHostInfo();
 }
 
 void BentoComponentContainer::run()
@@ -165,7 +191,7 @@ void BentoComponentContainer::requestHostInfo()
 		if (data.isObject())
 		{
 			//NLOG(niceName, "Received HOST_INFO :\n" << JSON::toString(data));
-
+			wsPort = data.getProperty("WS_PORT", wsPort);
 			success = true;
 
 			requestStructure();

@@ -68,8 +68,8 @@ BehaviourManagerComponent behaviours;
 DummyManagerComponent dummies;
 #endif
 
-#ifdef USE_IMU
-IMUComponent imu;
+#ifdef USE_MOTION
+MotionComponent imu;
 #endif
 
 #ifdef USE_SERVO
@@ -108,7 +108,11 @@ bool isShuttingDown() const { return timeAtShutdown > 0; }
 String getDeviceID() const;
 
 HandleSetParamInternalStart
-    CheckAndSetParam(deviceName);
+    CheckTrigger(shutdown);
+CheckTrigger(restart);
+CheckTrigger(saveSettings);
+CheckTrigger(clearSettings);
+CheckAndSetParam(deviceName);
 CheckAndSetParam(deviceType);
 CheckAndSetParam(wakeUpButton);
 CheckAndSetParam(wakeUpState);
@@ -122,7 +126,11 @@ FillSettingsParam(wakeUpState);
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
-    FillOSCQueryStringParamReadOnly(id);
+    FillOSCQueryTrigger(shutdown);
+FillOSCQueryTrigger(restart);
+FillOSCQueryTrigger(saveSettings);
+FillOSCQueryTrigger(clearSettings);
+FillOSCQueryStringParamReadOnly(id);
 FillOSCQueryStringParam(deviceName);
 FillOSCQueryStringParam(deviceType);
 FillOSCQueryIntParam(wakeUpButton);

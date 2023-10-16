@@ -1,4 +1,4 @@
-bool IMUComponent::initInternal(JsonObject o)
+bool MotionComponent::initInternal(JsonObject o)
 {
     AddBoolParamConfig(connected);
     connected = false;
@@ -50,7 +50,7 @@ bool IMUComponent::initInternal(JsonObject o)
     return true;
 }
 
-void IMUComponent::updateInternal()
+void MotionComponent::updateInternal()
 {
     // NDBG("updateInternal " + String(hasNewData)); // + ", " + String(orientation[1]) + ", " + String(orientation[2]));
     if (!hasNewData)
@@ -88,12 +88,13 @@ void IMUComponent::updateInternal()
     imuLock = false;
 }
 
-void IMUComponent::clearInternal()
+void MotionComponent::clearInternal()
 {
     shouldStopRead = true;
+    bno.enterSuspendMode();
 }
 
-void IMUComponent::onEnabledChanged()
+void MotionComponent::onEnabledChanged()
 {
     if (enabled)
         startIMUTask();
@@ -101,18 +102,18 @@ void IMUComponent::onEnabledChanged()
         shouldStopRead = true;
 }
 
-void IMUComponent::startIMUTask()
+void MotionComponent::startIMUTask()
 {
     hasNewData = false,
     shouldStopRead = false;
     imuLock = false;
-    xTaskCreate(&IMUComponent::readIMUStatic, "imu", IMU_NATIVE_STACK_SIZE, this, 1, NULL);
+    xTaskCreate(&MotionComponent::readIMUStatic, "imu", IMU_NATIVE_STACK_SIZE, this, 1, NULL);
 }
 
-void IMUComponent::readIMUStatic(void *_imu)
+void MotionComponent::readIMUStatic(void *_imu)
 {
     DBG("[IMU] Async Thread Start");
-    IMUComponent *imuComp = (IMUComponent *)_imu;
+    MotionComponent *imuComp = (MotionComponent *)_imu;
 
     bool result = imuComp->setupBNO();
 
@@ -136,7 +137,7 @@ void IMUComponent::readIMUStatic(void *_imu)
     vTaskDelete(NULL);
 }
 
-bool IMUComponent::setupBNO()
+bool MotionComponent::setupBNO()
 {
     if (connected)
         return true;
@@ -160,7 +161,7 @@ bool IMUComponent::setupBNO()
     return true;
 }
 
-void IMUComponent::readIMU()
+void MotionComponent::readIMU()
 {
     if (!enabled)
         return;
@@ -187,13 +188,13 @@ void IMUComponent::readIMU()
               (float)(euler.z() * 180 / PI));
 
     imu::Vector<3> acc = bno.getVector(Adafruit_BNO055::VECTOR_ACCELEROMETER);
-    // SetParam3(accel, (float)acc.x(), (float)acc.y(), (float)acc.z());
+    SetParam3(accel, (float)acc.x(), (float)acc.y(), (float)acc.z());
 
     imu::Vector<3> laccel = bno.getVector(Adafruit_BNO055::VECTOR_LINEARACCEL);
-    // SetParam3(linearAccel, (float)laccel.x(), (float)laccel.y(), (float)laccel.z());
+    SetParam3(linearAccel, (float)laccel.x(), (float)laccel.y(), (float)laccel.z());
 
     imu::Vector<3> gyr = bno.getVector(Adafruit_BNO055::VECTOR_GYROSCOPE);
-    // SetParam3(gyro, (float)gyr.x(), (float)gyr.y(), (float)gyr.z());
+    SetParam3(gyro, (float)gyr.x(), (float)gyr.y(), (float)gyr.z());
 
     // imu::Vector<3> grav = bno.getVector(Adafruit_BNO055::VECTOR_GRAVITY);
     // gravity[0] = grav.x();
@@ -207,7 +208,7 @@ void IMUComponent::readIMU()
     hasNewData = true;
 }
 
-void IMUComponent::computeProjectedAngle()
+void MotionComponent::computeProjectedAngle()
 {
     float eulerRadians[3];
     float lookAt[3];
@@ -281,7 +282,7 @@ void IMUComponent::computeProjectedAngle()
     projectedAngle = result;
 }
 
-void IMUComponent::computeThrow()
+void MotionComponent::computeThrow()
 {
     float maxAccelYZ = max(fabsf(accel[1]), fabsf(accel[2]));
     float maxAccel = max(maxAccelYZ, fabsf(accel[0]));
@@ -340,7 +341,7 @@ void IMUComponent::computeThrow()
     }
 }
 
-void IMUComponent::computeActivity()
+void MotionComponent::computeActivity()
 {
     float maxLinearAccel = max(max(fabsf(linearAccel[0]), fabsf(linearAccel[1])), fabsf(linearAccel[2]));
     maxLinearAccel = (((maxLinearAccel - 0) * (1 - 0)) / (40 - 0)) + 0; // remap to 0..1 range
@@ -350,7 +351,7 @@ void IMUComponent::computeActivity()
     prevActivity = activity;
 }
 
-void IMUComponent::sendCalibrationStatus()
+void MotionComponent::sendCalibrationStatus()
 {
     uint8_t system, gyro, accel, mag;
     system = gyro = accel = mag = 0;
@@ -365,18 +366,18 @@ void IMUComponent::sendCalibrationStatus()
     sendEvent(CalibrationStatus, data, 4);
 }
 
-void IMUComponent::setOrientationXOffset(float offset = 0.0f)
+void MotionComponent::setOrientationXOffset(float offset = 0.0f)
 {
     orientationXOffset = offset;
 }
 
-void IMUComponent::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
+void MotionComponent::setProjectAngleOffset(float yaw = 0.0f, float angle = 0.0f)
 {
     angleOffset = angle;
     xOnCalibration = yaw;
 }
 
-bool IMUComponent::handleCommandInternal(const String &command, var *data, int numData)
+bool MotionComponent::handleCommandInternal(const String &command, var *data, int numData)
 {
     if (checkCommand(command, "calibrationStatus", numData, 0))
     {

@@ -88,7 +88,8 @@ void CommunicationComponent::sendParamFeedback(Component *c, void *param, const 
 
 #ifdef USE_SERVER
     // maybe should find away so calls are not crossed with websocket ?
-    WebServerComponent::instance->sendParamFeedback(c, pName, data, numData);
+    if (WebServerComponent::instance->sendFeedback)
+        WebServerComponent::instance->sendParamFeedback(c, pName, data, numData);
 #endif
 }
 

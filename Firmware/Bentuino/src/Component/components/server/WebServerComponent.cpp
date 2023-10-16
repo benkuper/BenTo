@@ -1,14 +1,20 @@
-ImplementSingleton(WebServerComponent)
+ImplementSingleton(WebServerComponent);
 
-    bool WebServerComponent::initInternal(JsonObject o)
+bool WebServerComponent::initInternal(JsonObject o)
 {
-    // server.cors(); // This is the magic
+
+    AddBoolParamConfig(sendFeedback);
 
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
+#if USE_ASYNC_WEBSOCKET
     server.addHandler(&ws);
+    ws.onEvent(std::bind(&WebServerComponent::onAsyncWSEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
+#else
+    ws.onEvent(std::bind<void>(&WebServerComponent::onWSEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+#endif
 
 #ifdef USE_OSC
     server.on("/", HTTP_GET, [&](AsyncWebServerRequest *request)
@@ -36,6 +42,9 @@ ImplementSingleton(WebServerComponent)
             o["NAME"] = RootComponent::instance->deviceName;
             o["OSC_PORT"] = OSC_LOCAL_PORT;
             o["OSC_TRANSPORT"] = "UDP";
+            #if !USE_ASYNC_WEBSOCKET
+            o["WS_PORT"] = 81;
+            #endif
 
             String jStr;
             serializeJson(doc, jStr);
@@ -81,21 +90,26 @@ ImplementSingleton(WebServerComponent)
     server.serveStatic("/server/", SD, "/server");
 #endif
 
-    ws.onEvent(std::bind(&WebServerComponent::onWSEvent,
-                         this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
-
     return true;
 }
 
 void WebServerComponent::updateInternal()
 {
+#if USE_ASYNC_WEBSOCKET
     // server.handleClient();
     ws.cleanupClients();
+#else
+    ws.loop();
+#endif
 }
 
 void WebServerComponent::clearInternal()
 {
+#if USE_ASYNC_WEBSOCKET
     ws.closeAll();
+#else
+    ws.disconnect();
+#endif
 }
 
 // SERVER
@@ -113,6 +127,11 @@ void WebServerComponent::setupConnection()
         NDBG("Start HTTP Server");
         server.begin();
         NDBG("HTTP server started");
+
+#if !USE_ASYNC_WEBSOCKET
+        ws.begin();
+#endif
+
     }
     else
     {
@@ -175,6 +194,7 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
 #endif
 }
 
+#if USE_ASYNC_WEBSOCKET
 void WebServerComponent::onWSEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
                                    void *arg, uint8_t *data, size_t len)
 {
@@ -232,6 +252,69 @@ void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t
         }
     }
 }
+#else
+void WebServerComponent::onWSEvent(uint8_t id, WStype_t type, uint8_t *data, size_t len)
+{
+
+    switch (type)
+    {
+    case WStype_DISCONNECTED:
+        DBG("WebSocket client " + String(id) + "connected from " + StringHelpers::ipToString(ws.remoteIP(id)));
+        break;
+    case WStype_CONNECTED:
+        DBG("WebSocket client " + String(id) + "connected from " + StringHelpers::ipToString(ws.remoteIP(id)));
+        // webSocket.sendTXT(id, "Connected");
+        break;
+
+    case WStype_TEXT:
+        DBG("Text received from " + String(id) + " > " + String((char *)data));
+
+        // send message to client
+        // webSocket.sendTXT(num, "message here");
+
+        // send data to all connected clients
+        // webSocket.broadcastTXT("message here");
+        break;
+
+    case WStype_BIN:
+    {
+
+        DBG("Got binary");
+#ifdef USE_OSC
+        OSCMessage msg;
+        msg.fill(data, len);
+        if (!msg.hasError())
+        {
+            // DBG("Got websocket OSC message");
+
+            char addr[64];
+            msg.getAddress(addr);
+            tmpExcludeParam = String(addr);
+
+            OSCComponent::instance->processMessage(msg);
+
+            tmpExcludeParam = "";
+        }
+    }
+#endif
+    // send message to client
+    // webSocket.sendBIN(num, payload, length);
+    break;
+
+    case WStype_ERROR:
+    case WStype_FRAGMENT_TEXT_START:
+    case WStype_FRAGMENT_BIN_START:
+    case WStype_FRAGMENT:
+    case WStype_FRAGMENT_FIN:
+    case WStype_PING:
+    case WStype_PONG:
+        break;
+
+    default:
+    break;
+    }
+}
+#endif
 
 // void WebServerComponent::sendParameterFeedback(Component *c, Parameter *param)
 // {
@@ -263,6 +346,13 @@ void WebServerComponent::sendParamFeedback(Component *c, String pName, var *data
 
     wsPrint.flush();
     msg.send(wsPrint);
+
+#if USE_ASYNC_WEBSOCKET
+    if (!ws.availableForWriteAll())
+        return;
     ws.binaryAll(wsPrint.data, wsPrint.index);
+#else
+    ws.broadcastBIN(wsPrint.data, wsPrint.index);
+#endif
 #endif
 }

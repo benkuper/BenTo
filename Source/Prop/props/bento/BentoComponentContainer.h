@@ -41,6 +41,8 @@ public:
 	Trigger* listenNoneTrigger;
 
 	std::unique_ptr<SimpleWebSocketClientBase> wsClient;
+	int wsPort;
+
 	bool isUpdatingStructure;
 	Array<Controllable*> noFeedbackList;
 
@@ -49,6 +51,8 @@ public:
 	//Script
 
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
+	void onContainerParameterChanged(Parameter* p) override;
+	void onContainerTriggerTriggered(Trigger* t) override;
 
 	virtual void syncData();
 	virtual void updateTreeFromData(var data);

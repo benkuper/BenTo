@@ -43,7 +43,7 @@ void SerialComponent::processMessage(String buffer)
         return;
     }
 
-    ParsingHelper::processStringMessage(buffer, [this](var *data, int numdata)
+    StringHelpers::processStringMessage(buffer, [this](var *data, int numdata)
                                         { sendEvent(MessageReceived, data, numdata); });
 
     // free(data);

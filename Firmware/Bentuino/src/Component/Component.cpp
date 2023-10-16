@@ -109,15 +109,6 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
 
 void Component::fillSettingsData(JsonObject o, bool showConfig)
 {
-    // for (int i = 0; i < numParams; i++)
-    // {
-    //     // Parameter *p = parameters[i];
-    //     // if (!p->isConfig && showConfig)
-    //     //     continue;
-
-    //     p->fillSettingsData(showConfig ? o : o.createNestedObject(p->name), showConfig);
-    // }
-
     FillSettingsParam(enabled);
     fillSettingsParamsInternal(o, showConfig);
 
@@ -133,56 +124,15 @@ void Component::fillSettingsData(JsonObject o, bool showConfig)
     }
 }
 
-// void Component::fillOSCQueryData(JsonObject o, bool includeConfig, bool recursive)
-// {
-//     String fullPath = getFullPath();
-//     o["DESCRIPTION"] = name;
-//     o["FULL_PATH"] = fullPath;
-//     o["ACCESS"] = 0;
-
-//     FillOSCQueryBoolParam(enabled);
-//     fillOSCQueryParamsInternal(o, fullPath);
-
-//     // for (int i = 0; i < numParams; i++)
-//     // {
-//     //     fillOSCQueryParam(o, fullPath, paramNames[i], paramTypes[i], params[i]);
-//     // }
-
-//     JsonObject contents = o.createNestedObject("CONTENTS");
-
-//     // for (int i = 0; i < numParams; i++)
-//     // {
-//     //     Parameter *p = parameters[i];
-//     //     if (p->isConfig && !includeConfig)
-//     //         continue;
-//     //     JsonObject po = contents.createNestedObject(p->name);
-//     //     p->fillOSCQueryData(po);
-//     //     po["FULL_PATH"] = fullPath + "/" + p->name;
-//     // }
-
-//     if (recursive)
-//     {
-//         for (int i = 0; i < numComponents; i++)
-//         {
-//             if (components[i] == nullptr)
-//                 continue;
-
-//             Component *c = components[i];
-//             JsonObject co = contents.createNestedObject(c->name);
-//             c->fillOSCQueryData(co);
-//         }
-//     }
-// }
-
 void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk, bool showConfig)
 {
-    const String fullPath = getFullPath();
+    const String fullPath = getFullPath(this == RootComponent::instance);
 
     switch (chunk->nextType)
     {
     case Start:
     {
-        chunk->data = "{\"DESCRIPTION\":\"" + name + "\"," +
+        chunk->data = "{\"DESCRIPTION\":\"" + StringHelpers::lowerCamelToTitleCase(name) + "\"," +
                       "\"FULL_PATH\":\"" + fullPath + "\"," +
                       "\"ACCESS\":0," +
                       "\"CONTENTS\":";
@@ -205,18 +155,6 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk, bool showConfig)
         {
             chunk->data += "{";
         }
-
-        // for (int i = 0; i < numParams; i++)
-        // {
-
-        //     fillOSCQueryParam(o, pNames[i], paramTypes[i], &params[i]);
-        //     // Parameter *p = parameters[i];
-        //     // p->fillOSCQueryData(o);
-
-        //     chunk->data += "\"" + pNames[i] + "\":" + str;
-        //     if (i < numParams - 1)
-        //         chunk->data += ",";
-        // }
 
         if (numComponents > 0)
         {
@@ -261,7 +199,7 @@ void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const St
         return;
 
     JsonObject po = o.createNestedObject(pName);
-    po["DESCRIPTION"] = pName;
+    po["DESCRIPTION"] = StringHelpers::lowerCamelToTitleCase(pName);
     po["ACCESS"] = readOnly ? 1 : 3;
     const String pType = t == Bool ? (*(bool *)param) ? "T" : "F" : typeNames[t];
     po["TYPE"] = pType;
@@ -273,78 +211,81 @@ void Component::fillOSCQueryParam(JsonObject o, const String &fullPath, const St
         to.add(tagNames[tag]);
     }
 
-    JsonArray vArr = po.createNestedArray("VALUE");
-
-    if (options != nullptr && numOptions > 0)
+    if (t != ParamType::Trigger)
     {
-        JsonArray rArr = po.createNestedArray("RANGE");
-        JsonObject vals = rArr.createNestedObject();
-        JsonArray opt = vals.createNestedArray("VALS");
+        JsonArray vArr = po.createNestedArray("VALUE");
 
-        for (int i = 0; i < numOptions; i++)
+        if (options != nullptr && numOptions > 0)
         {
-            opt.add(options[i]);
-        }
+            JsonArray rArr = po.createNestedArray("RANGE");
+            JsonObject vals = rArr.createNestedObject();
+            JsonArray opt = vals.createNestedArray("VALS");
 
-        po["TYPE"] = "s"; // force string type
-        int index = *(int *)param;
-        if (index >= 0 && index < numOptions)
-            vArr.add(options[index]);
-    }
-    else
-    {
-        switch (t)
-        {
-        case ParamType::Bool:
-            vArr.add((*(bool *)param));
-            break;
-
-        case ParamType::Int:
-            vArr.add((*(int *)param));
-            break;
-
-        case ParamType::Float:
-            vArr.add((*(float *)param));
-            break;
-
-        case ParamType::Str:
-            vArr.add((*(String *)param));
-            break;
-
-        case ParamType::P2D:
-            vArr.add(((float *)param)[0]);
-            vArr.add(((float *)param)[1]);
-            break;
-
-        case ParamType::P3D:
-            vArr.add(((float *)param)[0]);
-            vArr.add(((float *)param)[1]);
-            vArr.add(((float *)param)[2]);
-            break;
-
-        default:
-            break;
-        }
-    }
-
-    if (vMin1 != 0 || vMax1 != 0)
-    {
-        JsonArray rArr = po.createNestedArray("RANGE");
-        JsonObject r1 = rArr.createNestedObject();
-        r1["MIN"] = vMin1;
-        r1["MAX"] = vMax1;
-        if (t == ParamType::P2D || t == ParamType::P3D)
-        {
-            JsonObject r2 = rArr.createNestedObject();
-
-            r2["MIN"] = vMin2;
-            r2["MAX"] = vMax2;
-
-            if (t == ParamType::P3D)
+            for (int i = 0; i < numOptions; i++)
             {
-                JsonObject r3 = rArr.createNestedObject();
-                r3["MIN"] = vMin3;
-                r3["MAX"] = vMax3;
+                opt.add(options[i]);
+            }
+
+            po["TYPE"] = "s"; // force string type
+            int index = *(int *)param;
+            if (index >= 0 && index < numOptions)
+                vArr.add(options[index]);
+        }
+        else
+        {
+            switch (t)
+            {
+            case ParamType::Bool:
+                vArr.add((*(bool *)param));
+                break;
+
+            case ParamType::Int:
+                vArr.add((*(int *)param));
+                break;
+
+            case ParamType::Float:
+                vArr.add((*(float *)param));
+                break;
+
+            case ParamType::Str:
+                vArr.add((*(String *)param));
+                break;
+
+            case ParamType::P2D:
+                vArr.add(((float *)param)[0]);
+                vArr.add(((float *)param)[1]);
+                break;
+
+            case ParamType::P3D:
+                vArr.add(((float *)param)[0]);
+                vArr.add(((float *)param)[1]);
+                vArr.add(((float *)param)[2]);
+                break;
+
+            default:
+                break;
+            }
+        }
+
+        if (vMin1 != 0 || vMax1 != 0)
+        {
+            JsonArray rArr = po.createNestedArray("RANGE");
+            JsonObject r1 = rArr.createNestedObject();
+            r1["MIN"] = vMin1;
+            r1["MAX"] = vMax1;
+            if (t == ParamType::P2D || t == ParamType::P3D)
+            {
+                JsonObject r2 = rArr.createNestedObject();
+
+                r2["MIN"] = vMin2;
+                r2["MAX"] = vMax2;
+
+                if (t == ParamType::P3D)
+                {
+                    JsonObject r3 = rArr.createNestedObject();
+                    r3["MIN"] = vMin3;
+                    r3["MAX"] = vMax3;
+                }
             }
         }
     }

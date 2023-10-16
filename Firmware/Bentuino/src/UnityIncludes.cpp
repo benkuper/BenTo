@@ -2,7 +2,7 @@
 #include "UnityIncludes.h"
 
 #include "Common/Settings.cpp"
-#include "Common/ParsingHelper.cpp"
+#include "Common/StringHelpers.cpp"
 
 #include "Component/ComponentEvent.cpp"
 #include "Component/Component.cpp"
@@ -54,8 +54,8 @@
 #include "Component/components/battery/BatteryComponent.cpp"
 #endif
 
-#ifdef USE_IMU
-#include "Component/components/imu/IMUComponent.cpp"
+#ifdef USE_MOTION
+#include "Component/components/motion/MotionComponent.cpp"
 #endif
 
 #ifdef USE_LEDSTRIP

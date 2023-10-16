@@ -52,7 +52,7 @@ bool RootComponent::initInternal(JsonObject)
 #endif
 #endif
 
-#if USE_IMU
+#if USE_MOTION
     AddOwnedComponent(&imu);
 #endif
 

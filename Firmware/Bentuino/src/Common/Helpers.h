@@ -208,11 +208,18 @@
     if (Class::handleSetParamInternal(paramName, data, numData)) \
         return true;
 
+#define CheckTrigger(func)                                     \
+    if (paramName == #func)                                    \
+    {                                                          \
+        Serial.println("Trigger func : " + String(paramName)); \
+        func();                                                \
+        return true;                                           \
+    }
+
 #define CheckAndSetParam(param)                      \
     {                                                \
         if (paramName == #param)                     \
         {                                            \
-            Serial.println("Set param : " + String(paramName)); \
             setParam((void *)&param, data, numData); \
             return true;                             \
         }                                            \
@@ -303,6 +310,7 @@
 #define FillSettingsInternalEnd }
 
 // Fill OSCQuery
+#define FillOSCQueryTrigger(func) fillOSCQueryParam(o, fullPath, #func, ParamType::Trigger, nullptr, showConfig);
 #define FillOSCQueryBoolParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param, showConfig);
 #define FillOSCQueryIntParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig);
 #define FillOSCQueryEnumParam(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig, false, options, numOptions);
@@ -312,6 +320,7 @@
 #define FillOSCQueryP2DParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::P2D, param, showConfig);
 #define FillOSCQueryP3DParam(param) fillOSCQueryParam(o, fullPath, #param, ParamType::P2D, param, showConfig);
 
+#define FillOSCQueryTriggerReadOnly(func) fillOSCQueryParam(o, fullPath, #func, ParamType::Trigger, nullptr, showConfig, true);
 #define FillOSCQueryBoolParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Bool, &param, showConfig, true);
 #define FillOSCQueryIntParamReadOnly(param) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig, true);
 #define FillOSCQueryEnumParamReadOnly(param, options, numOptions) fillOSCQueryParam(o, fullPath, #param, ParamType::Int, &param, showConfig, true, options, numOptions);

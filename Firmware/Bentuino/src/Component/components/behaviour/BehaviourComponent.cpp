@@ -148,7 +148,7 @@ void BehaviourComponent::trigger()
     {
         String cmd = triggerValue;
         cmd.replace("{value}", getParamString(targetParam));
-        ParsingHelper::processStringMessage(cmd, [this](var *data, int numData)
+        StringHelpers::processStringMessage(cmd, [this](var *data, int numData)
                                             { sendEvent(CommandLaunched, data, numData); });
     }
     break;
