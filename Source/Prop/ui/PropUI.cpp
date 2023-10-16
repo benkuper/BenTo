@@ -97,16 +97,7 @@ void PropUI::mouseDown(const MouseEvent& e)
 {
 	BaseItemUI::mouseDown(e);
 
-	if (e.mods.isRightButtonDown())
-	{
-		LightBlockModelLibrary::showSourcesAndGet(nullptr, [this](ControllableContainer* cc)
-			{
-				LightBlockColorProvider* p = dynamic_cast<LightBlockColorProvider*>(cc);
-				if (p != nullptr) item->activeProvider->setValueFromTarget(p);
-			}
-		);
-	}
-	else if (e.mods.isLeftButtonDown())
+	if (e.mods.isLeftButtonDown())
 	{
 		if (e.mods.isAltDown())
 		{
@@ -119,6 +110,16 @@ void PropUI::mouseUp(const MouseEvent& e)
 {
 	BaseItemUI::mouseUp(e);
 	item->findPropMode->setValue(false);
+}
+
+void PropUI::addContextMenuItems(PopupMenu& m)
+{
+	PopupMenu controlMenu;
+	controlMenu.addItem("Upload Playback", [this]() { item->uploadPlaybackTrigger->trigger(); });
+	controlMenu.addItem("Power Off", [this]() { item->powerOffTrigger->trigger(); });
+	controlMenu.addItem("Restart", [this]() { item->restartTrigger->trigger(); });
+
+	m.addSubMenu("Control", controlMenu);
 }
 
 void PropUI::resizedInternalHeader(Rectangle<int>& r)
