@@ -24,9 +24,12 @@ PropFlasherPanel::PropFlasherPanel() :
 	progressUI.reset(PropFlasher::getInstance()->progression->createSlider());
 
 	serverFolder.reset((StringParameterFileUI*)PropFlasher::getInstance()->serverFilesParam->createStringParameterFileUI());
+	serverFolder->useCustomBGColor = true;
+	serverFolder->customBGColor = BG_COLOR;
+	serverFolder->updateUIParams();
 	uploadServerFiles.reset(PropFlasher::getInstance()->uploadTrigger->createButtonUI());
 
-	firmwareCustomFileUI->useCustomBGColor = true;
+	serverFolder->useCustomBGColor = true;
 	firmwareCustomFileUI->customBGColor = BG_COLOR;
 	firmwareCustomFileUI->updateUIParams();
 
@@ -148,9 +151,9 @@ void PropFlasherPanel::resized()
 	uploadRect = cr.removeFromBottom(68);
 	Rectangle<int> ur = uploadRect.reduced(10);
 	ur.removeFromTop(20);
-	serverFolder->setBounds(ur.removeFromLeft(200).reduced(4));
-	ur.removeFromLeft(20);
-	uploadServerFiles->setBounds(ur.reduced(4));
+	uploadServerFiles->setBounds(ur.removeFromRight(100).reduced(4));
+	ur.removeFromRight(20);
+	serverFolder->setBounds(ur.reduced(4));
 }
 
 
