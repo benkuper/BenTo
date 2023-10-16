@@ -82,9 +82,11 @@
         {                                                     \
             String n = #itemName + String(i + 1);             \
             AddStaticOrDynamicComponent(n, Type, i == 0);     \
+            addItemInternal(i);                               \
         }                                                     \
         return true;                                          \
     }                                                         \
+                                                              \
     HandleSetParamInternalStart                               \
         CheckAndSetParam(count);                              \
     HandleSetParamInternalEnd;                                \

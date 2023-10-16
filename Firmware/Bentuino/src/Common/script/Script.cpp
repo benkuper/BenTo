@@ -1,3 +1,4 @@
+#include "Script.h"
 #define FATAL(func, msg)                  \
     {                                     \
         Serial.print("Fatal: " func " "); \
@@ -139,6 +140,10 @@ void Script::launchWasmTask()
     if (stopFunc != NULL)
         foundFunc += " / stop";
 
+    result = m3_FindFunction(&setScriptParamFunc, runtime, "setParam");
+    if (setScriptParamFunc != NULL)
+        foundFunc += " / setParam";
+
     DBG("Found functions : " + foundFunc);
 
     isRunning = true;
@@ -203,6 +208,12 @@ void Script::stop()
     {
         DBG("Not stopping script, because non was running");
     }
+}
+
+void Script::setScriptParam(int index, float value)
+{
+    if (stopFunc != NULL)
+        m3_CallV(setScriptParamFunc, index, value);
 }
 
 void Script::shutdown()

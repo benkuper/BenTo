@@ -26,6 +26,7 @@ public:
     IM3Function initFunc;
     IM3Function updateFunc;
     IM3Function stopFunc;
+    IM3Function setScriptParamFunc;
 
     static float timeAtLaunch;
 
@@ -39,6 +40,8 @@ public:
     void launchWasm();
     void shutdown();
     void stop();
+
+    void setScriptParam(int index, float value);
 
 #if WASM_ASYNC
     static void launchWasmTaskStatic(void *);

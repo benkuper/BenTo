@@ -65,4 +65,5 @@ public:
 };
 
 DeclareComponentManager(Button, BUTTON, buttons, button)
+    void addItemInternal(int index) { if(index == 0) items[index]->pin = BUTTON_DEFAULT_PIN; };
     EndDeclareComponent

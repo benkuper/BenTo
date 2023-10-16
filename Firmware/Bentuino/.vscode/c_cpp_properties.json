@@ -274,6 +274,8 @@
                 "BUTTON_DEFAULT_PIN=32",
                 "USE_IO",
                 "IO_MAX_COUNT=4",
+                "IO_DEFAULT_PIN=17",
+                "IO_DEFAULT_MODE=IOComponent::PinMode::A_OUTPUT",
                 "USE_BATTERY",
                 "BATTERY_DEFAULT_PIN=35",
                 "BATTERY_DEFAUT_RAW_MIN=222",
