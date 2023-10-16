@@ -8,14 +8,7 @@
   ==============================================================================
 */
 
-#include "NodeManager.h"
-#include "Prop/Prop.h"
-#include "nodes/colorRemap/ColorRemapNode.h"
-#include "nodes/composite/CompositeNode.h"
-#include "nodes/model/ModelNode.h"
-#include "nodes/parameter/ParameterNode.h"
-#include "nodes/positionRemap/PositionRemapNode.h"
-#include "nodes/prop/PropNode.h"
+#include "Node/NodeIncludes.h"
 
 juce_ImplementSingleton(NodeFactory)
 
@@ -24,7 +17,7 @@ NodeManager::NodeManager() :
 	connectionManager(this)
 {
 	managerFactory = NodeFactory::getInstance();
-	
+
 	propNode = new PropNode();
 	addItem(propNode);
 
@@ -42,18 +35,18 @@ NodeManager::~NodeManager()
 Array<WeakReference<Controllable>> NodeManager::getExposedParameters()
 {
 	Array<WeakReference<Controllable>> result;
-	for (auto &n : items)
+	for (auto& n : items)
 	{
-		ParameterNode * pn = dynamic_cast<ParameterNode *>(n);
+		ParameterNode* pn = dynamic_cast<ParameterNode*>(n);
 		if (pn != nullptr) result.add(pn->parameter);
 	}
 
 	return result;
 }
 
-NodeConnectionSlot * NodeManager::getSlotForName(const String & nodeName, const String & slotName, bool isInput)
+NodeConnectionSlot* NodeManager::getSlotForName(const String& nodeName, const String& slotName, bool isInput)
 {
-	Node * n = getItemWithName(nodeName);
+	Node* n = getItemWithName(nodeName);
 	if (n == nullptr) return nullptr;
 	return n->getSlotWithName(isInput, slotName);
 }
@@ -73,7 +66,7 @@ void NodeManager::loadJSONDataManagerInternal(var data)
 
 	propNode = new PropNode();
 	addItem(propNode);
-	propNode->loadJSONData(data.getProperty("prop",var()));
+	propNode->loadJSONData(data.getProperty("prop", var()));
 
 	BaseManager::loadJSONDataManagerInternal(data);
 
@@ -82,12 +75,12 @@ void NodeManager::loadJSONDataManagerInternal(var data)
 
 NodeFactory::NodeFactory()
 {
-	defs.add(Factory<Node>::Definition::createDef("Color", "Model", &ModelNode::create)->addParam("nodeType", "color"));
-	defs.add(Factory<Node>::Definition::createDef("Color", "Composite", &CompositeNode::create)->addParam("nodeType", "color"));
-	defs.add(Factory<Node>::Definition::createDef("Color", "Position Remap", &PositionRemapNode::create)->addParam("nodeType", "color"));
-	defs.add(Factory<Node>::Definition::createDef("Color", "Color Remap", &ColorRemapNode::create)->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef<ModelNode>("Color")->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef<CompositeNode>("Color")->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef<PositionRemapNode>("Color")->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef<ColorRemapNode>("Color")->addParam("nodeType", "color"));
 
-	defs.add(Factory<Node>::Definition::createDef("Parameter", "Integer", &ParameterNode::create)->addParam("nodeType","param")->addParam("type", IntParameter::getTypeStringStatic()));
+	defs.add(Factory<Node>::Definition::createDef("Parameter", "Integer", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", IntParameter::getTypeStringStatic()));
 	defs.add(Factory<Node>::Definition::createDef("Parameter", "Float", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", FloatParameter::getTypeStringStatic()));
 	defs.add(Factory<Node>::Definition::createDef("Parameter", "Color", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", ColorParameter::getTypeStringStatic()));
 	defs.add(Factory<Node>::Definition::createDef("Parameter", "Boolean", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", BoolParameter::getTypeStringStatic()));

@@ -38,6 +38,6 @@ public:
 
 	Array<Colour> getColorsInternal(Prop * p, double time, var params, var localParams) override;
 
-	String getTypeString() const override { return "Position Remap"; }
+	DECLARE_TYPE("Position Remap");
 	static PositionRemapNode * create(var params) { return new PositionRemapNode(params); }
 };

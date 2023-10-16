@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    CompositeNode.h
-    Created: 13 Apr 2018 11:30:02pm
-    Author:  Ben
+	CompositeNode.h
+	Created: 13 Apr 2018 11:30:02pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -17,18 +17,21 @@ public:
 	CompositeNode(var params = var());
 	~CompositeNode();
 
-	enum BlendMode { ADD, ALPHA, SUBTRACT, MIX, MAX, MIN};
+	enum BlendMode { ADD, ALPHA, SUBTRACT, MIX, MAX, MIN };
 
-	ColorSlot * c1;
-	ColorSlot * c2;
+	ColorSlot* c1;
+	ColorSlot* c2;
+	ColorSlot* c3;
+	ColorSlot* c4;
 
-	EnumParameter * blendMode;
+	EnumParameter* blendMode;
 	FloatParameter* mix;
 
-	Array<Colour> getColorsInternal(Prop * p, double time, var params, var localParams) override;
+	Array<Colour> getColorsInternal(Prop* p, double time, var params, var localParams) override;
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 
-	String getTypeString() const override { return "Composite"; }
-	static CompositeNode * create(var params) { return new CompositeNode(params); }
+	DECLARE_TYPE("Composite");
+
+	static CompositeNode* create(var params) { return new CompositeNode(params); }
 };
