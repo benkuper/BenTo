@@ -34,6 +34,8 @@ public:
 	IntParameter* resolutionRef;
 	FloatParameter* brightnessRef;
 
+	String playbackAddress;
+
 	virtual void clearItem() override;
 
 	virtual void setSerialDevice(SerialDevice* d);

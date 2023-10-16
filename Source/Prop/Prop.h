@@ -36,6 +36,7 @@ public:
 
 	IntParameter* resolutionRef;
 	EnumParameter* shape;
+	bool invertLedsInUI;
 
 	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
@@ -55,6 +56,7 @@ public:
 	StringParameter* playbackFileName;
 	BoolParameter* playbackMode;
 
+	bool useAlphaInPlaybackData;
 	BoolParameter* sendCompressedFile;
 	BoolParameter* isGeneratingPlayback;
 

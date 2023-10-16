@@ -18,10 +18,13 @@ PropUI::PropUI(Prop* p) :
 	itemLabel.setVisible(false);
 
 	acceptedDropTypes.add("LightBlockModel");
-	acceptedDropTypes.add("Timeline");
-	acceptedDropTypes.add("Script");
-	acceptedDropTypes.add("Picture");
-	acceptedDropTypes.add("Node");
+	acceptedDropTypes.add(SequenceBlock::getTypeStringStatic());
+	acceptedDropTypes.add(StreamingScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(EmbeddedScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(PictureBlock::getTypeStringStatic());
+	acceptedDropTypes.add(NodeBlock::getTypeStringStatic());
+	acceptedDropTypes.add(VideoFileBlock::getTypeStringStatic());
+	acceptedDropTypes.add(SharedTextureBlock::getTypeStringStatic());
 
 	idUI.reset(p->globalID->createLabelUI());
 	idUI->showLabel = false;

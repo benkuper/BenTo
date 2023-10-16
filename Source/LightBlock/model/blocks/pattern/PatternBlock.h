@@ -172,3 +172,20 @@ public:
 
 	DECLARE_TYPE("Multipoint")
 };
+
+class LedRangePattern :
+	public PatternBlock
+{
+public:
+	LedRangePattern(var params = var());
+	~LedRangePattern() {}
+
+	IntParameter* start;
+	IntParameter* count;
+	ColorParameter* color;
+	ColorParameter* bgColor;
+
+	void getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params) override;
+
+	DECLARE_TYPE("Led Range")
+};

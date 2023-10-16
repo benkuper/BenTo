@@ -60,7 +60,7 @@
 
 #ifdef USE_LEDSTRIP
 #include "Component/components/ledstrip/Layer/LedStripLayer.cpp"
-#include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.cpp"
+#include "Component/components/ledstrip/Layer/layers/playback/LedStripPlaybackLayer.cpp"
 #include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.cpp"
 #ifdef USE_STREAMING
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.cpp"

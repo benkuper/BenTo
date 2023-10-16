@@ -12164,7 +12164,16 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\models\patterns\ledRange.png">
+      <Filter>BenTo\Resources\models\patterns</Filter>
+    </None>
+    <None Include="..\..\Resources\models\patterns\multipoint.png">
+      <Filter>BenTo\Resources\models\patterns</Filter>
+    </None>
     <None Include="..\..\Resources\models\patterns\noise.png">
+      <Filter>BenTo\Resources\models\patterns</Filter>
+    </None>
+    <None Include="..\..\Resources\models\patterns\point.png">
       <Filter>BenTo\Resources\models\patterns</Filter>
     </None>
     <None Include="..\..\Resources\models\patterns\rainbow.png">
@@ -12185,16 +12194,10 @@
     <None Include="..\..\Resources\models\embeddedScript.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
-    <None Include="..\..\Resources\models\multipoint.png">
-      <Filter>BenTo\Resources\models</Filter>
-    </None>
     <None Include="..\..\Resources\models\node.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
     <None Include="..\..\Resources\models\picture.png">
-      <Filter>BenTo\Resources\models</Filter>
-    </None>
-    <None Include="..\..\Resources\models\point.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
     <None Include="..\..\Resources\models\sequence.png">

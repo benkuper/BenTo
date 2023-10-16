@@ -95,7 +95,7 @@
 
 
 #include "Component/components/ledstrip/Layer/LedStripLayer.h"
-#include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.h"
+#include "Component/components/ledstrip/Layer/layers/playback/LedStripPlaybackLayer.h"
 #include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.h"
 
 #ifdef USE_STREAMING

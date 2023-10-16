@@ -57,7 +57,7 @@ public:
 
     // user layers, may be more than one later
 #if USE_BAKELAYER
-    LedStripBakeLayer bakeLayer;
+    LedStripPlaybackLayer bakeLayer;
 #endif
 #if USE_STREAMINGLAYER
     LedStripStreamLayer streamLayer;

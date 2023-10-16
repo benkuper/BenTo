@@ -39,8 +39,9 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	strobeBlock.reset(new StrobePattern());
 	noiseBlock.reset(new NoisePattern());
 	pointBlock.reset(new PointPattern());
-	multiPointBlock.reset(new MultiPointPattern());
 	rangeBlock.reset(new RangePattern());
+	ledRangeBlock.reset(new LedRangePattern());
+	multiPointBlock.reset(new MultiPointPattern());
 
 	//VideoFileBlock.reset(new VideoFileBlock());;
 	//shapeBlock.reset(new ShapeEditorBlock());;
@@ -53,6 +54,7 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	patternBlocks.addChildControllableContainer(pointBlock.get());
 	patternBlocks.addChildControllableContainer(multiPointBlock.get());
 	patternBlocks.addChildControllableContainer(rangeBlock.get());
+	patternBlocks.addChildControllableContainer(ledRangeBlock.get());
 
 	addChildControllableContainer(&patternBlocks);
 
@@ -118,7 +120,7 @@ var LightBlockModelLibrary::getJSONData()
 	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(sequenceBlocks.shortName, uData);
 	uData = videoBlocks.getJSONData();
 	if (uData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(videoBlocks.shortName, uData);
-	
+
 	/*var fData = genericFilterBlocks.getJSONData();
 	if (fData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("genericFilters", fData);*/
 

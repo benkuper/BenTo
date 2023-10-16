@@ -18,6 +18,9 @@ BentoProp::BentoProp(var params) :
 	brightnessRef(nullptr)
 {
 	updateRate = 100;
+	useAlphaInPlaybackData = true;
+	invertLedsInUI = true;
+
 	remoteHost = connectionCC.addStringParameter("Network IP", "IP of the prop on the network", "192.168.0.100");
 
 	resolution->setDefaultValue(32);
@@ -45,6 +48,7 @@ BentoProp::BentoProp(var params) :
 	componentsCC.reset(new BentoComponentContainer(this));
 	addChildControllableContainer(componentsCC.get(), false, controllableContainers.indexOf(scriptManager.get()));
 
+	playbackAddress = "/leds/strip1/playbackLayer";
 }
 
 BentoProp::~BentoProp()
@@ -167,7 +171,7 @@ void BentoProp::sendColorsToPropInternal()
 
 void BentoProp::uploadPlaybackData(PlaybackData data)
 {
-	String target = "http://" + remoteHost->stringValue() + "/upload";
+	String target = "http://" + remoteHost->stringValue() + "/uploadFile";
 	//String target = "http://benjamin.kuperberg.fr/chataigne/releases/uploadTest.php";
 
 	NLOG(niceName, "Uploading " << target << " to " << data.name << " :\n > " << data.numFrames << " frames\n > " << (int)(data.data.getSize()) << " bytes");
@@ -291,7 +295,7 @@ void BentoProp::loadPlayback(StringRef fileName, bool autoPlay)
 	}
 	else
 	{
-		OSCMessage m("/player/load");
+		OSCMessage m(playbackAddress + "/load");
 		m.addString(fileName);
 		m.addInt32(autoPlay ? 1 : 0);
 		sendMessageToProp(m);
@@ -302,12 +306,13 @@ void BentoProp::playPlayback(float time, bool loop)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.play\n");// +String(time == -1 ? -1 : time + .1f) + " \n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".play\n");// +String(time == -1 ? -1 : time + .1f) + " \n");
 	}
 	else
 	{
 
-		OSCMessage m("/player/play");
+		OSCMessage m(playbackAddress + "/play");
 		m.addFloat32(time);
 		m.addInt32(loop ? 1 : 0);
 		sendMessageToProp(m);
@@ -318,11 +323,12 @@ void BentoProp::pausePlaybackPlaying()
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.pause\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".pause\n");
 	}
 	else
 	{
-		OSCMessage m("/player/pause");
+		OSCMessage m(playbackAddress + "/pause");
 		sendMessageToProp(m);
 	}
 }
@@ -331,11 +337,12 @@ void BentoProp::seekPlaybackPlaying(float time)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.seek " + String(time) + "\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + "seek " + String(time) + "\n");
 	}
 	else
 	{
-		OSCMessage m("/player/seek");
+		OSCMessage m(playbackAddress + "/seek");
 		m.addFloat32(time);
 		sendMessageToProp(m);
 	}
@@ -345,11 +352,12 @@ void BentoProp::stopPlaybackPlaying()
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.stop\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".stop\n");
 	}
 	else
 	{
-		OSCMessage m("/player/stop");
+		OSCMessage m(playbackAddress + "/stop");
 		sendMessageToProp(m);
 	}
 }
@@ -358,11 +366,12 @@ void BentoProp::sendShowPropID(bool value)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.id " + String(value ? 1 : 0) + "\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".id " + String(value ? 1 : 0) + "\n");
 	}
 	else
 	{
-		OSCMessage m("/player/id");
+		OSCMessage m(playbackAddress + "/id");
 		m.addInt32(value);
 		sendMessageToProp(m);
 	}

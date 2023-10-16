@@ -6061,17 +6061,18 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\models\patterns\ledRange.png"/>
+    <None Include="..\..\Resources\models\patterns\multipoint.png"/>
     <None Include="..\..\Resources\models\patterns\noise.png"/>
+    <None Include="..\..\Resources\models\patterns\point.png"/>
     <None Include="..\..\Resources\models\patterns\rainbow.png"/>
     <None Include="..\..\Resources\models\patterns\range.png"/>
     <None Include="..\..\Resources\models\patterns\solidColor.png"/>
     <None Include="..\..\Resources\models\patterns\strobe.png"/>
     <None Include="..\..\Resources\models\dmx.png"/>
     <None Include="..\..\Resources\models\embeddedScript.png"/>
-    <None Include="..\..\Resources\models\multipoint.png"/>
     <None Include="..\..\Resources\models\node.png"/>
     <None Include="..\..\Resources\models\picture.png"/>
-    <None Include="..\..\Resources\models\point.png"/>
     <None Include="..\..\Resources\models\sequence.png"/>
     <None Include="..\..\Resources\models\streamingScript.png"/>
     <None Include="..\..\Resources\models\video.png"/>

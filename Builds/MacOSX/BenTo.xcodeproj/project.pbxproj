@@ -77,7 +77,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
-		003661861512974059D9E83E /* multipoint.png */ /* multipoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = multipoint.png; path = ../../Resources/models/multipoint.png; sourceTree = SOURCE_ROOT; };
 		01CDEF946B6BB684FF5A12DF /* VideoPreviewPanel.cpp */ /* VideoPreviewPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoPreviewPanel.cpp; path = ../../Source/VideoPreview/VideoPreviewPanel.cpp; sourceTree = SOURCE_ROOT; };
 		021B306D854A605C14FC6CC6 /* VideoClip.cpp */ /* VideoClip.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoClip.cpp; path = ../../Source/Sequence/layers/Video/VideoClip.cpp; sourceTree = SOURCE_ROOT; };
 		037D45D36AC17A135233B13B /* PropComponent.h */ /* PropComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropComponent.h; path = ../../Source/Prop/Component/PropComponent.h; sourceTree = SOURCE_ROOT; };
@@ -125,12 +124,12 @@
 		210BED4302DCBD61602AA100 /* VideoLayerTimeline.cpp */ /* VideoLayerTimeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoLayerTimeline.cpp; path = ../../Source/Sequence/layers/Video/ui/VideoLayerTimeline.cpp; sourceTree = SOURCE_ROOT; };
 		21A4C58D48757E498A3FC8BA /* PropShapeBlock.h */ /* PropShapeBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropShapeBlock.h; path = ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.h; sourceTree = SOURCE_ROOT; };
 		220E2A77499D10F5F6DA62AE /* fadeIn.png */ /* fadeIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fadeIn.png; path = ../../Resources/fadeIn.png; sourceTree = SOURCE_ROOT; };
+		22CE866173F64ED417BA6D96 /* point.png */ /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = point.png; path = ../../Resources/models/patterns/point.png; sourceTree = SOURCE_ROOT; };
 		24D777C5E89B13BDA5C2F6BB /* CommonIncludes.h */ /* CommonIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommonIncludes.h; path = ../../Source/Common/CommonIncludes.h; sourceTree = SOURCE_ROOT; };
 		254191C212D3FA4801711E2B /* PropShapeCurveEasing.cpp */ /* PropShapeCurveEasing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropShapeCurveEasing.cpp; path = ../../Source/Prop/Shape/PropShapeCurveEasing.cpp; sourceTree = SOURCE_ROOT; };
 		25945F3EEF80155623FA70D6 /* HSVBlockFilter.h */ /* HSVBlockFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HSVBlockFilter.h; path = ../../Source/LightBlock/model/blocks/filters/generic/hsv/HSVBlockFilter.h; sourceTree = SOURCE_ROOT; };
 		25A86663AB1BCEB88DE5C5ED /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
 		27DE73926A22E3A853E791D4 /* esptool */ /* esptool */ = {isa = PBXFileReference; lastKnownFileType = folder; name = esptool; path = ../../Resources/mac/esptool; sourceTree = "<group>"; };
-		2802E348ED9155CFCD865E76 /* point.png */ /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = point.png; path = ../../Resources/models/point.png; sourceTree = SOURCE_ROOT; };
 		28B8FCD6E8665FDEDA16A088 /* LightBlockModelParameter.h */ /* LightBlockModelParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameter.h; path = ../../Source/LightBlock/model/LightBlockModelParameter.h; sourceTree = SOURCE_ROOT; };
 		2A0C477D5ED3CDD9953752E6 /* filmstro_ffmpeg */ /* filmstro_ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = folder; name = filmstro_ffmpeg; path = ../../Modules/filmstro_ffmpeg; sourceTree = SOURCE_ROOT; };
 		2A35504BF657E68FB282B47E /* juce_serial */ /* juce_serial */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_serial; path = ../../Modules/juce_serial; sourceTree = SOURCE_ROOT; };
@@ -223,6 +222,7 @@
 		6B929A2D013B22BC369A960E /* BentoComponentCommands.cpp */ /* BentoComponentCommands.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoComponentCommands.cpp; path = ../../Source/BentoComponentCommands.cpp; sourceTree = SOURCE_ROOT; };
 		6E2670FAA1FA6D8C18008661 /* LightBlockModelLibraryUI.h */ /* LightBlockModelLibraryUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelLibraryUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelLibraryUI.h; sourceTree = SOURCE_ROOT; };
 		6E875803CF12A1C47F874D4A /* StreamingScriptBlock.h */ /* StreamingScriptBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = StreamingScriptBlock.h; path = ../../Source/LightBlock/model/blocks/streamingscript/StreamingScriptBlock.h; sourceTree = SOURCE_ROOT; };
+		6FAAE09DDE11E567FF939822 /* multipoint.png */ /* multipoint.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = multipoint.png; path = ../../Resources/models/patterns/multipoint.png; sourceTree = SOURCE_ROOT; };
 		6FD324810D4F9DC2B420FA91 /* SpatializerEvent.h */ /* SpatializerEvent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpatializerEvent.h; path = ../../Source/Video/SpatializerEvent.h; sourceTree = SOURCE_ROOT; };
 		746266F5EEE79F13E1F107C5 /* AudioManager.h */ /* AudioManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioManager.h; path = ../../Source/Audio/AudioManager.h; sourceTree = SOURCE_ROOT; };
 		75E55D038F692B1012611F23 /* NodeConnectionUI.cpp */ /* NodeConnectionUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionUI.cpp; path = ../../Source/Node/ui/NodeConnectionUI.cpp; sourceTree = SOURCE_ROOT; };
@@ -301,6 +301,7 @@
 		A0581BEF4C53A1EAE08C8473 /* include_juce_audio_processors.mm */ /* include_juce_audio_processors.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_audio_processors.mm; path = ../../JuceLibraryCode/include_juce_audio_processors.mm; sourceTree = SOURCE_ROOT; };
 		A18532D31690178D279CBF00 /* NodeBlock.cpp */ /* NodeBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeBlock.cpp; path = ../../Source/LightBlock/model/blocks/node/NodeBlock.cpp; sourceTree = SOURCE_ROOT; };
 		A1C0F782FE9CBAEDE19E835F /* LightBlockModelLibrary.cpp */ /* LightBlockModelLibrary.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelLibrary.cpp; path = ../../Source/LightBlock/model/LightBlockModelLibrary.cpp; sourceTree = SOURCE_ROOT; };
+		A2AA990ADD45E1BA74DAA566 /* ledRange.png */ /* ledRange.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = ledRange.png; path = ../../Resources/models/patterns/ledRange.png; sourceTree = SOURCE_ROOT; };
 		A2EA8ABFF472FAEC83673DF2 /* DMXBlock.h */ /* DMXBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = DMXBlock.h; path = ../../Source/LightBlock/model/blocks/dmx/DMXBlock.h; sourceTree = SOURCE_ROOT; };
 		A43FB19216C50E48675B9544 /* juce_audio_devices */ /* juce_audio_devices */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_audio_devices; path = "~/JUCE/modules/juce_audio_devices"; sourceTree = "<absolute>"; };
 		A5410F5F7AE2D39A1F7DA314 /* PropShape.cpp */ /* PropShape.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropShape.cpp; path = ../../Source/Prop/Shape/PropShape.cpp; sourceTree = SOURCE_ROOT; };
@@ -571,7 +572,10 @@
 		208154AD871CA4748CAF4FD4 /* patterns */ = {
 			isa = PBXGroup;
 			children = (
+				A2AA990ADD45E1BA74DAA566,
+				6FAAE09DDE11E567FF939822,
 				5E3ED034F5CF78BB19EEA5EC,
+				22CE866173F64ED417BA6D96,
 				8E2D9DF2881733CADA59D8E0,
 				F77FC2B0A28B53A2CC059C49,
 				69CBB9B1FD8EE80262A02244,
@@ -707,10 +711,8 @@
 				208154AD871CA4748CAF4FD4,
 				7ADE26AC714AABF818B8BECE,
 				7AA7A0ACB1DFCEF20C0EF10B,
-				003661861512974059D9E83E,
 				42D0B60221EE6B79C91E4545,
 				E7B7F5671349BE13E13B25AF,
-				2802E348ED9155CFCD865E76,
 				99EB12F2B329571B7D8B9AC4,
 				19E79F7351E09AD55A45358E,
 				D2D2C8114E3834E55E3E0403,

@@ -29,10 +29,13 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	generatePreview();
 
 	acceptedDropTypes.add("LightBlockModel");
-	acceptedDropTypes.add("Timeline");
-	acceptedDropTypes.add("Script");
-	acceptedDropTypes.add("Picture");
-	acceptedDropTypes.add("Node");
+	acceptedDropTypes.add(SequenceBlock::getTypeStringStatic());
+	acceptedDropTypes.add(StreamingScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(EmbeddedScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(PictureBlock::getTypeStringStatic());
+	acceptedDropTypes.add(NodeBlock::getTypeStringStatic());
+	acceptedDropTypes.add(VideoFileBlock::getTypeStringStatic());
+	acceptedDropTypes.add(SharedTextureBlock::getTypeStringStatic());
 
 	addChildComponent(&fadeInHandle, 0);
 	addChildComponent(&fadeOutHandle, 0);

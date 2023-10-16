@@ -17,10 +17,13 @@ LightBlockClipManagerUI::LightBlockClipManagerUI(LightBlockLayerTimeline * _time
 	dropClipX(-1)
 {
 	acceptedDropTypes.add("LightBlockModel");
-	acceptedDropTypes.add("Script");
-	acceptedDropTypes.add("Timeline");
-	acceptedDropTypes.add("Picture");
-	acceptedDropTypes.add("Node");
+	acceptedDropTypes.add(SequenceBlock::getTypeStringStatic());
+	acceptedDropTypes.add(StreamingScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(EmbeddedScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(PictureBlock::getTypeStringStatic());
+	acceptedDropTypes.add(NodeBlock::getTypeStringStatic());
+	acceptedDropTypes.add(VideoFileBlock::getTypeStringStatic());
+	acceptedDropTypes.add(SharedTextureBlock::getTypeStringStatic());
 
 	addExistingItems();
 }

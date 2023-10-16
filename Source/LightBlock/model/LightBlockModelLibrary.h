@@ -37,6 +37,7 @@ public:
 	std::unique_ptr<LightBlockModel> pointBlock;
 	std::unique_ptr<LightBlockModel> multiPointBlock;
 	std::unique_ptr<LightBlockModel> rangeBlock;
+	std::unique_ptr<LightBlockModel> ledRangeBlock;
 
 	////Generic / Filters
 	//LightBlockModelGroup genericFilterBlocks;

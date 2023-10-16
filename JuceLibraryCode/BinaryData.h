@@ -8,8 +8,17 @@
 
 namespace BinaryData
 {
+    extern const char*   ledRange_png;
+    const int            ledRange_pngSize = 3899;
+
+    extern const char*   multipoint_png;
+    const int            multipoint_pngSize = 3119;
+
     extern const char*   noise_png;
     const int            noise_pngSize = 1839;
+
+    extern const char*   point_png;
+    const int            point_pngSize = 2756;
 
     extern const char*   rainbow_png;
     const int            rainbow_pngSize = 4481;
@@ -29,17 +38,11 @@ namespace BinaryData
     extern const char*   embeddedScript_png;
     const int            embeddedScript_pngSize = 2804;
 
-    extern const char*   multipoint_png;
-    const int            multipoint_pngSize = 3119;
-
     extern const char*   node_png;
     const int            node_pngSize = 3682;
 
     extern const char*   picture_png;
     const int            picture_pngSize = 3156;
-
-    extern const char*   point_png;
-    const int            point_pngSize = 2756;
 
     extern const char*   sequence_png;
     const int            sequence_pngSize = 1253;
@@ -69,7 +72,7 @@ namespace BinaryData
     const int            shader_fragSize = 975;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 20;
+    const int namedResourceListSize = 21;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

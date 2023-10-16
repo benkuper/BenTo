@@ -149,9 +149,9 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
     if (filename.endsWith(".wasm"))
         dest = "/scripts";
     else if (filename.endsWith(".colors") || filename.endsWith(".meta"))
-        dest = "/bake";
+        dest = "/playback";
     else if (filename.endsWith(".seq"))
-        dest = "/sequences";
+        dest = "/playback";
 
     if (dest == "")
     {

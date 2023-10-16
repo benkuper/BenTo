@@ -49,8 +49,7 @@ bool FilesComponent::initInternal(JsonObject o)
 
         //    NDBG("SD Card initialized.");
         SD.mkdir("/scripts");
-        SD.mkdir("/sequences");
-        SD.mkdir("/bake");
+        SD.mkdir("/playback");
         SD.mkdir("/server");
         //    listDir("/", 1);
     }

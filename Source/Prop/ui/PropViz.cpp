@@ -8,6 +8,8 @@
   ==============================================================================
 */
 
+#include "Prop/PropIncludes.h"
+
 juce_ImplementSingleton(VizTimer);
 
 PropViz::PropViz(Prop* prop) :
@@ -57,7 +59,8 @@ void PropViz::paint(Graphics& g)
 		for (int i = 0; i < numLeds; i++)
 		{
 			float p = i * 1.0f / (numLeds - 1);
-			Rectangle<float> ledR = ls.withY(lr.getY() + (1 - p) * lr.getHeight() - ledSize / 2.0f).toFloat();
+			if (!prop->invertLedsInUI) p = 1 - p;
+			Rectangle<float> ledR = ls.withY(lr.getY() + p * lr.getHeight() - ledSize / 2.0f).toFloat();
 			g.setColour(Colours::white.withAlpha(.2f));
 			g.drawEllipse(ledR, .5f);
 			g.setColour(prop->colors[numLeds - 1 - i]);

@@ -1,8 +1,12 @@
-bool LedStripBakeLayer::initInternal(JsonObject o)
+bool LedStripPlaybackLayer::initInternal(JsonObject o)
 {
     LedStripLayer::initInternal(o);
 
+#if PLAYBACK_USE_ALPHA
     frameSize = strip->count * 4;
+#else
+    frameSize = strip->count * 3;
+#endif
 
     fps = 0;
     totalTime = 0;
@@ -20,7 +24,7 @@ bool LedStripBakeLayer::initInternal(JsonObject o)
     return true;
 }
 
-void LedStripBakeLayer::updateInternal()
+void LedStripPlaybackLayer::updateInternal()
 {
     if (!curFile)
         return;
@@ -47,12 +51,13 @@ void LedStripBakeLayer::updateInternal()
     playFrame();
 }
 
-void LedStripBakeLayer::clearInternal()
+void LedStripPlaybackLayer::clearInternal()
 {
 }
 
-bool LedStripBakeLayer::playFrame()
+bool LedStripPlaybackLayer::playFrame()
 {
+    DBG("Play frame");
     if (curFile.available() < frameSize)
     {
         NDBG("End of show");
@@ -108,12 +113,12 @@ bool LedStripBakeLayer::playFrame()
     return true;
 }
 
-void LedStripBakeLayer::showBlackFrame()
+void LedStripPlaybackLayer::showBlackFrame()
 {
     clearColors();
 }
 
-void LedStripBakeLayer::showIdFrame()
+void LedStripPlaybackLayer::showIdFrame()
 {
     if (groupID == -1 || localID == -1)
         return;
@@ -122,13 +127,15 @@ void LedStripBakeLayer::showIdFrame()
     fillRange(c, 0, localID * 1.f / strip->count, false);
 }
 
-void LedStripBakeLayer::load(String path)
+void LedStripPlaybackLayer::load(String path)
 {
     showBlackFrame();
 
+    const String playbackDir = "/playback";
+
     NDBG("Load file " + path);
     NDBG("Reading meta data");
-    metaDataFile = FilesComponent::instance->openFile(path + ".meta", false); // false is for reading
+    metaDataFile = FilesComponent::instance->openFile(playbackDir + "/" + path + ".meta", false); // false is for reading
     if (!metaDataFile)
     {
         NDBG("Error reading metadata");
@@ -158,7 +165,7 @@ void LedStripBakeLayer::load(String path)
     }
 
     NDBG("Loading colors..");
-    curFile = FilesComponent::instance->openFile(path + ".colors", false); // false is for reading
+    curFile = FilesComponent::instance->openFile(playbackDir+ "/" + path + ".colors", false); // false is for reading
     if (!curFile)
     {
         NDBG("Error playing file " + path);
@@ -177,7 +184,7 @@ void LedStripBakeLayer::load(String path)
     play(0);
 }
 
-void LedStripBakeLayer::play(float atTime)
+void LedStripPlaybackLayer::play(float atTime)
 {
     DBG("Play " + String(atTime));
     if (!curFile)
@@ -191,7 +198,7 @@ void LedStripBakeLayer::play(float atTime)
     sendEvent(Playing);
 }
 
-void LedStripBakeLayer::seek(float t, bool doSendEvent)
+void LedStripPlaybackLayer::seek(float t, bool doSendEvent)
 {
     if (!curFile)
         return;
@@ -215,14 +222,14 @@ void LedStripBakeLayer::seek(float t, bool doSendEvent)
         sendEvent(Seek);
 }
 
-void LedStripBakeLayer::pause()
+void LedStripPlaybackLayer::pause()
 {
     DBG("Pause");
     isPlaying = false;
     sendEvent(Paused);
 }
 
-void LedStripBakeLayer::stop()
+void LedStripPlaybackLayer::stop()
 {
     DBG("Stop");
     isPlaying = false;
@@ -230,7 +237,7 @@ void LedStripBakeLayer::stop()
     sendEvent(Stopped);
 }
 
-void LedStripBakeLayer::togglePlayPause()
+void LedStripPlaybackLayer::togglePlayPause()
 {
     if (!isPlaying)
         pause();
@@ -238,7 +245,7 @@ void LedStripBakeLayer::togglePlayPause()
         play();
 }
 
-bool LedStripBakeLayer::handleCommandInternal(const String &command, var *data, int numData)
+bool LedStripPlaybackLayer::handleCommandInternal(const String &command, var *data, int numData)
 {
     if (checkCommand(command, "load", numData, 1))
     {

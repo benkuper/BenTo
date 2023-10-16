@@ -20,12 +20,14 @@ NodeManagerUI::NodeManagerUI(NodeManager * manager) :
 	removeMouseListener(this);
 	addMouseListener(this, true);
 
-	acceptedDropTypes.add("NodeTool");
 	acceptedDropTypes.add("LightBlockModel");
-	acceptedDropTypes.add("Script");
-	acceptedDropTypes.add("Node");
-	acceptedDropTypes.add("Timeline");
-	acceptedDropTypes.add("Picture");
+	acceptedDropTypes.add(SequenceBlock::getTypeStringStatic());
+	acceptedDropTypes.add(StreamingScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(EmbeddedScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(PictureBlock::getTypeStringStatic());
+	acceptedDropTypes.add(NodeBlock::getTypeStringStatic());
+	acceptedDropTypes.add(VideoFileBlock::getTypeStringStatic());
+	acceptedDropTypes.add(SharedTextureBlock::getTypeStringStatic());
 	
 	addExistingItems(false);
 	

@@ -1,10 +1,10 @@
 #pragma once
 
-class LedStripBakeLayer : public LedStripLayer
+class LedStripPlaybackLayer : public LedStripLayer
 {
 public:
-    LedStripBakeLayer(LedStripComponent *strip) : LedStripLayer("bakeLayer", LedStripLayer::Bake, strip) {}
-    ~LedStripBakeLayer() {}
+    LedStripPlaybackLayer(LedStripComponent *strip) : LedStripLayer("playbackLayer", LedStripLayer::Bake, strip) {}
+    ~LedStripPlaybackLayer() {}
 
     File curFile;
     File metaDataFile;

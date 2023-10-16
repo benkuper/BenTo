@@ -17,9 +17,11 @@ Prop::Prop(var params) :
 	Thread("Prop"),
 	generalCC("Main Parameters"),
 	resolutionRef(nullptr),
+	invertLedsInUI(true),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
 	playbackCC("Playback"),
+	useAlphaInPlaybackData(false),
 	playbackProvider(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
@@ -452,6 +454,7 @@ PlaybackData Prop::generatePlayback()
 		for (int i = startIndex; i != endIndex; i += step)
 		{
 			int index = i;//proprefactor (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
+			if (useAlphaInPlaybackData) os.writeByte(cols[index].getAlpha());
 			os.writeByte(cols[index].getRed());
 			os.writeByte(cols[index].getGreen());
 			os.writeByte(cols[index].getBlue());

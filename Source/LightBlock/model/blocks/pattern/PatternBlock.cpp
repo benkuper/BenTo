@@ -355,3 +355,28 @@ void MultiPointPattern::getColorsInternal(Array<Colour>* result, Prop* p, double
 		result->set(i, c.withMultipliedBrightness(bBrightness));
 	}
 }
+
+LedRangePattern::LedRangePattern(var params) :
+	PatternBlock(getTypeString(), params)
+{
+	start = paramsContainer->addIntParameter("Start", "Range start", 1);
+	count = paramsContainer->addIntParameter("Count", "Number of leds to show", 1);
+	color = paramsContainer->addColorParameter("Color", "The color of the leds", Colours::red);
+	bgColor = paramsContainer->addColorParameter("Background Color", "The color of the background", Colours::black);
+}
+
+void LedRangePattern::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
+{
+	int bStart = getParamValue<int>(start, params);
+	int bCount = getParamValue<int>(count, params);
+	var colorVar = getParamValue<var>(color, params);
+	Colour bColor = Colour::fromFloatRGBA(colorVar[0], colorVar[1], colorVar[2], colorVar[3]);
+	var bgColorVar = getParamValue<var>(bgColor, params);
+	Colour bBGColor = Colour::fromFloatRGBA(bgColorVar[0], bgColorVar[1], bgColorVar[2], bgColorVar[3]);
+
+	for (int i = 0; i < resolution; i++)
+	{
+		bool isInRange = i >= (bStart-1) && i < (bStart + bCount-1);
+		result->set(i, isInRange ? bColor : bBGColor);
+	}
+}
