@@ -66,7 +66,6 @@ void MotionComponent::updateInternal()
     {
         if (sendLevel >= 1)
         {
-            DBG("Send orientation");
             SendMultiParamFeedback(orientation);
 
             if (sendLevel >= 2)

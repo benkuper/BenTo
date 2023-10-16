@@ -28,7 +28,6 @@ BentoEngine::BentoEngine() :
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
 	addChildControllableContainer(Spatializer::getInstance());
-	addChildControllableContainer(EmbeddedScriptManager::getInstance());
 
 	projectName = ProjectSettings::getInstance()->addStringParameter("Project name", "This name will be used to identify the project when uploaded to the props", "project", true);
 
@@ -65,7 +64,6 @@ BentoEngine::~BentoEngine()
 	Spatializer::deleteInstance();
 
 	ZeroconfManager::deleteInstance();
-	EmbeddedScriptManager::deleteInstance();
 
 	PropFlasher::deleteInstance();
 }
@@ -75,7 +73,6 @@ void BentoEngine::clearInternal()
 	PropManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
 	Spatializer::getInstance()->clear();
-	EmbeddedScriptManager::getInstance()->clear();
 
 	projectName->resetValue();
 }
@@ -212,9 +209,6 @@ var BentoEngine::getJSONData()
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
 
-	var wasmData = EmbeddedScriptManager::getInstance()->getJSONData();
-	if (!wasmData.isVoid() && wasmData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(EmbeddedScriptManager::getInstance()->shortName, wasmData);
-
 	return data;
 }
 
@@ -235,8 +229,4 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask
 	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));
 	propTask->setProgress(1);
 	propTask->end();
-
-	EmbeddedScriptManager::getInstance()->loadJSONData(data.getProperty(EmbeddedScriptManager::getInstance()->shortName, var()));
-
-
 }

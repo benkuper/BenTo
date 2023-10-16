@@ -44,7 +44,7 @@ public:
     void setLed(int index, Color c);
     Color getLed(int index);
 
-
+    void setBlendMode(BlendMode b);
 
     HandleSetParamInternalStart
         CheckAndSetEnumParam(blendMode, blendModeOptions, BlendModeMax);
@@ -57,4 +57,5 @@ public:
     FillOSCQueryInternalStart
         FillOSCQueryEnumParam(blendMode, blendModeOptions, BlendModeMax);
     FillOSCQueryInternalEnd
+    
 };

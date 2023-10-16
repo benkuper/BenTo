@@ -11,6 +11,15 @@
     <Filter Include="BenTo\Resources">
       <UniqueIdentifier>{8E65566C-A6CB-B998-F659-4E3386AD8621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Source\LightBlock\ui">
+      <UniqueIdentifier>{C9A8C53E-67AF-6417-BB17-EAD9AEA30365}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Source\LightBlock">
+      <UniqueIdentifier>{306FAF36-83CF-796C-601E-E7BA5D889C60}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Source">
+      <UniqueIdentifier>{1328D82E-A170-F3E3-663B-68ED9EAE53A3}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Common\BlockViz">
       <UniqueIdentifier>{ACBE3565-6DFD-B7C2-79BA-202E8D24AFD0}</UniqueIdentifier>
     </Filter>
@@ -5121,6 +5130,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\LightBlock\ui\LightBlockManagerUI.h">
+      <Filter>BenTo\Source\Source\LightBlock\ui</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\Common\BlockViz\BlockVizPanel.h">
       <Filter>BenTo\Source\Common\BlockViz</Filter>
     </ClInclude>
@@ -12188,6 +12200,9 @@
     <None Include="..\..\Resources\models\patterns\strobe.png">
       <Filter>BenTo\Resources\models\patterns</Filter>
     </None>
+    <None Include="..\..\Resources\models\sequenceBlock.png">
+      <Filter>BenTo\Resources\models</Filter>
+    </None>
     <None Include="..\..\Resources\models\dmx.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
@@ -12198,9 +12213,6 @@
       <Filter>BenTo\Resources\models</Filter>
     </None>
     <None Include="..\..\Resources\models\picture.png">
-      <Filter>BenTo\Resources\models</Filter>
-    </None>
-    <None Include="..\..\Resources\models\sequence.png">
       <Filter>BenTo\Resources\models</Filter>
     </None>
     <None Include="..\..\Resources\models\streamingScript.png">

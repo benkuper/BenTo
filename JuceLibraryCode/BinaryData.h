@@ -32,6 +32,9 @@ namespace BinaryData
     extern const char*   strobe_png;
     const int            strobe_pngSize = 5621;
 
+    extern const char*   sequenceBlock_png;
+    const int            sequenceBlock_pngSize = 1253;
+
     extern const char*   dmx_png;
     const int            dmx_pngSize = 3170;
 
@@ -43,9 +46,6 @@ namespace BinaryData
 
     extern const char*   picture_png;
     const int            picture_pngSize = 3156;
-
-    extern const char*   sequence_png;
-    const int            sequence_pngSize = 1253;
 
     extern const char*   streamingScript_png;
     const int            streamingScript_pngSize = 2116;

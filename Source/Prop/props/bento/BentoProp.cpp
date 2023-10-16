@@ -263,7 +263,7 @@ void BentoProp::exportPlaybackData(PlaybackData data)
 
 void BentoProp::uploadFile(File f)
 {
-	String target = "http://" + remoteHost->stringValue() + "/upload";
+	String target = "http://" + remoteHost->stringValue() + "/uploadFile";
 	FileInputStream fs(f);
 	MemoryBlock b;
 	fs.readIntoMemoryBlock(b);

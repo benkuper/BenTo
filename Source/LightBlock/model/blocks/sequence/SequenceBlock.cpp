@@ -13,7 +13,7 @@
 #include "BentoEngine.h"
 
 BentoSequenceBlock::BentoSequenceBlock(var params) :
-	LightBlockModel(getTypeString(), params)
+	LightBlockModel("Sequence", params)
 {
 	itemDataType = getTypeString();
 

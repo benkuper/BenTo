@@ -344,7 +344,8 @@ void Component::linkScriptFunctions(IM3Module module, bool isLocal)
 {
     const char *tName = isLocal ? "local" : name.c_str(); // getFullPath(false, true).c_str();
 
-    // m3_LinkRawFunctionEx(module, tName, "setEnabled", "v(i)", &Component::m3_setEnabled, this);
+    LinkScriptFunction(Component, setEnabled, v, i);
+
     linkScriptFunctionsInternal(module, tName);
 
     for (int i = 0; i < numComponents; i++)

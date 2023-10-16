@@ -41,7 +41,6 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(SpatializerPanel::getTypeStringStatic(), &SpatializerPanel::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition(PropShapePanel::getTypeStringStatic(), &PropShapePanel::create));
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Video Preview", &VideoPreviewPanel::create));
-	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("WASM Scripts", &EmbeddedScriptManagerUI::create));
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);
 	ShapeShifterManager::getInstance()->setLayoutInformations("btlayout", "Bento/layouts");

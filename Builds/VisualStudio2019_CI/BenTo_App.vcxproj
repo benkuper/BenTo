@@ -3712,6 +3712,7 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\LightBlock\ui\LightBlockManagerUI.h"/>
     <ClInclude Include="..\..\Source\Common\BlockViz\BlockVizPanel.h"/>
     <ClInclude Include="..\..\Source\Common\EmbeddedScript\ui\EmbeddedScriptManagerUI.h"/>
     <ClInclude Include="..\..\Source\Common\EmbeddedScript\EmbeddedScript.h"/>
@@ -6069,11 +6070,11 @@
     <None Include="..\..\Resources\models\patterns\range.png"/>
     <None Include="..\..\Resources\models\patterns\solidColor.png"/>
     <None Include="..\..\Resources\models\patterns\strobe.png"/>
+    <None Include="..\..\Resources\models\sequenceBlock.png"/>
     <None Include="..\..\Resources\models\dmx.png"/>
     <None Include="..\..\Resources\models\embeddedScript.png"/>
     <None Include="..\..\Resources\models\node.png"/>
     <None Include="..\..\Resources\models\picture.png"/>
-    <None Include="..\..\Resources\models\sequence.png"/>
     <None Include="..\..\Resources\models\streamingScript.png"/>
     <None Include="..\..\Resources\models\video.png"/>
     <None Include="..\..\Resources\default.btlayout"/>

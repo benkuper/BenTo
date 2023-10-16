@@ -75,6 +75,7 @@ DeclareComponentEventNames("orientation", "accel", "gyro", "linearAccel", "throw
 
 #ifdef USE_SCRIPT
 LinkScriptFunctionsStart
+LinkScriptFunctionsStartMotherClass(Component)
     LinkScriptFunction(MotionComponent, getOrientation, f, i);
 LinkScriptFunction(MotionComponent, getYaw, f, );
 LinkScriptFunction(MotionComponent, getPitch, f, );

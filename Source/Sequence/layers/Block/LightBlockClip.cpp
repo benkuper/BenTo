@@ -1,16 +1,16 @@
 /*
   ==============================================================================
 
-    LightBlockClip.cpp
-    Created: 17 Apr 2018 5:10:24pm
-    Author:  Ben
+	LightBlockClip.cpp
+	Created: 17 Apr 2018 5:10:24pm
+	Author:  Ben
 
   ==============================================================================
 */
 
 #include "Sequence/SequenceIncludes.h"
 
-LightBlockClip::LightBlockClip(LightBlockLayer * layer) :
+LightBlockClip::LightBlockClip(LightBlockLayer* layer) :
 	LayerBlock(getTypeString()),
 	effects("Block Effects"),
 	layer(layer),
@@ -44,7 +44,7 @@ LightBlockClip::~LightBlockClip()
 	setBlockFromProvider(nullptr);
 }
 
-void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
+void LightBlockClip::setBlockFromProvider(LightBlockColorProvider* provider)
 {
 	if (currentBlock == nullptr && provider == nullptr) return;
 
@@ -76,7 +76,7 @@ void LightBlockClip::setBlockFromProvider(LightBlockColorProvider * provider)
 		}
 	}
 }
-Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var params)
+Array<Colour> LightBlockClip::getColors(Prop* p, double absoluteTime, var params)
 {
 
 	int resolution = p->getResolution();
@@ -88,18 +88,18 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 		result.fill(Colours::transparentBlack);
 		return result;
 	}
-		
-	
+
+
 	float factor = 1;
 
 	int id = params.getProperty("forceID", p->globalID->intValue());
 	float offset = id * timeOffsetByID->floatValue();
 	double relTimeTotal = absoluteTime - time->floatValue() + offset;
-	if (fadeIn->floatValue() > 0) factor *= jmin<double>(relTimeTotal / fadeIn->floatValue(),1.f);
+	if (fadeIn->floatValue() > 0) factor *= jmin<double>(relTimeTotal / fadeIn->floatValue(), 1.f);
 	if (fadeOut->floatValue() > 0) factor *= jmin<double>((getTotalLength() - relTimeTotal) / fadeOut->floatValue(), 1.f);
 	factor = jmax(factor, 0.f);
 
-	if (dynamic_cast<SequenceBlock *>(currentBlock->provider.get()) != nullptr)
+	if (dynamic_cast<SequenceBlock*>(currentBlock->provider.get()) != nullptr)
 	{
 		params.getDynamicObject()->setProperty("sequenceTime", false);
 	}
@@ -118,27 +118,27 @@ Array<Colour> LightBlockClip::getColors(Prop * p, double absoluteTime, var param
 
 	for (int i = 0; i < resolution; i++)
 	{
-		colors.set(i,colors[i].withMultipliedAlpha(factor));
+		colors.set(i, colors[i].withMultipliedAlpha(factor));
 	}
 
 	return colors;
 }
 
-void LightBlockClip::addEffectFromProvider(LightBlockColorProvider * provider)
+void LightBlockClip::addEffectFromProvider(LightBlockColorProvider* provider)
 {
-	LightBlockEffect * e = effects.addItem();
+	LightBlockEffect* e = effects.addItem();
 	e->setProvider(provider);
 
 	notifyUpdatePreview();
 
 }
 
-void LightBlockClip::blockParamControlModeChanged(Parameter * p) 
+void LightBlockClip::blockParamControlModeChanged(Parameter* p)
 {
 	if (p->controlMode == Parameter::AUTOMATION)
 	{
 		p->automation->setAllowKeysOutside(true);
-		p->automation->setLength(coreLength->floatValue(),true);
+		p->automation->setLength(coreLength->floatValue(), true);
 	}
 }
 
@@ -150,7 +150,7 @@ void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEn
 	if (currentBlock != nullptr)
 	{
 		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
-		for (auto & pa : params)
+		for (auto& pa : params)
 		{
 			if (pa->automation == nullptr) continue;
 			pa->automation->setAllowKeysOutside(true);
@@ -168,26 +168,33 @@ void LightBlockClip::notifyUpdatePreview()
 
 void LightBlockClip::handleEnterExit(bool enter, Array<Prop*> filteredProps)
 {
-	if(currentBlock == nullptr) return;
+	if (currentBlock == nullptr) return;
 	if (enter == isActive->boolValue()) return;
 	isActive->setValue(enter);
 
-	if(filterManager->items.isEmpty()) currentBlock->handleEnterExit(isActive->boolValue(), filteredProps);
-	else
+	Array<Prop*> clipProps;
+	if (filterManager->items.isEmpty()) clipProps.addArray(filteredProps);
+	else for (auto& p : filteredProps) if (filterManager->getTargetIDForProp(p) >= 0) clipProps.add(p);
+
+	for (auto& cp : clipProps)
 	{
-		Array<Prop*> clipProps;
-		for (auto& p : filteredProps) if (filterManager->getTargetIDForProp(p) >= 0) clipProps.add(p);
-		currentBlock->handleEnterExit(isActive->boolValue(), clipProps);
+		if (cp->currentBlock != nullptr)
+		{
+			if (BentoSequenceBlock* sb = dynamic_cast<BentoSequenceBlock*>(cp->currentBlock->provider.get()))
+			{
+				if (sb->sequence.get() == layer->sequence) currentBlock->handleEnterExit(isActive->boolValue(), clipProps);
+			}
+		}
 	}
 }
 
-void LightBlockClip::onContainerParameterChangedInternal(Parameter * p)
+void LightBlockClip::onContainerParameterChangedInternal(Parameter* p)
 {
 	LayerBlock::onContainerParameterChangedInternal(p);
 
 	if (p == activeProvider)
 	{
-		setBlockFromProvider(dynamic_cast<LightBlockColorProvider *>(activeProvider->targetContainer.get()));
+		setBlockFromProvider(dynamic_cast<LightBlockColorProvider*>(activeProvider->targetContainer.get()));
 	}
 	else if (p == coreLength || p == loopLength)
 	{
@@ -235,7 +242,7 @@ void LightBlockClip::loadJSONDataInternal(var data)
 
 		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
 
-		for (auto & pa : params)
+		for (auto& pa : params)
 		{
 			if (pa->automation == nullptr) continue;
 			pa->automation->setAllowKeysOutside(true);
@@ -248,7 +255,7 @@ void LightBlockClip::loadJSONDataInternal(var data)
 	effects.loadJSONData(data.getProperty("effects", var()));
 
 	//Retro compatibility, to remove after
-	var params = data.getProperty("parameters",var());
+	var params = data.getProperty("parameters", var());
 	for (int i = 0; i < params.size(); i++)
 	{
 		if (params[i].getProperty("controlAddress", "") == "/autoFade")
@@ -259,7 +266,7 @@ void LightBlockClip::loadJSONDataInternal(var data)
 			break;
 		}
 	}
-	
-	
+
+
 
 }

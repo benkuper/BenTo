@@ -343,6 +343,9 @@
 #define LinkScriptFunctionsStart                                                           \
     virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) override \
     {
+
+#define LinkScriptFunctionsStartMotherClass(Class) Class::linkScriptFunctionsInternal(module, tName);
+
 #define LinkScriptFunctionsEnd }
 
 #define LinkScriptFunction(Class, FunctionName, ReturnType, Args) m3_LinkRawFunctionEx(module, tName, XSTR(FunctionName), XSTR(ReturnType(Args)), &Class::m3_##FunctionName, this);

@@ -242,7 +242,7 @@ void PointPattern::fillPoint(Array<Colour>* result, Prop* p, double time, int id
 	{
 		float diff = 1 - (fabsf(i - relPos) * 1.f / (relSize / (bFade * 2)));
 
-		int index = invert ? resolution - i : i;
+		int index = invert ? resolution - 1 - i : i;
 		Colour c = result->getUnchecked(index).interpolatedWith(bColor, diff);
 		result->set(index, c.withMultipliedBrightness(bBrightness));
 	}

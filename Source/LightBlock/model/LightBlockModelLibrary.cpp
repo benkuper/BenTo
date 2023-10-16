@@ -21,7 +21,6 @@ LightBlockModelLibrary::LightBlockModelLibrary() :
 	pictureBlocks("Pictures", UserLightBlockModelManager::PICTURE),
 	nodeBlocks("Nodes", UserLightBlockModelManager::NODE),
 	streamingScriptBlocks("Streaming Scripts", UserLightBlockModelManager::STREAMING_SCRIPT),
-	embeddedScriptBlocks("Embedded Scripts", UserLightBlockModelManager::EMBEDDED_SCRIPT),
 	sequenceBlocks("Sequences", UserLightBlockModelManager::SEQUENCE)
 	//genericFilterBlocks("Generic Filters")
 {

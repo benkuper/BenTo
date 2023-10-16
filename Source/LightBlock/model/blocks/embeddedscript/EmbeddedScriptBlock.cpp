@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    EmbeddedScriptBlock.cpp
-    Created: 9 Nov 2021 6:06:13pm
-    Author:  bkupe
+	EmbeddedScriptBlock.cpp
+	Created: 9 Nov 2021 6:06:13pm
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -40,7 +40,11 @@ void EmbeddedScriptBlock::checkAutoCompile()
 	File f = scriptFile->getFile();
 	if (!f.exists()) return;
 	Time t = f.getLastModificationTime();
-	if (t > lastModTime) startThread();
+	if (t > lastModTime)
+	{
+		stopThread(100);
+		startThread();
+	}
 	lastModTime = t;
 
 }
@@ -121,12 +125,18 @@ File EmbeddedScriptBlock::getWasmFile()
 
 void EmbeddedScriptBlock::loadScriptOnProp(Prop* p)
 {
-	if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.load", shortName);
+	if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+	{
+		bp->sendControlToProp("script.load", shortName);
+	}
 }
 
 void EmbeddedScriptBlock::stopScriptOnProp(Prop* p)
 {
-	if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.stop", shortName);
+	if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+	{
+		bp->sendControlToProp("script.stop", shortName);
+	}
 }
 
 void EmbeddedScriptBlock::run()
@@ -169,14 +179,14 @@ void EmbeddedScriptBlock::onContainerTriggerTriggered(Trigger* t)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.load", shortName);
+			if (p->currentBlock != nullptr && p->currentBlock->provider == this) loadScriptOnProp(p);
 		}
 	}
 	else if (t == stopOnPropsTrigger)
 	{
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->sendControlToProp("scripts.stop", shortName);
+			if (p->currentBlock != nullptr && p->currentBlock->provider == this) stopScriptOnProp(p);
 		}
 	}
 }
@@ -194,4 +204,9 @@ void EmbeddedScriptBlock::handleEnterExit(bool enter, Array<Prop*> props)
 void EmbeddedScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
 {
 	result->fill(Colours::black.withAlpha(.2f));
+}
+
+void EmbeddedScriptBlockManager::timerCallback()
+{
+	for (auto& i : items) ((EmbeddedScriptBlock*)i)->checkAutoCompile();
 }

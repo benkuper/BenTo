@@ -14,10 +14,6 @@
 
 #include "BlockViz\BlockVizPanel.h"
 
-#include "EmbeddedScript\EmbeddedScript.h"
-#include "EmbeddedScript\EmbeddedScriptManager.h"
-#include "EmbeddedScript\ui\EmbeddedScriptManagerUI.h"
-
 #include "Identification\IdentificationRule.h"
 #include "Identification\IdentificationRuleManager.h"
 

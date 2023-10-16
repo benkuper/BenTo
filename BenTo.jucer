@@ -16,12 +16,13 @@
           <FILE id="Dr7vTV" name="solidColor.png" compile="0" resource="1" file="Resources/models/patterns/solidColor.png"/>
           <FILE id="WOljwS" name="strobe.png" compile="0" resource="1" file="Resources/models/patterns/strobe.png"/>
         </GROUP>
+        <FILE id="WdcaQm" name="sequenceBlock.png" compile="0" resource="1"
+              file="Resources/models/sequenceBlock.png"/>
         <FILE id="S1AUx7" name="dmx.png" compile="0" resource="1" file="Resources/models/dmx.png"/>
         <FILE id="JG5C78" name="embeddedScript.png" compile="0" resource="1"
               file="Resources/models/embeddedScript.png"/>
         <FILE id="OO6Nta" name="node.png" compile="0" resource="1" file="Resources/models/node.png"/>
         <FILE id="MQHQlQ" name="picture.png" compile="0" resource="1" file="Resources/models/picture.png"/>
-        <FILE id="XxXIDd" name="sequence.png" compile="0" resource="1" file="Resources/models/sequence.png"/>
         <FILE id="d0F62O" name="streamingScript.png" compile="0" resource="1"
               file="Resources/models/streamingScript.png"/>
         <FILE id="ZghcER" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>
@@ -35,6 +36,105 @@
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{1D983D24-0441-C72A-26E1-53EB8226180E}" name="Source">
+        <GROUP id="{9891EF0E-D9AD-3AD7-CB82-6DC61BFD1EAC}" name="Audio">
+          <GROUP id="{9D947111-C4DC-703F-DF73-027BC221F373}" name="ui"/>
+        </GROUP>
+        <GROUP id="{B947907B-9AEC-DE9D-30FA-4BAB073C0EA7}" name="Common">
+          <GROUP id="{99002953-0B55-10B2-9238-5C18D2473DD6}" name="BlockViz"/>
+          <GROUP id="{20F15E0B-1081-14B0-ED1E-BA0BAA344D83}" name="EmbeddedScript">
+            <GROUP id="{314BC280-E845-C6D2-183E-706DD54ADCC7}" name="ui"/>
+          </GROUP>
+          <GROUP id="{4E28B0D5-F121-66CD-CD19-64AA14BB2029}" name="Identification"/>
+          <GROUP id="{BDC0ECAA-C09C-FC20-D9CF-76DBE29A98AD}" name="Zeroconf"/>
+        </GROUP>
+        <GROUP id="{1BFD4FBE-1E84-E9D4-C203-4C64D28CCBBB}" name="LightBlock">
+          <GROUP id="{EC9A4A33-1FC9-3D57-FE3C-D9D21020FB22}" name="model">
+            <GROUP id="{816D0901-E941-8E08-4953-483D915FA182}" name="blocks">
+              <GROUP id="{69A19699-5763-7E20-9173-D3953639CDC5}" name="dmx"/>
+              <GROUP id="{DE5B3EE2-87C1-0A25-1319-6E1F9483B51A}" name="embeddedscript"/>
+              <GROUP id="{6BCBF19D-3DD7-D7D0-9CA7-63906D3127AB}" name="filters">
+                <GROUP id="{E004A5ED-1D5A-C960-7624-62C26845B30F}" name="generic">
+                  <GROUP id="{396468FA-E33F-D48D-4F09-C23DFF5BD189}" name="brightnesscontrast"/>
+                  <GROUP id="{69EA92D3-FC11-C30D-7F4A-5E5DE628C973}" name="hsv"/>
+                  <GROUP id="{68173D02-4A1B-74EA-C86E-B29E4B7E9563}" name="remap"/>
+                </GROUP>
+              </GROUP>
+              <GROUP id="{80CA45F0-4193-6606-6923-54D723B45BF1}" name="node">
+                <GROUP id="{DED0C4A8-FEF4-0FFC-3067-FDAC27F8C700}" name="ui"/>
+              </GROUP>
+              <GROUP id="{8AA8037D-94E9-1603-4BDC-CB1600E94E31}" name="pattern"/>
+              <GROUP id="{B6701E2D-2F87-3D76-A986-35034CFC846E}" name="picture">
+                <GROUP id="{F91D3792-224E-B25A-ABCB-819EB43B0D3B}" name="ui"/>
+              </GROUP>
+              <GROUP id="{3656A0C2-03F8-C40F-F173-D6932977FA7A}" name="sequence">
+                <GROUP id="{E55ABE98-A0CB-8316-B70A-FBBEFE865BA3}" name="ui"/>
+              </GROUP>
+              <GROUP id="{4001F3AB-2674-F9D0-5E10-340D5C3B38CE}" name="shape"/>
+              <GROUP id="{FD742272-C4C9-17B7-56E1-8DB27DD93202}" name="streamingscript"/>
+              <GROUP id="{BEC9B595-143A-86E1-FDBD-363A67A98F4A}" name="video">
+                <GROUP id="{4D190013-7F7A-58B4-B16D-BDE8691231BA}" name="ui"/>
+              </GROUP>
+            </GROUP>
+            <GROUP id="{7D0CF1F9-4280-532F-23DB-C4E106A4A6DD}" name="preset"/>
+            <GROUP id="{E452EC18-25F4-C7EC-B0CB-E09F36D05429}" name="ui"/>
+          </GROUP>
+          <GROUP id="{F1EDF226-DFD2-6DBD-98E8-D9E8CF9EC334}" name="ui">
+            <FILE id="letZzR" name="LightBlockManagerUI.h" compile="0" resource="0"
+                  file="Source/LightBlock/ui/LightBlockManagerUI.h"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{691C97ED-2735-04B8-E798-DBE5921FBC01}" name="Node">
+          <GROUP id="{52DF2A7C-BFEC-AF35-12E8-823D8DF982B3}" name="nodes">
+            <GROUP id="{51324179-05DC-B387-1CC0-1C188828E80B}" name="colorRemap"/>
+            <GROUP id="{845E393A-69E9-BF3B-05F6-0186C3184CFE}" name="composite"/>
+            <GROUP id="{BEA912B8-CED5-9111-FF52-A38F6EEDAF3D}" name="model">
+              <GROUP id="{7A1DA13D-6716-A1DE-A1E4-8AC1678BE904}" name="ui"/>
+            </GROUP>
+            <GROUP id="{6EE955D7-15A5-7C4B-3F88-6CB0879DCFDA}" name="parameter"/>
+            <GROUP id="{A96BE1AA-2BC4-A8A0-9276-5DD6D0F537F8}" name="positionRemap"/>
+            <GROUP id="{42106B0B-8A3A-4CED-7479-87124CAAD17A}" name="prop"/>
+          </GROUP>
+          <GROUP id="{DAAC93E7-F0E7-53D1-DB07-B3FD57CF9099}" name="ui"/>
+        </GROUP>
+        <GROUP id="{97E97609-5464-A99B-9A8E-1A9B0FF44A4B}" name="Prop">
+          <GROUP id="{A0889CE0-3877-1224-318C-D9BD772D2F0B}" name="Cluster">
+            <GROUP id="{3608F5FD-145B-C959-0D17-4DEC18023009}" name="ui"/>
+          </GROUP>
+          <GROUP id="{4DD18672-F942-1BA5-053D-033024952320}" name="Component">
+            <GROUP id="{74BCE165-969B-4BB5-37E7-0911677BA69A}" name="battery"/>
+            <GROUP id="{A2D3B00B-AA8F-F673-C40F-F505FC594025}" name="buttons"/>
+            <GROUP id="{8FE7778F-030D-6832-CF26-C08C5DAC63A1}" name="files"/>
+            <GROUP id="{B784BC3F-4DCB-7CFD-39E6-F81A19A7125A}" name="fx"/>
+            <GROUP id="{F9E8CF4C-1F5A-9840-3317-822401521A7F}" name="imu"/>
+            <GROUP id="{0D88150C-0EAC-6579-C120-D6D213FF0BD3}" name="ir"/>
+            <GROUP id="{A19EF80C-F210-576E-EA74-F03980DD8144}" name="rgb"/>
+            <GROUP id="{22C0F7D8-BE92-EE39-3849-3042924D67EE}" name="touch"/>
+          </GROUP>
+          <GROUP id="{DE380207-2838-09D7-84AA-A68C95E3694A}" name="props">
+            <GROUP id="{4150A868-5A0E-EE99-89B7-722FD4AD6B17}" name="bento"/>
+          </GROUP>
+          <GROUP id="{63D54BE4-0144-258C-E776-8088DD0425E1}" name="Shape">
+            <GROUP id="{58C2C260-2EEC-D5C7-FA4F-95B07EBACEE7}" name="ui"/>
+          </GROUP>
+          <GROUP id="{FBF676B5-C5B0-1F5E-C7BD-F22E0385C617}" name="TargetFilter"/>
+          <GROUP id="{CF5E07BC-4561-1A0F-B237-1CDAD62FCF69}" name="ui"/>
+        </GROUP>
+        <GROUP id="{F9E597FE-F5BF-747C-095D-98FAB88B3959}" name="Sequence">
+          <GROUP id="{B68600F4-D2CB-49D8-A940-0C2CF9D308E7}" name="layers">
+            <GROUP id="{FCE8DE41-A00E-A655-E72A-0250B8FC06ED}" name="Block">
+              <GROUP id="{11988347-52A9-7914-320E-008B21EB9DFF}" name="ui"/>
+            </GROUP>
+            <GROUP id="{285BDB7F-1BA4-47EB-F71B-3661C0FF24F4}" name="Video">
+              <GROUP id="{2FD8176A-A309-E865-7EFB-36BD317AF526}" name="ui"/>
+            </GROUP>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{BC5CB199-1DB1-F87A-DCAA-C18BC6E6136C}" name="Video">
+          <GROUP id="{CC99B8E0-B568-7339-60E7-44725EC9F1CD}" name="ui"/>
+        </GROUP>
+        <GROUP id="{33DCD973-22A2-3C29-F5A0-054ED1FF00CA}" name="VideoPreview"/>
+      </GROUP>
       <GROUP id="{EE130150-B1B1-4FF0-6360-8BEF17AAE2D5}" name="Common">
         <GROUP id="{B3AE9FD9-23DE-7B86-041F-68234C3014CC}" name="BlockViz">
           <FILE id="Tsva2O" name="BlockVizPanel.cpp" compile="0" resource="0"

@@ -142,6 +142,9 @@ public:
 #ifdef USE_SCRIPT
     virtual void linkScriptFunctions(IM3Module module, bool isLocal = false);
     virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) {}
+
+
+    DeclareScriptFunctionVoid1(Component, setEnabled, int) { SetParam(enabled,arg1); }
 #endif
-    // DeclareScriptFunctionVoid1(Component, setEnabled, uint32_t);
+
 };

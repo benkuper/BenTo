@@ -12,7 +12,6 @@
 
 
 
-
 class EmbeddedScriptBlock :
 	public LightBlockModel,
 	public Thread
@@ -64,5 +63,5 @@ public:
 	EmbeddedScriptBlockManager() : UserLightBlockModelManager("Embedded Scripts", EMBEDDED_SCRIPT) { startTimerHz(1); }
 	~EmbeddedScriptBlockManager() {}
 
-	void timerCallback() override { for (auto& i : items) ((EmbeddedScriptBlock*)i)->checkAutoCompile(); }
+	void timerCallback() override;
 };

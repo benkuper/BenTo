@@ -44,6 +44,6 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	LightBlockModelUI* createUI() override;
-	DECLARE_TYPE("Sequence")
+	DECLARE_TYPE("SequenceBlock")
 
 };

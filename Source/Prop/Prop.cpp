@@ -179,6 +179,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 			unregisterLinkedInspectable(currentBlock->provider.get());
 			currentBlock->provider->removeColorProviderListener(this);
 			currentBlock->provider->removeInspectableListener(this);
+			currentBlock->provider->handleEnterExit(false, this);
 		}
 
 		//currentBlock->removeLightBlockListener(this);
@@ -193,7 +194,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 		addChildControllableContainer(currentBlock.get());
 		currentBlock->provider->addInspectableListener(this);
 		currentBlock->provider->addColorProviderListener(this);
-
+		currentBlock->provider->handleEnterExit(true, this);
 
 		registerLinkedInspectable(currentBlock->provider.get());
 

@@ -12,9 +12,6 @@
 
 #include "BlockViz\BlockVizPanel.cpp"
 
-#include "EmbeddedScript\EmbeddedScript.cpp"
-#include "EmbeddedScript\EmbeddedScriptManager.cpp"
-#include "EmbeddedScript\ui\EmbeddedScriptManagerUI.cpp"
 
 #include "Identification\IdentificationRule.cpp"
 #include "Identification\IdentificationRuleManager.cpp"
