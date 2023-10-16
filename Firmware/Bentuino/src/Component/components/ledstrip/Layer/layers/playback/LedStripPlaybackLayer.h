@@ -8,7 +8,6 @@ public:
 
     File curFile;
     File metaDataFile;
-    StaticJsonDocument<200> metaData;
 
     int frameSize;
 
@@ -48,7 +47,9 @@ public:
     void stop();
     void togglePlayPause();
 
+
     void onEnabledChanged() override;
+    void paramValueChangedInternal(void* param) override;
 
     bool handleCommandInternal(const String &command, var *data, int numData) override;
 

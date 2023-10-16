@@ -88,7 +88,7 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == enabled)
 	{
-		sendMessageToProp(OSCMessage("/rgb/enabled", enabled->boolValue() ? 1 : 0));
+		sendMessageToProp(OSCMessage("/leds/strip1/enabled", enabled->boolValue() ? 1 : 0));
 	}
 }
 
@@ -387,7 +387,7 @@ void BentoProp::sendShowPropID(bool value)
 	}
 	else
 	{
-		OSCMessage m(playbackAddress + "/id");
+		OSCMessage m(playbackAddress + "/idMode");
 		m.addInt32(value);
 		sendMessageToProp(m);
 	}

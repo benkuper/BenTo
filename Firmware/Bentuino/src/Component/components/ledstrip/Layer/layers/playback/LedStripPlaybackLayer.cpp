@@ -32,7 +32,7 @@ void LedStripPlaybackLayer::updateInternal()
 
     if (idMode)
     {
-        showIdFrame();
+        // showIdFrame();
         return;
     }
 
@@ -49,7 +49,8 @@ void LedStripPlaybackLayer::updateInternal()
     //     return;
     // }
 
-    if(isPlaying) playFrame();
+    if (isPlaying)
+        playFrame();
 }
 
 void LedStripPlaybackLayer::clearInternal()
@@ -58,7 +59,7 @@ void LedStripPlaybackLayer::clearInternal()
 
 bool LedStripPlaybackLayer::playFrame()
 {
-    // DBG("Play frame");
+    NDBG("Play frame");
     if (curFile.available() < frameSize)
     {
         NDBG("End of show");
@@ -121,10 +122,12 @@ void LedStripPlaybackLayer::showBlackFrame()
 
 void LedStripPlaybackLayer::showIdFrame()
 {
+    NDBG("Show id frame " + String(groupID) + ":" + String(localID));
     if (groupID == -1 || localID == -1)
         return;
-    fillRange(groupColor, .9f, 1);
-    Color c = Color::HSV(localID / 12.f, 1, 1);
+
+    fillRange(groupColor, 1 - 3.f / strip->count, 1);
+    Color c = Color::HSV(localID * 1.0f / 4, 1, 1);
     fillRange(c, 0, localID * 1.f / strip->count, false);
 }
 
@@ -136,6 +139,7 @@ void LedStripPlaybackLayer::load(String path)
 
     NDBG("Load file " + path);
     NDBG("Reading meta data");
+    DynamicJsonDocument metaData(1000);
     metaDataFile = FilesComponent::instance->openFile(playbackDir + "/" + path + ".meta", false); // false is for reading
     if (!metaDataFile)
     {
@@ -148,6 +152,7 @@ void LedStripPlaybackLayer::load(String path)
         {
             Serial.print(F("deserializeJson() failed: "));
             Serial.println(error.c_str());
+            Serial.println("Meta content : " + String(metaDataFile.readString()));
         }
         else
         {
@@ -166,7 +171,7 @@ void LedStripPlaybackLayer::load(String path)
     }
 
     NDBG("Loading colors..");
-    curFile = FilesComponent::instance->openFile(playbackDir+ "/" + path + ".colors", false); // false is for reading
+    curFile = FilesComponent::instance->openFile(playbackDir + "/" + path + ".colors", false); // false is for reading
     if (!curFile)
     {
         NDBG("Error playing file " + path);
@@ -180,7 +185,10 @@ void LedStripPlaybackLayer::load(String path)
         curTimeMs = 0;
         isPlaying = false;
         NDBG("File loaded, " + String(totalBytes) + " bytes" + ", " + String(totalFrames) + " frames, " + String(totalTime) + " time");
+
+        if(idMode) showIdFrame();
     }
+
 
     // play(0);
 }
@@ -201,10 +209,10 @@ void LedStripPlaybackLayer::play(float atTime)
 
 void LedStripPlaybackLayer::seek(float t, bool doSendEvent)
 {
+    NDBG("Seek " + String(t));
     if (!curFile)
         return;
 
-    NDBG("Seek to " + String(t));
     curTimeMs = secondsToMs(t);
     prevTimeMs = millis();
 
@@ -251,10 +259,28 @@ void LedStripPlaybackLayer::togglePlayPause()
 void LedStripPlaybackLayer::onEnabledChanged()
 {
     LedStripLayer::onEnabledChanged();
-    if(!enabled) 
+    if (!enabled)
     {
         stop();
         showBlackFrame();
+    }
+    else
+    {
+        if (idMode)
+            showIdFrame();
+    }
+}
+
+void LedStripPlaybackLayer::paramValueChangedInternal(void *param)
+{
+    LedStripLayer::paramValueChangedInternal(param);
+    if (param == &idMode)
+    {
+        NDBG("ID Mode Switch " + String(idMode));
+        if (idMode)
+            showIdFrame();
+        else
+            seek(msToSeconds(curTimeMs));
     }
 }
 

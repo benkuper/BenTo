@@ -33,7 +33,10 @@ public:
 
 	void controllableFeedbackUpdateInternal(Controllable* c) override;
 
-	void mouseDown(const MouseEvent &e) override;
+	void mouseDown(const MouseEvent& e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
+
+	void addContextMenuItems(PopupMenu&m) override;
+	void handleContextMenuResult(int result) override;
 };
 

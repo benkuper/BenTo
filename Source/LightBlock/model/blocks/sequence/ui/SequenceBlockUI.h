@@ -20,4 +20,6 @@ public:
 	BentoSequenceBlock * tb;
 
 	void editBlock() override;
+
+	void addContextMenuItems(PopupMenu& m) override;
 };

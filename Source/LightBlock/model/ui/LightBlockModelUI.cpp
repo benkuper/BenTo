@@ -10,6 +10,7 @@
 
 #include "LightBlock/LightBlockIncludes.h"
 #include "Prop/PropIncludes.h"
+#include "Sequence/SequenceIncludes.h"
 
 LightBlockModelUI::LightBlockModelUI(LightBlockModel* model) :
 	BaseItemMinimalUI(model),
@@ -79,7 +80,6 @@ void LightBlockModelUI::mouseDown(const MouseEvent& e)
 {
 	BaseItemMinimalUI::mouseDown(e);
 
-
 	if (e.mods.isLeftButtonDown())
 	{
 		if (e.mods.isAltDown())
@@ -90,43 +90,45 @@ void LightBlockModelUI::mouseDown(const MouseEvent& e)
 			}
 		}
 	}
-	else if (e.mods.isRightButtonDown())
-	{
-		PopupMenu menu;
-		PopupMenu assignMenu;
 
-		int index = 1;
-		for (auto& p : PropManager::getInstance()->items)
-		{
-			assignMenu.addItem(index, p->niceName);
-			index++;
-		}
-
-		menu.addItem(-1, "Assign to all");
-		menu.addSubMenu("Assign to...", assignMenu);
-
-		menu.showMenuAsync(PopupMenu::Options(), [this](int result)
-			{
-				if (result == 0) return;
-				if (result == -1)
-				{
-					for (auto& p : PropManager::getInstance()->items)
-					{
-						p->activeProvider->setValueFromTarget(item);
-					}
-				}if (result > 0 && result <= PropManager::getInstance()->items.size())
-				{
-					Prop* p = PropManager::getInstance()->items[result - 1];
-					p->activeProvider->setValueFromTarget(item);
-				}
-			}
-		);
-	}
 }
 
 void LightBlockModelUI::mouseDoubleClick(const MouseEvent& e)
 {
 	editBlock();
+}
+
+void LightBlockModelUI::addContextMenuItems(PopupMenu& m)
+{
+	PopupMenu menu;
+	PopupMenu assignMenu;
+
+	int index = 1;
+	for (auto& p : PropManager::getInstance()->items)
+	{
+		assignMenu.addItem(index, p->niceName);
+		index++;
+	}
+
+	m.addItem(-1, "Assign to all");
+	m.addSubMenu("Assign to...", assignMenu);
+
+
+}
+
+void LightBlockModelUI::handleContextMenuResult(int result)
+{
+	if (result == -1)
+	{
+		for (auto& p : PropManager::getInstance()->items)
+		{
+			p->activeProvider->setValueFromTarget(item);
+		}
+	}if (result > 0 && result <= PropManager::getInstance()->items.size())
+	{
+		Prop* p = PropManager::getInstance()->items[result - 1];
+		p->activeProvider->setValueFromTarget(item);
+	};
 }
 
 void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent& e)
