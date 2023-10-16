@@ -434,11 +434,11 @@ void BentoProp::powerOffProp()
 	NLOG(niceName, "Powering off");
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("root.sleep\n");
+		serialDevice->writeString("root.shutdown\n");
 	}
 	else
 	{
-		OSCMessage m("/root/sleep");
+		OSCMessage m("/root/shutdown");
 		sendMessageToProp(m);
 	}
 }
