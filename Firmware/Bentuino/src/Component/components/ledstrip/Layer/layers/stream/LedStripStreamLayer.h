@@ -12,7 +12,7 @@ public:
     ~LedStripStreamLayer() {}
 
     DeclareIntParam(universe, 0);
-    DeclareBoolParam(clearOnNoReception, false);
+    DeclareBoolParam(clearOnNoReception, true);
     DeclareFloatParam(noReceptionTime, 1.0f);
 
     bool hasCleared = false;
