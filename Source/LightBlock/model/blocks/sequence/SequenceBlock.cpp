@@ -22,6 +22,9 @@ BentoSequenceBlock::BentoSequenceBlock(var params) :
 	autoSetPropEnabled = addBoolParameter("Auto Set enabled", "If checked, this will automatically enable / disable prop based on whether they are filtered by the sequence", false);
 
 	sequence.reset(new SequenceBlockSequence());
+	sequence->userCanRemove = false;
+	sequence->userCanDuplicate = false;
+	sequence->setCanBeDisabled(false);
 	sequence->addSequenceListener(this);
 	addChildControllableContainer(sequence.get());
 }
