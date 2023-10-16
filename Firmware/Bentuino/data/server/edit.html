@@ -424,7 +424,7 @@
 
 
         function sendTrigger(fullPath) {
-            oscWS.send({ address: fullPath, args: [{ "type": type, "value": value }] });
+            oscWS.send({ address: fullPath});
         }
 
         function sendParameterValue(fullPath, type, value) {
