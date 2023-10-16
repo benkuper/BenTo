@@ -1,3 +1,4 @@
+#include "LedStripPlaybackLayer.h"
 bool LedStripPlaybackLayer::initInternal(JsonObject o)
 {
     LedStripLayer::initInternal(o);
@@ -42,13 +43,13 @@ void LedStripPlaybackLayer::updateInternal()
         timeSinceLastSeek = millis();
     }
 
-    if (!isPlaying)
-    {
-        showBlackFrame();
-        return;
-    }
+    // if (!isPlaying)
+    // {
+    //     showBlackFrame();
+    //     return;
+    // }
 
-    playFrame();
+    if(isPlaying) playFrame();
 }
 
 void LedStripPlaybackLayer::clearInternal()
@@ -57,7 +58,7 @@ void LedStripPlaybackLayer::clearInternal()
 
 bool LedStripPlaybackLayer::playFrame()
 {
-    DBG("Play frame");
+    // DBG("Play frame");
     if (curFile.available() < frameSize)
     {
         NDBG("End of show");
@@ -233,7 +234,9 @@ void LedStripPlaybackLayer::stop()
 {
     DBG("Stop");
     isPlaying = false;
-    showBlackFrame();
+    curTimeMs = 0;
+    prevTimeMs = 0;
+    // showBlackFrame();
     sendEvent(Stopped);
 }
 
@@ -245,8 +248,20 @@ void LedStripPlaybackLayer::togglePlayPause()
         play();
 }
 
+void LedStripPlaybackLayer::onEnabledChanged()
+{
+    LedStripLayer::onEnabledChanged();
+    if(!enabled) 
+    {
+        stop();
+        showBlackFrame();
+    }
+}
+
 bool LedStripPlaybackLayer::handleCommandInternal(const String &command, var *data, int numData)
 {
+    LedStripLayer::handleCommandInternal(command, data, numData);
+
     if (checkCommand(command, "load", numData, 1))
     {
         load(data[0].stringValue());
@@ -290,5 +305,6 @@ bool LedStripPlaybackLayer::handleCommandInternal(const String &command, var *da
         timeToSeek = data[0].floatValue();
         return true;
     }
-    return true;
+
+    return false;
 }

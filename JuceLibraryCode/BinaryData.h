@@ -15,7 +15,7 @@ namespace BinaryData
     const int            jquery_min_jsSize = 87535;
 
     extern const char*   oscbrowser_min_js;
-    const int            oscbrowser_min_jsSize = 42964;
+    const int            oscbrowser_min_jsSize = 43791;
 
     extern const char*   upload_html;
     const int            upload_htmlSize = 3548;

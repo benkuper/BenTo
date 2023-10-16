@@ -108,12 +108,16 @@ public:
 	virtual void initGeneratePlayback(BaseColorProvider* block, AfterPlaybackGenAction afterPlaybackGenAction);
 	virtual PlaybackData generatePlayback();
 
+
 	virtual void uploadPlaybackData(PlaybackData data);
 	virtual void exportPlaybackData(PlaybackData data);
 	virtual void addFileToUpload(FileToUpload f);
 	virtual void uploadFileQueue();
 	virtual void uploadFile(FileToUpload f);
 
+	virtual void updatePlaybackModeOnProp();
+	virtual void setPlaybackEnabled(bool value) {}
+	virtual void setStreamingEnabled(bool value) {}
 	virtual void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/) {}
 	virtual void playPlayback(float /*time */ = 0, bool /* loop */ = false) {}
 	virtual void pausePlaybackPlaying() {}

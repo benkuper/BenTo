@@ -48,6 +48,8 @@ public:
     void stop();
     void togglePlayPause();
 
+    void onEnabledChanged() override;
+
     bool handleCommandInternal(const String &command, var *data, int numData) override;
 
     // Time computation helpers
@@ -66,17 +68,20 @@ public:
     DeclareComponentEventNames("Loaded", "LoadError", "Playing", "Paused", "Stopped", "Seek", "Looped");
 
     HandleSetParamInternalStart
-        CheckAndSetParam(idMode);
+        HandleSetParamInternalMotherClass(LedStripLayer)
+            CheckAndSetParam(idMode);
     CheckAndSetParam(loop);
     HandleSetParamInternalEnd;
 
     FillSettingsInternalStart
-        FillSettingsParam(idMode);
+        FillSettingsInternalMotherClass(LedStripLayer)
+            FillSettingsParam(idMode);
     FillSettingsParam(loop);
     FillSettingsInternalEnd;
 
     FillOSCQueryInternalStart
-        FillOSCQueryBoolParam(idMode);
+        FillOSCQueryInternalMotherClass(LedStripLayer)
+            FillOSCQueryBoolParam(idMode);
     FillOSCQueryBoolParam(loop);
     FillOSCQueryInternalEnd
 };

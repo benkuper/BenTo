@@ -9,6 +9,7 @@
 */
 
 #include "Prop/PropIncludes.h"
+#include "BentoProp.h"
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
@@ -49,6 +50,7 @@ BentoProp::BentoProp(var params) :
 	addChildControllableContainer(componentsCC.get(), false, controllableContainers.indexOf(scriptManager.get()));
 
 	playbackAddress = "/leds/strip1/playbackLayer";
+	streamingAddress = "/leds/strip1/streamLayer";
 }
 
 BentoProp::~BentoProp()
@@ -93,22 +95,7 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Prop::onControllableFeedbackUpdateInternal(cc, c);
-	if (c == playbackMode)
-	{
-		if (playbackMode->boolValue())
-		{
-			String filename = currentBlock != nullptr ? currentBlock->shortName : (playbackFileName->enabled ? playbackFileName->stringValue() : "");
-			if (filename.isNotEmpty()) loadPlayback(filename);
-		}
-		else
-		{
-			OSCMessage m("/leds/mode");
-			m.addString("stream");
-			sendMessageToProp(m);
-		}
-
-	}
-	else if (c == serialParam)
+	if (c == serialParam)
 	{
 		setSerialDevice(serialParam->getDevice());
 	}
@@ -289,6 +276,34 @@ void BentoProp::uploadFile(FileToUpload f)
 	}
 }
 
+void BentoProp::setPlaybackEnabled(bool value)
+{
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.load " + String(value ? 1 : 0) + "\n");// +" " + (autoPlay ? "1" : "0") + " \n");
+	}
+	else
+	{
+		OSCMessage m(playbackAddress + "/enabled");
+		m.addInt32((int)value);
+		sendMessageToProp(m);
+	}
+}
+
+void BentoProp::setStreamingEnabled(bool value)
+{
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString(streamingAddress + ".enabled" + String(enabled ? 1 : 0) + "\n");
+	}
+	else
+	{
+		OSCMessage m(streamingAddress + "/enabled");
+		m.addInt32((int)value);
+		sendMessageToProp(m);
+	}
+}
+
 void BentoProp::loadPlayback(StringRef fileName, bool autoPlay)
 {
 	if (serialDevice != nullptr)
@@ -299,7 +314,6 @@ void BentoProp::loadPlayback(StringRef fileName, bool autoPlay)
 	{
 		OSCMessage m(playbackAddress + "/load");
 		m.addString(fileName);
-		m.addInt32(autoPlay ? 1 : 0);
 		sendMessageToProp(m);
 	}
 }

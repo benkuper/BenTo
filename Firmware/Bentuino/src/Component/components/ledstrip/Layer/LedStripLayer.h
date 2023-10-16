@@ -55,7 +55,6 @@ public:
     FillSettingsInternalEnd;
 
     FillOSCQueryInternalStart
-        FillOSCQueryEnumParam(blendMode, blendModeOptions, BlendModeMax);
+            FillOSCQueryEnumParam(blendMode, blendModeOptions, BlendModeMax);
     FillOSCQueryInternalEnd
-    
 };

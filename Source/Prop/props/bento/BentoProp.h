@@ -35,6 +35,7 @@ public:
 	FloatParameter* brightnessRef;
 
 	String playbackAddress;
+	String streamingAddress;
 
 	virtual void clearItem() override;
 
@@ -52,10 +53,11 @@ public:
 	virtual void exportPlaybackData(PlaybackData data) override;
 	virtual void uploadFile(FileToUpload f) override;
 
+	virtual void setPlaybackEnabled(bool enabled) override;
+	virtual void setStreamingEnabled(bool enabled) override;
 	virtual void loadPlayback(StringRef fileName, bool autoPlay = false) override;
 	virtual void playPlayback(float time = 0, bool loop = false) override;
 	virtual void pausePlaybackPlaying() override;
-	virtual void resumePlaybackPlaying() override {}
 	virtual void seekPlaybackPlaying(float time) override;
 	virtual void stopPlaybackPlaying() override;
 	virtual void sendShowPropID(bool value) override;

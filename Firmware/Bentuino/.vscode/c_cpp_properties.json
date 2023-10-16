@@ -266,7 +266,7 @@
                 "LED_DEFAULT_COLOR_ORDER=BGR",
                 "LED_DEFAULT_INVERT_DIRECTION=true",
                 "LED_DEFAULT_BRIGHTNESS=0.5f",
-                "LED_MAX_BRIGHTNESS=0.5f",
+                "LED_MAX_BRIGHTNESS=0.4f",
                 "LED_MAX_COUNT=300",
                 "PLAYBACK_USE_ALPHA",
                 "USE_BUTTON",

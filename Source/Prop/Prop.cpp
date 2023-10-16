@@ -281,11 +281,11 @@ void Prop::update()
 	{
 		sendColorsToProp();
 	}
-	else if (seekPlaybackTime != -1)
-	{
-		seekPlaybackPlaying(seekPlaybackTime);
-		seekPlaybackTime = -1;
-	}
+	//else if (seekPlaybackTime != -1)
+	//{
+	//	seekPlaybackPlaying(seekPlaybackTime);
+	//	seekPlaybackTime = -1;
+	//}
 }
 
 void Prop::onContainerParameterChangedInternal(Parameter* p)
@@ -352,6 +352,10 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 		//	HashMap<String, PropComponent*>::Iterator it(components);
 		//	while (it.next()) it.getValue()->handlePropConnected();
 		//}
+	}
+	else if (c == playbackMode)
+	{
+		updatePlaybackModeOnProp();
 	}
 }
 
@@ -502,6 +506,25 @@ void Prop::uploadFile(FileToUpload f)
 	NLOG(niceName, "Uploading file " + f.file.getFullPathName() + "...");
 }
 
+void Prop::updatePlaybackModeOnProp()
+{
+	setPlaybackEnabled(playbackMode->boolValue());
+	setStreamingEnabled(!playbackMode->boolValue());
+
+	if (playbackMode->boolValue())
+	{
+		String filename = currentBlock != nullptr ? currentBlock->shortName : (playbackFileName->enabled ? playbackFileName->stringValue() : "");
+		if (filename.isNotEmpty()) loadPlayback(filename, false);
+
+		if (BentoSequenceBlock* bs = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
+		{
+			if (!bs->sequence->isPlaying->boolValue()) seekPlaybackPlaying(bs->sequence->currentTime->floatValue());
+			else playPlayback(bs->sequence->currentTime->floatValue());
+		}
+
+	}
+}
+
 
 void Prop::providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data)
 {
@@ -518,8 +541,7 @@ void Prop::providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackContro
 		break;
 
 	case LightBlockColorProvider::PlaybackControl::SEEK:
-		seekPlaybackTime = (float)data;
-		//if(seekPlaybackTime == -1) seekPlaybackPlaying((float)data);
+		seekPlaybackPlaying((float)data);
 		break;
 
 	case LightBlockColorProvider::PlaybackControl::STOP:

@@ -66,31 +66,13 @@ void Component::clear()
 
 bool Component::handleCommand(const String &command, var *data, int numData)
 {
+    if (handleSetParam(command, data, numData))
+        return true;
+
     if (handleCommandInternal(command, data, numData))
         return true;
 
-    // if (Parameter *p = getParameterWithName(command))
-    // {
-    //     if (p->readOnly)
-    //     {
-    //         NDBG("Parameter " + p->name + "is read only !");
-    //         return true;
-    //     }
-
-    //     if (numData > 0) // query for feedback
-    //     {
-    //         p->set(data[0]);
-    //         // NDBG("Set Parameter " + p->name + " : " + data[0].stringValue() + " >> " + p->stringValue());
-    //     }
-    //     else
-    //     {
-    //         SendParameterFeedback(p);
-    //     }
-
-    //     return true;
-    // }
-
-    return handleSetParam(command, data, numData);
+    return false;
 }
 
 bool Component::checkCommand(const String &command, const String &ref, int numData, int expectedData)
@@ -515,12 +497,6 @@ void Component::setParam(void *param, var *value, int numData)
 
 bool Component::handleSetParam(const String &paramName, var *data, int numData)
 {
-    // NDBG("Handle Set Param " + paramName + " : ");
-    // for (int i = 0; i < numData; i++)
-    // {
-    //     DBG("> " + data[i].stringValue());
-    // }
-
     CheckAndSetParam(enabled);
 
     // NDBG("Handle Param Internal");
