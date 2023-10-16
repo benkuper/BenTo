@@ -90,15 +90,13 @@ void RootComponent::updateInternal()
 
 void RootComponent::restart()
 {
-    // saveSettings();
-
+    clear();
+    delay(500);
     ESP.restart();
 }
 
 void RootComponent::shutdown()
 {
-    // saveSettings();
-
     timeAtShutdown = millis();
     timer.in(1000, [](void *) -> bool
              {  RootComponent::instance->powerdown(); return false; });
