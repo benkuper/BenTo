@@ -261,16 +261,16 @@ void BentoProp::exportPlaybackData(PlaybackData data)
 	builder.writeToStream(fs2, &progress);
 }
 
-void BentoProp::uploadFile(File f, String remoteFolder)
+void BentoProp::uploadFile(FileToUpload f)
 {
-	String target = "http://" + remoteHost->stringValue() + "/uploadFile/";
-	if(remoteFolder.isNotEmpty()) target += "?folder=" + remoteFolder;
+	String target = "http://" + remoteHost->stringValue() + "/uploadFile";
+	if (f.remoteFolder.isNotEmpty()) target += "?folder=" + f.remoteFolder;
 
-	FileInputStream fs(f);
+	FileInputStream fs(f.file);
 	MemoryBlock b;
 	fs.readIntoMemoryBlock(b);
 
-	URL url = URL(target).withDataToUpload("uploadData", f.getFileName(), b, "text/plain");
+	URL url = URL(target).withDataToUpload("uploadData", f.file.getFileName(), b, "text/plain");
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withExtraHeaders("Content-Length:" + String(b.getSize())).withConnectionTimeoutMs(10000)));
 

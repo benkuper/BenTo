@@ -50,7 +50,7 @@ public:
 
 	virtual void uploadPlaybackData(PlaybackData data) override;
 	virtual void exportPlaybackData(PlaybackData data) override;
-	virtual void uploadFile(File f, String remoteFolder = "") override;
+	virtual void uploadFile(FileToUpload f) override;
 
 	virtual void loadPlayback(StringRef fileName, bool autoPlay = false) override;
 	virtual void playPlayback(float time = 0, bool loop = false) override;

@@ -269,11 +269,11 @@ void PropFlasher::uploadServerFiles()
 	File folder = serverFilesParam->getFile();
 	if (!folder.exists()) return;
 
-	Array<File> files = folder.findChildFiles(File::TypesOfFileToFind::findFiles,false);
+	Array<File> files = folder.findChildFiles(File::TypesOfFileToFind::findFiles, false);
 
 	for (auto& p : props)
 	{
-		for (auto& f : files) p->addFileToUpload(f);
+		for (auto& f : files) p->addFileToUpload({ f,"server" });
 	}
 }
 

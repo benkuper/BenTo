@@ -145,7 +145,7 @@ void EmbeddedScriptBlock::generateParams()
 				pArr.addTokens(s, ",", "\"");
 				if (pArr.size() >= 2)
 				{
-					FloatParameter* fp = paramsContainer->addFloatParameter(pArr[0], pArr[0], pArr[1].getFloatValue(), pArr.size() > 2 ? pArr[2].getFloatValue() : (float)INT32_MIN, pArr.size() > 3 ? pArr[3].getFloatValue() : (float)INT32_MAX);
+					paramsContainer->addFloatParameter(pArr[0], pArr[0], pArr[1].getFloatValue(), pArr.size() > 2 ? pArr[2].getFloatValue() : (float)INT32_MIN, pArr.size() > 3 ? pArr[3].getFloatValue() : (float)INT32_MAX);
 				}
 			}
 			break;
@@ -228,7 +228,7 @@ void EmbeddedScriptBlock::onContainerTriggerTriggered(Trigger* t)
 
 		for (auto& p : PropManager::getInstance()->items)
 		{
-			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->addFileToUpload(f);
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->addFileToUpload({ f });
 		}
 	}
 	else if (t == loadOnPropsTrigger)

@@ -82,7 +82,12 @@ public:
 	int previousID; //for swapping
 	int updateRate;
 
-	Array<File, CriticalSection> filesToUpload;
+	struct FileToUpload
+	{
+		File file;
+		String remoteFolder;
+	};
+	Array<FileToUpload, CriticalSection> filesToUpload;
 
 
 	virtual void clearItem() override;
@@ -105,9 +110,9 @@ public:
 
 	virtual void uploadPlaybackData(PlaybackData data);
 	virtual void exportPlaybackData(PlaybackData data);
-	virtual void addFileToUpload(File f);
+	virtual void addFileToUpload(FileToUpload f);
 	virtual void uploadFileQueue();
-	virtual void uploadFile(File f, String remoteFolder = "");
+	virtual void uploadFile(FileToUpload f);
 
 	virtual void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/) {}
 	virtual void playPlayback(float /*time */ = 0, bool /* loop */ = false) {}

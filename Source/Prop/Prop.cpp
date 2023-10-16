@@ -481,7 +481,7 @@ void Prop::exportPlaybackData(PlaybackData data)
 	NLOG(niceName, "Export playback data " << data.name);
 }
 
-void Prop::addFileToUpload(File f)
+void Prop::addFileToUpload(FileToUpload f)
 {
 	filesToUpload.add(f);
 	isUploading->setValue(true);
@@ -492,14 +492,14 @@ void Prop::uploadFileQueue()
 {
 	while (filesToUpload.size() > 0)
 	{
-		File f = filesToUpload.removeAndReturn(0);
+		FileToUpload f = filesToUpload.removeAndReturn(0);
 		uploadFile(f);
 	}
 }
 
-void Prop::uploadFile(File f, String remoteFolder)
+void Prop::uploadFile(FileToUpload f)
 {
-	NLOG(niceName, "Uploading file " + f.getFullPathName() + "...");
+	NLOG(niceName, "Uploading file " + f.file.getFullPathName() + "...");
 }
 
 
