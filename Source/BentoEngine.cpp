@@ -39,9 +39,8 @@ BentoEngine::BentoEngine() :
 	SerialManager::getInstance(); // init
 
 
+	GlobalSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 	GlobalSettings::getInstance()->addChildControllableContainer(BentoSettings::getInstance());
-
-	//BentoWebServer::getInstance(); //init
 
 }
 
