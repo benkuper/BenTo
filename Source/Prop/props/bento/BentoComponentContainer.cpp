@@ -159,7 +159,7 @@ void BentoComponentContainer::run()
 
 void BentoComponentContainer::requestHostInfo()
 {
-	if (prop->remoteHost == nullptr) return
+	if (prop->remoteHost == nullptr || prop->remoteHost->stringValue().isEmpty()) return
 
 		prop->isConnected->setValue(false);
 

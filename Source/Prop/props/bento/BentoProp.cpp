@@ -21,7 +21,7 @@ BentoProp::BentoProp(var params) :
 	useAlphaInPlaybackData = true;
 	invertLedsInUI = true;
 
-	remoteHost = connectionCC.addStringParameter("Network IP", "IP of the prop on the network", "192.168.0.100");
+	remoteHost = connectionCC.addStringParameter("Network IP", "IP of the prop on the network", "");
 
 	resolution->setDefaultValue(32);
 	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", 1, 0, 1);
