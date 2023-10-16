@@ -181,7 +181,7 @@ void LedStripPlaybackLayer::load(String path)
         NDBG("File loaded, " + String(totalBytes) + " bytes" + ", " + String(totalFrames) + " frames, " + String(totalTime) + " time");
     }
 
-    play(0);
+    // play(0);
 }
 
 void LedStripPlaybackLayer::play(float atTime)
