@@ -10,6 +10,7 @@
 
 #include "Prop/PropIncludes.h"
 #include "BentoSettings.h"
+#include "PropFlasher.h"
 
 juce_ImplementSingleton(PropFlasher)
 
@@ -72,6 +73,10 @@ PropFlasher::PropFlasher() :
 	fwData.getDynamicObject()->setProperty("filename", "creatorclub");
 
 	availableFirmwares.append(fwData);
+
+	serverFilesParam = addFileParameter("Server Files", "Files to upload to the server");
+	serverFilesParam->directoryMode = true;
+	uploadTrigger = addTrigger("Upload", "Upload files to the server");
 }
 
 PropFlasher::~PropFlasher()
@@ -108,6 +113,7 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == flashTrigger) flash();
+	else if (t == uploadTrigger) uploadServerFiles();
 	//else if (t == setWifiTrigger) setAllWifi();
 }
 
@@ -255,6 +261,20 @@ void PropFlasher::setAllWifi()
 	for (auto& s : devices) s->removeSerialDeviceListener(this);
 
 	LOG("All Props wifi are set !");
+}
+
+void PropFlasher::uploadServerFiles()
+{
+	Array<BentoProp*> props = PropManager::getInstance()->getItemsWithType<BentoProp>();
+	File folder = serverFilesParam->getFile();
+	if (!folder.exists()) return;
+
+	Array<File> files = folder.findChildFiles(File::TypesOfFileToFind::findFiles,false);
+
+	for (auto& p : props)
+	{
+		for (auto& f : files) p->addFileToUpload(f);
+	}
 }
 
 

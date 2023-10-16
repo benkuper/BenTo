@@ -23,6 +23,9 @@ PropFlasherPanel::PropFlasherPanel() :
 	flashAllUI.reset(PropFlasher::getInstance()->flashTrigger->createButtonUI());
 	progressUI.reset(PropFlasher::getInstance()->progression->createSlider());
 
+	serverFolder.reset((StringParameterFileUI*)PropFlasher::getInstance()->serverFilesParam->createStringParameterFileUI());
+	uploadServerFiles.reset(PropFlasher::getInstance()->uploadTrigger->createButtonUI());
+
 	firmwareCustomFileUI->useCustomBGColor = true;
 	firmwareCustomFileUI->customBGColor = BG_COLOR;
 	firmwareCustomFileUI->updateUIParams();
@@ -43,6 +46,10 @@ PropFlasherPanel::PropFlasherPanel() :
 	addAndMakeVisible(wifiPassUI.get());
 	addAndMakeVisible(flashAllUI.get());
 	addAndMakeVisible(progressUI.get());
+
+	addAndMakeVisible(serverFolder.get());
+	addAndMakeVisible(uploadServerFiles.get());
+
 
 	SerialManager::getInstance()->addSerialManagerListener(this);
 	PropFlasher::getInstance()->filterKnownDevices->addAsyncCoalescedParameterListener(this);
@@ -72,12 +79,14 @@ void PropFlasherPanel::paint(Graphics& g)
 	g.drawRoundedRectangle(fwRect.toFloat(), 4, 1);
 	g.drawRoundedRectangle(wifiRect.toFloat(), 4, 1);
 	g.drawRoundedRectangle(flashRect.toFloat(), 4, 1);
+	g.drawRoundedRectangle(uploadRect.toFloat(), 4, 1);
 
 	g.setColour(TEXT_COLOR);
 	g.setFont(18);
 	g.drawText("1. Choose Firmware", fwRect.withHeight(24), Justification::centred);
 	g.drawText("2. Set Wifi Informations", wifiRect.withHeight(24), Justification::centred);
 	g.drawText("3. Upload Firmware", flashRect.withHeight(24), Justification::centred);
+	g.drawText("4. Upload Server files", uploadRect.withHeight(24), Justification::centred);
 
 	int numDevices = infos.size();
 
@@ -133,6 +142,15 @@ void PropFlasherPanel::resized()
 	fr.removeFromTop(20);
 	flashAllUI->setBounds(fr.removeFromTop(70).withSizeKeepingCentre(jmin(fr.getWidth(), 400), 50));
 	progressUI->setBounds(fr.removeFromBottom(40));
+
+	cr.removeFromTop(16);
+
+	uploadRect = cr.removeFromBottom(68);
+	Rectangle<int> ur = uploadRect.reduced(10);
+	ur.removeFromTop(20);
+	serverFolder->setBounds(ur.removeFromLeft(200).reduced(4));
+	ur.removeFromLeft(20);
+	uploadServerFiles->setBounds(ur.reduced(4));
 }
 
 

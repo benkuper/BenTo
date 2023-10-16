@@ -24,6 +24,7 @@ public:
 	Rectangle<int> fwRect;
 	Rectangle<int> wifiRect;
 	Rectangle<int> flashRect;
+	Rectangle<int> uploadRect;
 
 	Array<SerialDeviceInfo*> infos;
 
@@ -37,6 +38,10 @@ public:
 
 	std::unique_ptr<TriggerButtonUI> flashAllUI;
 	std::unique_ptr<FloatSliderUI> progressUI;
+
+	std::unique_ptr<StringParameterFileUI> serverFolder;
+	std::unique_ptr<TriggerButtonUI> uploadServerFiles;
+
 
 	virtual void portAdded(SerialDeviceInfo* info) override;
 	virtual void portRemoved(SerialDeviceInfo* info) override;

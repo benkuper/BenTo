@@ -33,7 +33,9 @@ public:
 	StringParameter* wifiPass;
 
 	Trigger* flashTrigger;
-	//Trigger* setWifiTrigger;
+
+	FileParameter* serverFilesParam;
+	Trigger* uploadTrigger;
 
 	File flasher;
 	File app0Bin;
@@ -52,6 +54,7 @@ public:
 
 	void flash();
 	void setAllWifi();
+	void uploadServerFiles();
 
 	void run() override;
 

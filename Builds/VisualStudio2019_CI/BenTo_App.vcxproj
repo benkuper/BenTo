@@ -6062,6 +6062,10 @@
     <ClInclude Include="..\..\JuceLibraryCode\JuceHeader.h"/>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\firmware\server\edit.html"/>
+    <None Include="..\..\Resources\firmware\server\jquery.min.js"/>
+    <None Include="..\..\Resources\firmware\server\osc-browser.min.js"/>
+    <None Include="..\..\Resources\firmware\server\upload.html"/>
     <None Include="..\..\Resources\models\patterns\ledRange.png"/>
     <None Include="..\..\Resources\models\patterns\multipoint.png"/>
     <None Include="..\..\Resources\models\patterns\noise.png"/>

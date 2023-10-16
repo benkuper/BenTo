@@ -261,9 +261,11 @@ void BentoProp::exportPlaybackData(PlaybackData data)
 	builder.writeToStream(fs2, &progress);
 }
 
-void BentoProp::uploadFile(File f)
+void BentoProp::uploadFile(File f, String remoteFolder)
 {
-	String target = "http://" + remoteHost->stringValue() + "/uploadFile";
+	String target = "http://" + remoteHost->stringValue() + "/uploadFile/";
+	if(remoteFolder.isNotEmpty()) target += "?folder=" + remoteFolder;
+
 	FileInputStream fs(f);
 	MemoryBlock b;
 	fs.readIntoMemoryBlock(b);

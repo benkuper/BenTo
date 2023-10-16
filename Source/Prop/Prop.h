@@ -107,7 +107,7 @@ public:
 	virtual void exportPlaybackData(PlaybackData data);
 	virtual void addFileToUpload(File f);
 	virtual void uploadFileQueue();
-	virtual void uploadFile(File f);
+	virtual void uploadFile(File f, String remoteFolder = "");
 
 	virtual void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/) {}
 	virtual void playPlayback(float /*time */ = 0, bool /* loop */ = false) {}

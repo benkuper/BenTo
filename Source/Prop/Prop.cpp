@@ -497,7 +497,7 @@ void Prop::uploadFileQueue()
 	}
 }
 
-void Prop::uploadFile(File f)
+void Prop::uploadFile(File f, String remoteFolder)
 {
 	NLOG(niceName, "Uploading file " + f.getFullPathName() + "...");
 }

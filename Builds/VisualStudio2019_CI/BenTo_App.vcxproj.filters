@@ -2,6 +2,12 @@
 
 <Project ToolsVersion="16.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Filter Include="BenTo\Resources\firmware\server">
+      <UniqueIdentifier>{A88B45F3-7EF1-9B04-CF40-A3F8072C6AE2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Resources\firmware">
+      <UniqueIdentifier>{BE22C71A-063C-47F5-115C-8BCA1CA5F453}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Resources\models\patterns">
       <UniqueIdentifier>{82DFFBAF-B77E-F752-5AAB-029B7F9C89C8}</UniqueIdentifier>
     </Filter>
@@ -12176,6 +12182,18 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\Resources\firmware\server\edit.html">
+      <Filter>BenTo\Resources\firmware\server</Filter>
+    </None>
+    <None Include="..\..\Resources\firmware\server\jquery.min.js">
+      <Filter>BenTo\Resources\firmware\server</Filter>
+    </None>
+    <None Include="..\..\Resources\firmware\server\osc-browser.min.js">
+      <Filter>BenTo\Resources\firmware\server</Filter>
+    </None>
+    <None Include="..\..\Resources\firmware\server\upload.html">
+      <Filter>BenTo\Resources\firmware\server</Filter>
+    </None>
     <None Include="..\..\Resources\models\patterns\ledRange.png">
       <Filter>BenTo\Resources\models\patterns</Filter>
     </None>

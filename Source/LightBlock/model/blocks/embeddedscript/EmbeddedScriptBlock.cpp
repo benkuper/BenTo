@@ -100,6 +100,9 @@ void EmbeddedScriptBlock::compile()
 	{
 		File nwf = getWasmFile();
 		NLOG(niceName, "Script has been compiled successfully to " + nwf.getFileName());
+
+		generateParams();
+
 		if (autoUpload->boolValue())
 		{
 			uploadToPropsTrigger->trigger();
@@ -114,6 +117,47 @@ void EmbeddedScriptBlock::compile()
 	{
 		NLOGERROR(niceName, "Error compiling script : \n" << pResult);
 	}
+}
+
+void EmbeddedScriptBlock::generateParams()
+{
+	File f = scriptFile->getFile();
+	if (!f.existsAsFile()) return;
+	FileInputStream fis(f);
+
+	paramsContainer->clear();
+
+	int paramsState = -1;
+	String s = fis.readNextLine();
+	while (s.isNotEmpty())
+	{
+		switch (paramsState)
+		{
+		case -1:
+			if (s.startsWith("/*Parameters")) paramsState = 0;
+			break;
+
+		case 0:
+			if (s.startsWith("*/")) paramsState = 1;
+			else
+			{
+				StringArray pArr;
+				pArr.addTokens(s, ",", "\"");
+				if (pArr.size() >= 2)
+				{
+					FloatParameter* fp = paramsContainer->addFloatParameter(pArr[0], pArr[0], pArr[1].getFloatValue(), pArr.size() > 2 ? pArr[2].getFloatValue() : (float)INT32_MIN, pArr.size() > 3 ? pArr[3].getFloatValue() : (float)INT32_MAX);
+				}
+			}
+			break;
+
+		}
+
+		if (paramsState == 1) break;
+
+		s = fis.readNextLine();
+
+	}
+
 }
 
 File EmbeddedScriptBlock::getWasmFile()
@@ -138,6 +182,18 @@ void EmbeddedScriptBlock::stopScriptOnProp(Prop* p)
 		bp->sendControlToProp("script.stop", shortName);
 	}
 }
+
+void EmbeddedScriptBlock::sendParamControlToProp(Prop* p, int index, float val)
+{
+	if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+	{
+		var args;
+		args.append(index);
+		args.append(val);
+		bp->sendControlToProp("script.setScriptParam", args);
+	}
+}
+
 
 void EmbeddedScriptBlock::run()
 {
@@ -191,6 +247,19 @@ void EmbeddedScriptBlock::onContainerTriggerTriggered(Trigger* t)
 	}
 }
 
+void EmbeddedScriptBlock::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
+{
+	LightBlockModel::onControllableFeedbackUpdateInternal(cc, c);
+	if (cc == paramsContainer.get())
+	{
+		for (auto& p : PropManager::getInstance()->items)
+		{
+			int index = paramsContainer->controllables.indexOf(c);
+			if (p->currentBlock != nullptr && p->currentBlock->provider == this) sendParamControlToProp(p, index, ((Parameter*)c)->floatValue());
+		}
+	}
+}
+
 void EmbeddedScriptBlock::handleEnterExit(bool enter, Array<Prop*> props)
 {
 	for (auto& p : props)
@@ -198,6 +267,11 @@ void EmbeddedScriptBlock::handleEnterExit(bool enter, Array<Prop*> props)
 		if (enter) loadScriptOnProp(p);
 		else stopScriptOnProp(p);
 	}
+}
+
+void EmbeddedScriptBlock::afterLoadJSONDataInternal()
+{
+	generateParams();
 }
 
 

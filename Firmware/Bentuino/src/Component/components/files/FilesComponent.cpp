@@ -185,7 +185,9 @@ bool FilesComponent::handleCommandInternal(const String &command, var *data, int
 #ifdef FILES_USE_INTERNAL_MEMORY
             SPIFFS.rmdir("/");
 #else
-            SD.rmdir("/");
+            bool success = SD.rmdir("/");
+            if (!success)
+                NDBG("Error deleting all files");
 #endif
         }
 
