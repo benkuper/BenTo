@@ -15,7 +15,7 @@ public:
     void flush() { index = 0; };
 };
 
-DeclareBoolParam(sendFeedback, false);
+DeclareBoolParam(sendFeedback, true);
 
 AsyncWebServer server = AsyncWebServer(80);
 
