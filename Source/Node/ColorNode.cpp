@@ -11,6 +11,11 @@
 ColorNode::ColorNode(const String & name, var params) : 
 	Node(name, params)
 {
+	var val;
+	val.append(100);
+	val.append(210);
+	BaseItem::viewUISize->setDefaultValue(val);
+
 	mainColorsSlot = addColorSlot(false, "Colors");
 }
 
