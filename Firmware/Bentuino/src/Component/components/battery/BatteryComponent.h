@@ -7,7 +7,7 @@
 DeclareComponentSingleton(Battery, "battery", )
 
     DeclareIntParam(batteryPin, BATTERY_DEFAULT_PIN);
-DeclareIntParam(chargePin, -1);
+DeclareIntParam(chargePin, BATTERY_DEFAULT_CHARGE_PIN);
 DeclareIntParam(rawMin, BATTERY_DEFAUT_RAW_MIN);
 DeclareIntParam(rawMax, BATTERY_DEFAULT_RAW_MAX);
 DeclareFloatParam(lowBatteryThreshold, 3.5);
@@ -33,7 +33,7 @@ DeclareComponentEventTypes(CriticalBattery);
 DeclareComponentEventNames("CriticalBattery");
 
 CheckFeedbackParamInternalStart
-CheckAndSendParamFeedback(batteryLevel);
+    CheckAndSendParamFeedback(batteryLevel);
 CheckFeedbackParamInternalEnd;
 
 HandleSetParamInternalStart

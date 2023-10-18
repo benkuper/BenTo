@@ -111,7 +111,7 @@ void MotionComponent::startIMUTask()
 
 void MotionComponent::readIMUStatic(void *_imu)
 {
-    DBG("[IMU] Async Thread Start");
+    DBG("[motion] Start reading IMU");
     MotionComponent *imuComp = (MotionComponent *)_imu;
 
     bool result = imuComp->setupBNO();
@@ -132,7 +132,7 @@ void MotionComponent::readIMUStatic(void *_imu)
 
     imuComp->bno.enterSuspendMode();
 
-    DBG("[IMU] Async Thread Stop");
+    DBG("[motion] Stopped reading IMU");
     vTaskDelete(NULL);
 }
 
@@ -152,7 +152,8 @@ bool MotionComponent::setupBNO()
     bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
     bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
     bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
-    bno.setExtCrystalUse(true);
+    // bno.setExtCrystalUse(true); //works on club but not on tab
+    bno.enterNormalMode();
 
     SetParam(connected, true);
     NDBG("BNO is setup");
@@ -168,6 +169,7 @@ void MotionComponent::readIMU()
     if (imuLock)
         return;
 
+
     // NDBG("ReadIMU " + String(hasNewData));
     imu::Quaternion q = bno.getQuat();
     q.normalize();
@@ -176,7 +178,7 @@ void MotionComponent::readIMU()
 
     if (isnan(euler.x()) || isnan(euler.y()) || isnan(euler.z()))
     {
-        //  NDBG("Reading is sh*t (nan)");
+        NDBG("Reading is sh*t (nan)");
         return;
     }
     // NDBG("Euler " + String(euler.x()));

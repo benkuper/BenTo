@@ -12,6 +12,7 @@ DeclareIntParam(sendLevel, 0);
 DeclareIntParam(orientationSendRate, 50);
 DeclareIntParam(sdaPin, IMU_DEFAULT_SDA);
 DeclareIntParam(sclPin, IMU_DEFAULT_SCL);
+DeclareIntParam(intPin, IMU_DEFAULT_INT);
 
 long timeSinceOrientationLastSent;
 
@@ -113,6 +114,7 @@ HandleSetParamInternalStart
 CheckAndSetParam(orientationSendRate);
 CheckAndSetParam(sdaPin);
 CheckAndSetParam(sclPin);
+CheckAndSetParam(intPin);
 CheckAndSetParam(orientationXOffset);
 CheckAndSetParam(flatThresholds);
 CheckAndSetParam(accelThresholds);
@@ -129,6 +131,7 @@ FillSettingsInternalStart
 FillSettingsParam(orientationSendRate);
 FillSettingsParam(sdaPin);
 FillSettingsParam(sclPin);
+FillSettingsParam(intPin);
 FillSettingsParam(orientationXOffset);
 FillSettingsParam2(flatThresholds);
 FillSettingsParam3(accelThresholds);
@@ -146,6 +149,7 @@ FillOSCQueryEnumParam(sendLevel, sendLevelOptions, 3);
 FillOSCQueryIntParam(orientationSendRate);
 FillOSCQueryIntParam(sdaPin);
 FillOSCQueryIntParam(sclPin);
+FillOSCQueryIntParam(intPin);
 FillOSCQueryP3DRangeParamReadOnly(orientation, -180, 180, -90, 90, -180, 180);
 FillOSCQueryP3DParamReadOnly(accel);
 FillOSCQueryP3DParamReadOnly(gyro);
