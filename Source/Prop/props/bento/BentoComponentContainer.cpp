@@ -19,7 +19,7 @@ BentoComponentContainer::BentoComponentContainer(BentoProp* prop) :
 	isUpdatingStructure(false)
 {
 	startThread();
-	startTimer(5000);
+	startTimer(5000); //would be better in PropManager
 }
 
 BentoComponentContainer::~BentoComponentContainer()
@@ -148,7 +148,11 @@ void BentoComponentContainer::messageReceived(const String& message)
 
 void BentoComponentContainer::timerCallback()
 {
-	if (!prop->isConnected->boolValue()) requestHostInfo();
+	if (!prop->isConnected->boolValue())
+	{
+		stopThread(300);
+		startThread();
+	}
 }
 
 void BentoComponentContainer::run()
@@ -169,10 +173,12 @@ void BentoComponentContainer::requestHostInfo()
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(
 		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(2000)
+		.withConnectionTimeoutMs(200)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
 	));
+
+	if (threadShouldExit()) return;
 
 	bool success = false;
 
@@ -220,10 +226,12 @@ void BentoComponentContainer::requestStructure()
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(
 		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(2000)
+		.withConnectionTimeoutMs(200)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
 	));
+
+	if (threadShouldExit()) return;
 
 #if JUCE_WINDOWS
 	if (statusCode != 200)
