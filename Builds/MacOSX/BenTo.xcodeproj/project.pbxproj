@@ -1646,9 +1646,11 @@
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../Modules",
 					"$(HOME)/JUCE/modules",
+					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../External/asio",
 					"$(SRCROOT)/../../External/serial/include",
 					"$(SRCROOT)/../../External/servus/include",
-					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../External/ffmpeg/include",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-App.plist;
@@ -1663,7 +1665,7 @@
 					"\"../../Modules/juce_simpleweb/libs/MacOSX/${CURRENT_ARCH}\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(HOME)/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(HOME)/JUCE/modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/ffmpeg/include";
 				OTHER_LDFLAGS = "-lServus -lserial -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";
@@ -1753,9 +1755,11 @@
 					"$(SRCROOT)/../../JuceLibraryCode",
 					"$(SRCROOT)/../../Modules",
 					"$(HOME)/JUCE/modules",
+					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../External/asio",
 					"$(SRCROOT)/../../External/serial/include",
 					"$(SRCROOT)/../../External/servus/include",
-					"$(SRCROOT)/../../Source",
+					"$(SRCROOT)/../../External/ffmpeg/include",
 					"$(inherited)",
 				);
 				INFOPLIST_FILE = Info-App.plist;
@@ -1771,7 +1775,7 @@
 				);
 				LLVM_LTO = YES;
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
-				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(HOME)/JUCE/modules $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../Source";
+				MTL_HEADER_SEARCH_PATHS = "$(SRCROOT)/../../JuceLibraryCode $(SRCROOT)/../../Modules $(HOME)/JUCE/modules $(SRCROOT)/../../Source $(SRCROOT)/../../External/asio $(SRCROOT)/../../External/serial/include $(SRCROOT)/../../External/servus/include $(SRCROOT)/../../External/ffmpeg/include";
 				OTHER_LDFLAGS = "-lServus -lserial -lssl -lcrypto -lz -weak_framework Metal -weak_framework MetalKit";
 				PRODUCT_BUNDLE_IDENTIFIER = com.yourcompany.BenTo;
 				PRODUCT_NAME = "BenTo";

@@ -10,12 +10,11 @@
 
 #include "CommonIncludes.h"
 
-#include "BlockViz\BlockVizPanel.cpp"
+#include "BlockViz/BlockVizPanel.cpp"
 
+#include "Identification/IdentificationRule.cpp"
+#include "Identification/IdentificationRuleManager.cpp"
 
-#include "Identification\IdentificationRule.cpp"
-#include "Identification\IdentificationRuleManager.cpp"
-
-#include "Zeroconf\ZeroconfManager.cpp"
+#include "Zeroconf/ZeroconfManager.cpp"
 
 
