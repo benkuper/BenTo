@@ -862,8 +862,9 @@
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0"
-               xcodeValidArchs="x86_64" customXcodeResourceFolders="Resources/mac/esptool">
+               externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
+               xcodeValidArchs="arm64,x86_64" customXcodeResourceFolders="Resources/mac/esptool"
+               documentExtensions="bento" hardenedRuntimeOptions="com.apple.security.cs.allow-jit">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.10 SDK" libraryPath="../../External/servus/lib/osx/release"
                        macOSDeploymentTarget="10.10" binaryPath="Release"/>

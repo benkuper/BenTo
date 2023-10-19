@@ -30,5 +30,24 @@
     <string></string>
     <key>NSHighResolutionCapable</key>
     <true/>
+    <key>CFBundleDocumentTypes</key>
+    <array>
+      <dict>
+        <key>CFBundleTypeExtensions</key>
+        <array>
+          <string>bento</string>
+        </array>
+        <key>CFBundleTypeName</key>
+        <string>bento</string>
+        <key>CFBundleTypeRole</key>
+        <string>Editor</string>
+        <key>CFBundleTypeIconFile</key>
+        <string>Icon</string>
+        <key>NSPersistentStoreTypeKey</key>
+        <string>XML</string>
+        <key>LSHandlerRank</key>
+        <string>Default</string>
+      </dict>
+    </array>
   </dict>
 </plist>
