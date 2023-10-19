@@ -415,9 +415,6 @@
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoComponentContainer.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3803,7 +3800,6 @@
     <ClInclude Include="..\..\Source\LightBlock\LightBlockIncludes.h"/>
     <ClInclude Include="..\..\Source\VideoPreview\VideoPreviewPanel.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoComponentContainer.h"/>
-    <ClInclude Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h"/>
     <ClInclude Include="..\..\Source\Prop\Component\PropComponent.h"/>
     <ClInclude Include="..\..\Source\Prop\Shape\ui\PropShapeCurveEasingUI.h"/>

@@ -176,7 +176,6 @@
 		4A82E1B5894FE86A561A46B4 /* default.btlayout */ /* default.btlayout */ = {isa = PBXFileReference; lastKnownFileType = file.btlayout; name = default.btlayout; path = ../../Resources/default.btlayout; sourceTree = SOURCE_ROOT; };
 		4AA49400F632E13E4625FF39 /* SpatLayout.h */ /* SpatLayout.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SpatLayout.h; path = ../../Source/Video/SpatLayout.h; sourceTree = SOURCE_ROOT; };
 		4B06BDC0D466DCF5D90D819A /* PropShape.h */ /* PropShape.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropShape.h; path = ../../Source/Prop/Shape/PropShape.h; sourceTree = SOURCE_ROOT; };
-		4B33C0D8DB2A2E3C3599F36E /* BentoPropGenericComponent.cpp */ /* BentoPropGenericComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoPropGenericComponent.cpp; path = ../../Source/Prop/props/bento/BentoPropGenericComponent.cpp; sourceTree = SOURCE_ROOT; };
 		4C0FFBAFE2436814115FE752 /* Node.cpp */ /* Node.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Node.cpp; path = ../../Source/Node/Node.cpp; sourceTree = SOURCE_ROOT; };
 		4D63221EC48D2920320210D9 /* VideoLayer.h */ /* VideoLayer.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoLayer.h; path = ../../Source/Sequence/layers/Video/VideoLayer.h; sourceTree = SOURCE_ROOT; };
 		4D756E470B2CED02703B26FE /* PropNode.cpp */ /* PropNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropNode.cpp; path = ../../Source/Node/nodes/prop/PropNode.cpp; sourceTree = SOURCE_ROOT; };
@@ -241,7 +240,6 @@
 		7DF3DFB9A3990703455A075C /* NodeConnectionSlot.cpp */ /* NodeConnectionSlot.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionSlot.cpp; path = ../../Source/Node/NodeConnectionSlot.cpp; sourceTree = SOURCE_ROOT; };
 		7DF7FFF1CD1248E451519039 /* LightBlockClipManagerUI.h */ /* LightBlockClipManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockClipManagerUI.h; path = ../../Source/Sequence/layers/Block/ui/LightBlockClipManagerUI.h; sourceTree = SOURCE_ROOT; };
 		7E4205EA64C0438F7F63F64E /* IdentificationRule.h */ /* IdentificationRule.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = IdentificationRule.h; path = ../../Source/Common/Identification/IdentificationRule.h; sourceTree = SOURCE_ROOT; };
-		7F0046804CA45F3842A214EC /* BentoPropGenericComponent.h */ /* BentoPropGenericComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = BentoPropGenericComponent.h; path = ../../Source/Prop/props/bento/BentoPropGenericComponent.h; sourceTree = SOURCE_ROOT; };
 		8040E4F47B673E635CB8D091 /* PropShapeGroup.cpp */ /* PropShapeGroup.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropShapeGroup.cpp; path = ../../Source/Prop/Shape/PropShapeGroup.cpp; sourceTree = SOURCE_ROOT; };
 		8055E866585B98F6CD0EE43B /* include_filmstro_ffmpeg_FFmpegVideoComponent.cpp */ /* include_filmstro_ffmpeg_FFmpegVideoComponent.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_filmstro_ffmpeg_FFmpegVideoComponent.cpp; path = ../../JuceLibraryCode/include_filmstro_ffmpeg_FFmpegVideoComponent.cpp; sourceTree = SOURCE_ROOT; };
 		808AAC0DA10E0C307350A7F1 /* strobe.png */ /* strobe.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = strobe.png; path = ../../Resources/models/patterns/strobe.png; sourceTree = SOURCE_ROOT; };
@@ -929,8 +927,6 @@
 			children = (
 				433569FC140D5F23CEEA008A,
 				81F7C1016F3F694E81B28AE7,
-				4B33C0D8DB2A2E3C3599F36E,
-				7F0046804CA45F3842A214EC,
 				3CB40E424265CF9D5240523B,
 				9FDCA8F6ADDBE28AAA607B41,
 			);

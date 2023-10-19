@@ -1552,9 +1552,6 @@
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoComponentContainer.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.cpp">
-      <Filter>BenTo\Source\Prop\props\bento</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Prop\props\bento\BentoProp.cpp">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClCompile>
@@ -5419,9 +5416,6 @@
       <Filter>BenTo\Source\VideoPreview</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoComponentContainer.h">
-      <Filter>BenTo\Source\Prop\props\bento</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Prop\props\bento\BentoPropGenericComponent.h">
       <Filter>BenTo\Source\Prop\props\bento</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Prop\props\bento\BentoProp.h">

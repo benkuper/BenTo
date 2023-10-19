@@ -575,10 +575,6 @@
                   file="Source/Prop/props/bento/BentoComponentContainer.cpp"/>
             <FILE id="t0MEZa" name="BentoComponentContainer.h" compile="0" resource="0"
                   file="Source/Prop/props/bento/BentoComponentContainer.h"/>
-            <FILE id="FrN3p5" name="BentoPropGenericComponent.cpp" compile="0"
-                  resource="0" file="Source/Prop/props/bento/BentoPropGenericComponent.cpp"/>
-            <FILE id="iEx3EN" name="BentoPropGenericComponent.h" compile="0" resource="0"
-                  file="Source/Prop/props/bento/BentoPropGenericComponent.h"/>
             <FILE id="e7lkEF" name="BentoProp.cpp" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
             <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>
           </GROUP>
@@ -869,10 +865,11 @@
                externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0"
                xcodeValidArchs="x86_64" customXcodeResourceFolders="Resources/mac/esptool">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug"
-                       macOSDeploymentTarget="10.9"/>
-        <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/release"
-                       macOSDeploymentTarget="10.9"/>
+        <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.10 SDK" libraryPath="../../External/servus/lib/osx/release"
+                       macOSDeploymentTarget="10.10" binaryPath="Release"/>
+        <CONFIGURATION isDebug="0" name="ReleaseSilicon" osxCompatibility="10.10 SDK"
+                       libraryPath="../../External/servus/lib/silicon/release" macOSDeploymentTarget="10.10"
+                       binaryPath="Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
