@@ -81,6 +81,8 @@ public:
     void updateInternal() override;
     void clearInternal() override;
 
+    void setBrightness(float val);
+
     void paramValueChangedInternal(void *param) override;
     void onEnabledChanged() override;
 

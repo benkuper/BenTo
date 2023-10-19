@@ -199,6 +199,9 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     {
         if (e.type == BatteryComponent::CriticalBattery)
         {
+            #if USE_LEDSTRIP
+            strips.items[0]->setBrightness(.05f);
+            #endif
             shutdown();
         }
     }
