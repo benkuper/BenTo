@@ -433,6 +433,7 @@ void LightBlockClipUI::run()
 
 		var params = new DynamicObject();
 		params.getDynamicObject()->setProperty("updateAutomation", false);
+		params.getDynamicObject()->setProperty("sequenceTime", false);
 
 		float start = clip->time->floatValue();
 		//float length = clip->getTotalLength();
