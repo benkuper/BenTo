@@ -10,7 +10,7 @@ DeclareComponentSingleton(Battery, "battery", )
 DeclareIntParam(chargePin, BATTERY_DEFAULT_CHARGE_PIN);
 DeclareIntParam(rawMin, BATTERY_DEFAUT_RAW_MIN);
 DeclareIntParam(rawMax, BATTERY_DEFAULT_RAW_MAX);
-DeclareFloatParam(lowBatteryThreshold, 3.5);
+DeclareFloatParam(lowBatteryThreshold, BATTERY_DEFAULT_LOW_VOLTAGE);
 
 DeclareBoolParam(sendFeedback, true);
 

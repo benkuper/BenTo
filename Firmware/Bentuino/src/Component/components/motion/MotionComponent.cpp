@@ -16,7 +16,7 @@ bool MotionComponent::initInternal(JsonObject o)
     // AddP3DParam(gravity);
 
     AddFloatParamConfig(orientationXOffset);
-    AddIntParamConfig(throwState);
+    AddIntParam(throwState);
     AddFloatParamConfig(activity);
     AddP2DParamConfig(flatThresholds);
     AddP3DParamConfig(accelThresholds);

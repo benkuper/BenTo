@@ -282,7 +282,7 @@
                 "BATTERY_DEFAULT_CHARGE_PIN=-1",
                 "BATTERY_DEFAUT_RAW_MIN=222",
                 "BATTERY_DEFAULT_RAW_MAX=335",
-                "BATTERY_DEFAULT_LOW_VOLTAGE=3.3f",
+                "BATTERY_DEFAULT_LOW_VOLTAGE=3.5f",
                 "USE_FILES",
                 "FILES_DEFAULT_SDSPEED=27000000",
                 "FILES_DEFAULT_SD_EN=16",
