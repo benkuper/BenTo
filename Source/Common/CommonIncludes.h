@@ -12,9 +12,9 @@
 
 #include "JuceHeader.h"
 
-#include "BlockViz\BlockVizPanel.h"
+#include "BlockViz/BlockVizPanel.h"
 
-#include "Identification\IdentificationRule.h"
-#include "Identification\IdentificationRuleManager.h"
+#include "Identification/IdentificationRule.h"
+#include "Identification/IdentificationRuleManager.h"
 
-#include "Zeroconf\ZeroconfManager.h"
+#include "Zeroconf/ZeroconfManager.h"
