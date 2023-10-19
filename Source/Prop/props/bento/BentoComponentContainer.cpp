@@ -176,6 +176,7 @@ void BentoComponentContainer::requestHostInfo()
 		.withConnectionTimeoutMs(200)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
+		.withProgressCallback([this](int, int) { return !threadShouldExit(); })
 	));
 
 	if (threadShouldExit()) return;
@@ -229,6 +230,7 @@ void BentoComponentContainer::requestStructure()
 		.withConnectionTimeoutMs(200)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
+		.withProgressCallback([this](int, int) { return !threadShouldExit(); })
 	));
 
 	if (threadShouldExit()) return;
