@@ -37,7 +37,6 @@
 #include "Shape/ui/PropShapeView.cpp"
 #include "TargetFilter/PropTargetFilter.cpp"
 #include "TargetFilter/PropTargetFilterManager.cpp"
-#include "props/Bento/BentoPropGenericComponent.cpp"
 #include "props/bento/BentoComponentContainer.cpp"
 #include "props/bento/BentoProp.cpp"
 #include "ui/PropEditor.cpp"

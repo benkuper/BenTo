@@ -16,7 +16,6 @@
 
 #include "Component/PropComponent.h"
 #include "Prop.h"
-#include "props/Bento/BentoPropGenericComponent.h"
 #include "props/Bento/BentoComponentContainer.h"
 #include "props/bento/BentoProp.h"
 
