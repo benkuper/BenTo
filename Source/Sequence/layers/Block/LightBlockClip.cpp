@@ -128,7 +128,7 @@ Array<Colour> LightBlockClip::getColors(Prop* p, double absoluteTime, var params
 	{
 		Array<Colour> remapColors;
 		remapColors.resize(resolution);
-		remapColors.fill(Colours::black);
+		remapColors.fill(Colours::transparentBlack);
 		
 		Point<float> p = positionRemap->getPoint();
 		int startIndex = p.x * resolution;

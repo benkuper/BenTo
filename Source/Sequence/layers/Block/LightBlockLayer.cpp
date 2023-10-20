@@ -105,7 +105,7 @@ Array<Colour> LightBlockLayer::getColors(Prop* p, double time, var params)
 	{
 		Array<Colour> remapColors;
 		remapColors.resize(resolution);
-		remapColors.fill(Colours::black);
+		remapColors.fill(Colours::transparentBlack);
 
 		Point<float> p = positionRemap->getPoint();
 		int startIndex = p.x * resolution;
