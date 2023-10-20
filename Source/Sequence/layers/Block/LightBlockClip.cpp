@@ -28,6 +28,14 @@ LightBlockClip::LightBlockClip(LightBlockLayer* layer) :
 	fadeOut = addFloatParameter("Fade Out", "Fade out time", 0, 0, getTotalLength(), false);
 	fadeOut->canBeDisabledByUser = true;
 
+	positionRemap = addPoint2DParameter("Position Remap", "Remaps the position so you can easily target a portion of the prop", false);
+	positionRemap->canBeDisabledByUser = true;
+	positionRemap->setBounds(0, 0, 1, 1);
+	var def;
+	def.append(0);
+	def.append(0.5f);
+	positionRemap->setDefaultValue(def);
+
 	timeOffsetByID = addFloatParameter("Time Offset by ID", "Offset computed time by Prop ID", 0);
 	timeOffsetByID->defaultUI = FloatParameter::TIME;
 
@@ -116,11 +124,28 @@ Array<Colour> LightBlockClip::getColors(Prop* p, double absoluteTime, var params
 		effects.items[i]->lightBlock->filterColors(&colors, p, relTimeLooped, params);
 	}
 
-	for (int i = 0; i < resolution; i++)
+	if (positionRemap->enabled)
 	{
-		colors.set(i, colors[i].withMultipliedAlpha(factor));
+		Array<Colour> remapColors;
+		remapColors.resize(resolution);
+		remapColors.fill(Colours::black);
+		
+		Point<float> p = positionRemap->getPoint();
+		int startIndex = p.x * resolution;
+		int endIndex = p.y * resolution;
+		if (startIndex != endIndex)
+		{
+			for (int i = startIndex; i < endIndex; i++)
+			{
+				int index = jmap(i, startIndex, endIndex, 0, resolution);
+				remapColors.set(i, colors[index].withMultipliedAlpha(factor));
+			}
+		}
+		
+		return remapColors;
 	}
-
+	
+	for (int i = 0; i < resolution; i++) colors.set(i, colors[i].withMultipliedAlpha(factor));
 	return colors;
 }
 
@@ -206,6 +231,10 @@ void LightBlockClip::onContainerParameterChangedInternal(Parameter* p)
 			setCoreLength(coreLength->floatValue());
 		}
 	}
+	else if (p == positionRemap)
+	{
+		clipNotifier.addMessage(new ClipEvent(ClipEvent::REGENERATE_PREVIEW, this));
+	}
 	/*
 	else if (p == autoFade)
 	{
@@ -221,6 +250,10 @@ void LightBlockClip::controllableStateChanged(Controllable* c)
 	{
 		clipListeners.call(&ClipListener::clipFadesChanged, this);
 		clipNotifier.addMessage(new ClipEvent(ClipEvent::FADES_CHANGED, this));
+	}
+	else if (c == positionRemap)
+	{
+		clipNotifier.addMessage(new ClipEvent(ClipEvent::REGENERATE_PREVIEW, this));
 	}
 }
 

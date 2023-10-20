@@ -28,6 +28,7 @@ public:
 
 	FloatParameter * fadeIn;
 	FloatParameter * fadeOut;
+	Point2DParameter* positionRemap;
 
 	FloatParameter* timeOffsetByID;
 

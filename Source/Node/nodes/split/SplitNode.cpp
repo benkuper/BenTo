@@ -19,11 +19,11 @@ SplitNode::SplitNode(var params) :
 		positions[i] = addFloatParameter("Position " + String(i + 1), "Center position of the color input", .5f, 0, 1);
 	}
 
-	fade = addFloatParameter("Fade", "Fade between splits", .5f, 0, 2);
+	//fade = addFloatParameter("Fade", "Fade between splits", .5f, 0, 2);
 
 	for (int i = 0; i < 4; i++) inColors[i] = addColorSlot(true, "Colors " + String(i + 1));
 	for (int i = 0; i < 3; i++) positionSlots[i] = addParameterSlot(true, positions[i]);
-	fadeSlot = addParameterSlot(true, fade);
+	//fadeSlot = addParameterSlot(true, fade);
 }
 
 SplitNode::~SplitNode()

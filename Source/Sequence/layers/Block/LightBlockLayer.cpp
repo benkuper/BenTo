@@ -28,6 +28,14 @@ LightBlockLayer::LightBlockLayer(Sequence* s, var params) :
 	addChildControllableContainer(filterManager.get());
 	filterManager->addFilterManagerListener(this);
 
+	positionRemap = addPoint2DParameter("Position Remap", "Remaps the position so you can easily target a portion of the prop", false);
+	positionRemap->canBeDisabledByUser = true;
+	positionRemap->setBounds(0, 0, 1, 1);
+	var def;
+	def.append(0);
+	def.append(0.5f);
+	positionRemap->setDefaultValue(def);
+
 	updateLinkedProps();
 
 	addChildControllableContainer(&blockClipManager);
@@ -91,6 +99,27 @@ Array<Colour> LightBlockLayer::getColors(Prop* p, double time, var params)
 
 			result.set(i, (Colour::fromFloatRGBA(jmin(r, 1.f), jmin(g, 1.f), jmin(b, 1.f), jmin(a, 1.f))));
 		}
+	}
+
+	if (positionRemap->enabled)
+	{
+		Array<Colour> remapColors;
+		remapColors.resize(resolution);
+		remapColors.fill(Colours::black);
+
+		Point<float> p = positionRemap->getPoint();
+		int startIndex = p.x * resolution;
+		int endIndex = p.y * resolution;
+		if (startIndex != endIndex)
+		{
+			for (int i = startIndex; i < endIndex; i++)
+			{
+				int index = jmap(i, startIndex, endIndex, 0, resolution);
+				remapColors.set(i, result[index]);
+			}
+		}
+
+		return remapColors;
 	}
 
 

@@ -72,6 +72,8 @@ void LightBlockClipManagerUI::itemDropped(const SourceDetails & source)
 	dropClipX = -1;
 
 	LightBlockModelUI * modelUI = dynamic_cast<LightBlockModelUI *>(source.sourceComponent.get());
+	if (manager->layer->sequence->parentContainer.get() == modelUI->item) return;
+
 	LightBlockClip * clip = (LightBlockClip *)manager->addBlockAt(timeline->getTimeForX(source.localPosition.x));
 	if (modelUI == nullptr || clip == nullptr) return;
 

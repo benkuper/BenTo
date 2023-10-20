@@ -19,11 +19,11 @@ public:
 	enum RemapMode { RESIZE, CROP };
 
 	Parameter* positions[3];
-	Parameter* fade;
+	//Parameter* fade;
 
 	ColorSlot* inColors[4];
 	ParameterSlot* positionSlots[3];
-	ParameterSlot* fadeSlot;
+	//ParameterSlot* fadeSlot;
 
 	Array<Colour> getColorsInternal(Prop* p, double time, var params, var localParams) override;
 

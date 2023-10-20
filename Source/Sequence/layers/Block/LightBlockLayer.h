@@ -25,6 +25,7 @@ public:
 
 	BoolParameter* defaultLayer;
 	EnumParameter* blendMode;
+	Point2DParameter* positionRemap;
 
 	std::unique_ptr<PropTargetFilterManager> filterManager;
 	IntParameter* previewID;
