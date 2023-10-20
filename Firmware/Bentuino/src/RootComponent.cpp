@@ -53,7 +53,7 @@ bool RootComponent::initInternal(JsonObject)
 #endif
 
 #if USE_MOTION
-    AddOwnedComponent(&imu);
+    AddOwnedComponent(&motion);
 #endif
 
 #if USE_SERVO
@@ -105,7 +105,7 @@ void RootComponent::shutdown()
 void RootComponent::powerdown()
 {
     clear();
-    
+
     // NDBG("Sleep now, baby.");
 
     delay(500);
@@ -199,9 +199,9 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
     {
         if (e.type == BatteryComponent::CriticalBattery)
         {
-            #if USE_LEDSTRIP
+#if USE_LEDSTRIP
             strips.items[0]->setBrightness(.05f);
-            #endif
+#endif
             shutdown();
         }
     }

@@ -37,6 +37,8 @@ public:
                                                                            ,
                                                                            systemLayer(this)
 #endif
+                                                                           ,
+                                                                           fx(this)
     {
     }
 
@@ -67,6 +69,10 @@ public:
 #endif
 #if USE_SYSTEMLAYER
     LedStripSystemLayer systemLayer;
+#endif
+
+#if USE_FX
+    FXComponent fx;
 #endif
 
     LedStripLayer *userLayers[LEDSTRIP_NUM_USER_LAYERS];
@@ -171,7 +177,7 @@ DeclareScriptFunctionReturn1(LedStripManagerComponent, get, uint32_t, uint32_t) 
 
 DeclareScriptFunctionVoid3(LedStripManagerComponent, setBlendMode, uint32_t, uint32_t, uint32_t) { return items[0]->userLayers[(int)arg2]->setBlendMode((LedStripLayer::BlendMode)arg3); }
 
-    void addItemInternal(int index) {  };
+void addItemInternal(int index){};
 
 #endif
 

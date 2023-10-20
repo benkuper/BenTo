@@ -270,6 +270,7 @@
                 "LED_MAX_COUNT=300",
                 "PLAYBACK_USE_ALPHA",
                 "PLAYBACK_MAX_SCRIPTS=32",
+                "USE_FX",
                 "USE_BUTTON",
                 "BUTTON_MAX_COUNT=1",
                 "BUTTON_DEFAULT_PIN=32",

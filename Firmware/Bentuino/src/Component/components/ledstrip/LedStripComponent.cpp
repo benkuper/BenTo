@@ -1,4 +1,3 @@
-#include "LedStripComponent.h"
 ImplementManagerSingleton(LedStrip)
 
     bool LedStripComponent::initInternal(JsonObject o)
@@ -31,6 +30,10 @@ ImplementManagerSingleton(LedStrip)
 #endif
 #if USE_SYSTEMLAYER
     AddOwnedComponent(&systemLayer);
+#endif
+
+#if USE_FX
+    AddOwnedComponent(&fx);
 #endif
 
     setupLeds();
@@ -212,6 +215,10 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
             break;
         }
     }
+
+#if USE_FX
+    fx.process(colors);
+#endif
 }
 
 // Color functions

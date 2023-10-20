@@ -66,9 +66,7 @@
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.cpp"
 #endif
 
-// #ifdef USE_SCRIPT
-// #include "Component/components/ledstrip/Layer/layers/script/LedStripScriptLayer.cpp"
-// #endif
+#include "Component/components/ledstrip/FXComponent.cpp"
 
 #include "Component/components/ledstrip/LedStripComponent.cpp"
 #endif

@@ -69,7 +69,7 @@ DummyManagerComponent dummies;
 #endif
 
 #ifdef USE_MOTION
-MotionComponent imu;
+MotionComponent motion;
 #endif
 
 #ifdef USE_SERVO

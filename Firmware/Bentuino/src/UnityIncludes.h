@@ -103,9 +103,8 @@
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.h"
 #endif
 
-// #if USE_SCRIPT
-// #include "Component/components/ledstrip/Layer/layers/script/LedStripScriptLayer.h"
-// #endif
+#include "Component/components/ledstrip/FXComponent.h"
+
 
 #include "Component/components/ledstrip/LedStripComponent.h"
 #endif //LEDSTRIP
