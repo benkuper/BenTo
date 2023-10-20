@@ -36,6 +36,7 @@ public:
 	var getWasmTimingsDataForProp(Prop* p, float timeOffset = 0);
 
 	void itemAdded(SequenceLayer* s) override;
+	void itemsAdded(Array<SequenceLayer*> items) override;
 
 	void itemAdded(PropClusterGroup* g) override;
 	void itemsAdded(Array<PropClusterGroup*> g) override;

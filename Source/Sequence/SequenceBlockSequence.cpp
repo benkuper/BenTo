@@ -183,20 +183,39 @@ var SequenceBlockSequence::getWasmTimingsDataForProp(Prop* p, float timeOffset)
 	return result;
 }
 
-void SequenceBlockSequence::itemAdded(SequenceLayer* s)
+void SequenceBlockSequence::itemAdded(SequenceLayer* item)
 {
 
-	LightBlockLayer* l = dynamic_cast<LightBlockLayer*>(s);
+	LightBlockLayer* l = dynamic_cast<LightBlockLayer*>(item);
 	if (l != nullptr)
 	{
 		if (!Engine::mainEngine->isLoadingFile && layerManager->items.size() == 1) l->defaultLayer->setValue(true);
 		return;
 	}
 
-	AudioLayer* al = dynamic_cast<AudioLayer*>(s);
+	AudioLayer* al = dynamic_cast<AudioLayer*>(item);
 	if (al != nullptr)
 	{
 		al->setAudioProcessorGraph(&AudioManager::getInstance()->graph, AUDIO_OUTPUT_GRAPH_ID);
+	}
+}
+
+void SequenceBlockSequence::itemsAdded(Array<SequenceLayer*> items)
+{
+	for (auto& item : items)
+	{
+		LightBlockLayer* l = dynamic_cast<LightBlockLayer*>(item);
+		if (l != nullptr)
+		{
+			if (!Engine::mainEngine->isLoadingFile && layerManager->items.size() == 1) l->defaultLayer->setValue(true);
+			return;
+		}
+
+		AudioLayer* al = dynamic_cast<AudioLayer*>(item);
+		if (al != nullptr)
+		{
+			al->setAudioProcessorGraph(&AudioManager::getInstance()->graph, AUDIO_OUTPUT_GRAPH_ID);
+		}
 	}
 
 }
