@@ -208,7 +208,7 @@ void SequenceBlockSequence::itemsAdded(Array<SequenceLayer*> items)
 		if (l != nullptr)
 		{
 			if (!Engine::mainEngine->isLoadingFile && layerManager->items.size() == 1) l->defaultLayer->setValue(true);
-			return;
+			continue;
 		}
 
 		AudioLayer* al = dynamic_cast<AudioLayer*>(item);
