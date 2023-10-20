@@ -290,6 +290,10 @@
               file="Source/Node/NodeIncludes.cpp"/>
         <FILE id="RIF8Ow" name="NodeIncludes.h" compile="0" resource="0" file="Source/Node/NodeIncludes.h"/>
         <GROUP id="{983B72E8-0A02-C1C3-CCCB-B64FE65F2FEA}" name="nodes">
+          <GROUP id="{4BA010EF-5209-856B-C561-E1767DAB3B13}" name="split">
+            <FILE id="Am4tN4" name="SplitNode.cpp" compile="0" resource="0" file="Source/Node/nodes/split/SplitNode.cpp"/>
+            <FILE id="zt5UpA" name="SplitNode.h" compile="0" resource="0" file="Source/Node/nodes/split/SplitNode.h"/>
+          </GROUP>
           <GROUP id="{1666FCD0-6E9D-B464-E9FF-C20C2EFBB292}" name="colorRemap">
             <FILE id="YOIq8a" name="ColorRemapNode.cpp" compile="0" resource="0"
                   file="Source/Node/nodes/colorRemap/ColorRemapNode.cpp"/>

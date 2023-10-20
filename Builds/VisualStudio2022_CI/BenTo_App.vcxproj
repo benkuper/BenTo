@@ -236,6 +236,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Sequence\SequenceIncludes.cpp"/>
     <ClCompile Include="..\..\Source\Node\NodeIncludes.cpp"/>
+    <ClCompile Include="..\..\Source\Node\nodes\split\SplitNode.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3739,6 +3742,7 @@
     <ClInclude Include="..\..\Source\Sequence\BentoSequenceEditor.h"/>
     <ClInclude Include="..\..\Source\Sequence\SequenceIncludes.h"/>
     <ClInclude Include="..\..\Source\Node\NodeIncludes.h"/>
+    <ClInclude Include="..\..\Source\Node\nodes\split\SplitNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\composite\CompositeNode.h"/>
     <ClInclude Include="..\..\Source\Node\nodes\model\ui\ModelNodeUI.h"/>

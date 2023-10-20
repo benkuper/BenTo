@@ -110,7 +110,7 @@ void LightBlockModelUI::addContextMenuItems(PopupMenu& m)
 		index++;
 	}
 
-	m.addItem(-1, "Assign to all");
+	m.addItem("Assign to all", [&]() {for (auto& p : PropManager::getInstance()->items) p->activeProvider->setValueFromTarget(item); });
 	m.addSubMenu("Assign to...", assignMenu);
 
 
@@ -118,13 +118,7 @@ void LightBlockModelUI::addContextMenuItems(PopupMenu& m)
 
 void LightBlockModelUI::handleContextMenuResult(int result)
 {
-	if (result == -1)
-	{
-		for (auto& p : PropManager::getInstance()->items)
-		{
-			p->activeProvider->setValueFromTarget(item);
-		}
-	}if (result > 0 && result <= PropManager::getInstance()->items.size())
+	if (result > 0 && result <= PropManager::getInstance()->items.size())
 	{
 		Prop* p = PropManager::getInstance()->items[result - 1];
 		p->activeProvider->setValueFromTarget(item);

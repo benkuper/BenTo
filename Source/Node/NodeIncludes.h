@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    NodeIncludes.h
-    Created: 20 May 2021 9:00:20am
-    Author:  bkupe
+	NodeIncludes.h
+	Created: 20 May 2021 9:00:20am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -28,6 +28,7 @@ using namespace juce;
 #include "nodes/composite/CompositeNode.h"
 #include "nodes/parameter/ParameterNode.h"
 #include "nodes/positionRemap/PositionRemapNode.h"
+#include "nodes/split/SplitNode.h"
 
 #include "ui/NodeViewUI.h"
 #include "ui/ColorNodeViewUI.h"

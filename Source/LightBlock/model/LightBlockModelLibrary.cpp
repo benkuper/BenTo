@@ -195,23 +195,23 @@ LightBlockModel* LightBlockModelLibrary::getFilterWithName(const String& modelNa
 void LightBlockModelLibrary::showSourcesAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
-	Array<LightBlockColorProvider*> mList = fillProvidersMenu(menu, true, true, false);
+	std::shared_ptr<Array<LightBlockColorProvider*>> mList = std::make_shared<Array<LightBlockColorProvider*>>(fillProvidersMenu(menu, true, true, false));
 
-	menu.showMenuAsync(PopupMenu::Options(), [&mList, returnFunc](int result)
+
+	menu.showMenuAsync(PopupMenu::Options(), [mList, returnFunc](int result)
 		{
-			if (result > 0) returnFunc(mList[result - 1]);
+			if (result > 0) returnFunc((*mList)[result - 1]);
 		}
 	);
 }
 
-
 void LightBlockModelLibrary::showFiltersAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc)
 {
 	PopupMenu menu;
-	Array<LightBlockColorProvider*> mList = fillProvidersMenu(menu, true, false, true);
-	menu.showMenuAsync(PopupMenu::Options(), [&mList, returnFunc](int result)
+	std::shared_ptr<Array<LightBlockColorProvider*>> mList = std::make_shared<Array<LightBlockColorProvider*>>(fillProvidersMenu(menu, true, false, true));
+	menu.showMenuAsync(PopupMenu::Options(), [mList, returnFunc](int result)
 		{
-			if (result > 0) returnFunc(mList[result - 1]);
+			if (result > 0) returnFunc((*mList)[result - 1]);
 		}
 	);
 }

@@ -35,7 +35,7 @@ public:
 	Array<NodeConnectionSlot *> getSlotsWithType(bool isInput, ConnectionType  type);
 	ParameterSlot * getParameterSlot(Parameter * p, bool isInput);
 
-	var getParameterValue(Parameter * p, var params);
+	var getParameterValue(Parameter * p, var params, var localParams);
 
 	var getLocalParams(var params);
 	

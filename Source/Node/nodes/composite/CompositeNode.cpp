@@ -37,7 +37,7 @@ Array<Colour> CompositeNode::getColorsInternal(Prop* p, double time, var params,
 	if (c3->isConnected()) colors.add(c3->getColors(p, time, params));
 	if (c4->isConnected()) colors.add(c4->getColors(p, time, params));
 
-	BlendMode b = (BlendMode)(int)getParameterValue(blendMode, localParams);
+	BlendMode b = (BlendMode)(int)getParameterValue(blendMode, params, localParams);
 
 	if (colors.size() == 0) return Array<Colour>();
 

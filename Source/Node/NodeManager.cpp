@@ -79,6 +79,7 @@ NodeFactory::NodeFactory()
 	defs.add(Factory<Node>::Definition::createDef<CompositeNode>("Color")->addParam("nodeType", "color"));
 	defs.add(Factory<Node>::Definition::createDef<PositionRemapNode>("Color")->addParam("nodeType", "color"));
 	defs.add(Factory<Node>::Definition::createDef<ColorRemapNode>("Color")->addParam("nodeType", "color"));
+	defs.add(Factory<Node>::Definition::createDef<SplitNode>("Color")->addParam("nodeType", "color"));
 
 	defs.add(Factory<Node>::Definition::createDef("Parameter", "Integer", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", IntParameter::getTypeStringStatic()));
 	defs.add(Factory<Node>::Definition::createDef("Parameter", "Float", &ParameterNode::create)->addParam("nodeType", "param")->addParam("type", FloatParameter::getTypeStringStatic()));

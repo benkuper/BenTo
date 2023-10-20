@@ -113,6 +113,7 @@
 		16621BE75EEBD08CCD26E8C4 /* AVFoundation.framework */ /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		170FE150BA66B4CADFA926C5 /* PictureBlockUI.cpp */ /* PictureBlockUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PictureBlockUI.cpp; path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.cpp; sourceTree = SOURCE_ROOT; };
 		18F78DAAE30A736BD0EA641E /* ColorRemapNode.cpp */ /* ColorRemapNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ColorRemapNode.cpp; path = ../../Source/Node/nodes/colorRemap/ColorRemapNode.cpp; sourceTree = SOURCE_ROOT; };
+		192D37508A701331B5A78652 /* SplitNode.h */ /* SplitNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SplitNode.h; path = ../../Source/Node/nodes/split/SplitNode.h; sourceTree = SOURCE_ROOT; };
 		19AF14CEF00658DEFF7167B5 /* juce_events */ /* juce_events */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_events; path = ../../JUCE/modules/juce_events; sourceTree = SOURCE_ROOT; };
 		19E79F7351E09AD55A45358E /* streamingScript.png */ /* streamingScript.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = streamingScript.png; path = ../../Resources/models/streamingScript.png; sourceTree = SOURCE_ROOT; };
 		1A1F430A23A8B7054CD4E15C /* icon.png */ /* icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = icon.png; path = ../../Resources/icon.png; sourceTree = SOURCE_ROOT; };
@@ -186,6 +187,7 @@
 		4E9D333D665303870C9A2117 /* PropTargetFilter.cpp */ /* PropTargetFilter.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropTargetFilter.cpp; path = ../../Source/Prop/TargetFilter/PropTargetFilter.cpp; sourceTree = SOURCE_ROOT; };
 		4EAE7FA2B5C4DE0B0EE98DBB /* Prop.cpp */ /* Prop.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = Prop.cpp; path = ../../Source/Prop/Prop.cpp; sourceTree = SOURCE_ROOT; };
 		4F816E3D0FF2DB6894AD836D /* SequenceBlockSequence.cpp */ /* SequenceBlockSequence.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SequenceBlockSequence.cpp; path = ../../Source/Sequence/SequenceBlockSequence.cpp; sourceTree = SOURCE_ROOT; };
+		4F8C400BE53494510607AD14 /* SplitNode.cpp */ /* SplitNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = SplitNode.cpp; path = ../../Source/Node/nodes/split/SplitNode.cpp; sourceTree = SOURCE_ROOT; };
 		500D85928B2B8F7C8E885687 /* IOKit.framework */ /* IOKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = IOKit.framework; path = System/Library/Frameworks/IOKit.framework; sourceTree = SDKROOT; };
 		51317BFC040AE415C6D3E7CC /* Icon.icns */ /* Icon.icns */ = {isa = PBXFileReference; lastKnownFileType = file.icns; name = Icon.icns; path = Icon.icns; sourceTree = SOURCE_ROOT; };
 		53D37D2D06EE1BEC2DD10572 /* ZeroconfManager.h */ /* ZeroconfManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZeroconfManager.h; path = ../../Source/Common/Zeroconf/ZeroconfManager.h; sourceTree = SOURCE_ROOT; };
@@ -796,6 +798,15 @@
 			name = remap;
 			sourceTree = "<group>";
 		};
+		53954821F02F91C48CB8E9E9 /* split */ = {
+			isa = PBXGroup;
+			children = (
+				4F8C400BE53494510607AD14,
+				192D37508A701331B5A78652,
+			);
+			name = split;
+			sourceTree = "<group>";
+		};
 		549EAD63C2FB698E832FD1B8 /* TargetFilter */ = {
 			isa = PBXGroup;
 			children = (
@@ -1127,6 +1138,7 @@
 		A1949C5D402CC793438D96F6 /* nodes */ = {
 			isa = PBXGroup;
 			children = (
+				53954821F02F91C48CB8E9E9,
 				094DAF489FF8D7928F811C84,
 				C15207A305CC27E1EC587425,
 				C5EFA94FD996A811414D67D6,

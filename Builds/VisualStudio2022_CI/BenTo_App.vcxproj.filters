@@ -74,6 +74,9 @@
     <Filter Include="BenTo\Source\Sequence">
       <UniqueIdentifier>{587BA3A0-2D29-22BF-6868-A5762919330F}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Node\nodes\split">
+      <UniqueIdentifier>{31C1F1E7-3A4A-1D6B-64F7-93F1B90396FD}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Node\nodes\colorRemap">
       <UniqueIdentifier>{42CBB6D4-E397-8984-CB57-09BC25960679}</UniqueIdentifier>
     </Filter>
@@ -1368,6 +1371,9 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\NodeIncludes.cpp">
       <Filter>BenTo\Source\Node</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Node\nodes\split\SplitNode.cpp">
+      <Filter>BenTo\Source\Node\nodes\split</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.cpp">
       <Filter>BenTo\Source\Node\nodes\colorRemap</Filter>
@@ -5234,6 +5240,9 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\NodeIncludes.h">
       <Filter>BenTo\Source\Node</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Node\nodes\split\SplitNode.h">
+      <Filter>BenTo\Source\Node\nodes\split</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Node\nodes\colorRemap\ColorRemapNode.h">
       <Filter>BenTo\Source\Node\nodes\colorRemap</Filter>
