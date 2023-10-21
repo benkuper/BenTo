@@ -289,5 +289,21 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 			container->prop->brightness->setValue(container->prop->brightnessRef->floatValue());
 		}
 	}
+	else if (shortName == "battery")
+	{
+		if (c->shortName == "batteryLevel")
+		{
+			container->prop->batteryRef = ((FloatParameter*)c);
+			container->prop->battery->setRange(container->prop->batteryRef->minimumValue, container->prop->batteryRef->maximumValue);
+			container->prop->battery->setValue(container->prop->batteryRef->floatValue());
+		}
+	}
+	else if (shortName == "motion")
+	{
+		if (c->shortName == "enabled")
+		{
+			container->prop->motionRef = ((BoolParameter*)c);
+		}
+	}
 
 }

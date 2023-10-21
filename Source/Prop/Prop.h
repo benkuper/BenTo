@@ -40,6 +40,10 @@ public:
 	EnumParameter* shape;
 	bool invertLedsInUI;
 
+	FloatParameter* battery;
+	FloatParameter* batteryRef;
+	BoolParameter* motionRef;
+
 	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
 

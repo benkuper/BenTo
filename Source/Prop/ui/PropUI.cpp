@@ -12,8 +12,7 @@
 
 PropUI::PropUI(Prop* p) :
 	BaseItemUI(p, HORIZONTAL),
-	viz(p),
-	imuRef(nullptr)
+	viz(p)
 {
 	itemLabel.setVisible(false);
 
@@ -29,16 +28,15 @@ PropUI::PropUI(Prop* p) :
 	idUI.reset(p->globalID->createLabelUI());
 	idUI->showLabel = false;
 
-	//if (BatteryPropComponent* bat = dynamic_cast<BatteryPropComponent*>(p->getComponent("battery")))
-	//{
-	//	batteryUI.reset(bat->level->createSlider());
-	//	addAndMakeVisible(batteryUI.get());
-	//}
+	if (item->battery != nullptr)
+	{
+		batteryUI.reset(item->battery->createSlider());
+		addAndMakeVisible(batteryUI.get());
+	}
 
 	addAndMakeVisible(idUI.get());
 	addAndMakeVisible(&viz);
 
-	//if (IMUPropComponent* imu = dynamic_cast<IMUPropComponent*>(p->getComponent("imu"))) imuRef = imu->enabled;
 
 	viz.setInterceptsMouseClicks(false, false);
 
@@ -80,7 +78,7 @@ void PropUI::paintOverChildren(Graphics& g)
 	Rectangle<int> r = getMainBounds().translated(0, headerHeight + headerGap).removeFromRight(20).removeFromTop(20).reduced(1);
 	g.fillEllipse(r.toFloat().reduced(4));
 
-	if (imuRef != nullptr && imuRef->boolValue())
+	if (item->motionRef != nullptr && item->motionRef->boolValue())
 	{
 		g.setColour(YELLOW_COLOR);
 		g.drawEllipse(r.toFloat().reduced(2), 1);
@@ -143,7 +141,7 @@ void PropUI::resizedInternalContent(Rectangle<int>& r)
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (c == item->isGeneratingPlayback || c == item->playbackGenProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef /*|| c == item->isFlashing || c == item->flashingProgression*/) repaint();
+	if (c == item->isGeneratingPlayback || c == item->playbackGenProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == item->motionRef /*|| c == item->isFlashing || c == item->flashingProgression*/) repaint();
 	else if (c == item->shape)
 	{
 		Prop::Shape shape = item->shape->getValueDataAsEnum<Prop::Shape>();

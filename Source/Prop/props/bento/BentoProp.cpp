@@ -26,6 +26,8 @@ BentoProp::BentoProp(var params) :
 
 	resolution->setDefaultValue(32);
 	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", 1, 0, 1);
+	battery = generalCC.addFloatParameter("Battery", "Battery level of the prop", 1, 0, 1);
+	battery->setControllableFeedbackOnly(true);
 
 	artnet.inputCC->enabled->setValue(false);
 
@@ -119,6 +121,10 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	else if (c == brightnessRef)
 	{
 		brightness->setValue(brightnessRef->floatValue());
+	}
+	else if (c == batteryRef)
+	{
+		battery->setValue(batteryRef->floatValue());
 	}
 }
 

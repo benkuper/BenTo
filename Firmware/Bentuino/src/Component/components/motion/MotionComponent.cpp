@@ -1,6 +1,7 @@
 bool MotionComponent::initInternal(JsonObject o)
 {
     saveEnabled = false;
+    enabled = false;
 
     AddBoolParamConfig(connected);
     connected = false;
