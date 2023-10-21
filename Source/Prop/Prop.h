@@ -10,6 +10,8 @@
 
 #pragma once
 
+class PropCustomParams;
+
 class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
@@ -88,6 +90,8 @@ public:
 		String remoteFolder;
 	};
 	Array<FileToUpload, CriticalSection> filesToUpload;
+
+	std::unique_ptr<PropCustomParams> customParams;
 
 
 	virtual void clearItem() override;
@@ -180,4 +184,24 @@ public:
 private:
 	WeakReference<Prop>::Master masterReference;
 	friend class WeakReference<Prop>;
+};
+
+
+
+class PropCustomParams :
+	public ControllableContainer
+{
+public:
+	PropCustomParams();
+	~PropCustomParams();
+
+	//void customParamsChanged(ObjectManager*);
+	void rebuildCustomParams();
+
+	var getParamValueFor(WeakReference<Parameter> p);
+	var getParamValueForName(const String& name);
+	var getParamValues();
+
+	Parameter* getActiveParamFor(WeakReference<Parameter> p);
+	Parameter* getActiveCustomParamForName(const String& name);
 };

@@ -71,7 +71,7 @@ void LightBlockClipUI::paint(Graphics& g)
 	g.drawImage(previewImage, getCoreBounds().toFloat(), RectanglePlacement::stretchToFit);
 	if (item->loopLength->floatValue() > 0)
 	{
-		g.setTiledImageFill(previewImage.rescaled(getCoreWidth(),getHeight(),Graphics::ResamplingQuality::lowResamplingQuality), getCoreWidth(), 0, .5f);
+		g.setTiledImageFill(previewImage.rescaled(getCoreWidth(), getHeight(), Graphics::ResamplingQuality::lowResamplingQuality), getCoreWidth(), 0, .5f);
 		g.fillRect(getLocalBounds().withLeft(getCoreWidth()));
 	}
 	imgLock.exit();
@@ -329,35 +329,35 @@ void LightBlockClipUI::itemDropped(const SourceDetails& source)
 		{
 
 			std::function<void(LightBlockColorProvider*, LightBlockModelUI*)> assignFunc = [this](LightBlockColorProvider* provider, LightBlockModelUI* modelUI)
-			{
-				if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
-				else
 				{
-					if (StreamingScriptBlock* sb = dynamic_cast<StreamingScriptBlock*>(provider))
-					{
-						PopupMenu m;
-						m.addItem(1, "Replace source");
-						m.addItem(2, "Add as effect");
-
-						m.showMenuAsync(PopupMenu::Options(), [this, provider](int result)
-							{
-								if (result == 2)
-								{
-									clip->addEffectFromProvider(provider);
-								}
-								else
-								{
-									clip->activeProvider->setValueFromTarget(provider, true);
-								}
-							}
-						);
-					}
+					if (LightBlockFilter* f = dynamic_cast<LightBlockFilter*>(provider)) clip->addEffectFromProvider(f);
 					else
 					{
-						clip->activeProvider->setValueFromTarget(provider, true);
+						if (StreamingScriptBlock* sb = dynamic_cast<StreamingScriptBlock*>(provider))
+						{
+							PopupMenu m;
+							m.addItem(1, "Replace source");
+							m.addItem(2, "Add as effect");
+
+							m.showMenuAsync(PopupMenu::Options(), [this, provider](int result)
+								{
+									if (result == 2)
+									{
+										clip->addEffectFromProvider(provider);
+									}
+									else
+									{
+										clip->activeProvider->setValueFromTarget(provider, true);
+									}
+								}
+							);
+						}
+						else
+						{
+							clip->activeProvider->setValueFromTarget(provider, true);
+						}
 					}
-				}
-			};
+				};
 
 			bool shift = KeyPress::isKeyCurrentlyDown(16);
 			if (shift)
@@ -430,6 +430,17 @@ void LightBlockClipUI::run()
 
 		previewProp->globalID->setValue(id, true);
 		previewProp->resolution->setValue(resY, true);
+
+		if (Prop* prop = PropManager::getInstance()->getPropWithId(id))
+		{
+			previewProp->customParams->loadJSONData(prop->customParams->getJSONData());
+			//for (int i = 0; i < previewProp->customParams->controllables.size(); i++)
+			//{
+			//	((Parameter*)previewProp->customParams->controllables[i])->setValue(((Parameter*)prop->customParams->controllables[i])->getValue());
+
+			//	DBG(previewProp->customParams->controllables[i]->niceName << " > " << ((Parameter*)previewProp->customParams->controllables[i])->stringValue());
+			//}
+		}
 
 		var params = new DynamicObject();
 		params.getDynamicObject()->setProperty("updateAutomation", false);

@@ -21,7 +21,8 @@
 #include "Sequence/SequenceIncludes.h"
 
 BentoEngine::BentoEngine() :
-	Engine("BenTo", ".bento")
+	Engine("BenTo", ".bento"),
+	customParams("Custom parameters", false, false, false, false)
 {
 	Engine::mainEngine = this;
 
@@ -41,6 +42,8 @@ BentoEngine::BentoEngine() :
 
 	GlobalSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 	GlobalSettings::getInstance()->addChildControllableContainer(BentoSettings::getInstance());
+
+	ProjectSettings::getInstance()->addChildControllableContainer(&customParams);
 
 }
 

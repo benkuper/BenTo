@@ -14,6 +14,7 @@
 
 #include "Node/NodeIncludes.h"
 #include "Video/VideoIncludes.h"
+#include "Common/CommonIncludes.h"
 
 #include "model/LightBlockModelParameter.h"
 #include "model/LightBlockModelParameterManager.h"

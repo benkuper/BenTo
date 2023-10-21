@@ -4817,8 +4817,26 @@ static const unsigned char temp_binary_data_22[] =
 
 const char* icon_png = (const char*) temp_binary_data_22;
 
-//================== new.png ==================
+//================== link.png ==================
 static const unsigned char temp_binary_data_23[] =
+"\x89PNG\r\n"
+"\x1a\n"
+"\0\0\0\rIHDR\0\0\0\x14\0\0\0\x14\x08\x06\0\0\0\x8d\x89\x1d\r\0\0\0\tpHYs\0\0\x0b\x13\0\0\x0b\x13\x01\0\x9a\x9c\x18\0\0\x05\x16iTXtXML:com.adobe.xmp\0\0\0\0\0<?xpacket begin=\"\xef\xbb\xbf\" id=\"W5M0MpCehiHzreSzNTczkc9d\"?> <x:xmpmeta xmlns:x=\"adobe"
+":ns:meta/\" x:xmptk=\"Adobe XMP Core 5.6-c148 79.164036, 2019/08/13-01:06:57        \"> <rdf:RDF xmlns:rdf=\"http://www.w3.org/1999/02/22-rdf-syntax-ns#\"> <rdf:Description rdf:about=\"\" xmlns:xmp=\"http://ns.adobe.com/xap/1.0/\" xmlns:dc=\"http://p"
+"url.org/dc/elements/1.1/\" xmlns:photoshop=\"http://ns.adobe.com/photoshop/1.0/\" xmlns:xmpMM=\"http://ns.adobe.com/xap/1.0/mm/\" xmlns:stEvt=\"http://ns.adobe.com/xap/1.0/sType/ResourceEvent#\" xmp:CreatorTool=\"Adobe Photoshop 21.1 (Windows)\" xmp:"
+"CreateDate=\"2021-02-08T12:22:02+01:00\" xmp:ModifyDate=\"2021-02-08T12:23:09+01:00\" xmp:MetadataDate=\"2021-02-08T12:23:09+01:00\" dc:format=\"image/png\" photoshop:ColorMode=\"3\" photoshop:ICCProfile=\"sRGB IEC61966-2.1\" xmpMM:InstanceID=\"xmp.i"
+"id:58eec02a-ba47-db4b-8e9d-2a7dc40dc732\" xmpMM:DocumentID=\"xmp.did:58eec02a-ba47-db4b-8e9d-2a7dc40dc732\" xmpMM:OriginalDocumentID=\"xmp.did:58eec02a-ba47-db4b-8e9d-2a7dc40dc732\"> <xmpMM:History> <rdf:Seq> <rdf:li stEvt:action=\"created\" stEvt:in"
+"stanceID=\"xmp.iid:58eec02a-ba47-db4b-8e9d-2a7dc40dc732\" stEvt:when=\"2021-02-08T12:22:02+01:00\" stEvt:softwareAgent=\"Adobe Photoshop 21.1 (Windows)\"/> </rdf:Seq> </xmpMM:History> </rdf:Description> </rdf:RDF> </x:xmpmeta> <?xpacket end=\"r\"?>E\xce"
+"W\xc5\0\0\x01SIDAT8\x8d\xd5\xd4=K\x1cQ\x14\x06\xe0g%\xeb\x0c$\x85XX\t\xa2\x9b\x8f\x1f`\xe3\x0f\x88\x9d\x85\xa8\x84\xc5""F+CR\xa4I\x08\xc4J\x10""DR\xdaX\x8a\x8a`c\xe7G\x9d:e\n"
+"QL@\xf0\x1f""du\xc6Q\x18\x8b\x1d""a\x9c\x1dq\xc1-\xf4\xc0\xe5r\xcfy\xcf\xcb{\xce\xb9\xf7V\xd2""4\xd5I\xeb\xea(\xdb\xb3 |Qt\\]\xc6\xf7""a\xbb\xf1\r\xa3""8\xc1""2\xfeV\x83\xf0\x0e\xa8R\x1c\xca=\x84}X\xc5\x04N1\x80#\x8cU\x83\xf0$\x0fl\xb7\xe4\x0f\x18\xc1"
+"w\xbc\xcdT\x0e""b\xa1\x08|Ha\x17\xc6\xf1\x0e\xc7\xd8\xc9\xc5\x8e\xf1\xbf\x1a\x84\xc3\xf9\x84\x96\x1e\xe6,\xc4\x1a\xea\xb8""D\x80\r\xcc\xe0#\xde`\xb1]\x85/\xb1\x8eI|\xc1.>\xe3\x1a\x7f\xb0\x85=\xd4\xab""A\xd8(\x96T\xa6\xec\x96l\x16=\x99\xa2\x15\xcd\x81"
+"l\xe1\0\xd3h\xb4""d\xa7izg%q\xf4#\x89\xa3""4\x89\xa3\xafI\x1cI\xe2h3;\x9fg\xfbN\x12G\xaf\xb2XK~Y\xc9\xbf\xd1\x8bZ\xce=\xa5""9\xdd\x7f\x9a\x83\xb9\xba\r\x14\xef""aY\xc9\x87\xe8\xc7{T\xf0\t?q\x81\xed<Y\x99\x95)\xac""a?\xa7h(\xeb\xd9\x1c\xce\x8a\x04\xed"
+"\xbe\x94\xd7\x98\xcf\xf6_XBT\xa6\xe8""A\xc2\xc7\xda\xd3\xff\xbe:Nx\x03\xb2\x18\x9b\xec\xd1\xbd:(\0\0\0\0IEND\xae""B`\x82";
+
+const char* link_png = (const char*) temp_binary_data_23;
+
+//================== new.png ==================
+static const unsigned char temp_binary_data_24[] =
 { 137,80,78,71,13,10,26,10,0,0,0,13,73,72,68,82,0,0,0,32,0,0,0,32,8,3,0,0,0,68,164,138,198,0,0,0,3,115,66,73,84,8,8,8,219,225,79,224,0,0,0,9,112,72,89,115,0,0,1,133,0,0,1,133,1,69,89,158,66,0,0,0,25,116,69,88,116,83,111,102,116,119,97,114,101,0,119,119,
 119,46,105,110,107,115,99,97,112,101,46,111,114,103,155,238,60,26,0,0,0,231,80,76,84,69,255,255,255,64,191,128,57,170,170,60,180,158,64,180,156,61,177,160,60,179,157,63,177,159,60,180,159,61,180,158,62,179,159,62,180,158,61,179,158,61,179,158,60,179,
 158,62,179,158,61,179,158,61,179,158,61,179,158,61,179,158,62,179,158,66,181,161,67,181,161,69,182,162,70,183,163,75,185,165,79,186,167,89,190,172,90,190,172,92,191,174,104,196,180,107,197,181,108,197,182,110,198,183,113,199,184,113,200,184,114,200,185,
@@ -4830,10 +4848,10 @@ static const unsigned char temp_binary_data_23[] =
 85,39,253,204,54,230,62,186,167,207,39,221,9,80,164,24,181,206,134,157,116,64,242,246,125,245,242,109,115,146,162,48,217,95,152,237,181,87,94,179,3,238,247,102,182,239,231,167,38,229,111,202,133,146,74,45,54,75,108,183,56,48,226,200,253,111,104,197,177,
 23,23,71,92,61,113,121,11,253,90,255,47,159,246,53,100,208,138,122,201,0,0,0,0,73,69,78,68,174,66,96,130,0,0 };
 
-const char* new_png = (const char*) temp_binary_data_23;
+const char* new_png = (const char*) temp_binary_data_24;
 
 //================== shader.frag ==================
-static const unsigned char temp_binary_data_24[] =
+static const unsigned char temp_binary_data_25[] =
 "#version 150\n"
 "\n"
 "\n"
@@ -4872,7 +4890,7 @@ static const unsigned char temp_binary_data_24[] =
 "}\n"
 "\n";
 
-const char* shader_frag = (const char*) temp_binary_data_24;
+const char* shader_frag = (const char*) temp_binary_data_25;
 
 
 const char* getNamedResource (const char* resourceNameUTF8, int& numBytes);
@@ -4909,6 +4927,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0x78c8c9ab:  numBytes = 1868; return fadeIn_png;
         case 0xeac7f79c:  numBytes = 392; return fadeOut_png;
         case 0xd4093963:  numBytes = 98974; return icon_png;
+        case 0x47330464:  numBytes = 1731; return link_png;
         case 0x6e00bb0a:  numBytes = 675; return new_png;
         case 0x893e7e0c:  numBytes = 975; return shader_frag;
         default: break;
@@ -4943,6 +4962,7 @@ const char* namedResourceList[] =
     "fadeIn_png",
     "fadeOut_png",
     "icon_png",
+    "link_png",
     "new_png",
     "shader_frag"
 };
@@ -4972,6 +4992,7 @@ const char* originalFilenames[] =
     "fadeIn.png",
     "fadeOut.png",
     "icon.png",
+    "link.png",
     "new.png",
     "shader.frag"
 };

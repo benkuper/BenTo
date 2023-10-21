@@ -10,6 +10,8 @@
 
 #pragma once
 
+class Prop;
+
 class LightBlock :
 	public ControllableContainer,
 	public BaseColorProvider,
@@ -20,7 +22,7 @@ public:
 	virtual ~LightBlock();
 
 	WeakReference<LightBlockColorProvider> provider;
-	ControllableContainer paramsContainer;
+	ParamLinkContainer paramsContainer;
 	SpinLock paramsLock;
 
 	var paramsLoadData;

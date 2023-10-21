@@ -170,6 +170,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Identification\IdentificationRuleManager.cpp"/>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3715,6 +3721,8 @@
     <ClInclude Include="..\..\Source\Common\EmbeddedScript\EmbeddedScriptManager.h"/>
     <ClInclude Include="..\..\Source\Common\Identification\IdentificationRule.h"/>
     <ClInclude Include="..\..\Source\Common\Identification\IdentificationRuleManager.h"/>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h"/>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h"/>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\CommonIncludes.h"/>
     <ClInclude Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.h"/>
@@ -6081,6 +6089,7 @@
     <None Include="..\..\Resources\fadeIn.png"/>
     <None Include="..\..\Resources\fadeOut.png"/>
     <None Include="..\..\Resources\icon.png"/>
+    <None Include="..\..\Resources\link.png"/>
     <None Include="..\..\Resources\new.png"/>
     <None Include="..\..\Resources\shader.frag"/>
     <None Include="..\..\JUCE\modules\juce_audio_devices\native\oboe\CMakeLists.txt"/>

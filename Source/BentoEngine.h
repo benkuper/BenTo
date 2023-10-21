@@ -22,6 +22,7 @@ public:
 
 
 	StringParameter* projectName;
+	GenericControllableManager customParams;
 
 	void clearInternal() override;
 

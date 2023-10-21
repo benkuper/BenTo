@@ -128,6 +128,10 @@ Prop::Prop(var params) :
 		script->userCanRemove = false;
 	}
 
+
+	customParams.reset(new PropCustomParams());
+	addChildControllableContainer(customParams.get());
+
 	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
 	startThread();
@@ -625,4 +629,99 @@ void Prop::run()
 			if (sleepTime >= 1) sleep(sleepTime); //50fps
 		}
 	}
+}
+
+
+PropCustomParams::PropCustomParams() :
+	ControllableContainer("Custom Parameters")
+{
+	//if (om != nullptr) om->addObjectManagerListener(this);
+	rebuildCustomParams();
+}
+
+
+PropCustomParams::~PropCustomParams()
+{
+	//if (om != nullptr) om->removeObjectManagerListener(this);
+}
+
+
+//void PropCustomParams::customParamsChanged(ObjectManager*)
+//{
+//	rebuildCustomParams();
+//}
+
+void PropCustomParams::rebuildCustomParams()
+{
+	//if (om == nullptr) return;
+
+	var oldData = getJSONData();
+	clear();
+
+	GenericControllableManager* customParams = &((BentoEngine*)Engine::mainEngine)->customParams;
+	for (auto& gci : customParams->items)
+	{
+		if (gci->controllable->type == Controllable::TRIGGER) continue;
+
+		if (Parameter* p = ControllableFactory::createParameterFrom((Parameter*)gci->controllable, true, true))
+		{
+			p->canBeDisabledByUser = true;
+			p->setEnabled(false);
+			addParameter(p);
+		}
+	}
+
+	loadJSONData(oldData);
+}
+
+var PropCustomParams::getParamValueFor(WeakReference<Parameter> p)
+{
+	return getParamValueForName(p->shortName);
+}
+
+var PropCustomParams::getParamValueForName(const String& name)
+{
+	if (Parameter* p = getActiveCustomParamForName(name)) return p->getValue();
+	jassertfalse;
+	return var();
+}
+
+var PropCustomParams::getParamValues()
+{
+	Array<WeakReference<Parameter>> params = getAllParameters();
+
+	var values(new DynamicObject());
+
+	for (auto& p : params)
+	{
+		Parameter* targetP = p;
+		if (!p->enabled)
+		{
+			if (GenericControllableItem* gci = ((BentoEngine*)Engine::mainEngine)->customParams.getItemWithName(p->shortName)) targetP = (Parameter*)gci->controllable;
+			else targetP = nullptr;
+		}
+
+		if (targetP != nullptr) values.getDynamicObject()->setProperty(targetP->shortName, targetP->getValue());
+
+	}
+	return values;
+}
+
+
+Parameter* PropCustomParams::getActiveParamFor(WeakReference<Parameter> p)
+{
+	return getActiveCustomParamForName(p->shortName);
+}
+
+
+Parameter* PropCustomParams::getActiveCustomParamForName(const String& name)
+{
+	if (Parameter* p = getParameterByName(name))
+	{
+		if (p->enabled) return p;
+	}
+
+	if (GenericControllableItem* gci = ((BentoEngine*)Engine::mainEngine)->customParams.getItemWithName(name)) return ((Parameter*)gci->controllable);
+
+	return nullptr;
 }

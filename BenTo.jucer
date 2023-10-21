@@ -41,6 +41,7 @@
       <FILE id="HceyjT" name="fadeIn.png" compile="0" resource="1" file="Resources/fadeIn.png"/>
       <FILE id="vNhvMo" name="fadeOut.png" compile="0" resource="1" file="Resources/fadeOut.png"/>
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
+      <FILE id="Hxq8ZD" name="link.png" compile="0" resource="1" file="Resources/link.png"/>
       <FILE id="l8evl8" name="new.png" compile="0" resource="1" file="Resources/new.png"/>
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
@@ -175,6 +176,17 @@
                 resource="0" file="Source/Common/Identification/IdentificationRuleManager.cpp"/>
           <FILE id="dMGnLZ" name="IdentificationRuleManager.h" compile="0" resource="0"
                 file="Source/Common/Identification/IdentificationRuleManager.h"/>
+        </GROUP>
+        <GROUP id="{296BCBC8-5435-EAF0-1387-4EF59D1862BC}" name="ParameterLink">
+          <GROUP id="{1A1B3CF9-787E-3013-82C3-9B07797C9AC2}" name="ui">
+            <FILE id="yzsmi3" name="LinkableParameterEditor.cpp" compile="0" resource="0"
+                  file="Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp"/>
+            <FILE id="lFaUxR" name="LinkableParameterEditor.h" compile="0" resource="0"
+                  file="Source/Common/ParameterLink/ui/LinkableParameterEditor.h"/>
+          </GROUP>
+          <FILE id="TS2hkh" name="ParameterLink.cpp" compile="0" resource="0"
+                file="Source/Common/ParameterLink/ParameterLink.cpp"/>
+          <FILE id="uZ0kW4" name="ParameterLink.h" compile="0" resource="0" file="Source/Common/ParameterLink/ParameterLink.h"/>
         </GROUP>
         <GROUP id="{E0046D36-DDB5-629C-1196-F1FABDC4382D}" name="Zeroconf">
           <FILE id="zUn4Oc" name="ZeroconfManager.cpp" compile="0" resource="0"

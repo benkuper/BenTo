@@ -38,6 +38,12 @@
     <Filter Include="BenTo\Source\Common\Identification">
       <UniqueIdentifier>{0A7C4CD8-CC31-4568-DB60-C772D3018E14}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\Common\ParameterLink\ui">
+      <UniqueIdentifier>{B2A6D7E7-D602-B51A-40AB-1FDE910E02B6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\Common\ParameterLink">
+      <UniqueIdentifier>{ADAA8288-B45E-07FD-C32F-EBD16AE08678}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Common\Zeroconf">
       <UniqueIdentifier>{2F03148D-4022-BAB0-B304-F9AADC120D87}</UniqueIdentifier>
     </Filter>
@@ -1293,6 +1299,12 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Identification\IdentificationRuleManager.cpp">
       <Filter>BenTo\Source\Common\Identification</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
+      <Filter>BenTo\Source\Common\ParameterLink\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
+      <Filter>BenTo\Source\Common\ParameterLink</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <Filter>BenTo\Source\Common\Zeroconf</Filter>
@@ -5159,6 +5171,12 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Identification\IdentificationRuleManager.h">
       <Filter>BenTo\Source\Common\Identification</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h">
+      <Filter>BenTo\Source\Common\ParameterLink\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h">
+      <Filter>BenTo\Source\Common\ParameterLink</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
       <Filter>BenTo\Source\Common\Zeroconf</Filter>
@@ -12252,6 +12270,9 @@
       <Filter>BenTo\Resources</Filter>
     </None>
     <None Include="..\..\Resources\icon.png">
+      <Filter>BenTo\Resources</Filter>
+    </None>
+    <None Include="..\..\Resources\link.png">
       <Filter>BenTo\Resources</Filter>
     </None>
     <None Include="..\..\Resources\new.png">
