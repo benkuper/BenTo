@@ -1,7 +1,7 @@
 bool LedStripSystemLayer::initInternal(JsonObject o)
 {
-    blendMode = BlendMode::Alpha;
     LedStripLayer::initInternal(o);
+    blendMode = BlendMode::Alpha;
     return true;
 }
 

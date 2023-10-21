@@ -8,6 +8,8 @@ class Component : public EventBroadcaster<ComponentEvent>
 public:
     Component(const String &name, bool _enabled = true) : name(name),
                                                           isInit(false),
+                                                          exposeEnabled(true),
+                                                          saveEnabled(true),
                                                           parentComponent(NULL),
                                                           numComponents(0),
                                                           numParams(0)
@@ -20,6 +22,8 @@ public:
 
     String name;
     bool isInit;
+    bool exposeEnabled;
+    bool saveEnabled;
 
     DeclareBoolParam(enabled, true);
 
@@ -143,8 +147,6 @@ public:
     virtual void linkScriptFunctions(IM3Module module, bool isLocal = false);
     virtual void linkScriptFunctionsInternal(IM3Module module, const char *tName) {}
 
-
-    DeclareScriptFunctionVoid1(Component, setEnabled, int) { SetParam(enabled,arg1); }
+    DeclareScriptFunctionVoid1(Component, setEnabled, int) { SetParam(enabled, arg1); }
 #endif
-
 };

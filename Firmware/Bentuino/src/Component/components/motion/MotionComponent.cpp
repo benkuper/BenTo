@@ -1,5 +1,7 @@
 bool MotionComponent::initInternal(JsonObject o)
 {
+    saveEnabled = false;
+
     AddBoolParamConfig(connected);
     connected = false;
 
@@ -168,7 +170,6 @@ void MotionComponent::readIMU()
 
     if (imuLock)
         return;
-
 
     // NDBG("ReadIMU " + String(hasNewData));
     imu::Quaternion q = bno.getQuat();

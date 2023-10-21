@@ -91,7 +91,7 @@ bool Component::checkCommand(const String &command, const String &ref, int numDa
 
 void Component::fillSettingsData(JsonObject o, bool showConfig)
 {
-    FillSettingsParam(enabled);
+    if(saveEnabled) FillSettingsParam(enabled);
     fillSettingsParamsInternal(o, showConfig);
 
     if (numComponents > 0)
@@ -125,7 +125,7 @@ void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk, bool showConfig)
             StaticJsonDocument<6000> doc;
             JsonObject o = doc.to<JsonObject>();
 
-            FillOSCQueryBoolParam(enabled);
+            if(exposeEnabled) FillOSCQueryBoolParam(enabled);
             fillOSCQueryParamsInternal(o, fullPath, showConfig);
 
             String str;

@@ -7,6 +7,9 @@ bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
 
+    exposeEnabled = false;
+    saveEnabled = false;
+
     timeAtStart = millis();
     timeAtShutdown = 0;
 
