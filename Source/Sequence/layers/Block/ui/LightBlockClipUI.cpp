@@ -9,6 +9,7 @@
 */
 
 #include "Sequence/SequenceIncludes.h"
+#include "ParameterLink/ParameterLink.h"
 
 LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	LayerBlockUI(_clip),
@@ -201,7 +202,7 @@ void LightBlockClipUI::mouseDown(const MouseEvent& e)
 
 			PopupMenu ap;
 
-			Array<WeakReference<Parameter>> params = clip->currentBlock->paramsContainer.getAllParameters();
+			Array<WeakReference<Parameter>> params = clip->currentBlock->paramsContainer->getAllParameters();
 
 
 
@@ -292,7 +293,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable* c)
 	LayerBlockUI::controllableFeedbackUpdateInternal(c);
 
 	if (c == clip->coreLength || c == clip->loopLength || c == clip->activeProvider || c == clip->fadeIn || c == clip->fadeOut) generatePreview();
-	else if (clip->currentBlock != nullptr && c->parentContainer == &clip->currentBlock->paramsContainer && c->type != Controllable::TRIGGER && ((Parameter*)c)->controlMode == Parameter::MANUAL) generatePreview();
+	else if (clip->currentBlock != nullptr && c->parentContainer == clip->currentBlock->paramsContainer.get() && c->type != Controllable::TRIGGER && ((Parameter*)c)->controlMode == Parameter::MANUAL) generatePreview();
 	else if (c->getParentAs<AutomationKey>() != nullptr)
 	{
 		generatePreview();

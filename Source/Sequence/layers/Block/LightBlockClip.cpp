@@ -9,6 +9,7 @@
 */
 
 #include "Sequence/SequenceIncludes.h"
+#include "ParameterLink/ParameterLink.h"
 
 LightBlockClip::LightBlockClip(LightBlockLayer* layer) :
 	LayerBlock(getTypeString()),
@@ -174,7 +175,7 @@ void LightBlockClip::setCoreLength(float value, bool stretch, bool stickToCoreEn
 
 	if (currentBlock != nullptr)
 	{
-		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
+		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer->getAllParameters();
 		for (auto& pa : params)
 		{
 			if (pa->automation == nullptr) continue;
@@ -273,7 +274,7 @@ void LightBlockClip::loadJSONDataInternal(var data)
 	{
 		currentBlock->loadJSONData(data.getProperty("blockData", var()));
 
-		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer.getAllParameters();
+		Array<WeakReference<Parameter>> params = currentBlock->paramsContainer->getAllParameters();
 
 		for (auto& pa : params)
 		{

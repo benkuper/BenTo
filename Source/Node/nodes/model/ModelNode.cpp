@@ -8,7 +8,9 @@
   ==============================================================================
 */
 
+#include "LightBlock/LightBlockIncludes.h"
 #include "Node/NodeIncludes.h"
+#include "ParameterLink/ParameterLink.h"
 
 ModelNode::ModelNode(var params) :
 	ColorNode(getTypeString(), params),
@@ -59,7 +61,7 @@ void ModelNode::buildSlots()
 {
 	if (currentBlock == nullptr) return;
 
-	Array<WeakReference<Parameter>> blockParams = currentBlock->paramsContainer.getAllParameters();
+	Array<WeakReference<Parameter>> blockParams = currentBlock->paramsContainer->getAllParameters();
 	for (auto& p : blockParams)
 	{
 		if (p->type == Controllable::ENUM || p->type == Controllable::TARGET || p->type == Controllable::POINT2D || p->type == Controllable::POINT3D) continue;

@@ -7,9 +7,13 @@
 
   ==============================================================================
 */
+
+#include "ParameterLink.h"
+#include "Ui/LinkableParameterEditor.h"
 #include "Common/CommonIncludes.h"
 #include "Prop/PropIncludes.h"
 #include "BentoEngine.h"
+
 
 ParameterLink::ParameterLink(WeakReference<Parameter> p) :
 	linkType(NONE),

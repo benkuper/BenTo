@@ -11,6 +11,7 @@
 #pragma once
 
 class Prop;
+class ParamLinkContainer;
 
 class LightBlock :
 	public ControllableContainer,
@@ -22,7 +23,7 @@ public:
 	virtual ~LightBlock();
 
 	WeakReference<LightBlockColorProvider> provider;
-	ParamLinkContainer paramsContainer;
+	std::unique_ptr<ParamLinkContainer> paramsContainer;
 	SpinLock paramsLock;
 
 	var paramsLoadData;

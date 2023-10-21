@@ -10,14 +10,16 @@
 
 #include "LightBlock/LightBlockIncludes.h"
 #include "Prop/PropIncludes.h"
+#include "ParameterLink/ParameterLink.h"
 
 LightBlock::LightBlock(LightBlockColorProvider* provider) :
 	ControllableContainer(provider->niceName),
 	provider(provider),
-	paramsContainer("Parameters"),
 	paramsLoadData(var())
 {
-	addChildControllableContainer(&paramsContainer);
+	paramsContainer.reset(new ParamLinkContainer("Parameters"));
+
+	addChildControllableContainer(paramsContainer.get());
 
 	rebuildArgsFromModel();
 	provider->addColorProviderListener(this);
@@ -57,7 +59,7 @@ var LightBlock::getLocalParams(Prop* p, double time, var params)
 	var localParams = params.isVoid() ? new DynamicObject() : new DynamicObject(*params.getDynamicObject());
 
 	paramsLock.enter();
-	Array<WeakReference<Parameter>> paramList = paramsContainer.getAllParameters();
+	Array<WeakReference<Parameter>> paramList = paramsContainer->getAllParameters();
 
 	//if (localParams.getProperty("updateAutomation", true))
 	//{
@@ -99,7 +101,7 @@ var LightBlock::getLocalParams(Prop* p, double time, var params)
 	for (auto& param : paramList)
 	{
 		if (param.wasObjectDeleted() || param == nullptr) continue;
-		if (!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, paramsContainer.getLinkedValue(param, p, p->globalID->intValue(), time));
+		if (!localParams.hasProperty(param->shortName)) localParams.getDynamicObject()->setProperty(param->shortName, paramsContainer->getLinkedValue(param, p, p->globalID->intValue(), time));
 	}
 
 	paramsLock.exit();
@@ -110,11 +112,11 @@ var LightBlock::getLocalParams(Prop* p, double time, var params)
 
 void LightBlock::rebuildArgsFromModel()
 {
-	if (paramsContainer.controllables.size() > 0) paramsLoadData = paramsContainer.getJSONData();
+	if (paramsContainer->controllables.size() > 0) paramsLoadData = paramsContainer->getJSONData();
 	//var aData = automationsManager.getJSONData();
 
 	paramsLock.enter();
-	paramsContainer.clear();
+	paramsContainer->clear();
 	//automationsManager.clear();
 
 
@@ -124,23 +126,23 @@ void LightBlock::rebuildArgsFromModel()
 	{
 		if (sc->type == Controllable::TRIGGER)
 		{
-			paramsContainer.addTrigger(sc->niceName, sc->description);
+			paramsContainer->addTrigger(sc->niceName, sc->description);
 		}
 		else
 		{
 			Parameter* p = ControllableFactory::createParameterFrom(sc, true, true);
 			p->setControllableFeedbackOnly(sc->isControllableFeedbackOnly);
 			p->addParameterListener(this);
-			paramsContainer.addParameter(p);
+			paramsContainer->addParameter(p);
 		}
 	}
 
-	paramsContainer.hideInEditor = paramsContainer.controllables.size() == 0;
-	paramsContainer.loadJSONData(paramsLoadData);
+	paramsContainer->hideInEditor = paramsContainer->controllables.size() == 0;
+	paramsContainer->loadJSONData(paramsLoadData);
 
 	paramsLock.exit();
 
-	//automationsManager.hideInEditor = paramsContainer.hideInEditor;
+	//automationsManager.hideInEditor = paramsContainer->hideInEditor;
 	//automationsManager.loadJSONData(aData);
 
 }
@@ -155,7 +157,7 @@ void LightBlock::providerParameterValueUpdated(LightBlockColorProvider*, Paramet
 {
 
 	if (p == nullptr) return;
-	Parameter* tp = paramsContainer.getParameterByName(p->shortName);
+	Parameter* tp = paramsContainer->getParameterByName(p->shortName);
 	if (tp == nullptr) return;
 
 	//set the default value even if overriden, so when doing a manual "reset value", it's back to the actual current one.
@@ -194,7 +196,7 @@ PlaybackData LightBlock::getPlaybackDataForProp(Prop* p)
 var LightBlock::getJSONData()
 {
 	var data = ControllableContainer::getJSONData();
-	data.getDynamicObject()->setProperty("params", paramsContainer.getJSONData());
+	data.getDynamicObject()->setProperty("params", paramsContainer->getJSONData());
 	//data.getDynamicObject()->setProperty("automations", automationsManager.getJSONData());
 
 	return data;
@@ -207,8 +209,8 @@ void LightBlock::loadJSONDataInternal(var data)
 	ControllableContainer::loadJSONDataInternal(data);
 
 	var pData = data.getProperty("params", var());
-	paramsContainer.loadJSONData(pData);
+	paramsContainer->loadJSONData(pData);
 	//automationsManager.loadJSONData(data.getProperty("automations", var()));
 
-	if (paramsContainer.controllables.size() == 0) paramsLoadData = pData; //if params where not already there when loading (using script for exemple), store data to use later
+	if (paramsContainer->controllables.size() == 0) paramsLoadData = pData; //if params where not already there when loading (using script for exemple), store data to use later
 }

@@ -10,6 +10,8 @@
 
 #pragma once
 
+#include "../ParameterLink.h"
+
 class LinkableParameterEditor :
     public InspectableEditor,
     public Button::Listener,

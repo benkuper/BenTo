@@ -17,7 +17,4 @@
 
 #include "Zeroconf/ZeroconfManager.cpp"
 
-#include "ParameterLink/ParameterLink.cpp"
-#include "ParameterLink/ui/LinkableParameterEditor.cpp"
-
 

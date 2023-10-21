@@ -8,6 +8,7 @@
   ==============================================================================
 */
 
+#include "LinkableParameterEditor.h"
 #include "Common/CommonIncludes.h"
 #include "Prop/PropIncludes.h"
 #include "BentoEngine.h"
@@ -109,7 +110,7 @@ void LinkableParameterEditor::buttonClicked(Button* b)
 		p.addSeparator();
 		p.addItem(-1, "Unlink", link->linkType != link->NONE);
 
-		p.showMenuAsync(PopupMenu::Options(), [this](int result) 
+		p.showMenuAsync(PopupMenu::Options(), [this](int result)
 			{
 				if (result == -1) this->link->setLinkType(this->link->NONE);
 				else if (result == 1) this->link->setLinkType(this->link->OBJECT_ID);

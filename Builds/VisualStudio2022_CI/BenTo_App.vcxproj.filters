@@ -17,6 +17,12 @@
     <Filter Include="BenTo\Resources">
       <UniqueIdentifier>{8E65566C-A6CB-B998-F659-4E3386AD8621}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\ParameterLink\ui">
+      <UniqueIdentifier>{F8B9D884-3059-BAF5-05C1-0165600A4548}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="BenTo\Source\ParameterLink">
+      <UniqueIdentifier>{F49D71D7-9841-A9CC-66CE-C347354B2684}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\Source\LightBlock\ui">
       <UniqueIdentifier>{C9A8C53E-67AF-6417-BB17-EAD9AEA30365}</UniqueIdentifier>
     </Filter>
@@ -37,12 +43,6 @@
     </Filter>
     <Filter Include="BenTo\Source\Common\Identification">
       <UniqueIdentifier>{0A7C4CD8-CC31-4568-DB60-C772D3018E14}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Common\ParameterLink\ui">
-      <UniqueIdentifier>{B2A6D7E7-D602-B51A-40AB-1FDE910E02B6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="BenTo\Source\Common\ParameterLink">
-      <UniqueIdentifier>{ADAA8288-B45E-07FD-C32F-EBD16AE08678}</UniqueIdentifier>
     </Filter>
     <Filter Include="BenTo\Source\Common\Zeroconf">
       <UniqueIdentifier>{2F03148D-4022-BAB0-B304-F9AADC120D87}</UniqueIdentifier>
@@ -1282,6 +1282,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ParameterLink\ui\LinkableParameterEditor.cpp">
+      <Filter>BenTo\Source\ParameterLink\ui</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\ParameterLink\ParameterLink.cpp">
+      <Filter>BenTo\Source\ParameterLink</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\Common\BlockViz\BlockVizPanel.cpp">
       <Filter>BenTo\Source\Common\BlockViz</Filter>
     </ClCompile>
@@ -1299,12 +1305,6 @@
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Identification\IdentificationRuleManager.cpp">
       <Filter>BenTo\Source\Common\Identification</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
-      <Filter>BenTo\Source\Common\ParameterLink\ui</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
-      <Filter>BenTo\Source\Common\ParameterLink</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <Filter>BenTo\Source\Common\Zeroconf</Filter>
@@ -5151,6 +5151,12 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ParameterLink\ui\LinkableParameterEditor.h">
+      <Filter>BenTo\Source\ParameterLink\ui</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\ParameterLink\ParameterLink.h">
+      <Filter>BenTo\Source\ParameterLink</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\ui\LightBlockManagerUI.h">
       <Filter>BenTo\Source\Source\LightBlock\ui</Filter>
     </ClInclude>
@@ -5171,12 +5177,6 @@
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Identification\IdentificationRuleManager.h">
       <Filter>BenTo\Source\Common\Identification</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h">
-      <Filter>BenTo\Source\Common\ParameterLink\ui</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h">
-      <Filter>BenTo\Source\Common\ParameterLink</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h">
       <Filter>BenTo\Source\Common\Zeroconf</Filter>

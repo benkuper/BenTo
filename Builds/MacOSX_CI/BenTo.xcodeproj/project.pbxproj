@@ -21,7 +21,9 @@
 		2B043E0ED0777E3A5E64017F /* IdentificationRuleManager.cpp */ = {isa = PBXBuildFile; fileRef = 9EB96EE07F38B874C10617A8; };
 		423EA5A481C18D4BC00F94CC /* BentoEngine.cpp */ = {isa = PBXBuildFile; fileRef = 34FDD8C4811BA347FB82415F; };
 		43EEF4DFA57501DE6D455005 /* include_juce_opengl.mm */ = {isa = PBXBuildFile; fileRef = D239AAEE967D9E958B6ACAB3; };
+		49DFC4FA3A10F43FF7F85B76 /* LinkableParameterEditor.cpp */ = {isa = PBXBuildFile; fileRef = 3C29712D1773F60DB0B0574D; };
 		537C41D9F02529110920A1E1 /* Icon.icns */ = {isa = PBXBuildFile; fileRef = 51317BFC040AE415C6D3E7CC; };
+		53DDC11BAAD69489DDB8D457 /* ParameterLink.cpp */ = {isa = PBXBuildFile; fileRef = EFB5859BAD29659B2A0DF512; };
 		59AD036C62A5076D63D48C39 /* BinaryData.cpp */ = {isa = PBXBuildFile; fileRef = B90E6FAC86CD2D932F3FB50E; };
 		59C4DC529881F6E72CBE3EAC /* AVKit.framework */ = {isa = PBXBuildFile; fileRef = BB837126791EF0960CC08D3F; };
 		6057B6A9FF0B7C855B2AB599 /* PropIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 1450BC9E3E326A61FA510A2A; };
@@ -83,6 +85,7 @@
 		037D45D36AC17A135233B13B /* PropComponent.h */ /* PropComponent.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropComponent.h; path = ../../Source/Prop/Component/PropComponent.h; sourceTree = SOURCE_ROOT; };
 		03BA31A4B0B7FFB276C97F72 /* EmbeddedScriptManagerUI.h */ /* EmbeddedScriptManagerUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EmbeddedScriptManagerUI.h; path = ../../Source/Common/EmbeddedScript/ui/EmbeddedScriptManagerUI.h; sourceTree = SOURCE_ROOT; };
 		0412F6CB658FAC5C619C85D6 /* EmbeddedScriptManager.h */ /* EmbeddedScriptManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EmbeddedScriptManager.h; path = ../../Source/Common/EmbeddedScript/EmbeddedScriptManager.h; sourceTree = SOURCE_ROOT; };
+		0479DF955CF1974B9ACA0A4F /* LinkableParameterEditor.h */ /* LinkableParameterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LinkableParameterEditor.h; path = ../../Source/ParameterLink/ui/LinkableParameterEditor.h; sourceTree = SOURCE_ROOT; };
 		0505A07AAC20C4A5C4FB87C9 /* LightBlockModelGroupUI.h */ /* LightBlockModelGroupUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelGroupUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelGroupUI.h; sourceTree = SOURCE_ROOT; };
 		05147B0EFDCDAF5F831D2723 /* CoreAudioKit.framework */ /* CoreAudioKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudioKit.framework; path = System/Library/Frameworks/CoreAudioKit.framework; sourceTree = SDKROOT; };
 		0582EB179BF4CB791ADEB5D4 /* PropFamily.cpp */ /* PropFamily.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropFamily.cpp; path = ../../Source/Prop/PropFamily.cpp; sourceTree = SOURCE_ROOT; };
@@ -129,7 +132,6 @@
 		21A4C58D48757E498A3FC8BA /* PropShapeBlock.h */ /* PropShapeBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropShapeBlock.h; path = ../../Source/LightBlock/model/blocks/shape/PropShapeBlock.h; sourceTree = SOURCE_ROOT; };
 		220E2A77499D10F5F6DA62AE /* fadeIn.png */ /* fadeIn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fadeIn.png; path = ../../Resources/fadeIn.png; sourceTree = SOURCE_ROOT; };
 		22CE866173F64ED417BA6D96 /* point.png */ /* point.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = point.png; path = ../../Resources/models/patterns/point.png; sourceTree = SOURCE_ROOT; };
-		2469D4B08A3F531FAA9B1200 /* ParameterLink.h */ /* ParameterLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterLink.h; path = ../../Source/Common/ParameterLink/ParameterLink.h; sourceTree = SOURCE_ROOT; };
 		24D777C5E89B13BDA5C2F6BB /* CommonIncludes.h */ /* CommonIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = CommonIncludes.h; path = ../../Source/Common/CommonIncludes.h; sourceTree = SOURCE_ROOT; };
 		254191C212D3FA4801711E2B /* PropShapeCurveEasing.cpp */ /* PropShapeCurveEasing.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropShapeCurveEasing.cpp; path = ../../Source/Prop/Shape/PropShapeCurveEasing.cpp; sourceTree = SOURCE_ROOT; };
 		25945F3EEF80155623FA70D6 /* HSVBlockFilter.h */ /* HSVBlockFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = HSVBlockFilter.h; path = ../../Source/LightBlock/model/blocks/filters/generic/hsv/HSVBlockFilter.h; sourceTree = SOURCE_ROOT; };
@@ -163,10 +165,10 @@
 		39C605D1FCD98ECE3F885BDD /* StreamingScriptBlock.cpp */ /* StreamingScriptBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = StreamingScriptBlock.cpp; path = ../../Source/LightBlock/model/blocks/streamingscript/StreamingScriptBlock.cpp; sourceTree = SOURCE_ROOT; };
 		39C69E32810099B133EB8E5E /* LightBlockLayerTimeline.cpp */ /* LightBlockLayerTimeline.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayerTimeline.cpp; path = ../../Source/Sequence/layers/Block/ui/LightBlockLayerTimeline.cpp; sourceTree = SOURCE_ROOT; };
 		3C1C74A4E168E2E3DAF9F651 /* LightBlockModelUI.h */ /* LightBlockModelUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelUI.h; path = ../../Source/LightBlock/model/ui/LightBlockModelUI.h; sourceTree = SOURCE_ROOT; };
+		3C29712D1773F60DB0B0574D /* LinkableParameterEditor.cpp */ /* LinkableParameterEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LinkableParameterEditor.cpp; path = ../../Source/ParameterLink/ui/LinkableParameterEditor.cpp; sourceTree = SOURCE_ROOT; };
 		3CB40E424265CF9D5240523B /* BentoProp.cpp */ /* BentoProp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoProp.cpp; path = ../../Source/Prop/props/bento/BentoProp.cpp; sourceTree = SOURCE_ROOT; };
 		3CF751812457867DE7EF346A /* include_juce_simpleweb.cpp */ /* include_juce_simpleweb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb.cpp; sourceTree = SOURCE_ROOT; };
 		3EA271EE23512DABADB0DB9A /* UserLightBlockModelManager.cpp */ /* UserLightBlockModelManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = SOURCE_ROOT; };
-		3FFD0382C8F1EB4669C27883 /* LinkableParameterEditor.h */ /* LinkableParameterEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LinkableParameterEditor.h; path = ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.h; sourceTree = SOURCE_ROOT; };
 		414654DC5F2DB306F91226BA /* RemapBlockFilter.h */ /* RemapBlockFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RemapBlockFilter.h; path = ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.h; sourceTree = SOURCE_ROOT; };
 		4236786BFB7C6B16DEC0C427 /* SequenceIncludes.h */ /* SequenceIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SequenceIncludes.h; path = ../../Source/Sequence/SequenceIncludes.h; sourceTree = SOURCE_ROOT; };
 		4297491F00482662E47F3924 /* PatternBlock.cpp */ /* PatternBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatternBlock.cpp; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp; sourceTree = SOURCE_ROOT; };
@@ -199,7 +201,6 @@
 		54BADC6A36799090F97570F0 /* EmbeddedScriptBlock.h */ /* EmbeddedScriptBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = EmbeddedScriptBlock.h; path = ../../Source/LightBlock/model/blocks/embeddedscript/EmbeddedScriptBlock.h; sourceTree = SOURCE_ROOT; };
 		54EF4FA1D7EAB47665CB335A /* LightBlockLayer.cpp */ /* LightBlockLayer.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockLayer.cpp; path = ../../Source/Sequence/layers/Block/LightBlockLayer.cpp; sourceTree = SOURCE_ROOT; };
 		56598B4CEA26CB9B09EAF597 /* NodeManager.cpp */ /* NodeManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeManager.cpp; path = ../../Source/Node/NodeManager.cpp; sourceTree = SOURCE_ROOT; };
-		56DE45620DE8110594BEF1A8 /* LinkableParameterEditor.cpp */ /* LinkableParameterEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LinkableParameterEditor.cpp; path = ../../Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp; sourceTree = SOURCE_ROOT; };
 		57207ED77C344A20300A7213 /* VideoBlock.h */ /* VideoBlock.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoBlock.h; path = ../../Source/LightBlock/model/blocks/video/VideoBlock.h; sourceTree = SOURCE_ROOT; };
 		5731628241F8F54285734659 /* ParameterNode.h */ /* ParameterNode.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterNode.h; path = ../../Source/Node/nodes/parameter/ParameterNode.h; sourceTree = SOURCE_ROOT; };
 		5745CC92BC3ABCE7867B60B8 /* LightBlockModelParameterManager.cpp */ /* LightBlockModelParameterManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = LightBlockModelParameterManager.cpp; path = ../../Source/LightBlock/model/LightBlockModelParameterManager.cpp; sourceTree = SOURCE_ROOT; };
@@ -289,7 +290,6 @@
 		9A91BB187BDD2B1249C31042 /* VideoLayerTimeline.h */ /* VideoLayerTimeline.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = VideoLayerTimeline.h; path = ../../Source/Sequence/layers/Video/ui/VideoLayerTimeline.h; sourceTree = SOURCE_ROOT; };
 		9ACCA4ED4FB2CD06C460811E /* PropCluster.h */ /* PropCluster.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropCluster.h; path = ../../Source/Prop/Cluster/PropCluster.h; sourceTree = SOURCE_ROOT; };
 		9B5EE640C3A975CCE738B19D /* ModelNode.cpp */ /* ModelNode.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ModelNode.cpp; path = ../../Source/Node/nodes/model/ModelNode.cpp; sourceTree = SOURCE_ROOT; };
-		9B6B5DA36D170624DFA6CBA2 /* ParameterLink.cpp */ /* ParameterLink.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterLink.cpp; path = ../../Source/Common/ParameterLink/ParameterLink.cpp; sourceTree = SOURCE_ROOT; };
 		9BF486D95EE46A928759703D /* edit.html */ /* edit.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = edit.html; path = ../../Resources/firmware/server/edit.html; sourceTree = SOURCE_ROOT; };
 		9C2E10A82F6CAE3899CE2394 /* NodeViewUI.h */ /* NodeViewUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeViewUI.h; path = ../../Source/Node/ui/NodeViewUI.h; sourceTree = SOURCE_ROOT; };
 		9D3DF8EC0D55CB4AD3C8682F /* PropCluster.cpp */ /* PropCluster.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropCluster.cpp; path = ../../Source/Prop/Cluster/PropCluster.cpp; sourceTree = SOURCE_ROOT; };
@@ -343,6 +343,7 @@
 		BB837126791EF0960CC08D3F /* AVKit.framework */ /* AVKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVKit.framework; path = System/Library/Frameworks/AVKit.framework; sourceTree = SDKROOT; };
 		BB97A61E9559A762E2D4349D /* juce_dmx */ /* juce_dmx */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_dmx; path = ../../Modules/juce_dmx; sourceTree = SOURCE_ROOT; };
 		BBA77C252FB90F4617446BCA /* VideoFileBlock.cpp */ /* VideoFileBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoFileBlock.cpp; path = ../../Source/LightBlock/model/blocks/video/VideoFileBlock.cpp; sourceTree = SOURCE_ROOT; };
+		BBD76CB46A37797135F960DD /* ParameterLink.h */ /* ParameterLink.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ParameterLink.h; path = ../../Source/ParameterLink/ParameterLink.h; sourceTree = SOURCE_ROOT; };
 		BBF18D5349F504C770A40C2E /* PropFlasher.h */ /* PropFlasher.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PropFlasher.h; path = ../../Source/Prop/PropFlasher.h; sourceTree = SOURCE_ROOT; };
 		BBF45671EEBECEC715749580 /* Info-App.plist */ /* Info-App.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "Info-App.plist"; path = "Info-App.plist"; sourceTree = SOURCE_ROOT; };
 		BC3D98E1734C5FDC34A1EAC1 /* NodeManager.h */ /* NodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeManager.h; path = ../../Source/Node/NodeManager.h; sourceTree = SOURCE_ROOT; };
@@ -412,6 +413,7 @@
 		EE53B220A439D01A313C291E /* CoreMIDI.framework */ /* CoreMIDI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreMIDI.framework; path = System/Library/Frameworks/CoreMIDI.framework; sourceTree = SDKROOT; };
 		EF1DB0E5791C90560C115752 /* NodeIncludes.cpp */ /* NodeIncludes.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeIncludes.cpp; path = ../../Source/Node/NodeIncludes.cpp; sourceTree = SOURCE_ROOT; };
 		EF45DD3120E830FFD3242CF6 /* PropShapePanel.cpp */ /* PropShapePanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PropShapePanel.cpp; path = ../../Source/Prop/Shape/ui/PropShapePanel.cpp; sourceTree = SOURCE_ROOT; };
+		EFB5859BAD29659B2A0DF512 /* ParameterLink.cpp */ /* ParameterLink.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = ParameterLink.cpp; path = ../../Source/ParameterLink/ParameterLink.cpp; sourceTree = SOURCE_ROOT; };
 		F36ABE11C3B014EB8870CE8A /* AudioManagerHardwareEditor.cpp */ /* AudioManagerHardwareEditor.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = AudioManagerHardwareEditor.cpp; path = ../../Source/Audio/ui/AudioManagerHardwareEditor.cpp; sourceTree = SOURCE_ROOT; };
 		F5297DDABB66A420EC9905FB /* NodeIncludes.h */ /* NodeIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeIncludes.h; path = ../../Source/Node/NodeIncludes.h; sourceTree = SOURCE_ROOT; };
 		F5FA9F581703191F77BC9636 /* upload.html */ /* upload.html */ = {isa = PBXFileReference; lastKnownFileType = text.html; name = upload.html; path = ../../Resources/firmware/server/upload.html; sourceTree = SOURCE_ROOT; };
@@ -587,6 +589,16 @@
 			name = parameter;
 			sourceTree = "<group>";
 		};
+		1C4990686698BFB5E8AE9A50 /* ParameterLink */ = {
+			isa = PBXGroup;
+			children = (
+				3BCBAC6DF00BD9095A142CFF,
+				EFB5859BAD29659B2A0DF512,
+				BBD76CB46A37797135F960DD,
+			);
+			name = ParameterLink;
+			sourceTree = "<group>";
+		};
 		200EC846D90088A1B1617B93 /* ui */ = {
 			isa = PBXGroup;
 			children = (
@@ -664,7 +676,6 @@
 				94BC9790B3FF62EF6A208EE1,
 				420B717710D8C554E43D737F,
 				09B6756BFCB769440D34B3EB,
-				B1A578AC99E3C52E3644EA3D,
 				5C3A231D80B9AC3F0697C5D3,
 				B31B708EFF29E846E898817C,
 				24D777C5E89B13BDA5C2F6BB,
@@ -688,6 +699,15 @@
 				7FF5C22651CC50AD5031148D,
 			);
 			name = layers;
+			sourceTree = "<group>";
+		};
+		3BCBAC6DF00BD9095A142CFF /* ui */ = {
+			isa = PBXGroup;
+			children = (
+				3C29712D1773F60DB0B0574D,
+				0479DF955CF1974B9ACA0A4F,
+			);
+			name = ui;
 			sourceTree = "<group>";
 		};
 		3BD725FD87DB41FF8B9ADB97 /* JUCE Library Code */ = {
@@ -1110,15 +1130,6 @@
 			name = BlockViz;
 			sourceTree = "<group>";
 		};
-		98B826B31627EB077C69565D /* ui */ = {
-			isa = PBXGroup;
-			children = (
-				56DE45620DE8110594BEF1A8,
-				3FFD0382C8F1EB4669C27883,
-			);
-			name = ui;
-			sourceTree = "<group>";
-		};
 		999DAA7576F7B8277782329A /* streamingscript */ = {
 			isa = PBXGroup;
 			children = (
@@ -1206,16 +1217,6 @@
 				85CDC92A5B223242E6AD3FB8,
 			);
 			name = picture;
-			sourceTree = "<group>";
-		};
-		B1A578AC99E3C52E3644EA3D /* ParameterLink */ = {
-			isa = PBXGroup;
-			children = (
-				98B826B31627EB077C69565D,
-				9B6B5DA36D170624DFA6CBA2,
-				2469D4B08A3F531FAA9B1200,
-			);
-			name = ParameterLink;
 			sourceTree = "<group>";
 		};
 		B1CF3B604659D2AA11D8C475 /* server */ = {
@@ -1345,6 +1346,7 @@
 		DA08DC73F2CE78AB063AFD17 /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1C4990686698BFB5E8AE9A50,
 				9C05AE5267AD10B2F6207D4E,
 				31E67B25124A445D58BC2A57,
 				75668C3074610EB07798E80A,
@@ -1546,6 +1548,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				49DFC4FA3A10F43FF7F85B76,
+				53DDC11BAAD69489DDB8D457,
 				2B043E0ED0777E3A5E64017F,
 				FE224668E0B77890F729B94B,
 				6160C279B3285CE01D431A39,

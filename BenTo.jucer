@@ -46,6 +46,17 @@
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
+      <GROUP id="{001FD7E1-51F5-5A49-3408-C604BD53A945}" name="ParameterLink">
+        <GROUP id="{BA5A9004-0FF6-EFAD-0E10-2976928F2D64}" name="ui">
+          <FILE id="tVES2N" name="LinkableParameterEditor.cpp" compile="1" resource="0"
+                file="Source/ParameterLink/ui/LinkableParameterEditor.cpp"/>
+          <FILE id="kdIuos" name="LinkableParameterEditor.h" compile="0" resource="0"
+                file="Source/ParameterLink/ui/LinkableParameterEditor.h"/>
+        </GROUP>
+        <FILE id="Q0mOQa" name="ParameterLink.cpp" compile="1" resource="0"
+              file="Source/ParameterLink/ParameterLink.cpp"/>
+        <FILE id="A819Dj" name="ParameterLink.h" compile="0" resource="0" file="Source/ParameterLink/ParameterLink.h"/>
+      </GROUP>
       <GROUP id="{1D983D24-0441-C72A-26E1-53EB8226180E}" name="Source">
         <GROUP id="{9891EF0E-D9AD-3AD7-CB82-6DC61BFD1EAC}" name="Audio">
           <GROUP id="{9D947111-C4DC-703F-DF73-027BC221F373}" name="ui"/>
@@ -176,17 +187,6 @@
                 resource="0" file="Source/Common/Identification/IdentificationRuleManager.cpp"/>
           <FILE id="dMGnLZ" name="IdentificationRuleManager.h" compile="0" resource="0"
                 file="Source/Common/Identification/IdentificationRuleManager.h"/>
-        </GROUP>
-        <GROUP id="{296BCBC8-5435-EAF0-1387-4EF59D1862BC}" name="ParameterLink">
-          <GROUP id="{1A1B3CF9-787E-3013-82C3-9B07797C9AC2}" name="ui">
-            <FILE id="yzsmi3" name="LinkableParameterEditor.cpp" compile="0" resource="0"
-                  file="Source/Common/ParameterLink/ui/LinkableParameterEditor.cpp"/>
-            <FILE id="lFaUxR" name="LinkableParameterEditor.h" compile="0" resource="0"
-                  file="Source/Common/ParameterLink/ui/LinkableParameterEditor.h"/>
-          </GROUP>
-          <FILE id="TS2hkh" name="ParameterLink.cpp" compile="0" resource="0"
-                file="Source/Common/ParameterLink/ParameterLink.cpp"/>
-          <FILE id="uZ0kW4" name="ParameterLink.h" compile="0" resource="0" file="Source/Common/ParameterLink/ParameterLink.h"/>
         </GROUP>
         <GROUP id="{E0046D36-DDB5-629C-1196-F1FABDC4382D}" name="Zeroconf">
           <FILE id="zUn4Oc" name="ZeroconfManager.cpp" compile="0" resource="0"

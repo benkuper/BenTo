@@ -72,6 +72,8 @@ ifeq ($(CONFIG),Release)
 endif
 
 OBJECTS_APP := \
+  $(JUCE_OBJDIR)/LinkableParameterEditor_c2d1703c.o \
+  $(JUCE_OBJDIR)/ParameterLink_562ab838.o \
   $(JUCE_OBJDIR)/IdentificationRuleManager_b6910e67.o \
   $(JUCE_OBJDIR)/CommonIncludes_97d07afb.o \
   $(JUCE_OBJDIR)/AudioManagerHardwareEditor_ce81cbaf.o \
@@ -132,6 +134,16 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(JUCE_OBJDIR)/execinfo.cmd $
 	-$(V_AT)mkdir -p $(JUCE_LIBDIR)
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
+
+$(JUCE_OBJDIR)/LinkableParameterEditor_c2d1703c.o: ../../Source/ParameterLink/ui/LinkableParameterEditor.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling LinkableParameterEditor.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/ParameterLink_562ab838.o: ../../Source/ParameterLink/ParameterLink.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling ParameterLink.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/IdentificationRuleManager_b6910e67.o: ../../Source/Common/Identification/IdentificationRuleManager.cpp
 	-$(V_AT)mkdir -p $(@D)

@@ -154,6 +154,8 @@
     </Lib>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\Source\ParameterLink\ui\LinkableParameterEditor.cpp"/>
+    <ClCompile Include="..\..\Source\ParameterLink\ParameterLink.cpp"/>
     <ClCompile Include="..\..\Source\Common\BlockViz\BlockVizPanel.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -170,12 +172,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\Common\Identification\IdentificationRuleManager.cpp"/>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\Source\Common\ParameterLink\ParameterLink.cpp">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\Source\Common\Zeroconf\ZeroconfManager.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -3714,6 +3710,8 @@
     <ClCompile Include="..\..\JuceLibraryCode\include_juce_video.cpp"/>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\Source\ParameterLink\ui\LinkableParameterEditor.h"/>
+    <ClInclude Include="..\..\Source\ParameterLink\ParameterLink.h"/>
     <ClInclude Include="..\..\Source\LightBlock\ui\LightBlockManagerUI.h"/>
     <ClInclude Include="..\..\Source\Common\BlockViz\BlockVizPanel.h"/>
     <ClInclude Include="..\..\Source\Common\EmbeddedScript\ui\EmbeddedScriptManagerUI.h"/>
@@ -3721,8 +3719,6 @@
     <ClInclude Include="..\..\Source\Common\EmbeddedScript\EmbeddedScriptManager.h"/>
     <ClInclude Include="..\..\Source\Common\Identification\IdentificationRule.h"/>
     <ClInclude Include="..\..\Source\Common\Identification\IdentificationRuleManager.h"/>
-    <ClInclude Include="..\..\Source\Common\ParameterLink\ui\LinkableParameterEditor.h"/>
-    <ClInclude Include="..\..\Source\Common\ParameterLink\ParameterLink.h"/>
     <ClInclude Include="..\..\Source\Common\Zeroconf\ZeroconfManager.h"/>
     <ClInclude Include="..\..\Source\Common\CommonIncludes.h"/>
     <ClInclude Include="..\..\Source\Audio\ui\AudioManagerHardwareEditor.h"/>
