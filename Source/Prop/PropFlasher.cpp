@@ -16,7 +16,7 @@ juce_ImplementSingleton(PropFlasher)
 
 PropFlasher::PropFlasher() :
 	ControllableContainer("Firmware Uploader"),
-	Thread("Firmware Uploader")
+	Thread("Prop Flasher Wifi")
 {
 
 	filterKnownDevices = addBoolParameter("Filter Known Devices", "Only upload firmware on devices that are compatible. If you don't see your connect props on the list, try disabling this option.", true);
@@ -83,6 +83,48 @@ PropFlasher::~PropFlasher()
 {
 	stopThread(1000);
 }
+
+void PropFlasher::setFlashProgression(SingleFlasher* flasher, float val)
+{
+	int index = flashers.indexOf(flasher);
+	progressions.set(index, val);
+
+	float globalProgression = 0;
+	for (auto& p : progressions) globalProgression += p;
+	globalProgression /= progressions.size();
+
+	progression->setValue(globalProgression);
+}
+
+void PropFlasher::setFlashingDone(SingleFlasher* flasher, FlashResult val)
+{
+	int index = flashers.indexOf(flasher);
+	flasherDones.set(index, val);
+
+	int numSuccess = 0;
+	int numProcessed = 0;
+	for (auto& d : flasherDones)
+	{
+		if (d == FlashResult::Success) numSuccess++;
+		if (d != FlashResult::None) numProcessed++;
+	}
+
+	if (numProcessed < flashers.size()) return;
+
+
+	if (numSuccess == flashers.size())
+	{
+		LOG("All props flashed !");
+	}
+	else
+	{
+		LOGWARNING(numSuccess << " out of " << flashers.size() << " flashed");
+	}
+
+
+	if (setWifiAfterFlash->boolValue()) startThread(); //set wifi
+
+}
 void PropFlasher::onContainerParameterChanged(Parameter* p)
 {
 	if (p == fwType)
@@ -112,7 +154,7 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 
 void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 {
-	if (t == flashTrigger) flash();
+	if (t == flashTrigger) flashAll();
 	else if (t == uploadTrigger) uploadServerFiles();
 	//else if (t == setWifiTrigger) setAllWifi();
 }
@@ -164,11 +206,14 @@ Array<SerialDeviceInfo*> PropFlasher::getDevicesToFlash()
 	return infos;
 }
 
-void PropFlasher::flash()
+void PropFlasher::flashAll()
 {
-	stopThread(1000);
-
 #if JUCE_WINDOWS || JUCE_MAC
+
+	flashers.clear();
+	progressions.clear();
+	flasherDones.clear();
+
 	if (!firmwareFile.exists())
 	{
 		LOGERROR("Firmware file doesn't exist !");
@@ -211,11 +256,28 @@ void PropFlasher::flash()
 		return;
 	}
 
-	startThread();
-#else
-	LOGWARNING("Flashing not supported for this platform");
-#endif
+	Array<SerialDeviceInfo*> infos = getDevicesToFlash();
 
+	for (auto& info : infos)
+	{
+		SingleFlasher* flasher = new SingleFlasher(info->port);
+		flashers.add(flasher);
+		progressions.add(0);
+		flasherDones.add(None);
+	}
+
+	LOG("Start flashing " << infos.size() << " props...");
+	for (auto& f : flashers) f->startThread();
+
+#endif
+}
+
+
+
+void PropFlasher::run()
+{
+	sleep(500);
+	setAllWifi();
 }
 
 void PropFlasher::setAllWifi()
@@ -278,40 +340,33 @@ void PropFlasher::uploadServerFiles()
 }
 
 
-void PropFlasher::run()
+SingleFlasher::SingleFlasher(const String& port) :
+	Thread("SingleFlasher (" + port + ")"),
+	port(port)
 {
-	Array<SerialDeviceInfo*> infos = getDevicesToFlash();
-
-	LOG("Flashing " << infos.size() << " devices...");
+}
 
 
-	numFlashingProps = infos.size();
-	progression->setValue(0);
-	flashedDevices.clear();
+SingleFlasher::~SingleFlasher()
+{
+	stopThread(1000);
+}
 
-	for (auto& i : infos)
+
+
+void SingleFlasher::run()
+{
+	bool result = flashProp();
+	if (result)
 	{
-		if (!flashProp(i->port))
-		{
-			LOGERROR("Error flashing " << i->uniqueDescription);
-		}
-		else
-		{
-			LOG("Prop " << i->uniqueDescription << " flashed");
-			flashedDevices.add(i);
-		}
-	}
-
-	if (flashedDevices.size() == infos.size())
-	{
-		LOG("All props flashed !");
+		LOG("[" + port + "] Prop flashed");
 	}
 	else
 	{
-		LOGWARNING("Flashed successfully " << flashedDevices.size() << " props out of " << infos.size());
+		LOGERROR("[" + port + "] Error flashing");
 	}
 
-	if (setWifiAfterFlash->boolValue()) setAllWifi();
+	PropFlasher::getInstance()->setFlashingDone(this, result ? PropFlasher::Success : PropFlasher::Fail);
 }
 
 void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)
@@ -323,9 +378,8 @@ void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)
 	}
 }
 
-bool PropFlasher::flashProp(const String& port)
+bool SingleFlasher::flashProp()
 {
-	float startProgression = progression->floatValue();
 
 	String quotes = "\"";
 #if JUCE_MAC
@@ -333,16 +387,16 @@ bool PropFlasher::flashProp(const String& port)
 #endif
 
 	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
-	parameters += " 0xe000 " + quotes + app0Bin.getFullPathName() + quotes;
-	parameters += " 0x1000 " + quotes + bootloaderBin.getFullPathName() + quotes;
-	parameters += " 0x10000 " + quotes + firmwareFile.getFullPathName() + quotes;
-	parameters += " 0x8000 " + quotes + partitionsFile.getFullPathName() + quotes;
+	parameters += " 0xe000 " + quotes + PropFlasher::getInstance()->app0Bin.getFullPathName() + quotes;
+	parameters += " 0x1000 " + quotes + PropFlasher::getInstance()->bootloaderBin.getFullPathName() + quotes;
+	parameters += " 0x10000 " + quotes + PropFlasher::getInstance()->firmwareFile.getFullPathName() + quotes;
+	parameters += " 0x8000 " + quotes + PropFlasher::getInstance()->partitionsFile.getFullPathName() + quotes;
 
-	LOG("Flashing firmware...");
+	LOG("[" + port + "] Flashing firmware...");
 	//LOG("Launch with parameters " + parameters);
 
 	ChildProcess cp;
-	cp.start(flasher.getFullPathName() + parameters);
+	cp.start(PropFlasher::getInstance()->flasher.getFullPathName() + parameters);
 
 	bool errored = false;
 
@@ -370,11 +424,10 @@ bool PropFlasher::flashProp(const String& port)
 			if (prog.size() > 1)
 			{
 				float relProg = prog[1].getFloatValue() / 100.0f;
-				float tProg = startProgression + relProg / numFlashingProps;
 				if (relProg != 1)
 				{
-					progression->setValue(tProg); //not using 1 to avoid double 100% log from partitions and firmware.
-					LOG("Flashing... " << (int)(relProg * 100) << "%");
+					PropFlasher::getInstance()->setFlashProgression(this, relProg); //not using 1 to avoid double 100% log from partitions and firmware.
+					LOG("[" + port + "] Flashing... " << (int)(relProg * 100) << " % ");
 				}
 				else
 				{
@@ -390,12 +443,12 @@ bool PropFlasher::flashProp(const String& port)
 
 	if (!got100)
 	{
-		LOGERROR("Something got wrong");
-		LOGERROR(cp.readAllProcessOutput());
+		LOGERROR("[" + port + "] Something got wrong");
+		LOGERROR("[" + port + "] " + cp.readAllProcessOutput());
 		errored = true;
-
 	}
-	progression->setValue(startProgression + 1.0f / numFlashingProps);
+
+	PropFlasher::getInstance()->setFlashProgression(this, 1);
 
 	if (errored || cp.readAllProcessOutput().toLowerCase().contains("error"))
 	{

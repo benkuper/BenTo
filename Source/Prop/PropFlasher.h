@@ -10,6 +10,21 @@
 
 #pragma once
 
+class SingleFlasher :
+	public Thread,
+	public SerialDevice::SerialDeviceListener
+{
+public:
+	SingleFlasher(const String& port);
+	~SingleFlasher();
+
+	String port;
+	float progression;
+
+	void run() override;
+	bool flashProp();
+};
+
 class PropFlasher :
 	public ControllableContainer,
 	public Thread,
@@ -44,22 +59,27 @@ public:
 	Array<SerialDeviceInfo*> flashedDevices;
 
 	int numFlashingProps;
-
 	var availableFirmwares;
+
+	enum FlashResult { None, Success, Fail };
+	OwnedArray<SingleFlasher> flashers;
+	Array<float> progressions;
+	Array<FlashResult> flasherDones;
+
+	void setFlashProgression(SingleFlasher*, float val);;
+	void setFlashingDone(SingleFlasher*, FlashResult val);
 
 	void onContainerParameterChanged(Parameter* p) override;
 	void onContainerTriggerTriggered(Trigger* t) override;
 
 	Array<SerialDeviceInfo*> getDevicesToFlash();
 
-	void flash();
+	void flashAll();
 	void setAllWifi();
 	void uploadServerFiles();
 
-	void run() override;
+	void run();
 
 	void serialDataReceived(SerialDevice* s, const var& data) override;
-
-	bool flashProp(const String& port);
 
 };
