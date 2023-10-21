@@ -107,7 +107,7 @@ Array<Colour> LightBlockClip::getColors(Prop* p, double absoluteTime, var params
 	if (fadeOut->floatValue() > 0) factor *= jmin<double>((getTotalLength() - relTimeTotal) / fadeOut->floatValue(), 1.f);
 	factor = jmax(factor, 0.f);
 
-	if (dynamic_cast<SequenceBlock*>(currentBlock->provider.get()) != nullptr)
+	if (dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()) != nullptr)
 	{
 		params.getDynamicObject()->setProperty("sequenceTime", false);
 	}
