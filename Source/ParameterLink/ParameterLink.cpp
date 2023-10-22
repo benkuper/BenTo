@@ -9,7 +9,7 @@
 */
 
 #include "ParameterLink.h"
-#include "Ui/LinkableParameterEditor.h"
+#include "UI/LinkableParameterEditor.h"
 #include "Common/CommonIncludes.h"
 #include "Prop/PropIncludes.h"
 #include "BentoEngine.h"
