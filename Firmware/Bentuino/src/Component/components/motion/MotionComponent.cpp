@@ -141,8 +141,10 @@ void MotionComponent::readIMUStatic(void *_imu)
 
 bool MotionComponent::setupBNO()
 {
-    if (connected)
-        return true;
+    connected = false;
+
+    //if (connected)
+     //   return true;
 
     NDBG("Setup BNO...");
     if (!bno.begin())

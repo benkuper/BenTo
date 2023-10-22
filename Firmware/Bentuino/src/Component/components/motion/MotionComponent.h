@@ -49,6 +49,7 @@ bool shouldStopRead;
 const String sendLevelOptions[3]{"None", "Orientation", "All"};
 const String throwStateOptions[6]{"None", "Flat", "Single", "Double", "Flat Front", "Loftie"};
 
+
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
