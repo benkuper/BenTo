@@ -94,29 +94,29 @@ public:
 
 	virtual void linkUpdated(ParameterLink* p) override;
 
-	template<class T>
-	T* getLinkedTargetAs(TargetParameter* target, Prop* p)
-	{
-		if (target == nullptr) return nullptr;
+	//template<class T>
+	//T* getLinkedTargetAs(TargetParameter* target, Prop* p)
+	//{
+	//	if (target == nullptr) return nullptr;
 
-		if (paramsCanBeLinked)
-		{
-			if (ParameterLink* pl = getLinkedParam(target)) return dynamic_cast<T*>(pl->getLinkedTarget(prop.get()));
-		}
+	//	if (paramsCanBeLinked)
+	//	{
+	//		if (ParameterLink* pl = getLinkedParam(target)) return dynamic_cast<T*>(pl->getLinkedTarget(prop.get()));
+	//	}
 
-		return dynamic_cast<T*>(target->target.get());
-	}
+	//	return dynamic_cast<T*>(target->target.get());
+	//}
 
-	template<class T>
-	T* getLinkedTargetContainerAs(TargetParameter* target, Prop* prop)
-	{
-		if (paramsCanBeLinked)
-		{
-			if (ParameterLink* pl = getLinkedParam(target)) return dynamic_cast<T*>(pl->getLinkedTargetContainer(prop).get());
-		}
+	//template<class T>
+	//T* getLinkedTargetContainerAs(TargetParameter* target, Prop* prop)
+	//{
+	//	if (paramsCanBeLinked)
+	//	{
+	//		if (ParameterLink* pl = getLinkedParam(target)) return dynamic_cast<T*>(pl->getLinkedTargetContainer(prop).get());
+	//	}
 
-		return dynamic_cast<T*>(target->targetContainer.get());
-	}
+	//	return dynamic_cast<T*>(target->targetContainer.get());
+	//}
 
 	class ParamLinkContainerListener
 	{
