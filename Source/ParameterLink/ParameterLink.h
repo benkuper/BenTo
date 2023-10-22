@@ -11,8 +11,7 @@
 #pragma once
 
 #include "JuceHeader.h"
-
-class Prop;
+#include "Prop/PropIncludes.h"
 
 class ParameterLink :
 	public Inspectable::InspectableListener
