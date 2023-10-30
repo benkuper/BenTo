@@ -78,7 +78,7 @@ void LedStreamReceiverComponent::setupConnection()
     }
     else
     {
-        //artnet.stop(); //when it will be implemented
+        artnet.stop();
         serverIsInit = false;
     }
 }
