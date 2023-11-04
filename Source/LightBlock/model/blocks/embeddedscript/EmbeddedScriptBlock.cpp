@@ -209,7 +209,10 @@ void EmbeddedScriptBlock::onContainerParameterChangedInternal(Parameter* p)
 		if (f.existsAsFile())
 		{
 			lastModTime = f.getLastModificationTime();
-			setNiceName(f.getFileNameWithoutExtension());
+
+			if (!isCurrentlyLoadingData) {
+				setNiceName(f.getFileNameWithoutExtension());
+			}
 		}
 	}
 }
