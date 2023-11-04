@@ -26,6 +26,9 @@ BentoEngine::BentoEngine() :
 {
 	Engine::mainEngine = this;
 
+	convertURL = "https://www.jonglissimo.com/bento-converter/convert.php";
+	breakingChangesVersions.add("2.0.0b1");
+
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
 	addChildControllableContainer(Spatializer::getInstance());
