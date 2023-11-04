@@ -8,7 +8,8 @@ DeclareComponentSingleton(Root, "root", )
 
     const String deviceID = getDeviceID();
 
-DeclareStringParam(id, deviceID);
+DeclareIntParam(propID, 0);
+DeclareStringParam(macAddress, deviceID);
 DeclareStringParam(deviceName, DEVICE_TYPE);
 DeclareStringParam(deviceType, DEVICE_TYPE);
 
@@ -114,6 +115,7 @@ CheckTrigger(saveSettings);
 CheckTrigger(clearSettings);
 CheckAndSetParam(deviceName);
 CheckAndSetParam(deviceType);
+CheckAndSetParam(propID);
 CheckAndSetParam(wakeUpButton);
 CheckAndSetParam(wakeUpState);
 HandleSetParamInternalEnd;
@@ -121,6 +123,7 @@ HandleSetParamInternalEnd;
 FillSettingsInternalStart
     FillSettingsParam(deviceName);
 FillSettingsParam(deviceType);
+FillSettingsParam(propID);
 FillSettingsParam(wakeUpButton);
 FillSettingsParam(wakeUpState);
 FillSettingsInternalEnd;
@@ -130,7 +133,8 @@ FillOSCQueryInternalStart
 FillOSCQueryTrigger(restart);
 FillOSCQueryTrigger(saveSettings);
 FillOSCQueryTrigger(clearSettings);
-FillOSCQueryStringParamReadOnly(id);
+FillOSCQueryIntParam(propID);
+FillOSCQueryStringParamReadOnly(macAddress);
 FillOSCQueryStringParam(deviceName);
 FillOSCQueryStringParam(deviceType);
 FillOSCQueryIntParam(wakeUpButton);
