@@ -38,6 +38,7 @@ PropManager::PropManager() :
 	addChildControllableContainer(&connectionCC);
 
 	autoAssignIdTrigger = controlsCC.addTrigger("Auto Assign IDs", "Auto assign based on order in the manager");
+	assignPropIdTrigger = controlsCC.addTrigger("Assign IDs from Props", "Assign Prop IDs from Prop to Global ID");
 	//sendFeedback = controlsCC.addBoolParameter("Send Feedback", "If checked, will send feedback from sensor to OSC", false);
 	clearAll = controlsCC.addTrigger("Clear all props", "Remove all props from manager");
 	enableAll = controlsCC.addTrigger("Enable All", "");
@@ -197,6 +198,18 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		{
 			p->globalID->setValue(id);
 			id++;
+		}
+	}
+	else if (c == assignPropIdTrigger) {
+		LOG("Assign IDs from Prop IDs");
+
+		for (auto& p : items)
+		{
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+			{
+				int propID = bp->componentsCC->getParameterByName("propID")->intValue();
+				p->globalID->setValue(propID);
+			}
 		}
 	}
 	else if (c == detectProps)

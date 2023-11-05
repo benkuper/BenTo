@@ -20,6 +20,7 @@ public:
 
 	std::unique_ptr<TriggerButtonUI> autoDetectUI;
 	std::unique_ptr<TriggerButtonUI> autoAssignUI;
+	std::unique_ptr<TriggerButtonUI> assignPropIdUI;
 	std::unique_ptr<TriggerButtonUI> enableUI;
 	std::unique_ptr<TriggerButtonUI> disableUI;
 	std::unique_ptr<FloatSliderUI> globalBrightnessUI;

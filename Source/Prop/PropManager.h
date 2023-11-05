@@ -37,6 +37,7 @@ public:
 	const int localPort = 10000;
 
 	Trigger* autoAssignIdTrigger;
+	Trigger* assignPropIdTrigger;
 	Trigger* clearAll;
 	BoolParameter* disablePreview;
 

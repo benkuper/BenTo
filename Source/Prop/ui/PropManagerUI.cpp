@@ -20,6 +20,7 @@ PropManagerUI::PropManagerUI(const String& name, PropManager* m) :
 	addExistingItems();
 
 	autoDetectUI.reset(manager->detectProps->createButtonUI());
+	assignPropIdUI.reset(manager->assignPropIdTrigger->createButtonUI());
 	autoAssignUI.reset(manager->autoAssignIdTrigger->createButtonUI());
 
 	enableUI.reset(manager->enableAll->createButtonUI());
@@ -31,6 +32,7 @@ PropManagerUI::PropManagerUI(const String& name, PropManager* m) :
 	playbackModeUI.reset(manager->playbackMode->createToggle());
 
 	addAndMakeVisible(autoDetectUI.get());
+	addAndMakeVisible(assignPropIdUI.get());
 	addAndMakeVisible(autoAssignUI.get());
 	addAndMakeVisible(uploadAllUI.get());
 	addAndMakeVisible(playbackModeUI.get());
@@ -49,9 +51,11 @@ void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
 	Rectangle<int> addR = r.removeFromTop(24).removeFromRight(24);
 	BaseManagerUI::resizedInternalHeader(addR);
 	Rectangle<int> hr = r.reduced(2);
-	autoAssignUI->setBounds(hr.removeFromTop(20));
-	hr.removeFromTop(2);
 	autoDetectUI->setBounds(hr.removeFromTop(20));
+	hr.removeFromTop(2);
+	assignPropIdUI->setBounds(hr.removeFromTop(20));
+	hr.removeFromTop(2);
+	autoAssignUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(8);
 	enableUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(2);
@@ -75,7 +79,8 @@ void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownP
 
 	PopupMenu menu;
 	menu.addSubMenu("Create", manager->managerFactory->getMenu());
-	menu.addItem(-2, "Auto Detect Props");
+	menu.addItem(-3, "Auto Detect Props");
+	menu.addItem(-2, "Assign IDs from Props");
 	menu.addItem(-1, "Auto assign IDs");
 
 	PopupMenu assignToAllMenu;
@@ -86,8 +91,9 @@ void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownP
 	menu.showMenuAsync(PopupMenu::Options(), [this, mList](int result)
 		{
 			if (result == 0) return;
-			else if (result == -1) 	manager->autoAssignIdTrigger->trigger();
-			else if (result == -2) manager->detectProps->trigger();
+			else if (result == -1) manager->autoAssignIdTrigger->trigger();
+			else if (result == -2) manager->assignPropIdTrigger->trigger();
+			else if (result == -3) manager->detectProps->trigger();
 			else if (result >= 10000)
 			{
 				LightBlockColorProvider* mp = mList[result - 10000];
