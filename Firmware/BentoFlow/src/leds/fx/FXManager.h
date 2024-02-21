@@ -3,7 +3,7 @@
 
 #include "common/Common.h"
 
-#if HAS_LED_FX
+#ifdef HAS_LED_FX
 
 #ifdef LED_COUNT
 #include <FastLED.h>

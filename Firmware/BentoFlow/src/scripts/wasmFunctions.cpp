@@ -168,11 +168,11 @@ m3ApiRawFunction(m3_pointHSV)
 m3ApiRawFunction(m3_setIR)
 {
     m3ApiGetArg(float, v);
+    #ifdef HAS_IR
     MainManager::instance->leds.irManager.setBrightness(v);
-
+    #endif
     m3ApiSuccess();
 }
-
 
 m3ApiRawFunction(m3_updateLeds)
 {
@@ -180,69 +180,93 @@ m3ApiRawFunction(m3_updateLeds)
     m3ApiSuccess();
 }
 
-
 m3ApiRawFunction(m3_getFXSpeed)
 {
     m3ApiReturnType(float);
+    #ifdef HAS_LED_FX
     float v = MainManager::instance->leds.fxManager.offsetSpeed;
+    #else
+    float v = 0;
+    #endif
     m3ApiReturn((float)v);
 }
 
 m3ApiRawFunction(m3_getFXIsoSpeed)
 {
     m3ApiReturnType(float);
+    #ifdef HAS_LED_FX
     float v = MainManager::instance->leds.fxManager.isolationSpeed;
+    #else
+    float v = 0;
+    #endif
     m3ApiReturn((float)v);
 }
 
 m3ApiRawFunction(m3_getFXStaticOffset)
 {
     m3ApiReturnType(float);
+    #ifdef HAS_LED_FX
     float v = MainManager::instance->leds.fxManager.staticOffset;
+    #else
+    float v = 0;
+    #endif
     m3ApiReturn((float)v);
 }
 
 m3ApiRawFunction(m3_getFXFlipped)
 {
     m3ApiReturnType(uint32_t);
+    #ifdef HAS_LED_FX
     bool v = MainManager::instance->leds.fxManager.boardIsFlipped;
+    #else
+    float v = 0;
+    #endif
     m3ApiReturn((uint32_t)v);
 }
 
 m3ApiRawFunction(m3_setFXSpeed)
 {
     m3ApiGetArg(float, sp);
+#ifdef HAS_LED_FX
     MainManager::instance->leds.fxManager.offsetSpeed = sp;
+#endif
     m3ApiSuccess();
 }
 
 m3ApiRawFunction(m3_setFXIsoSpeed)
 {
     m3ApiGetArg(float, sp);
+#ifdef HAS_LED_FX
     MainManager::instance->leds.fxManager.isolationSpeed = sp;
+#endif
     m3ApiSuccess();
 }
 
 m3ApiRawFunction(m3_setFXIsoAxis)
 {
     m3ApiGetArg(uint32_t, ax);
+   #ifdef HAS_LED_FX
     MainManager::instance->leds.fxManager.isolationAxis = ax;
+   #endif
     m3ApiSuccess();
 }
 
 m3ApiRawFunction(m3_setFXStaticOffset)
 {
     m3ApiGetArg(float, sp);
+#ifdef HAS_LED_FX
     MainManager::instance->leds.fxManager.staticOffset = sp;
+#endif
     m3ApiSuccess();
 }
 
 m3ApiRawFunction(m3_resetFX)
 {
+#ifdef HAS_LED_FX
     MainManager::instance->leds.fxManager.reset();
+#endif
     m3ApiSuccess();
 }
-
 
 #endif
 
@@ -255,15 +279,17 @@ m3ApiRawFunction(m3_setBatterySendEnabled)
 
 m3ApiRawFunction(m3_playVariant)
 {
+#ifdef HAS_VARIANT
     m3ApiGetArg(uint32_t, v);
     String name = MainManager::instance->leds.playerMode.fileName;
     float time = MainManager::instance->leds.playerMode.curTimeMs;
     uint32_t start = millis();
-    char l = name.charAt(name.length()-1);
+    char l = name.charAt(name.length() - 1);
 
-    if (l >= '0' && l <= '9') {
-        name.remove(name.length()-1);
-    } 
+    if (l >= '0' && l <= '9')
+    {
+        name.remove(name.length() - 1);
+    }
 
     name = name + String(v);
 
@@ -271,6 +297,8 @@ m3ApiRawFunction(m3_playVariant)
 
     time = (time + (millis() - start)) / 1000;
     MainManager::instance->leds.playerMode.play(time);
+#endif
+
     m3ApiSuccess();
 }
 
@@ -364,7 +392,9 @@ m3ApiRawFunction(m3_getSpin)
 m3ApiRawFunction(m3_setMicEnabled)
 {
     m3ApiGetArg(uint32_t, en);
+#ifdef HAS_MIC
     MicManager::instance->setEnabled((bool)en);
+#endif
     m3ApiSuccess();
 }
 
@@ -372,15 +402,16 @@ m3ApiRawFunction(m3_getMicLevel)
 {
     m3ApiReturnType(float);
 
+#ifdef HAS_MIC
 #ifdef BUTTON_COUNT
     float v = MicManager::instance->enveloppe;
+#endif
 #else
     float v = 0;
 #endif
 
     m3ApiReturn((float)v);
 }
-
 
 m3ApiRawFunction(m3_randomInt)
 {

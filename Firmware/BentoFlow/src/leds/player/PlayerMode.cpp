@@ -1,6 +1,6 @@
 
 #include "PlayerMode.h"
-#if HAS_SCRIPTS
+#ifdef HAS_SCRIPTS
 #include "../../scripts/ScriptManager.h"
 #endif
 

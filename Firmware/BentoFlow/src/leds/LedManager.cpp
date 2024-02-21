@@ -30,7 +30,7 @@ void LedManager::init()
     rgbManager.addListener(std::bind(&LedManager::rgbLedsEvent, this, std::placeholders::_1));
     sysLedMode.init();
 
-#if HAS_IR
+#ifdef HAS_IR
     irManager.init();
 #endif
 

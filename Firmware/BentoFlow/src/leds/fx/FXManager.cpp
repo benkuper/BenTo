@@ -2,7 +2,7 @@
 #include "FXManager.h"
 #include "../../MainManager.h"
 
-#if HAS_LED_FX
+#ifdef HAS_LED_FX
 
 #ifdef LED_COUNT
 

@@ -137,7 +137,7 @@ public:
     void rgbLedsEvent(const RGBLedsEvent &e);
 #endif
 
-#if HAS_FILES
+#ifdef HAS_FILES
     void fileEvent(const FileEvent &e);
 #endif
 

@@ -39,6 +39,7 @@
 const int buttonPins[BUTTON_COUNT]{36};
 
 //battery sence
+#define HAS_BATTERY
 #define BATTERY_PIN 35 // takes the measurment from the battery sence.
 #define BATTERY_CHARGE_PIN 39
 
@@ -65,6 +66,11 @@ const int buttonPins[BUTTON_COUNT]{36};
 
 // SD config
 #define HAS_FILES
+#define HAS_BATTERY
+
+
+
+#define HAS_SCRIPTS
 
 #define SDSPEED 27000000
 

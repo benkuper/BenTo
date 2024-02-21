@@ -29,11 +29,11 @@ public:
     //out
     RGBLedsManager rgbManager;
 
-#if HAS_LED_FX
+#ifdef HAS_LED_FX
     FXManager fxManager;
 #endif
 
-#if HAS_IR
+#ifdef HAS_IR
     IRLedsManager irManager;
 #endif
 
