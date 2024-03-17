@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="http://192.168.1.162/server/osc-browser.min.js"></script>
-    <script type="text/javascript" src="http://192.168.1.162/server/jquery.min.js"></script>
+    <!-- <script type="text/javascript" src="http://192.168.1.162/server/osc-browser.min.js"></script> -->
+    <!-- <script type="text/javascript" src="http://192.168.1.162/server/jquery.min.js"></script> -->
     <script type="text/javascript" src="/server/osc-browser.min.js"></script>
     <script type="text/javascript" src="/server/jquery.min.js"></script>
     <title>Bentuino Settings</title>
@@ -200,7 +200,7 @@
 
     <script>
 
-        var local = window.location.hostname.startsWith("192");
+        var local = window.location.hostname.startsWith("1");
         var ip = local ? window.location.hostname : "192.168.1.162";
         setTimeout(() => { connectToServer(); }, 100);
         var data = {};
@@ -209,7 +209,7 @@
 
         function connectToServer() {
             const editorContainer = document.getElementById('editor');
-            editorContainer.innerHTML = 'Connecting to server...';
+            editorContainer.innerHTML = 'Connecting to server : '+ip+'...';
 
             var showConfig = true;
 

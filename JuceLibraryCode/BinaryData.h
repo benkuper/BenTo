@@ -84,7 +84,7 @@ namespace BinaryData
     const int            new_pngSize = 675;
 
     extern const char*   shader_frag;
-    const int            shader_fragSize = 1012;
+    const int            shader_fragSize = 975;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 26;

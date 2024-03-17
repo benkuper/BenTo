@@ -4855,43 +4855,43 @@ const char* new_png = (const char*) temp_binary_data_24;
 
 //================== shader.frag ==================
 static const unsigned char temp_binary_data_25[] =
-"#version 150\r\n"
-"\r\n"
-"\r\n"
-"\r\n"
-"out vec4 outputColor;\r\n"
-"\r\n"
-"//perso\r\n"
-"uniform int inverse;\r\n"
-"uniform vec2 fboSize;\r\n"
-"uniform vec2 sourceSize;\r\n"
-"uniform sampler2DRect sourceTex;\r\n"
-"uniform sampler2DRect ledMap;\r\n"
-"//uniform float pixMaps[65536];\r\n"
-"\r\n"
-"void main()\r\n"
-"{\r\n"
-"    // gl_FragCoord contains the window relative coordinate for the fragment.\r\n"
-"    // we use gl_FragCoord.x position to control the red color value.\r\n"
-"    // we use gl_FragCoord.y position to control the green color value.\r\n"
-"    // please note that all r, g, b, a values are between 0 and 1.\r\n"
-"    \r\n"
-"\t//ivec2 lsize = textureSize(ledMap,0);\r\n"
-"    //ivec2 tsize = textureSize(sourceTex,0);\r\n"
-"    \r\n"
-"    vec2 lsize = fboSize; //led map is same size as fbo\r\n"
-"    vec2 tsize = sourceSize;\r\n"
-"    \r\n"
-"\tfloat tx = (gl_FragCoord.x / fboSize.x) * lsize.x;\r\n"
-"\tfloat ty = (gl_FragCoord.y / fboSize.y) * lsize.y;\r\n"
-"\r\n"
-"\tvec4 tcoord = texture(ledMap,vec2(tx,ty));\r\n"
-"\r\n"
-"    if(inverse == 1) tcoord.y = 1-tcoord.y;\r\n"
-"\toutputColor = texture(sourceTex,vec2(tcoord.x*tsize.x,tcoord.y*tsize.y));\r\n"
-"    \r\n"
-"}\r\n"
-"\r\n";
+"#version 150\n"
+"\n"
+"\n"
+"\n"
+"out vec4 outputColor;\n"
+"\n"
+"//perso\n"
+"uniform int inverse;\n"
+"uniform vec2 fboSize;\n"
+"uniform vec2 sourceSize;\n"
+"uniform sampler2DRect sourceTex;\n"
+"uniform sampler2DRect ledMap;\n"
+"//uniform float pixMaps[65536];\n"
+"\n"
+"void main()\n"
+"{\n"
+"    // gl_FragCoord contains the window relative coordinate for the fragment.\n"
+"    // we use gl_FragCoord.x position to control the red color value.\n"
+"    // we use gl_FragCoord.y position to control the green color value.\n"
+"    // please note that all r, g, b, a values are between 0 and 1.\n"
+"    \n"
+"\t//ivec2 lsize = textureSize(ledMap,0);\n"
+"    //ivec2 tsize = textureSize(sourceTex,0);\n"
+"    \n"
+"    vec2 lsize = fboSize; //led map is same size as fbo\n"
+"    vec2 tsize = sourceSize;\n"
+"    \n"
+"\tfloat tx = (gl_FragCoord.x / fboSize.x) * lsize.x;\n"
+"\tfloat ty = (gl_FragCoord.y / fboSize.y) * lsize.y;\n"
+"\n"
+"\tvec4 tcoord = texture(ledMap,vec2(tx,ty));\n"
+"\n"
+"    if(inverse == 1) tcoord.y = 1-tcoord.y;\n"
+"\toutputColor = texture(sourceTex,vec2(tcoord.x*tsize.x,tcoord.y*tsize.y));\n"
+"    \n"
+"}\n"
+"\n";
 
 const char* shader_frag = (const char*) temp_binary_data_25;
 
@@ -4932,7 +4932,7 @@ const char* getNamedResource (const char* resourceNameUTF8, int& numBytes)
         case 0xd4093963:  numBytes = 98974; return icon_png;
         case 0x47330464:  numBytes = 1731; return link_png;
         case 0x6e00bb0a:  numBytes = 675; return new_png;
-        case 0x893e7e0c:  numBytes = 1012; return shader_frag;
+        case 0x893e7e0c:  numBytes = 975; return shader_frag;
         default: break;
     }
 

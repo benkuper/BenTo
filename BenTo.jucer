@@ -705,7 +705,7 @@
   </LIVE_SETTINGS>
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
-            smallIcon="YlXmhK" bigIcon="YlXmhK">
+            smallIcon="YlXmhK" bigIcon="YlXmhK" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"
                        binaryPath="Binaries/Debug"/>

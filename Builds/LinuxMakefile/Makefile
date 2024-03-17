@@ -47,7 +47,7 @@ ifeq ($(CONFIG),Debug)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lcurl -lServus $(LDFLAGS)
 
-  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
+  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
 
 ifeq ($(CONFIG),Release)
@@ -68,7 +68,7 @@ ifeq ($(CONFIG),Release)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lcurl -lServus $(LDFLAGS)
 
-  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
+  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
 
 OBJECTS_APP := \
@@ -385,12 +385,17 @@ $(JUCE_OBJDIR)/execinfo.cmd:
 	-@if [ -z "$(V_AT)" ]; then echo "Checking if we need to link libexecinfo"; fi
 	$(V_AT)printf "int main() { return 0; }" | $(CXX) -x c++ -o $(@D)/execinfo.x -lexecinfo - >/dev/null 2>&1 && printf -- "-lexecinfo" > "$@" || touch "$@"
 
+$(JUCE_OBJDIR)/cxxfs.cmd:
+	-$(V_AT)mkdir -p $(@D)
+	-@if [ -z "$(V_AT)" ]; then echo "Checking if we need to link stdc++fs"; fi
+	$(V_AT)printf "int main() { return 0; }" | $(CXX) -x c++ -o $(@D)/cxxfs.x -lstdc++fs - >/dev/null 2>&1 && printf -- "-lstdc++fs" > "$@" || touch "$@"
+
 clean:
 	@echo Cleaning BenTo
 	$(V_AT)$(CLEANCMD)
 
 strip:
 	@echo Stripping BenTo
-	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(TARGET)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_APP)
 
 -include $(OBJECTS_APP:%.o=%.d)
