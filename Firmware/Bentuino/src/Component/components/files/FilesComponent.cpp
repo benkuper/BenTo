@@ -70,7 +70,7 @@ bool FilesComponent::initInternalMemory()
         NDBG("Error initializing SPIFFS");
         return false;
     }
-    // NDBG("SPIFFS initialized.");
+    NDBG("Internal Memory SPIFFS initialized.");
     return true;
 }
 
@@ -173,22 +173,28 @@ bool FilesComponent::handleCommandInternal(const String &command, var *data, int
         if (numData > 0)
         {
             NDBG("Deleting folder " + data[0].stringValue());
-#ifdef FILES_USE_INTERNAL_MEMORY
-            SPIFFS.rmdir(data[0].stringValue());
-#else
-            SD.rmdir(data[0].stringValue());
-#endif
+            if (useInternalMemory)
+            {
+                SPIFFS.rmdir(data[0].stringValue());
+            }
+            else
+            {
+                SD.rmdir(data[0].stringValue());
+            }
         }
         else
         {
             NDBG("Deleting all files");
-#ifdef FILES_USE_INTERNAL_MEMORY
-            SPIFFS.rmdir("/");
-#else
-            bool success = SD.rmdir("/");
-            if (!success)
-                NDBG("Error deleting all files");
-#endif
+            if (useInternalMemory)
+            {
+                SPIFFS.rmdir("/");
+            }
+            else
+            {
+                bool success = SD.rmdir("/");
+                if (!success)
+                    NDBG("Error deleting all files");
+            }
         }
 
         return true;

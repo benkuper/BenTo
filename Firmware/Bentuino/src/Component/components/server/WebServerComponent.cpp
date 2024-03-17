@@ -42,9 +42,9 @@ bool WebServerComponent::initInternal(JsonObject o)
             o["NAME"] = RootComponent::instance->deviceName;
             o["OSC_PORT"] = OSC_LOCAL_PORT;
             o["OSC_TRANSPORT"] = "UDP";
-            #if !USE_ASYNC_WEBSOCKET
+#if !USE_ASYNC_WEBSOCKET
             o["WS_PORT"] = 81;
-            #endif
+#endif
 
             String jStr;
             serializeJson(doc, jStr);
@@ -85,9 +85,18 @@ bool WebServerComponent::initInternal(JsonObject o)
         std::bind(&WebServerComponent::handleFileUpload,
                   this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 
-    server.serveStatic("/edit", SD, "/server/edit.html");
-    server.serveStatic("/upload", SD, "/server/upload.html");
-    server.serveStatic("/server/", SD, "/server");
+    if (FilesComponent::instance->useInternalMemory)
+    {
+        server.serveStatic("/edit", SPIFFS, "/server/edit.html");
+        server.serveStatic("/upload", SPIFFS, "/server/upload.html");
+        server.serveStatic("/server/", SPIFFS, "/server");
+    }
+    else
+    {
+        server.serveStatic("/edit", SD, "/server/edit.html");
+        server.serveStatic("/upload", SD, "/server/upload.html");
+        server.serveStatic("/server/", SD, "/server");
+    }
 #endif
 
     return true;
@@ -131,7 +140,6 @@ void WebServerComponent::setupConnection()
 #if !USE_ASYNC_WEBSOCKET
         ws.begin();
 #endif
-
     }
     else
     {
@@ -311,7 +319,7 @@ void WebServerComponent::onWSEvent(uint8_t id, WStype_t type, uint8_t *data, siz
         break;
 
     default:
-    break;
+        break;
     }
 }
 #endif
