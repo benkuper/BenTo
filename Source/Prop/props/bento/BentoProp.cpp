@@ -14,10 +14,11 @@
 BentoProp::BentoProp(var params) :
 	Prop(params),
 	serialDevice(nullptr),
-	universe(0),
 	resolutionRef(nullptr),
 	brightnessRef(nullptr)
 {
+	universes.add(new DMXUniverse(0));
+
 	updateRate = 100;
 	useAlphaInPlaybackData = true;
 	invertLedsInUI = true;
@@ -109,6 +110,15 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	else if (c == resolution)
 	{
 		if (resolutionRef != nullptr) resolutionRef->setValue(resolution->intValue());
+		int numUniverses = ceil(resolution->intValue() * 1.0f / 170);
+		while (numUniverses > universes.size())
+		{
+			universes.add(new DMXUniverse(universes.size()));
+		}
+		while (numUniverses < universes.size())
+		{
+			universes.remove(universes.size() - 1);
+		};
 	}
 	else if (c == resolutionRef)
 	{
@@ -145,20 +155,33 @@ void BentoProp::portRemoved(SerialDevice* d)
 
 void BentoProp::sendColorsToPropInternal()
 {
-	int numChannels = colors.size() * 3;
+	if (colors.isEmpty()) return;
 
-	for (int i = 0; i < colors.size(); i++)
+	for (int u = 0; u < universes.size(); u++)
 	{
-		int index = i * 3;
-		if (index >= DMX_NUM_CHANNELS - 2) break;
-		Colour c = colors[i];
-		float a = c.getFloatAlpha();
-		data.set(index, jmin<int>(c.getRed() * a, 255));
-		data.set(index + 1, jmin<int>(c.getGreen() * a, 255));
-		data.set(index + 2, jmin<int>(c.getBlue() * a, 255));
+		int startLed = u * 170;
+		int numChannels = jmax(0, jmin(colors.size() - 170, 170));
+
+		data.fill(0);
+		
+		for (int i = 0; i < numChannels; i++)
+		{
+			int channelIndex = i * 3;
+			int colorIndex = startLed + i;
+			//if (index >= DMX_NUM_CHANNELS - 2) break;
+			Colour c = colors[colorIndex];
+			float a = c.getFloatAlpha();
+			data.set(channelIndex, jmin<int>(c.getRed() * a, 255));
+			data.set(channelIndex + 1, jmin<int>(c.getGreen() * a, 255));
+			data.set(channelIndex + 2, jmin<int>(c.getBlue() * a, 255));
+		}
+
+		universes[u]->updateValues(data);
+		if (universes[u]->isDirty) artnet.sendDMXValues(universes[u]);
+		wait(2);
 	}
-	universe.updateValues(data);
-	if (universe.isDirty) artnet.sendDMXValues(&universe, numChannels);
+
+
 
 }
 

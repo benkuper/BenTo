@@ -26,7 +26,7 @@ public:
 	SerialDevice* serialDevice;
 
 	DMXArtNetDevice artnet;
-	DMXUniverse universe;
+	OwnedArray<DMXUniverse, CriticalSection> universes;
 	Array<uint8> data;
 
 	std::unique_ptr<BentoComponentContainer> componentsCC;
