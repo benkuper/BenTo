@@ -51,7 +51,11 @@ void LedStreamReceiverComponent::updateInternal()
     if (curTime > lastReceiveTime + (1000 / max(receiveRate, 1)))
     {
         lastReceiveTime = curTime;
-        artnet.read();
+        int r = -1;
+        while(r != 0)
+        {
+            r = artnet.read();
+        } 
     }
 }
 
@@ -103,14 +107,23 @@ void LedStreamReceiverComponent::unregisterLayer(LedStripStreamLayer *layer)
 void LedStreamReceiverComponent::onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t *data)
 {
     // DBG("Received Artnet "+String(universe));
+
     for (auto &layer : instance->layers)
     {
-        if (universe != layer->universe)
+        int numUniverses = std::ceil(layer->strip->count * 1.0f / 170); // 170 leds per universe
+        if (universe < layer->universe || universe > layer->universe + numUniverses - 1)
             continue;
-        // DBG("Received Artnet " + String(universe) + " " + String(length) + " " + String(sequence) + " " + String(stripIndex) + " " + String(layer->strip->count));
-        for (int i = 0; i < layer->strip->count && i < length; i++)
-            layer->colors[i] = Color(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
 
+        // DBG("Received Artnet " + String(universe) + " " + String(length) + " " + String(sequence) + " " + String(stripIndex) + " " + String(layer->strip->count));
+
+        int start = (universe - layer->universe) * 170;
+
+        //DBG("Received Artnet " + String(universe) + ", start = " + String(start));
+        for (int i = 0; i < layer->strip->count && i < 170 && (i*3) < length; i++)
+        {
+            layer->colors[i+start] = Color(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
+        }
+        
         layer->lastReceiveTime = millis() / 1000.0f;
         layer->hasCleared = false;
         // memcpy((uint8_t *)layer->colors, streamBuffer + 1, byteIndex - 2);
