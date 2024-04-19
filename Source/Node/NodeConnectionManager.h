@@ -26,8 +26,10 @@ public:
 	void addConnection(NodeConnectionSlot * source, NodeConnectionSlot * dest);
 	NodeConnection * getConnectionForSlots(NodeConnectionSlot * source, NodeConnectionSlot * dest);
 
-	void addItemInternal(NodeConnection * nc, var) override;
-	void removeItemInternal(NodeConnection * nc) override;
+	void addItemInternal(NodeConnection* nc, var) override;
+	void addItemsInternal(Array<NodeConnection *> items, var) override;
+	void removeItemInternal(NodeConnection* nc) override;
+	void removeItemsInternal(Array<NodeConnection *> items) override;
 
 	void askToInsertNode(NodeConnection * nc, StringRef nodeType) override;
 };

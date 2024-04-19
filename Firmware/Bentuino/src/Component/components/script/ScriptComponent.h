@@ -1,6 +1,6 @@
 #pragma once
 
-DeclareComponent(Script, "script", )
+DeclareComponentSingleton(Script, "script", )
 
     Script script;
 

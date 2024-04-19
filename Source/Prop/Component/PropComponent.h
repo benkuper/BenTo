@@ -20,20 +20,20 @@ public:
     virtual ~PropComponent();
 
     WeakReference<Prop> prop;
-    bool feedbackEnabled;
-    Array<Parameter*> sendValuesOnPropConnected;
+    //bool feedbackEnabled;
+    //Array<Parameter*> sendValuesOnPropConnected;
 
-    Array<Controllable *> excludeControlControllables;
+    //Array<Controllable *> excludeControlControllables;
 
-    void sendControl(String control, var value = var());
-    virtual void onContainerParameterChanged(Parameter* p) override;
-    virtual void onContainerTriggerTriggered(Trigger* t) override;
+    //void sendControl(String control, var value = var());
+    //virtual void onContainerParameterChanged(Parameter* p) override;
+    //virtual void onContainerTriggerTriggered(Trigger* t) override;
 
-    virtual void update() {}
+    //virtual void update() {}
 
-    virtual void handlePropConnected();
+    //virtual void handlePropConnected();
 
-    virtual void handleMessage(const String &msg, var value = var());
+    //virtual void handleMessage(const String &msg, var value = var());
 
     JUCE_DECLARE_NON_COPYABLE_WITH_LEAK_DETECTOR(PropComponent)
 

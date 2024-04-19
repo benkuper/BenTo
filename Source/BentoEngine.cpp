@@ -16,29 +16,22 @@
 #include "Node/NodeIncludes.h"
 
 #include "Audio/AudioManager.h"
-#include "Common/Serial/SerialManager.h"
-//#include "WebServer/BentoWebServer.h"
 #include "BentoSettings.h"
-#include "WebAssembly/WasmManager.h"
-#include "Timeline/TimelineBlockSequence.h"
+#include "Common/CommonIncludes.h"
+#include "Sequence/SequenceIncludes.h"
 
 BentoEngine::BentoEngine() :
 	Engine("BenTo", ".bento"),
-	ioCC("Input - Output")
+	customParams("Custom parameters", false, false, false, false)
 {
 	Engine::mainEngine = this;
+
+	convertURL = "https://www.jonglissimo.com/bento-converter/convert.php";
+	breakingChangesVersions.add("2.0.0b1");
 
 	addChildControllableContainer(LightBlockModelLibrary::getInstance());
 	addChildControllableContainer(PropManager::getInstance());
 	addChildControllableContainer(Spatializer::getInstance());
-	addChildControllableContainer(WasmManager::getInstance());
-
-	remoteHost = ioCC.addStringParameter("Remote Host", "Global remote host to send OSC to", "127.0.0.1");
-	remotePort = ioCC.addIntParameter("Remote port", "Remote port to send OSC to", 43001, 1024, 65535);
-	globalSender.connect("0.0.0.0", 1024);
-
-	ProjectSettings::getInstance()->addChildControllableContainer(&ioCC);
-	ProjectSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 
 	projectName = ProjectSettings::getInstance()->addStringParameter("Project name", "This name will be used to identify the project when uploaded to the props", "project", true);
 
@@ -50,9 +43,10 @@ BentoEngine::BentoEngine() :
 	SerialManager::getInstance(); // init
 
 
+	GlobalSettings::getInstance()->addChildControllableContainer(AudioManager::getInstance());
 	GlobalSettings::getInstance()->addChildControllableContainer(BentoSettings::getInstance());
 
-	//BentoWebServer::getInstance(); //init
+	ProjectSettings::getInstance()->addChildControllableContainer(&customParams);
 
 }
 
@@ -61,6 +55,7 @@ BentoEngine::~BentoEngine()
 	PropManager::deleteInstance();
 	PropShapeLibrary::deleteInstance();
 	SerialManager::deleteInstance();
+	DMXManager::deleteInstance();
 
 	NodeFactory::deleteInstance();
 	LightBlockModelLibrary::deleteInstance();
@@ -74,7 +69,6 @@ BentoEngine::~BentoEngine()
 	Spatializer::deleteInstance();
 
 	ZeroconfManager::deleteInstance();
-	WasmManager::deleteInstance();
 
 	PropFlasher::deleteInstance();
 }
@@ -84,7 +78,6 @@ void BentoEngine::clearInternal()
 	PropManager::getInstance()->clear();
 	LightBlockModelLibrary::getInstance()->clear();
 	Spatializer::getInstance()->clear();
-	WasmManager::getInstance()->clear();
 
 	projectName->resetValue();
 }
@@ -103,7 +96,7 @@ juce::Result BentoEngine::saveDocument(const File& file)
 }
 
 
-void BentoEngine::processMessage(const OSCMessage& m)
+void BentoEngine::processMessage(const OSCMessage& m, const String& clientId)
 {
 	StringArray aList;
 	aList.addTokens(m.getAddressPattern().toString(), "/", "\"");
@@ -150,22 +143,22 @@ void BentoEngine::processMessage(const OSCMessage& m)
 	}
 	else if (aList[1] == "prop")
 	{
-		int id = aList[2] == "all" ? -1 : aList[2].getIntValue();
+		//int id = aList[2] == "all" ? -1 : aList[2].getIntValue();
 
-		String localAddress = "/" + aList.joinIntoString("/", 3);
-		OSCMessage lm(localAddress);
-		lm.addString(""); //fake ID
-		for (auto& a : m) lm.addArgument(a);
-		lm.setAddressPattern(localAddress);
+		//String localAddress = "/" + aList.joinIntoString("/", 3);
+		//OSCMessage lm(localAddress);
+		//lm.addString(""); //fake ID
+		//for (auto& a : m) lm.addArgument(a);
+		//lm.setAddressPattern(localAddress);
 
-		if (id == -1)
-		{
-			for (auto& p : PropManager::getInstance()->items)  p->handleOSCMessage(lm);
-		}
-		else
-		{
-			if (Prop* p = PropManager::getInstance()->getPropWithId(id)) p->handleOSCMessage(lm);
-		}
+		//if (id == -1)
+		//{
+		//	for (auto& p : PropManager::getInstance()->items)  p->handleOSCMessage(lm);
+		//}
+		//else
+		//{
+		//	if (Prop* p = PropManager::getInstance()->getPropWithId(id)) p->handleOSCMessage(lm);
+		//}
 	}
 	else if (aList[1] == "enableList")
 	{
@@ -182,7 +175,7 @@ void BentoEngine::processMessage(const OSCMessage& m)
 		String modelName = OSCHelpers::getStringArg(m[0]);
 		LightBlockModel* lm = LightBlockModelLibrary::getInstance()->getModelWithName(modelName);
 
-		if (TimelineBlock* b = dynamic_cast<TimelineBlock*>(lm))
+		if (BentoSequenceBlock* b = dynamic_cast<BentoSequenceBlock*>(lm))
 		{
 			Array<Prop*> props;
 			if (m.size() == 1) props.addArray(PropManager::getInstance()->items);
@@ -202,9 +195,9 @@ void BentoEngine::processMessage(const OSCMessage& m)
 	}
 	else if (aList[1] == "stopAllSequences")
 	{
-		for (auto& b : LightBlockModelLibrary::getInstance()->timelineBlocks.items)
+		for (auto& b : LightBlockModelLibrary::getInstance()->sequenceBlocks.items)
 		{
-			if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(b)) tb->sequence->stopTrigger->trigger();
+			if (BentoSequenceBlock* tb = dynamic_cast<BentoSequenceBlock*>(b)) tb->sequence->stopTrigger->trigger();
 		}
 	}
 }
@@ -220,9 +213,6 @@ var BentoEngine::getJSONData()
 
 	var propData = PropManager::getInstance()->getJSONData();
 	if (!propData.isVoid() && propData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("props", propData);
-
-	var wasmData = WasmManager::getInstance()->getJSONData();
-	if (!wasmData.isVoid() && wasmData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(WasmManager::getInstance()->shortName, wasmData);
 
 	return data;
 }
@@ -244,8 +234,4 @@ void BentoEngine::loadJSONDataInternalEngine(var data, ProgressTask* loadingTask
 	PropManager::getInstance()->loadJSONData(data.getProperty("props", var()));
 	propTask->setProgress(1);
 	propTask->end();
-
-	WasmManager::getInstance()->loadJSONData(data.getProperty(WasmManager::getInstance()->shortName, var()));
-
-
 }

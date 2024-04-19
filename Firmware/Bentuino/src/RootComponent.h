@@ -8,8 +8,9 @@ DeclareComponentSingleton(Root, "root", )
 
     const String deviceID = getDeviceID();
 
-DeclareStringParam(id, deviceID);
-DeclareStringParam(deviceName, deviceID);
+DeclareIntParam(propID, 0);
+DeclareStringParam(macAddress, deviceID);
+DeclareStringParam(deviceName, DEVICE_TYPE);
 DeclareStringParam(deviceType, DEVICE_TYPE);
 
 DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
@@ -68,8 +69,8 @@ BehaviourManagerComponent behaviours;
 DummyManagerComponent dummies;
 #endif
 
-#ifdef USE_IMU
-IMUComponent imu;
+#ifdef USE_MOTION
+MotionComponent motion;
 #endif
 
 #ifdef USE_SERVO
@@ -84,6 +85,7 @@ StepperComponent stepper;
 
 // Behaviour
 Timer<5> timer;
+long timeAtStart;
 long timeAtShutdown;
 
 bool initInternal(JsonObject o) override;
@@ -98,6 +100,7 @@ void saveSettings();
 void clearSettings();
 
 void onChildComponentEvent(const ComponentEvent &e) override;
+void childParamValueChanged(Component *caller, Component *comp, void *param);
 
 bool handleCommandInternal(const String &command, var *data, int numData) override;
 
@@ -106,8 +109,13 @@ bool isShuttingDown() const { return timeAtShutdown > 0; }
 String getDeviceID() const;
 
 HandleSetParamInternalStart
-    CheckAndSetParam(deviceName);
+    CheckTrigger(shutdown);
+CheckTrigger(restart);
+CheckTrigger(saveSettings);
+CheckTrigger(clearSettings);
+CheckAndSetParam(deviceName);
 CheckAndSetParam(deviceType);
+CheckAndSetParam(propID);
 CheckAndSetParam(wakeUpButton);
 CheckAndSetParam(wakeUpState);
 HandleSetParamInternalEnd;
@@ -115,12 +123,18 @@ HandleSetParamInternalEnd;
 FillSettingsInternalStart
     FillSettingsParam(deviceName);
 FillSettingsParam(deviceType);
+FillSettingsParam(propID);
 FillSettingsParam(wakeUpButton);
 FillSettingsParam(wakeUpState);
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
-    FillOSCQueryStringParamReadOnly(id);
+    FillOSCQueryTrigger(shutdown);
+FillOSCQueryTrigger(restart);
+FillOSCQueryTrigger(saveSettings);
+FillOSCQueryTrigger(clearSettings);
+FillOSCQueryIntParam(propID);
+FillOSCQueryStringParamReadOnly(macAddress);
 FillOSCQueryStringParam(deviceName);
 FillOSCQueryStringParam(deviceType);
 FillOSCQueryIntParam(wakeUpButton);

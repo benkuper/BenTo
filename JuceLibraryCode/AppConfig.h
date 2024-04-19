@@ -43,7 +43,7 @@
 
 #define JUCE_USE_DARK_SPLASH_SCREEN 1
 
-#define JUCE_PROJUCER_VERSION 0x70005
+#define JUCE_PROJUCER_VERSION 0x7000c
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_filmstro_audiohelpers      1
@@ -56,6 +56,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_core                  1
 #define JUCE_MODULE_AVAILABLE_juce_cryptography          1
 #define JUCE_MODULE_AVAILABLE_juce_data_structures       1
+#define JUCE_MODULE_AVAILABLE_juce_dmx                   1
 #define JUCE_MODULE_AVAILABLE_juce_events                1
 #define JUCE_MODULE_AVAILABLE_juce_graphics              1
 #define JUCE_MODULE_AVAILABLE_juce_gui_basics            1
@@ -63,6 +64,7 @@
 #define JUCE_MODULE_AVAILABLE_juce_opengl                1
 #define JUCE_MODULE_AVAILABLE_juce_organicui             1
 #define JUCE_MODULE_AVAILABLE_juce_osc                   1
+#define JUCE_MODULE_AVAILABLE_juce_serial                1
 #define JUCE_MODULE_AVAILABLE_juce_sharedtexture         1
 #define JUCE_MODULE_AVAILABLE_juce_simpleweb             1
 #define JUCE_MODULE_AVAILABLE_juce_timeline              1
@@ -251,6 +253,10 @@
  //#define JUCE_DISABLE_COREGRAPHICS_FONT_SMOOTHING 0
 #endif
 
+#ifndef    JUCE_FLOAT_COLOURS
+ //#define JUCE_FLOAT_COLOURS 0
+#endif
+
 //==============================================================================
 // juce_gui_basics flags:
 
@@ -290,7 +296,7 @@
 #endif
 
 #ifndef    JUCE_USE_WIN_WEBVIEW2
- //#define JUCE_USE_WIN_WEBVIEW2 0
+ #define   JUCE_USE_WIN_WEBVIEW2 1
 #endif
 
 #ifndef    JUCE_ENABLE_LIVE_CONSTANT_EDITOR
@@ -305,7 +311,7 @@
 #endif
 
 #ifndef    ORGANICUI_USE_SHAREDTEXTURE
- //#define ORGANICUI_USE_SHAREDTEXTURE 0
+ #define   ORGANICUI_USE_SHAREDTEXTURE 1
 #endif
 
 #ifndef    ORGANICUI_USE_WEBSERVER

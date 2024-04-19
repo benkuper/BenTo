@@ -4,9 +4,9 @@ bool LedStripStreamLayer::initInternal(JsonObject o)
 {
     LedStripLayer::initInternal(o);
 
-    AddIntParam(universe);
-    AddBoolParam(clearOnNoReception);
-    AddFloatParam(noReceptionTime);
+    AddIntParamConfig(universe);
+    AddBoolParamConfig(clearOnNoReception);
+    AddFloatParamConfig(noReceptionTime);
 
     LedStreamReceiverComponent::instance->registerLayer(this);
 
@@ -36,7 +36,6 @@ bool LedStreamReceiverComponent::initInternal(JsonObject o)
     AddIntParam(receiveRate);
     byteIndex = 0;
 
-    AddBoolParam(useArtnet);
     artnet.setArtDmxCallback(&LedStreamReceiverComponent::onDmxFrame);
 
     setupConnection();
@@ -48,68 +47,21 @@ void LedStreamReceiverComponent::updateInternal()
     if (!serverIsInit)
         return;
 
-    if (useArtnet)
+    long curTime = millis();
+    if (curTime > lastReceiveTime + (1000 / max(receiveRate, 1)))
     {
-        // DBG("Artnet read");
-        artnet.read();
-    }
-    else
-    {
-        // DBG("UDP Read");
-        long curTime = millis();
-
-        if (curTime > lastUDPReceiveTime + (1000 / receiveRate))
+        lastReceiveTime = curTime;
+        int r = -1;
+        while(r != 0)
         {
-            lastUDPReceiveTime = curTime;
-            receiveUDP();
-        }
+            r = artnet.read();
+        } 
     }
 }
 
 void LedStreamReceiverComponent::clearInternal()
 {
-    udp.flush();
-    udp.stop();
-}
-
-void LedStreamReceiverComponent::receiveUDP()
-{
-    if (!udp.available())
-        return;
-
-    while (udp.parsePacket())
-    {
-        //  NDBG("Packet available : " + String(size));
-        byteIndex += udp.read(streamBuffer + byteIndex, LEDSTREAM_MAX_PACKET_SIZE - byteIndex);
-
-        // NDBG("Received : " + String(byteIndex));
-
-        bool isFinal = streamBuffer[byteIndex - 1] == 255;
-
-        if (isFinal)
-        {
-
-            int stripIndex = streamBuffer[0];
-
-            // NDBG("Is Final : " + String(stripIndex));
-
-            if (stripIndex < layers.size())
-            {
-                LedStripStreamLayer *layer = layers[stripIndex];
-
-                memcpy((uint8_t *)layer->colors, streamBuffer + 1, byteIndex - 2);
-            }
-            else
-            {
-                NDBG("Strip " + String(stripIndex) + " does not exist");
-            }
-
-            byteIndex = 0;
-        }
-
-        if (byteIndex >= LEDSTREAM_MAX_PACKET_SIZE)
-            break;
-    }
+    // artnet.stop(); //when it will be implemented
 }
 
 void LedStreamReceiverComponent::onEnabledChanged()
@@ -121,56 +73,17 @@ void LedStreamReceiverComponent::setupConnection()
 {
     bool shouldConnect = enabled && WifiComponent::instance->state == WifiComponent::Connected;
 
-    serverIsInit = false;
-
     if (shouldConnect)
     {
-
-        if (useArtnet)
-        {
-            NDBG("Start Receive Led Stream on Artnet");
-            artnet.begin();
-            NDBG("Artnet started");
-        }
-        else
-        {
-            NDBG("Start Receive Led Stream on UDP " + String(LEDSTREAM_RECEIVE_PORT));
-            udp.begin(LEDSTREAM_RECEIVE_PORT);
-            udp.flush();
-        }
-
+        NDBG("Start Receive Led Stream on Artnet");
+        artnet.begin();
+        NDBG("Artnet started");
         serverIsInit = true;
     }
     else
     {
-        NDBG("Stop receiving");
-        udp.flush();
-        udp.stop();
-        // artnet.stop();
-    }
-}
-
-void LedStreamReceiverComponent::paramValueChangedInternal(void *param)
-{
-    if (param == &useArtnet)
-    {
-        if (enabled)
-        {
-            NDBG("Start Receive Led Stream on UDP " + String(LEDSTREAM_RECEIVE_PORT));
-
-            if (useArtnet)
-            {
-                udp.flush();
-                udp.stop();
-                artnet.begin();
-            }
-            else
-            {
-                // artnet.stop();
-                udp.begin(8888);
-                udp.flush();
-            }
-        }
+        artnet.stop();
+        serverIsInit = false;
     }
 }
 
@@ -194,14 +107,23 @@ void LedStreamReceiverComponent::unregisterLayer(LedStripStreamLayer *layer)
 void LedStreamReceiverComponent::onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uint8_t *data)
 {
     // DBG("Received Artnet "+String(universe));
+
     for (auto &layer : instance->layers)
     {
-        if (universe != layer->universe)
+        int numUniverses = std::ceil(layer->strip->count * 1.0f / 170); // 170 leds per universe
+        if (universe < layer->universe || universe > layer->universe + numUniverses - 1)
             continue;
-        // DBG("Received Artnet " + String(universe) + " " + String(length) + " " + String(sequence) + " " + String(stripIndex) + " " + String(layer->strip->count));
-        for (int i = 0; i < layer->strip->count && i < length; i++)
-            layer->colors[i] = Color(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
 
+        // DBG("Received Artnet " + String(universe) + " " + String(length) + " " + String(sequence) + " " + String(stripIndex) + " " + String(layer->strip->count));
+
+        int start = (universe - layer->universe) * 170;
+
+        //DBG("Received Artnet " + String(universe) + ", start = " + String(start));
+        for (int i = 0; i < layer->strip->count && i < 170 && (i*3) < length; i++)
+        {
+            layer->colors[i+start] = Color(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
+        }
+        
         layer->lastReceiveTime = millis() / 1000.0f;
         layer->hasCleared = false;
         // memcpy((uint8_t *)layer->colors, streamBuffer + 1, byteIndex - 2);

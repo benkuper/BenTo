@@ -1,6 +1,6 @@
 bool ServoComponent::initInternal(JsonObject o)
 {
-    AddIntParam(pin);
+    AddIntParamConfig(pin);
     if (pin > 0)
         servo.attach(pin);
 

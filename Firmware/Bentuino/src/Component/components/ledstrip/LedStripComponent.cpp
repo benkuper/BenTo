@@ -1,4 +1,3 @@
-#include "LedStripComponent.h"
 ImplementManagerSingleton(LedStrip)
 
     bool LedStripComponent::initInternal(JsonObject o)
@@ -11,11 +10,11 @@ ImplementManagerSingleton(LedStrip)
         userLayers[i] = NULL;
 
     AddIntParam(count);
-    AddIntParam(dataPin);
-    AddIntParam(enPin);
-    AddIntParam(clkPin);
+    AddIntParamConfig(dataPin);
+    AddIntParamConfig(enPin);
+    AddIntParamConfig(clkPin);
     AddFloatParam(brightness);
-    AddBoolParam(invertStrip);
+    AddBoolParamConfig(invertStrip);
 
 #if USE_BAKELAYER
     AddOwnedComponent(&bakeLayer);
@@ -31,6 +30,10 @@ ImplementManagerSingleton(LedStrip)
 #endif
 #if USE_SYSTEMLAYER
     AddOwnedComponent(&systemLayer);
+#endif
+
+#if USE_FX
+    AddOwnedComponent(&fx);
 #endif
 
     setupLeds();
@@ -119,21 +122,26 @@ void LedStripComponent::clearInternal()
     setStripPower(false);
 }
 
+void LedStripComponent::setBrightness(float val)
+{
+    SetParam(brightness, val);
+}
+
 void LedStripComponent::paramValueChangedInternal(void *param)
 {
     if (param == &brightness)
     {
         if (neoPixelStrip != NULL)
-            neoPixelStrip->setBrightness(brightness * 255);
+            neoPixelStrip->setBrightness(brightness * LED_MAX_BRIGHTNESS * 255);
         else if (dotStarStrip != NULL)
-            dotStarStrip->setBrightness(brightness * 255);
+            dotStarStrip->setBrightness(brightness * LED_MAX_BRIGHTNESS * 255);
     }
     else if (param == &count)
     {
         if (neoPixelStrip != NULL)
             neoPixelStrip->updateLength(count);
         else if (dotStarStrip != NULL)
-            dotStarStrip->setBrightness(count);
+            dotStarStrip->updateLength(count);
     }
 }
 
@@ -171,8 +179,8 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
         case LedStripLayer::Add:
             colors[i] += c;
             // if (i == 0)
-                // NDBG(layer->name + " > " + colors[i].toString());
-                break;
+            // NDBG(layer->name + " > " + colors[i].toString());
+            break;
 
         case LedStripLayer::Multiply:
             colors[i] *= c;
@@ -207,6 +215,10 @@ void LedStripComponent::processLayer(LedStripLayer *layer)
             break;
         }
     }
+
+#if USE_FX
+    fx.process(colors);
+#endif
 }
 
 // Color functions

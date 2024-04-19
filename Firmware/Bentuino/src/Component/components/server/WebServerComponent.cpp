@@ -1,14 +1,20 @@
-ImplementSingleton(WebServerComponent)
+ImplementSingleton(WebServerComponent);
 
-    bool WebServerComponent::initInternal(JsonObject o)
+bool WebServerComponent::initInternal(JsonObject o)
 {
-    // server.cors(); // This is the magic
+
+    AddBoolParamConfig(sendFeedback);
 
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Origin", "*");
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Methods", "GET, POST, PUT");
     DefaultHeaders::Instance().addHeader("Access-Control-Allow-Headers", "Content-Type");
 
+#if USE_ASYNC_WEBSOCKET
     server.addHandler(&ws);
+    ws.onEvent(std::bind(&WebServerComponent::onAsyncWSEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
+#else
+    ws.onEvent(std::bind<void>(&WebServerComponent::onWSEvent, this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4));
+#endif
 
 #ifdef USE_OSC
     server.on("/", HTTP_GET, [&](AsyncWebServerRequest *request)
@@ -36,6 +42,9 @@ ImplementSingleton(WebServerComponent)
             o["NAME"] = RootComponent::instance->deviceName;
             o["OSC_PORT"] = OSC_LOCAL_PORT;
             o["OSC_TRANSPORT"] = "UDP";
+#if !USE_ASYNC_WEBSOCKET
+            o["WS_PORT"] = 81;
+#endif
 
             String jStr;
             serializeJson(doc, jStr);
@@ -43,13 +52,15 @@ ImplementSingleton(WebServerComponent)
         }
         else
         {
+            std::shared_ptr<bool> showConfig = std::make_shared<bool>(request->hasArg("config")?request->arg("config")=="1":true);
             std::shared_ptr<OSCQueryChunk> chunk = std::make_shared<OSCQueryChunk>(OSCQueryChunk(RootComponent::instance));
-            AsyncWebServerResponse *response = request->beginChunkedResponse("application/json", [chunk](uint8_t *buffer, size_t maxLen, size_t index) {
+            AsyncWebServerResponse *response = request->beginChunkedResponse("application/json", [chunk, showConfig](uint8_t *buffer, size_t maxLen, size_t index) {
  
                 if(chunk->nextComponent == nullptr) return 0;
 
-                DBG("Fill chunk "+chunk->nextComponent->name+" : "+String(chunk->nextType));
-                chunk->nextComponent->fillChunkedOSCQueryData(chunk.get());
+                // DBG("Fill chunk, config = " + String(*showConfig));
+
+                chunk->nextComponent->fillChunkedOSCQueryData(chunk.get(), *showConfig);
                 
                 
                 sprintf((char*)buffer, chunk->data.c_str());
@@ -74,25 +85,40 @@ ImplementSingleton(WebServerComponent)
         std::bind(&WebServerComponent::handleFileUpload,
                   this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 
-    server.serveStatic("/edit", SD, "/server/edit.html");
-    server.serveStatic("/upload", SD, "/server/upload.html");
-    server.serveStatic("/server/", SD, "/server");
+    if (FilesComponent::instance->useInternalMemory)
+    {
+        server.serveStatic("/edit", SPIFFS, "/server/edit.html");
+        server.serveStatic("/upload", SPIFFS, "/server/upload.html");
+        server.serveStatic("/server/", SPIFFS, "/server");
+    }
+    else
+    {
+        server.serveStatic("/edit", SD, "/server/edit.html");
+        server.serveStatic("/upload", SD, "/server/upload.html");
+        server.serveStatic("/server/", SD, "/server");
+    }
 #endif
-
-    ws.onEvent(std::bind(&WebServerComponent::onWSEvent,
-                         this, std::placeholders::_1, std::placeholders::_2, std::placeholders::_3, std::placeholders::_4, std::placeholders::_5, std::placeholders::_6));
 
     return true;
 }
 
 void WebServerComponent::updateInternal()
 {
+#if USE_ASYNC_WEBSOCKET
     // server.handleClient();
     ws.cleanupClients();
+#else
+    ws.loop();
+#endif
 }
 
 void WebServerComponent::clearInternal()
 {
+#if USE_ASYNC_WEBSOCKET
+    ws.closeAll();
+#else
+    ws.disconnect();
+#endif
 }
 
 // SERVER
@@ -110,6 +136,10 @@ void WebServerComponent::setupConnection()
         NDBG("Start HTTP Server");
         server.begin();
         NDBG("HTTP server started");
+
+#if !USE_ASYNC_WEBSOCKET
+        ws.begin();
+#endif
     }
     else
     {
@@ -127,9 +157,9 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
     if (filename.endsWith(".wasm"))
         dest = "/scripts";
     else if (filename.endsWith(".colors") || filename.endsWith(".meta"))
-        dest = "/bake";
+        dest = "/playback";
     else if (filename.endsWith(".seq"))
-        dest = "/sequences";
+        dest = "/playback";
 
     if (dest == "")
     {
@@ -172,6 +202,7 @@ void WebServerComponent::handleFileUpload(AsyncWebServerRequest *request, String
 #endif
 }
 
+#if USE_ASYNC_WEBSOCKET
 void WebServerComponent::onWSEvent(AsyncWebSocket *server, AsyncWebSocketClient *client, AwsEventType type,
                                    void *arg, uint8_t *data, size_t len)
 {
@@ -229,6 +260,69 @@ void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t
         }
     }
 }
+#else
+void WebServerComponent::onWSEvent(uint8_t id, WStype_t type, uint8_t *data, size_t len)
+{
+
+    switch (type)
+    {
+    case WStype_DISCONNECTED:
+        DBG("WebSocket client " + String(id) + "connected from " + StringHelpers::ipToString(ws.remoteIP(id)));
+        break;
+    case WStype_CONNECTED:
+        DBG("WebSocket client " + String(id) + "connected from " + StringHelpers::ipToString(ws.remoteIP(id)));
+        // webSocket.sendTXT(id, "Connected");
+        break;
+
+    case WStype_TEXT:
+        DBG("Text received from " + String(id) + " > " + String((char *)data));
+
+        // send message to client
+        // webSocket.sendTXT(num, "message here");
+
+        // send data to all connected clients
+        // webSocket.broadcastTXT("message here");
+        break;
+
+    case WStype_BIN:
+    {
+
+        DBG("Got binary");
+#ifdef USE_OSC
+        OSCMessage msg;
+        msg.fill(data, len);
+        if (!msg.hasError())
+        {
+            // DBG("Got websocket OSC message");
+
+            char addr[64];
+            msg.getAddress(addr);
+            tmpExcludeParam = String(addr);
+
+            OSCComponent::instance->processMessage(msg);
+
+            tmpExcludeParam = "";
+        }
+    }
+#endif
+    // send message to client
+    // webSocket.sendBIN(num, payload, length);
+    break;
+
+    case WStype_ERROR:
+    case WStype_FRAGMENT_TEXT_START:
+    case WStype_FRAGMENT_BIN_START:
+    case WStype_FRAGMENT:
+    case WStype_FRAGMENT_FIN:
+    case WStype_PING:
+    case WStype_PONG:
+        break;
+
+    default:
+        break;
+    }
+}
+#endif
 
 // void WebServerComponent::sendParameterFeedback(Component *c, Parameter *param)
 // {
@@ -250,7 +344,7 @@ void WebServerComponent::handleWebSocketMessage(void *arg, uint8_t *data, size_t
 void WebServerComponent::sendParamFeedback(Component *c, String pName, var *data, int numData)
 {
 #ifdef USE_OSC
-    
+
     OSCMessage msg = OSCComponent::createMessage(c->getFullPath(), pName, data, numData, false);
 
     char addr[64];
@@ -260,6 +354,13 @@ void WebServerComponent::sendParamFeedback(Component *c, String pName, var *data
 
     wsPrint.flush();
     msg.send(wsPrint);
+
+#if USE_ASYNC_WEBSOCKET
+    if (!ws.availableForWriteAll())
+        return;
     ws.binaryAll(wsPrint.data, wsPrint.index);
+#else
+    ws.broadcastBIN(wsPrint.data, wsPrint.index);
+#endif
 #endif
 }

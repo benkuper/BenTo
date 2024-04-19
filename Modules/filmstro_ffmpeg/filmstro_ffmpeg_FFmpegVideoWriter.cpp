@@ -39,7 +39,7 @@
 
 
 
-#pragma warning(disable:4100 4244 4458 4996 4189)
+#pragma warning(disable:4100 4244 4458 4996 4189 4018)
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #if FILMSTRO_USE_FFMPEG

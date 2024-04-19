@@ -15,7 +15,7 @@ LightBlockModel::LightBlockModel(const String &name, var params, ProviderType pr
 	modelNotifier(5)
 {
 	setHasCustomColor(true);
-	itemColor->hideInEditor = false;
+	//itemColor->hideInEditor = true;
 
 	itemDataType = "LightBlockModel";
 	paramsContainer.reset(new ControllableContainer("Parameters"));
@@ -56,11 +56,11 @@ Array<WeakReference<Controllable>> LightBlockModel::getModelParameters()
 Array<Colour> LightBlockModel::getColors(Prop * p, double time, var params)
 {
 	Array<Colour> result;
-	result.resize(p->resolution->intValue());
+	result.resize(p->getResolution());
 	result.fill(Colours::transparentBlack);
 
 	int id = params.getProperty("forceID", p->globalID->intValue());
-	getColorsInternal(&result, p, time, id, p->resolution->intValue(), params);
+	getColorsInternal(&result, p, time, id, p->getResolution(), params);
 
 	return result;
 }

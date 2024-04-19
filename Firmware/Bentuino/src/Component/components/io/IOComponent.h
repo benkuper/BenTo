@@ -49,7 +49,7 @@ CheckAndSetParam(inverted);
 HandleSetParamInternalEnd;
 
 CheckFeedbackParamInternalStart
-CheckAndSendParamFeedback(value);
+    CheckAndSendParamFeedback(value);
 CheckFeedbackParamInternalEnd;
 
 FillSettingsInternalStart
@@ -69,5 +69,15 @@ FillOSCQueryInternalEnd
 
 // Manager
 
-DeclareComponentManager(IO, IO, gpio, gpio)
-    EndDeclareComponent
+DeclareComponentManager(IO, IO, gpio, gpio) 
+
+void addItemInternal(int index)
+{
+    if (index == 0)
+    {
+        items[index]->pin = IO_DEFAULT_PIN;
+        items[index]->mode = IO_DEFAULT_MODE;
+    }
+};
+
+EndDeclareComponent

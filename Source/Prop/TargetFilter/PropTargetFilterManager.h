@@ -25,8 +25,10 @@ public:
 
 	int getTargetIDForProp(Prop *);
 
-	void addItemInternal(PropTargetFilter *, var data) override;
-	void removeItemInternal(PropTargetFilter *) override;
+	void addItemInternal(PropTargetFilter*, var data) override;
+	void addItemsInternal(Array<PropTargetFilter *>, var data) override;
+	void removeItemInternal(PropTargetFilter*) override;
+	void removeItemsInternal(Array<PropTargetFilter *>) override;
 
 	void onControllableFeedbackUpdate(ControllableContainer * cc, Controllable *c) override;
 

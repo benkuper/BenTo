@@ -10,6 +10,9 @@
 
 #pragma once
 
+class Prop;
+class ParamLinkContainer;
+
 class LightBlock :
 	public ControllableContainer,
 	public BaseColorProvider,
@@ -20,7 +23,7 @@ public:
 	virtual ~LightBlock();
 
 	WeakReference<LightBlockColorProvider> provider;
-	ControllableContainer paramsContainer;
+	std::unique_ptr<ParamLinkContainer> paramsContainer;
 	SpinLock paramsLock;
 
 	var paramsLoadData;
@@ -29,7 +32,7 @@ public:
 	void filterColors(Array<Colour>* result, Prop* p, double time, var params);
 	var getLocalParams(Prop* p, double time, var params);
 
-	BakeData getBakeDataForProp(Prop* prop) override;
+	PlaybackData getPlaybackDataForProp(Prop* prop) override;
 
 	void rebuildArgsFromModel();
 

@@ -8,7 +8,9 @@
   ==============================================================================
 */
 
-Node::Node(const String & name, var) :
+#include "NodeIncludes.h"
+
+Node::Node(const String& name, var) :
 	BaseItem(name),
 	nodeNotifier(10)
 {
@@ -20,14 +22,14 @@ Node::~Node()
 	masterReference.clear();
 }
 
-ParameterSlot * Node::addParameterSlot(bool isInput, Parameter * p)
+ParameterSlot* Node::addParameterSlot(bool isInput, Parameter* p)
 {
 	if (p->type != Parameter::FLOAT && p->type != Parameter::INT && p->type != Parameter::COLOR)
 	{
 		DBG("Other types are not supported !");
 	}
 
-	ParameterSlot * s = static_cast<ParameterSlot *>(getSlotWithName(isInput, p->niceName));
+	ParameterSlot* s = static_cast<ParameterSlot*>(getSlotWithName(isInput, p->niceName));
 	if (s == nullptr)
 	{
 		s = new ParameterSlot(this, isInput, p);
@@ -41,9 +43,9 @@ ParameterSlot * Node::addParameterSlot(bool isInput, Parameter * p)
 	return s;
 }
 
-ColorSlot * Node::addColorSlot(bool isInput, const String & name)
+ColorSlot* Node::addColorSlot(bool isInput, const String& name)
 {
-	ColorSlot * s = static_cast<ColorSlot *>(getSlotWithName(isInput, name));
+	ColorSlot* s = static_cast<ColorSlot*>(getSlotWithName(isInput, name));
 	if (s == nullptr)
 	{
 		s = new ColorSlot(this, isInput, name);
@@ -56,13 +58,13 @@ ColorSlot * Node::addColorSlot(bool isInput, const String & name)
 	return s;
 }
 
-void Node::removeSlot(bool isInput, const String & name)
+void Node::removeSlot(bool isInput, const String& name)
 {
-	NodeConnectionSlot * s = getSlotWithName(isInput, name);
+	NodeConnectionSlot* s = getSlotWithName(isInput, name);
 	removeSlot(isInput, s);
 }
 
-void Node::removeSlot(bool isInput, NodeConnectionSlot * s)
+void Node::removeSlot(bool isInput, NodeConnectionSlot* s)
 {
 	if (s != nullptr)
 	{
@@ -80,14 +82,14 @@ void Node::removeSlot(bool isInput, NodeConnectionSlot * s)
 	}
 }
 
-NodeConnectionSlot * Node::getSlotWithName(bool isInput, const String & name)
+NodeConnectionSlot* Node::getSlotWithName(bool isInput, const String& name)
 {
 	if (isInput) {
-		for (auto & s : inSlots) if (s->name == name) return s;
+		for (auto& s : inSlots) if (s->name == name) return s;
 	}
 	else
 	{
-		for (auto & s : outSlots) if (s->name == name) return s;
+		for (auto& s : outSlots) if (s->name == name) return s;
 	}
 
 	return nullptr;
@@ -98,34 +100,34 @@ Array<NodeConnectionSlot*> Node::getSlotsWithType(bool isInput, ConnectionType t
 	Array<NodeConnectionSlot*> result;
 	if (isInput)
 	{
-		for (auto & s : inSlots) if (s->type == type) result.add(s);
+		for (auto& s : inSlots) if (s->type == type) result.add(s);
 	}
 	else
 	{
-		for (auto & s : outSlots) if (s->type == type) result.add(s);
+		for (auto& s : outSlots) if (s->type == type) result.add(s);
 	}
 
 	return result;
 }
 
-ParameterSlot * Node::getParameterSlot(Parameter * p, bool isInput)
+ParameterSlot* Node::getParameterSlot(Parameter* p, bool isInput)
 {
 	if (isInput)
 	{
-		for (auto & s : inSlots)
+		for (auto& s : inSlots)
 		{
 			if (s->type == ConnectionType::ColorBlock) continue;
-			ParameterSlot * ps = dynamic_cast<ParameterSlot *>(s);
+			ParameterSlot* ps = dynamic_cast<ParameterSlot*>(s);
 			if (ps == nullptr) continue;
 			if (ps->parameter == p) return ps;
 		}
 	}
 	else
 	{
-		for (auto & s : outSlots)
+		for (auto& s : outSlots)
 		{
 			if (s->type == ConnectionType::ColorBlock) continue;
-			ParameterSlot * ps = dynamic_cast<ParameterSlot *>(s);
+			ParameterSlot* ps = dynamic_cast<ParameterSlot*>(s);
 			if (ps == nullptr) continue;
 			if (ps->parameter == p) return ps;
 		}
@@ -134,49 +136,50 @@ ParameterSlot * Node::getParameterSlot(Parameter * p, bool isInput)
 	return nullptr;
 }
 
-var Node::getParameterValue(Parameter * p, var params)
+var Node::getParameterValue(Parameter* p, var params, var localParams)
 {
-	NodeConnectionSlot * slot = getParameterSlot(p, true);
+
+	NodeConnectionSlot* slot = getParameterSlot(p, true);
 	if (slot == nullptr || !slot->isConnected()) return p->getValue();
 
-	Node * n = slot->connections[0]->sourceSlot->node;
+	Node* n = slot->connections[0]->sourceSlot->node;
 	if (n == nullptr) return p->getValue();
 
-	return params.getProperty(n->shortName, p->getValue());
+	return params.getProperty(n->shortName, localParams.getProperty(n->shortName, p->getValue()));
 }
 
 var Node::getLocalParams(var params)
 {
 	var result = new DynamicObject();
 	if (params.isVoid()) return result;
-	
+
 	inSlots.getLock().enter();
-	for (auto &s : inSlots)
+	for (auto& s : inSlots)
 	{
 		if (s->type == ConnectionType::ColorBlock) continue;
 
 		if (s->isConnected())
 		{
 			if (s->connections[0]->sourceSlot == nullptr) continue;
-			ParameterNode * pn = dynamic_cast<ParameterNode *>(s->connections[0]->sourceSlot->node);
+			ParameterNode* pn = dynamic_cast<ParameterNode*>(s->connections[0]->sourceSlot->node);
 			if (pn == nullptr) continue;
 
 			NamedValueSet set = params.getDynamicObject()->getProperties();
-			
+
 			if (params.hasProperty(pn->shortName))
 			{
 				var value = params.getProperty(pn->shortName, pn->parameter->getValue());
 				result.getDynamicObject()->setProperty(s->id, value);
 			}
 		}
-		
+
 	}
 	inSlots.getLock().exit();
 
 	return result;
 }
 
-NodeViewUI * Node::createUI()
+NodeViewUI* Node::createUI()
 {
 	return new NodeViewUI(this);
 }

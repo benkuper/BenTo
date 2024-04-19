@@ -19,7 +19,7 @@
 #include "Common/color.h"
 #include "Common/EventBroadcaster.h"
 #include "Common/Settings.h"
-#include "Common/ParsingHelper.h"
+#include "Common/StringHelpers.h"
 
 #ifdef USE_SCRIPT //needs pre declaration to be used by Component
 #include <wasm3.h>
@@ -59,6 +59,9 @@
 // #define CONFIG_ASYNC_TCP_USE_WDT 0
 #include <AsyncTCP.h>
 #include <ESPAsyncWebServer.h>
+#if !USE_ASYNC_WEBSOCKET
+#include <WebSocketsServer.h>
+#endif
 #include "Component/components/server/WebServerComponent.h"
 #endif
 
@@ -77,13 +80,13 @@
 #include "Component/components/battery/BatteryComponent.h"
 #endif
 
-#ifdef USE_IMU
+#ifdef USE_MOTION
 #include <utility/vector.h>
 #include <utility/matrix.h>
 #include <utility/quaternion.h>
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
-#include "Component/components/imu/IMUComponent.h"
+#include "Component/components/motion/MotionComponent.h"
 #endif
 
 #ifdef USE_LEDSTRIP
@@ -92,7 +95,7 @@
 
 
 #include "Component/components/ledstrip/Layer/LedStripLayer.h"
-#include "Component/components/ledstrip/Layer/layers/bake/LedStripBakeLayer.h"
+#include "Component/components/ledstrip/Layer/layers/playback/LedStripPlaybackLayer.h"
 #include "Component/components/ledstrip/Layer/layers/system/LedStripSystemLayer.h"
 
 #ifdef USE_STREAMING
@@ -100,9 +103,8 @@
 #include "Component/components/ledstrip/Layer/layers/stream/LedStripStreamLayer.h"
 #endif
 
-// #if USE_SCRIPT
-// #include "Component/components/ledstrip/Layer/layers/script/LedStripScriptLayer.h"
-// #endif
+#include "Component/components/ledstrip/FXComponent.h"
+
 
 #include "Component/components/ledstrip/LedStripComponent.h"
 #endif //LEDSTRIP

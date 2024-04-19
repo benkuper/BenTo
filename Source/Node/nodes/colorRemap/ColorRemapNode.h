@@ -25,6 +25,7 @@ public:
 
 	Array<Colour> getColorsInternal(Prop* p, double time, var params, var localParams) override;
 
-	String getTypeString() const override { return "Color Remap"; }
+
+	DECLARE_TYPE("Color Remap");
 	static ColorRemapNode* create(var params) { return new ColorRemapNode(params); }
 };

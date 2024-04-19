@@ -122,7 +122,7 @@ Array<Colour> Spatializer::getColors(Image tex, Prop* p, SpatLayout* forceLayout
 
 	//computeSpat(tex, forceLayout); //to optimize
 
-	int resolution = p->resolution->intValue();
+	int resolution = p->getResolution();
 	Array<Colour> result;
 	result.resize(resolution);
 	result.fill(Colours::black);

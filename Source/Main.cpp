@@ -11,7 +11,7 @@
 #include "JuceHeader.h"
 #include "BentoEngine.h"
 #include "MainComponent.h"
-#include "BlockViz/BlockVizPanel.h"
+#include "Common/CommonIncludes.h"
 
 //==============================================================================
 class BenToApplication  :

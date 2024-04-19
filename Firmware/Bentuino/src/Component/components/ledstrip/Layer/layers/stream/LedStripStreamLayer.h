@@ -3,7 +3,6 @@
 #define LEDSTREAM_MAX_LEDS 1000
 #define LEDSTREAM_MAX_PACKET_SIZE LEDSTREAM_MAX_LEDS * 4 + 1
 
-#define LEDSTREAM_RECEIVE_PORT 8888
 #define LEDSTREAM_ARTNET_PORT 5678
 
 class LedStripStreamLayer : public LedStripLayer
@@ -13,7 +12,7 @@ public:
     ~LedStripStreamLayer() {}
 
     DeclareIntParam(universe, 0);
-    DeclareBoolParam(clearOnNoReception, false);
+    DeclareBoolParam(clearOnNoReception, true);
     DeclareFloatParam(noReceptionTime, 1.0f);
 
     bool hasCleared = false;
@@ -49,12 +48,10 @@ public:
 
 DeclareComponentSingleton(LedStreamReceiver, "streamReceiver", )
 
-    WiFiUDP udp;
 bool serverIsInit;
-float lastUDPReceiveTime = 0;
+float lastReceiveTime = 0;
 
-DeclareIntParam(receiveRate, 50);
-DeclareBoolParam(useArtnet, true);
+DeclareIntParam(receiveRate, 60);
 
 ArtnetWifi artnet;
 
@@ -67,8 +64,6 @@ void onEnabledChanged() override;
 
 void setupConnection();
 
-void paramValueChangedInternal(void *param) override;
-
 uint8_t streamBuffer[LEDSTREAM_MAX_PACKET_SIZE];
 int byteIndex;
 
@@ -80,17 +75,14 @@ static void onDmxFrame(uint16_t universe, uint16_t length, uint8_t sequence, uin
 
 HandleSetParamInternalStart
     CheckAndSetParam(receiveRate);
-CheckAndSetParam(useArtnet);
 HandleSetParamInternalEnd;
 
 FillSettingsInternalStart
     FillSettingsParam(receiveRate);
-FillSettingsParam(useArtnet);
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
     FillOSCQueryIntParam(receiveRate);
-FillOSCQueryBoolParam(useArtnet);
 FillOSCQueryInternalEnd
 
     EndDeclareComponent

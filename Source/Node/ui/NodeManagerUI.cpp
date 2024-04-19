@@ -8,26 +8,30 @@
   ==============================================================================
 */
 
-NodeManagerUI::NodeManagerUI(NodeManager * manager) :
+NodeManagerUI::NodeManagerUI(NodeManager* manager) :
 	BaseManagerViewUI("Nodes", manager),
 	startConnector(nullptr),
 	dropConnector(nullptr)
 {
 	animateItemOnAdd = false;
 	canZoom = true;
+	updatePositionOnDragMove = true;
 
 	removeMouseListener(this);
 	addMouseListener(this, true);
 
-	acceptedDropTypes.add("NodeTool");
 	acceptedDropTypes.add("LightBlockModel");
-	acceptedDropTypes.add("Script");
-	acceptedDropTypes.add("Node");
-	acceptedDropTypes.add("Timeline");
-	acceptedDropTypes.add("Picture");
-	
+	acceptedDropTypes.add("NodeTool");
+	acceptedDropTypes.add(SequenceBlock::getTypeStringStatic());
+	acceptedDropTypes.add(StreamingScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(EmbeddedScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(PictureBlock::getTypeStringStatic());
+	acceptedDropTypes.add(NodeBlock::getTypeStringStatic());
+	acceptedDropTypes.add(VideoFileBlock::getTypeStringStatic());
+	acceptedDropTypes.add(SharedTextureBlock::getTypeStringStatic());
+
 	addExistingItems(false);
-	
+
 	connectionsUI.reset(new NodeConnectionManagerUI(&manager->connectionManager, this));
 	addAndMakeVisible(connectionsUI.get());
 	connectionsUI->toBack();
@@ -43,7 +47,7 @@ NodeManagerUI::~NodeManagerUI()
 {
 }
 
-void NodeManagerUI::paintOverChildren(Graphics & g)
+void NodeManagerUI::paintOverChildren(Graphics& g)
 {
 	BaseManagerUI::paintOverChildren(g);
 	if (startConnector != nullptr) drawConnectionCreation(g);
@@ -57,7 +61,7 @@ void NodeManagerUI::paintOverChildren(Graphics & g)
 	}*/
 }
 
-void NodeManagerUI::drawConnectionCreation(Graphics &g)
+void NodeManagerUI::drawConnectionCreation(Graphics& g)
 {
 	Point<float> sp = getLocalPoint(startConnector, startConnector->getLocalBounds().getCentre().toFloat());
 	Point<float> dp = dropConnector == nullptr ? getMouseXYRelative().toFloat() : getLocalPoint(dropConnector, dropConnector->getLocalBounds().getCentre().toFloat());
@@ -79,14 +83,14 @@ void NodeManagerUI::resized()
 }
 
 
-NodeViewUI::Connector * NodeManagerUI::getDropCandidate()
+NodeViewUI::Connector* NodeManagerUI::getDropCandidate()
 {
-	for (auto & nui : itemsUI)
+	for (auto& nui : itemsUI)
 	{
 		if (nui->item == startConnector->slot->node) continue;
-		
-		OwnedArray<NodeViewUI::Connector> * arr = startConnector->slot->isInput ? &nui->outConnectors : &nui->inConnectors;
-		for (auto &con : *arr)
+
+		OwnedArray<NodeViewUI::Connector>* arr = startConnector->slot->isInput ? &nui->outConnectors : &nui->inConnectors;
+		for (auto& con : *arr)
 		{
 			if (con->slot->type != startConnector->slot->type) continue;
 			if (con->getMouseXYRelative().getDistanceFromOrigin() < dropDistance) return con;
@@ -97,16 +101,16 @@ NodeViewUI::Connector * NodeManagerUI::getDropCandidate()
 
 }
 
-NodeViewUI::Connector * NodeManagerUI::getConnectorForSlot(NodeConnectionSlot * s)
+NodeViewUI::Connector* NodeManagerUI::getConnectorForSlot(NodeConnectionSlot* s)
 {
 	if (s == nullptr) return nullptr;
 
-	NodeViewUI * nui = getUIForItem(s->node);
-	
+	NodeViewUI* nui = getUIForItem(s->node);
+
 	if (nui == nullptr) return nullptr;
 
-	OwnedArray<NodeViewUI::Connector> * arr = s->isInput ? &nui->inConnectors : &nui->outConnectors;
-	for (auto &con : *arr)
+	OwnedArray<NodeViewUI::Connector>* arr = s->isInput ? &nui->inConnectors : &nui->outConnectors;
+	for (auto& con : *arr)
 	{
 		if (con->slot == s) return con;
 	}
@@ -114,19 +118,19 @@ NodeViewUI::Connector * NodeManagerUI::getConnectorForSlot(NodeConnectionSlot * 
 	return nullptr;
 }
 
-NodeViewUI * NodeManagerUI::createUIForItem(Node * item)
+NodeViewUI* NodeManagerUI::createUIForItem(Node* item)
 {
-	NodeViewUI * nui = item->createUI();
-	ColorNodeViewUI * cnui = dynamic_cast<ColorNodeViewUI *>(nui);
+	NodeViewUI* nui = item->createUI();
+	ColorNodeViewUI* cnui = dynamic_cast<ColorNodeViewUI*>(nui);
 	if (cnui != nullptr) cnui->propToPreview = manager->prop.get();
 	return nui;
 }
 
-void NodeManagerUI::mouseDown(const MouseEvent & e)
+void NodeManagerUI::mouseDown(const MouseEvent& e)
 {
 	BaseManagerViewUI::mouseDown(e);
 
-	NodeViewUI::Connector * c = dynamic_cast<NodeViewUI::Connector *>(e.originalComponent);
+	NodeViewUI::Connector* c = dynamic_cast<NodeViewUI::Connector*>(e.originalComponent);
 	if (c != nullptr)
 	{
 		startConnector = c;
@@ -134,10 +138,10 @@ void NodeManagerUI::mouseDown(const MouseEvent & e)
 	}
 }
 
-void NodeManagerUI::mouseDrag(const MouseEvent & e)
+void NodeManagerUI::mouseDrag(const MouseEvent& e)
 {
 	BaseManagerViewUI::mouseDrag(e);
-	
+
 	//Check for drop candidates
 	if (startConnector != nullptr)
 	{
@@ -146,14 +150,14 @@ void NodeManagerUI::mouseDrag(const MouseEvent & e)
 	}
 }
 
-void NodeManagerUI::mouseUp(const MouseEvent & e)
+void NodeManagerUI::mouseUp(const MouseEvent& e)
 {
 	BaseManagerViewUI::mouseUp(e);
 
 	if (startConnector != nullptr && dropConnector != nullptr)
 	{
-		NodeConnectionSlot * source = startConnector->slot->isInput ? dropConnector->slot : startConnector->slot;
-		NodeConnectionSlot * dest = startConnector->slot->isInput ? startConnector->slot : dropConnector->slot;
+		NodeConnectionSlot* source = startConnector->slot->isInput ? dropConnector->slot : startConnector->slot;
+		NodeConnectionSlot* dest = startConnector->slot->isInput ? startConnector->slot : dropConnector->slot;
 		manager->connectionManager.addConnection(source, dest);
 	}
 
@@ -164,7 +168,7 @@ void NodeManagerUI::mouseUp(const MouseEvent & e)
 	setRepaintsOnMouseActivity(false);
 }
 
-void NodeManagerUI::mouseEnter(const MouseEvent & e)
+void NodeManagerUI::mouseEnter(const MouseEvent& e)
 {
 	BaseManagerViewUI::mouseEnter(e);
 	/*NodeViewUI::Connector * c = dynamic_cast<NodeViewUI::Connector *>(e.originalComponent);
@@ -175,39 +179,42 @@ void NodeManagerUI::mouseEnter(const MouseEvent & e)
 }
 
 
-void NodeManagerUI::itemDragEnter(const SourceDetails & source)
+void NodeManagerUI::itemDragEnter(const SourceDetails& source)
 {
+	BaseManagerViewUI::itemDragEnter(source);
 	dragPosition = getViewMousePosition().toFloat();
 	dragType = source.description.getProperty("dataType", "");
 	repaint();
 }
 
-void NodeManagerUI::itemDragExit(const SourceDetails & source)
+void NodeManagerUI::itemDragExit(const SourceDetails& source)
 {
+	BaseManagerViewUI::itemDragExit(source);
 	dragPosition = Point<float>();
 	repaint();
 }
 
-void NodeManagerUI::itemDragMove(const SourceDetails & source)
+void NodeManagerUI::itemDragMove(const SourceDetails& source)
 {
+	BaseManagerViewUI::itemDragMove(source);
 	dragPosition = getViewMousePosition().toFloat();
 	repaint();
 }
 
-void NodeManagerUI::itemDropped(const SourceDetails & source)
+void NodeManagerUI::itemDropped(const SourceDetails& source)
 {
-	BaseManagerViewUI::itemDropped(source); 
-	
+	BaseManagerViewUI::itemDropped(source);
+
 	dragType = source.description.getProperty("dataType", "");
-	
+
 	if (LightBlockModelUI* modelUI = dynamic_cast<LightBlockModelUI*>(source.sourceComponent.get()))
 	{
-		if (modelUI == nullptr ) return;
+		if (modelUI == nullptr) return;
 
-		NodeBlock * nb = dynamic_cast<NodeBlock *>(modelUI->item);
+		NodeBlock* nb = dynamic_cast<NodeBlock*>(modelUI->item);
 		if (nb != nullptr && manager == &nb->manager) return;
 
-		ModelNode * node = (ModelNode *)manager->addItem(NodeFactory::getInstance()->create("Model"));
+		ModelNode* node = (ModelNode*)manager->addItem(NodeFactory::getInstance()->create("Model"));
 		if (node == nullptr) return;
 
 		node->viewUIPosition->setPoint(getViewMousePosition().toFloat() - node->viewUISize->getPoint() / 2);
@@ -220,7 +227,7 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 			m.addItem(-1, "Default");
 			m.addSeparator();
 			int index = 1;
-			for (auto &p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
+			for (auto& p : modelUI->item->presetManager.items) m.addItem(index++, p->niceName);
 			m.showMenuAsync(PopupMenu::Options(), [this, modelUI](int result)
 				{
 					if (result >= 1)
@@ -237,9 +244,10 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 
 		}
 
-	}else if (dragType == "NodeTool")
+	}
+	else if (dragType == "NodeTool")
 	{
-		Node * node = manager->addItem(NodeFactory::getInstance()->create(source.description.getProperty("nodeType", "")));
+		Node* node = manager->addItem(NodeFactory::getInstance()->create(source.description.getProperty("nodeType", "")));
 		if (node == nullptr)
 		{
 			dragPosition = Point<float>();
@@ -248,12 +256,12 @@ void NodeManagerUI::itemDropped(const SourceDetails & source)
 
 		node->viewUIPosition->setPoint(dragPosition);
 	}
-	
+
 	dragPosition = Point<float>();
 }
 
 
 void NodeManagerUI::timerCallback()
 {
-	for (auto &nui : itemsUI) nui->repaint();
+	for (auto& nui : itemsUI) nui->repaint();
 }

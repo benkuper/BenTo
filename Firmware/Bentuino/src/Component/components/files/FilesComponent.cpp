@@ -4,13 +4,13 @@ bool FilesComponent::initInternal(JsonObject o)
 {
     useInternalMemory = false;
 
-    AddIntParam(sdEnPin);
-    AddBoolParam(sdEnVal);
-    AddIntParam(sdSCK);
-    AddIntParam(sdMiso);
-    AddIntParam(sdMosi);
-    AddIntParam(sdCS);
-    AddIntParam(sdSpeed);
+    AddIntParamConfig(sdEnPin);
+    AddBoolParamConfig(sdEnVal);
+    AddIntParamConfig(sdSCK);
+    AddIntParamConfig(sdMiso);
+    AddIntParamConfig(sdMosi);
+    AddIntParamConfig(sdCS);
+    AddIntParamConfig(sdSpeed);
 
     if (sdEnPin > 0)
     {
@@ -49,8 +49,7 @@ bool FilesComponent::initInternal(JsonObject o)
 
         //    NDBG("SD Card initialized.");
         SD.mkdir("/scripts");
-        SD.mkdir("/sequences");
-        SD.mkdir("/bake");
+        SD.mkdir("/playback");
         SD.mkdir("/server");
         //    listDir("/", 1);
     }
@@ -71,7 +70,7 @@ bool FilesComponent::initInternalMemory()
         NDBG("Error initializing SPIFFS");
         return false;
     }
-    // NDBG("SPIFFS initialized.");
+    NDBG("Internal Memory SPIFFS initialized.");
     return true;
 }
 
@@ -174,20 +173,28 @@ bool FilesComponent::handleCommandInternal(const String &command, var *data, int
         if (numData > 0)
         {
             NDBG("Deleting folder " + data[0].stringValue());
-#ifdef FILES_USE_INTERNAL_MEMORY
-            SPIFFS.rmdir(data[0].stringValue());
-#else
-            SD.rmdir(data[0].stringValue());
-#endif
+            if (useInternalMemory)
+            {
+                SPIFFS.rmdir(data[0].stringValue());
+            }
+            else
+            {
+                SD.rmdir(data[0].stringValue());
+            }
         }
         else
         {
             NDBG("Deleting all files");
-#ifdef FILES_USE_INTERNAL_MEMORY
-            SPIFFS.rmdir("/");
-#else
-            SD.rmdir("/");
-#endif
+            if (useInternalMemory)
+            {
+                SPIFFS.rmdir("/");
+            }
+            else
+            {
+                bool success = SD.rmdir("/");
+                if (!success)
+                    NDBG("Error deleting all files");
+            }
         }
 
         return true;

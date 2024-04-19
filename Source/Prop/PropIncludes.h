@@ -10,11 +10,13 @@
 
 #pragma once
 
-//#include "JuceHeader.h"
+#include "JuceHeader.h"
+
 #include "LightBlock/LightBlockIncludes.h"
 
 #include "Component/PropComponent.h"
 #include "Prop.h"
+#include "props/bento/BentoComponentContainer.h"
 #include "props/bento/BentoProp.h"
 
 #include "Cluster/PropCluster.h"
@@ -22,14 +24,14 @@
 #include "Cluster/PropClusterGroupManager.h"
 #include "Cluster/ui/PropClusterGroupManagerUI.h"
 
-#include "Component/battery/BatteryComponent.h"
-#include "Component/buttons/ButtonsComponent.h"
-#include "Component/files/FilesComponent.h"
-#include "Component/imu/IMUComponent.h"
-#include "Component/ir/IRPropComponent.h"
-#include "Component/rgb/RGBComponent.h"
-#include "Component/touch/TouchComponent.h"
-#include "Component/fx/FXComponent.h"
+//#include "Component/battery/BatteryComponent.h"
+//#include "Component/buttons/ButtonsComponent.h"
+//#include "Component/files/FilesComponent.h"
+//#include "Component/imu/IMUComponent.h"
+//#include "Component/ir/IRPropComponent.h"
+//#include "Component/rgb/RGBComponent.h"
+//#include "Component/touch/TouchComponent.h"
+//#include "Component/fx/FXComponent.h"
 
 #include "PropFamily.h"
 #include "PropManager.h"

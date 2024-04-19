@@ -32,13 +32,16 @@
                 "type": 0,
                 "width": 1062,
                 "height": 638,
-                "currentContent": "Sequence Editor",
+                "currentContent": "Firmware Uploader",
                 "tabs": [
                   {
-                    "name": "Node Editor"
+                    "name": "Firmware Uploader"
                   },
                   {
                     "name": "Sequence Editor"
+                  },
+                  {
+                    "name": "Node Editor"
                   }
                 ]
               },

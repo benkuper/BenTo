@@ -10,30 +10,30 @@
 
 #include "BentoEngine.h"
 #include "Prop/PropIncludes.h"
-#include "Timeline/TimelineIncludes.h"
+#include "Sequence/SequenceIncludes.h"
 
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
 	Thread("Prop"),
-	family(nullptr),
-	generalCC("General"),
+	generalCC("Main Parameters"),
+	resolutionRef(nullptr),
+	invertLedsInUI(true),
+	battery(nullptr),
+	batteryRef(nullptr),
+	motionRef(nullptr),
 	connectionCC("Connection"),
 	controlsCC("Controls"),
-	rgbComponent(nullptr),
-	bakingCC("Bake and Upload"),
-	pingEnabled(true),
-	receivedPongSinceLastPingSent(false),
-	providerToBake(nullptr),
+	playbackCC("Playback"),
+	useAlphaInPlaybackData(false),
+	playbackProvider(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
-	updateRate(50),
+	updateRate(10),
 	propNotifier(50)
 {
-	registerFamily(params.getProperty("family", "Mistery Family").toString());
+	//registerFamily(params.getProperty("family", "Mistery Family").toString());
 
-	firmwareFile = File(params.getProperty("firmware", ""));
-
-	customType = params.getProperty("type", "");
+	hideInEditor = true;
 
 	logIncoming = addBoolParameter("Log Incoming", "Log all incoming messages from the prop", false);
 	logOutgoing = addBoolParameter("Log Outgoing", "Log all outgoing messages to the prop", false);
@@ -44,15 +44,14 @@ Prop::Prop(var params) :
 	editorIsCollapsed = true;
 	saveAndLoadRecursiveData = true;
 
-	addChildControllableContainer(&generalCC);
 	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
+	shape = generalCC.addEnumParameter("Type", "The type of the prop");
+	fillTypeOptions(shape);
+	shape->setValueWithKey(params.getProperty("shape", shape->getValueKey()));
+	resolution = generalCC.addIntParameter("Resolution", "The resolution of the prop", 50, 1, 500);
+	addChildControllableContainer(&generalCC);
 
-	resolution = generalCC.addIntParameter("Resolution", "Number of controllable colors in the prop", params.getProperty("resolution", 1), 1);
-	type = generalCC.addEnumParameter("Type", "The type of the prop");
-	fillTypeOptions(type);
-	type->setValueWithKey(params.getProperty("shape", type->getValueKey()));
-
-	colors.resize(resolution->intValue());
+	colors.resize(getResolution());
 
 	isConnected = connectionCC.addBoolParameter("Is Connected", "This is checked if the prop is connected.", false);
 	isConnected->setControllableFeedbackOnly(true);
@@ -66,53 +65,46 @@ Prop::Prop(var params) :
 
 	powerOffTrigger = controlsCC.addTrigger("Power Off", "Power Off the prop");
 	restartTrigger = controlsCC.addTrigger("Restart", "Restart the prop");
-	uploadFirmwareTrigger = controlsCC.addTrigger("Upload Firmware", "Upload firmware. The props needs to be connected with usb");
-	isFlashing = controlsCC.addBoolParameter("Is Flashing", "Is currently flashing a firmware", false);
-	isFlashing->hideInEditor = true;
-	isFlashing->setControllableFeedbackOnly(true);
-	isFlashing->isSavable = false;
-	flashingProgression = controlsCC.addFloatParameter("Flashing Progression", "Progression of the flashing process", 0, 0, 1);
-	flashingProgression->setControllableFeedbackOnly(true);
 
 	addChildControllableContainer(&controlsCC);
 
-	bakeStartTime = bakingCC.addFloatParameter("Bake Start Time", "Set the start time of baking", 0, 0, INT32_MAX, false);
-	bakeStartTime->defaultUI = FloatParameter::TIME;
-	bakeStartTime->canBeDisabledByUser = true;
-	bakeEndTime = bakingCC.addFloatParameter("Bake End Time", "Set the end time of baking", 1, 1, INT32_MAX, false);
-	bakeEndTime->defaultUI = FloatParameter::TIME;
-	bakeEndTime->canBeDisabledByUser = true;
-	bakeFrequency = bakingCC.addIntParameter("Bake Frequency", "The frequency at which to bake", 100, 1, 50000, false);
-	bakeFrequency->canBeDisabledByUser = true;
+	playbackStartTime = playbackCC.addFloatParameter("Playback Start Time", "Set the start time of playback", 0, 0, INT32_MAX, false);
+	playbackStartTime->defaultUI = FloatParameter::TIME;
+	playbackStartTime->canBeDisabledByUser = true;
+	playbackEndTime = playbackCC.addFloatParameter("Playback End Time", "Set the end time of playback", 1, 1, INT32_MAX, false);
+	playbackEndTime->defaultUI = FloatParameter::TIME;
+	playbackEndTime->canBeDisabledByUser = true;
+	playbackFrequency = playbackCC.addIntParameter("Playback Frequency", "The frequency at which the playback is generate", 100, 1, 50000, false);
+	playbackFrequency->canBeDisabledByUser = true;
 
-	bakeAndUploadTrigger = bakingCC.addTrigger("Bake and Upload", "Bake the current assigned block and upload it to the prop");
-	bakeAndExportTrigger = bakingCC.addTrigger("Bake and Export", "Bake the current assigned block and export it to a file");
+	uploadPlaybackTrigger = playbackCC.addTrigger("Generate and Upload", "Generate a playback of the current assigned block and upload it to the prop");
+	exportPlaybackTrigger = playbackCC.addTrigger("Generate and Export", "Generate a playback the current assigned block and export it to a file");
 
-	bakeFileName = bakingCC.addStringParameter("Bake file name", "Name of the bake file to send and to play", "", false);
-	bakeFileName->canBeDisabledByUser = true;
+	playbackFileName = playbackCC.addStringParameter("Playback File Name", "Name of the playback file to send and to play", "", false);
+	playbackFileName->canBeDisabledByUser = true;
 
-	bakeMode = bakingCC.addBoolParameter("Bake Mode", "Play the bake file with name set above, or revert to streaming", false);
+	playbackMode = playbackCC.addBoolParameter("Playback Mode", "Play the playback file with name set above, or revert to streaming", false);
 
-	sendCompressedFile = bakingCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
+	sendCompressedFile = playbackCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
 
-	isBaking = bakingCC.addBoolParameter("Is Baking", "Is this prop currently baking ?", false);
-	isBaking->hideInEditor = true;
-	isBaking->setControllableFeedbackOnly(true);
-	isBaking->isSavable = false;
+	isGeneratingPlayback = playbackCC.addBoolParameter("Is Generating", "Is this prop currently generating ?", false);
+	isGeneratingPlayback->hideInEditor = true;
+	isGeneratingPlayback->setControllableFeedbackOnly(true);
+	isGeneratingPlayback->isSavable = false;
 
 
-	isUploading = bakingCC.addBoolParameter("Is Uploading", "Upload after bake", false);
+	isUploading = playbackCC.addBoolParameter("Is Uploading", "Is currently uploading", false);
 	isUploading->hideInEditor = true;
 	isUploading->setControllableFeedbackOnly(true);
 	isUploading->isSavable = false;
 
-	bakingProgress = bakingCC.addFloatParameter("Baking progress", "", 0, 0, 1);
-	bakingProgress->setControllableFeedbackOnly(true);
-	uploadProgress = bakingCC.addFloatParameter("Upload progress", "", 0, 0, 1);
+	playbackGenProgress = playbackCC.addFloatParameter("Generation progress", "", 0, 0, 1);
+	playbackGenProgress->setControllableFeedbackOnly(true);
+	uploadProgress = playbackCC.addFloatParameter("Upload progress", "", 0, 0, 1);
 	uploadProgress->setControllableFeedbackOnly(true);
 
-	bakingCC.editorIsCollapsed = true;
-	addChildControllableContainer(&bakingCC);
+	playbackCC.editorIsCollapsed = true;
+	addChildControllableContainer(&playbackCC);
 
 
 	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
@@ -120,7 +112,8 @@ Prop::Prop(var params) :
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showSourcesAndGet;
 	activeProvider->hideInEditor = true;
 
-	setupComponentsJSONDefinition(params.getProperty("components", var()));
+	//proprefactor
+	//setupComponentsJSONDefinition(params.getProperty("components", var()));
 
 	var scriptsData = params.getProperty("scripts", var());
 	for (int i = 0; i < scriptsData.size(); i++)
@@ -138,10 +131,11 @@ Prop::Prop(var params) :
 		script->userCanRemove = false;
 	}
 
-	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
-	pingEnabled = params.getProperty("ping", pingEnabled);
-	if (pingEnabled) startTimer(PROP_PING_TIMERID, 2000); //ping every 2s, expect a pong between thecalls
+	customParams.reset(new PropCustomParams());
+	addChildControllableContainer(customParams.get());
+
+	controllableContainers.move(controllableContainers.indexOf(scriptManager.get()), controllableContainers.size() - 1);
 
 	startThread();
 }
@@ -157,29 +151,29 @@ void Prop::clearItem()
 	colors.fill(Colours::black);
 	sendColorsToProp();
 	setBlockFromProvider(nullptr);
-	if (!Engine::mainEngine->isClearing && family != nullptr) family->unregisterProp(this);
+	//if (!Engine::mainEngine->isClearing && family != nullptr) family->unregisterProp(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(1000);
 	setBlockFromProvider(nullptr);
 }
 
-void Prop::registerFamily(StringRef familyName)
-{
-	if (familyName.isEmpty()) return;
-
-	PropFamily* f = PropManager::getInstance()->getFamilyWithName(familyName);
-	if (f != nullptr)
-	{
-		family = f;
-		family->registerProp(this);
-	}
-}
+//void Prop::registerFamily(StringRef familyName)
+//{
+//	if (familyName.isEmpty()) return;
+//
+//	PropFamily* f = PropManager::getInstance()->getFamilyWithName(familyName);
+//	if (f != nullptr)
+//	{
+//		family = f;
+//		family->registerProp(this);
+//	}
+//}
 
 void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 {
 	if (currentBlock == nullptr && model == nullptr) return;
 	if (model != nullptr && currentBlock != nullptr && currentBlock->provider == model) return;
-	if (isBaking->boolValue()) return;
+	if (isGeneratingPlayback->boolValue()) return;
 
 	if (currentBlock != nullptr)
 	{
@@ -192,6 +186,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 			unregisterLinkedInspectable(currentBlock->provider.get());
 			currentBlock->provider->removeColorProviderListener(this);
 			currentBlock->provider->removeInspectableListener(this);
+			currentBlock->provider->handleEnterExit(false, this);
 		}
 
 		//currentBlock->removeLightBlockListener(this);
@@ -206,13 +201,13 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 		addChildControllableContainer(currentBlock.get());
 		currentBlock->provider->addInspectableListener(this);
 		currentBlock->provider->addColorProviderListener(this);
-
+		currentBlock->provider->handleEnterExit(true, this);
 
 		registerLinkedInspectable(currentBlock->provider.get());
 
 
 
-		if (TimelineBlock* tb = dynamic_cast<TimelineBlock*>(currentBlock->provider.get()))
+		if (BentoSequenceBlock* tb = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
 		{
 			if (tb->autoSetPropEnabled->boolValue())
 			{
@@ -245,12 +240,18 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 	}
 }
 
+int Prop::getResolution()
+{
+	return resolution->intValue(); //may have something else
+}
+
 void Prop::update()
 {
 	if (!enabled->boolValue()) return;
 
-	HashMap<String, PropComponent*>::Iterator it(components);
-	while (it.next()) it.getValue()->update();
+	//proprefactor
+	//HashMap<String, PropComponent*>::Iterator it(components);
+	//while (it.next()) it.getValue()->update();
 
 	if (findPropMode->boolValue())
 	{
@@ -264,7 +265,7 @@ void Prop::update()
 	}
 	else if (currentBlock != nullptr)
 	{
-		double time = (Time::getMillisecondCounter() % (int)1e9) / 1000.0;
+		double time = fmod(Time::getMillisecondCounterHiRes(), (int)1e9) / 1000.0;
 
 		colorLock.enter();
 		colors = currentBlock->getColors(this, time, var());
@@ -278,18 +279,20 @@ void Prop::update()
 	}
 
 
-	if (!bakeMode->boolValue()
-		&& !isBaking->boolValue()
+	if (!playbackMode->boolValue()
+		&& !isGeneratingPlayback->boolValue()
 		&& !isUploading->boolValue()
-		&& (rgbComponent != nullptr && rgbComponent->streamEnable->boolValue()))
+		//proprefactor
+		//&& (rgbComponent != nullptr && rgbComponent->streamEnable->boolValue())
+		)
 	{
 		sendColorsToProp();
 	}
-	else if (seekBakeTime != -1)
-	{
-		seekBakePlaying(seekBakeTime);
-		seekBakeTime = -1;
-	}
+	//else if (seekPlaybackTime != -1)
+	//{
+	//	seekPlaybackPlaying(seekPlaybackTime);
+	//	seekPlaybackTime = -1;
+	//}
 }
 
 void Prop::onContainerParameterChangedInternal(Parameter* p)
@@ -312,16 +315,16 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 {
 	if (c == resolution)
 	{
-		colors.resize(resolution->intValue());
+		colors.resize(getResolution());
 	}
 	else if (c == globalID)
 	{
 		propListeners.call(&PropListener::propIDChanged, this, previousID);
 		previousID = globalID->intValue();
 	}
-	else if (c == bakeAndUploadTrigger || c == bakeAndExportTrigger)
+	else if (c == uploadPlaybackTrigger || c == exportPlaybackTrigger)
 	{
-		initBaking(currentBlock.get(), c == bakeAndUploadTrigger ? UPLOAD : EXPORT);
+		initGeneratePlayback(currentBlock.get(), c == uploadPlaybackTrigger ? UPLOAD : EXPORT);
 	}
 	else if (c == findPropMode)
 	{
@@ -336,24 +339,30 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		restartProp();
 	}
-	else if (PropComponent* pc = dynamic_cast<PropComponent*>(cc)) //just do 1 level dynamic_cast<PropComponent*>(cc))
-	{
-		if (PropManager::getInstance()->sendFeedback->boolValue() && pc->feedbackEnabled)
-		{
-			OSCMessage m("/prop/" + globalID->stringValue() + c->getControlAddress(this));
-			if (c->type != Controllable::TRIGGER) OSCHelpers::addArgumentsForParameter(m, (Parameter*)c);//PropManager::getInstance());
+	//proprefactor
+	//else if (PropComponent* pc = dynamic_cast<PropComponent*>(cc)) //just do 1 level dynamic_cast<PropComponent*>(cc))
+	//{
+	//	if (PropManager::getInstance()->sendFeedback->boolValue())
+	//	{
+	//		OSCMessage m("/prop/" + globalID->stringValue() + c->getControlAddress(this));
+	//		if (c->type != Controllable::TRIGGER) OSCHelpers::addArgumentsForParameter(m, (Parameter*)c);//PropManager::getInstance());
 
-			BentoEngine* be = (BentoEngine*)Engine::mainEngine;
-			PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
-		}
-	}
+	//		BentoEngine* be = (BentoEngine*)Engine::mainEngine;
+	//		PropManager::getInstance()->sender.sendToIPAddress(be->remoteHost->stringValue(), be->remotePort->intValue(), m);
+	//	}
+	//}
 	else if (c == isConnected)
 	{
-		if (isConnected->boolValue())
-		{
-			HashMap<String, PropComponent*>::Iterator it(components);
-			while (it.next()) it.getValue()->handlePropConnected();
-		}
+		//proprefactor
+			//if (isConnected->boolValue())
+		//{
+		//	HashMap<String, PropComponent*>::Iterator it(components);
+		//	while (it.next()) it.getValue()->handlePropConnected();
+		//}
+	}
+	else if (c == playbackMode)
+	{
+		updatePlaybackModeOnProp();
 	}
 }
 
@@ -375,18 +384,18 @@ void Prop::fillTypeOptions(EnumParameter* p)
 	p->addOption("Club", CLUB)->addOption("Ball", BALL)->addOption("Poi", POI)->addOption("Hoop", HOOP)->addOption("Ring", RING)->addOption("Buggeng", BUGGENG)->addOption("Box", BOX)->addOption("Custom", CUSTOM);
 }
 
-void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
+void Prop::initGeneratePlayback(BaseColorProvider* block, AfterPlaybackGenAction afterPlaybackGenAction)
 {
 	if (block == nullptr)
 	{
-		NLOGWARNING(niceName, "Current block not assigned, cannot bake");
+		NLOGWARNING(niceName, "Current block not assigned, cannot generate playback");
 		return;
 	}
 
-	afterBake = afterBakeAction;
-	providerToBake = block;
+	afterGeneratePlayback = afterPlaybackGenAction;
+	playbackProvider = block;
 
-	if (afterBake == EXPORT)
+	if (afterGeneratePlayback == EXPORT)
 	{
 		FileChooser* fc(new FileChooser("Export a block"));
 		fc->launchAsync(FileBrowserComponent::FileChooserFlags::saveMode, [this](const FileChooser& fc)
@@ -396,36 +405,34 @@ void Prop::initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction)
 				if (f == File()) return;
 
 				exportFile = f;
-				bakingProgress->setValue(0);
+				playbackGenProgress->setValue(0);
 				uploadProgress->setValue(0);
-				isBaking->setValue(true);
+				isGeneratingPlayback->setValue(true);
 			}
 		);
 	}
 	else
 	{
-		bakingProgress->setValue(0);
+		playbackGenProgress->setValue(0);
 		uploadProgress->setValue(0);
-		isBaking->setValue(true);
+		isGeneratingPlayback->setValue(true);
 	}
 }
 
-BakeData Prop::bakeBlock()
+PlaybackData Prop::generatePlayback()
 {
-	if (providerToBake == nullptr) return BakeData();
+	if (playbackProvider == nullptr) return PlaybackData();
 
-
-	BakeData result = providerToBake->getBakeDataForProp(this);
-	NLOG(niceName, "Baking block " << result.name);
-
+	PlaybackData result = playbackProvider->getPlaybackDataForProp(this);
+	NLOG(niceName, "Generating playback for block " << result.name);
 
 	//overrides
-	if (bakeFileName->enabled && bakeFileName->stringValue().isNotEmpty()) result.name = bakeFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
-	if (bakeStartTime->enabled) result.startTime = bakeStartTime->floatValue();
-	if (bakeEndTime->enabled) result.endTime = bakeEndTime->floatValue();
-	if (bakeFrequency->enabled) result.fps = bakeFrequency->intValue();
+	if (playbackFileName->enabled && playbackFileName->stringValue().isNotEmpty()) result.name = playbackFileName->stringValue();// currentBlock->shortName + "_" + globalID->stringValue();
+	if (playbackStartTime->enabled) result.startTime = playbackStartTime->floatValue();
+	if (playbackEndTime->enabled) result.endTime = playbackEndTime->floatValue();
+	if (playbackFrequency->enabled) result.fps = playbackFrequency->intValue();
 
-	if (!result.metaData.hasProperty("id"))
+	if (globalID != nullptr && !result.metaData.hasProperty("id"))
 	{
 		DBG("No ID set, default to global ID ");
 		result.metaData.getDynamicObject()->setProperty("id", globalID->intValue());
@@ -441,8 +448,9 @@ BakeData Prop::bakeBlock()
 
 	MemoryOutputStream os(result.data, false);
 
-	const int numLeds = resolution->intValue();
-	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection);
+	const int numLeds = getResolution();
+
+	bool invert = false; //proprefactor (rgbComponent != nullptr && rgbComponent->invertDirection);
 	int startIndex = invert ? numLeds - 1 : 0;
 	int endIndex = invert ? -1 : numLeds;
 	int step = invert ? -1 : 1;
@@ -452,19 +460,20 @@ BakeData Prop::bakeBlock()
 	{
 		if (threadShouldExit()) return result;
 
-		if (providerToBake == nullptr) return result;
-		Array<Colour> cols = providerToBake->getColors(this, curTime, params);
+		if (playbackProvider == nullptr) return result;
+		Array<Colour> cols = playbackProvider->getColors(this, curTime, params);
 
 		for (int i = startIndex; i != endIndex; i += step)
 		{
-			int index = (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
+			int index = i;//proprefactor (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
+			if (useAlphaInPlaybackData) os.writeByte(cols[index].getAlpha());
 			os.writeByte(cols[index].getRed());
 			os.writeByte(cols[index].getGreen());
 			os.writeByte(cols[index].getBlue());
 		}
 		result.numFrames++;
 
-		bakingProgress->setValue(jmap<float>(curTime, result.startTime, result.endTime, 0, 1));
+		playbackGenProgress->setValue(jmap<float>(curTime, result.startTime, result.endTime, 0, 1));
 	}
 
 	os.flush();
@@ -473,17 +482,17 @@ BakeData Prop::bakeBlock()
 }
 
 
-void Prop::uploadBakedData(BakeData bakedColors)
+void Prop::uploadPlaybackData(PlaybackData playbackColors)
 {
-	NLOG(niceName, "Uploading here... " << bakedColors.numFrames << " frames");
+	NLOG(niceName, "Uploading here... " << playbackColors.numFrames << " frames");
 }
 
-void Prop::exportBakedData(BakeData data)
+void Prop::exportPlaybackData(PlaybackData data)
 {
-	NLOG(niceName, "Export bake data " << data.name);
+	NLOG(niceName, "Export playback data " << data.name);
 }
 
-void Prop::addFileToUpload(File f)
+void Prop::addFileToUpload(FileToUpload f)
 {
 	filesToUpload.add(f);
 	isUploading->setValue(true);
@@ -494,171 +503,62 @@ void Prop::uploadFileQueue()
 {
 	while (filesToUpload.size() > 0)
 	{
-		File f = filesToUpload.removeAndReturn(0);
+		FileToUpload f = filesToUpload.removeAndReturn(0);
 		uploadFile(f);
 	}
 }
 
-void Prop::uploadFile(File f)
+void Prop::uploadFile(FileToUpload f)
 {
-	NLOG(niceName, "Uploading file " + f.getFullPathName() + "...");
+	NLOG(niceName, "Uploading file " + f.file.getFullPathName() + "...");
+}
+
+void Prop::updatePlaybackModeOnProp()
+{
+	setPlaybackEnabled(playbackMode->boolValue());
+	setStreamingEnabled(!playbackMode->boolValue());
+
+	if (playbackMode->boolValue())
+	{
+		String filename = currentBlock != nullptr ? currentBlock->shortName : (playbackFileName->enabled ? playbackFileName->stringValue() : "");
+		if (filename.isNotEmpty()) loadPlayback(filename, false);
+
+		if (BentoSequenceBlock* bs = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
+		{
+			if (!bs->sequence->isPlaying->boolValue()) seekPlaybackPlaying(bs->sequence->currentTime->floatValue());
+			else playPlayback(bs->sequence->currentTime->floatValue());
+		}
+
+	}
 }
 
 
-void Prop::providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data)
+void Prop::providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data)
 {
-	if (!bakeMode->boolValue()) return;
+	if (!playbackMode->boolValue()) return;
 
 	switch (control)
 	{
-	case LightBlockColorProvider::BakeControl::PLAY:
-		playBake((float)data);
+	case LightBlockColorProvider::PlaybackControl::PLAY:
+		playPlayback((float)data);
 		break;
 
-	case LightBlockColorProvider::BakeControl::PAUSE:
-		pauseBakePlaying();
+	case LightBlockColorProvider::PlaybackControl::PAUSE:
+		pausePlaybackPlaying();
 		break;
 
-	case LightBlockColorProvider::BakeControl::SEEK:
-		seekBakeTime = (float)data;
-		//if(seekBakeTime == -1) seekBakePlaying((float)data);
+	case LightBlockColorProvider::PlaybackControl::SEEK:
+		seekPlaybackPlaying((float)data);
 		break;
 
-	case LightBlockColorProvider::BakeControl::STOP:
-		stopBakePlaying();
+	case LightBlockColorProvider::PlaybackControl::STOP:
+		stopPlaybackPlaying();
 		break;
 
-	case LightBlockColorProvider::BakeControl::SHOW_ID:
+	case LightBlockColorProvider::PlaybackControl::SHOW_ID:
 		sendShowPropID((bool)data);
 		break;
 	}
-}
-
-void Prop::sendControlToProp(String message, var value)
-{
-	if (!enabled->boolValue()) return;
-	if (logOutgoing->boolValue())
-	{
-		NLOG(niceName, "Sending " + message + " : " + value.toString());
-	}
-	sendControlToPropInternal(message, value);
-}
-
-
-void Prop::handleOSCMessage(const OSCMessage& m)
-{
-	if (m.getAddressPattern().toString() == "/pong") handlePong();
-	else if (m.getAddressPattern().toString() == "/enabled")
-	{
-		if (m.size() > 1) enabled->setValue(OSCHelpers::getIntArg(m[1]) == 1);
-	}
-	else if (m.getAddressPattern().toString() == "/model")
-	{
-		if (m.size() > 1)
-		{
-			if (LightBlockModel* p = dynamic_cast<LightBlockModel*>(LightBlockModelLibrary::getInstance()->getControllableContainerForAddress(OSCHelpers::getStringArg(m[1]))))
-			{
-				if (m.size() > 2)
-				{
-					if (LightBlockModelPreset* pr = p->presetManager.getItemWithName(OSCHelpers::getStringArg(m[2])))
-					{
-						activeProvider->setValueFromTarget(pr);
-					}
-				}
-				else
-				{
-					activeProvider->setValueFromTarget(p);
-				}
-			}
-		}
-	}
-	else
-	{
-		if (logIncoming->boolValue())
-		{
-			String s = "Received : " + m.getAddressPattern().toString() + ", ";
-			for (int i = 1; i < m.size(); i++) s += "\n" + OSCHelpers::getStringArg(m[i]);
-			NLOG(niceName, s);
-		}
-
-		StringArray mSplit;
-		mSplit.addTokens(m.getAddressPattern().toString(), "/", "\"");
-
-		if (mSplit[1] == "block")
-		{
-			if (currentBlock != nullptr && mSplit.size() > 2)
-			{
-				if (Controllable* c = currentBlock->paramsContainer.getControllableByName(mSplit[2]))
-				{
-					OSCHelpers::handleControllableForOSCMessage(c, m, 1);
-				}
-			}
-		}
-		else
-		{
-			PropComponent* pc = getComponent(mSplit[1]);
-			var value;
-			for (int i = 1; i < m.size(); i++) value.append(OSCHelpers::argumentToVar(m[i]));
-			if (pc != nullptr) pc->handleMessage(mSplit[2], value);
-		}
-
-	}
-}
-
-void Prop::handlePong()
-{
-	if (!pingEnabled) return;
-	receivedPongSinceLastPingSent = true;
-	isConnected->setValue(true);
-}
-
-void Prop::sendPing()
-{
-	if (!pingEnabled) return;
-	receivedPongSinceLastPingSent = false;
-	sendPingInternal();
-}
-
-void Prop::timerCallback(int timerID)
-{
-	switch (timerID)
-	{
-	case PROP_PING_TIMERID:
-		if (!pingEnabled) return;
-		if (!receivedPongSinceLastPingSent) isConnected->setValue(false);
-		sendPing();
-		break;
-	}
-}
-
-void Prop::setupComponentsJSONDefinition(var def)
-{
-	if (def.hasProperty("rgb"))
-	{
-		rgbComponent = new RGBPropComponent(this, def.getProperty("rgb", var()));
-		addComponent(rgbComponent);
-		resolution->setValue(rgbComponent->resolution);
-		updateRate = rgbComponent->updateRate;
-	}
-
-	if (def.hasProperty("fx")) addComponent(new FXPropComponent(this, def.getProperty("fx", var())));
-	if (def.hasProperty("buttons")) addComponent(new ButtonsPropComponent(this, def.getProperty("buttons", var())));
-	if (def.hasProperty("touch")) addComponent(new TouchPropComponent(this, def.getProperty("touch", var())));
-	if (def.hasProperty("imu")) addComponent(new IMUPropComponent(this, def.getProperty("imu", var())));
-	if (def.hasProperty("ir")) addComponent(new IRPropComponent(this, def.getProperty("ir", var())));
-	if (def.hasProperty("battery")) addComponent(new BatteryPropComponent(this, def.getProperty("battery", var())));
-	if (def.hasProperty("files")) addComponent(new FilesPropComponent(this, def.getProperty("files", var())));
-}
-
-void Prop::addComponent(PropComponent* pc)
-{
-	addChildControllableContainer(pc, true);
-	components.set(pc->shortName, pc);
-}
-
-PropComponent* Prop::getComponent(const String& name)
-{
-	return components.contains(name) ? components[name] : nullptr;
 }
 
 var Prop::getJSONData()
@@ -683,36 +583,38 @@ InspectableEditor* Prop::getEditorInternal(bool isRoot, Array<Inspectable*> insp
 
 void Prop::run()
 {
-	sleep(100);
+	sleep(50);
 
 	while (!threadShouldExit())
 	{
-		if (isBaking->boolValue())
+		double timeBeforeUpdate = Time::getMillisecondCounterHiRes();
+
+		if (isGeneratingPlayback->boolValue())
 		{
-			BakeData data = bakeBlock();
+			PlaybackData data = generatePlayback();
 
 			if (threadShouldExit()) return;
 
-			switch (afterBake)
+			switch (afterGeneratePlayback)
 			{
 			case UPLOAD:
 				isUploading->setValue(true);
-				uploadBakedData(data);
+				uploadPlaybackData(data);
 				if (threadShouldExit()) return;
 				isUploading->setValue(false);
 
-				bakeMode->setValue(bakeMode->value, false, true); //force resend bakeMode
+				playbackMode->setValue(playbackMode->value, false, true); //force resend playbackMode
 				break;
 
 			case EXPORT:
-				exportBakedData(data);
+				exportPlaybackData(data);
 				break;
 
 			default:
 				break;
 			}
 
-			isBaking->setValue(false);
+			isGeneratingPlayback->setValue(false);
 		}
 		else if (filesToUpload.size() > 0)
 		{
@@ -723,7 +625,106 @@ void Prop::run()
 		else
 		{
 			if (enabled->boolValue()) update();
-			sleep(1000.0f / updateRate); //50fps
+
+			double diffTime = Time::getMillisecondCounterHiRes() - timeBeforeUpdate;
+			double sleepTime = 1000.0 / updateRate - diffTime;
+			//DBG("Sleep time " << sleepTime << " ms, diffTime " << diffTime << " ms");
+			if (sleepTime >= 1) sleep(sleepTime); //50fps
 		}
 	}
+}
+
+
+PropCustomParams::PropCustomParams() :
+	ControllableContainer("Custom Parameters")
+{
+	//if (om != nullptr) om->addObjectManagerListener(this);
+	rebuildCustomParams();
+}
+
+
+PropCustomParams::~PropCustomParams()
+{
+	//if (om != nullptr) om->removeObjectManagerListener(this);
+}
+
+
+//void PropCustomParams::customParamsChanged(ObjectManager*)
+//{
+//	rebuildCustomParams();
+//}
+
+void PropCustomParams::rebuildCustomParams()
+{
+	//if (om == nullptr) return;
+
+	var oldData = getJSONData();
+	clear();
+
+	GenericControllableManager* customParams = &((BentoEngine*)Engine::mainEngine)->customParams;
+	for (auto& gci : customParams->items)
+	{
+		if (gci->controllable->type == Controllable::TRIGGER) continue;
+
+		if (Parameter* p = ControllableFactory::createParameterFrom((Parameter*)gci->controllable, true, true))
+		{
+			p->canBeDisabledByUser = true;
+			p->setEnabled(false);
+			addParameter(p);
+		}
+	}
+
+	loadJSONData(oldData);
+}
+
+var PropCustomParams::getParamValueFor(WeakReference<Parameter> p)
+{
+	return getParamValueForName(p->shortName);
+}
+
+var PropCustomParams::getParamValueForName(const String& name)
+{
+	if (Parameter* p = getActiveCustomParamForName(name)) return p->getValue();
+	jassertfalse;
+	return var();
+}
+
+var PropCustomParams::getParamValues()
+{
+	Array<WeakReference<Parameter>> params = getAllParameters();
+
+	var values(new DynamicObject());
+
+	for (auto& p : params)
+	{
+		Parameter* targetP = p;
+		if (!p->enabled)
+		{
+			if (GenericControllableItem* gci = ((BentoEngine*)Engine::mainEngine)->customParams.getItemWithName(p->shortName)) targetP = (Parameter*)gci->controllable;
+			else targetP = nullptr;
+		}
+
+		if (targetP != nullptr) values.getDynamicObject()->setProperty(targetP->shortName, targetP->getValue());
+
+	}
+	return values;
+}
+
+
+Parameter* PropCustomParams::getActiveParamFor(WeakReference<Parameter> p)
+{
+	return getActiveCustomParamForName(p->shortName);
+}
+
+
+Parameter* PropCustomParams::getActiveCustomParamForName(const String& name)
+{
+	if (Parameter* p = getParameterByName(name))
+	{
+		if (p->enabled) return p;
+	}
+
+	if (GenericControllableItem* gci = ((BentoEngine*)Engine::mainEngine)->customParams.getItemWithName(name)) return ((Parameter*)gci->controllable);
+
+	return nullptr;
 }

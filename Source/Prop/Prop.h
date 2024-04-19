@@ -10,16 +10,12 @@
 
 #pragma once
 
-class PropFamily;
-class RGBPropComponent;
-
-#define PROP_PING_TIMERID 0
+class PropCustomParams;
 
 class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
 	public Thread,
-	public MultiTimer,
 	public LightBlockColorProvider::ProviderListener
 {
 public:
@@ -30,58 +26,56 @@ public:
 
 
 	String deviceID;
-	PropFamily* family;
-	String customType;
+	IntParameter* globalID;
+
 
 	BoolParameter* logIncoming;
 	BoolParameter* logOutgoing;
 
 	ControllableContainer generalCC;
-	IntParameter* globalID;
 	IntParameter* resolution;
-	EnumParameter* type;
+	FloatParameter* brightness;
+
+	IntParameter* resolutionRef;
+	EnumParameter* shape;
+	bool invertLedsInUI;
+
+	FloatParameter* battery;
+	FloatParameter* batteryRef;
+	BoolParameter* motionRef;
 
 	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
-
-	bool pingEnabled;
-	bool receivedPongSinceLastPingSent;
 
 	BoolParameter* findPropMode;
 
 	ControllableContainer controlsCC;
 	Trigger* powerOffTrigger;
 	Trigger* restartTrigger;
-	Trigger* uploadFirmwareTrigger;
 
-	HashMap<String, PropComponent*> components;
-	RGBPropComponent* rgbComponent;
+	ControllableContainer playbackCC;
+	FloatParameter* playbackStartTime;
+	FloatParameter* playbackEndTime;
+	IntParameter* playbackFrequency;
+	Trigger* uploadPlaybackTrigger;
+	Trigger* exportPlaybackTrigger;
+	StringParameter* playbackFileName;
+	BoolParameter* playbackMode;
 
-	ControllableContainer bakingCC;
-	FloatParameter* bakeStartTime;
-	FloatParameter* bakeEndTime;
-	IntParameter* bakeFrequency;
-	Trigger* bakeAndUploadTrigger;
-	Trigger* bakeAndExportTrigger;
-	StringParameter* bakeFileName;
-	BoolParameter* bakeMode;
-
+	bool useAlphaInPlaybackData;
 	BoolParameter* sendCompressedFile;
-	BoolParameter* isBaking;
+	BoolParameter* isGeneratingPlayback;
 
 	BoolParameter* isUploading;
-	FloatParameter* bakingProgress;
+	FloatParameter* playbackGenProgress;
 	FloatParameter* uploadProgress;
 
-	BoolParameter* isFlashing;
-	FloatParameter* flashingProgression;
+	enum AfterPlaybackGenAction { UPLOAD, EXPORT, NOTHING };
+	AfterPlaybackGenAction afterGeneratePlayback;
 
-	enum AfterBakeAction { UPLOAD, EXPORT, NOTHING };
-	AfterBakeAction afterBake;
+	BaseColorProvider* playbackProvider;
 
-	BaseColorProvider* providerToBake;
-
-	float seekBakeTime;
+	float seekPlaybackTime;
 
 	File exportFile;
 
@@ -94,17 +88,20 @@ public:
 	int previousID; //for swapping
 	int updateRate;
 
-	Array<File, CriticalSection> filesToUpload;
+	struct FileToUpload
+	{
+		File file;
+		String remoteFolder;
+	};
+	Array<FileToUpload, CriticalSection> filesToUpload;
 
-	File firmwareFile;
+	std::unique_ptr<PropCustomParams> customParams;
 
-	//ping
+
 	virtual void clearItem() override;
 
-	void registerFamily(StringRef familyName);
-
 	void setBlockFromProvider(LightBlockColorProvider* model);
-
+	int getResolution();
 	void update();
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
@@ -116,44 +113,31 @@ public:
 
 	static void fillTypeOptions(EnumParameter* p);
 
-	virtual void initBaking(BaseColorProvider* block, AfterBakeAction afterBakeAction);
-	virtual BakeData bakeBlock();
+	virtual void initGeneratePlayback(BaseColorProvider* block, AfterPlaybackGenAction afterPlaybackGenAction);
+	virtual PlaybackData generatePlayback();
 
-	virtual void uploadBakedData(BakeData data);
-	virtual void exportBakedData(BakeData data);
-	virtual void addFileToUpload(File f);
+
+	virtual void uploadPlaybackData(PlaybackData data);
+	virtual void exportPlaybackData(PlaybackData data);
+	virtual void addFileToUpload(FileToUpload f);
 	virtual void uploadFileQueue();
-	virtual void uploadFile(File f);
+	virtual void uploadFile(FileToUpload f);
 
-	virtual void loadBake(StringRef /*fileName*/, bool /*autoPlay*/) {}
-	virtual void playBake(float /*time */ = 0, bool /* loop */ = false) {}
-	virtual void pauseBakePlaying() {}
-	virtual void resumeBakePlaying() {}
-	virtual void seekBakePlaying(float /*time */) {}
-	virtual void stopBakePlaying() {}
+	virtual void updatePlaybackModeOnProp();
+	virtual void setPlaybackEnabled(bool value) {}
+	virtual void setStreamingEnabled(bool value) {}
+	virtual void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/) {}
+	virtual void playPlayback(float /*time */ = 0, bool /* loop */ = false) {}
+	virtual void pausePlaybackPlaying() {}
+	virtual void resumePlaybackPlaying() {}
+	virtual void seekPlaybackPlaying(float /*time */) {}
+	virtual void stopPlaybackPlaying() {}
 	virtual void sendShowPropID(bool value) {}
 
-	void providerBakeControlUpdate(LightBlockColorProvider::BakeControl control, var data) override;
-
-	void sendControlToProp(String message, var value = var());
-	virtual void sendControlToPropInternal(String message, var value = var()) {} //to be overriden
+	void providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data) override;
 
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
-
-	virtual void uploadFirmware() {}
-
-	virtual void handleOSCMessage(const OSCMessage& m);
-
-	virtual void handlePong();
-	void sendPing();
-	virtual void sendPingInternal() {}
-	virtual void timerCallback(int timerID) override;
-
-	void setupComponentsJSONDefinition(var def);
-	void addComponent(PropComponent* pc);
-
-	PropComponent* getComponent(const String& name);
 
 	var getJSONData() override;
 	void loadJSONDataInternal(var data) override;
@@ -199,10 +183,29 @@ public:
 
 	virtual void run() override;
 
-	virtual String getTypeString() const { return customType; }
-	static Prop* create(var params) { return new Prop(params); }
+	DECLARE_TYPE("Prop");
 
 private:
 	WeakReference<Prop>::Master masterReference;
 	friend class WeakReference<Prop>;
+};
+
+
+
+class PropCustomParams :
+	public ControllableContainer
+{
+public:
+	PropCustomParams();
+	~PropCustomParams();
+
+	//void customParamsChanged(ObjectManager*);
+	void rebuildCustomParams();
+
+	var getParamValueFor(WeakReference<Parameter> p);
+	var getParamValueForName(const String& name);
+	var getParamValues();
+
+	Parameter* getActiveParamFor(WeakReference<Parameter> p);
+	Parameter* getActiveCustomParamForName(const String& name);
 };

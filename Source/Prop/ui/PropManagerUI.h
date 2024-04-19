@@ -20,8 +20,12 @@ public:
 
 	std::unique_ptr<TriggerButtonUI> autoDetectUI;
 	std::unique_ptr<TriggerButtonUI> autoAssignUI;
-	std::unique_ptr<TriggerButtonUI> bakeAllUI;
-	std::unique_ptr<BoolToggleUI> bakeModeUI;
+	std::unique_ptr<TriggerButtonUI> assignPropIdUI;
+	std::unique_ptr<TriggerButtonUI> enableUI;
+	std::unique_ptr<TriggerButtonUI> disableUI;
+	std::unique_ptr<FloatSliderUI> globalBrightnessUI;
+	std::unique_ptr<TriggerButtonUI> uploadAllUI;
+	std::unique_ptr<BoolToggleUI> playbackModeUI;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownPos) override;

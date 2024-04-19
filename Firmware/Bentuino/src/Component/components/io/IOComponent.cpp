@@ -6,13 +6,13 @@ bool IOComponent::initInternal(JsonObject o)
 {
     pwmChannel = -1;
 
-    AddIntParam(pin);
-    AddIntParam(mode);
+    AddIntParamConfig(pin);
+    AddIntParamConfig(mode);
 
     // mode.options = modeOptions;
     // mode.numOptions = PINMODE_MAX;
 
-    AddBoolParam(inverted);
+    AddBoolParamConfig(inverted);
 
     AddFloatParam(value);
     // int m = mode;
@@ -113,7 +113,8 @@ void IOComponent::updatePin()
         if (inverted)
             val = !val;
 
-        if(value != val) {
+        if (value != val)
+        {
             SetParam(value, val);
         }
         // SetParam(value, val);

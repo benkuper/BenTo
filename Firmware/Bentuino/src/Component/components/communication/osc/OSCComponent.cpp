@@ -1,24 +1,17 @@
-ImplementSingleton(OSCComponent)
+ImplementSingleton(OSCComponent);
 
-    bool OSCComponent::initInternal(JsonObject o)
+bool OSCComponent::initInternal(JsonObject o)
 {
     udpIsInit = false;
 
-    pingEnabled = false;
-    timeSinceLastReceivedPing = 0;
-
-    AddStringParam(remoteHost);
-    AddBoolParam(isAlive);
-    AddBoolParam(sendFeedback);
+    AddStringParamConfig(remoteHost);
+    AddBoolParamConfig(sendFeedback);
 
     return true;
 }
 
 void OSCComponent::updateInternal()
 {
-    if (pingEnabled && millis() > timeSinceLastReceivedPing + OSC_PING_TIMEOUT)
-        SetParam(isAlive, false);
-
     receiveOSC();
 }
 
@@ -42,7 +35,6 @@ void OSCComponent::setupConnection()
         udp.begin(OSC_LOCAL_PORT);
         udp.flush();
         SetParam(isAlive, true);
-        timeSinceLastReceivedPing = millis();
 
         if (MDNS.begin((DeviceName).c_str()))
         {
@@ -109,6 +101,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
         msg.add(WifiComponent::instance->getIP().c_str());
         msg.add(DeviceID.c_str());
         msg.add(DeviceType.c_str());
+        msg.add(DeviceName.c_str());
 
         sendMessage(msg);
     }
@@ -116,8 +109,6 @@ void OSCComponent::processMessage(OSCMessage &msg)
     {
         // NDBG("Received ping");
         SetParam(isAlive, true);
-        pingEnabled = true;
-        timeSinceLastReceivedPing = millis();
 
         if (msg.size() > 0)
         {

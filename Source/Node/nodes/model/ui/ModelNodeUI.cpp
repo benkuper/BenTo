@@ -22,11 +22,14 @@ ModelNodeUI::~ModelNodeUI()
 
 void ModelNodeUI::paintOverChildren(Graphics& g)
 {
+
 	if (isDraggingItemOver)
 	{
 		g.setColour(BLUE_COLOR.withAlpha(.3f));
 		g.fillRect(getMainBounds());
 	}
+
+	NodeViewUI::paintOverChildren(g);
 }
 
 

@@ -12,34 +12,35 @@
 
 PropUI::PropUI(Prop* p) :
 	BaseItemUI(p, HORIZONTAL),
-	viz(p),
-	imuRef(nullptr)
+	viz(p)
 {
 	itemLabel.setVisible(false);
 
 	acceptedDropTypes.add("LightBlockModel");
-	acceptedDropTypes.add("Timeline");
-	acceptedDropTypes.add("Script");
-	acceptedDropTypes.add("Picture");
-	acceptedDropTypes.add("Node");
+	acceptedDropTypes.add(SequenceBlock::getTypeStringStatic());
+	acceptedDropTypes.add(StreamingScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(EmbeddedScriptBlock::getTypeStringStatic());
+	acceptedDropTypes.add(PictureBlock::getTypeStringStatic());
+	acceptedDropTypes.add(NodeBlock::getTypeStringStatic());
+	acceptedDropTypes.add(VideoFileBlock::getTypeStringStatic());
+	acceptedDropTypes.add(SharedTextureBlock::getTypeStringStatic());
 
 	idUI.reset(p->globalID->createLabelUI());
 	idUI->showLabel = false;
 
-	if (BatteryPropComponent* bat = dynamic_cast<BatteryPropComponent*>(p->getComponent("battery")))
+	if (item->battery != nullptr)
 	{
-		batteryUI.reset(bat->level->createSlider());
+		batteryUI.reset(item->battery->createSlider());
 		addAndMakeVisible(batteryUI.get());
 	}
 
 	addAndMakeVisible(idUI.get());
 	addAndMakeVisible(&viz);
 
-	if (IMUPropComponent* imu = dynamic_cast<IMUPropComponent*>(p->getComponent("imu"))) imuRef = imu->enabled;
 
 	viz.setInterceptsMouseClicks(false, false);
 
-	Prop::Shape shape = p->type->getValueDataAsEnum<Prop::Shape>();
+	Prop::Shape shape = p->shape->getValueDataAsEnum<Prop::Shape>();
 
 	setSize(shape == Prop::HOOP ? 100 : 50, 100);
 }
@@ -51,12 +52,12 @@ PropUI::~PropUI()
 void PropUI::paintOverChildren(Graphics& g)
 {
 	BaseItemUI::paintOverChildren(g);
-	if (item->isBaking->boolValue())
+	if (item->isGeneratingPlayback->boolValue())
 	{
 		g.fillAll(Colours::black.withAlpha(.3f));
 
 		g.setColour(Colours::orange.darker().withAlpha(.2f));
-		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->bakingProgress->floatValue() * viz.getHeight()).toFloat(), 2);
+		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->playbackGenProgress->floatValue() * viz.getHeight()).toFloat(), 2);
 
 		g.setColour(Colours::limegreen.darker().withAlpha(.2f));
 		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->uploadProgress->floatValue() * viz.getHeight()).toFloat(), 2);
@@ -64,20 +65,20 @@ void PropUI::paintOverChildren(Graphics& g)
 		g.setColour(item->isUploading->boolValue() ? Colours::limegreen : Colours::orange);
 		g.drawFittedText(item->isUploading->boolValue() ? "Uploading ..." : "Baking...", getLocalBounds(), Justification::centred, 1);
 	}
-	else if (item->isFlashing->boolValue())
-	{
-		g.setColour(Colours::lightpink.withAlpha(.2f));
-		g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->flashingProgression->floatValue() * viz.getHeight()).toFloat(), 2);
+	//else if (item->isFlashing->boolValue())
+	//{
+	//	g.setColour(Colours::lightpink.withAlpha(.2f));
+	//	g.fillRoundedRectangle(viz.getBounds().removeFromBottom(item->flashingProgression->floatValue() * viz.getHeight()).toFloat(), 2);
 
-		g.setColour(Colours::lightpink);
-		g.drawFittedText("Flashing...", getLocalBounds(), Justification::centred, 1);
-	}
+	//	g.setColour(Colours::lightpink);
+	//	g.drawFittedText("Flashing...", getLocalBounds(), Justification::centred, 1);
+	//}
 
 	g.setColour(item->isConnected->boolValue() ? GREEN_COLOR : BG_COLOR);
 	Rectangle<int> r = getMainBounds().translated(0, headerHeight + headerGap).removeFromRight(20).removeFromTop(20).reduced(1);
 	g.fillEllipse(r.toFloat().reduced(4));
 
-	if (imuRef != nullptr && imuRef->boolValue())
+	if (item->motionRef != nullptr && item->motionRef->boolValue())
 	{
 		g.setColour(YELLOW_COLOR);
 		g.drawEllipse(r.toFloat().reduced(2), 1);
@@ -94,16 +95,7 @@ void PropUI::mouseDown(const MouseEvent& e)
 {
 	BaseItemUI::mouseDown(e);
 
-	if (e.mods.isRightButtonDown())
-	{
-		LightBlockModelLibrary::showSourcesAndGet(nullptr, [this](ControllableContainer* cc)
-			{
-				LightBlockColorProvider* p = dynamic_cast<LightBlockColorProvider*>(cc);
-				if (p != nullptr) item->activeProvider->setValueFromTarget(p);
-			}
-		);
-	}
-	else if (e.mods.isLeftButtonDown())
+	if (e.mods.isLeftButtonDown())
 	{
 		if (e.mods.isAltDown())
 		{
@@ -116,6 +108,16 @@ void PropUI::mouseUp(const MouseEvent& e)
 {
 	BaseItemUI::mouseUp(e);
 	item->findPropMode->setValue(false);
+}
+
+void PropUI::addContextMenuItems(PopupMenu& m)
+{
+	PopupMenu controlMenu;
+	controlMenu.addItem("Upload Playback", [this]() { item->uploadPlaybackTrigger->trigger(); });
+	controlMenu.addItem("Power Off", [this]() { item->powerOffTrigger->trigger(); });
+	controlMenu.addItem("Restart", [this]() { item->restartTrigger->trigger(); });
+
+	m.addSubMenu("Control", controlMenu);
 }
 
 void PropUI::resizedInternalHeader(Rectangle<int>& r)
@@ -139,10 +141,10 @@ void PropUI::resizedInternalContent(Rectangle<int>& r)
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (c == item->isBaking || c == item->bakingProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == imuRef || c == item->isFlashing || c == item->flashingProgression) repaint();
-	else if (c == item->type)
+	if (c == item->isGeneratingPlayback || c == item->playbackGenProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == item->motionRef /*|| c == item->isFlashing || c == item->flashingProgression*/) repaint();
+	else if (c == item->shape)
 	{
-		Prop::Shape shape = item->type->getValueDataAsEnum<Prop::Shape>();
+		Prop::Shape shape = item->shape->getValueDataAsEnum<Prop::Shape>();
 		setSize(shape == Prop::HOOP ? 100 : 50, 100);
 	}
 }

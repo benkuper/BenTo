@@ -2,22 +2,22 @@ ImplementManagerSingleton(Behaviour)
 
 bool BehaviourComponent::initInternal(JsonObject o)
 {
-    AddStringParam(paramName);
-    AddIntParam(comparator);
+    AddStringParamConfig(paramName);
+    AddIntParamConfig(comparator);
     // comparator.options = operatorOptions;
     // comparator.numOptions = OPERATOR_MAX;
 
-    AddFloatParam(compareValue);
-    AddFloatParam(validationTime);
-    AddBoolParam(alwaysTrigger);
+    AddFloatParamConfig(compareValue);
+    AddFloatParamConfig(validationTime);
+    AddBoolParamConfig(alwaysTrigger);
     AddBoolParam(valid);
     // valid.readOnly = true;
 
-    AddIntParam(triggerAction);
+    AddIntParamConfig(triggerAction);
     // triggerAction.options = triggerActionOptions;
     // triggerAction.numOptions = ActionMax;
 
-    AddStringParam(triggerValue);
+    AddStringParamConfig(triggerValue);
 
     updateTargetParameter();
 
@@ -148,7 +148,7 @@ void BehaviourComponent::trigger()
     {
         String cmd = triggerValue;
         cmd.replace("{value}", getParamString(targetParam));
-        ParsingHelper::processStringMessage(cmd, [this](var *data, int numData)
+        StringHelpers::processStringMessage(cmd, [this](var *data, int numData)
                                             { sendEvent(CommandLaunched, data, numData); });
     }
     break;

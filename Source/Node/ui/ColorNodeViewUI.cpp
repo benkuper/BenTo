@@ -25,7 +25,7 @@ void ColorNodeViewUI::paint(Graphics & g)
 	
 	if (propToPreview == nullptr || cn == nullptr) return;
 
-	int numLeds = propToPreview->resolution->intValue();
+	int numLeds = propToPreview->getResolution();
 	float ratio = getWidth()*1.0f / getHeight();
 	
 	Rectangle<int> lr(getFeedbackBounds());
@@ -38,6 +38,6 @@ void ColorNodeViewUI::paint(Graphics & g)
 	for (int i = 0; i < numLeds; i++)
 	{
 		g.setColour(colors[i]);
-		g.fillEllipse(lr.removeFromTop(ledSize).reduced(1).toFloat());
+		g.fillEllipse(lr.removeFromBottom(ledSize).reduced(1).toFloat());
 	}
 }

@@ -17,7 +17,6 @@ public:
 	DMXBlock(var params = var());
 	~DMXBlock();
 
-	String getTypeString() const override { return "DMX"; }
+	DECLARE_TYPE("DMX")
 
-	static DMXBlock * create(var params) { return new DMXBlock(params); }
 };

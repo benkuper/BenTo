@@ -39,7 +39,7 @@ ifeq ($(CONFIG),Debug)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DFILMSTRO_USE_FFMPEG=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.4.3b5" "-DJUCE_APP_VERSION_HEX=0x10403" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I../../JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DDEBUG=1" "-D_DEBUG=1" "-DFILMSTRO_USE_FFMPEG=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=2.0.0b1" "-DJUCE_APP_VERSION_HEX=0x20000" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I../../JUCE/modules -I../../Source -I../../External/asio -I../../External/serial/include -I../../External/servus/include -I../../External/ffmpeg/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := BenTo
 
@@ -47,7 +47,7 @@ ifeq ($(CONFIG),Debug)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lcurl -lServus $(LDFLAGS)
 
-  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
+  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
 
 ifeq ($(CONFIG),Release)
@@ -60,7 +60,7 @@ ifeq ($(CONFIG),Release)
     TARGET_ARCH := -m64
   endif
 
-  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DFILMSTRO_USE_FFMPEG=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=1.4.3b5" "-DJUCE_APP_VERSION_HEX=0x10403" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I../../JUCE/modules -I../../External/serial/include -I../../External/servus/include -I../../Source $(CPPFLAGS)
+  JUCE_CPPFLAGS := $(DEPFLAGS) "-DLINUX=1" "-DNDEBUG=1" "-DFILMSTRO_USE_FFMPEG=0" "-DJUCER_LINUX_MAKE_6D53C8B4=1" "-DJUCE_APP_VERSION=2.0.0b1" "-DJUCE_APP_VERSION_HEX=0x20000" $(shell $(PKG_CONFIG) --cflags alsa freetype2 gl libcurl webkit2gtk-4.0 gtk+-x11-3.0) -pthread -I../../JuceLibraryCode -I../../Modules -I../../JUCE/modules -I../../Source -I../../External/asio -I../../External/serial/include -I../../External/servus/include -I../../External/ffmpeg/include $(CPPFLAGS)
   JUCE_CPPFLAGS_APP :=  "-DJucePlugin_Build_VST=0" "-DJucePlugin_Build_VST3=0" "-DJucePlugin_Build_AU=0" "-DJucePlugin_Build_AUv3=0" "-DJucePlugin_Build_AAX=0" "-DJucePlugin_Build_Standalone=0" "-DJucePlugin_Build_Unity=0" "-DJucePlugin_Build_LV2=0"
   JUCE_TARGET_APP := BenTo
 
@@ -68,36 +68,22 @@ ifeq ($(CONFIG),Release)
   JUCE_CXXFLAGS += $(JUCE_CFLAGS) -std=c++17 $(CXXFLAGS)
   JUCE_LDFLAGS += $(TARGET_ARCH) -L$(JUCE_BINDIR) -L$(JUCE_LIBDIR) -L../../External/servus/lib/linux -L/usr/lib/x86_64-linux-gnu/ -L../../Modules/juce_simpleweb/libs/Linux/x86_64 $(shell $(PKG_CONFIG) --libs alsa freetype2 gl libcurl) -fvisibility=hidden -Wl,-rpath,"lib" -Wl,--as-needed -lrt -ldl -lpthread -lssl -lcrypto -lcurl -lServus $(LDFLAGS)
 
-  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(TARGET) $(JUCE_OBJDIR)
+  CLEANCMD = rm -rf $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(JUCE_OBJDIR)
 endif
 
 OBJECTS_APP := \
-  $(JUCE_OBJDIR)/WasmManagerUI_2f57d580.o \
-  $(JUCE_OBJDIR)/WasmManager_efaa0975.o \
-  $(JUCE_OBJDIR)/WasmScript_cd27320d.o \
-  $(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o \
-  $(JUCE_OBJDIR)/IdentificationRuleManager_8bd0c2cb.o \
-  $(JUCE_OBJDIR)/serial_82f97e54.o \
-  $(JUCE_OBJDIR)/list_ports_linux_203b2613.o \
-  $(JUCE_OBJDIR)/list_ports_osx_d93ade33.o \
-  $(JUCE_OBJDIR)/list_ports_win_e6502c6b.o \
-  $(JUCE_OBJDIR)/unix_d5f5c79d.o \
-  $(JUCE_OBJDIR)/win_4c1bdbbb.o \
-  $(JUCE_OBJDIR)/cobs_e77e740f.o \
-  $(JUCE_OBJDIR)/SerialDevice_e404848a.o \
-  $(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o \
-  $(JUCE_OBJDIR)/SerialManager_fd829543.o \
-  $(JUCE_OBJDIR)/ZeroconfManager_68129d03.o \
+  $(JUCE_OBJDIR)/LinkableParameterEditor_c2d1703c.o \
+  $(JUCE_OBJDIR)/ParameterLink_562ab838.o \
+  $(JUCE_OBJDIR)/IdentificationRuleManager_b6910e67.o \
+  $(JUCE_OBJDIR)/CommonIncludes_97d07afb.o \
   $(JUCE_OBJDIR)/AudioManagerHardwareEditor_ce81cbaf.o \
   $(JUCE_OBJDIR)/AudioManager_d6082e39.o \
   $(JUCE_OBJDIR)/VideoIncludes_4f736913.o \
-  $(JUCE_OBJDIR)/TimelineIncludes_a63c4bb.o \
+  $(JUCE_OBJDIR)/SequenceIncludes_1f9bb4bb.o \
   $(JUCE_OBJDIR)/NodeIncludes_261ff85b.o \
-  $(JUCE_OBJDIR)/BlockVizPanel_f0c2e5be.o \
   $(JUCE_OBJDIR)/LightBlockIncludes_4bd1d97b.o \
   $(JUCE_OBJDIR)/VideoPreviewPanel_e2748d5e.o \
   $(JUCE_OBJDIR)/PropIncludes_3ad3cfb.o \
-  $(JUCE_OBJDIR)/CommonIncludes_8106e45f.o \
   $(JUCE_OBJDIR)/BentoSettings_c196016a.o \
   $(JUCE_OBJDIR)/BentoEngine_f46ef489.o \
   $(JUCE_OBJDIR)/MainComponent_a6ffb4a5.o \
@@ -117,6 +103,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_core_f26d17db.o \
   $(JUCE_OBJDIR)/include_juce_cryptography_8cb807a8.o \
   $(JUCE_OBJDIR)/include_juce_data_structures_7471b1e3.o \
+  $(JUCE_OBJDIR)/include_juce_dmx_a4e5ae5d.o \
   $(JUCE_OBJDIR)/include_juce_events_fd7d695.o \
   $(JUCE_OBJDIR)/include_juce_graphics_f817e147.o \
   $(JUCE_OBJDIR)/include_juce_gui_basics_e3f79785.o \
@@ -128,6 +115,7 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/include_juce_organicui3_5ac6ddd0.o \
   $(JUCE_OBJDIR)/include_juce_organicui4_5ad4f551.o \
   $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o \
+  $(JUCE_OBJDIR)/include_juce_serial_b0720df0.o \
   $(JUCE_OBJDIR)/include_juce_sharedtexture_e491fa4.o \
   $(JUCE_OBJDIR)/include_juce_simpleweb_acec7570.o \
   $(JUCE_OBJDIR)/include_juce_simpleweb2_f0c24e8c.o \
@@ -147,84 +135,24 @@ $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) : $(OBJECTS_APP) $(JUCE_OBJDIR)/execinfo.cmd $
 	-$(V_AT)mkdir -p $(JUCE_OUTDIR)
 	$(V_AT)$(CXX) -o $(JUCE_OUTDIR)/$(JUCE_TARGET_APP) $(OBJECTS_APP) $(JUCE_LDFLAGS) $(shell cat $(JUCE_OBJDIR)/execinfo.cmd) $(JUCE_LDFLAGS_APP) $(RESOURCES) $(TARGET_ARCH)
 
-$(JUCE_OBJDIR)/WasmManagerUI_2f57d580.o: ../../Source/WebAssembly/ui/WasmManagerUI.cpp
+$(JUCE_OBJDIR)/LinkableParameterEditor_c2d1703c.o: ../../Source/ParameterLink/ui/LinkableParameterEditor.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling WasmManagerUI.cpp"
+	@echo "Compiling LinkableParameterEditor.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WasmManager_efaa0975.o: ../../Source/WebAssembly/WasmManager.cpp
+$(JUCE_OBJDIR)/ParameterLink_562ab838.o: ../../Source/ParameterLink/ParameterLink.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling WasmManager.cpp"
+	@echo "Compiling ParameterLink.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/WasmScript_cd27320d.o: ../../Source/WebAssembly/WasmScript.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling WasmScript.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IdentificationRule_c7b013cc.o: ../../Source/Identification/IdentificationRule.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling IdentificationRule.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/IdentificationRuleManager_8bd0c2cb.o: ../../Source/Identification/IdentificationRuleManager.cpp
+$(JUCE_OBJDIR)/IdentificationRuleManager_b6910e67.o: ../../Source/Common/Identification/IdentificationRuleManager.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling IdentificationRuleManager.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/serial_82f97e54.o: ../../Source/Common/Serial/lib/serial/serial.cc
+$(JUCE_OBJDIR)/CommonIncludes_97d07afb.o: ../../Source/Common/CommonIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling serial.cc"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/list_ports_linux_203b2613.o: ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling list_ports_linux.cc"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/list_ports_osx_d93ade33.o: ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling list_ports_osx.cc"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/list_ports_win_e6502c6b.o: ../../Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling list_ports_win.cc"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/unix_d5f5c79d.o: ../../Source/Common/Serial/lib/serial/impl/unix.cc
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling unix.cc"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/win_4c1bdbbb.o: ../../Source/Common/Serial/lib/serial/impl/win.cc
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling win.cc"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/cobs_e77e740f.o: ../../Source/Common/Serial/lib/cobs/cobs.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling cobs.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SerialDevice_e404848a.o: ../../Source/Common/Serial/SerialDevice.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling SerialDevice.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SerialDeviceParameter_2de97789.o: ../../Source/Common/Serial/SerialDeviceParameter.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling SerialDeviceParameter.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/SerialManager_fd829543.o: ../../Source/Common/Serial/SerialManager.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling SerialManager.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/ZeroconfManager_68129d03.o: ../../Source/Common/Zeroconf/ZeroconfManager.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling ZeroconfManager.cpp"
+	@echo "Compiling CommonIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/AudioManagerHardwareEditor_ce81cbaf.o: ../../Source/Audio/ui/AudioManagerHardwareEditor.cpp
@@ -242,19 +170,14 @@ $(JUCE_OBJDIR)/VideoIncludes_4f736913.o: ../../Source/Video/VideoIncludes.cpp
 	@echo "Compiling VideoIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
-$(JUCE_OBJDIR)/TimelineIncludes_a63c4bb.o: ../../Source/Timeline/TimelineIncludes.cpp
+$(JUCE_OBJDIR)/SequenceIncludes_1f9bb4bb.o: ../../Source/Sequence/SequenceIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling TimelineIncludes.cpp"
+	@echo "Compiling SequenceIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/NodeIncludes_261ff85b.o: ../../Source/Node/NodeIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling NodeIncludes.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/BlockVizPanel_f0c2e5be.o: ../../Source/BlockViz/BlockVizPanel.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling BlockVizPanel.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LightBlockIncludes_4bd1d97b.o: ../../Source/LightBlock/LightBlockIncludes.cpp
@@ -270,11 +193,6 @@ $(JUCE_OBJDIR)/VideoPreviewPanel_e2748d5e.o: ../../Source/VideoPreview/VideoPrev
 $(JUCE_OBJDIR)/PropIncludes_3ad3cfb.o: ../../Source/Prop/PropIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling PropIncludes.cpp"
-	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
-
-$(JUCE_OBJDIR)/CommonIncludes_8106e45f.o: ../../Source/CommonIncludes.cpp
-	-$(V_AT)mkdir -p $(@D)
-	@echo "Compiling CommonIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/BentoSettings_c196016a.o: ../../Source/BentoSettings.cpp
@@ -372,6 +290,11 @@ $(JUCE_OBJDIR)/include_juce_data_structures_7471b1e3.o: ../../JuceLibraryCode/in
 	@echo "Compiling include_juce_data_structures.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/include_juce_dmx_a4e5ae5d.o: ../../JuceLibraryCode/include_juce_dmx.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_dmx.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/include_juce_events_fd7d695.o: ../../JuceLibraryCode/include_juce_events.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling include_juce_events.cpp"
@@ -427,6 +350,11 @@ $(JUCE_OBJDIR)/include_juce_osc_f3df604d.o: ../../JuceLibraryCode/include_juce_o
 	@echo "Compiling include_juce_osc.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
+$(JUCE_OBJDIR)/include_juce_serial_b0720df0.o: ../../JuceLibraryCode/include_juce_serial.cpp
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling include_juce_serial.cpp"
+	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
 $(JUCE_OBJDIR)/include_juce_sharedtexture_e491fa4.o: ../../JuceLibraryCode/include_juce_sharedtexture.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling include_juce_sharedtexture.cpp"
@@ -457,12 +385,17 @@ $(JUCE_OBJDIR)/execinfo.cmd:
 	-@if [ -z "$(V_AT)" ]; then echo "Checking if we need to link libexecinfo"; fi
 	$(V_AT)printf "int main() { return 0; }" | $(CXX) -x c++ -o $(@D)/execinfo.x -lexecinfo - >/dev/null 2>&1 && printf -- "-lexecinfo" > "$@" || touch "$@"
 
+$(JUCE_OBJDIR)/cxxfs.cmd:
+	-$(V_AT)mkdir -p $(@D)
+	-@if [ -z "$(V_AT)" ]; then echo "Checking if we need to link stdc++fs"; fi
+	$(V_AT)printf "int main() { return 0; }" | $(CXX) -x c++ -o $(@D)/cxxfs.x -lstdc++fs - >/dev/null 2>&1 && printf -- "-lstdc++fs" > "$@" || touch "$@"
+
 clean:
 	@echo Cleaning BenTo
 	$(V_AT)$(CLEANCMD)
 
 strip:
 	@echo Stripping BenTo
-	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(TARGET)
+	-$(V_AT)$(STRIP) --strip-unneeded $(JUCE_OUTDIR)/$(JUCE_TARGET_APP)
 
 -include $(OBJECTS_APP:%.o=%.d)

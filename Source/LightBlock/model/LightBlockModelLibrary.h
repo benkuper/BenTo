@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    LightBlockModelLibrary.h
-    Created: 10 Apr 2018 10:57:18pm
-    Author:  Ben
+	LightBlockModelLibrary.h
+	Created: 10 Apr 2018 10:57:18pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -14,18 +14,19 @@ class LightBlockModelLibrary :
 	public ControllableContainer
 {
 public:
-	juce_DeclareSingleton(LightBlockModelLibrary, true)
+	juce_DeclareSingleton(LightBlockModelLibrary, true);
+
 	LightBlockModelLibrary();
 	~LightBlockModelLibrary();
-	
-	LightBlockModelGroup genericBlocks;
-	UserLightBlockModelManager liveFeedBlocks;
+
+	LightBlockModelGroup patternBlocks;
+	//UserLightBlockModelManager SharedTextureBlocks;
 	UserLightBlockModelManager videoBlocks;
-	UserLightBlockModelManager pictureBlocks;	
+	UserLightBlockModelManager pictureBlocks;
 	UserLightBlockModelManager nodeBlocks;
-	UserLightBlockModelManager scriptBlocks;
-	WasmBlockManager wasmBlocks;
-	UserLightBlockModelManager timelineBlocks;
+	UserLightBlockModelManager streamingScriptBlocks;
+	EmbeddedScriptBlockManager embeddedScriptBlocks;
+	UserLightBlockModelManager sequenceBlocks;
 
 
 	//Generic / Patterns
@@ -36,20 +37,21 @@ public:
 	std::unique_ptr<LightBlockModel> pointBlock;
 	std::unique_ptr<LightBlockModel> multiPointBlock;
 	std::unique_ptr<LightBlockModel> rangeBlock;
+	std::unique_ptr<LightBlockModel> ledRangeBlock;
 
-	//Generic / Filters
-	LightBlockModelGroup genericFilterBlocks;
-	std::unique_ptr<LightBlockModel> remapBlock;
-	std::unique_ptr<LightBlockModel> hsvBlock;
-	std::unique_ptr<LightBlockModel> brightContrastBlock;
+	////Generic / Filters
+	//LightBlockModelGroup genericFilterBlocks;
+	//std::unique_ptr<LightBlockModel> remapBlock;
+	//std::unique_ptr<LightBlockModel> hsvBlock;
+	//std::unique_ptr<LightBlockModel> brightContrastBlock;
 
 	//Live Feed
-	//std::unique_ptr<LightBlockModel> videoBlock;
+	//std::unique_ptr<LightBlockModel> VideoFileBlock;
 	//std::unique_ptr<LightBlockModel> shapeBlock;
 	//std::unique_ptr<LightBlockModel> dmxBlock;
 
 	//Interface
-	IntParameter * iconSize;
+	IntParameter* iconSize;
 
 	void clear() override;
 
@@ -57,14 +59,14 @@ public:
 	void loadJSONDataInternal(var data) override;
 
 	Array<LightBlockModel*> getAllModels(bool includeUserModels = true);
-	Array<LightBlockModel *> getAllFilters(bool includeUserModels = true);
+	Array<LightBlockModel*> getAllFilters(bool includeUserModels = true);
 	LightBlockModel* getModelWithName(const String& modelName);
-	LightBlockModel * getFilterWithName(const String &modelName);
+	LightBlockModel* getFilterWithName(const String& modelName);
 
 
-	static void showSourcesAndGet(ControllableContainer * sourceCC, std::function<void(ControllableContainer*)> returnFunc);
+	static void showSourcesAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc);
 	static void showFiltersAndGet(ControllableContainer* sourceCC, std::function<void(ControllableContainer*)> returnFunc);
-	static Array<LightBlockColorProvider *> fillProvidersMenu(PopupMenu &menu, bool includePresets, bool includeSources, bool includeFilters, int startIndex = 1);
-	static Array<LightBlockColorProvider *> fillUserLightBlockManagerMenu(UserLightBlockModelManager * manager, PopupMenu &menu, bool includePresets, int startIndex);
+	static Array<LightBlockColorProvider*> fillProvidersMenu(PopupMenu& menu, bool includePresets, bool includeSources, bool includeFilters, int startIndex = 1);
+	static Array<LightBlockColorProvider*> fillUserLightBlockManagerMenu(UserLightBlockModelManager* manager, PopupMenu& menu, bool includePresets, int startIndex);
 
 };

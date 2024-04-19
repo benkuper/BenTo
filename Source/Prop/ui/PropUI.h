@@ -19,12 +19,13 @@ public:
 
 	PropViz viz;
 	std::unique_ptr<IntParameterLabelUI> idUI;
-	BoolParameter* imuRef;
 	std::unique_ptr<FloatSliderUI> batteryUI;
 
 	void paintOverChildren(Graphics &g) override;
 	void mouseDown(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
+
+	void addContextMenuItems(PopupMenu& m) override;
 
 	void resizedInternalHeader(Rectangle<int> &r) override;
 	void resizedInternalContent(Rectangle<int> &r) override;

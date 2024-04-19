@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    NodeIncludes.cpp
-    Created: 20 May 2021 9:00:20am
-    Author:  bkupe
+	NodeIncludes.cpp
+	Created: 20 May 2021 9:00:20am
+	Author:  bkupe
 
   ==============================================================================
 */
@@ -29,6 +29,7 @@
 #include "nodes/colorRemap/ColorRemapNode.cpp"
 #include "nodes/composite/CompositeNode.cpp"
 #include "nodes/positionRemap/PositionRemapNode.cpp"
+#include "nodes/split/SplitNode.cpp"
 
 #include "nodes/model/ui/ModelNodeUI.cpp"
 

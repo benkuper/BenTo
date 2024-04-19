@@ -19,7 +19,7 @@ public:
 	~LightBlockModelUI();
 
 	Image modelImage;
-	TimelineBlock* timelineBlock;
+	BentoSequenceBlock* sequenceBlock;
 
 	//static const Identifier dragAndDropID;
 
@@ -33,7 +33,10 @@ public:
 
 	void controllableFeedbackUpdateInternal(Controllable* c) override;
 
-	void mouseDown(const MouseEvent &e) override;
+	void mouseDown(const MouseEvent& e) override;
 	void mouseDoubleClick(const MouseEvent &e) override;
+
+	void addContextMenuItems(PopupMenu&m) override;
+	void handleContextMenuResult(int result) override;
 };
 

@@ -36,6 +36,7 @@ public:
 	
 	NodeViewUI * createUI() override;
 
-	String getTypeString() const override { return "Model"; }
+	DECLARE_TYPE("Model");
+
 	static ModelNode * create(var params) { return new ModelNode(params); }
 };

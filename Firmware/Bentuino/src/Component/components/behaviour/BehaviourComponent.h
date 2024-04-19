@@ -93,12 +93,13 @@ FillOSCQueryBoolParam(alwaysTrigger);
 FillOSCQueryBoolParamReadOnly(valid);
 FillOSCQueryEnumParam(triggerAction, triggerActionOptions, ActionMax);
 FillOSCQueryStringParam(triggerValue);
-FillOSCQueryInternalEnd
-}
-;
+FillOSCQueryInternalEnd;
+
+};
 
 DeclareComponentManager(Behaviour, BEHAVIOUR, behaviours, behaviour)
 
+      void addItemInternal(int index) {  };
     void onChildComponentEvent(const ComponentEvent &e) override;
 DeclareComponentEventTypes(CommandLaunched);
 DeclareComponentEventNames("CommandLaunched");

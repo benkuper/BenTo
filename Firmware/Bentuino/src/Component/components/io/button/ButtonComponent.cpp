@@ -17,6 +17,8 @@ bool ButtonComponent::initInternal(JsonObject o)
     // longPress.readOnly = true;
 
     AddIntParam(veryLongPress);
+    
+    AddBoolParamConfig(canShutDown);
     // veryLongPress.readOnly = true;
 
     return result;
@@ -31,13 +33,11 @@ void ButtonComponent::updateInternal()
         if (!longPress && millis() > timeAtPress + LONGPRESS_TIME)
         {
             SetParam(longPress, true);
-            sendEvent(LongPress);
         }
 
         if (!veryLongPress && millis() > timeAtPress + VERYLONGPRESS_TIME)
         {
             SetParam(veryLongPress, true);
-            sendEvent(VeryLongPress);
         }
     }
 
@@ -46,13 +46,11 @@ void ButtonComponent::updateInternal()
         if (multiPressCount > 0)
         {
             SetParam(multiPressCount, 0);
-            var data[1]{multiPressCount};
-            sendEvent(MultiPress, data, 1);
         }
     }
 }
 
-void ButtonComponent::paramValueChangedInternal(void * param)
+void ButtonComponent::paramValueChangedInternal(void *param)
 {
     IOComponent::paramValueChangedInternal(param);
 
@@ -66,14 +64,12 @@ void ButtonComponent::paramValueChangedInternal(void * param)
         {
             timeAtPress = millis();
             SetParam(multiPressCount, multiPressCount + 1);
-            var data[1]{multiPressCount};
-            sendEvent(MultiPress, data, 1);
         }
         else
         {
             if (millis() < timeAtPress + SHORTPRESS_TIME)
             {
-                sendEvent(ShortPress);
+                // sendEvent(ShortPress); //should be trigger
             }
         }
     }

@@ -1,25 +1,26 @@
 /*
   ==============================================================================
 
-    LightBlockLibraryUI.cpp
-    Created: 10 Apr 2018 10:58:08pm
-    Author:  Ben
+	LightBlockLibraryUI.cpp
+	Created: 10 Apr 2018 10:58:08pm
+	Author:  Ben
 
   ==============================================================================
 */
 
-LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, LightBlockModelLibrary * library) :
+#include "LightBlock/LightBlockIncludes.h"
+
+LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String& contentName, LightBlockModelLibrary* library) :
 	ShapeShifterContentComponent(contentName),
 	library(library),
-	genericGroupUI(&library->genericBlocks),
-	liveFeedManagerUI("Live Feed", &library->liveFeedBlocks),
-	videoManagerUI("Video", &library->videoBlocks),
-	pictureBlocksManagerUI("Pictures", &library->pictureBlocks),
+	patternGroupUI(&library->patternBlocks),
+	sequenceBlocksManagerUI("Sequences", &library->sequenceBlocks),
 	nodeBlocksManagerUI("Nodes", &library->nodeBlocks),
-	scriptBlocksManagerUI("Scripts", &library->scriptBlocks),
-	wasmBlocksManagerUI("Wasm", &library->wasmBlocks),
-	timelineBlocksManagerUI("Timelines", &library->timelineBlocks),
-	genericFilterGroupUI(&library->genericFilterBlocks)
+	pictureBlocksManagerUI("Pictures", &library->pictureBlocks),
+	streamingScriptBlocksManagerUI("Streaming Scripts", &library->streamingScriptBlocks),
+	embeddedScriptBlocksManagerUI("Embedded Scripts (Experimental)", &library->embeddedScriptBlocks),
+	videoManagerUI("Videos (Experimental)", &library->videoBlocks)
+	//genericFilterGroupUI(&library->genericFilterBlocks)
 {
 	iconSizeUI.reset(library->iconSize->createSlider());
 	addAndMakeVisible(iconSizeUI.get());
@@ -30,37 +31,34 @@ LightBlockModelLibraryUI::LightBlockModelLibraryUI(const String &contentName, Li
 	viewport.setScrollBarThickness(10);
 	addAndMakeVisible(viewport);
 
-	genericGroupUI.setThumbSize(library->iconSize->intValue());
-	liveFeedManagerUI.setThumbSize(library->iconSize->intValue());
-	videoManagerUI.setThumbSize(library->iconSize->intValue());
-	pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	patternGroupUI.setThumbSize(library->iconSize->intValue());
+	sequenceBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 	nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-	scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-	wasmBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-	timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-	genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
+	pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	streamingScriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	embeddedScriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+	videoManagerUI.setThumbSize(library->iconSize->intValue());
+	//genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
 
 
-	container.addAndMakeVisible(&genericGroupUI);
-
-	container.addAndMakeVisible(&liveFeedManagerUI);
-	container.addAndMakeVisible(&videoManagerUI);
+	container.addAndMakeVisible(&patternGroupUI);
+	container.addAndMakeVisible(&sequenceBlocksManagerUI);
 	container.addAndMakeVisible(&pictureBlocksManagerUI);
 	container.addAndMakeVisible(&nodeBlocksManagerUI);
-	container.addAndMakeVisible(&scriptBlocksManagerUI);
-	container.addAndMakeVisible(&wasmBlocksManagerUI);
-	container.addAndMakeVisible(&timelineBlocksManagerUI);
+	container.addAndMakeVisible(&streamingScriptBlocksManagerUI);
+	container.addAndMakeVisible(&embeddedScriptBlocksManagerUI);
+	container.addAndMakeVisible(&videoManagerUI);
 
-	container.addAndMakeVisible(&genericFilterGroupUI);
+	//container.addAndMakeVisible(&genericFilterGroupUI);
 
 
-	liveFeedManagerUI.addComponentListener(this);
-	videoManagerUI.addComponentListener(this);
+
+	sequenceBlocksManagerUI.addComponentListener(this);
 	pictureBlocksManagerUI.addComponentListener(this);
 	nodeBlocksManagerUI.addComponentListener(this);
-	scriptBlocksManagerUI.addComponentListener(this);
-	wasmBlocksManagerUI.addComponentListener(this);
-	timelineBlocksManagerUI.addComponentListener(this);
+	streamingScriptBlocksManagerUI.addComponentListener(this);
+	embeddedScriptBlocksManagerUI.addComponentListener(this);
+	videoManagerUI.addComponentListener(this);
 
 	library->addAsyncCoalescedContainerListener(this);
 }
@@ -70,7 +68,7 @@ LightBlockModelLibraryUI::~LightBlockModelLibraryUI()
 	if (LightBlockModelLibrary::getInstanceWithoutCreating() != nullptr) library->removeAsyncContainerListener(this);
 }
 
-void LightBlockModelLibraryUI::paint(Graphics & g)
+void LightBlockModelLibraryUI::paint(Graphics& g)
 {
 }
 
@@ -87,41 +85,39 @@ void LightBlockModelLibraryUI::resized()
 	r.setY(0);
 	r = r.withTrimmedRight(10);
 
-	if (genericGroupUI.getWidth() == 0) genericGroupUI.setBounds(r);
-	genericGroupUI.setBounds(r.withHeight(genericGroupUI.getHeight()));
-	r.translate(0, genericGroupUI.getHeight() + 10);
+	if (patternGroupUI.getWidth() == 0) patternGroupUI.setBounds(r);
+	patternGroupUI.setBounds(r.withHeight(patternGroupUI.getHeight()));
+	r.translate(0, patternGroupUI.getHeight() + 10);
 
-	liveFeedManagerUI.setBounds(r.withHeight(liveFeedManagerUI.getHeight()));
-	r.translate(0, liveFeedManagerUI.getHeight() + 10);
-	
-	videoManagerUI.setBounds(r.withHeight(videoManagerUI.getHeight()));
-	r.translate(0, videoManagerUI.getHeight() + 10);
-	
+	sequenceBlocksManagerUI.setBounds(r.withHeight(sequenceBlocksManagerUI.getHeight()));
+	r.translate(0, sequenceBlocksManagerUI.getHeight() + 10);
+
+
 	pictureBlocksManagerUI.setBounds(r.withHeight(pictureBlocksManagerUI.getHeight()));
 	r.translate(0, pictureBlocksManagerUI.getHeight() + 10);
 
 	nodeBlocksManagerUI.setBounds(r.withHeight(nodeBlocksManagerUI.getHeight()));
 	r.translate(0, nodeBlocksManagerUI.getHeight() + 10);
 
-	scriptBlocksManagerUI.setBounds(r.withHeight(scriptBlocksManagerUI.getHeight()));
-	r.translate(0, scriptBlocksManagerUI.getHeight() + 10);
-	
-	wasmBlocksManagerUI.setBounds(r.withHeight(wasmBlocksManagerUI.getHeight()));
-	r.translate(0, wasmBlocksManagerUI.getHeight() + 10);
+	streamingScriptBlocksManagerUI.setBounds(r.withHeight(streamingScriptBlocksManagerUI.getHeight()));
+	r.translate(0, streamingScriptBlocksManagerUI.getHeight() + 10);
 
-	timelineBlocksManagerUI.setBounds(r.withHeight(timelineBlocksManagerUI.getHeight()));
-	r.translate(0, timelineBlocksManagerUI.getHeight() + 10);
+	embeddedScriptBlocksManagerUI.setBounds(r.withHeight(embeddedScriptBlocksManagerUI.getHeight()));
+	r.translate(0, embeddedScriptBlocksManagerUI.getHeight() + 10);
 
-	r.translate(0, 10);
-	if (genericFilterGroupUI.getWidth() == 0) genericFilterGroupUI.setBounds(r);
-	genericFilterGroupUI.setBounds(r.withHeight(genericFilterGroupUI.getHeight()));
-	r.translate(0, genericFilterGroupUI.getHeight() + 10);
+	videoManagerUI.setBounds(r.withHeight(videoManagerUI.getHeight()));
+	r.translate(0, videoManagerUI.getHeight() + 10);
+
+	/*r.translate(0, 10);
+	//if (genericFilterGroupUI.getWidth() == 0) genericFilterGroupUI.setBounds(r);
+	//genericFilterGroupUI.setBounds(r.withHeight(genericFilterGroupUI.getHeight()));*/
+	//r.translate(0, genericFilterGroupUI.getHeight() + 10);
 
 	container.setSize(getWidth(), r.getBottom());
 	viewport.setBounds(getLocalBounds().withTrimmedTop(cy));
 }
 
-void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent & e)
+void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent& e)
 {
 	switch (e.type)
 	{
@@ -129,15 +125,14 @@ void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent & e)
 	{
 		if (e.targetControllable == library->iconSize)
 		{
-			genericGroupUI.setThumbSize(library->iconSize->intValue());
-			liveFeedManagerUI.setThumbSize(library->iconSize->intValue());
-			videoManagerUI.setThumbSize(library->iconSize->intValue());
+			patternGroupUI.setThumbSize(library->iconSize->intValue());
+			sequenceBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			pictureBlocksManagerUI.setThumbSize(library->iconSize->intValue());
 			nodeBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-			scriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-			wasmBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-			timelineBlocksManagerUI.setThumbSize(library->iconSize->intValue());
-			genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
+			streamingScriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+			embeddedScriptBlocksManagerUI.setThumbSize(library->iconSize->intValue());
+			videoManagerUI.setThumbSize(library->iconSize->intValue());
+			//genericFilterGroupUI.setThumbSize(library->iconSize->intValue());
 
 			resized();
 		}
@@ -149,7 +144,7 @@ void LightBlockModelLibraryUI::newMessage(const ContainerAsyncEvent & e)
 	}
 }
 
-void LightBlockModelLibraryUI::componentMovedOrResized(Component &, bool, bool)
+void LightBlockModelLibraryUI::componentMovedOrResized(Component&, bool, bool)
 {
 	resized();
 }

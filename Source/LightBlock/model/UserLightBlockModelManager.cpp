@@ -8,7 +8,8 @@
   ==============================================================================
 */
 
-#include "JuceHeader.h"
+#include "LightBlock/LightBlockIncludes.h"
+#include "Sequence/SequenceIncludes.h"
 
 UserLightBlockModelManager::UserLightBlockModelManager(const String &name, BlockType type) :
 	BaseManager(name),
@@ -46,25 +47,25 @@ LightBlockModel * UserLightBlockModelManager::createItem()
 		
 		return n;
 	}
-	case SCRIPT: return new ScriptBlock();
-	case TIMELINE:
+	case STREAMING_SCRIPT: return new StreamingScriptBlock();
+	case SEQUENCE:
 	{
-		TimelineBlock * t = new TimelineBlock();
+		BentoSequenceBlock * t = new BentoSequenceBlock();
 
 		if (!Engine::mainEngine->isLoadingFile)
 		{
-			ShapeShifterManager::getInstance()->showContent(TimelineEditor::getTypeStringStatic());
-			TimelineEditor * te = (TimelineEditor *)ShapeShifterManager::getInstance()->getContentForName(TimelineEditor::getTypeStringStatic());
+			ShapeShifterManager::getInstance()->showContent(BentoSequenceEditor::getTypeStringStatic());
+			BentoSequenceEditor * te = (BentoSequenceEditor*)ShapeShifterManager::getInstance()->getContentForName(BentoSequenceEditor::getTypeStringStatic());
 			if (te != nullptr) te->setSequence(t->sequence.get());
 		}
 		
 		return t;
 	}
 
-	case LIVE_FEED: return new LiveFeedBlock();
-	case VIDEO: return new VideoBlock();
+	case LIVE_FEED: return new SharedTextureBlock();
+	case VIDEO: return new VideoFileBlock();
 
-	case WASM: return new WasmBlock();
+	case EMBEDDED_SCRIPT: return new EmbeddedScriptBlock();
 
 	default:
 		break;
@@ -106,9 +107,9 @@ void UserLightBlockModelManager::loadJSONDataInternal(var data)
 			DBG("Edit node block");
 			NodeBlockEditor * ne = (NodeBlockEditor *)ShapeShifterManager::getInstance()->getContentForName(NodeBlockEditor::getTypeStringStatic());
 			if (ne != nullptr) ne->setNodeBlock(nb);
-		}else if(TimelineBlock * t = dynamic_cast<TimelineBlock *>(m))
+		}else if(SequenceBlock * t = dynamic_cast<SequenceBlock *>(m))
 		{
-			DBG("Edit timeline block"); 
+			DBG("Edit sequence block"); 
 			TimelineEditor * te = (TimelineEditor *)ShapeShifterManager::getInstance()->getContentForName(TimelineEditor::getTypeStringStatic());
 			if (te != nullptr) te->setSequence(&t->sequence);
 		}

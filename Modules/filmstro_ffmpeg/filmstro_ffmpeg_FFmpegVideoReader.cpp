@@ -49,7 +49,8 @@
 #include "../JuceLibraryCode/JuceHeader.h"
 
 #if FILMSTRO_USE_FFMPEG
-
+#pragma warning(push)
+#pragma warning(disable: 4996)
 // enable this to print a DBG statement for each packet containing stream ID and timestamp
 //#define DEBUG_LOG_PACKETS
 
@@ -491,7 +492,7 @@ int FFmpegVideoReader::DecoderThread::openCodecContext (AVCodecContext** decoder
 
 int FFmpegVideoReader::DecoderThread::decodeAudioPacket (AVPacket packet)
 {
-    int decoded   = packet.size;
+    //int decoded   = packet.size;
     int outputNumSamples    = 0;
 
     int response = avcodec_send_packet(audioContext, &packet);
@@ -554,7 +555,7 @@ double FFmpegVideoReader::DecoderThread::decodeVideoPacket (AVPacket packet)
     
     double pts_sec = 0.0;
     while (response >= 0) {
-        int got_picture = 0;
+        //int got_picture = 0;
         AVFrame* frame = videoFrames [videoFifoWrite].second;
 
         response = avcodec_receive_frame(videoContext, frame);
@@ -777,5 +778,7 @@ AVCodecContext* FFmpegVideoReader::DecoderThread::getSubtitleContext () const
 {
     return subtitleContext;
 }
+
+#pragma warning(pop)
 
 #endif

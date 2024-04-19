@@ -25,17 +25,15 @@ public:
 	std::unique_ptr<IntSliderUI> iconSizeUI;
 
 	LightBlockModelLibrary * library;
-	LightBlockModelGroupUI genericGroupUI;
-
-	LightBlockModelManagerUI liveFeedManagerUI;
-	LightBlockModelManagerUI videoManagerUI;
-	LightBlockModelManagerUI pictureBlocksManagerUI;
+	LightBlockModelGroupUI patternGroupUI;
 	LightBlockModelManagerUI nodeBlocksManagerUI;
-	LightBlockModelManagerUI scriptBlocksManagerUI;
-	LightBlockModelManagerUI wasmBlocksManagerUI;
-	LightBlockModelManagerUI timelineBlocksManagerUI;
+	LightBlockModelManagerUI sequenceBlocksManagerUI;
+	LightBlockModelManagerUI pictureBlocksManagerUI;
+	LightBlockModelManagerUI streamingScriptBlocksManagerUI;
+	LightBlockModelManagerUI embeddedScriptBlocksManagerUI;
+	LightBlockModelManagerUI videoManagerUI;
 
-	LightBlockModelGroupUI genericFilterGroupUI;
+	//LightBlockModelGroupUI genericFilterGroupUI;
 
 
 	void paint(Graphics &g) override;

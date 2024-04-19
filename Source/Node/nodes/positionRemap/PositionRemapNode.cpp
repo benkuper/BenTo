@@ -37,14 +37,14 @@ PositionRemapNode::~PositionRemapNode()
 Array<Colour> PositionRemapNode::getColorsInternal(Prop * p, double time, var params, var localParams)
 {
 	int id = params.getProperty("forceID", p->globalID->intValue());
-	int resolution = p->resolution->intValue();
-	float bPosition = (float)getParameterValue(position, localParams);
-	float bSize = (float)getParameterValue(size, localParams);
-	int bExtend = jmax((int)getParameterValue(extendNum, localParams), 1);
-	float bInvertEvens = (bool)getParameterValue(invertEvens, localParams);
-	float bInvertOdds = (bool)getParameterValue(invertOdds, localParams);
+	int resolution = p->getResolution();
+	float bPosition = (float)getParameterValue(position, params, localParams);
+	float bSize = (float)getParameterValue(size, params, localParams);
+	int bExtend = jmax((int)getParameterValue(extendNum, params, localParams), 1);
+	float bInvertEvens = (bool)getParameterValue(invertEvens, params, localParams);
+	float bInvertOdds = (bool)getParameterValue(invertOdds, params, localParams);
 
-	var bgColorVar = getParameterValue(bgColor, localParams);
+	var bgColorVar = getParameterValue(bgColor, params, localParams);
 	Colour bBGColor = Colour::fromFloatRGBA(bgColorVar[0], bgColorVar[1], bgColorVar[2], bgColorVar[3]);
 
 	

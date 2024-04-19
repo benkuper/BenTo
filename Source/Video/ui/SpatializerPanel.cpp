@@ -1,4 +1,3 @@
-#include "SpatializerPanel.h"
 /*
   ==============================================================================
 
@@ -9,10 +8,13 @@
   ==============================================================================
 */
 
+#include "Video/VideoIncludes.h"
+#include "LightBlock/LightBlockIncludes.h"
+
 SpatializerPanel::SpatializerPanel(const String & name) :
 	ShapeShifterContentComponent(name),
 	needsRepaint(true),
-	textureBlock(nullptr)
+	videoBlock(nullptr)
 {
 	
 	setCurrentLayoutView(Spatializer::getInstance()->currentLayout);
@@ -45,9 +47,9 @@ void SpatializerPanel::setCurrentLayoutView(SpatLayout * layout)
 	}
 }
 
-void SpatializerPanel::setTextureBlock(TextureBlock* b)
+void SpatializerPanel::setVideoBlock(VideoBlock* b)
 {
-	textureBlock = b;
+	videoBlock = b;
 }
 
 void SpatializerPanel::paint(Graphics & g)
@@ -62,10 +64,10 @@ void SpatializerPanel::paint(Graphics & g)
 		return;
 	}
 
-	if (textureBlock != nullptr && textureBlock->inputIsLive->boolValue())
+	if (videoBlock != nullptr && videoBlock->inputIsLive->boolValue())
 	{
 		g.setColour(Colours::white.withAlpha(Spatializer::getInstance()->textureOpacity->floatValue()));
-		g.drawImage(textureBlock->getImage(), getLocalBounds().toFloat());
+		g.drawImage(videoBlock->getImage(), getLocalBounds().toFloat());
 	}
 }
 
@@ -103,7 +105,7 @@ void SpatializerPanel::newMessage(const SpatializerEvent & e)
 
 void SpatializerPanel::timerCallback()
 {
-	if (textureBlock == nullptr || !textureBlock->inputIsLive->boolValue()) return;
+	if (videoBlock == nullptr || !videoBlock->inputIsLive->boolValue()) return;
 	if (needsRepaint) repaint();
 }
 

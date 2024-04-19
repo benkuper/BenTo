@@ -68,15 +68,15 @@ bool MainComponent::perform(const InvocationInfo& info)
 
 	switch (info.commandID)
 	{
-	case BentoCommandIDs::updatePropDefinitions:
-	{
-		PropManager::getInstance()->startThread();
-	}
-	break;
+	//case BentoCommandIDs::updatePropDefinitions:
+	//{
+	//	PropManager::getInstance()->startThread();
+	//}
+	//break;
 
 	case BentoCommandIDs::gotoFlasher:
 	{
-		PropFlasher::getInstance()->selectThis();
+		ShapeShifterManager::getInstance()->showContent(PropFlasherPanel::getTypeStringStatic());
 	}
 	break;
 

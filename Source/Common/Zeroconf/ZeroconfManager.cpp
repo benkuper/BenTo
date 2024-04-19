@@ -8,7 +8,7 @@
   ==============================================================================
 */
 
-#include "ZeroconfManager.h"
+#include "Common/CommonIncludes.h"
 
 #ifdef JUCE_WINDOWS
 #include <Winsock2.h>

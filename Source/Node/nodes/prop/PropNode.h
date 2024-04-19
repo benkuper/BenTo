@@ -21,6 +21,6 @@ public:
 
 	Array<Colour> getColorsInternal(Prop * p, double time, var params, var localParams) override;
 
-	String getTypeString() const override { return "Prop"; }
+	DECLARE_TYPE("Prop");
 	static PropNode * create(var params) { return new PropNode(params); }
 };

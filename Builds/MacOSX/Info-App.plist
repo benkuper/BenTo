@@ -13,7 +13,7 @@
     <key>CFBundleIconFile</key>
     <string>Icon.icns</string>
     <key>CFBundleIdentifier</key>
-    <string>com.yourcompany.BenTo</string>
+    <string>benkuper.Bento</string>
     <key>CFBundleName</key>
     <string>BenTo</string>
     <key>CFBundleDisplayName</key>
@@ -23,9 +23,9 @@
     <key>CFBundleSignature</key>
     <string>????</string>
     <key>CFBundleShortVersionString</key>
-    <string>1.4.3b5</string>
+    <string>2.0.0b1</string>
     <key>CFBundleVersion</key>
-    <string>1.4.3b5</string>
+    <string>2.0.0b1</string>
     <key>NSHumanReadableCopyright</key>
     <string></string>
     <key>NSHighResolutionCapable</key>

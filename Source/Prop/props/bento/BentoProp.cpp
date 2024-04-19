@@ -9,29 +9,51 @@
 */
 
 #include "Prop/PropIncludes.h"
-
+#include "BentoProp.h"
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
 	serialDevice(nullptr),
-	flasher(this)
+	resolutionRef(nullptr),
+	brightnessRef(nullptr)
 {
-	updateRate = params.getProperty("updateRate", 50);
-	remoteHost = connectionCC.addStringParameter("Prop IP", "IP of the prop on the network", "192.168.0.100");
+	universes.add(new DMXUniverse(0));
 
-	serialParam = new SerialDeviceParameter("USB Device", "For connecting props trhough USB", true);
-	serialParam->openBaudRate = 115200;
-	if (params.hasProperty("vid")) serialParam->vidFilter = (int)params.getProperty("vid", 0);
-	if (params.hasProperty("pid")) serialParam->pidFilter = (int)params.getProperty("pid", 0);
+	updateRate = 100;
+	useAlphaInPlaybackData = true;
+	invertLedsInUI = true;
 
-	indexPrefix = generalCC.addIntParameter("Index Prefix", "If enabled, this prepends a byte corresponding to the strip index it's addressing.", 1, 1, 255, false);
-	indexPrefix->canBeDisabledByUser = true;
+	remoteHost = connectionCC.addStringParameter("Network IP", "IP of the prop on the network", "");
 
-	scriptObject.setMethod("send", &BentoProp::sendMessageToPropFromScript);
+	resolution->setDefaultValue(32);
+	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", 1, 0, 1);
+	battery = generalCC.addFloatParameter("Battery", "Battery level of the prop", 1, 0, 1);
+	battery->setControllableFeedbackOnly(true);
+
+	artnet.inputCC->enabled->setValue(false);
+
+	serialParam = new SerialDeviceParameter("USB Port", "For connecting props through USB", true);
+	serialParam->setBaudrate(115200);
+
+#if !JUCE_MAC
+	if (params.hasProperty("vid")) serialParam->vidFilters.add((int)params.getProperty("vid", 0));
+	if (params.hasProperty("pid")) serialParam->pidFilters.add((int)params.getProperty("pid", 0));
+#endif
+
+	scriptObject.getDynamicObject()->setMethod("send", &BentoProp::sendMessageToPropFromScript);
 
 	connectionCC.addParameter(serialParam);
 
 	oscSender.connect("127.0.0.1", 1024);
+
+	data.resize(DMX_NUM_CHANNELS);
+	data.fill(0);
+
+	componentsCC.reset(new BentoComponentContainer(this));
+	addChildControllableContainer(componentsCC.get(), false, controllableContainers.indexOf(scriptManager.get()));
+
+	playbackAddress = "/leds/strip1/playbackLayer";
+	streamingAddress = "/leds/strip1/streamLayer";
 }
 
 BentoProp::~BentoProp()
@@ -69,39 +91,50 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == enabled)
 	{
-		sendMessageToProp(OSCMessage("/rgb/enabled", enabled->boolValue() ? 1 : 0));
+		sendMessageToProp(OSCMessage("/leds/strip1/enabled", enabled->boolValue() ? 1 : 0));
 	}
 }
 
 void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
 	Prop::onControllableFeedbackUpdateInternal(cc, c);
-	if (c == bakeMode)
-	{
-		if (bakeMode->boolValue())
-		{
-			String filename = currentBlock != nullptr ? currentBlock->shortName : (bakeFileName->enabled ? bakeFileName->stringValue() : "");
-			if (filename.isNotEmpty()) loadBake(filename);
-		}
-		else
-		{
-			OSCMessage m("/leds/mode");
-			m.addString("stream");
-			sendMessageToProp(m);
-		}
-
-	}
-	else if (c == serialParam)
+	if (c == serialParam)
 	{
 		setSerialDevice(serialParam->getDevice());
 	}
 	else if (c == remoteHost)
 	{
-		sendYo();
+		//sendYo();
+		artnet.remoteHost->setValue(remoteHost->stringValue());
 	}
-	else if (c == uploadFirmwareTrigger)
+	else if (c == resolution)
 	{
-		uploadFirmware();
+		if (resolutionRef != nullptr) resolutionRef->setValue(resolution->intValue());
+		int numUniverses = ceil(resolution->intValue() * 1.0f / 170);
+		while (numUniverses > universes.size())
+		{
+			universes.add(new DMXUniverse(universes.size()));
+		}
+		while (numUniverses < universes.size())
+		{
+			universes.remove(universes.size() - 1);
+		};
+	}
+	else if (c == resolutionRef)
+	{
+		resolution->setValue(resolutionRef->intValue());
+	}
+	else if (c == brightness)
+	{
+		if (brightnessRef != nullptr) brightnessRef->setValue(brightness->floatValue());
+	}
+	else if (c == brightnessRef)
+	{
+		brightness->setValue(brightnessRef->floatValue());
+	}
+	else if (c == batteryRef)
+	{
+		battery->setValue(batteryRef->floatValue());
 	}
 }
 
@@ -122,58 +155,39 @@ void BentoProp::portRemoved(SerialDevice* d)
 
 void BentoProp::sendColorsToPropInternal()
 {
-	const int numLeds = resolution->intValue();
+	if (colors.isEmpty()) return;
 
-	Array<uint8> data;
-	if (indexPrefix->enabled)
+	for (int u = 0; u < universes.size(); u++)
 	{
-		data.add(indexPrefix->intValue());
-	}
+		int startLed = u * 170;
+		int numChannels = jmax(0, jmin(colors.size() - 170, 170));
 
-	bool invert = (rgbComponent != nullptr && rgbComponent->invertDirection->boolValue());
-	int startIndex = invert ? numLeds - 1 : 0;
-	int endIndex = invert ? -1 : numLeds;
-	int step = invert ? -1 : 1;
-
-	for (int i = startIndex; i != endIndex; i += step)
-	{
-		int index = (rgbComponent != nullptr && rgbComponent->useLayout) ? rgbComponent->ledIndexMap[i] : i;
-		float a = colors[index].getFloatAlpha();
-		data.add(jmin<int>(colors[index].getRed() * a, 254));
-		data.add(jmin<int>(colors[index].getGreen() * a, 254));
-		data.add(jmin<int>(colors[index].getBlue() * a, 254));
-	}
-
-	data.add(255);
-
-	const int maxPacketSize = 1000; //1500 bytes on ESP32
-	const int dataSize = data.size();
-	int offset = 0;
-	int numPacketSent = 0;
-
-	while (offset < dataSize)
-	{
-		int length = jmin(maxPacketSize, dataSize - offset);
-
-		int dataSent = sender.write(remoteHost->stringValue(), remotePort, data.getRawDataPointer() + offset, length);
-
-		if (dataSent == -1)
+		data.fill(0);
+		
+		for (int i = 0; i < numChannels; i++)
 		{
-			LOGWARNING("Error sending data");
-			break;
+			int channelIndex = i * 3;
+			int colorIndex = startLed + i;
+			//if (index >= DMX_NUM_CHANNELS - 2) break;
+			Colour c = colors[colorIndex];
+			float a = c.getFloatAlpha();
+			data.set(channelIndex, jmin<int>(c.getRed() * a, 255));
+			data.set(channelIndex + 1, jmin<int>(c.getGreen() * a, 255));
+			data.set(channelIndex + 2, jmin<int>(c.getBlue() * a, 255));
 		}
 
-		numPacketSent++;
-		offset += dataSent;
-		sleep(2);
+		universes[u]->updateValues(data);
+		if (universes[u]->isDirty) artnet.sendDMXValues(universes[u]);
+		wait(2);
 	}
 
-	if (numPacketSent > 1) sleep(10);
+
+
 }
 
-void BentoProp::uploadBakedData(BakeData data)
+void BentoProp::uploadPlaybackData(PlaybackData data)
 {
-	String target = "http://" + remoteHost->stringValue() + "/upload";
+	String target = "http://" + remoteHost->stringValue() + "/uploadFile";
 	//String target = "http://benjamin.kuperberg.fr/chataigne/releases/uploadTest.php";
 
 	NLOG(niceName, "Uploading " << target << " to " << data.name << " :\n > " << data.numFrames << " frames\n > " << (int)(data.data.getSize()) << " bytes");
@@ -240,7 +254,7 @@ void BentoProp::uploadBakedData(BakeData data)
 	}
 }
 
-void BentoProp::exportBakedData(BakeData data)
+void BentoProp::exportPlaybackData(PlaybackData data)
 {
 	MemoryInputStream is(data.data, true);
 	if (exportFile.existsAsFile()) exportFile.deleteFile();
@@ -263,14 +277,16 @@ void BentoProp::exportBakedData(BakeData data)
 	builder.writeToStream(fs2, &progress);
 }
 
-void BentoProp::uploadFile(File f)
+void BentoProp::uploadFile(FileToUpload f)
 {
-	String target = "http://" + remoteHost->stringValue() + "/upload";
-	FileInputStream fs(f);
+	String target = "http://" + remoteHost->stringValue() + "/uploadFile";
+	if (f.remoteFolder.isNotEmpty()) target += "?folder=" + f.remoteFolder;
+
+	FileInputStream fs(f.file);
 	MemoryBlock b;
 	fs.readIntoMemoryBlock(b);
 
-	URL url = URL(target).withDataToUpload("uploadData", f.getFileName(), b, "text/plain");
+	URL url = URL(target).withDataToUpload("uploadData", f.file.getFileName(), b, "text/plain");
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withExtraHeaders("Content-Length:" + String(b.getSize())).withConnectionTimeoutMs(10000)));
 
@@ -289,7 +305,35 @@ void BentoProp::uploadFile(File f)
 	}
 }
 
-void BentoProp::loadBake(StringRef fileName, bool autoPlay)
+void BentoProp::setPlaybackEnabled(bool value)
+{
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("player.load " + String(value ? 1 : 0) + "\n");// +" " + (autoPlay ? "1" : "0") + " \n");
+	}
+	else
+	{
+		OSCMessage m(playbackAddress + "/enabled");
+		m.addInt32((int)value);
+		sendMessageToProp(m);
+	}
+}
+
+void BentoProp::setStreamingEnabled(bool value)
+{
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString(streamingAddress + ".enabled" + String(enabled ? 1 : 0) + "\n");
+	}
+	else
+	{
+		OSCMessage m(streamingAddress + "/enabled");
+		m.addInt32((int)value);
+		sendMessageToProp(m);
+	}
+}
+
+void BentoProp::loadPlayback(StringRef fileName, bool autoPlay)
 {
 	if (serialDevice != nullptr)
 	{
@@ -297,65 +341,68 @@ void BentoProp::loadBake(StringRef fileName, bool autoPlay)
 	}
 	else
 	{
-		OSCMessage m("/player/load");
+		OSCMessage m(playbackAddress + "/load");
 		m.addString(fileName);
-		m.addInt32(autoPlay ? 1 : 0);
 		sendMessageToProp(m);
 	}
 }
 
-void BentoProp::playBake(float time, bool loop)
+void BentoProp::playPlayback(float time, bool loop)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.play\n");// +String(time == -1 ? -1 : time + .1f) + " \n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".play\n");// +String(time == -1 ? -1 : time + .1f) + " \n");
 	}
 	else
 	{
 
-		OSCMessage m("/player/play");
+		OSCMessage m(playbackAddress + "/play");
 		m.addFloat32(time);
 		m.addInt32(loop ? 1 : 0);
 		sendMessageToProp(m);
 	}
 }
 
-void BentoProp::pauseBakePlaying()
+void BentoProp::pausePlaybackPlaying()
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.pause\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".pause\n");
 	}
 	else
 	{
-		OSCMessage m("/player/pause");
+		OSCMessage m(playbackAddress + "/pause");
 		sendMessageToProp(m);
 	}
 }
 
-void BentoProp::seekBakePlaying(float time)
+void BentoProp::seekPlaybackPlaying(float time)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.seek " + String(time) + "\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + "seek " + String(time) + "\n");
 	}
 	else
 	{
-		OSCMessage m("/player/seek");
+		OSCMessage m(playbackAddress + "/seek");
 		m.addFloat32(time);
 		sendMessageToProp(m);
 	}
 }
 
-void BentoProp::stopBakePlaying()
+void BentoProp::stopPlaybackPlaying()
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.stop\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".stop\n");
 	}
 	else
 	{
-		OSCMessage m("/player/stop");
+		OSCMessage m(playbackAddress + "/stop");
 		sendMessageToProp(m);
 	}
 }
@@ -364,11 +411,12 @@ void BentoProp::sendShowPropID(bool value)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.id " + String(value ? 1 : 0) + "\n");
+		String serialPlaybackAddress = playbackAddress.substring(1).replace("/", ".");
+		serialDevice->writeString(serialPlaybackAddress + ".id " + String(value ? 1 : 0) + "\n");
 	}
 	else
 	{
-		OSCMessage m("/player/id");
+		OSCMessage m(playbackAddress + "/idMode");
 		m.addInt32(value);
 		sendMessageToProp(m);
 	}
@@ -404,22 +452,38 @@ void BentoProp::sendYo()
 	sendMessageToProp(m);
 }
 
-void BentoProp::sendPingInternal()
+void BentoProp::sendControlToProp(String control, var value)
 {
-	OSCMessage m("/ping");
+	if (!enabled->boolValue()) return;
+	if (logOutgoing->boolValue())
+	{
+		NLOG(niceName, "Sending " + control + " : " + value.toString());
+	}
+
+	OSCMessage m("/" + control.replaceCharacter('.', '/'));
+	if (value.isArray())
+	{
+		for (int i = 0; i < value.size(); i++) m.addArgument(OSCHelpers::varToArgument(value[i], OSCHelpers::BoolMode::Int));
+	}
+	else if (!value.isVoid())
+	{
+		m.addArgument(OSCHelpers::varToArgument(value, OSCHelpers::BoolMode::Int));
+	}
+
 	sendMessageToProp(m);
 }
+
 
 void BentoProp::powerOffProp()
 {
 	NLOG(niceName, "Powering off");
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("root.sleep\n");
+		serialDevice->writeString("root.shutdown\n");
 	}
 	else
 	{
-		OSCMessage m("/root/sleep");
+		OSCMessage m("/root/shutdown");
 		sendMessageToProp(m);
 	}
 }
@@ -454,28 +518,6 @@ void BentoProp::sendWiFiCredentials(String ssid, String pass)
 	}
 }
 
-void BentoProp::uploadFirmware()
-{
-	isFlashing->setValue(true);
-	flasher.startThread();
-
-}
-
-void BentoProp::sendControlToPropInternal(String control, var value)
-{
-	OSCMessage m("/" + control.replaceCharacter('.', '/'));
-	if (value.isArray())
-	{
-		for (int i = 0; i < value.size(); i++) m.addArgument(OSCHelpers::varToArgument(value[i]));
-	}
-	else if (!value.isVoid())
-	{
-		m.addArgument(OSCHelpers::varToArgument(value));
-	}
-
-	sendMessageToProp(m);
-}
-
 void BentoProp::sendMessageToProp(const OSCMessage& m)
 {
 	if (logOutgoing->boolValue())
@@ -498,115 +540,10 @@ var BentoProp::sendMessageToPropFromScript(const var::NativeFunctionArgs& a)
 	OSCMessage m(a.arguments[0].toString());
 	for (int i = 1; i < a.numArguments; i++)
 	{
-		m.addArgument(OSCHelpers::varToArgument(a.arguments[i]));
+		m.addArgument(OSCHelpers::varToArgument(a.arguments[i], OSCHelpers::BoolMode::Int));
 	}
 
 	p->sendMessageToProp(m);
 
 	return true;
 }
-
-
-BentoProp::Flasher::Flasher(BentoProp* prop) :
-	Thread("Bento Flasher"),
-	prop(prop)
-{
-}
-
-void BentoProp::Flasher::run()
-{
-	prop->flashingProgression->setValue(0);
-#if JUCE_WINDOWS || JUCE_MAC
-	if (!prop->firmwareFile.existsAsFile())
-	{
-		NLOGERROR(prop->niceName, "Firmware file not found. It should be a file called firmware.bin aside the prop json definition file.");
-		return;
-
-	}
-
-	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
-#if JUCE_WINDOWS
-	File flasher = appFolder.getChildFile("esptool.exe");
-	File app0Bin = appFolder.getChildFile("boot_app0.bin");
-	File bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
-#elif JUCE_MAC
-	File bundle = juce::File::getSpecialLocation(juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
-	File espFolder = bundle.getChildFile("Resources").getChildFile("esptool");
-
-	File flasher = espFolder.getChildFile("esptool");
-	File app0Bin = espFolder.getChildFile("boot_app0.bin");
-	File bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
-#endif
-
-
-
-	if (!flasher.existsAsFile())
-	{
-		NLOGERROR(prop->niceName, "Flasher file not found. It should be a file esptool.exe inside Bento's Application folder");
-		return;
-	}
-
-
-	File partitionsFile = prop->firmwareFile.getChildFile("../partitions.bin");
-
-	if (!partitionsFile.exists())
-	{
-		NLOGERROR(prop->niceName, "Partitions file not found. It should be a file called partitions.bin aside the firmware.bin file");
-		return;
-	}
-
-	if (prop->serialDevice == nullptr)
-	{
-		NLOGERROR(prop->niceName, "Serial device is not connected. Please connect the prop and select from the serial device dropdown menu the right one.");
-		return;
-	}
-
-	String port = prop->serialDevice->info->port;
-
-	prop->serialParam->setValueForDevice(nullptr); //close device to let the flasher use it
-
-	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
-	parameters += " 0xe000 \"" + app0Bin.getFullPathName() + "\"";
-	parameters += " 0x1000 \"" + bootloaderBin.getFullPathName() + "\"";
-	parameters += " 0x10000 \"" + prop->firmwareFile.getFullPathName() + "\"";
-	parameters += " 0x8000 \"" + partitionsFile.getFullPathName() + "\"";
-
-	NLOG(prop->niceName, "Flashing firmware...");
-	//NLOG(prop->niceName, "Launch with parameters " + parameters);
-
-	//#if JUCE_WINDOWS
-		//flasher.startAsProcess(parameters);
-	//#else
-	ChildProcess cp;
-	cp.start(flasher.getFullPathName() + parameters);
-
-	String buffer;
-	while (cp.isRunning())
-	{
-		char buf[8];
-		memset(buf, 0, 8);
-		int numRead = cp.readProcessOutput(buf, 8);
-		buffer += String(buf, numRead);
-		StringArray lines;
-		lines.addLines(buffer);
-		for (int i = 0; i < lines.size() - 1; i++)
-		{
-			if (prop->logIncoming->boolValue()) NLOG(prop->niceName, lines[i]);
-			StringArray prog = RegexFunctions::getFirstMatch("Writing.+\\(([0-9]+) %\\)", lines[i]);
-			if (prog.size() > 1)
-			{
-				float relProg = prog[1].getFloatValue() / 100.0f;
-				if (relProg != 1) prop->flashingProgression->setValue(relProg); //not using 1 to avoid double 100% log from partitions and firmware.
-			}
-		}
-		buffer = lines[lines.size() - 1];
-			}
-	//#endif
-
-#else
-	LOGWARNING("Flashing only supported on Windows and mac for now");
-#endif
-
-	prop->flashingProgression->setValue(1);
-	prop->isFlashing->setValue(false);
-		}

@@ -8,9 +8,13 @@
   ==============================================================================
 */
 
+#include "LightBlock/LightBlockIncludes.h"
+#include "Prop/PropIncludes.h"
+#include "Sequence/SequenceIncludes.h"
+
 LightBlockModelUI::LightBlockModelUI(LightBlockModel* model) :
 	BaseItemMinimalUI(model),
-	timelineBlock(dynamic_cast<TimelineBlock*>(model))
+	sequenceBlock(dynamic_cast<BentoSequenceBlock*>(model))
 {
 
 	updateThumbnail();
@@ -32,9 +36,9 @@ void LightBlockModelUI::paint(Graphics& g)
 {
 	Colour bc = item->itemColor->getColor();
 	bgColor = item->isBeingEdited ? BLUE_COLOR.darker().withSaturation(.3f) : bc;
-	
+
 	Colour bgC = bgColor;
-	if (timelineBlock != nullptr && timelineBlock->sequence->isPlaying->boolValue()) bgC = GREEN_COLOR.darker();
+	if (sequenceBlock != nullptr && sequenceBlock->sequence->isPlaying->boolValue()) bgC = GREEN_COLOR.darker();
 	g.setColour(bgC.brighter(isMouseOver() ? .2f : 0));
 	g.fillRoundedRectangle(getLocalBounds().toFloat(), 2);
 	g.setColour(Colours::white);// .withAlpha(isMouseOver() ? .2f : 1.f));
@@ -76,7 +80,6 @@ void LightBlockModelUI::mouseDown(const MouseEvent& e)
 {
 	BaseItemMinimalUI::mouseDown(e);
 
-
 	if (e.mods.isLeftButtonDown())
 	{
 		if (e.mods.isAltDown())
@@ -87,43 +90,39 @@ void LightBlockModelUI::mouseDown(const MouseEvent& e)
 			}
 		}
 	}
-	else if (e.mods.isRightButtonDown())
-	{
-		PopupMenu menu;
-		PopupMenu assignMenu;
 
-		int index = 1;
-		for (auto& p : PropManager::getInstance()->items)
-		{
-			assignMenu.addItem(index, p->niceName);
-			index++;
-		}
-
-		menu.addItem(-1, "Assign to all");
-		menu.addSubMenu("Assign to...", assignMenu);
-
-		menu.showMenuAsync(PopupMenu::Options(), [this](int result)
-			{
-				if (result == 0) return;
-				if (result == -1)
-				{
-					for (auto& p : PropManager::getInstance()->items)
-					{
-						p->activeProvider->setValueFromTarget(item);
-					}
-				}if (result > 0 && result <= PropManager::getInstance()->items.size())
-				{
-					Prop* p = PropManager::getInstance()->items[result - 1];
-					p->activeProvider->setValueFromTarget(item);
-				}
-			}
-		);
-	}
 }
 
 void LightBlockModelUI::mouseDoubleClick(const MouseEvent& e)
 {
 	editBlock();
+}
+
+void LightBlockModelUI::addContextMenuItems(PopupMenu& m)
+{
+	PopupMenu menu;
+	PopupMenu assignMenu;
+
+	int index = 1;
+	for (auto& p : PropManager::getInstance()->items)
+	{
+		assignMenu.addItem(index, p->niceName);
+		index++;
+	}
+
+	m.addItem("Assign to all", [&]() {for (auto& p : PropManager::getInstance()->items) p->activeProvider->setValueFromTarget(item); });
+	m.addSubMenu("Assign to...", assignMenu);
+
+
+}
+
+void LightBlockModelUI::handleContextMenuResult(int result)
+{
+	if (result > 0 && result <= PropManager::getInstance()->items.size())
+	{
+		Prop* p = PropManager::getInstance()->items[result - 1];
+		p->activeProvider->setValueFromTarget(item);
+	};
 }
 
 void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent& e)
@@ -142,7 +141,7 @@ void LightBlockModelUI::newMessage(const LightBlockModel::ModelEvent& e)
 
 void LightBlockModelUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (timelineBlock != nullptr && c == timelineBlock->sequence->isPlaying)
+	if (sequenceBlock != nullptr && c == sequenceBlock->sequence->isPlaying)
 	{
 		repaint();
 	}

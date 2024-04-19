@@ -25,5 +25,6 @@ public:
 	StringParameter * wifiPass;
 	Trigger* saveWifiTrigger;
 
+
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;
 };

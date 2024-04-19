@@ -1,24 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source" id="LP0of5"
-              version="1.4.3b5" projectLineFeed="&#10;" jucerFormatVersion="1"
-              cppLanguageStandard="17">
+<JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source&#10;../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
+              id="LP0of5" version="2.0.0b1" projectLineFeed="&#10;" jucerFormatVersion="1"
+              cppLanguageStandard="17" includeBinaryInJuceHeader="1" bundleIdentifier="benkuper.Bento">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
+      <GROUP id="{C587F002-A9ED-4F66-C0EE-B59995027012}" name="firmware">
+        <GROUP id="{CB7BEF62-D2BA-4929-D0CE-62FE2B145E39}" name="server">
+          <FILE id="RYCTym" name="edit.html" compile="0" resource="1" file="Resources/firmware/server/edit.html"/>
+          <FILE id="hyA4YN" name="jquery.min.js" compile="0" resource="1" file="Resources/firmware/server/jquery.min.js"/>
+          <FILE id="lOhTbP" name="osc-browser.min.js" compile="0" resource="1"
+                file="Resources/firmware/server/osc-browser.min.js"/>
+          <FILE id="XU6m07" name="upload.html" compile="0" resource="1" file="Resources/firmware/server/upload.html"/>
+        </GROUP>
+      </GROUP>
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">
         <GROUP id="{AA53C9C4-83BE-D8AE-2509-C14F27B31F7B}" name="patterns">
+          <FILE id="RN4YUg" name="ledRange.png" compile="0" resource="1" file="Resources/models/patterns/ledRange.png"/>
+          <FILE id="Rak65m" name="multipoint.png" compile="0" resource="1" file="Resources/models/patterns/multipoint.png"/>
           <FILE id="KrzbHq" name="noise.png" compile="0" resource="1" file="Resources/models/patterns/noise.png"/>
+          <FILE id="jyYE8s" name="point.png" compile="0" resource="1" file="Resources/models/patterns/point.png"/>
           <FILE id="dcD1tm" name="rainbow.png" compile="0" resource="1" file="Resources/models/patterns/rainbow.png"/>
+          <FILE id="FnBqcK" name="range.png" compile="0" resource="1" file="Resources/models/patterns/range.png"/>
           <FILE id="Dr7vTV" name="solidColor.png" compile="0" resource="1" file="Resources/models/patterns/solidColor.png"/>
           <FILE id="WOljwS" name="strobe.png" compile="0" resource="1" file="Resources/models/patterns/strobe.png"/>
         </GROUP>
+        <FILE id="WdcaQm" name="sequenceBlock.png" compile="0" resource="1"
+              file="Resources/models/sequenceBlock.png"/>
         <FILE id="S1AUx7" name="dmx.png" compile="0" resource="1" file="Resources/models/dmx.png"/>
-        <FILE id="qD4otD" name="multipoint.png" compile="0" resource="1" file="Resources/models/multipoint.png"/>
+        <FILE id="JG5C78" name="embeddedScript.png" compile="0" resource="1"
+              file="Resources/models/embeddedScript.png"/>
         <FILE id="OO6Nta" name="node.png" compile="0" resource="1" file="Resources/models/node.png"/>
         <FILE id="MQHQlQ" name="picture.png" compile="0" resource="1" file="Resources/models/picture.png"/>
-        <FILE id="BZoVed" name="point.png" compile="0" resource="1" file="Resources/models/point.png"/>
-        <FILE id="a1DDEw" name="script.png" compile="0" resource="1" file="Resources/models/script.png"/>
-        <FILE id="Rlqbru" name="timeline.png" compile="0" resource="1" file="Resources/models/timeline.png"/>
+        <FILE id="d0F62O" name="streamingScript.png" compile="0" resource="1"
+              file="Resources/models/streamingScript.png"/>
         <FILE id="ZghcER" name="video.png" compile="0" resource="1" file="Resources/models/video.png"/>
       </GROUP>
       <FILE id="jaq4JI" name="default.btlayout" compile="0" resource="1"
@@ -26,71 +41,163 @@
       <FILE id="HceyjT" name="fadeIn.png" compile="0" resource="1" file="Resources/fadeIn.png"/>
       <FILE id="vNhvMo" name="fadeOut.png" compile="0" resource="1" file="Resources/fadeOut.png"/>
       <FILE id="YlXmhK" name="icon.png" compile="0" resource="1" file="Resources/icon.png"/>
+      <FILE id="Hxq8ZD" name="link.png" compile="0" resource="1" file="Resources/link.png"/>
       <FILE id="l8evl8" name="new.png" compile="0" resource="1" file="Resources/new.png"/>
       <FILE id="fu16GM" name="shader.frag" compile="0" resource="1" file="Resources/shader.frag"/>
     </GROUP>
     <GROUP id="{D2A44099-7F3F-5FDC-E812-3E39F0CC6193}" name="Source">
-      <GROUP id="{46E5FDF7-71F8-AEEB-CF03-501B0190C17C}" name="WebAssembly">
-        <GROUP id="{F6899AD0-CCDA-F91E-535C-DF42792C122B}" name="ui">
-          <FILE id="G7PlyO" name="WasmManagerUI.cpp" compile="1" resource="0"
-                file="Source/WebAssembly/ui/WasmManagerUI.cpp"/>
-          <FILE id="ySCMkq" name="WasmManagerUI.h" compile="0" resource="0" file="Source/WebAssembly/ui/WasmManagerUI.h"/>
+      <GROUP id="{001FD7E1-51F5-5A49-3408-C604BD53A945}" name="ParameterLink">
+        <GROUP id="{BA5A9004-0FF6-EFAD-0E10-2976928F2D64}" name="ui">
+          <FILE id="tVES2N" name="LinkableParameterEditor.cpp" compile="1" resource="0"
+                file="Source/ParameterLink/ui/LinkableParameterEditor.cpp"/>
+          <FILE id="kdIuos" name="LinkableParameterEditor.h" compile="0" resource="0"
+                file="Source/ParameterLink/ui/LinkableParameterEditor.h"/>
         </GROUP>
-        <FILE id="Z536IZ" name="WasmManager.cpp" compile="1" resource="0" file="Source/WebAssembly/WasmManager.cpp"/>
-        <FILE id="oIKBnc" name="WasmManager.h" compile="0" resource="0" file="Source/WebAssembly/WasmManager.h"/>
-        <FILE id="xHpf6Q" name="WasmScript.cpp" compile="1" resource="0" file="Source/WebAssembly/WasmScript.cpp"/>
-        <FILE id="EvI5IS" name="WasmScript.h" compile="0" resource="0" file="Source/WebAssembly/WasmScript.h"/>
+        <FILE id="Q0mOQa" name="ParameterLink.cpp" compile="1" resource="0"
+              file="Source/ParameterLink/ParameterLink.cpp"/>
+        <FILE id="A819Dj" name="ParameterLink.h" compile="0" resource="0" file="Source/ParameterLink/ParameterLink.h"/>
       </GROUP>
-      <GROUP id="{6904D42F-2293-0320-A5A4-5AE3259D75F7}" name="Identification">
-        <FILE id="s6Jv8B" name="IdentificationRule.cpp" compile="1" resource="0"
-              file="Source/Identification/IdentificationRule.cpp"/>
-        <FILE id="On77vb" name="IdentificationRule.h" compile="0" resource="0"
-              file="Source/Identification/IdentificationRule.h"/>
-        <FILE id="mLUpyS" name="IdentificationRuleManager.cpp" compile="1"
-              resource="0" file="Source/Identification/IdentificationRuleManager.cpp"/>
-        <FILE id="b0hRAv" name="IdentificationRuleManager.h" compile="0" resource="0"
-              file="Source/Identification/IdentificationRuleManager.h"/>
-      </GROUP>
-      <GROUP id="{EE130150-B1B1-4FF0-6360-8BEF17AAE2D5}" name="Common">
-        <GROUP id="{E5AB7332-E8D5-6861-6B71-6BBA6E1DA217}" name="Serial">
-          <GROUP id="{A05100E8-DD1D-77F5-EF15-6F01585C9AAA}" name="lib">
-            <GROUP id="{1CC34E65-739F-DD21-CAFB-79E07823FDD3}" name="serial">
-              <GROUP id="{16478FD5-D606-2BCF-19D0-566EC616EAEE}" name="impl">
-                <FILE id="QjvUq3" name="serial.cc" compile="1" resource="0" file="Source/Common/Serial/lib/serial/serial.cc"/>
-                <GROUP id="{9B4379E8-1576-4CF0-EC54-39D366977CA1}" name="list_ports">
-                  <FILE id="AAadfK" name="list_ports_linux.cc" compile="1" resource="0"
-                        file="Source/Common/Serial/lib/serial/impl/list_ports/list_ports_linux.cc"/>
-                  <FILE id="zCxIC1" name="list_ports_osx.cc" compile="1" resource="0"
-                        file="Source/Common/Serial/lib/serial/impl/list_ports/list_ports_osx.cc"/>
-                  <FILE id="WMWDuc" name="list_ports_win.cc" compile="1" resource="0"
-                        file="Source/Common/Serial/lib/serial/impl/list_ports/list_ports_win.cc"/>
+      <GROUP id="{1D983D24-0441-C72A-26E1-53EB8226180E}" name="Source">
+        <GROUP id="{9891EF0E-D9AD-3AD7-CB82-6DC61BFD1EAC}" name="Audio">
+          <GROUP id="{9D947111-C4DC-703F-DF73-027BC221F373}" name="ui"/>
+        </GROUP>
+        <GROUP id="{B947907B-9AEC-DE9D-30FA-4BAB073C0EA7}" name="Common">
+          <GROUP id="{99002953-0B55-10B2-9238-5C18D2473DD6}" name="BlockViz"/>
+          <GROUP id="{20F15E0B-1081-14B0-ED1E-BA0BAA344D83}" name="EmbeddedScript">
+            <GROUP id="{314BC280-E845-C6D2-183E-706DD54ADCC7}" name="ui"/>
+          </GROUP>
+          <GROUP id="{4E28B0D5-F121-66CD-CD19-64AA14BB2029}" name="Identification"/>
+          <GROUP id="{BDC0ECAA-C09C-FC20-D9CF-76DBE29A98AD}" name="Zeroconf"/>
+        </GROUP>
+        <GROUP id="{1BFD4FBE-1E84-E9D4-C203-4C64D28CCBBB}" name="LightBlock">
+          <GROUP id="{EC9A4A33-1FC9-3D57-FE3C-D9D21020FB22}" name="model">
+            <GROUP id="{816D0901-E941-8E08-4953-483D915FA182}" name="blocks">
+              <GROUP id="{69A19699-5763-7E20-9173-D3953639CDC5}" name="dmx"/>
+              <GROUP id="{DE5B3EE2-87C1-0A25-1319-6E1F9483B51A}" name="embeddedscript"/>
+              <GROUP id="{6BCBF19D-3DD7-D7D0-9CA7-63906D3127AB}" name="filters">
+                <GROUP id="{E004A5ED-1D5A-C960-7624-62C26845B30F}" name="generic">
+                  <GROUP id="{396468FA-E33F-D48D-4F09-C23DFF5BD189}" name="brightnesscontrast"/>
+                  <GROUP id="{69EA92D3-FC11-C30D-7F4A-5E5DE628C973}" name="hsv"/>
+                  <GROUP id="{68173D02-4A1B-74EA-C86E-B29E4B7E9563}" name="remap"/>
                 </GROUP>
-                <FILE id="JUzv31" name="unix.cc" compile="1" resource="0" file="Source/Common/Serial/lib/serial/impl/unix.cc"/>
-                <FILE id="T0Qmsm" name="win.cc" compile="1" resource="0" file="Source/Common/Serial/lib/serial/impl/win.cc"/>
+              </GROUP>
+              <GROUP id="{80CA45F0-4193-6606-6923-54D723B45BF1}" name="node">
+                <GROUP id="{DED0C4A8-FEF4-0FFC-3067-FDAC27F8C700}" name="ui"/>
+              </GROUP>
+              <GROUP id="{8AA8037D-94E9-1603-4BDC-CB1600E94E31}" name="pattern"/>
+              <GROUP id="{B6701E2D-2F87-3D76-A986-35034CFC846E}" name="picture">
+                <GROUP id="{F91D3792-224E-B25A-ABCB-819EB43B0D3B}" name="ui"/>
+              </GROUP>
+              <GROUP id="{3656A0C2-03F8-C40F-F173-D6932977FA7A}" name="sequence">
+                <GROUP id="{E55ABE98-A0CB-8316-B70A-FBBEFE865BA3}" name="ui"/>
+              </GROUP>
+              <GROUP id="{4001F3AB-2674-F9D0-5E10-340D5C3B38CE}" name="shape"/>
+              <GROUP id="{FD742272-C4C9-17B7-56E1-8DB27DD93202}" name="streamingscript"/>
+              <GROUP id="{BEC9B595-143A-86E1-FDBD-363A67A98F4A}" name="video">
+                <GROUP id="{4D190013-7F7A-58B4-B16D-BDE8691231BA}" name="ui"/>
               </GROUP>
             </GROUP>
-            <GROUP id="{9F8AA1B2-DC00-C7A6-A326-7EF26E7E46BC}" name="cobs">
-              <FILE id="urfea5" name="cobs.cpp" compile="1" resource="0" file="Source/Common/Serial/lib/cobs/cobs.cpp"/>
-              <FILE id="ZTtE1U" name="cobs.h" compile="0" resource="0" file="Source/Common/Serial/lib/cobs/cobs.h"/>
+            <GROUP id="{7D0CF1F9-4280-532F-23DB-C4E106A4A6DD}" name="preset"/>
+            <GROUP id="{E452EC18-25F4-C7EC-B0CB-E09F36D05429}" name="ui"/>
+          </GROUP>
+          <GROUP id="{F1EDF226-DFD2-6DBD-98E8-D9E8CF9EC334}" name="ui">
+            <FILE id="letZzR" name="LightBlockManagerUI.h" compile="0" resource="0"
+                  file="Source/LightBlock/ui/LightBlockManagerUI.h"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{691C97ED-2735-04B8-E798-DBE5921FBC01}" name="Node">
+          <GROUP id="{52DF2A7C-BFEC-AF35-12E8-823D8DF982B3}" name="nodes">
+            <GROUP id="{51324179-05DC-B387-1CC0-1C188828E80B}" name="colorRemap"/>
+            <GROUP id="{845E393A-69E9-BF3B-05F6-0186C3184CFE}" name="composite"/>
+            <GROUP id="{BEA912B8-CED5-9111-FF52-A38F6EEDAF3D}" name="model">
+              <GROUP id="{7A1DA13D-6716-A1DE-A1E4-8AC1678BE904}" name="ui"/>
+            </GROUP>
+            <GROUP id="{6EE955D7-15A5-7C4B-3F88-6CB0879DCFDA}" name="parameter"/>
+            <GROUP id="{A96BE1AA-2BC4-A8A0-9276-5DD6D0F537F8}" name="positionRemap"/>
+            <GROUP id="{42106B0B-8A3A-4CED-7479-87124CAAD17A}" name="prop"/>
+          </GROUP>
+          <GROUP id="{DAAC93E7-F0E7-53D1-DB07-B3FD57CF9099}" name="ui"/>
+        </GROUP>
+        <GROUP id="{97E97609-5464-A99B-9A8E-1A9B0FF44A4B}" name="Prop">
+          <GROUP id="{A0889CE0-3877-1224-318C-D9BD772D2F0B}" name="Cluster">
+            <GROUP id="{3608F5FD-145B-C959-0D17-4DEC18023009}" name="ui"/>
+          </GROUP>
+          <GROUP id="{4DD18672-F942-1BA5-053D-033024952320}" name="Component">
+            <GROUP id="{74BCE165-969B-4BB5-37E7-0911677BA69A}" name="battery"/>
+            <GROUP id="{A2D3B00B-AA8F-F673-C40F-F505FC594025}" name="buttons"/>
+            <GROUP id="{8FE7778F-030D-6832-CF26-C08C5DAC63A1}" name="files"/>
+            <GROUP id="{B784BC3F-4DCB-7CFD-39E6-F81A19A7125A}" name="fx"/>
+            <GROUP id="{F9E8CF4C-1F5A-9840-3317-822401521A7F}" name="imu"/>
+            <GROUP id="{0D88150C-0EAC-6579-C120-D6D213FF0BD3}" name="ir"/>
+            <GROUP id="{A19EF80C-F210-576E-EA74-F03980DD8144}" name="rgb"/>
+            <GROUP id="{22C0F7D8-BE92-EE39-3849-3042924D67EE}" name="touch"/>
+          </GROUP>
+          <GROUP id="{DE380207-2838-09D7-84AA-A68C95E3694A}" name="props">
+            <GROUP id="{4150A868-5A0E-EE99-89B7-722FD4AD6B17}" name="bento"/>
+          </GROUP>
+          <GROUP id="{63D54BE4-0144-258C-E776-8088DD0425E1}" name="Shape">
+            <GROUP id="{58C2C260-2EEC-D5C7-FA4F-95B07EBACEE7}" name="ui"/>
+          </GROUP>
+          <GROUP id="{FBF676B5-C5B0-1F5E-C7BD-F22E0385C617}" name="TargetFilter"/>
+          <GROUP id="{CF5E07BC-4561-1A0F-B237-1CDAD62FCF69}" name="ui"/>
+        </GROUP>
+        <GROUP id="{F9E597FE-F5BF-747C-095D-98FAB88B3959}" name="Sequence">
+          <GROUP id="{B68600F4-D2CB-49D8-A940-0C2CF9D308E7}" name="layers">
+            <GROUP id="{FCE8DE41-A00E-A655-E72A-0250B8FC06ED}" name="Block">
+              <GROUP id="{11988347-52A9-7914-320E-008B21EB9DFF}" name="ui"/>
+            </GROUP>
+            <GROUP id="{285BDB7F-1BA4-47EB-F71B-3661C0FF24F4}" name="Video">
+              <GROUP id="{2FD8176A-A309-E865-7EFB-36BD317AF526}" name="ui"/>
             </GROUP>
           </GROUP>
-          <FILE id="bHQsIa" name="SerialDevice.cpp" compile="1" resource="0"
-                file="Source/Common/Serial/SerialDevice.cpp"/>
-          <FILE id="zybZvG" name="SerialDevice.h" compile="0" resource="0" file="Source/Common/Serial/SerialDevice.h"/>
-          <FILE id="JiPgL4" name="SerialDeviceParameter.cpp" compile="1" resource="0"
-                file="Source/Common/Serial/SerialDeviceParameter.cpp"/>
-          <FILE id="ntxa3F" name="SerialDeviceParameter.h" compile="0" resource="0"
-                file="Source/Common/Serial/SerialDeviceParameter.h"/>
-          <FILE id="UBXk2b" name="SerialManager.cpp" compile="1" resource="0"
-                file="Source/Common/Serial/SerialManager.cpp"/>
-          <FILE id="qdT1yK" name="SerialManager.h" compile="0" resource="0" file="Source/Common/Serial/SerialManager.h"/>
         </GROUP>
-        <GROUP id="{9092AA3D-8F5A-A602-3561-F5C63DAAA4F2}" name="Zeroconf">
-          <FILE id="jgqNf2" name="ZeroconfManager.cpp" compile="1" resource="0"
+        <GROUP id="{BC5CB199-1DB1-F87A-DCAA-C18BC6E6136C}" name="Video">
+          <GROUP id="{CC99B8E0-B568-7339-60E7-44725EC9F1CD}" name="ui"/>
+        </GROUP>
+        <GROUP id="{33DCD973-22A2-3C29-F5A0-054ED1FF00CA}" name="VideoPreview"/>
+      </GROUP>
+      <GROUP id="{EE130150-B1B1-4FF0-6360-8BEF17AAE2D5}" name="Common">
+        <GROUP id="{B3AE9FD9-23DE-7B86-041F-68234C3014CC}" name="BlockViz">
+          <FILE id="Tsva2O" name="BlockVizPanel.cpp" compile="0" resource="0"
+                file="Source/Common/BlockViz/BlockVizPanel.cpp"/>
+          <FILE id="QuLuTw" name="BlockVizPanel.h" compile="0" resource="0" file="Source/Common/BlockViz/BlockVizPanel.h"/>
+        </GROUP>
+        <GROUP id="{47A27C4D-2349-A229-1644-7FF1CF8E7CBC}" name="EmbeddedScript">
+          <GROUP id="{834378A3-C0DF-3604-8156-D1C3C7D68509}" name="ui">
+            <FILE id="nWQw57" name="EmbeddedScriptManagerUI.cpp" compile="0" resource="0"
+                  file="Source/Common/EmbeddedScript/ui/EmbeddedScriptManagerUI.cpp"/>
+            <FILE id="PBNeAa" name="EmbeddedScriptManagerUI.h" compile="0" resource="0"
+                  file="Source/Common/EmbeddedScript/ui/EmbeddedScriptManagerUI.h"/>
+          </GROUP>
+          <FILE id="ZIStgD" name="EmbeddedScript.cpp" compile="0" resource="0"
+                file="Source/Common/EmbeddedScript/EmbeddedScript.cpp"/>
+          <FILE id="EPqExs" name="EmbeddedScript.h" compile="0" resource="0"
+                file="Source/Common/EmbeddedScript/EmbeddedScript.h"/>
+          <FILE id="z008W4" name="EmbeddedScriptManager.cpp" compile="0" resource="0"
+                file="Source/Common/EmbeddedScript/EmbeddedScriptManager.cpp"/>
+          <FILE id="yAD4gg" name="EmbeddedScriptManager.h" compile="0" resource="0"
+                file="Source/Common/EmbeddedScript/EmbeddedScriptManager.h"/>
+        </GROUP>
+        <GROUP id="{55BB23A5-EB03-B7C5-9575-A8E09D7410A0}" name="Identification">
+          <FILE id="radum6" name="IdentificationRule.cpp" compile="0" resource="0"
+                file="Source/Common/Identification/IdentificationRule.cpp"/>
+          <FILE id="zPPOCf" name="IdentificationRule.h" compile="0" resource="0"
+                file="Source/Common/Identification/IdentificationRule.h"/>
+          <FILE id="RJ55oe" name="IdentificationRuleManager.cpp" compile="1"
+                resource="0" file="Source/Common/Identification/IdentificationRuleManager.cpp"/>
+          <FILE id="dMGnLZ" name="IdentificationRuleManager.h" compile="0" resource="0"
+                file="Source/Common/Identification/IdentificationRuleManager.h"/>
+        </GROUP>
+        <GROUP id="{E0046D36-DDB5-629C-1196-F1FABDC4382D}" name="Zeroconf">
+          <FILE id="zUn4Oc" name="ZeroconfManager.cpp" compile="0" resource="0"
                 file="Source/Common/Zeroconf/ZeroconfManager.cpp"/>
-          <FILE id="K1bCqn" name="ZeroconfManager.h" compile="0" resource="0"
+          <FILE id="qIsJN4" name="ZeroconfManager.h" compile="0" resource="0"
                 file="Source/Common/Zeroconf/ZeroconfManager.h"/>
         </GROUP>
+        <FILE id="FVccwh" name="CommonIncludes.cpp" compile="1" resource="0"
+              file="Source/Common/CommonIncludes.cpp"/>
+        <FILE id="qYPlrt" name="CommonIncludes.h" compile="0" resource="0"
+              file="Source/Common/CommonIncludes.h"/>
       </GROUP>
       <GROUP id="{DD3F6708-4882-5DBB-AA47-902382837C77}" name="Audio">
         <GROUP id="{C26FBE46-2C24-03EF-A8C4-1682E596F5DF}" name="ui">
@@ -124,77 +231,81 @@
               file="Source/Video/VideoIncludes.cpp"/>
         <FILE id="F8uF0S" name="VideoIncludes.h" compile="0" resource="0" file="Source/Video/VideoIncludes.h"/>
       </GROUP>
-      <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Timeline">
-        <GROUP id="{A1AFAD58-3A7C-C173-6CDD-A4A70BF370DB}" name="layers">
-          <GROUP id="{23F1BF42-F3AE-5D51-2965-25B23F9D4FCF}" name="VideoLayer">
-            <GROUP id="{E5D80CDA-116E-3B37-6E0B-8F191EC18795}" name="ui">
-              <FILE id="tqI7dU" name="VideoClipUI.cpp" compile="0" resource="0" file="Source/Timeline/layers/Video/ui/VideoClipUI.cpp"/>
-              <FILE id="OSLf4P" name="VideoClipUI.h" compile="0" resource="0" file="Source/Timeline/layers/Video/ui/VideoClipUI.h"/>
-              <FILE id="wCPplq" name="VideoLayerTimeline.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Video/ui/VideoLayerTimeline.cpp"/>
-              <FILE id="y8N0W4" name="VideoLayerTimeline.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Video/ui/VideoLayerTimeline.h"/>
+      <GROUP id="{825C5EA0-A1B9-6BB7-56F9-06BCEA029807}" name="Sequence">
+        <GROUP id="{55372100-8F51-FE9C-964C-BB7E22D9A52F}" name="layers">
+          <GROUP id="{078AFBB6-1C8F-2918-4505-DEFF1727BD0E}" name="Block">
+            <GROUP id="{259C5B2F-9230-F133-BB88-C1F0CD0E2ADE}" name="ui">
+              <FILE id="qzZvuJ" name="LightBlockClipManagerUI.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipManagerUI.cpp"/>
+              <FILE id="Em1eCh" name="LightBlockClipManagerUI.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipManagerUI.h"/>
+              <FILE id="a6fxIF" name="LightBlockClipUI.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipUI.cpp"/>
+              <FILE id="iQER9y" name="LightBlockClipUI.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockClipUI.h"/>
+              <FILE id="xmWBet" name="LightBlockLayerPanel.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerPanel.cpp"/>
+              <FILE id="PkE5Qw" name="LightBlockLayerPanel.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerPanel.h"/>
+              <FILE id="YSARUz" name="LightBlockLayerTimeline.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerTimeline.cpp"/>
+              <FILE id="gLniQk" name="LightBlockLayerTimeline.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Block/ui/LightBlockLayerTimeline.h"/>
             </GROUP>
-            <FILE id="MbTp6E" name="VideoClip.cpp" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoClip.cpp"/>
-            <FILE id="FjLOAO" name="VideoClip.h" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoClip.h"/>
-            <FILE id="gZZ9wM" name="VideoLayer.cpp" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoLayer.cpp"/>
-            <FILE id="prYSX4" name="VideoLayer.h" compile="0" resource="0" file="Source/Timeline/layers/Video/VideoLayer.h"/>
+            <FILE id="yjoced" name="LightBlockClip.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClip.cpp"/>
+            <FILE id="NzOxX4" name="LightBlockClip.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClip.h"/>
+            <FILE id="ijaJVq" name="LightBlockClipManager.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClipManager.cpp"/>
+            <FILE id="qNTR3m" name="LightBlockClipManager.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockClipManager.h"/>
+            <FILE id="OEjyL9" name="LightBlockEffect.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockEffect.cpp"/>
+            <FILE id="P5f0qR" name="LightBlockEffect.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockEffect.h"/>
+            <FILE id="WzhMCD" name="LightBlockLayer.cpp" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockLayer.cpp"/>
+            <FILE id="Wf8pOF" name="LightBlockLayer.h" compile="0" resource="0"
+                  file="Source/Sequence/layers/Block/LightBlockLayer.h"/>
           </GROUP>
-          <GROUP id="{A00ED23C-4B48-75CB-7911-E2C659ADA7F6}" name="BlockLayer">
-            <GROUP id="{8B8B8A4A-F021-600B-344E-0D211A44C9D8}" name="ui">
-              <FILE id="YvFGK0" name="LightBlockClipManagerUI.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.cpp"/>
-              <FILE id="K8SGh7" name="LightBlockClipManagerUI.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipManagerUI.h"/>
-              <FILE id="pdpqJ7" name="LightBlockClipUI.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipUI.cpp"/>
-              <FILE id="Bubcp9" name="LightBlockClipUI.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockClipUI.h"/>
-              <FILE id="tSDDee" name="LightBlockLayerPanel.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerPanel.cpp"/>
-              <FILE id="owrELj" name="LightBlockLayerPanel.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerPanel.h"/>
-              <FILE id="djPcg4" name="LightBlockLayerTimeline.cpp" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.cpp"/>
-              <FILE id="gxLhFE" name="LightBlockLayerTimeline.h" compile="0" resource="0"
-                    file="Source/Timeline/layers/Block/ui/LightBlockLayerTimeline.h"/>
+          <GROUP id="{73DD235E-2A34-48E3-F815-5FFF5476072D}" name="Video">
+            <GROUP id="{8C6013BA-62BC-4BAD-CA77-F2631737559A}" name="ui">
+              <FILE id="Zp8z7Q" name="VideoClipUI.cpp" compile="0" resource="0" file="Source/Sequence/layers/Video/ui/VideoClipUI.cpp"/>
+              <FILE id="YX3HKn" name="VideoClipUI.h" compile="0" resource="0" file="Source/Sequence/layers/Video/ui/VideoClipUI.h"/>
+              <FILE id="dq5vDW" name="VideoLayerTimeline.cpp" compile="0" resource="0"
+                    file="Source/Sequence/layers/Video/ui/VideoLayerTimeline.cpp"/>
+              <FILE id="SQ1Ar1" name="VideoLayerTimeline.h" compile="0" resource="0"
+                    file="Source/Sequence/layers/Video/ui/VideoLayerTimeline.h"/>
             </GROUP>
-            <FILE id="wEJXJP" name="LightBlockClip.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClip.cpp"/>
-            <FILE id="VxyeHG" name="LightBlockClip.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClip.h"/>
-            <FILE id="R5TU19" name="LightBlockClipManager.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClipManager.cpp"/>
-            <FILE id="c5NS7j" name="LightBlockClipManager.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockClipManager.h"/>
-            <FILE id="ihqs03" name="LightBlockEffect.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockEffect.cpp"/>
-            <FILE id="Wouh1m" name="LightBlockEffect.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockEffect.h"/>
-            <FILE id="t8NxFM" name="LightBlockLayer.cpp" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockLayer.cpp"/>
-            <FILE id="lOb1Wl" name="LightBlockLayer.h" compile="0" resource="0"
-                  file="Source/Timeline/layers/Block/LightBlockLayer.h"/>
+            <FILE id="kRzoij" name="VideoClip.cpp" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoClip.cpp"/>
+            <FILE id="afUgbp" name="VideoClip.h" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoClip.h"/>
+            <FILE id="YdrCia" name="VideoLayer.cpp" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoLayer.cpp"/>
+            <FILE id="fTjiT2" name="VideoLayer.h" compile="0" resource="0" file="Source/Sequence/layers/Video/VideoLayer.h"/>
           </GROUP>
         </GROUP>
-        <FILE id="GGKa6S" name="TimelineBlockSequence.cpp" compile="0" resource="0"
-              file="Source/Timeline/TimelineBlockSequence.cpp"/>
-        <FILE id="gsgndr" name="TimelineBlockSequence.h" compile="0" resource="0"
-              file="Source/Timeline/TimelineBlockSequence.h"/>
-        <FILE id="TrhEoc" name="TimelineEditor.cpp" compile="0" resource="0"
-              file="Source/Timeline/TimelineEditor.cpp"/>
-        <FILE id="xhjR6g" name="TimelineEditor.h" compile="0" resource="0"
-              file="Source/Timeline/TimelineEditor.h"/>
-        <FILE id="kLD7ZB" name="TimelineIncludes.cpp" compile="1" resource="0"
-              file="Source/Timeline/TimelineIncludes.cpp"/>
-        <FILE id="cR2T7P" name="TimelineIncludes.h" compile="0" resource="0"
-              file="Source/Timeline/TimelineIncludes.h"/>
+        <FILE id="mRagx6" name="SequenceBlockSequence.cpp" compile="0" resource="0"
+              file="Source/Sequence/SequenceBlockSequence.cpp"/>
+        <FILE id="Wgrg9p" name="SequenceBlockSequence.h" compile="0" resource="0"
+              file="Source/Sequence/SequenceBlockSequence.h"/>
+        <FILE id="oDmH3o" name="BentoSequenceEditor.cpp" compile="0" resource="0"
+              file="Source/Sequence/BentoSequenceEditor.cpp"/>
+        <FILE id="cOYZSX" name="BentoSequenceEditor.h" compile="0" resource="0"
+              file="Source/Sequence/BentoSequenceEditor.h"/>
+        <FILE id="KdIeor" name="SequenceIncludes.cpp" compile="1" resource="0"
+              file="Source/Sequence/SequenceIncludes.cpp"/>
+        <FILE id="YuAyPK" name="SequenceIncludes.h" compile="0" resource="0"
+              file="Source/Sequence/SequenceIncludes.h"/>
       </GROUP>
       <GROUP id="{B442BAE5-1BDF-4D74-47E1-DC8E4A866FEF}" name="Node">
         <FILE id="ZalxzQ" name="NodeIncludes.cpp" compile="1" resource="0"
               file="Source/Node/NodeIncludes.cpp"/>
         <FILE id="RIF8Ow" name="NodeIncludes.h" compile="0" resource="0" file="Source/Node/NodeIncludes.h"/>
         <GROUP id="{983B72E8-0A02-C1C3-CCCB-B64FE65F2FEA}" name="nodes">
+          <GROUP id="{4BA010EF-5209-856B-C561-E1767DAB3B13}" name="split">
+            <FILE id="Am4tN4" name="SplitNode.cpp" compile="0" resource="0" file="Source/Node/nodes/split/SplitNode.cpp"/>
+            <FILE id="zt5UpA" name="SplitNode.h" compile="0" resource="0" file="Source/Node/nodes/split/SplitNode.h"/>
+          </GROUP>
           <GROUP id="{1666FCD0-6E9D-B464-E9FF-C20C2EFBB292}" name="colorRemap">
             <FILE id="YOIq8a" name="ColorRemapNode.cpp" compile="0" resource="0"
                   file="Source/Node/nodes/colorRemap/ColorRemapNode.cpp"/>
@@ -286,21 +397,8 @@
         <FILE id="gG1epK" name="NodeManager.cpp" compile="0" resource="0" file="Source/Node/NodeManager.cpp"/>
         <FILE id="aFtS4M" name="NodeManager.h" compile="0" resource="0" file="Source/Node/NodeManager.h"/>
       </GROUP>
-      <GROUP id="{DC424058-7D3A-9ECF-4700-F3A41EC48DC1}" name="BlockViz">
-        <FILE id="SAoLE9" name="BlockVizPanel.cpp" compile="1" resource="0"
-              file="Source/BlockViz/BlockVizPanel.cpp"/>
-        <FILE id="kHpdT8" name="BlockVizPanel.h" compile="0" resource="0" file="Source/BlockViz/BlockVizPanel.h"/>
-      </GROUP>
       <GROUP id="{102A14FE-203D-7048-FD34-335BF3C28E15}" name="LightBlock">
         <GROUP id="{048BDCCA-51F2-B1DF-AC0B-49ECF3B81664}" name="model">
-          <FILE id="jOUL4M" name="LightBlockModelGroup.cpp" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockModelGroup.cpp"/>
-          <FILE id="VPjW7n" name="LightBlockModelGroup.h" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockModelGroup.h"/>
-          <FILE id="K7pG3d" name="LightBlockColorProvider.cpp" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockColorProvider.cpp"/>
-          <FILE id="h3OveU" name="LightBlockColorProvider.h" compile="0" resource="0"
-                file="Source/LightBlock/model/LightBlockColorProvider.h"/>
           <GROUP id="{D095B248-F9F6-57FA-ADF5-9C28C09825C8}" name="preset">
             <FILE id="UJIOru" name="LightBlockModelPreset.cpp" compile="0" resource="0"
                   file="Source/LightBlock/model/preset/LightBlockModelPreset.cpp"/>
@@ -312,6 +410,10 @@
                   resource="0" file="Source/LightBlock/model/preset/LightBlockModelPresetManager.h"/>
           </GROUP>
           <GROUP id="{CE00199C-474B-BD58-0F61-5FF5F410A6CD}" name="ui">
+            <FILE id="K3xW1L" name="LightBlockColorProviderEditor.cpp" compile="0"
+                  resource="0" file="Source/LightBlock/model/ui/LightBlockColorProviderEditor.cpp"/>
+            <FILE id="go7TrD" name="LightBlockColorProviderEditor.h" compile="0"
+                  resource="0" file="Source/LightBlock/model/ui/LightBlockColorProviderEditor.h"/>
             <FILE id="zc95pL" name="LightBlockModelGroupUI.cpp" compile="0" resource="0"
                   file="Source/LightBlock/model/ui/LightBlockModelGroupUI.cpp"/>
             <FILE id="M4rmmU" name="LightBlockModelGroupUI.h" compile="0" resource="0"
@@ -338,10 +440,11 @@
                   file="Source/LightBlock/model/ui/LightBlockModelUI.h"/>
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
-            <GROUP id="{EE5C0264-0254-0301-E4F8-139423483011}" name="wasm">
-              <FILE id="hCW9le" name="WasmBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/wasm/WasmBlock.cpp"
-                    xcodeResource="0"/>
-              <FILE id="aHyxRW" name="WasmBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/wasm/WasmBlock.h"/>
+            <GROUP id="{EE5C0264-0254-0301-E4F8-139423483011}" name="embeddedscript">
+              <FILE id="tGiwQF" name="EmbeddedScriptBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/embeddedscript/EmbeddedScriptBlock.cpp"/>
+              <FILE id="pC9M6J" name="EmbeddedScriptBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/embeddedscript/EmbeddedScriptBlock.h"/>
             </GROUP>
             <GROUP id="{D937E358-C3AF-2A4E-107D-7B9701E30F09}" name="shape">
               <FILE id="FO2Ik9" name="PropShapeBlock.h" compile="0" resource="0"
@@ -354,12 +457,6 @@
                     file="Source/LightBlock/model/blocks/filters/LightBlockFilter.cpp"/>
               <FILE id="CKtIqA" name="LightBlockFilter.h" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/filters/LightBlockFilter.h"/>
-              <GROUP id="{1E09FF80-0519-21FD-56A2-C7F7A294CF88}" name="script">
-                <FILE id="QMkX5k" name="ScriptBlockFilter.cpp" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.cpp"/>
-                <FILE id="cqWnRz" name="ScriptBlockFilter.h" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/filters/script/ScriptBlockFilter.h"/>
-              </GROUP>
               <GROUP id="{54983641-858F-4D3C-1698-66878E9EF55F}" name="generic">
                 <GROUP id="{6F459FB5-88B1-3AF9-62EA-A9BC94718E1C}" name="brightnesscontrast">
                   <FILE id="cY9bTK" name="BrightnessContrastBlockFilter.cpp" compile="0"
@@ -398,35 +495,37 @@
             </GROUP>
             <GROUP id="{40CD7123-FB3D-52B3-808A-2429C88F4ADF}" name="video">
               <GROUP id="{9264E4A8-3C60-EAC1-E633-8E38B9D6AC31}" name="ui">
-                <FILE id="Zle69A" name="LiveFeedBlockUI.cpp" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/video/ui/LiveFeedBlockUI.cpp"/>
-                <FILE id="sFzGot" name="LiveFeedBlockUI.h" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/video/ui/LiveFeedBlockUI.h"/>
+                <FILE id="Zle69A" name="SharedTextureBlockUI.cpp" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/video/ui/SharedTextureBlockUI.cpp"/>
+                <FILE id="sFzGot" name="SharedTextureBlockUI.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/video/ui/SharedTextureBlockUI.h"/>
               </GROUP>
-              <FILE id="fNmZwX" name="LiveFeedBlock.cpp" compile="0" resource="0"
-                    file="Source/LightBlock/model/blocks/video/LiveFeedBlock.cpp"/>
-              <FILE id="FSizg9" name="LiveFeedBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/LiveFeedBlock.h"/>
-              <FILE id="Dqo2jj" name="TextureBlock.cpp" compile="0" resource="0"
-                    file="Source/LightBlock/model/blocks/video/TextureBlock.cpp"/>
-              <FILE id="DlbLE0" name="TextureBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/TextureBlock.h"/>
-              <FILE id="ntFSJH" name="VideoBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
-              <FILE id="eocegK" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
+              <FILE id="fNmZwX" name="SharedTextureBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/SharedTextureBlock.cpp"/>
+              <FILE id="FSizg9" name="SharedTextureBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/SharedTextureBlock.h"/>
+              <FILE id="Dqo2jj" name="VideoBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.cpp"/>
+              <FILE id="DlbLE0" name="VideoBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/video/VideoBlock.h"/>
+              <FILE id="ntFSJH" name="VideoFileBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/VideoFileBlock.cpp"/>
+              <FILE id="eocegK" name="VideoFileBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/video/VideoFileBlock.h"/>
             </GROUP>
             <GROUP id="{C3E304E5-69B5-CD46-F35F-67763032BEA6}" name="pattern">
               <FILE id="RcwkQf" name="PatternBlock.cpp" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/pattern/PatternBlock.cpp"/>
               <FILE id="qnd4Dp" name="PatternBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/pattern/PatternBlock.h"/>
             </GROUP>
-            <GROUP id="{44802627-FF3C-1EE6-7861-1A5D57732488}" name="timeline">
-              <GROUP id="{243F0BA7-213E-1A5E-0ED9-E6892C4F0A08}" name="ui">
-                <FILE id="ldHNpi" name="TimelineBlockUI.cpp" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.cpp"/>
-                <FILE id="TfnA1b" name="TimelineBlockUI.h" compile="0" resource="0"
-                      file="Source/LightBlock/model/blocks/timeline/ui/TimelineBlockUI.h"/>
+            <GROUP id="{44802627-FF3C-1EE6-7861-1A5D57732488}" name="sequence">
+              <GROUP id="{FA40B911-1153-9327-5B1E-65A05AE492FC}" name="ui">
+                <FILE id="ZctWGU" name="SequenceBlockUI.cpp" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/sequence/ui/SequenceBlockUI.cpp"/>
+                <FILE id="N9zRTU" name="SequenceBlockUI.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/sequence/ui/SequenceBlockUI.h"/>
               </GROUP>
-              <FILE id="gDwEqG" name="TimelineBlock.cpp" compile="0" resource="0"
-                    file="Source/LightBlock/model/blocks/timeline/TimelineBlock.cpp"/>
-              <FILE id="LU8ewB" name="TimelineBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/timeline/TimelineBlock.h"/>
+              <FILE id="inYxhw" name="SequenceBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/sequence/SequenceBlock.cpp"/>
+              <FILE id="sjsC45" name="SequenceBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/sequence/SequenceBlock.h"/>
             </GROUP>
             <GROUP id="{65EF9CB3-D01F-96FC-4333-04140ECFDA46}" name="node">
               <GROUP id="{29B62111-FFD9-CC84-8FD5-B10C2394A2E9}" name="ui">
@@ -436,11 +535,21 @@
               <FILE id="N7GTzt" name="NodeBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.cpp"/>
               <FILE id="dbYEkI" name="NodeBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/node/NodeBlock.h"/>
             </GROUP>
-            <GROUP id="{5F6001C4-8152-D9AB-3AB2-916147B8D27B}" name="script">
-              <FILE id="qs3dXw" name="ScriptBlock.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/script/ScriptBlock.cpp"/>
-              <FILE id="ylGCjQ" name="ScriptBlock.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/script/ScriptBlock.h"/>
+            <GROUP id="{5F6001C4-8152-D9AB-3AB2-916147B8D27B}" name="streamingscript">
+              <FILE id="Uckekd" name="StreamingScriptBlock.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/streamingscript/StreamingScriptBlock.cpp"/>
+              <FILE id="H6O24S" name="StreamingScriptBlock.h" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/streamingscript/StreamingScriptBlock.h"/>
             </GROUP>
           </GROUP>
+          <FILE id="jOUL4M" name="LightBlockModelGroup.cpp" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModelGroup.cpp"/>
+          <FILE id="VPjW7n" name="LightBlockModelGroup.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockModelGroup.h"/>
+          <FILE id="K7pG3d" name="LightBlockColorProvider.cpp" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockColorProvider.cpp"/>
+          <FILE id="h3OveU" name="LightBlockColorProvider.h" compile="0" resource="0"
+                file="Source/LightBlock/model/LightBlockColorProvider.h"/>
           <FILE id="VHwqee" name="LightBlockModel.cpp" compile="0" resource="0"
                 file="Source/LightBlock/model/LightBlockModel.cpp"/>
           <FILE id="Ajpb7J" name="LightBlockModel.h" compile="0" resource="0"
@@ -476,8 +585,22 @@
               file="Source/VideoPreview/VideoPreviewPanel.h"/>
       </GROUP>
       <GROUP id="{4E9EC2C7-DD9C-7F5F-D9AF-BBDF026D3EF7}" name="Prop">
-        <FILE id="yBPkNV" name="PropFlasher.cpp" compile="0" resource="0" file="Source/Prop/PropFlasher.cpp"/>
-        <FILE id="Pucsvn" name="PropFlasher.h" compile="0" resource="0" file="Source/Prop/PropFlasher.h"/>
+        <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
+          <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
+            <FILE id="GktRO6" name="BentoComponentContainer.cpp" compile="0" resource="0"
+                  file="Source/Prop/props/bento/BentoComponentContainer.cpp"/>
+            <FILE id="t0MEZa" name="BentoComponentContainer.h" compile="0" resource="0"
+                  file="Source/Prop/props/bento/BentoComponentContainer.h"/>
+            <FILE id="e7lkEF" name="BentoProp.cpp" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
+            <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>
+          </GROUP>
+        </GROUP>
+        <GROUP id="{8E4ED156-FAC3-B69B-D00B-42398B54E32F}" name="Component">
+          <GROUP id="{96B6B97F-243C-2E0E-1B3D-9482FBFB37B6}" name="components"/>
+          <FILE id="uwUmvQ" name="PropComponent.cpp" compile="0" resource="0"
+                file="Source/Prop/Component/PropComponent.cpp" skipPCH="0"/>
+          <FILE id="oD40jg" name="PropComponent.h" compile="0" resource="0" file="Source/Prop/Component/PropComponent.h"/>
+        </GROUP>
         <GROUP id="{D40B9824-1B5B-6FA5-B249-175979B439C7}" name="Shape">
           <GROUP id="{8334483F-C7CD-CCBB-F1CF-4555459226ED}" name="ui">
             <FILE id="ZTyQbn" name="PropShapeCurveEasingUI.cpp" compile="0" resource="0"
@@ -507,8 +630,6 @@
           <FILE id="loKohm" name="PropShapeGroup.h" compile="0" resource="0"
                 file="Source/Prop/Shape/PropShapeGroup.h"/>
         </GROUP>
-        <FILE id="WR3mnT" name="PropFamily.cpp" compile="0" resource="0" file="Source/Prop/PropFamily.cpp"/>
-        <FILE id="p2GnSz" name="PropFamily.h" compile="0" resource="0" file="Source/Prop/PropFamily.h"/>
         <GROUP id="{2C9EC421-B4F2-97F6-B5FC-EB3BC810C022}" name="TargetFilter">
           <GROUP id="{30C8E5B1-F574-BA99-E16B-80CDE5072A7A}" name="filters"/>
           <FILE id="y0NGDg" name="PropTargetFilterManager.cpp" compile="0" resource="0"
@@ -538,63 +659,6 @@
           <FILE id="eC7Fz0" name="PropClusterGroupManager.h" compile="0" resource="0"
                 file="Source/Prop/Cluster/PropClusterGroupManager.h"/>
         </GROUP>
-        <GROUP id="{A96EF49C-B27D-1C3B-4930-0F36661D6E83}" name="props">
-          <GROUP id="{8E508E2C-EEAD-3EB7-F9AF-5C8FE02DC9DF}" name="bento">
-            <FILE id="e7lkEF" name="BentoProp.cpp" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.cpp"/>
-            <FILE id="wUCsPB" name="BentoProp.h" compile="0" resource="0" file="Source/Prop/props/bento/BentoProp.h"/>
-          </GROUP>
-        </GROUP>
-        <GROUP id="{8E4ED156-FAC3-B69B-D00B-42398B54E32F}" name="Component">
-          <GROUP id="{96B6B97F-243C-2E0E-1B3D-9482FBFB37B6}" name="components">
-            <GROUP id="{062D34D2-8CE6-36BB-644F-13D8FDA44D96}" name="fx">
-              <FILE id="H56yai" name="FXComponent.cpp" compile="0" resource="0" file="Source/Prop/Component/fx/FXComponent.cpp"/>
-              <FILE id="zb4GlC" name="FXComponent.h" compile="0" resource="0" file="Source/Prop/Component/fx/FXComponent.h"/>
-            </GROUP>
-            <GROUP id="{4393D381-241C-E5DB-874A-9F8C40AA3899}" name="touch">
-              <FILE id="C3YSwv" name="TouchComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/touch/TouchComponent.cpp"/>
-              <FILE id="bv63IY" name="TouchComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/touch/TouchComponent.h"/>
-            </GROUP>
-            <GROUP id="{E7E01D5E-99F9-820C-D396-1D880223BFEE}" name="ir">
-              <FILE id="j8Lq3y" name="IRPropComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/ir/IRPropComponent.cpp"/>
-              <FILE id="B5iWVm" name="IRPropComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/ir/IRPropComponent.h"/>
-            </GROUP>
-            <GROUP id="{6C61C5FA-B783-C5C5-39CA-B1AB17F45C52}" name="battery">
-              <FILE id="RD2USN" name="BatteryComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/battery/BatteryComponent.cpp"/>
-              <FILE id="CB9yZf" name="BatteryComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/battery/BatteryComponent.h"/>
-            </GROUP>
-            <GROUP id="{84FB84DA-5AD5-97EF-6383-7D492E76900D}" name="buttons">
-              <FILE id="NhZPbo" name="ButtonsComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/buttons/ButtonsComponent.cpp"/>
-              <FILE id="tMsmgE" name="ButtonsComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/buttons/ButtonsComponent.h"/>
-            </GROUP>
-            <GROUP id="{44518473-18ED-63D9-31D4-55726C7D6B14}" name="files">
-              <FILE id="Tv3ZFE" name="FilesComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/files/FilesComponent.cpp"/>
-              <FILE id="n6IqVO" name="FilesComponent.h" compile="0" resource="0"
-                    file="Source/Prop/Component/files/FilesComponent.h"/>
-            </GROUP>
-            <GROUP id="{D0797117-8561-FE57-3185-EBE36DDB8B7A}" name="imu">
-              <FILE id="dI2fBY" name="IMUComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/imu/IMUComponent.cpp"/>
-              <FILE id="u5jusy" name="IMUComponent.h" compile="0" resource="0" file="Source/Prop/Component/imu/IMUComponent.h"/>
-            </GROUP>
-            <GROUP id="{CE3BD012-D672-F337-0C0E-C3726E1188BC}" name="rgb">
-              <FILE id="xgqzsY" name="RGBComponent.cpp" compile="0" resource="0"
-                    file="Source/Prop/Component/rgb/RGBComponent.cpp"/>
-              <FILE id="WXzhgz" name="RGBComponent.h" compile="0" resource="0" file="Source/Prop/Component/rgb/RGBComponent.h"/>
-            </GROUP>
-          </GROUP>
-          <FILE id="uwUmvQ" name="PropComponent.cpp" compile="0" resource="0"
-                file="Source/Prop/Component/PropComponent.cpp" skipPCH="0"/>
-          <FILE id="oD40jg" name="PropComponent.h" compile="0" resource="0" file="Source/Prop/Component/PropComponent.h"/>
-        </GROUP>
         <GROUP id="{2D4445E7-66E2-A651-74EF-D1FC94C498A0}" name="ui">
           <FILE id="LK4Os9" name="PropEditor.cpp" compile="0" resource="0" file="Source/Prop/ui/PropEditor.cpp"/>
           <FILE id="iHeBC5" name="PropEditor.h" compile="0" resource="0" file="Source/Prop/ui/PropEditor.h"/>
@@ -610,6 +674,10 @@
           <FILE id="CmrKhv" name="PropViz.cpp" compile="0" resource="0" file="Source/Prop/ui/PropViz.cpp"/>
           <FILE id="NC7SlZ" name="PropViz.h" compile="0" resource="0" file="Source/Prop/ui/PropViz.h"/>
         </GROUP>
+        <FILE id="yBPkNV" name="PropFlasher.cpp" compile="0" resource="0" file="Source/Prop/PropFlasher.cpp"/>
+        <FILE id="Pucsvn" name="PropFlasher.h" compile="0" resource="0" file="Source/Prop/PropFlasher.h"/>
+        <FILE id="WR3mnT" name="PropFamily.cpp" compile="0" resource="0" file="Source/Prop/PropFamily.cpp"/>
+        <FILE id="p2GnSz" name="PropFamily.h" compile="0" resource="0" file="Source/Prop/PropFamily.h"/>
         <FILE id="uU9x0j" name="Prop.cpp" compile="0" resource="0" file="Source/Prop/Prop.cpp"/>
         <FILE id="Z57bbm" name="Prop.h" compile="0" resource="0" file="Source/Prop/Prop.h"/>
         <FILE id="e3SfwF" name="PropManager.cpp" compile="0" resource="0" file="Source/Prop/PropManager.cpp"/>
@@ -618,10 +686,6 @@
               file="Source/Prop/PropIncludes.cpp"/>
         <FILE id="KqHNKk" name="PropIncludes.h" compile="0" resource="0" file="Source/Prop/PropIncludes.h"/>
       </GROUP>
-      <FILE id="L55Jbe" name="CommonIncludes.cpp" compile="1" resource="0"
-            file="Source/CommonIncludes.cpp"/>
-      <FILE id="JjZHYb" name="CommonIncludes.h" compile="0" resource="0"
-            file="Source/CommonIncludes.h"/>
       <FILE id="tOdLFU" name="BentoSettings.cpp" compile="1" resource="0"
             file="Source/BentoSettings.cpp"/>
       <FILE id="o4vHyg" name="BentoSettings.h" compile="0" resource="0" file="Source/BentoSettings.h"/>
@@ -641,13 +705,11 @@
   </LIVE_SETTINGS>
   <EXPORTFORMATS>
     <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
-            smallIcon="YlXmhK" bigIcon="YlXmhK">
+            smallIcon="YlXmhK" bigIcon="YlXmhK" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-                       libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"
                        binaryPath="Binaries/Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-                       libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"
+        <CONFIGURATION isDebug="0" name="Release" headerPath="&#10;" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"
                        binaryPath="Binaries"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
@@ -656,7 +718,6 @@
         <MODULEPATH id="juce_audio_basics"/>
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_formats"/>
-        <MODULEPATH id="juce_audio_processors"/>
         <MODULEPATH id="juce_audio_utils"/>
         <MODULEPATH id="juce_core"/>
         <MODULEPATH id="juce_data_structures"/>
@@ -672,6 +733,9 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_video"/>
         <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_serial" path="Modules"/>
+        <MODULEPATH id="juce_dmx" path="Modules"/>
+        <MODULEPATH id="juce_audio_processors"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -679,10 +743,10 @@
                externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0"
                xcodeValidArchs="x86_64" customXcodeResourceFolders="Resources/mac/esptool">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/osx/debug" macOSDeploymentTarget="10.9"/>
-        <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/osx/release" macOSDeploymentTarget="10.9"/>
+        <CONFIGURATION isDebug="1" name="Debug" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug"
+                       macOSDeploymentTarget="10.9"/>
+        <CONFIGURATION name="Release" osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/release"
+                       macOSDeploymentTarget="10.9"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
@@ -696,7 +760,6 @@
         <MODULEPATH id="juce_data_structures"/>
         <MODULEPATH id="juce_core"/>
         <MODULEPATH id="juce_audio_utils"/>
-        <MODULEPATH id="juce_audio_processors"/>
         <MODULEPATH id="juce_audio_formats"/>
         <MODULEPATH id="juce_audio_devices"/>
         <MODULEPATH id="juce_audio_basics"/>
@@ -706,16 +769,17 @@
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
         <MODULEPATH id="juce_cryptography"/>
+        <MODULEPATH id="juce_serial" path="Modules"/>
+        <MODULEPATH id="juce_dmx" path="Modules"/>
+        <MODULEPATH id="juce_audio_processors"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl&#10;Servus"
                 smallIcon="YlXmhK" bigIcon="YlXmhK" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 extraDefs="FILMSTRO_USE_FFMPEG=0">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
-        <CONFIGURATION name="Release" linuxArchitecture="-m64" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
+        <CONFIGURATION isDebug="1" name="Debug" linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
+        <CONFIGURATION name="Release" linuxArchitecture="-m64" libraryPath="../../External/servus/lib/linux&#10;/usr/lib/x86_64-linux-gnu/"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
@@ -729,7 +793,6 @@
         <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
         <MODULEPATH id="juce_core" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
@@ -739,18 +802,91 @@
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
         <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
+        <MODULEPATH id="juce_serial" path="Modules"/>
+        <MODULEPATH id="juce_dmx" path="Modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
+    <VS2022 targetFolder="Builds/VisualStudio2022_CI" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
+            smallIcon="YlXmhK" bigIcon="YlXmhK">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"
+                       binaryPath="Binaries/CI" winArchitecture="x64"/>
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"
+                       binaryPath="Binaries/CI" winArchitecture="x64" alwaysGenerateDebugSymbols="1"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
+        <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_dmx" path="Modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
+        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
+        <MODULEPATH id="juce_serial" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
+        <MODULEPATH id="juce_video" path="D:\Softwares\JUCE\modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
+      </MODULEPATHS>
+    </VS2022>
+    <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
+               customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
+               externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
+               xcodeValidArchs="arm64,x86_64" customXcodeResourceFolders="Resources/mac/esptool"
+               documentExtensions="bento" hardenedRuntimeOptions="com.apple.security.cs.allow-jit">
+      <CONFIGURATIONS>
+        <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.10 SDK" libraryPath="../../External/servus/lib/osx/release"
+                       macOSDeploymentTarget="10.10" binaryPath="Release"/>
+        <CONFIGURATION isDebug="0" name="ReleaseSilicon" osxCompatibility="10.10 SDK"
+                       libraryPath="../../External/servus/lib/silicon/release" macOSDeploymentTarget="10.10"
+                       binaryPath="Release"/>
+      </CONFIGURATIONS>
+      <MODULEPATHS>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
+        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
+        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_video" path="JUCE/modules"/>
+        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
+        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
+        <MODULEPATH id="juce_serial" path="Modules"/>
+        <MODULEPATH id="juce_dmx" path="Modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
+      </MODULEPATHS>
+    </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
                 externalLibraries="curl&#10;Servus&#10;pthread" smallIcon="YlXmhK"
                 bigIcon="YlXmhK" extraDefs="FILMSTRO_USE_FFMPEG=0">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Debug" libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
-                       headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       linuxArchitecture="-march=armv7"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
-                       linuxArchitecture="-march=armv7"/>
+                       linuxArchitecture="-march=armv8-a" headerPath="/usr/include/freetype2"/>
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
+                       linuxArchitecture="-march=armv8-a" headerPath="/usr/include/freetype2"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
@@ -765,7 +901,6 @@
         <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
         <MODULEPATH id="juce_core" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
         <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
@@ -774,79 +909,46 @@
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
         <MODULEPATH id="juce_simpleweb" path="Modules"/>
         <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
+        <MODULEPATH id="juce_serial" path="Modules"/>
+        <MODULEPATH id="juce_dmx" path="Modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
-    <VS2019 targetFolder="Builds/VisualStudio2019_CI" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
-            smallIcon="YlXmhK" bigIcon="YlXmhK" extraLinkerFlags="/HEAP:0x400000,0x10000"
-            extraCompilerFlags="/Zm1000">
+    <LINUX_MAKE targetFolder="Builds/Raspberry64" smallIcon="YlXmhK" bigIcon="YlXmhK"
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
+                externalLibraries="curl&#10;Servus&#10;pthread" extraDefs="FILMSTRO_USE_FFMPEG=0">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" binaryPath="Binaries/CI" winArchitecture="x64"
-                       headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-                       libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"/>
-        <CONFIGURATION isDebug="0" name="Release" binaryPath="Binaries/CI" winArchitecture="x64"
-                       headerPath="../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-                       libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"
-                       alwaysGenerateDebugSymbols="1" debugInformationFormat="ProgramDatabase"/>
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/raspberry64&#10;/usr/lib/arm-linux-gnueabihf"
+                       headerPath="/usr/include/freetype2"/>
+        <CONFIGURATION isDebug="0" name="Release" libraryPath="../../External/servus/lib/raspberry64&#10;/usr/lib/arm-linux-gnueabihf"
+                       headerPath="/usr/include/freetype2"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
-        <MODULEPATH id="juce_video" path="JUCE/modules"/>
-        <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_simpleweb" path="Modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
-        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
-        <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
         <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
-        <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
-      </MODULEPATHS>
-    </VS2019>
-    <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
-               customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0"
-               xcodeValidArchs="x86_64" customXcodeResourceFolders="Resources/mac/esptool">
-      <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       osxCompatibility="10.9 SDK" libraryPath="../../External/servus/lib/osx/debug"
-                       macOSDeploymentTarget="10.9"/>
-        <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.9 SDK" headerPath="../../External/serial/include&#10;../../External/servus/include"
-                       libraryPath="../../External/servus/lib/osx/release" macOSDeploymentTarget="10.9"/>
-      </CONFIGURATIONS>
-      <MODULEPATHS>
-        <MODULEPATH id="juce_timeline" path="Modules"/>
-        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
-        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
-        <MODULEPATH id="juce_organicui" path="Modules"/>
-        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
-        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_events" path="JUCE/modules"/>
-        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
-        <MODULEPATH id="juce_core" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
-        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
-        <MODULEPATH id="juce_video" path="JUCE/modules"/>
         <MODULEPATH id="filmstro_ffmpeg" path="Modules"/>
-        <MODULEPATH id="filmstro_audiohelpers" path="Modules"/>
-        <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_audio_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_devices" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_formats" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_utils" path="JUCE/modules"/>
+        <MODULEPATH id="juce_core" path="JUCE/modules"/>
         <MODULEPATH id="juce_cryptography" path="JUCE/modules"/>
+        <MODULEPATH id="juce_data_structures" path="JUCE/modules"/>
+        <MODULEPATH id="juce_dmx" path="Modules"/>
+        <MODULEPATH id="juce_events" path="JUCE/modules"/>
+        <MODULEPATH id="juce_graphics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_basics" path="JUCE/modules"/>
+        <MODULEPATH id="juce_gui_extra" path="JUCE/modules"/>
+        <MODULEPATH id="juce_opengl" path="JUCE/modules"/>
+        <MODULEPATH id="juce_organicui" path="Modules"/>
+        <MODULEPATH id="juce_osc" path="JUCE/modules"/>
+        <MODULEPATH id="juce_serial" path="Modules"/>
+        <MODULEPATH id="juce_sharedtexture" path="Modules"/>
+        <MODULEPATH id="juce_simpleweb" path="Modules"/>
+        <MODULEPATH id="juce_timeline" path="Modules"/>
+        <MODULEPATH id="juce_video" path="JUCE/modules"/>
       </MODULEPATHS>
-    </XCODE_MAC>
+    </LINUX_MAKE>
   </EXPORTFORMATS>
   <MODULES>
     <MODULE id="filmstro_audiohelpers" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -859,6 +961,7 @@
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_data_structures" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_dmx" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_events" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_graphics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_gui_basics" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -866,6 +969,7 @@
     <MODULE id="juce_opengl" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_organicui" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_osc" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_serial" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_sharedtexture" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_simpleweb" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_timeline" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
@@ -874,5 +978,6 @@
   <JUCEOPTIONS JUCE_ASIO="1" TIMELINE_UNIQUE_LAYER_FACTORY="0" ORGANICUI_USE_SERVUS="1"
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" JUCE_USE_MP3AUDIOFORMAT="1"
                JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
-               ORGANICUI_USE_WEBSERVER="1" JUCE_IP_AND_PORT_DETECTION="1"/>
+               ORGANICUI_USE_WEBSERVER="1" JUCE_IP_AND_PORT_DETECTION="1" JUCE_USE_WIN_WEBVIEW2="1"
+               ORGANICUI_USE_SHAREDTEXTURE="1"/>
 </JUCERPROJECT>

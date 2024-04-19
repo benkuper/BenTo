@@ -37,6 +37,8 @@ public:
                                                                            ,
                                                                            systemLayer(this)
 #endif
+                                                                           ,
+                                                                           fx(this)
     {
     }
 
@@ -57,7 +59,7 @@ public:
 
     // user layers, may be more than one later
 #if USE_BAKELAYER
-    LedStripBakeLayer bakeLayer;
+    LedStripPlaybackLayer bakeLayer;
 #endif
 #if USE_STREAMINGLAYER
     LedStripStreamLayer streamLayer;
@@ -67,6 +69,10 @@ public:
 #endif
 #if USE_SYSTEMLAYER
     LedStripSystemLayer systemLayer;
+#endif
+
+#if USE_FX
+    FXComponent fx;
 #endif
 
     LedStripLayer *userLayers[LEDSTRIP_NUM_USER_LAYERS];
@@ -80,6 +86,8 @@ public:
 
     void updateInternal() override;
     void clearInternal() override;
+
+    void setBrightness(float val);
 
     void paramValueChangedInternal(void *param) override;
     void onEnabledChanged() override;
@@ -123,7 +131,6 @@ public:
     FillOSCQueryInternalEnd
 };
 
-
 DeclareComponentManager(LedStrip, LEDSTRIP, leds, strip)
 
 #ifdef USE_SCRIPT
@@ -140,13 +147,19 @@ LinkScriptFunction(LedStripManagerComponent, pointRGB, v, iiiff);
 LinkScriptFunction(LedStripManagerComponent, pointHSV, v, fffff);
 
 LinkScriptFunction(LedStripManagerComponent, set, v, ii);
-LinkScriptFunction(LedStripManagerComponent, get, i, i);
 LinkScriptFunction(LedStripManagerComponent, setRGB, v, iiii);
 LinkScriptFunction(LedStripManagerComponent, setHSV, v, ifff);
 
+LinkScriptFunction(LedStripManagerComponent, get, i, i);
+
+LinkScriptFunction(LedStripManagerComponent, setBlendMode, v, iii);
+
 LinkScriptFunctionsEnd
 
-DeclareScriptFunctionVoid0(LedStripManagerComponent, clear) { items[0]->scriptLayer.clearColors(); }
+DeclareScriptFunctionVoid0(LedStripManagerComponent, clear)
+{
+    items[0]->scriptLayer.clearColors();
+}
 DeclareScriptFunctionVoid1(LedStripManagerComponent, fillAll, uint32_t) { items[0]->scriptLayer.fillAll(arg1); }
 DeclareScriptFunctionVoid3(LedStripManagerComponent, fillRange, uint32_t, float, float) { items[0]->scriptLayer.fillRange(arg1, arg2, arg3); }
 
@@ -161,6 +174,10 @@ DeclareScriptFunctionVoid2(LedStripManagerComponent, set, uint32_t, uint32_t) { 
 DeclareScriptFunctionVoid4(LedStripManagerComponent, setRGB, uint32_t, uint32_t, uint32_t, uint32_t) { items[0]->scriptLayer.setLed(arg1, Color(arg2, arg3, arg4)); }
 DeclareScriptFunctionVoid4(LedStripManagerComponent, setHSV, uint32_t, float, float, float) { items[0]->scriptLayer.setLed(arg1, Color::HSV(arg2, arg3, arg4)); }
 DeclareScriptFunctionReturn1(LedStripManagerComponent, get, uint32_t, uint32_t) { return items[0]->scriptLayer.getLed(arg1).value; }
+
+DeclareScriptFunctionVoid3(LedStripManagerComponent, setBlendMode, uint32_t, uint32_t, uint32_t) { return items[0]->userLayers[(int)arg2]->setBlendMode((LedStripLayer::BlendMode)arg3); }
+
+void addItemInternal(int index){};
 
 #endif
 

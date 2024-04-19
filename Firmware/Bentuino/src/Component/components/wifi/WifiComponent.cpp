@@ -8,8 +8,8 @@ ImplementSingleton(WifiComponent)
     // AddAndSetParameter(pass);
     // AddAndSetParameter(apOnNoWifi);
 
-    AddStringParam(ssid);
-    AddStringParam(pass);
+    AddStringParamConfig(ssid);
+    AddStringParamConfig(pass);
 
     connect();
 
@@ -117,16 +117,10 @@ void WifiComponent::disconnect()
 String WifiComponent::getIP() const
 {
     if (state == Connected)
-        return String(WiFi.localIP()[0]) +
-               "." + String(WiFi.localIP()[1]) +
-               "." + String(WiFi.localIP()[2]) +
-               "." + String(WiFi.localIP()[3]);
+        return StringHelpers::ipToString(WiFi.localIP());
 
     else if (state == Hotspot)
-        return String(WiFi.softAPIP()[0]) +
-               "." + String(WiFi.softAPIP()[1]) +
-               "." + String(WiFi.softAPIP()[2]) +
-               "." + String(WiFi.softAPIP()[3]);
+        return StringHelpers::ipToString(WiFi.softAPIP());
 
     return "[noip]";
 }

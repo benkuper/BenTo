@@ -78,3 +78,8 @@ Color LedStripLayer::getLed(int index)
 
     return Color(0,0,0,0);
 }
+
+void LedStripLayer::setBlendMode(BlendMode b)
+{
+    SetParam(blendMode, b);
+}

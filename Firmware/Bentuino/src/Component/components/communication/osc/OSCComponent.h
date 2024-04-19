@@ -12,10 +12,6 @@ DeclareStringParam(remoteHost, "");
 DeclareBoolParam(isAlive, "");
 DeclareBoolParam(sendFeedback, false);
 
-// Ping
-bool pingEnabled; // only activate ping check if received a first ping
-long timeSinceLastReceivedPing;
-
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;

@@ -25,6 +25,7 @@ BentoSettings::BentoSettings() :
 	saveWifiTrigger = wifiCC.addTrigger("Upload Credentials to Prop", "Save the credentials into all connected props");
 	addChildControllableContainer(&wifiCC);
 
+	addChildControllableContainer(PropFlasher::getInstance());
 }
 
 BentoSettings::~BentoSettings()

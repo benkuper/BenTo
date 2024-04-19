@@ -1,3 +1,5 @@
+ImplementSingleton(ScriptComponent);
+
 bool ScriptComponent::initInternal(JsonObject o)
 {
     script.init();
@@ -24,6 +26,11 @@ bool ScriptComponent::handleCommandInternal(const String &command, var *data, in
     else if (CheckCommand("stop", 0))
     {
         script.stop();
+        return true;
+    }
+    else if (CheckCommand("setScriptParam", 2))
+    {
+        script.setScriptParam(data[0].intValue(), (float)data[1]);
         return true;
     }
 
