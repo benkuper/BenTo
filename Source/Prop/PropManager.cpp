@@ -516,7 +516,7 @@ void PropManager::checkSerialDevices()
 
 void PropManager::checkDeviceDeviceID(SerialDeviceInfo* info)
 {
-	SerialDevice* d = SerialManager::getInstance()->getPort(info, true, 115200);
+	SerialDevice* d = SerialManager::getInstance()->getPort(info, true);
 	if (d == nullptr)
 	{
 		LOGWARNING("Port already opened : " << info->uniqueDescription);

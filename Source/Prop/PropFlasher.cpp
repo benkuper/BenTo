@@ -296,7 +296,7 @@ void PropFlasher::setAllWifi()
 	Array<SerialDevice*> devices;
 	for (auto& f : flashedDevices)
 	{
-		SerialDevice* s = SerialManager::getInstance()->getPort(f, true, 115200);
+		SerialDevice* s = SerialManager::getInstance()->getPort(f, true);
 		if (s == nullptr)
 		{
 			LOGWARNING("Could not connect !");

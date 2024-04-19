@@ -96,7 +96,7 @@ juce::Result BentoEngine::saveDocument(const File& file)
 }
 
 
-void BentoEngine::processMessage(const OSCMessage& m)
+void BentoEngine::processMessage(const OSCMessage& m, const String& clientId)
 {
 	StringArray aList;
 	aList.addTokens(m.getAddressPattern().toString(), "/", "\"");

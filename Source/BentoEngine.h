@@ -28,7 +28,7 @@ public:
 
 	juce::Result saveDocument(const File& file) override;
 
-	void processMessage(const OSCMessage &m) override;
+	void processMessage(const OSCMessage &m, const String& clientId) override;
 	var getJSONData() override;
 	void loadJSONDataInternalEngine(var data, ProgressTask * loadingTask) override;
 
