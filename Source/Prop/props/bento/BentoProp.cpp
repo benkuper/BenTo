@@ -160,7 +160,7 @@ void BentoProp::sendColorsToPropInternal()
 	for (int u = 0; u < universes.size(); u++)
 	{
 		int startLed = u * 170;
-		int numChannels = jmax(0, jmin(colors.size() - 170, 170));
+		int numChannels = jmax(0, jmin(colors.size() - startLed, 170));
 
 		data.fill(0);
 		
