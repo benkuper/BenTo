@@ -7,6 +7,9 @@
 #include "Component/ComponentEvent.cpp"
 #include "Component/Component.cpp"
 
+
+#include "Component/components/settings/SettingsComponent.cpp"
+
 //SD shit
 #ifdef USE_FILES
 #include "../lib/SD/src/SD.cpp" //really weird

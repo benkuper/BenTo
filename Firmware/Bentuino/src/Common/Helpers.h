@@ -7,9 +7,9 @@
 #define DBG(text) SerialComponent::instance->send(text)
 #define NDBG(text) SerialComponent::instance->send("[" + name + "] " + text)
 
-#define DeviceID RootComponent::instance->deviceID
-#define DeviceType RootComponent::instance->deviceType
-#define DeviceName RootComponent::instance->deviceName
+#define DeviceID SettingsComponent::instance->deviceID
+#define DeviceType SettingsComponent::instance->deviceType
+#define DeviceName SettingsComponent::instance->deviceName
 
 // Class Helpers
 #define DeclareSingleton(Class) static Class *instance;

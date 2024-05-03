@@ -39,7 +39,7 @@ bool WebServerComponent::initInternal(JsonObject o)
             eo["PATH_RENAMED"] = true;
             eo["PATH_CHANGED"] = false;
 
-            o["NAME"] = RootComponent::instance->deviceName;
+            o["NAME"] = DeviceName;
             o["OSC_PORT"] = OSC_LOCAL_PORT;
             o["OSC_TRANSPORT"] = "UDP";
 #if !USE_ASYNC_WEBSOCKET
@@ -360,7 +360,6 @@ void WebServerComponent::sendParamFeedback(Component *c, String pName, var *data
         return;
     ws.binaryAll(wsPrint.data, wsPrint.index);
 #else
-    NDBG("Broadcast BIN for param " + c->getFullPath() + "." + pName);
     ws.broadcastBIN(wsPrint.data, wsPrint.index);
 #endif
 #endif

@@ -33,6 +33,7 @@
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
 
+
 #ifdef USE_FILES
 #include "../lib/SD/src/SD.h" //really weird
 #include "Component/components/files/FilesComponent.h"
@@ -130,5 +131,7 @@
 #ifdef USE_DUMMY
 #include "Component/components/dummy/DummyComponent.h"
 #endif
+
+#include "Component/components/settings/SettingsComponent.h"
 
 #include "RootComponent.h"

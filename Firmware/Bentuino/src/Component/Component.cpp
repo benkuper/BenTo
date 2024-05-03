@@ -499,7 +499,6 @@ bool Component::handleSetParam(const String &paramName, var *data, int numData)
 {
     CheckAndSetParam(enabled);
 
-    // NDBG("Handle Param Internal");
     return handleSetParamInternal(paramName, data, numData);
 }
 
@@ -526,7 +525,6 @@ void Component::childParamValueChanged(Component *caller, Component *comp, void 
 
 bool Component::checkParamsFeedback(void *param)
 {
-    NDBG("Check Params Feedback");
     CheckAndSendParamFeedback(enabled);
     return checkParamsFeedbackInternal(param);
 }

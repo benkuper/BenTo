@@ -37,6 +37,7 @@ public:
 	std::unique_ptr<StringParameterUI> wifiPassUI;
 
 	std::unique_ptr<TriggerButtonUI> flashAllUI;
+	std::unique_ptr<TriggerButtonUI> setWifiUI;
 	std::unique_ptr<FloatSliderUI> progressUI;
 
 	std::unique_ptr<StringParameterFileUI> serverFolder;

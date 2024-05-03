@@ -18,11 +18,7 @@ bool RootComponent::initInternal(JsonObject)
     JsonObject o = Settings::settings.as<JsonObject>();
 
     AddOwnedComponent(&comm);
-    AddIntParam(propID);
-    AddStringParam(deviceName);
-    AddStringParamConfig(deviceType);
-    AddIntParamConfig(wakeUpButton);
-    AddBoolParamConfig(wakeUpState);
+    AddOwnedComponent(&settings);
 
 #ifdef USE_LEDSTRIP
     AddOwnedComponent(&strips);
@@ -114,8 +110,8 @@ void RootComponent::powerdown()
 
     delay(500);
 
-    if (wakeUpButton > 0)
-        esp_sleep_enable_ext0_wakeup((gpio_num_t)wakeUpButton, wakeUpState);
+    if (settings.wakeUpButton > 0)
+        esp_sleep_enable_ext0_wakeup((gpio_num_t)settings.wakeUpButton, settings.wakeUpState);
 
         // #elif defined TOUCH_WAKEUP_PIN
         //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
@@ -129,21 +125,7 @@ void RootComponent::powerdown()
 #endif
 }
 
-void RootComponent::saveSettings()
-{
-    Settings::settings.clear();
-    JsonObject o = Settings::settings.to<JsonObject>();
-    fillSettingsData(o, true);
-    Settings::saveSettings();
-}
 
-void RootComponent::clearSettings()
-{
-    Settings::clearSettings();
-    NDBG("Settings cleared, will reboot now.");
-    delay(500);
-    restart();
-}
 
 void RootComponent::onChildComponentEvent(const ComponentEvent &e)
 {
@@ -239,39 +221,10 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
         DBG("Free Stack size  " + String((int)uxTaskGetStackHighWaterMark(NULL)) + " free");
         // comm->sendMessage(this, "freeHeap", String(ESP.getFreeHeap()) + " bytes");
     }
-    else if (command == "saveSettings")
-    {
-        saveSettings();
-    }
-    else if (command == "showSettings")
-    {
-        String test;
-        serializeJson(Settings::settings, test);
-        DBG(test);
-    }
-    else if (command == "factoryReset")
-    {
-        clearSettings();
-    }
     else
     {
         return false;
     }
 
     return true;
-}
-
-String RootComponent::getDeviceID() const
-{
-    byte mac[6]{0, 0, 0, 0, 0, 0};
-#ifdef USE_WIFI
-    WiFi.macAddress(mac);
-#endif
-
-    String d = "";
-    for (int i = 0; i < 6; i++)
-        d += (i > 0 ? "-" : "") + String(mac[i], HEX);
-
-    d.toUpperCase();
-    return d;
 }

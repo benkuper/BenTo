@@ -68,6 +68,7 @@ public:
 	StringParameter* wifiSSID;
 	StringParameter* wifiPass;
 	Trigger* setAllWifiTrigger;
+	bool setWifiNoDelay;
 
 	Trigger* flashTrigger;
 
@@ -97,7 +98,7 @@ public:
 
 	Array<SerialDeviceInfo*> getDevicesToFlash();
 
-	void flashAll();
+	void flashAll(bool onlySetWifi = false);
 	void setAllWifi();
 	void uploadServerFiles();
 

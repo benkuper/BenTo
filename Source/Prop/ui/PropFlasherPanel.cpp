@@ -21,6 +21,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	wifiSSIDUI.reset(PropFlasher::getInstance()->wifiSSID->createStringParameterUI());
 	wifiPassUI.reset(PropFlasher::getInstance()->wifiPass->createStringParameterUI());
 	flashAllUI.reset(PropFlasher::getInstance()->flashTrigger->createButtonUI());
+	setWifiUI.reset(PropFlasher::getInstance()->setAllWifiTrigger->createButtonUI());
 	progressUI.reset(PropFlasher::getInstance()->progression->createSlider());
 
 	serverFolder.reset((StringParameterFileUI*)PropFlasher::getInstance()->serverFilesParam->createStringParameterFileUI());
@@ -48,6 +49,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	addAndMakeVisible(wifiSSIDUI.get());
 	addAndMakeVisible(wifiPassUI.get());
 	addAndMakeVisible(flashAllUI.get());
+	addAndMakeVisible(setWifiUI.get());
 	addAndMakeVisible(progressUI.get());
 
 	addAndMakeVisible(serverFolder.get());
@@ -89,7 +91,7 @@ void PropFlasherPanel::paint(Graphics& g)
 	g.drawText("1. Choose Firmware", fwRect.withHeight(24), Justification::centred);
 	g.drawText("2. Set Wifi Informations", wifiRect.withHeight(24), Justification::centred);
 	g.drawText("3. Upload Firmware", flashRect.withHeight(24), Justification::centred);
-	g.drawText("4. Upload Server files", uploadRect.withHeight(24), Justification::centred);
+	g.drawText("Extra. Upload Server files (not mandatory)", uploadRect.withHeight(24), Justification::centred);
 
 	int numDevices = infos.size();
 
@@ -143,7 +145,9 @@ void PropFlasherPanel::resized()
 	flashRect = cr.removeFromTop(140);
 	Rectangle<int> fr = flashRect.reduced(10);
 	fr.removeFromTop(20);
-	flashAllUI->setBounds(fr.removeFromTop(70).withSizeKeepingCentre(jmin(fr.getWidth(), 400), 50));
+	Rectangle<int> fr2 = fr.removeFromTop(70).withSizeKeepingCentre(jmin(fr.getWidth(), 400), 50);
+	flashAllUI->setBounds(fr2.removeFromLeft(fr2.getWidth()/2).reduced(4));
+	setWifiUI->setBounds(fr2.reduced(4));
 	progressUI->setBounds(fr.removeFromBottom(40));
 
 	cr.removeFromTop(16);

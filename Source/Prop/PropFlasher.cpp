@@ -16,7 +16,8 @@ juce_ImplementSingleton(PropFlasher)
 
 PropFlasher::PropFlasher() :
 	ControllableContainer("Firmware Uploader"),
-	Thread("Prop Flasher Wifi")
+	Thread("Prop Flasher Wifi"),
+	setWifiNoDelay(false)
 {
 
 	filterKnownDevices = addBoolParameter("Filter Known Devices", "Only upload firmware on devices that are compatible. If you don't see your connect props on the list, try disabling this option.", true);
@@ -24,7 +25,6 @@ PropFlasher::PropFlasher() :
 	updateFirmwareDefinitionsTrigger = addTrigger("Update Firmware Definitions", "Update the list of available firmwares");
 
 	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
-	updateFirmwareDefinitions();
 
 	fwFileParam = addFileParameter("Firmware File", "The firmware.bin file to flash");
 	fwFileParam->fileTypeFilter = "*.bin";
@@ -35,20 +35,9 @@ PropFlasher::PropFlasher() :
 	setWifiAfterFlash = addBoolParameter("Set Wifi After flash", "Set wifi credentials in flashed props", true);
 	wifiSSID = addStringParameter("Wifi SSID", "SSID for the wifi to set", "");
 	wifiPass = addStringParameter("Wifi Pass", "Pass for the wifi to set", "");
-	//setWifiTrigger = addTrigger("Set Wifi to props", "Set wifi (ssid and pass are set in File > Preferences > Bento Settings)");
+	setAllWifiTrigger = addTrigger("Set Wifi Only", "Set wifi to all connected props");
 
-	String ft = fwType->getValueData().toString();
-	fwFileParam->setEnabled(ft.isEmpty());
-
-	if (ft.isEmpty())
-	{
-		firmwareFile = fwFileParam->getFile();
-	}
-	else
-	{
-		firmwareFile = File(fwType->getValueData().toString());
-	}
-
+	
 
 	//testing here, should come from internet
 
@@ -73,6 +62,9 @@ PropFlasher::PropFlasher() :
 	if (sf.exists()) serverFilesParam->setValue(sf.getFullPathName());
 
 	uploadTrigger = addTrigger("Upload", "Upload files to the server");
+
+	updateFirmwareDefinitions();
+
 }
 
 PropFlasher::~PropFlasher()
@@ -110,6 +102,18 @@ void PropFlasher::updateFirmwareDefinitions()
 	}
 
 	fwType->addOption("Custom", "");
+
+	String ft = fwType->getValueData().toString();
+	fwFileParam->setEnabled(ft.isEmpty());
+
+	if (ft.isEmpty())
+	{
+		firmwareFile = fwFileParam->getFile();
+	}
+	else
+	{
+		firmwareFile = File(fwType->getValueData().toString());
+	}
 }
 
 void PropFlasher::setFlashProgression(SingleFlasher* flasher, float val)
@@ -185,7 +189,7 @@ void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 	if (t == flashTrigger) flashAll();
 	else if (t == uploadTrigger) uploadServerFiles();
 	if (t == updateFirmwareDefinitionsTrigger) updateFirmwareDefinitions();
-	//else if (t == setWifiTrigger) setAllWifi();
+	else if (t == setAllWifiTrigger) flashAll(true);
 }
 
 Array<SerialDeviceInfo*> PropFlasher::getDevicesToFlash()
@@ -235,13 +239,31 @@ Array<SerialDeviceInfo*> PropFlasher::getDevicesToFlash()
 	return infos;
 }
 
-void PropFlasher::flashAll()
+void PropFlasher::flashAll(bool onlySetWifi)
 {
 #if JUCE_WINDOWS || JUCE_MAC
 
 	flashers.clear();
 	progressions.clear();
 	flasherDones.clear();
+
+	setWifiNoDelay = onlySetWifi;
+
+	Array<SerialDeviceInfo*> infos = getDevicesToFlash();
+	for (auto& info : infos)
+	{
+		SingleFlasher* flasher = new SingleFlasher(info);
+		flashers.add(flasher);
+		progressions.add(0);
+		flasherDones.add(None);
+	}
+
+	if (onlySetWifi)
+	{
+		setAllWifi();
+		return;
+	}
+
 
 	if (!firmwareFile.exists())
 	{
@@ -285,15 +307,7 @@ void PropFlasher::flashAll()
 		return;
 	}
 
-	Array<SerialDeviceInfo*> infos = getDevicesToFlash();
-
-	for (auto& info : infos)
-	{
-		SingleFlasher* flasher = new SingleFlasher(info);
-		flashers.add(flasher);
-		progressions.add(0);
-		flasherDones.add(None);
-	}
+	
 
 	LOG("Start flashing " << infos.size() << " props...");
 	for (auto& f : flashers) f->startThread();
@@ -302,12 +316,12 @@ void PropFlasher::flashAll()
 }
 
 
-
 void PropFlasher::run()
 {
-	sleep(500);
+	if(!setWifiNoDelay) sleep(500);
 	setAllWifi();
 }
+
 
 void PropFlasher::setAllWifi()
 {
@@ -320,18 +334,22 @@ void PropFlasher::setAllWifi()
 	String wifiStr = "wifi.ssid " + wifiSSID->stringValue() + "\nwifi.pass " + wifiPass->stringValue() + "\nroot.saveSettings\nroot.restart\n";
 
 	LOG("Setting Wifi infos to prop...");
-	wait(2000);
+	if (!setWifiNoDelay) wait(2000);
+
+
 
 	Array<SerialDevice*> devices;
 	for (auto& f : flashers)
 	{
 		SerialDevice* s = SerialManager::getInstance()->getPort(f->info, true);
+		
 		if (s == nullptr)
 		{
 			LOGWARNING("Could not connect !");
 			continue;
 		}
-
+		s->setDTR(true);
+		s->setRTS(true);
 		s->addSerialDeviceListener(this);
 		devices.add(s);
 	}
@@ -352,8 +370,9 @@ void PropFlasher::setAllWifi()
 
 		s->writeString("root.restart");
 		s->port->flush();
-		//s->close(); //no need to close
+		s->close(); //no need to close
 	}
+
 	wait(500);
 
 	for (auto& s : devices) s->removeSerialDeviceListener(this);
@@ -509,8 +528,7 @@ void PropFlasher::FirmwareDownloader::run()
 
 void PropFlasher::FirmwareDownloader::progress(URL::DownloadTask* task, int64 bytesDownloaded, int64 totalLength)
 {
-	float prog = bytesDownloaded * 1.0f / totalLength;
-	LOG("Downloading firmware files..." << (int)(prog * 100) << "%");
+	//LOG("Downloading firmware files...");
 }
 
 void PropFlasher::FirmwareDownloader::finished(URL::DownloadTask* task, bool success)

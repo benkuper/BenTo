@@ -1,26 +1,18 @@
 #pragma once
 
-#ifndef DEVICE_TYPE
-#define DEVICE_TYPE "Bento"
-#endif
+
 
 DeclareComponentSingleton(Root, "root", )
 
-    const String deviceID = getDeviceID();
 
-DeclareIntParam(propID, 0);
-DeclareStringParam(macAddress, deviceID);
-DeclareStringParam(deviceName, DEVICE_TYPE);
-DeclareStringParam(deviceType, DEVICE_TYPE);
-
-DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
-DeclareBoolParam(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
 
 // DeclareConfigParameter(deviceName, deviceID);
 // DeclareConfigParameter(wakeUpButton, POWER_WAKEUP_BUTTON);
 // DeclareConfigParameter(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
 
 // system
+SettingsComponent settings;
+
 CommunicationComponent comm;
 #ifdef USE_WIFI
 WifiComponent wifi;
@@ -96,9 +88,6 @@ void restart();
 
 void powerdown();
 
-void saveSettings();
-void clearSettings();
-
 void onChildComponentEvent(const ComponentEvent &e) override;
 void childParamValueChanged(Component *caller, Component *comp, void *param);
 
@@ -106,39 +95,22 @@ bool handleCommandInternal(const String &command, var *data, int numData) overri
 
 bool isShuttingDown() const { return timeAtShutdown > 0; }
 
-String getDeviceID() const;
+
 
 HandleSetParamInternalStart
     CheckTrigger(shutdown);
 CheckTrigger(restart);
-CheckTrigger(saveSettings);
-CheckTrigger(clearSettings);
-CheckAndSetParam(deviceName);
-CheckAndSetParam(deviceType);
-CheckAndSetParam(propID);
-CheckAndSetParam(wakeUpButton);
-CheckAndSetParam(wakeUpState);
+
 HandleSetParamInternalEnd;
 
 FillSettingsInternalStart
-    FillSettingsParam(deviceName);
-FillSettingsParam(deviceType);
-FillSettingsParam(propID);
-FillSettingsParam(wakeUpButton);
-FillSettingsParam(wakeUpState);
+
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
     FillOSCQueryTrigger(shutdown);
 FillOSCQueryTrigger(restart);
-FillOSCQueryTrigger(saveSettings);
-FillOSCQueryTrigger(clearSettings);
-FillOSCQueryIntParam(propID);
-FillOSCQueryStringParamReadOnly(macAddress);
-FillOSCQueryStringParam(deviceName);
-FillOSCQueryStringParam(deviceType);
-FillOSCQueryIntParam(wakeUpButton);
-FillOSCQueryBoolParam(wakeUpState);
+
 FillOSCQueryInternalEnd
 
     EndDeclareComponent
