@@ -16,7 +16,7 @@ UserLightBlockModelManager::UserLightBlockModelManager(const String &name, Block
 	type(type)
 {
 	itemDataType = name;
-	libFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("Bento/" + name);
+	libFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName)+"/" + name);
 	libFolder.createDirectory();
 }
 

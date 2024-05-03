@@ -185,6 +185,7 @@ void MotionComponent::readIMU()
         NDBG("Reading is sh*t (nan)");
         return;
     }
+    
     // NDBG("Euler " + String(euler.x()));
 
     SetParam3(orientation,

@@ -95,6 +95,7 @@ public:
 	virtual void oscMessageReceived(const OSCMessage& message) override;
 
 	void serviceAdded(ZeroconfManager::ServiceInfo* s) override;
+	void addPropForService(ZeroconfManager::ServiceInfo* s);
 
 	void afterLoadJSONDataInternal() override;
 

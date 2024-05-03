@@ -1,7 +1,7 @@
 /*
   ==============================================================================
 
-    This file was auto-generated!
+	This file was auto-generated!
 
   ==============================================================================
 */
@@ -43,7 +43,7 @@ void MainComponent::init()
 	ShapeShifterFactory::getInstance()->defs.add(new ShapeShifterDefinition("Video Preview", &VideoPreviewPanel::create));
 
 	ShapeShifterManager::getInstance()->setDefaultFileData(BinaryData::default_btlayout);
-	ShapeShifterManager::getInstance()->setLayoutInformations("btlayout", "Bento/layouts");
+	ShapeShifterManager::getInstance()->setLayoutInformations("btlayout", String(ProjectInfo::projectName) + "/layouts");
 
-	OrganicMainContentComponent::init();
+		OrganicMainContentComponent::init();
 }

@@ -71,7 +71,7 @@ PropManager::PropManager() :
 	setupReceiver();
 	sender.connect("0.0.0.0", 9000);
 
-	zeroconfSearcher = ZeroconfManager::getInstance()->addSearcher("OSC", "_osc._udp");
+	zeroconfSearcher = ZeroconfManager::getInstance()->addSearcher("OSCQuery", "_oscjson._tcp");
 	zeroconfSearcher->addSearcherListener(this);
 
 	SerialManager::getInstance()->addSerialManagerListener(this);
@@ -116,6 +116,7 @@ void PropManager::setupReceiver()
 	String s = "Local IPs:";
 	for (auto& ip : ips) s += String("\n > ") + ip;
 
+	
 	NLOG(niceName, s);
 }
 
@@ -233,7 +234,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 			LOG(" > sending /yo on " << broadcastIP << " with local ip " << ip << "...");
 		}
 
-		for (auto& s : zeroconfSearcher->services) serviceAdded(s);
+		for (auto& s : zeroconfSearcher->services) addPropForService(s);
 
 		checkSerialDevices();
 
@@ -365,13 +366,19 @@ void PropManager::oscMessageReceived(const OSCMessage& m)
 
 	if (address == "/wassup")
 	{
+		if (m.size() < 4)
+		{
+			LOGERROR("Not enough arguments for /wassup");
+			return;
+		}
+
 		String pHost = OSCHelpers::getStringArg(m[0]);
 		String pid = OSCHelpers::getStringArg(m[1]);
 		String pType = m.size() > 2 ? OSCHelpers::getStringArg(m[2]) : BentoProp::getTypeStringStatic();
 		String pName = m.size() > 3 ? OSCHelpers::getStringArg(m[3]) : "Prop";
 		//String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Bento";
 
-		//DBG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
+		LOG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
 		createPropIfNotExist(pType, pHost, pid, pName);
 	}
 	//else  if (m.size() > 0 && m[0].isString())
@@ -387,26 +394,27 @@ void PropManager::serviceAdded(ZeroconfManager::ServiceInfo* s)
 {
 	if (!autoAddNetworkProps->boolValue()) return;
 
+}
+
+void PropManager::addPropForService(ZeroconfManager::ServiceInfo* s)
+{
+
 	StringArray  nameSplit;
 	nameSplit.addTokens(s->name, "-", "\"");
 
-	String type = nameSplit[0].trim();
-	String mac = nameSplit[1].trim();
-
-	for (auto& d : factory.defs)
+	String deviceType = s->getKey("deviceType");
+	if (deviceType.isNotEmpty())
 	{
-		if (type == d->type)
-		{
-			createPropIfNotExist(type, s->ip, mac);
-		}
+		createPropIfNotExist(deviceType, s->ip, s->getKey("deviceID"), s->getKey("deviceName"));
 	}
+
 }
 
 //void PropManager::updatePropsAndFamiliesDefinitions()
 //{
 //	factory.defs.clear();
 //
-//	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props");
+//	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props");
 //	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, true, "*.json");
 //
 //	for (auto& f : propFiles)
@@ -436,7 +444,7 @@ void PropManager::serviceAdded(ZeroconfManager::ServiceInfo* s)
 //	for (auto& f : families) familiesCC.removeChildControllableContainer(f);
 //	families.clear();
 //
-//	File familyFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props/families");
+//	File familyFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props/families");
 //	if (!familyFolder.exists()) familyFolder.createDirectory();
 //
 //	Array<File> familyFiles = familyFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
@@ -475,7 +483,7 @@ void PropManager::afterLoadJSONDataInternal()
 //{
 //	File f = File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip");
 //	ZipFile zip(f);
-//	zip.uncompressTo(File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props"), true);
+//	zip.uncompressTo(File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props"), true);
 //
 //	f.deleteFile();
 //

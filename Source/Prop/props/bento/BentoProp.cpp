@@ -180,9 +180,6 @@ void BentoProp::sendColorsToPropInternal()
 		if (universes[u]->isDirty) artnet.sendDMXValues(universes[u]);
 		wait(2);
 	}
-
-
-
 }
 
 void BentoProp::uploadPlaybackData(PlaybackData data)

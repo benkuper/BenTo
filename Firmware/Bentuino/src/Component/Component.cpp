@@ -526,6 +526,7 @@ void Component::childParamValueChanged(Component *caller, Component *comp, void 
 
 bool Component::checkParamsFeedback(void *param)
 {
+    NDBG("Check Params Feedback");
     CheckAndSendParamFeedback(enabled);
     return checkParamsFeedbackInternal(param);
 }

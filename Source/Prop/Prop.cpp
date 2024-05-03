@@ -13,7 +13,7 @@
 #include "Sequence/SequenceIncludes.h"
 
 Prop::Prop(var params) :
-	BaseItem(params.getProperty("name", "Unknown").toString(), true, true),
+	BaseItem(params.getProperty("name", "Unknown").toString(), true),
 	Thread("Prop"),
 	generalCC("Main Parameters"),
 	resolutionRef(nullptr),
@@ -115,21 +115,21 @@ Prop::Prop(var params) :
 	//proprefactor
 	//setupComponentsJSONDefinition(params.getProperty("components", var()));
 
-	var scriptsData = params.getProperty("scripts", var());
-	for (int i = 0; i < scriptsData.size(); i++)
-	{
-		File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/props");
+	//var scriptsData = params.getProperty("scripts", var());
+	//for (int i = 0; i < scriptsData.size(); i++)
+	//{
+	//	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props");
 
-		Script* script = scriptManager->addItem(nullptr, var(), false);
-		scriptManager->setItemIndex(script, i);
-		script->filePath->customBasePath = propFolder.getFullPathName();
-		script->filePath->setControllableFeedbackOnly(true);
-		script->filePath->setValue(scriptsData[i].toString());
-		script->updateRate->setControllableFeedbackOnly(true);
-		script->isSavable = false;
-		script->userCanDuplicate = false;
-		script->userCanRemove = false;
-	}
+	//	Script* script = scriptManager->addItem(nullptr, var(), false);
+	//	scriptManager->setItemIndex(script, i);
+	//	script->filePath->customBasePath = propFolder.getFullPathName();
+	//	script->filePath->setControllableFeedbackOnly(true);
+	//	script->filePath->setValue(scriptsData[i].toString());
+	//	script->updateRate->setControllableFeedbackOnly(true);
+	//	script->isSavable = false;
+	//	script->userCanDuplicate = false;
+	//	script->userCanRemove = false;
+	//}
 
 
 	customParams.reset(new PropCustomParams());

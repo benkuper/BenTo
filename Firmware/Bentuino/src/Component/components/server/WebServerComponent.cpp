@@ -360,6 +360,7 @@ void WebServerComponent::sendParamFeedback(Component *c, String pName, var *data
         return;
     ws.binaryAll(wsPrint.data, wsPrint.index);
 #else
+    NDBG("Broadcast BIN for param " + c->getFullPath() + "." + pName);
     ws.broadcastBIN(wsPrint.data, wsPrint.index);
 #endif
 #endif

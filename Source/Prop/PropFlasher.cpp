@@ -21,17 +21,10 @@ PropFlasher::PropFlasher() :
 
 	filterKnownDevices = addBoolParameter("Filter Known Devices", "Only upload firmware on devices that are compatible. If you don't see your connect props on the list, try disabling this option.", true);
 
+	updateFirmwareDefinitionsTrigger = addTrigger("Update Firmware Definitions", "Update the list of available firmwares");
 
 	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
-	for (auto& def : PropManager::getInstance()->factory.defs)
-	{
-		FactorySimpleParametricDefinition<Prop>* pDef = (FactorySimpleParametricDefinition<Prop>*)def;
-		String fw = pDef->params.getProperty("firmware", "");
-		if (fw.isEmpty()) continue;
-		fwType->addOption(pDef->type, fw);
-	}
-
-	fwType->addOption("Custom", "");
+	updateFirmwareDefinitions();
 
 	fwFileParam = addFileParameter("Firmware File", "The firmware.bin file to flash");
 	fwFileParam->fileTypeFilter = "*.bin";
@@ -76,12 +69,47 @@ PropFlasher::PropFlasher() :
 
 	serverFilesParam = addFileParameter("Server Files", "Files to upload to the server");
 	serverFilesParam->directoryMode = true;
+	File sf = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/server");
+	if (sf.exists()) serverFilesParam->setValue(sf.getFullPathName());
+
 	uploadTrigger = addTrigger("Upload", "Upload files to the server");
 }
 
 PropFlasher::~PropFlasher()
 {
 	stopThread(1000);
+}
+
+void PropFlasher::updateFirmwareDefinitions()
+{
+	fwType->clearOptions();
+	File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares");
+	if (!f.exists())
+	{
+		LOG("No firmware folder found, downloading...");
+		fwDownloader.download([this]() { updateFirmwareDefinitions(); });
+		return;
+	}
+
+	Array<File> fwFolders = f.findChildFiles(File::TypesOfFileToFind::findDirectories, false);
+
+	for (auto& fold : fwFolders)
+	{
+		if (fold.getFileName() == "server")
+		{
+			if (serverFilesParam->stringValue().isEmpty())  serverFilesParam->setValue(fold.getFullPathName());
+			continue; //ignore server folder for firmware listing
+		}
+
+		if (!fold.getChildFile("firmware.bin").existsAsFile() || !fold.getChildFile("partitions.bin").existsAsFile())
+		{
+			NLOGWARNING(niceName, "Firmware folder " << fold.getFullPathName() << " is missing firmware.bin or partitions.bin");
+			continue;
+		}
+		fwType->addOption(fold.getFileName(), fold.getFullPathName() + "/firmware.bin");
+	}
+
+	fwType->addOption("Custom", "");
 }
 
 void PropFlasher::setFlashProgression(SingleFlasher* flasher, float val)
@@ -156,6 +184,7 @@ void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == flashTrigger) flashAll();
 	else if (t == uploadTrigger) uploadServerFiles();
+	if (t == updateFirmwareDefinitionsTrigger) updateFirmwareDefinitions();
 	//else if (t == setWifiTrigger) setAllWifi();
 }
 
@@ -260,7 +289,7 @@ void PropFlasher::flashAll()
 
 	for (auto& info : infos)
 	{
-		SingleFlasher* flasher = new SingleFlasher(info->port);
+		SingleFlasher* flasher = new SingleFlasher(info);
 		flashers.add(flasher);
 		progressions.add(0);
 		flasherDones.add(None);
@@ -294,9 +323,9 @@ void PropFlasher::setAllWifi()
 	wait(2000);
 
 	Array<SerialDevice*> devices;
-	for (auto& f : flashedDevices)
+	for (auto& f : flashers)
 	{
-		SerialDevice* s = SerialManager::getInstance()->getPort(f, true);
+		SerialDevice* s = SerialManager::getInstance()->getPort(f->info, true);
 		if (s == nullptr)
 		{
 			LOGWARNING("Could not connect !");
@@ -314,11 +343,18 @@ void PropFlasher::setAllWifi()
 		s->writeString(wifiStr);
 		s->port->flush();
 		//s->close(); //no need to close
-
 	}
 
 
 	wait(1000);
+	for (auto& s : devices)
+	{
+
+		s->writeString("root.restart");
+		s->port->flush();
+		//s->close(); //no need to close
+	}
+	wait(500);
 
 	for (auto& s : devices) s->removeSerialDeviceListener(this);
 
@@ -340,9 +376,9 @@ void PropFlasher::uploadServerFiles()
 }
 
 
-SingleFlasher::SingleFlasher(const String& port) :
-	Thread("SingleFlasher (" + port + ")"),
-	port(port)
+SingleFlasher::SingleFlasher(SerialDeviceInfo* info) :
+	Thread("SingleFlasher (" + info->port + ")"),
+	info(info)
 {
 }
 
@@ -353,17 +389,16 @@ SingleFlasher::~SingleFlasher()
 }
 
 
-
 void SingleFlasher::run()
 {
 	bool result = flashProp();
 	if (result)
 	{
-		LOG("[" + port + "] Prop flashed");
+		LOG("[" + info->port + "] Prop flashed");
 	}
 	else
 	{
-		LOGERROR("[" + port + "] Error flashing");
+		LOGERROR("[" + info->port + "] Error flashing");
 	}
 
 	PropFlasher::getInstance()->setFlashingDone(this, result ? PropFlasher::Success : PropFlasher::Fail);
@@ -378,6 +413,7 @@ void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)
 	}
 }
 
+
 bool SingleFlasher::flashProp()
 {
 
@@ -386,13 +422,13 @@ bool SingleFlasher::flashProp()
 	quotes = "";
 #endif
 
-	String parameters = " --chip esp32 --port " + port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
+	String parameters = " --chip esp32 --port " + info->port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
 	parameters += " 0xe000 " + quotes + PropFlasher::getInstance()->app0Bin.getFullPathName() + quotes;
 	parameters += " 0x1000 " + quotes + PropFlasher::getInstance()->bootloaderBin.getFullPathName() + quotes;
 	parameters += " 0x10000 " + quotes + PropFlasher::getInstance()->firmwareFile.getFullPathName() + quotes;
 	parameters += " 0x8000 " + quotes + PropFlasher::getInstance()->partitionsFile.getFullPathName() + quotes;
 
-	LOG("[" + port + "] Flashing firmware...");
+	LOG("[" + info->port + "] Flashing firmware...");
 	//LOG("Launch with parameters " + parameters);
 
 	ChildProcess cp;
@@ -427,7 +463,7 @@ bool SingleFlasher::flashProp()
 				if (relProg != 1)
 				{
 					PropFlasher::getInstance()->setFlashProgression(this, relProg); //not using 1 to avoid double 100% log from partitions and firmware.
-					LOG("[" + port + "] Flashing... " << (int)(relProg * 100) << " % ");
+					LOG("[" + info->port + "] Flashing... " << (int)(relProg * 100) << " % ");
 				}
 				else
 				{
@@ -443,8 +479,8 @@ bool SingleFlasher::flashProp()
 
 	if (!got100)
 	{
-		LOGERROR("[" + port + "] Something got wrong");
-		LOGERROR("[" + port + "] " + cp.readAllProcessOutput());
+		LOGERROR("[" + info->port + "] Something got wrong");
+		LOGERROR("[" + info->port + "] " + cp.readAllProcessOutput());
 		errored = true;
 	}
 
@@ -456,4 +492,39 @@ bool SingleFlasher::flashProp()
 	}
 
 	return true;
+}
+
+void PropFlasher::FirmwareDownloader::download(std::function<void()> callback)
+{
+	onDownloaded = callback;
+	startThread();
+}
+
+void PropFlasher::FirmwareDownloader::run()
+{
+	URL url("https://benjamin.kuperberg.fr/bentuino/getFirmwares.php");
+	File target = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares.zip");
+	downloadTask = url.downloadToFile(target, URL::DownloadTaskOptions().withListener(this));
+}
+
+void PropFlasher::FirmwareDownloader::progress(URL::DownloadTask* task, int64 bytesDownloaded, int64 totalLength)
+{
+	float prog = bytesDownloaded * 1.0f / totalLength;
+	LOG("Downloading firmware files..." << (int)(prog * 100) << "%");
+}
+
+void PropFlasher::FirmwareDownloader::finished(URL::DownloadTask* task, bool success)
+{
+	if (!success)
+	{
+		LOGERROR("Error download firmware files");
+		return;
+	}
+
+	LOG("Firmware files downloaded");
+	ZipFile zip(task->getTargetLocation());
+	zip.uncompressTo(File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares"), true);
+	task->getTargetLocation().deleteFile();
+
+	onDownloaded();
 }

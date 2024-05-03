@@ -92,7 +92,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
         char hostData[32];
         msg.getString(0, hostData, 32);
 
-        // NDBG("Yo received from : " + String(hostData));
+        NDBG("Yo received from : " + String(hostData));
 
         SetParam(remoteHost, hostData);
 
