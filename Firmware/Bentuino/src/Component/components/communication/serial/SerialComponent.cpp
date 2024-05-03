@@ -51,8 +51,7 @@ void SerialComponent::processMessage(String buffer)
 
 void SerialComponent::sendMessage(String source, String command, var *data, int numData)
 {
-
-    String msg = source + "." + command;
+    String msg = (source == "" ? "" : source + ".") + command;
     for (int i = 0; i < numData; i++)
     {
         msg += " " + data[i].stringValue();

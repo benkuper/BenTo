@@ -33,8 +33,10 @@ void SettingsComponent::saveSettings()
 {
     Settings::settings.clear();
     JsonObject o = Settings::settings.to<JsonObject>();
-    fillSettingsData(o, true);
+    RootComponent::instance->fillSettingsData(o, true);
     Settings::saveSettings();
+    NDBG("Settings saved");
+
 }
 
 void SettingsComponent::clearSettings()

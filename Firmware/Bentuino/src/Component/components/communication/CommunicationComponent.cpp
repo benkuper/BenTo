@@ -76,14 +76,16 @@ void CommunicationComponent::sendParamFeedback(Component *c, void *param, const 
         break;
     }
 
+    String baseAddress = c->getFullPath();
+    
 #ifdef USE_SERIAL
     if (serial.sendFeedback)
-        serial.sendMessage(c->name, pName, data, numData);
+        serial.sendMessage(baseAddress, pName, data, numData);
 #endif
 
 #ifdef USE_OSC
     if (osc.sendFeedback)
-        osc.sendMessage("/" + c->name, pName, data, numData);
+        osc.sendMessage(baseAddress, pName, data, numData);
 #endif
 
 #ifdef USE_SERVER
@@ -95,25 +97,28 @@ void CommunicationComponent::sendParamFeedback(Component *c, void *param, const 
 
 void CommunicationComponent::sendEventFeedback(const ComponentEvent &e)
 {
+    String baseAddress = e.component->getFullPath();
 #ifdef USE_SERIAL
     if (serial.sendFeedback)
-        serial.sendMessage(e.component->name, e.getName(), e.data, e.numData);
+        serial.sendMessage(baseAddress, e.getName(), e.data, e.numData);
 #endif
 
 #ifdef USE_OSC
     if (osc.sendFeedback)
-        osc.sendMessage(e.component->name, e.getName(), e.data, e.numData);
+        osc.sendMessage(baseAddress, e.getName(), e.data, e.numData);
 #endif
 }
 
 void CommunicationComponent::sendMessage(Component *c, const String &mName, const String &val)
 {
+    String baseAddress = c->getFullPath();
+
     var data[1]{val};
 #ifdef USE_SERIAL
-    serial.sendMessage(c->name, mName, data, 1);
+    serial.sendMessage(baseAddress, mName, data, 1);
 #endif
 
 #ifdef USE_OSC
-    osc.sendMessage(c->name, mName, data, 1);
+    osc.sendMessage(baseAddress, mName, data, 1);
 #endif
 }

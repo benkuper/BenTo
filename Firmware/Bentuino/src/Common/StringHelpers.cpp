@@ -8,7 +8,7 @@ void StringHelpers::processStringMessage(const String &buffer, std::function<voi
 
     int tcIndex = target.lastIndexOf('.');
 
-    String tc = target.substring(0, tcIndex);                                 // component name
+    String tc = tcIndex == -1 ? "root" : target.substring(0, tcIndex);        // component name
     String cmd = target.substring(tcIndex + 1);                               // parameter name
     String args = (splitIndex != -1 ? buffer.substring(splitIndex + 1) : ""); // value
 

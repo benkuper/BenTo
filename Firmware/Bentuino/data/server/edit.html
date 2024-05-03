@@ -171,10 +171,10 @@
     <h1>Bentuino Settings</h1>
     <div id="controls">
         <div class="control-block">
-            <input type="button" value="Save Settings" onclick="sendCommand('/root/saveSettings');restartDevice();" />
-            <input type="button" value="Shutdown" onclick="sendCommand('/root/shutdown')" />
+            <input type="button" value="Save Settings" onclick="sendCommand('/settings/save');restartDevice();" />
+            <input type="button" value="Shutdown" onclick="sendCommand('/shutdown')" />
             <input type="button" value="Restart" onclick="restartDevice();" />
-            <input type="button" value="Test Mode" onclick="sendCommand('/root/test');" />
+            <input type="button" value="Test Mode" onclick="sendCommand('/settings/testMode');" />
             Show Config<input id="showConfig" type="checkbox" value="Show Config" checked
                 onchange="updateShowConfig()" />
         </div>
@@ -436,7 +436,7 @@
         }
 
         function restartDevice() {
-            sendCommand('/root/restart');
+            sendCommand('/restart');
             setTimeout(() => connectToServer(), 1000);
         }
 

@@ -108,7 +108,7 @@ void Component::fillSettingsData(JsonObject o, bool showConfig)
 
 void Component::fillChunkedOSCQueryData(OSCQueryChunk *chunk, bool showConfig)
 {
-    const String fullPath = getFullPath(this == RootComponent::instance);
+    const String fullPath = getFullPath();//this == RootComponent::instance);
 
     switch (chunk->nextType)
     {
@@ -301,6 +301,8 @@ void Component::setupChunkAfterComponent(OSCQueryChunk *chunk, const Component *
 
 String Component::getFullPath(bool includeRoot, bool scriptMode) const
 {
+    if(this == RootComponent::instance && !includeRoot) return "";
+    
     Component *pc = parentComponent;
     String s = name;
 

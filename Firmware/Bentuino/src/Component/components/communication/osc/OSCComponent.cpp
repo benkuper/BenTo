@@ -128,7 +128,7 @@ void OSCComponent::processMessage(OSCMessage &msg)
         String addrStr = String(addr).substring(1);
         addrStr.replace('/', '.');
         int tcIndex = addrStr.lastIndexOf('.');
-        String tc = addrStr.substring(0, tcIndex); // component name
+        String tc = tcIndex == -1 ? "root" : addrStr.substring(0, tcIndex); // component name
         String cmd = addrStr.substring(tcIndex + 1);
 
         const int numData = 10; // max 10-2 = 8 arguments
