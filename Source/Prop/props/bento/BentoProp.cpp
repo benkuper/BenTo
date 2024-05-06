@@ -29,6 +29,8 @@ BentoProp::BentoProp(var params) :
 	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", 1, 0, 1);
 	battery = generalCC.addFloatParameter("Battery", "Battery level of the prop", 1, 0, 1);
 	battery->setControllableFeedbackOnly(true);
+	clearLedsOnRemove = generalCC.addBoolParameter("Clear LEDs on remove", "Clear LEDs when the prop is removed", true);
+	enableLedsOnConnect = generalCC.addBoolParameter("Enable LEDs on connect", "Enable LEDs when the prop is connected", true);
 
 	artnet.inputCC->enabled->setValue(false);
 
@@ -54,6 +56,7 @@ BentoProp::BentoProp(var params) :
 
 	playbackAddress = "/leds/strip1/playbackLayer";
 	streamingAddress = "/leds/strip1/streamLayer";
+	ledEnabledAddress = "/leds/strip1/enabled";
 }
 
 BentoProp::~BentoProp()
@@ -63,7 +66,10 @@ BentoProp::~BentoProp()
 
 void BentoProp::clearItem()
 {
+	if (clearLedsOnRemove->boolValue()) sendMessageToProp(OSCMessage(ledEnabledAddress, 0));
+
 	Prop::clearItem();
+
 	setSerialDevice(nullptr);
 }
 
@@ -91,7 +97,7 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == enabled)
 	{
-		sendMessageToProp(OSCMessage("/leds/strip1/enabled", enabled->boolValue() ? 1 : 0));
+		sendMessageToProp(OSCMessage(ledEnabledAddress, enabled->boolValue() ? 1 : 0));
 	}
 }
 
@@ -136,6 +142,13 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		battery->setValue(batteryRef->floatValue());
 	}
+	else if (c == isConnected)
+	{
+		if (isConnected->boolValue() && enabled->boolValue())
+		{
+			if(enableLedsOnConnect->boolValue()) sendMessageToProp(OSCMessage(ledEnabledAddress, 1));
+		}
+	}
 }
 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
@@ -163,7 +176,7 @@ void BentoProp::sendColorsToPropInternal()
 		int numChannels = jmax(0, jmin(colors.size() - startLed, 170));
 
 		data.fill(0);
-		
+
 		for (int i = 0; i < numChannels; i++)
 		{
 			int channelIndex = i * 3;

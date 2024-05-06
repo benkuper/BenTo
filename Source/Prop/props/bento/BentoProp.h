@@ -22,8 +22,11 @@ public:
 	const int remotePort = 9000;
 	OSCSender oscSender;
 
+
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
+	BoolParameter* enableLedsOnConnect;
+	BoolParameter* clearLedsOnRemove;
 
 	DMXArtNetDevice artnet;
 	OwnedArray<DMXUniverse, CriticalSection> universes;
@@ -34,8 +37,10 @@ public:
 	IntParameter* resolutionRef;
 	FloatParameter* brightnessRef;
 
+
 	String playbackAddress;
 	String streamingAddress;
+	String ledEnabledAddress;
 
 	virtual void clearItem() override;
 

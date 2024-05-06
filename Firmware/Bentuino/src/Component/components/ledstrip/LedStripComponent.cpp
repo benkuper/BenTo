@@ -112,6 +112,7 @@ void LedStripComponent::clearInternal()
 {
     clearColors();
     showLeds();
+    setStripPower(false);
 
     delete neoPixelStrip;
     neoPixelStrip = NULL;
@@ -119,7 +120,6 @@ void LedStripComponent::clearInternal()
     delete dotStarStrip;
     dotStarStrip = NULL;
 
-    setStripPower(false);
 }
 
 void LedStripComponent::setBrightness(float val)
