@@ -12,7 +12,8 @@
 #include "PropFlasherPanel.h"
 
 PropFlasherPanel::PropFlasherPanel() :
-	ShapeShifterContentComponent("Firmware Uploader")
+	ShapeShifterContentComponent("Firmware Uploader"),
+	noDeviceLabel("NoDeviceLabel", "No device detected. If you already plugged a device, you may need to install the driver. Click here to get the instructions.")
 {
 	filterKnownDevicesUI.reset(PropFlasher::getInstance()->filterKnownDevices->createToggle());
 	firmwareToUploadUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwType->createDefaultUI());
@@ -54,6 +55,13 @@ PropFlasherPanel::PropFlasherPanel() :
 
 	addAndMakeVisible(serverFolder.get());
 	addAndMakeVisible(uploadServerFiles.get());
+
+	noDeviceLabel.setJustificationType(Justification::centred);
+	noDeviceLabel.setColour(Label::textColourId, BLUE_COLOR);
+	noDeviceLabel.setFont(noDeviceLabel.getFont().withHeight(14).withStyle(Font::underlined));
+	noDeviceLabel.setMouseCursor(MouseCursor::PointingHandCursor);
+	noDeviceLabel.addMouseListener(this, true);
+	addAndMakeVisible(noDeviceLabel);
 
 
 	SerialManager::getInstance()->addSerialManagerListener(this);
@@ -118,6 +126,12 @@ void PropFlasherPanel::resized()
 
 	filterKnownDevicesUI->setBounds(propInfosRect.removeFromBottom(30).withSizeKeepingCentre(160, 20));
 
+	if (noDeviceLabel.isVisible())
+	{
+		noDeviceLabel.setBounds(propInfosRect.reduced(10));
+
+	}
+
 	controlRect = r.withLeft(propInfosRect.getRight() + 10);
 
 	Rectangle<int> cr = controlRect.reduced(10);
@@ -164,8 +178,18 @@ void PropFlasherPanel::resized()
 void PropFlasherPanel::updateInfos()
 {
 	infos = PropFlasher::getInstance()->getDevicesToFlash();
+	noDeviceLabel.setVisible(infos.isEmpty());
 }
 
+
+void PropFlasherPanel::mouseDown(const MouseEvent& e)
+{
+	if (e.eventComponent == &noDeviceLabel)
+	{
+		URL url("https://benkuper.notion.site/Installation-73cc90fceb7b4e918c576e4cad37f7dd");
+		url.launchInDefaultBrowser();
+	}
+}
 
 void PropFlasherPanel::portAdded(SerialDeviceInfo* info)
 {

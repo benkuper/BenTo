@@ -29,6 +29,7 @@ public:
 	Array<SerialDeviceInfo*> infos;
 
 	std::unique_ptr<BoolToggleUI> filterKnownDevicesUI;
+	Label noDeviceLabel;
 
 	std::unique_ptr<EnumParameterUI> firmwareToUploadUI;
 	std::unique_ptr<StringParameterFileUI> firmwareCustomFileUI;
@@ -43,6 +44,8 @@ public:
 	std::unique_ptr<StringParameterFileUI> serverFolder;
 	std::unique_ptr<TriggerButtonUI> uploadServerFiles;
 
+
+	void mouseDown(const MouseEvent& e) override;
 
 	virtual void portAdded(SerialDeviceInfo* info) override;
 	virtual void portRemoved(SerialDeviceInfo* info) override;
