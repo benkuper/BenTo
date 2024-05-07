@@ -5,7 +5,7 @@ Official BenTo Light Props Show Authoring Tool
 
 ## Documentation
 
-The documentation can be found at: https://bkuperberg.gitbook.io/bento-docs/
+The documentation can be found at: [The Crazy Bento Documentation](https://benkuper.notion.site/The-Crazy-Bento-Documentation-ee3a243320814347996ad9005de4397d)
 
 ## Discord
 
