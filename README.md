@@ -32,29 +32,11 @@ To build the software, you need to :
   - Clone the develop-local branch of my JUCE fork here :
   
   `git clone --branch=develop-local http://github.com/benkuper/JUCE`
-  - Download the dependencies (see below)
   - Launch the Projucer and open BenTo.jucer
   - Link the dependencies on the modules section
   - Save the jucer
   - Open the solution for you platform in the Builds folder
   - Build the solution from your IDE or make in linux without Code::Blocks
-
-### Dependencies
-
-  Chataigne relies on the OrganicUI JUCE module and juce_timeline that you can find here :  
-  - https://github.com/benkuper/juce_organicui
-  - https://github.com/benkuper/juce_timeline
-  - https://github.com/benkuper/juce_sharedtexture
-  
-  You will need to clone those repositories and link the Projucer juce_organicui and juce_timeline modules to its parent folder
-
-## The Badge Zone
-
-- Linux (x64):  [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/BenTo/branches/master/2)](https://travis-ci.org/benkuper/BenTo)
-
-- MacOS : [![Build Status](https://travis-matrix-badges.herokuapp.com/repos/benkuper/BenTo/branches/master/1)](https://travis-ci.org/benkuper/BenTo)
-
-- Windows (x64) : [![Build status](https://ci.appveyor.com/api/projects/status/r85kfdu2bv4ljxng?svg=true)](https://ci.appveyor.com/project/benkuper/bento)
 
 [![forthebadge](http://forthebadge.com/images/badges/gluten-free.svg)](http://forthebadge.com)
 
