@@ -45,8 +45,10 @@ PropFlasher::PropFlasher() :
 	fwData.getDynamicObject()->setProperty("name", "Flowtoys Creators Club");
 	var vids;
 	vids.append(0x10c4);
+	vids.append(0x0c);
 	var pids;
 	pids.append(0xea60);
+	pids.append(0xd0);
 	fwData.getDynamicObject()->setProperty("vids", vids);
 	fwData.getDynamicObject()->setProperty("pids", pids);
 	fwData.getDynamicObject()->setProperty("version", "1.0.0");
@@ -331,7 +333,7 @@ void PropFlasher::setAllWifi()
 		return;
 	}
 
-	String wifiStr = "wifi.ssid " + wifiSSID->stringValue() + "\nwifi.pass " + wifiPass->stringValue() + "\nroot.saveSettings\nroot.restart\n";
+	String wifiStr = "wifi.ssid " + wifiSSID->stringValue() + "\nwifi.pass " + wifiPass->stringValue() + "\nsettings.save\n";
 
 	LOG("Setting Wifi infos to prop...");
 	if (!setWifiNoDelay) wait(2000);
@@ -348,12 +350,14 @@ void PropFlasher::setAllWifi()
 			LOGWARNING("Could not connect !");
 			continue;
 		}
-		s->setDTR(true);
-		s->setRTS(true);
+		s->setDTR(false);
+		s->setRTS(false);
+		s->open();
 		s->addSerialDeviceListener(this);
 		devices.add(s);
 	}
 
+	wait(1000);
 
 	for (auto& s : devices)
 	{
@@ -364,16 +368,16 @@ void PropFlasher::setAllWifi()
 	}
 
 
-	wait(1000);
+	wait(100);
 	for (auto& s : devices)
 	{
 
-		s->writeString("root.restart");
+		s->writeString("root.restart\n");
 		s->port->flush();
 		s->close(); //no need to close
 	}
 
-	wait(500);
+	wait(200);
 
 	for (auto& s : devices) s->removeSerialDeviceListener(this);
 
@@ -426,7 +430,7 @@ void SingleFlasher::run()
 void PropFlasher::serialDataReceived(SerialDevice* s, const var& data)
 {
 	//LOG("Flasher Data Received :\n" << data.toString());
-	if (data.toString().contains(wifiSSID->stringValue() + " : " + wifiPass->stringValue()))
+	if (data.toString().contains(wifiSSID->stringValue()) && data.toString().contains(wifiPass->stringValue()))
 	{
 		LOG("Wifi is set for " << s->info->uniqueDescription);
 	}
