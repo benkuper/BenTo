@@ -15,6 +15,7 @@ bool Component::init(JsonObject o)
 
 void Component::update()
 {
+    // NDBG("Looping");
     if (!enabled)
         return;
 

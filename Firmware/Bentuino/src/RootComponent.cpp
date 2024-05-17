@@ -110,13 +110,14 @@ void RootComponent::powerdown()
 
     delay(500);
 
+#ifdef USE_POWER
     if (settings.wakeUpButton > 0)
         esp_sleep_enable_ext0_wakeup((gpio_num_t)settings.wakeUpButton, settings.wakeUpState);
-
         // #elif defined TOUCH_WAKEUP_PIN
         //     touchAttachInterrupt((gpio_num_t)TOUCH_WAKEUP_PIN, touchCallback, 110);
         //     esp_sleep_enable_touchpad_wakeup();
         // #endif
+#endif
 
 #ifdef ESP8266
     ESP.deepSleep(5e6);
@@ -198,7 +199,7 @@ void RootComponent::onChildComponentEvent(const ComponentEvent &e)
 
 void RootComponent::childParamValueChanged(Component *caller, Component *comp, void *param)
 {
-#if USE_BUTTON
+#ifdef USE_BUTTON
     if (caller == &buttons)
     {
         ButtonComponent *bc = (ButtonComponent *)comp;

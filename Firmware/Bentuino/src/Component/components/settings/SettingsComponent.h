@@ -13,8 +13,10 @@ DeclareStringParam(macAddress, deviceID);
 DeclareStringParam(deviceName, DEVICE_TYPE);
 DeclareStringParam(deviceType, DEVICE_TYPE);
 
+#ifdef USE_POWER
 DeclareIntParam(wakeUpButton, POWER_WAKEUP_BUTTON);
 DeclareBoolParam(wakeUpState, POWER_WAKEUP_BUTTON_STATE);
+#endif
 
 bool initInternal(JsonObject o) override;
 
@@ -33,16 +35,20 @@ HandleSetParamInternalStart
     CheckAndSetParam(deviceName);
     CheckAndSetParam(deviceType);
     CheckAndSetParam(propID);
+    #ifdef USE_POWER
     CheckAndSetParam(wakeUpButton);
     CheckAndSetParam(wakeUpState);
+    #endif
 HandleSetParamInternalEnd;
 
 FillSettingsInternalStart
     FillSettingsParam(deviceName);
     FillSettingsParam(deviceType);
     FillSettingsParam(propID);
+    #ifdef USE_POWER
     FillSettingsParam(wakeUpButton);
     FillSettingsParam(wakeUpState);
+    #endif
 FillSettingsInternalEnd
 
     FillOSCQueryInternalStart
@@ -52,8 +58,10 @@ FillSettingsInternalEnd
     FillOSCQueryStringParamReadOnly(macAddress);
     FillOSCQueryStringParam(deviceName);
     FillOSCQueryStringParam(deviceType);
+    #ifdef USE_POWER
     FillOSCQueryIntParam(wakeUpButton);
     FillOSCQueryBoolParam(wakeUpState);
+    #endif
 FillOSCQueryInternalEnd
 
     EndDeclareComponent

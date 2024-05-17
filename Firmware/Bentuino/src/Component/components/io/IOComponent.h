@@ -1,4 +1,17 @@
 #pragma once
+
+#ifndef IO_MAX_COUNT
+#define IO_MAX_COUNT 4
+#endif
+
+#ifndef IO_DEFAULT_PIN
+#define IO_DEFAULT_PIN 0
+#endif
+
+#ifndef IO_DEFAULT_MODE
+#define IO_DEFAULT_MODE IOComponent::D_OUTPUT
+#endif
+
 DeclareComponent(IO, "io", )
 
     enum PinMode { D_INPUT,

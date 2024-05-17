@@ -18,6 +18,7 @@ ImplementSingleton(WifiComponent)
 
 void WifiComponent::updateInternal()
 {
+    
     long curTime = millis();
     if (curTime > lastConnectTime + timeBetweenTries)
     {

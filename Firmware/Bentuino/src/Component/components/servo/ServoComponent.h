@@ -1,8 +1,12 @@
 #pragma once
 
+#ifndef SERVO_DEFAULT_PIN
+#define SERVO_DEFAULT_PIN 13
+#endif
+
 DeclareComponent(Servo, "servo", )
 
-DeclareIntParam(pin, 0);
+DeclareIntParam(pin, SERVO_DEFAULT_PIN);
 DeclareFloatParam(position, 0);
 
 Servo servo;
@@ -10,6 +14,7 @@ Servo servo;
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
+void paramValueChangedInternal(void *param) override;
 
 // void onParameterEventInternal(const ParameterEvent &e) override;
 

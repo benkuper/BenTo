@@ -5,9 +5,10 @@ bool SettingsComponent::initInternal(JsonObject o)
     AddIntParam(propID);
     AddStringParam(deviceName);
     AddStringParamConfig(deviceType);
+#ifdef USE_POWER
     AddIntParamConfig(wakeUpButton);
     AddBoolParamConfig(wakeUpState);
-
+#endif
     return true;
 }
 
@@ -36,7 +37,6 @@ void SettingsComponent::saveSettings()
     RootComponent::instance->fillSettingsData(o, true);
     Settings::saveSettings();
     NDBG("Settings saved");
-
 }
 
 void SettingsComponent::clearSettings()
