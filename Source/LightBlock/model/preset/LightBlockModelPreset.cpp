@@ -73,7 +73,7 @@ void LightBlockModelPreset::childStructureChanged(ControllableContainer * cc)
 
 void LightBlockModelPreset::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
-	if(cc == &paramsContainer) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
+	if(cc == &paramsContainer) providerListeners.call(&ColorProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
 }
 
 var LightBlockModelPreset::getJSONData()

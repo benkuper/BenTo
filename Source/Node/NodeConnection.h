@@ -41,9 +41,7 @@ public:
 	};
 
 
-	ListenerList<ConnectionListener> connectionListeners;
-	void addConnectionListener(ConnectionListener* newListener) { connectionListeners.add(newListener); }
-	void removeConnectionListener(ConnectionListener* listener) { connectionListeners.remove(listener); }
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(Connection, connection);
 
 
 	var getJSONData() override;

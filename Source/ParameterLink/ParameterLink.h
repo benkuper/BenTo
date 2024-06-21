@@ -10,7 +10,6 @@
 
 #pragma once
 
-#include "JuceHeader.h"
 #include "Prop/PropIncludes.h"
 
 class ParameterLink :
@@ -26,6 +25,7 @@ public:
 	WeakReference<Parameter> parameter;
 
 	bool isLinkable;
+	bool isLinkBeingDestroyed;
 
 	//links
 	WeakReference<Parameter> linkedCustomParam; //from ObjectManger custom params
@@ -61,9 +61,9 @@ public:
 
 	ListenerList<ParameterLinkListener> parameterLinkListeners;
 	void addParameterLinkListener(ParameterLinkListener* newListener) { parameterLinkListeners.add(newListener); }
-	void removeParameterLinkListener(ParameterLinkListener* listener) { parameterLinkListeners.remove(listener); }
+	void removeParameterLinkListener(ParameterLinkListener* listener) { if(!isLinkBeingDestroyed) parameterLinkListeners.remove(listener); }
 
-	DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED))
+	DECLARE_ASYNC_EVENT(ParameterLink, ParameterLink, paramLink, ENUM_LIST(LINK_UPDATED, PREVIEW_UPDATED), !isLinkBeingDestroyed )
 };
 
 class ParamLinkContainer :

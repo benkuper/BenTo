@@ -19,7 +19,7 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p) :
 	linkType(NONE),
 	parameter(p),
 	isLinkable(true),
-	//replacementHasMappingInputToken(false),
+	isLinkBeingDestroyed(false),
 	paramLinkNotifier(5)
 {
 
@@ -27,10 +27,7 @@ ParameterLink::ParameterLink(WeakReference<Parameter> p) :
 
 ParameterLink::~ParameterLink()
 {
-	//if (list != nullptr && !listRef.wasObjectDeleted())
-	//{
-	//	list->removeListListener(this);
-	//}
+	isLinkBeingDestroyed = true;
 }
 
 void ParameterLink::setLinkType(LinkType type)

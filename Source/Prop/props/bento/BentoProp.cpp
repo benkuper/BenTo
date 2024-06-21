@@ -315,6 +315,19 @@ void BentoProp::uploadFile(FileToUpload f)
 	}
 }
 
+void BentoProp::deleteAllFiles()
+{
+	if (serialDevice != nullptr)
+	{
+		serialDevice->writeString("files.deleteAll\n");
+	}
+	else
+	{
+		OSCMessage m("/files/deleteFolder");
+		sendMessageToProp(m);
+	}
+}
+
 void BentoProp::setPlaybackEnabled(bool value)
 {
 	if (serialDevice != nullptr)

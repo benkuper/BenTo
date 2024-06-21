@@ -16,7 +16,7 @@ class Prop :
 	public BaseItem,
 	public Inspectable::InspectableListener,
 	public Thread,
-	public LightBlockColorProvider::ProviderListener
+	public LightBlockColorProvider::ColorProviderListener
 {
 public:
 	enum Shape { CLUB, BALL, POI, HOOP, RING, BUGGENG, BOX, CUSTOM };
@@ -123,6 +123,8 @@ public:
 	virtual void uploadFileQueue();
 	virtual void uploadFile(FileToUpload f);
 
+	virtual void deleteAllFiles() {}
+
 	virtual void updatePlaybackModeOnProp();
 	virtual void setPlaybackEnabled(bool value) {}
 	virtual void setStreamingEnabled(bool value) {}
@@ -156,9 +158,7 @@ public:
 		virtual void colorsUpdated(Prop*) {}
 	};
 
-	ListenerList<PropListener> propListeners;
-	void addPropListener(PropListener* newListener) { propListeners.add(newListener); }
-	void removePropListener(PropListener* listener) { propListeners.remove(listener); }
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(Prop, prop);
 
 	// ASYNC
 	class  PropEvent
@@ -179,7 +179,7 @@ public:
 
 	void addAsyncPropListener(AsyncListener* newListener) { propNotifier.addListener(newListener); }
 	void addAsyncCoalescedPropListener(AsyncListener* newListener) { propNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncPropListener(AsyncListener* listener) { propNotifier.removeListener(listener); }
+	void removeAsyncPropListener(AsyncListener* listener) { if(!isClearing && !isBeingDestroyed) propNotifier.removeListener(listener); }
 
 	virtual void run() override;
 

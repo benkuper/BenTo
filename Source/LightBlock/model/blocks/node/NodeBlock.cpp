@@ -49,7 +49,7 @@ void NodeBlock::itemAdded(Node* n)
 	p->addParameterListener(this);
 	paramsContainer->addParameter(p);
 
-	providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	providerListeners.call(&ColorProviderListener::providerParametersChanged, this);
 }
 
 void NodeBlock::itemsAdded(Array<Node*> nodes)
@@ -72,7 +72,7 @@ void NodeBlock::itemsAdded(Array<Node*> nodes)
 		paramsContainer->addParameter(p);
 	}
 
-	providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	providerListeners.call(&ColorProviderListener::providerParametersChanged, this);
 }
 
 void NodeBlock::itemRemoved(Node* n)
@@ -91,7 +91,7 @@ void NodeBlock::itemRemoved(Node* n)
 	paramsContainer->removeControllable(p.get());
 	pn->removeControllableContainerListener(this);
 
-	providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	providerListeners.call(&ColorProviderListener::providerParametersChanged, this);
 }
 
 void NodeBlock::itemsRemoved(Array<Node*> nodes)
@@ -114,7 +114,7 @@ void NodeBlock::itemsRemoved(Array<Node*> nodes)
 
 	}
 
-	providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	providerListeners.call(&ColorProviderListener::providerParametersChanged, this);
 }
 
 void NodeBlock::childAddressChanged(ControllableContainer* cc)

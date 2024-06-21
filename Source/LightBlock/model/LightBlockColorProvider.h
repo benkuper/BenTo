@@ -65,18 +65,16 @@ public:
 
 	virtual void handleEnterExit(bool enter, Array<Prop *> props) {}
 
-	class ProviderListener
+	class ColorProviderListener
 	{
 	public:
-		virtual ~ProviderListener() {}
+		virtual ~ColorProviderListener() {}
 		virtual void providerParametersChanged(LightBlockColorProvider *) {}
 		virtual void providerParameterValueUpdated(LightBlockColorProvider *, Parameter *) {}
 		virtual void providerPlaybackControlUpdate(PlaybackControl control, var data = var()) {}
 	};
 
-	ListenerList<ProviderListener> providerListeners;
-	void addColorProviderListener(ProviderListener* newListener) { providerListeners.add(newListener); }
-	void removeColorProviderListener(ProviderListener* listener) { providerListeners.remove(listener); }
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(ColorProvider, provider)
 
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables) override;

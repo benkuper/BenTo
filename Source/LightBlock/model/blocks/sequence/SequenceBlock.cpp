@@ -86,7 +86,7 @@ void BentoSequenceBlock::sequenceCurrentTimeChanged(Sequence*, float prevTime, b
 {
 	if (sequence->isSeeking)
 	{
-		providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, SEEK, sequence->currentTime->floatValue());
+		providerListeners.call(&ColorProviderListener::providerPlaybackControlUpdate, SEEK, sequence->currentTime->floatValue());
 	}
 
 	//OSCMessage msg("/" + shortName + "/currentTime");
@@ -98,7 +98,7 @@ void BentoSequenceBlock::sequenceCurrentTimeChanged(Sequence*, float prevTime, b
 
 void BentoSequenceBlock::sequencePlayStateChanged(Sequence* s)
 {
-	providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, sequence->isPlaying->boolValue() ? PLAY : PAUSE, sequence->currentTime->floatValue());
+	providerListeners.call(&ColorProviderListener::providerPlaybackControlUpdate, sequence->isPlaying->boolValue() ? PLAY : PAUSE, sequence->currentTime->floatValue());
 }
 
 void BentoSequenceBlock::sequenceEditingStateChanged(Sequence* s)
@@ -108,7 +108,7 @@ void BentoSequenceBlock::sequenceEditingStateChanged(Sequence* s)
 
 void BentoSequenceBlock::sequenceLooped(Sequence* s)
 {
-	providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, PLAY, 0);
+	providerListeners.call(&ColorProviderListener::providerPlaybackControlUpdate, PLAY, 0);
 }
 
 void BentoSequenceBlock::onContainerTriggerTriggered(Trigger* t)
@@ -126,7 +126,7 @@ void BentoSequenceBlock::onControllableFeedbackUpdateInternal(ControllableContai
 	LightBlockModel::onControllableFeedbackUpdateInternal(cc, c);
 	if (c == sequence->identityMode)
 	{
-		providerListeners.call(&ProviderListener::providerPlaybackControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
+		providerListeners.call(&ColorProviderListener::providerPlaybackControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
 	} 
 }
 

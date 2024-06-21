@@ -57,6 +57,7 @@ PropManager::PropManager() :
 	loadAll = playbackCC.addTrigger("Load All", "Load playback on all devices that can play");
 	playAll = playbackCC.addTrigger("Play All", "Play playback on all devices that can play");
 	stopAll = playbackCC.addTrigger("Stop All", "Stop playback on all devices that can stop");
+	deleteAllFiles = playbackCC.addTrigger("Delete All Files", "Delete all files on all devices");
 	loop = playbackCC.addBoolParameter("Loop Playback", "If checked, this will tell the player to loop the playing", false);
 	addChildControllableContainer(&playbackCC);
 
@@ -281,6 +282,28 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 	else if (c == playbackMode)
 	{
 		for (auto& pr : items) pr->playbackMode->setValue(playbackMode->boolValue());
+	}
+	else if (c == deleteAllFiles)
+	{
+		AlertWindow::showAsync(
+			MessageBoxOptions().withIconType(AlertWindow::WarningIcon)
+			.withTitle("Delete All files")
+			.withMessage("Are you sure you want to delete all the files on all the props ?")
+			.withButton("Yes")
+			.withButton("No"),
+			[&](int result)
+			{
+				if (result)
+				{
+					for (auto& p : items)
+					{
+						if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+						{
+							bp->deleteAllFiles();
+						}
+					}
+				}
+			});
 	}
 	else
 	{

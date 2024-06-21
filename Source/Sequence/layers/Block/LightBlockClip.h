@@ -69,9 +69,7 @@ public:
 		virtual void clipFadesChanged (LightBlockClip *) {}
 	};
 
-	ListenerList<ClipListener> clipListeners;
-	void addClipListener(ClipListener* newListener) { clipListeners.add(newListener); }
-	void removeClipListener(ClipListener* listener) { clipListeners.remove(listener); }
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(Clip, clip)
 
 	// ASYNC
 	class  ClipEvent
@@ -92,5 +90,5 @@ public:
 
 	void addAsyncClipListener(AsyncListener* newListener) { clipNotifier.addListener(newListener); }
 	void addAsyncCoalescedClipListener(AsyncListener* newListener) { clipNotifier.addAsyncCoalescedListener(newListener); }
-	void removeAsyncClipListener(AsyncListener* listener) { clipNotifier.removeListener(listener); }
+	void removeAsyncClipListener(AsyncListener* listener) { if(!isClearing || isBeingDestroyed) clipNotifier.removeListener(listener); }
 };

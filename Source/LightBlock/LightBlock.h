@@ -16,7 +16,7 @@ class ParamLinkContainer;
 class LightBlock :
 	public ControllableContainer,
 	public BaseColorProvider,
-	public LightBlockColorProvider::ProviderListener
+	public LightBlockColorProvider::ColorProviderListener
 {
 public:
 	LightBlock(LightBlockColorProvider * provider = nullptr);
@@ -55,9 +55,7 @@ public:
 		//virtual void colorsUpdated() {}
 	};
 
-	ListenerList<LightBlockListener> blockListeners;
-	void addLightBlockListener(LightBlockListener* newListener) { blockListeners.add(newListener); }
-	void removeLightBlockListener(LightBlockListener* listener) { blockListeners.remove(listener); }
+	DECLARE_INSPECTACLE_CRITICAL_LISTENER(LightBlock, block)
 	
 
 

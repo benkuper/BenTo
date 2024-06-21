@@ -72,12 +72,12 @@ void StreamingScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, dou
 
 void StreamingScriptBlock::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
 {
-	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter*>(c));
+	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ColorProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter*>(c));
 }
 
 void StreamingScriptBlock::childStructureChanged(ControllableContainer* cc)
 {
-	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+	if (cc == &script && script.state == Script::SCRIPT_LOADED) providerListeners.call(&ColorProviderListener::providerParametersChanged, this);
 }
 
 void StreamingScriptBlock::handleEnterExit(bool enter, Array<Prop *> props)
@@ -112,7 +112,7 @@ void StreamingScriptBlock::newMessage(const Script::ScriptEvent& e)
 		setCustomThumbnail(script.filePath->getFile().withFileExtension("png").getFullPathName());
 		setNiceName(script.niceName);
 
-		if (script.state == Script::SCRIPT_LOADED) providerListeners.call(&ProviderListener::providerParametersChanged, this);
+		if (script.state == Script::SCRIPT_LOADED) providerListeners.call(&ColorProviderListener::providerParametersChanged, this);
 		break;
 	}
 }
