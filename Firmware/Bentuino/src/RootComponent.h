@@ -14,6 +14,11 @@ DeclareComponentSingleton(Root, "root", )
 SettingsComponent settings;
 
 CommunicationComponent comm;
+
+#ifdef USE_DISPLAY
+DisplayComponent display;
+#endif
+
 #ifdef USE_WIFI
 WifiComponent wifi;
 #endif
@@ -34,11 +39,10 @@ BatteryComponent battery;
 SequenceComponent sequence;
 #endif
 
+#ifdef USE_LEDSTRIP
 #ifdef USE_STREAMING
 LedStreamReceiverComponent streamReceiver;
 #endif
-
-#ifdef USE_LEDSTRIP
 LedStripManagerComponent strips;
 #endif
 
@@ -73,7 +77,12 @@ ServoComponent servo;
 StepperComponent stepper;
 #endif
 
-// Needs a single structure
+#ifdef USE_DC_MOTOR
+DCMotorComponent motor;
+#endif
+
+static bool availablePWMChannels[16];
+int getFirstAvailablePWMChannel() const;
 
 // Behaviour
 Timer<5> timer;

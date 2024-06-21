@@ -63,4 +63,9 @@ void SerialComponent::sendMessage(String source, String command, var *data, int 
 void SerialComponent::send(const String &message)
 {
     Serial.println(message);
+#ifdef USE_DISPLAY
+#ifdef DISPLAY_SHOW_DBG
+    RootComponent::instance->display.log(message);
+#endif
+#endif
 }

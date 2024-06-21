@@ -17,17 +17,22 @@ bool SettingsComponent::handleCommandInternal(const String &command, var *data, 
     if (command == "save")
     {
         saveSettings();
+        return true;
     }
     else if (command == "show")
     {
         String test;
         serializeJson(Settings::settings, test);
         DBG(test);
+        return true;
     }
     else if (command == "clear")
     {
         clearSettings();
+        return true;
     }
+
+    return false;
 }
 
 void SettingsComponent::saveSettings()

@@ -19,6 +19,8 @@ DeclareComponent(IO, "io", )
                    A_INPUT,
                    D_OUTPUT,
                    A_OUTPUT,
+                   D_OSC,
+                   A_OSC,
                    PINMODE_MAX };
 
 DeclareIntParam(pin, -1);
@@ -31,7 +33,7 @@ int curPin;
 DeclareFloatParam(value, 0);
 float prevValue;
 
-const String modeOptions[PINMODE_MAX]{"Digital Input", "Digital Input Pullup", "Analog Input", "Digital Output", "Analog Output"};
+const String modeOptions[PINMODE_MAX]{"Digital Input", "Digital Input Pullup", "Analog Input", "Digital Output", "Analog Output", "Digital Oscillator", "Analog Oscillator"};
 
 virtual bool initInternal(JsonObject o) override;
 virtual void updateInternal() override;
@@ -42,8 +44,7 @@ void updatePin();
 
 // void onParameterEventInternal(const ParameterEvent &e) override;
 
-static bool availablePWMChannels[16];
-int getFirstAvailablePWMChannel() const;
+
 
 // #ifdef USE_SCRIPT
 // LinkScriptFunctionsStart
@@ -59,6 +60,7 @@ HandleSetParamInternalStart
     CheckAndSetParam(pin);
 CheckAndSetEnumParam(mode, modeOptions, PINMODE_MAX);
 CheckAndSetParam(inverted);
+CheckAndSetParam(value);
 HandleSetParamInternalEnd;
 
 CheckFeedbackParamInternalStart
@@ -75,18 +77,18 @@ FillSettingsInternalEnd
         FillOSCQueryIntParam(pin);
 FillOSCQueryEnumParam(mode, modeOptions, PINMODE_MAX);
 FillOSCQueryBoolParam(inverted);
-FillOSCQueryRangeParamReadOnly(value, 0, 1);
+FillOSCQueryRangeParam(value, 0, 1);
 FillOSCQueryInternalEnd
 
     EndDeclareComponent;
 
 // Manager
 
-DeclareComponentManager(IO, IO, gpio, gpio) 
+DeclareComponentManager(IO, IO, gpio, gpio)
 
-void addItemInternal(int index)
+    void addItemInternal(int index)
 {
-    if (index == 0)
+    if (index == 0 && items[index]->pin == -1)
     {
         items[index]->pin = IO_DEFAULT_PIN;
         items[index]->mode = IO_DEFAULT_MODE;

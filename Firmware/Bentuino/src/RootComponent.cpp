@@ -3,6 +3,9 @@
 
 ImplementSingleton(RootComponent);
 
+bool RootComponent::availablePWMChannels[16] = {true};
+
+
 bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
@@ -19,6 +22,10 @@ bool RootComponent::initInternal(JsonObject)
 
     AddOwnedComponent(&comm);
     AddOwnedComponent(&settings);
+
+#ifdef USE_DISPLAY
+    AddOwnedComponent(&display);
+#endif
 
 #ifdef USE_LEDSTRIP
     AddOwnedComponent(&strips);
@@ -45,7 +52,7 @@ bool RootComponent::initInternal(JsonObject)
 #endif
 
 #ifdef USE_IO
-    memset(IOComponent::availablePWMChannels, true, sizeof(IOComponent::availablePWMChannels));
+    memset(availablePWMChannels, true, sizeof(availablePWMChannels));
     AddOwnedComponent(&ios);
 #ifdef USE_BUTTON
     AddOwnedComponent(&buttons);
@@ -62,6 +69,10 @@ bool RootComponent::initInternal(JsonObject)
 
 #if USE_STEPPER
     AddOwnedComponent(&stepper);
+#endif
+
+#if USE_DC_MOTOR
+    AddOwnedComponent(&motor);
 #endif
 
 #ifdef USE_BEHAVIOUR
@@ -125,8 +136,6 @@ void RootComponent::powerdown()
     esp_deep_sleep_start();
 #endif
 }
-
-
 
 void RootComponent::onChildComponentEvent(const ComponentEvent &e)
 {
@@ -228,4 +237,15 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
     }
 
     return true;
+}
+
+
+int RootComponent::getFirstAvailablePWMChannel() const
+{
+    for (int i = 0; i < 16; i++)
+    {
+        if (availablePWMChannels[i])
+            return i;
+    }
+    return -1;
 }

@@ -124,9 +124,18 @@
 #include "Component/components/stepper/StepperComponent.h"
 #endif
 
+#ifdef USE_DC_MOTOR
+#include "Component/components/motor/DCMotorComponent.h"
+#endif
+
 #ifdef USE_BEHAVIOUR
 #include "Component/components/behaviour/BehaviourComponent.h"
 #endif
+
+#ifdef USE_DISPLAY
+#include "Component/components/display/DisplayComponent.h"
+#endif
+
 
 #ifdef USE_DUMMY
 #include "Component/components/dummy/DummyComponent.h"

@@ -19,20 +19,17 @@ void ServoComponent::clearInternal()
 
 void ServoComponent::paramValueChangedInternal(void *param)
 {
-    NDBG("param changed");
     if (param == &pin)
     {
         servo.detach();
         if (pin > 0)
         {
-            NDBG("Attach to pin " + String(pin));
             servo.attach(pin);
         }
     }
 
     if (param == &position)
     {
-        NDBG("Set position " + String(position));
         servo.write(position);
     }
 }

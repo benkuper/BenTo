@@ -16,7 +16,6 @@ void updateInternal() override;
 void clearInternal() override;
 void paramValueChangedInternal(void *param) override;
 
-// void onParameterEventInternal(const ParameterEvent &e) override;
 
    HandleSetParamInternalStart
         CheckAndSetParam(pin);

@@ -1,7 +1,5 @@
 ImplementManagerSingleton(IO);
 
-bool IOComponent::availablePWMChannels[16] = {true};
-
 bool IOComponent::initInternal(JsonObject o)
 {
     pwmChannel = -1;
@@ -40,7 +38,7 @@ void IOComponent::setupPin()
     if (curPin != -1 && pwmChannel != -1) // prevPin was a PWM pin
     {
         ledcDetachPin(curPin);
-        availablePWMChannels[pwmChannel] = true;
+        RootComponent::availablePWMChannels[pwmChannel] = true;
         pwmChannel = -1;
     }
 
@@ -64,6 +62,7 @@ void IOComponent::setupPin()
             break;
 
         case D_OUTPUT:
+        case D_OSC:
             pinm = OUTPUT;
             break;
 
@@ -76,17 +75,17 @@ void IOComponent::setupPin()
 
             pinMode(curPin, pinm);
         }
-        else if (m == A_OUTPUT)
+        else
         {
-            if (m == A_OUTPUT)
+            if (m == A_OUTPUT || m == A_OSC)
             {
-                int channel = getFirstAvailablePWMChannel();
+                int channel = RootComponent::instance->getFirstAvailablePWMChannel();
                 if (channel >= 0)
                 {
                     pwmChannel = channel;
                     ledcSetup(pwmChannel, 5000, 10); // 0-1024 at a 5khz resolution
                     ledcAttachPin(curPin, pwmChannel);
-                    availablePWMChannels[pwmChannel] = false;
+                    RootComponent::availablePWMChannels[pwmChannel] = false;
                     // NDBG("Attach pin " + String(pin) + " to " + String(pwmChannel));
                 }
                 else
@@ -153,29 +152,29 @@ void IOComponent::updatePin()
         SetParam(value, v);
     }
     break;
-    }
-}
 
-// void IOComponent::onParameterEventInternal(const ParameterEvent &e)
-// {
-//     if (e.parameter == &mode)
-//     {
-//         int m = mode;
-//         // value.readOnly = m == D_INPUT || m == D_INPUT_PULLUP || m == A_INPUT;
-//         setupPin();
-//     }
-//     else if (e.parameter == &pin)
-//     {
-//         setupPin();
-//     }
-// }
-
-int IOComponent::getFirstAvailablePWMChannel() const
-{
-    for (int i = 0; i < 16; i++)
+    case D_OSC:
     {
-        if (availablePWMChannels[i])
-            return i;
+        bool v = (millis() % (int)(value * 1000)) > (value * 300);
+        if(value == 0) v = 0;
+        else if(value == 1) v = 1;
+        
+        if (inverted)
+            v = !v;
+        digitalWrite(pin, v);
     }
-    return -1;
+    break;
+
+    case A_OSC:
+    {
+        if (pwmChannel != -1)
+        {
+            float sv = sin(millis() * value) * 0.5f + 0.5f;
+            uint32_t v = sv * 1024;
+            // NDBG("Set PWM with value " + String(v));
+            ledcWrite(pwmChannel, v);
+        }
+    }
+    break;
+    }
 }

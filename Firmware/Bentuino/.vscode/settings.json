@@ -44,7 +44,9 @@
         "stdexcept": "cpp",
         "streambuf": "cpp",
         "cinttypes": "cpp",
-        "regex": "cpp"
+        "regex": "cpp",
+        "ratio": "cpp",
+        "thread": "cpp"
     },
     "cmake.sourceDirectory": "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/creatorclub/FastAccelStepper"
 }

@@ -86,8 +86,17 @@
 #include "Component/components/stepper/StepperComponent.cpp"
 #endif
 
+#ifdef USE_DC_MOTOR
+#include "Component/components/motor/DCMotorComponent.cpp"
+#endif
+
 #ifdef USE_BEHAVIOUR
 #include "Component/components/behaviour/BehaviourComponent.cpp"
+#endif
+
+
+#ifdef USE_DISPLAY
+#include "Component/components/display/DisplayComponent.cpp"
 #endif
 
 #ifdef USE_DUMMY

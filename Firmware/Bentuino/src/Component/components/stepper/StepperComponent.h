@@ -1,13 +1,26 @@
 #pragma once
+
+#ifndef STEPPER_DEFAULT_DIR_PIN
+#define STEPPER_DEFAULT_DIR_PIN -1
+#endif
+
+#ifndef STEPPER_DEFAULT_STEP_PIN
+#define STEPPER_DEFAULT_STEP_PIN -1
+#endif
+
+#ifndef STEPPER_DEFAULT_EN_PIN
+#define STEPPER_DEFAULT_EN_PIN -1
+#endif
+
 DeclareComponent(Stepper, "stepper", )
 
     static FastAccelStepperEngine engine;
 static bool engineIsInit;
 FastAccelStepper *stepper = NULL;
 
-DeclareIntParam(stepPin, 0);
-DeclareIntParam(dirPin, 0);
-DeclareIntParam(enPin, 0);
+DeclareIntParam(dirPin, STEPPER_DEFAULT_DIR_PIN);
+DeclareIntParam(stepPin, STEPPER_DEFAULT_STEP_PIN);
+DeclareIntParam(enPin, STEPPER_DEFAULT_EN_PIN);
 
 DeclareFloatParam(accel, 0);
 DeclareFloatParam(speed, 0);
@@ -17,7 +30,8 @@ bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 
-// void onParameterEventInternal(const ParameterEvent &e) override;
+void onEnabledChanged() override;
+void paramValueChangedInternal(void *param) override;
 
 HandleSetParamInternalStart
     CheckAndSetParam(stepPin);
@@ -34,7 +48,6 @@ FillSettingsParam(dirPin);
 FillSettingsParam(enPin);
 FillSettingsParam(accel);
 FillSettingsParam(speed);
-FillSettingsParam(position);
 FillSettingsInternalEnd;
 
 FillOSCQueryInternalStart
