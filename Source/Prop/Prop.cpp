@@ -523,10 +523,14 @@ void Prop::updatePlaybackModeOnProp()
 		String filename = currentBlock != nullptr ? currentBlock->shortName : (playbackFileName->enabled ? playbackFileName->stringValue() : "");
 		if (filename.isNotEmpty()) loadPlayback(filename, false);
 
-		if (BentoSequenceBlock* bs = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
+		if (currentBlock != nullptr)
 		{
-			if (!bs->sequence->isPlaying->boolValue()) seekPlaybackPlaying(bs->sequence->currentTime->floatValue());
-			else playPlayback(bs->sequence->currentTime->floatValue());
+
+			if (BentoSequenceBlock* bs = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
+			{
+				if (!bs->sequence->isPlaying->boolValue()) seekPlaybackPlaying(bs->sequence->currentTime->floatValue());
+				else playPlayback(bs->sequence->currentTime->floatValue());
+			}
 		}
 
 	}
