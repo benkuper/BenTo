@@ -287,13 +287,14 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 	}
 	else if (c == deleteAllPlayback || c == deleteAllScripts)
 	{
+		bool isPlayback = c == deleteAllPlayback;
 		AlertWindow::showAsync(
 			MessageBoxOptions().withIconType(AlertWindow::WarningIcon)
 			.withTitle("Delete All files")
 			.withMessage("Are you sure you want to delete all the files on all the props ?")
 			.withButton("Yes")
 			.withButton("No"),
-			[&](int result)
+			[&, isPlayback](int result)
 			{
 				if (result)
 				{
@@ -301,7 +302,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 					{
 						if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 						{
-							bp->deleteFolder(c == deleteAllPlayback ? "/playback" : "/scripts");
+							bp->deleteFolder(isPlayback ? "/playback" : "/scripts");
 						}
 					}
 				}
