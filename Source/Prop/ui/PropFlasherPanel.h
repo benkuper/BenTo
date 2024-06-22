@@ -31,6 +31,7 @@ public:
 	std::unique_ptr<BoolToggleUI> filterKnownDevicesUI;
 	Label noDeviceLabel;
 
+	std::unique_ptr<TriggerButtonUI> updateFirmwareDefinitionsUI;
 	std::unique_ptr<EnumParameterUI> firmwareToUploadUI;
 	std::unique_ptr<StringParameterFileUI> firmwareCustomFileUI;
 	std::unique_ptr<BoolToggleUI> setWifiAfterFlashUI;

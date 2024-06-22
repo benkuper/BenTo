@@ -22,7 +22,7 @@ PropFlasher::PropFlasher() :
 
 	filterKnownDevices = addBoolParameter("Filter Known Devices", "Only upload firmware on devices that are compatible. If you don't see your connect props on the list, try disabling this option.", true);
 
-	updateFirmwareDefinitionsTrigger = addTrigger("Update Firmware Definitions", "Update the list of available firmwares");
+	updateFirmwareDefinitionsTrigger = addTrigger("Update List", "Update the list of available firmwares");
 
 	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
 
@@ -74,10 +74,12 @@ PropFlasher::~PropFlasher()
 	stopThread(1000);
 }
 
-void PropFlasher::updateFirmwareDefinitions()
+void PropFlasher::updateFirmwareDefinitions(bool force)
 {
 	fwType->clearOptions();
 	File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares");
+	if(force && f.exists()) f.deleteRecursively();
+
 	if (!f.exists())
 	{
 		LOG("No firmware folder found, downloading...");
@@ -190,7 +192,7 @@ void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == flashTrigger) flashAll();
 	else if (t == uploadTrigger) uploadServerFiles();
-	if (t == updateFirmwareDefinitionsTrigger) updateFirmwareDefinitions();
+	if (t == updateFirmwareDefinitionsTrigger) updateFirmwareDefinitions(true);
 	else if (t == setAllWifiTrigger) flashAll(true);
 }
 

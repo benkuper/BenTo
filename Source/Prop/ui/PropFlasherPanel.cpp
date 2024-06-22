@@ -18,6 +18,8 @@ PropFlasherPanel::PropFlasherPanel() :
 	filterKnownDevicesUI.reset(PropFlasher::getInstance()->filterKnownDevices->createToggle());
 	firmwareToUploadUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwType->createDefaultUI());
 	firmwareCustomFileUI.reset((StringParameterFileUI*)PropFlasher::getInstance()->fwFileParam->createStringParameterFileUI());
+	updateFirmwareDefinitionsUI.reset(PropFlasher::getInstance()->updateFirmwareDefinitionsTrigger->createButtonUI());
+
 	setWifiAfterFlashUI.reset(PropFlasher::getInstance()->setWifiAfterFlash->createToggle());
 	wifiSSIDUI.reset(PropFlasher::getInstance()->wifiSSID->createStringParameterUI());
 	wifiPassUI.reset(PropFlasher::getInstance()->wifiPass->createStringParameterUI());
@@ -43,6 +45,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	wifiPassUI->customBGColor = BG_COLOR;
 	wifiPassUI->updateUIParams();
 
+	addAndMakeVisible(updateFirmwareDefinitionsUI.get());
 	addAndMakeVisible(filterKnownDevicesUI.get());
 	addAndMakeVisible(firmwareToUploadUI.get());
 	addAndMakeVisible(firmwareCustomFileUI.get());
@@ -138,6 +141,7 @@ void PropFlasherPanel::resized()
 	fwRect = cr.removeFromTop(68);
 	Rectangle<int> fwr = fwRect.reduced(10);
 	fwr.removeFromTop(20);
+	updateFirmwareDefinitionsUI->setBounds(fwr.removeFromLeft(120).reduced(4));
 	firmwareToUploadUI->setBounds(fwr.removeFromLeft(200).reduced(4));
 	fwr.removeFromLeft(20);
 	firmwareCustomFileUI->setBounds(fwr.reduced(4));
@@ -160,7 +164,7 @@ void PropFlasherPanel::resized()
 	Rectangle<int> fr = flashRect.reduced(10);
 	fr.removeFromTop(20);
 	Rectangle<int> fr2 = fr.removeFromTop(70).withSizeKeepingCentre(jmin(fr.getWidth(), 400), 50);
-	flashAllUI->setBounds(fr2.removeFromLeft(fr2.getWidth()/2).reduced(4));
+	flashAllUI->setBounds(fr2.removeFromLeft(fr2.getWidth() / 2).reduced(4));
 	setWifiUI->setBounds(fr2.reduced(4));
 	progressUI->setBounds(fr.removeFromBottom(40));
 

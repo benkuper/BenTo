@@ -88,7 +88,7 @@ public:
 	Array<float> progressions;
 	Array<FlashResult> flasherDones;
 
-	void updateFirmwareDefinitions();
+	void updateFirmwareDefinitions(bool force = false);
 
 	void setFlashProgression(SingleFlasher*, float val);;
 	void setFlashingDone(SingleFlasher*, FlashResult val);
