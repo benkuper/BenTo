@@ -16,6 +16,7 @@ DeclareIntParam(sdCS, FILES_DEFAULT_SD_CS);
 DeclareIntParam(sdSpeed, FILES_DEFAULT_SDSPEED);
 
 File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
+bool deleteFolder(String path);
 void deleteFileIfExists(String path);
 String listDir(const char *dirname, uint8_t levels);
 

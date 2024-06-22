@@ -92,14 +92,61 @@ File FilesComponent::openFile(String fileName, bool forWriting, bool deleteIfExi
     return f;
 }
 
+bool FilesComponent::deleteFolder(String path)
+{
+    if (!isInit)
+        return false;
+
+    bool result = false;
+
+    File dir = SD.open(path);
+
+    File entry;
+    while (entry = dir.openNextFile())
+    {
+        String fPath = entry.name();
+
+        if (entry.isDirectory())
+        {
+            NDBG("Deleting folder " + fPath);
+
+            result = deleteFolder(fPath);
+            if (!result)
+            {
+                NDBG("Failed to delete folder " + fPath);
+                return false;
+            }
+
+            if (useInternalMemory)
+                result = SPIFFS.rmdir(fPath);
+            else
+                result = SD.rmdir(fPath);
+        }
+        else
+        {
+            NDBG("Deleting file " + fPath);
+
+            if (useInternalMemory)
+                result = SPIFFS.remove(fPath);
+            else
+                result = SD.remove(fPath);
+        }
+    }
+
+    return result;
+}
+
 void FilesComponent::deleteFileIfExists(String path)
 {
 
     if (!isInit)
         return;
 
+    NDBG("Deleting file " + path);
+
     if (useInternalMemory)
     {
+
         if (SPIFFS.exists(path))
             SPIFFS.remove(path);
     }
@@ -170,33 +217,7 @@ bool FilesComponent::handleCommandInternal(const String &command, var *data, int
     }
     else if (checkCommand(command, "deleteFolder", numData, 0))
     {
-        if (numData > 0)
-        {
-            NDBG("Deleting folder " + data[0].stringValue());
-            if (useInternalMemory)
-            {
-                SPIFFS.rmdir(data[0].stringValue());
-            }
-            else
-            {
-                SD.rmdir(data[0].stringValue());
-            }
-        }
-        else
-        {
-            NDBG("Deleting all files");
-            if (useInternalMemory)
-            {
-                SPIFFS.rmdir("/");
-            }
-            else
-            {
-                bool success = SD.rmdir("/");
-                if (!success)
-                    NDBG("Error deleting all files");
-            }
-        }
-
+        deleteFolder(numData > 0 ? data[0].stringValue() : "/");
         return true;
     }
     else if (checkCommand(command, "list", numData, 0))

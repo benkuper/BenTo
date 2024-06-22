@@ -146,7 +146,7 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		if (isConnected->boolValue() && enabled->boolValue())
 		{
-			if(enableLedsOnConnect->boolValue()) sendMessageToProp(OSCMessage(ledEnabledAddress, 1));
+			if (enableLedsOnConnect->boolValue()) sendMessageToProp(OSCMessage(ledEnabledAddress, 1));
 		}
 	}
 }
@@ -315,15 +315,16 @@ void BentoProp::uploadFile(FileToUpload f)
 	}
 }
 
-void BentoProp::deleteAllFiles()
+void BentoProp::deleteFolder(const String& path)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("files.deleteAll\n");
+		serialDevice->writeString("files.deleteFolder " + path + "\n");
 	}
 	else
 	{
 		OSCMessage m("/files/deleteFolder");
+		m.addString(path);
 		sendMessageToProp(m);
 	}
 }

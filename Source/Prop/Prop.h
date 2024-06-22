@@ -123,7 +123,7 @@ public:
 	virtual void uploadFileQueue();
 	virtual void uploadFile(FileToUpload f);
 
-	virtual void deleteAllFiles() {}
+	virtual void deleteFolder(const String& path = "/") {}
 
 	virtual void updatePlaybackModeOnProp();
 	virtual void setPlaybackEnabled(bool value) {}

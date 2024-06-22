@@ -58,7 +58,8 @@ public:
 	Trigger* loadAll;
 	Trigger* playAll;
 	Trigger* stopAll;
-	Trigger* deleteAllFiles;
+	Trigger* deleteAllPlayback;
+	Trigger* deleteAllScripts;
 	BoolParameter* loop;
 
 	BoolParameter* autoAddNetworkProps;

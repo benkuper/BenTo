@@ -57,7 +57,7 @@ public:
 	virtual void uploadPlaybackData(PlaybackData data) override;
 	virtual void exportPlaybackData(PlaybackData data) override;
 	virtual void uploadFile(FileToUpload f) override;
-	virtual void deleteAllFiles() override;
+	virtual void deleteFolder(const String& path = "/") override;
 
 	virtual void setPlaybackEnabled(bool enabled) override;
 	virtual void setStreamingEnabled(bool enabled) override;

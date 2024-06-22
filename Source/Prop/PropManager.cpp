@@ -57,7 +57,9 @@ PropManager::PropManager() :
 	loadAll = playbackCC.addTrigger("Load All", "Load playback on all devices that can play");
 	playAll = playbackCC.addTrigger("Play All", "Play playback on all devices that can play");
 	stopAll = playbackCC.addTrigger("Stop All", "Stop playback on all devices that can stop");
-	deleteAllFiles = playbackCC.addTrigger("Delete All Files", "Delete all files on all devices");
+	deleteAllPlayback = playbackCC.addTrigger("Delete All Playback Files", "Delete all playback files on all devices");
+	deleteAllScripts = playbackCC.addTrigger("Delete All Embedded Scripts", "Delete all Wasm scripts on all devices");
+
 	loop = playbackCC.addBoolParameter("Loop Playback", "If checked, this will tell the player to loop the playing", false);
 	addChildControllableContainer(&playbackCC);
 
@@ -117,7 +119,7 @@ void PropManager::setupReceiver()
 	String s = "Local IPs:";
 	for (auto& ip : ips) s += String("\n > ") + ip;
 
-	
+
 	NLOG(niceName, s);
 }
 
@@ -283,7 +285,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 	{
 		for (auto& pr : items) pr->playbackMode->setValue(playbackMode->boolValue());
 	}
-	else if (c == deleteAllFiles)
+	else if (c == deleteAllPlayback || c == deleteAllScripts)
 	{
 		AlertWindow::showAsync(
 			MessageBoxOptions().withIconType(AlertWindow::WarningIcon)
@@ -299,7 +301,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 					{
 						if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 						{
-							bp->deleteAllFiles();
+							bp->deleteFolder(c == deleteAllPlayback ? "/playback" : "/scripts");
 						}
 					}
 				}
