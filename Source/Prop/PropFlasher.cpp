@@ -32,10 +32,10 @@ PropFlasher::PropFlasher() :
 
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
 	progression = addFloatParameter("Progression", "Progression", 0, 0, 1);
-	setWifiAfterFlash = addBoolParameter("Set Wifi After flash", "Set wifi credentials in flashed props", true);
-	wifiSSID = addStringParameter("Wifi SSID", "SSID for the wifi to set", "");
-	wifiPass = addStringParameter("Wifi Pass", "Pass for the wifi to set", "");
-	setAllWifiTrigger = addTrigger("Set Wifi Only", "Set wifi to all connected props");
+	setWifiAfterFlash = addBoolParameter("Set Wifi During flash", "Set wifi credentials in flashed props", true);
+	wifiSSID = addStringParameter("Name", "Name (SSID) for the wifi to set", "");
+	wifiPass = addStringParameter("Pass", "Password for the wifi to set", "");
+	setAllWifiTrigger = addTrigger("Only Set Wifi", "Set wifi to all connected props but don't flash the firmware");
 
 	
 
