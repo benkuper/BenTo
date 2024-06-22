@@ -210,7 +210,7 @@ void BentoProp::uploadPlaybackData(PlaybackData data)
 
 	URL metaUrl = URL(target).withDataToUpload("uploadData", data.name + ".meta", metaData, "text/plain");
 
-	std::unique_ptr<InputStream> mStream(metaUrl.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadMetaDataProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withConnectionTimeoutMs(20000)));
+	std::unique_ptr<InputStream> mStream(metaUrl.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadMetaDataProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withConnectionTimeoutMs(5000)));
 
 
 
@@ -247,7 +247,7 @@ void BentoProp::uploadPlaybackData(PlaybackData data)
 
 	url = URL(target).withDataToUpload("uploadData", data.name + ".colors", dataToSend, sendCompressedFile->boolValue() ? "application/zip" : "text/plain");
 
-	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withExtraHeaders("Content-Length:" + String(dataToSend.getSize())).withConnectionTimeoutMs(10000)));
+	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withExtraHeaders("Content-Length: " + String(dataToSend.getSize()))));
 
 
 
@@ -310,7 +310,7 @@ void BentoProp::uploadFile(FileToUpload f)
 	}
 	else
 	{
-		NLOGERROR(niceName, "Error uploading color data to prop (id " << String(globalID->intValue()) << ")");
+		NLOGERROR(niceName, "Error uploading file to prop (id " << String(globalID->intValue()) << ")");
 		return;
 	}
 }
@@ -451,7 +451,7 @@ bool BentoProp::uploadProgressCallback(int bytesSent, int totalBytes)
 	if (threadShouldExit()) return false;
 	float p = bytesSent * 1.0f / totalBytes;
 	uploadProgress->setValue(.1f + p * .9f);
-	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
+	NLOG(niceName, "Uploading ... (" << bytesSent << " / " << totalBytes << ")");
 
 	return true;
 }
@@ -463,7 +463,6 @@ bool BentoProp::uploadMetaDataProgressCallback(int bytesSent, int totalBytes)
 	float p = bytesSent * 1.0f / totalBytes;
 	uploadProgress->setValue(p * .1f);
 
-	//NLOG(prop->niceName, "Uploading... " << (int)(prop->uploadProgress->floatValue() * 100) << "% (" << bytesSent << " / " << totalBytes << ")");
 
 	return true;
 }
