@@ -36,11 +36,11 @@
 
 #ifdef USE_FILES
 
-#ifndef FILES_MMC_TYPE
-#define FILES_SD_TYPE
+#ifndef FILES_TYPE_MMC
+#define FILES_TYPE_SD
 #endif
 
-#ifdef FILES_MMC_TYPE
+#ifdef FILES_TYPE_MMC
 #include "SD_MMC.h"
 #else
 #include "SD.h"

@@ -6,6 +6,18 @@ bool FilesComponent::initInternal(JsonObject o)
 {
     useInternalMemory = false;
 
+    bool mounted = false;
+#ifdef FILES_TYPE_MMC
+
+    NDBG("Init SD MMC");
+    if (SD_MMC.begin("/sdcard", true)) // if using ESP32 package 3.x.x
+    {
+        mounted = true;
+    }
+#else
+
+    NDBG("Init SD SPI");
+
     AddIntParamConfig(sdEnPin);
     AddBoolParamConfig(sdEnVal);
     AddIntParamConfig(sdSCK);
@@ -37,17 +49,6 @@ bool FilesComponent::initInternal(JsonObject o)
         return initInternalMemory();
     }
 
-    bool mounted = false;
-#ifdef FILES_MMC_TYPE
-
-    NDBG("Init SD MMC");
-    if (SD_MMC.begin("/sdcard", true)) // if using ESP32 package 3.x.x
-    {
-        mounted = true;
-    }
-#else
-
-    NDBG("Init SD SPI");
     // NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : " + sdSCK.stringValue() + "," + sdMiso.stringValue() + "," + sdMosi.stringValue() + "," + sdCS.stringValue() + "," + sdSpeed.stringValue());
     pinMode(sdSCK, INPUT_PULLUP);
     pinMode(sdMiso, INPUT_PULLUP);

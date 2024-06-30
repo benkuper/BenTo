@@ -36,6 +36,7 @@ bool handleCommandInternal(const String &command, var *data, int numData) overri
 DeclareComponentEventTypes(UploadStart, UploadProgress, UploadComplete, UploadCancel, FileList);
 DeclareComponentEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");
 
+#ifdef FILES_TYPE_SD
 HandleSetParamInternalStart
     CheckAndSetParam(sdEnPin);
 CheckAndSetParam(sdEnVal);
@@ -65,5 +66,6 @@ FillOSCQueryIntParam(sdMosi);
 FillOSCQueryIntParam(sdCS);
 FillOSCQueryIntParam(sdSpeed);
 FillOSCQueryInternalEnd
+#endif
 
     EndDeclareComponent
