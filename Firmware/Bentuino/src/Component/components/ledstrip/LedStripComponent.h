@@ -176,9 +176,9 @@ DeclareScriptFunctionVoid4(LedStripManagerComponent, setHSV, uint32_t, float, fl
 DeclareScriptFunctionReturn1(LedStripManagerComponent, get, uint32_t, uint32_t) { return items[0]->scriptLayer.getLed(arg1).value; }
 
 DeclareScriptFunctionVoid3(LedStripManagerComponent, setBlendMode, uint32_t, uint32_t, uint32_t) { return items[0]->userLayers[(int)arg2]->setBlendMode((LedStripLayer::BlendMode)arg3); }
+#endif
 
 void addItemInternal(int index){};
 
-#endif
 
 EndDeclareComponent
