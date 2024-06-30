@@ -52,10 +52,10 @@ void LedStreamReceiverComponent::updateInternal()
     {
         lastReceiveTime = curTime;
         int r = -1;
-        while(r != 0)
+        while (r != 0)
         {
             r = artnet.read();
-        } 
+        }
     }
 }
 
@@ -108,6 +108,14 @@ void LedStreamReceiverComponent::onDmxFrame(uint16_t universe, uint16_t length, 
 {
     // DBG("Received Artnet "+String(universe));
 
+    float multiplier = 1.0f;
+    if (RootComponent::instance->isShuttingDown())
+    {
+        float relT = (millis() - RootComponent::instance->timeAtShutdown) / 1000.0f;
+        const float animTime = 1.0f;
+        multiplier = max(1 - relT * 2 / animTime, 0.f);
+    }
+
     for (auto &layer : instance->layers)
     {
         int numUniverses = std::ceil(layer->strip->count * 1.0f / 170); // 170 leds per universe
@@ -118,12 +126,12 @@ void LedStreamReceiverComponent::onDmxFrame(uint16_t universe, uint16_t length, 
 
         int start = (universe - layer->universe) * 170;
 
-        //DBG("Received Artnet " + String(universe) + ", start = " + String(start));
-        for (int i = 0; i < layer->strip->count && i < 170 && (i*3) < length; i++)
+        // DBG("Received Artnet " + String(universe) + ", start = " + String(start));
+        for (int i = 0; i < layer->strip->count && i < 170 && (i * 3) < length; i++)
         {
-            layer->colors[i+start] = Color(data[i * 3], data[i * 3 + 1], data[i * 3 + 2]);
+            layer->colors[i + start] = Color(data[i * 3] * multiplier, data[i * 3 + 1] * multiplier, data[i * 3 + 2] * multiplier);
         }
-        
+
         layer->lastReceiveTime = millis() / 1000.0f;
         layer->hasCleared = false;
         // memcpy((uint8_t *)layer->colors, streamBuffer + 1, byteIndex - 2);

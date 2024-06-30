@@ -119,7 +119,6 @@ void LedStripComponent::clearInternal()
 
     delete dotStarStrip;
     dotStarStrip = NULL;
-
 }
 
 void LedStripComponent::setBrightness(float val)
