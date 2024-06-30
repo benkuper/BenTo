@@ -153,10 +153,10 @@ bool MotionComponent::setupBNO()
         return false;
     }
 
-    bno.setMode(Adafruit_BNO055::OPERATION_MODE_CONFIG);
+    bno.setMode(adafruit_bno055_opmode_t::OPERATION_MODE_CONFIG);
     bno.setAxisRemap(Adafruit_BNO055::REMAP_CONFIG_P0);
     bno.setAxisSign(Adafruit_BNO055::REMAP_SIGN_P0);
-    bno.setMode(Adafruit_BNO055::OPERATION_MODE_NDOF);
+    bno.setMode(adafruit_bno055_opmode_t::OPERATION_MODE_NDOF);
     // bno.setExtCrystalUse(true); //works on club but not on tab
     bno.enterNormalMode();
 
