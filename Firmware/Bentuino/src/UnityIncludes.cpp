@@ -12,8 +12,8 @@
 
 //SD shit
 #ifdef USE_FILES
-#include "../lib/SD/src/SD.cpp" //really weird
-#include "../lib/SD/src/sd_diskio.cpp" //really weird
+// #include "../lib/SD/src/SD.cpp" //really weird
+// #include "../lib/SD/src/sd_diskio.cpp" //really weird
 #include "Component/components/files/FilesComponent.cpp"
 #endif
 

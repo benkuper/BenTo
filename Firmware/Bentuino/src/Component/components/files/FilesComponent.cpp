@@ -1,5 +1,7 @@
 ImplementSingleton(FilesComponent);
 
+fs::FS& FilesComponent::fs = FS_TYPE;
+
 bool FilesComponent::initInternal(JsonObject o)
 {
     useInternalMemory = false;
@@ -42,16 +44,32 @@ bool FilesComponent::initInternal(JsonObject o)
     pinMode(sdCS, OUTPUT);
     digitalWrite(sdCS, LOW);
 
+    bool mounted = false;
+#if FILES_SD_TYPE == MMC
+
+    if (SD_MMC.begin("/sdcard", true)) // if using ESP32 package 3.x.x
+    {
+        mounted = true;
+    }
+#else
     spiSD.begin((int8_t)sdSCK, (int8_t)sdMiso, (int8_t)sdMosi, (int8_t)sdCS); // SCK,MISO,MOSI,ss
 
-    if (SD.begin((uint8_t)sdCS, spiSD))
+    if (fs.begin((uint8_t)sdCS, spiSD))
     {
 
         //    NDBG("SD Card initialized.");
-        SD.mkdir("/scripts");
-        SD.mkdir("/playback");
-        SD.mkdir("/server");
         //    listDir("/", 1);
+
+        mounted = true;
+    }
+#endif
+
+    if (mounted)
+    {
+        NDBG("SD Mounted");
+        fs.mkdir("/scripts");
+        fs.mkdir("/playback");
+        fs.mkdir("/server");
     }
     else
     {
@@ -87,7 +105,7 @@ File FilesComponent::openFile(String fileName, bool forWriting, bool deleteIfExi
     if (useInternalMemory)
         f = SPIFFS.open(fileName, forWriting ? "w" : "r"); // Open it
     else
-        f = SD.open(fileName.c_str(), forWriting ? FILE_WRITE : FILE_READ);
+        f = fs.open(fileName.c_str(), forWriting ? FILE_WRITE : FILE_READ);
 
     return f;
 }
@@ -99,7 +117,7 @@ bool FilesComponent::deleteFolder(String path)
 
     bool result = false;
 
-    File dir = SD.open(path);
+    File dir = fs.open(path);
 
     File entry;
     while (entry = dir.openNextFile())
@@ -120,7 +138,7 @@ bool FilesComponent::deleteFolder(String path)
             if (useInternalMemory)
                 result = SPIFFS.rmdir(fPath);
             else
-                result = SD.rmdir(fPath);
+                result = fs.rmdir(fPath);
         }
         else
         {
@@ -129,7 +147,7 @@ bool FilesComponent::deleteFolder(String path)
             if (useInternalMemory)
                 result = SPIFFS.remove(fPath);
             else
-                result = SD.remove(fPath);
+                result = fs.remove(fPath);
         }
     }
 
@@ -153,8 +171,8 @@ void FilesComponent::deleteFileIfExists(String path)
     else
     {
 
-        if (SD.exists(path.c_str()))
-            SD.remove(path.c_str());
+        if (fs.exists(path.c_str()))
+            fs.remove(path.c_str());
     }
 }
 
@@ -167,7 +185,7 @@ String FilesComponent::listDir(const char *dirname, uint8_t levels)
     if (useInternalMemory)
         root = SPIFFS.open("/", "r");
     else
-        root = SD.open(dirname);
+        root = fs.open(dirname);
 
     if (!root)
     {

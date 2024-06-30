@@ -93,9 +93,9 @@ bool WebServerComponent::initInternal(JsonObject o)
     }
     else
     {
-        server.serveStatic("/edit", SD, "/server/edit.html");
-        server.serveStatic("/upload", SD, "/server/upload.html");
-        server.serveStatic("/server/", SD, "/server");
+        server.serveStatic("/edit", FilesComponent::fs, "/server/edit.html");
+        server.serveStatic("/upload", FilesComponent::fs, "/server/upload.html");
+        server.serveStatic("/server/", FilesComponent::fs, "/server");
     }
 #endif
 

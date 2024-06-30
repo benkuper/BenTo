@@ -33,7 +33,11 @@ void LedStripSystemLayer::updateWifiStatus()
     if (connectionState != WifiComponent::Connecting && relT > animTime)
         return;
 
+#ifdef USE_BATTERY
     Color color = BatteryComponent::instance->getBatteryColor();
+#else
+    Color color = Color(100, 100, 100);
+#endif
 
     // NDBG("Wifi status : " + String(connectionState) + " " + String(relT));
 
@@ -96,7 +100,12 @@ void LedStripSystemLayer::updateShutdown()
 
     float t = relT / animTime;
 
+#ifdef USE_BATTERY
     Color c = BatteryComponent::instance->getBatteryColor();
+#else
+    Color c = Color(100, 100, 100);
+#endif
+
     c = c.withMultipliedAlpha(min(t * 2, 1.f));
     float end = constrain((1 - t) * 2, 0, 1);
 

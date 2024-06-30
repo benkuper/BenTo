@@ -3,6 +3,7 @@ bool Component::init(JsonObject o)
 {
     AddBoolParam(enabled);
 
+    NDBG("Init");
     isInit = initInternal(o);
 
     if (!isInit)
@@ -441,7 +442,6 @@ void Component::setParam(void *param, var *value, int numData)
         break;
 
     case ParamType::Bool:
-        // NDBG("Bool : " + String(*((bool *)param)) + "  <> " + String(value[0].boolValue()));
 
         hasChanged = *((bool *)param) != value[0].boolValue();
         if (hasChanged)

@@ -5,7 +5,15 @@ DeclareComponentSingleton(Files, "files", )
     bool initInternal(JsonObject o) override;
 bool initInternalMemory();
 
+#if FILES_SD_TYPE == MMC
+#define FS_TYPE SD_MMC
+#else
+#define FS_TYPE SD
 SPIClass spiSD;
+#endif
+
+static fs::FS &fs;
+
 bool useInternalMemory;
 DeclareIntParam(sdEnPin, FILES_DEFAULT_SD_EN);
 DeclareBoolParam(sdEnVal, FILES_DEFAULT_SD_POWER_VALUE);

@@ -141,18 +141,15 @@
 #define AddMultiParamWithTag(type, class, param, tag, numData)            \
     {                                                                     \
                                                                           \
-        DBG(String("Add multi param ") + #param);                         \
         addParam(&param, ParamType::type, tag);                           \
         if (o.containsKey(#param))                                        \
         {                                                                 \
             JsonArray vArr = o[#param].as<JsonArray>();                   \
-            DBG(" >  " + String(vArr.size()) + " <> " + String(numData)); \
             var dataV[numData];                                           \
             dataV[0] = vArr[0].as<class>();                               \
             dataV[1] = vArr[1].as<class>();                               \
             if (numData > 2)                                              \
                 dataV[2] = vArr[2].as<class>();                           \
-            DBG(" Data V is set");                                        \
             setParam(param, dataV, numData);                              \
         }                                                                 \
     }

@@ -45,7 +45,7 @@ void LedStripComponent::setupLeds()
     if (!enabled)
         return;
 
-    if (enPin != 0)
+    if (enPin > 0)
     {
         // NDBG("Setting Led Enable pin : " + String(enPin));
         pinMode(enPin, OUTPUT);
@@ -153,7 +153,7 @@ void LedStripComponent::onEnabledChanged()
 void LedStripComponent::setStripPower(bool value)
 {
     DBG("Set Strip Power " + String(value));
-    if (enPin != 0)
+    if (enPin > 0)
         digitalWrite(enPin, value); // enable LEDs
 
     pinMode(dataPin, value ? OUTPUT : OPEN_DRAIN);

@@ -5,7 +5,6 @@ ImplementSingleton(RootComponent);
 
 bool RootComponent::availablePWMChannels[16] = {true};
 
-
 bool RootComponent::initInternal(JsonObject)
 {
     BoardInit;
@@ -108,6 +107,7 @@ void RootComponent::restart()
 
 void RootComponent::shutdown()
 {
+    NDBG("Sleep now, baby.");
     timeAtShutdown = millis();
     timer.in(1000, [](void *) -> bool
              {  RootComponent::instance->powerdown(); return false; });
@@ -214,7 +214,10 @@ void RootComponent::childParamValueChanged(Component *caller, Component *comp, v
         ButtonComponent *bc = (ButtonComponent *)comp;
         // DBG("Root param value changed " + bc->name+" > "+String(param == &bc->veryLongPress) + " / " + String(bc->veryLongPress)+" can sd : "+String(bc->canShutDown)+" / "+String(buttons.items[0]->canShutDown));
         if (param == &bc->veryLongPress && bc->veryLongPress && bc->canShutDown)
+        {
+            NDBG("Shutdown from button");
             shutdown();
+        }
     }
 #endif
 }
@@ -238,7 +241,6 @@ bool RootComponent::handleCommandInternal(const String &command, var *data, int 
 
     return true;
 }
-
 
 int RootComponent::getFirstAvailablePWMChannel() const
 {

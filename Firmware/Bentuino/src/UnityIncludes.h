@@ -35,7 +35,19 @@
 
 
 #ifdef USE_FILES
-#include "../lib/SD/src/SD.h" //really weird
+
+#ifndef FILES_SD_TYPE
+#define FILES_SD_TYPE SPI
+#endif
+
+#if FILES_SD_TYPE == MMC
+#include "SD_MMC.h"
+#else
+// #include "../lib/SD/src/SD.h" //really weird
+#endif
+
+#include "FS.h"
+
 #include "Component/components/files/FilesComponent.h"
 #endif
 

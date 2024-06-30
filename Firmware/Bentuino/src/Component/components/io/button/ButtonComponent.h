@@ -6,6 +6,14 @@
 #define MULTIPRESS_TIME 300     // each new press shorter than 500ms after the previous one will increase the multiclick
 #define BUTTONPRESS_DEBOUNCE 5  // denoising, needs five reads to validate a change
 
+#ifndef BUTTON_DEFAULT_SHUTDOWN
+#ifdef USE_BATTERY
+#define BUTTON_DEFAULT_SHUTDOWN true
+#else
+#define BUTTON_DEFAULT_SHUTDOWN false
+#endif
+#endif
+
 class ButtonComponent : public IOComponent
 {
 public:
@@ -14,7 +22,7 @@ public:
     int debounceCount;
     long timeAtPress;
 
-    DeclareBoolParam(canShutDown, true);
+    DeclareBoolParam(canShutDown, BUTTON_DEFAULT_SHUTDOWN);
     DeclareIntParam(multiPressCount, 0);
     DeclareBoolParam(longPress, false);
     DeclareBoolParam(veryLongPress, false);
