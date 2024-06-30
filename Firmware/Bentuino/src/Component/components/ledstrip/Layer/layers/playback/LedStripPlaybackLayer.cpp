@@ -136,7 +136,7 @@ void LedStripPlaybackLayer::showIdFrame()
 
 void LedStripPlaybackLayer::playScripts()
 {
-#if USE_SCRIPT
+#ifdef USE_SCRIPT
     float curT = curTimeMs / 1000.0f;
     // float prevT = prevTimeMs / 1000.0f;
 
@@ -170,6 +170,7 @@ void LedStripPlaybackLayer::playScripts()
 
 void LedStripPlaybackLayer::load(String path)
 {
+#ifdef USE_FILES
     showBlackFrame();
 
     const String playbackDir = "/playback";
@@ -235,7 +236,8 @@ void LedStripPlaybackLayer::load(String path)
             showIdFrame();
     }
 
-    // play(0);
+// play(0);
+#endif
 }
 
 void LedStripPlaybackLayer::play(float atTime)

@@ -5,7 +5,7 @@ DeclareComponentSingleton(Files, "files", )
     bool initInternal(JsonObject o) override;
 bool initInternalMemory();
 
-#if FILES_SD_TYPE == MMC
+#ifdef FILES_TYPE_MMC
 #define FS_TYPE SD_MMC
 #else
 #define FS_TYPE SD
@@ -15,6 +15,8 @@ SPIClass spiSD;
 static fs::FS &fs;
 
 bool useInternalMemory;
+#ifdef FILES_TYPE_MMC
+#else
 DeclareIntParam(sdEnPin, FILES_DEFAULT_SD_EN);
 DeclareBoolParam(sdEnVal, FILES_DEFAULT_SD_POWER_VALUE);
 DeclareIntParam(sdSCK, FILES_DEFAULT_SD_SCK);
@@ -22,6 +24,7 @@ DeclareIntParam(sdMiso, FILES_DEFAULT_SD_MISO);
 DeclareIntParam(sdMosi, FILES_DEFAULT_SD_MOSI);
 DeclareIntParam(sdCS, FILES_DEFAULT_SD_CS);
 DeclareIntParam(sdSpeed, FILES_DEFAULT_SDSPEED);
+#endif
 
 File openFile(String fileName, bool forWriting = false, bool deleteIfExists = true);
 bool deleteFolder(String path);

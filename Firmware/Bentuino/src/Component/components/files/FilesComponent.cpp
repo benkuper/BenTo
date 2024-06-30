@@ -1,6 +1,6 @@
 ImplementSingleton(FilesComponent);
 
-fs::FS& FilesComponent::fs = FS_TYPE;
+fs::FS &FilesComponent::fs = FS_TYPE;
 
 bool FilesComponent::initInternal(JsonObject o)
 {
@@ -37,6 +37,17 @@ bool FilesComponent::initInternal(JsonObject o)
         return initInternalMemory();
     }
 
+    bool mounted = false;
+#ifdef FILES_MMC_TYPE
+
+    NDBG("Init SD MMC");
+    if (SD_MMC.begin("/sdcard", true)) // if using ESP32 package 3.x.x
+    {
+        mounted = true;
+    }
+#else
+
+    NDBG("Init SD SPI");
     // NDBG("initilializing SD with pins SCK,MISO,MOSI,CS,Speed : " + sdSCK.stringValue() + "," + sdMiso.stringValue() + "," + sdMosi.stringValue() + "," + sdCS.stringValue() + "," + sdSpeed.stringValue());
     pinMode(sdSCK, INPUT_PULLUP);
     pinMode(sdMiso, INPUT_PULLUP);
@@ -44,17 +55,9 @@ bool FilesComponent::initInternal(JsonObject o)
     pinMode(sdCS, OUTPUT);
     digitalWrite(sdCS, LOW);
 
-    bool mounted = false;
-#if FILES_SD_TYPE == MMC
-
-    if (SD_MMC.begin("/sdcard", true)) // if using ESP32 package 3.x.x
-    {
-        mounted = true;
-    }
-#else
     spiSD.begin((int8_t)sdSCK, (int8_t)sdMiso, (int8_t)sdMosi, (int8_t)sdCS); // SCK,MISO,MOSI,ss
 
-    if (fs.begin((uint8_t)sdCS, spiSD))
+    if (SD.begin((uint8_t)sdCS, spiSD))
     {
 
         //    NDBG("SD Card initialized.");

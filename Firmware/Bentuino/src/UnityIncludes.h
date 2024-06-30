@@ -36,14 +36,14 @@
 
 #ifdef USE_FILES
 
-#ifndef FILES_SD_TYPE
-#define FILES_SD_TYPE SPI
+#ifndef FILES_MMC_TYPE
+#define FILES_SD_TYPE
 #endif
 
-#if FILES_SD_TYPE == MMC
+#ifdef FILES_MMC_TYPE
 #include "SD_MMC.h"
 #else
-// #include "../lib/SD/src/SD.h" //really weird
+#include "SD.h"
 #endif
 
 #include "FS.h"
