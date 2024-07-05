@@ -148,7 +148,10 @@ void OSCComponent::processMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(OSCMessage &msg)
 {
-    if (!enabled || remoteHost.length() == 0)
+    if (!udpIsInit || !enabled || remoteHost.length() == 0)
+        return;
+
+    if (WifiComponent::instance->state != WifiComponent::Connected)
         return;
 
     char addr[32];
@@ -161,7 +164,10 @@ void OSCComponent::sendMessage(OSCMessage &msg)
 
 void OSCComponent::sendMessage(String address)
 {
-    if (!enabled || remoteHost.length() == 0)
+    if (!udpIsInit || !enabled || remoteHost.length() == 0)
+        return;
+
+    if (WifiComponent::instance->state != WifiComponent::Connected)
         return;
 
     OSCMessage m(address.c_str());
@@ -170,7 +176,10 @@ void OSCComponent::sendMessage(String address)
 
 void OSCComponent::sendMessage(const String &source, const String &command, var *data, int numData)
 {
-    if (!enabled || remoteHost.length() == 0)
+    if (!udpIsInit || !enabled || remoteHost.length() == 0)
+        return;
+
+    if (WifiComponent::instance->state != WifiComponent::Connected)
         return;
 
     OSCMessage msg = createMessage(source, command, data, numData, true);
