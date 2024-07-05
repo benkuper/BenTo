@@ -1,5 +1,6 @@
 {
     "files.associations": {
+        "*.embeddedhtml": "html",
         "typeinfo": "cpp",
         "functional": "cpp",
         "array": "cpp",
@@ -47,7 +48,11 @@
         "regex": "cpp",
         "ratio": "cpp",
         "thread": "cpp",
-        "list": "cpp"
+        "list": "cpp",
+        "format": "cpp",
+        "xhash": "cpp",
+        "xstring": "cpp",
+        "xutility": "cpp"
     },
     "cmake.sourceDirectory": "D:/Documents/Perso/Projects/BenTo/Firmware/Bentuino/.pio/libdeps/creatorclub/FastAccelStepper"
 }

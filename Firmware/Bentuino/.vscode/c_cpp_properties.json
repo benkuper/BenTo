@@ -525,6 +525,8 @@
                 "USE_WIFI",
                 "USE_OSC",
                 "BENTUINO_CREATORTAB",
+                "USE_ETHERNET=true",
+                "WIFI_DEFAULT_MODE=MODE_ETH",
                 "USE_POWER",
                 "POWER_KEEP_PIN=12",
                 "POWER_WAKEUP_BUTTON=34",
