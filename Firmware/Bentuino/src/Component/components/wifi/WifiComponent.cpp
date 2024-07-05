@@ -141,6 +141,8 @@ void WifiComponent::connect()
 #ifdef ESP32
 #endif
 
+    setState(Connecting);
+
 #ifdef USE_ETHERNET
     if (mode == MODE_ETH || mode == MODE_ETH_STA)
     {
@@ -158,8 +160,6 @@ void WifiComponent::connect()
         WiFi.setTxPower(WIFI_POWER_19dBm);
         WiFi.begin(ssid.c_str(), pass.c_str());
     }
-
-    setState(Connecting);
 }
 
 void WifiComponent::disable()
@@ -182,7 +182,6 @@ void WifiComponent::WiFiEvent(WiFiEvent_t event)
 
     case ARDUINO_EVENT_ETH_START:
         ETH.setHostname(DeviceID.c_str());
-        setState(Connecting);
         break;
 
     case ARDUINO_EVENT_ETH_CONNECTED:
