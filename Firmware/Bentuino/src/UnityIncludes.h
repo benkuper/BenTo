@@ -44,6 +44,8 @@
 #include "SD_MMC.h"
 #else
 #include "SD.h"
+#include "ff.h"
+#include "vfs_fat_internal.h"
 #endif
 
 #include "FS.h"

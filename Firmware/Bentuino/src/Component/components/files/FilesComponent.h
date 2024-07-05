@@ -32,6 +32,7 @@ void deleteFileIfExists(String path);
 String listDir(const char *dirname, uint8_t levels);
 
 bool handleCommandInternal(const String &command, var *data, int numData) override;
+esp_err_t format_sdcard();
 
 DeclareComponentEventTypes(UploadStart, UploadProgress, UploadComplete, UploadCancel, FileList);
 DeclareComponentEventNames("uploadStart", "uploadProgress", "uploadComplete", "uploadCancel", "list");

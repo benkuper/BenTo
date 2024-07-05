@@ -126,7 +126,7 @@ bool FilesComponent::deleteFolder(String path)
     File entry;
     while (entry = dir.openNextFile())
     {
-        String fPath = entry.name();
+        String fPath = entry.path();
 
         if (entry.isDirectory())
         {
@@ -214,19 +214,59 @@ String FilesComponent::listDir(const char *dirname, uint8_t levels)
             NDBG("  DIR : " + String(file.name()));
             if (levels)
             {
-                result += listDir(file.name(), levels - 1);
+                result += listDir(file.path(), levels - 1);
             }
         }
         else
         {
             NDBG("  FILE: " + String(file.name()));
-            result += String(file.name()) + ",";
+            result += String(file.path()) + ",";
             NDBG("  SIZE: " + String(file.size()));
         }
         file = root.openNextFile();
     }
 
     return result;
+}
+
+esp_err_t FilesComponent::format_sdcard() {
+#ifdef FILES_TYPE_SD
+    
+    char drv[3] = {'0', ':', 0};
+    const size_t workbuf_size = 4096;
+    void* workbuf = NULL;
+    esp_err_t err = ESP_OK;
+    ESP_LOGW("sdcard", "Formatting the SD card");
+
+    size_t allocation_unit_size = 16 * 1024;
+    int sector_size_default = 512;
+
+    workbuf = ff_memalloc(workbuf_size);
+    if (workbuf == NULL) {
+        return ESP_ERR_NO_MEM;
+    }
+
+    size_t alloc_unit_size = esp_vfs_fat_get_allocation_unit_size(
+                sector_size_default,
+                allocation_unit_size);
+
+#if (ESP_IDF_VERSION_MAJOR < 5)
+    FRESULT res = f_mkfs(drv, FM_ANY, alloc_unit_size, workbuf, workbuf_size);
+#else
+    const MKFS_PARM opt = {(BYTE)FM_ANY, 0, 0, 0, alloc_unit_size};
+    FRESULT res = f_mkfs(drv, &opt, workbuf, workbuf_size);
+#endif  /* ESP_IDF_VERSION_MAJOR */
+    if (res != FR_OK) {
+        err = ESP_FAIL;
+        ESP_LOGE("sdcard", "f_mkfs failed (%d)", res);
+    }
+
+    free(workbuf);
+
+    ESP_LOGI("sdcard", "Successfully formatted the SD card");
+
+    return err;
+#endif
 }
 
 bool FilesComponent::handleCommandInternal(const String &command, var *data, int numData)
@@ -251,6 +291,11 @@ bool FilesComponent::handleCommandInternal(const String &command, var *data, int
 
         sendEvent(FileList, &filesData, 1);
         return true;
+    }
+    else if (checkCommand(command, "format", numData, 0))
+    {
+        NDBG("Formatting SD card.");
+        format_sdcard();
     }
 
     return false;
