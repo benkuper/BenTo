@@ -23,7 +23,11 @@ ImplementSingleton(WifiComponent)
 
 void WifiComponent::updateInternal()
 {
-#ifndef USE_ETHERNET
+#ifdef USE_ETHERNET
+    if (mode == MODE_ETH)
+        return;
+#endif
+
     long curTime = millis();
     if (curTime > lastConnectTime + timeBetweenTries)
     {
@@ -68,7 +72,6 @@ void WifiComponent::updateInternal()
             break;
         }
     }
-#endif
 }
 
 void WifiComponent::clearInternal()
@@ -183,7 +186,8 @@ void WifiComponent::WiFiEvent(WiFiEvent_t event)
         break;
 
     case ARDUINO_EVENT_ETH_CONNECTED:
-        setState(Connected);
+        NDBG("Ethernet connected, getting IP...");
+        // setState(Connected);
         break;
 
     case ARDUINO_EVENT_ETH_GOT_IP:
