@@ -101,7 +101,7 @@ FillOSCQueryInternalStart
     FillOSCQueryStringParam(ssid);
 FillOSCQueryStringParam(pass);
 #ifdef USE_ETHERNET
-FillOSCQueryEnumParam(mode, wifiModeNames, WIFI_MODE_MAX);
+FillOSCQueryEnumParam(mode, wifiModeNames, MODE_MAX);
 #endif
 FillOSCQueryInternalEnd;
 
