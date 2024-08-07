@@ -11,7 +11,7 @@
 
 // main leds config
 #define LED_COUNT 30
-#define LED_DATA_PIN 15
+#define LED_DATA_PIN 5
 #define LED_TYPE WS2812B
 #define LED_COLOR_ORDER GRB
 #define LED_MAX_BRIGHTNESS 200
