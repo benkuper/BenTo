@@ -1,3 +1,4 @@
+#ifdef USE_FX
 class FXComponent : public Component
 {
 public:
@@ -80,3 +81,5 @@ public:
 
     String getTypeString() const override { return "fx"; }
 };
+
+#endif

@@ -30,11 +30,13 @@ public:
     long timeSinceLastSeek;
     float timeToSeek; // used to limit seeking
 
+#ifdef USE_SCRIPTS
     int numScripts;
     String scripts[PLAYBACK_MAX_SCRIPTS];
     float scriptStartTimes[PLAYBACK_MAX_SCRIPTS];
     float scriptEndTimes[PLAYBACK_MAX_SCRIPTS];
     int activeScriptIndex;
+#endif
 
     bool initInternal(JsonObject o) override;
     void updateInternal() override;

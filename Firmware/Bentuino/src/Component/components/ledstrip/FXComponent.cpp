@@ -1,4 +1,5 @@
 
+#ifdef USE_FX
 #ifndef FX_SWAP_UPSIDE_DOWN
 #define FX_SWAP_UPSIDE_DOWN 0
 #endif
@@ -139,3 +140,4 @@ void FXComponent::reset()
     SetParam(offsetSpeed, 0);
     SetParam(isolationSpeed, 0);
 }
+#endif

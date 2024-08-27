@@ -21,7 +21,10 @@ bool LedStripPlaybackLayer::initInternal(JsonObject o)
     prevTimeMs = 0;
     timeSinceLastSeek = 0;
     timeToSeek = 0;
+
+#ifdef USE_SCRIPT
     activeScriptIndex = -1;
+#endif
 
     return true;
 }
@@ -291,8 +294,10 @@ void LedStripPlaybackLayer::stop()
     isPlaying = false;
     curTimeMs = 0;
     prevTimeMs = 0;
-    // showBlackFrame();
+// showBlackFrame();
+#ifdef USE_SCRIPT
     activeScriptIndex = -1;
+#endif
 
     sendEvent(Stopped);
 }
