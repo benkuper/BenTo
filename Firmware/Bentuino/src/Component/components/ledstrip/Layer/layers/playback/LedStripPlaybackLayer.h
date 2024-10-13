@@ -30,7 +30,7 @@ public:
     long timeSinceLastSeek;
     float timeToSeek; // used to limit seeking
 
-#ifdef USE_SCRIPTS
+#ifdef USE_SCRIPT
     int numScripts;
     String scripts[PLAYBACK_MAX_SCRIPTS];
     float scriptStartTimes[PLAYBACK_MAX_SCRIPTS];

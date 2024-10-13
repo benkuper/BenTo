@@ -21,7 +21,7 @@
 #include "Common/Settings.h"
 #include "Common/StringHelpers.h"
 
-#ifdef USE_SCRIPT //needs pre declaration to be used by Component
+#ifdef USE_SCRIPT // needs pre declaration to be used by Component
 #include <wasm3.h>
 #include <m3_env.h>
 #include <SimplexNoise.h>
@@ -29,10 +29,8 @@
 #include "Common/script/wasmFunctions.h"
 #endif
 
-
 #include "Component/ComponentEvent.h"
 #include "Component/Component.h"
-
 
 #ifdef USE_FILES
 
@@ -104,15 +102,23 @@
 #include <utility/vector.h>
 #include <utility/matrix.h>
 #include <utility/quaternion.h>
+
+#ifndef IMU_TYPE
+#define IMU_TYPE BNO055
+#endif
+
+#ifdef IMU_TYPE_BNO055
 #include <Adafruit_Sensor.h>
 #include <Adafruit_BNO055.h>
+#elif defined IMU_TYPE_M5MPU
+#include <utility/MPU6886.h>
+#endif
 #include "Component/components/motion/MotionComponent.h"
 #endif
 
 #ifdef USE_LEDSTRIP
 #include <Adafruit_NeoPixel.h>
 #include <Adafruit_DotStar.h>
-
 
 #include "Component/components/ledstrip/Layer/LedStripLayer.h"
 #include "Component/components/ledstrip/Layer/layers/playback/LedStripPlaybackLayer.h"
@@ -125,9 +131,8 @@
 
 #include "Component/components/ledstrip/FXComponent.h"
 
-
 #include "Component/components/ledstrip/LedStripComponent.h"
-#endif //LEDSTRIP
+#endif // LEDSTRIP
 
 #ifdef USE_SEQUENCE
 #include "Component/components/sequence/SequenceComponent.h"
@@ -154,7 +159,6 @@
 #ifdef USE_DISPLAY
 #include "Component/components/display/DisplayComponent.h"
 #endif
-
 
 #ifdef USE_DUMMY
 #include "Component/components/dummy/DummyComponent.h"

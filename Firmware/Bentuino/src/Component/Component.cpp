@@ -467,7 +467,7 @@ void Component::setParam(void *param, var *value, int numData)
         break;
 
     case ParamType::P2D:
-        hasChanged = ((float *)param)[0] != value[0].floatValue() && ((float *)param)[1] != value[1].floatValue();
+        hasChanged = ((float *)param)[0] != value[0].floatValue() || ((float *)param)[1] != value[1].floatValue();
         if (hasChanged)
         {
             ((float *)param)[0] = value[0].floatValue();
@@ -476,12 +476,15 @@ void Component::setParam(void *param, var *value, int numData)
         break;
 
     case ParamType::P3D:
-        hasChanged = ((float *)param)[0] != value[0].floatValue() && ((float *)param)[1] != value[1].floatValue() && ((float *)param)[2] != value[2].floatValue();
+        hasChanged = ((float *)param)[0] != value[0].floatValue() || ((float *)param)[1] != value[1].floatValue() || ((float *)param)[2] != value[2].floatValue();
         if (hasChanged)
         {
             ((float *)param)[0] = value[0].floatValue();
             ((float *)param)[1] = value[1].floatValue();
             ((float *)param)[2] = value[2].floatValue();
+        }else
+        {
+            DBG("No change");
         }
         break;
 

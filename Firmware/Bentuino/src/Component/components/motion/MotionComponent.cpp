@@ -9,8 +9,11 @@ bool MotionComponent::initInternal(JsonObject o)
     AddIntParam(sendLevel);
 
     AddIntParamConfig(orientationSendRate);
+
+#ifdef IMU_TYPE_BNO055
     AddIntParamConfig(sdaPin);
     AddIntParamConfig(sclPin);
+#endif
 
     AddP3DParam(orientation);
     AddP3DParam(accel);
@@ -31,6 +34,7 @@ bool MotionComponent::initInternal(JsonObject o)
     AddFloatParam(projectedAngle);
     AddFloatParamConfig(xOnCalibration);
 
+#ifdef IMU_TYPE_BNO055
     if (sdaPin == 0 || sclPin == 0)
     {
         String npin;
@@ -44,6 +48,7 @@ bool MotionComponent::initInternal(JsonObject o)
     }
 
     Wire.begin(sdaPin, sclPin);
+#endif
 
     if (enabled)
     {
@@ -93,7 +98,9 @@ void MotionComponent::updateInternal()
 void MotionComponent::clearInternal()
 {
     shouldStopRead = true;
+#ifdef IMU_TYPE_BNO055
     bno.enterSuspendMode();
+#endif
 }
 
 void MotionComponent::onEnabledChanged()
@@ -117,7 +124,7 @@ void MotionComponent::readIMUStatic(void *_imu)
     DBG("[motion] Start reading IMU");
     MotionComponent *imuComp = (MotionComponent *)_imu;
 
-    bool result = imuComp->setupBNO();
+    bool result = imuComp->setupIMU();
 
     if (!result)
     {
@@ -125,7 +132,9 @@ void MotionComponent::readIMUStatic(void *_imu)
         return;
     }
 
+#ifdef IMU_TYPE_BNO055
     imuComp->bno.enterNormalMode();
+#endif
 
     while (!imuComp->shouldStopRead)
     {
@@ -133,19 +142,19 @@ void MotionComponent::readIMUStatic(void *_imu)
         delay(5);
     }
 
+#ifdef IMU_TYPE_BNO055
     imuComp->bno.enterSuspendMode();
+#endif
 
     DBG("[motion] Stopped reading IMU");
     vTaskDelete(NULL);
 }
 
-bool MotionComponent::setupBNO()
+bool MotionComponent::setupIMU()
 {
     connected = false;
 
-    //if (connected)
-     //   return true;
-
+#ifdef IMU_TYPE_BNO055
     NDBG("Setup BNO...");
     if (!bno.begin())
     {
@@ -161,7 +170,17 @@ bool MotionComponent::setupBNO()
     bno.enterNormalMode();
 
     SetParam(connected, true);
-    NDBG("BNO is setup");
+#elif defined IMU_TYPE_M5MPU
+    int result = mpu.Init();
+    if (result != 0)
+    {
+        NDBG("Error initializing MPU6886");
+        return false;
+    }
+    lastUpdateTime = millis();
+#endif
+
+    NDBG("IMU is setup");
 
     return true;
 }
@@ -174,6 +193,7 @@ void MotionComponent::readIMU()
     if (imuLock)
         return;
 
+#ifdef IMU_TYPE_BNO055
     // NDBG("ReadIMU " + String(hasNewData));
     imu::Quaternion q = bno.getQuat();
     q.normalize();
@@ -185,7 +205,7 @@ void MotionComponent::readIMU()
         NDBG("Reading is sh*t (nan)");
         return;
     }
-    
+
     // NDBG("Euler " + String(euler.x()));
 
     SetParam3(orientation,
@@ -211,6 +231,36 @@ void MotionComponent::readIMU()
     computeActivity();
     computeProjectedAngle();
 
+#elif defined IMU_TYPE_M5MPU
+
+    float gyroX, gyroY, gyroZ;
+    float accX, accY, accZ;
+
+    mpu.getGyroData(&gyroX, &gyroY, &gyroZ);
+    mpu.getAccelData(&accX, &accY, &accZ);
+    // mpu.getAhrsData(&pitch, &roll, &yaw);
+
+
+    double dt = (millis() - lastUpdateTime) / 1000.0;
+    lastUpdateTime = millis();
+
+    // Calculate pitch and roll from accelerometer
+    float accelPitch = atan2(accY, sqrt(accX * accX + accZ * accZ)) * 180 / PI;
+    float accelRoll = atan2(-accX, accZ) * 180 / PI;
+
+    // Integrate gyroscope data
+    float gyroPitch = orientation[1] + gyroX * dt;
+    float gyroRoll = orientation[2] + gyroY * dt;
+
+    // Complementary filter
+    float alpha = 0.98;
+    float pitch = alpha * gyroPitch + (1 - alpha) * accelPitch;
+    float roll = alpha * gyroRoll + (1 - alpha) * accelRoll;
+
+    SetParam3(orientation, 0, pitch, roll); // no yaw with only accel and gyro
+    SetParam3(accel, accX, accY, accZ);
+    SetParam3(gyro, gyroX, gyroY, gyroZ);
+#endif
     hasNewData = true;
 }
 
@@ -359,6 +409,7 @@ void MotionComponent::computeActivity()
 
 void MotionComponent::sendCalibrationStatus()
 {
+#ifdef IMU_TYPE_BNO055
     uint8_t system, gyro, accel, mag;
     system = gyro = accel = mag = 0;
     bno.getCalibration(&system, &gyro, &accel, &mag);
@@ -370,6 +421,7 @@ void MotionComponent::sendCalibrationStatus()
     data[3] = (float)mag;
 
     sendEvent(CalibrationStatus, data, 4);
+#endif
 }
 
 void MotionComponent::setOrientationXOffset(float offset = 0.0f)

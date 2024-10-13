@@ -5,14 +5,22 @@
 
 DeclareComponent(Motion, "motion", )
 
+#ifdef IMU_TYPE_BNO055
     Adafruit_BNO055 bno;
+#elif defined IMU_TYPE_M5MPU
+    MPU6886 mpu;
+    double lastUpdateTime;
+#endif
 
 DeclareBoolParam(connected, false);
 DeclareIntParam(sendLevel, 0);
 DeclareIntParam(orientationSendRate, 50);
+
+#ifdef IMU_TYPE_BNO055
 DeclareIntParam(sdaPin, IMU_DEFAULT_SDA);
 DeclareIntParam(sclPin, IMU_DEFAULT_SCL);
 DeclareIntParam(intPin, IMU_DEFAULT_INT);
+#endif
 
 long timeSinceOrientationLastSent;
 
@@ -49,7 +57,6 @@ bool shouldStopRead;
 const String sendLevelOptions[3]{"None", "Orientation", "All"};
 const String throwStateOptions[6]{"None", "Flat", "Single", "Double", "Flat Front", "Loftie"};
 
-
 bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
@@ -58,7 +65,8 @@ void startIMUTask();
 
 static void readIMUStatic(void *);
 
-bool setupBNO();
+bool setupIMU();
+
 void readIMU();
 void sendCalibrationStatus();
 void computeThrow();
@@ -77,8 +85,8 @@ DeclareComponentEventNames("orientation", "accel", "gyro", "linearAccel", "throw
 
 #ifdef USE_SCRIPT
 LinkScriptFunctionsStart
-LinkScriptFunctionsStartMotherClass(Component)
-    LinkScriptFunction(MotionComponent, getOrientation, f, i);
+    LinkScriptFunctionsStartMotherClass(Component)
+        LinkScriptFunction(MotionComponent, getOrientation, f, i);
 LinkScriptFunction(MotionComponent, getYaw, f, );
 LinkScriptFunction(MotionComponent, getPitch, f, );
 LinkScriptFunction(MotionComponent, getRoll, f, );
@@ -113,9 +121,11 @@ DeclareScriptFunctionReturn0(MotionComponent, getThrowState, uint32_t) { return 
 HandleSetParamInternalStart
     CheckAndSetEnumParam(sendLevel, sendLevelOptions, 3);
 CheckAndSetParam(orientationSendRate);
+#ifdef IMU_TYPE_BNO055
 CheckAndSetParam(sdaPin);
 CheckAndSetParam(sclPin);
 CheckAndSetParam(intPin);
+#endif
 CheckAndSetParam(orientationXOffset);
 CheckAndSetParam(flatThresholds);
 CheckAndSetParam(accelThresholds);
@@ -130,9 +140,11 @@ HandleSetParamInternalEnd;
 FillSettingsInternalStart
     FillSettingsParam(sendLevel);
 FillSettingsParam(orientationSendRate);
+#ifdef IMU_TYPE_BNO055
 FillSettingsParam(sdaPin);
 FillSettingsParam(sclPin);
 FillSettingsParam(intPin);
+#endif
 FillSettingsParam(orientationXOffset);
 FillSettingsParam2(flatThresholds);
 FillSettingsParam3(accelThresholds);
@@ -148,9 +160,11 @@ FillOSCQueryInternalStart
     FillOSCQueryBoolParamReadOnly(connected);
 FillOSCQueryEnumParam(sendLevel, sendLevelOptions, 3);
 FillOSCQueryIntParam(orientationSendRate);
+#ifdef IMU_TYPE_BNO055
 FillOSCQueryIntParam(sdaPin);
 FillOSCQueryIntParam(sclPin);
 FillOSCQueryIntParam(intPin);
+#endif
 FillOSCQueryP3DRangeParamReadOnly(orientation, -180, 180, -90, 90, -180, 180);
 FillOSCQueryP3DParamReadOnly(accel);
 FillOSCQueryP3DParamReadOnly(gyro);
@@ -167,5 +181,4 @@ FillOSCQueryFloatParam(singleThreshold);
 FillOSCQueryFloatParam(angleOffset);
 FillOSCQueryFloatParamReadOnly(projectedAngle);
 FillOSCQueryFloatParam(xOnCalibration);
-FillOSCQueryInternalEnd
-    EndDeclareComponent
+FillOSCQueryInternalEnd EndDeclareComponent
