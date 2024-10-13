@@ -4,9 +4,16 @@ fs::FS &FilesComponent::fs = FS_TYPE;
 
 bool FilesComponent::initInternal(JsonObject o)
 {
-    useInternalMemory = false;
 
     bool mounted = false;
+
+#ifdef FILES_TYPE_SPIFFS
+    initInternalMemory();
+#else
+    useInternalMemory = false;
+#endif
+
+
 #ifdef FILES_TYPE_MMC
 
     NDBG("Init SD MMC");
@@ -14,8 +21,9 @@ bool FilesComponent::initInternal(JsonObject o)
     {
         mounted = true;
     }
-#else
+#endif
 
+#ifdef FILES_TYPE_SD
     NDBG("Init SD SPI");
 
     AddIntParamConfig(sdEnPin);
@@ -229,12 +237,13 @@ String FilesComponent::listDir(const char *dirname, uint8_t levels)
     return result;
 }
 
-esp_err_t FilesComponent::format_sdcard() {
+esp_err_t FilesComponent::format_sdcard()
+{
 #ifdef FILES_TYPE_SD
-    
+
     char drv[3] = {'0', ':', 0};
     const size_t workbuf_size = 4096;
-    void* workbuf = NULL;
+    void *workbuf = NULL;
     esp_err_t err = ESP_OK;
     ESP_LOGW("sdcard", "Formatting the SD card");
 
@@ -242,21 +251,23 @@ esp_err_t FilesComponent::format_sdcard() {
     int sector_size_default = 512;
 
     workbuf = ff_memalloc(workbuf_size);
-    if (workbuf == NULL) {
+    if (workbuf == NULL)
+    {
         return ESP_ERR_NO_MEM;
     }
 
     size_t alloc_unit_size = esp_vfs_fat_get_allocation_unit_size(
-                sector_size_default,
-                allocation_unit_size);
+        sector_size_default,
+        allocation_unit_size);
 
 #if (ESP_IDF_VERSION_MAJOR < 5)
     FRESULT res = f_mkfs(drv, FM_ANY, alloc_unit_size, workbuf, workbuf_size);
 #else
     const MKFS_PARM opt = {(BYTE)FM_ANY, 0, 0, 0, alloc_unit_size};
     FRESULT res = f_mkfs(drv, &opt, workbuf, workbuf_size);
-#endif  /* ESP_IDF_VERSION_MAJOR */
-    if (res != FR_OK) {
+#endif /* ESP_IDF_VERSION_MAJOR */
+    if (res != FR_OK)
+    {
         err = ESP_FAIL;
         ESP_LOGE("sdcard", "f_mkfs failed (%d)", res);
     }

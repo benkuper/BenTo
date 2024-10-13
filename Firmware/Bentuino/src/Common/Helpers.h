@@ -210,7 +210,6 @@
 #define CheckTrigger(func)                                     \
     if (paramName == #func)                                    \
     {                                                          \
-        Serial.println("Trigger func : " + String(paramName)); \
         func();                                                \
         return true;                                           \
     }

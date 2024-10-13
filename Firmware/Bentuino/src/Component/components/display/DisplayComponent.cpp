@@ -23,6 +23,7 @@ void DisplayComponent::clearInternal()
     clearDisplay();
 }
 
+#if DISPLAY_TYPE == M5StickC
 void DisplayComponent::initM5StickC()
 {
     display.begin();
@@ -44,9 +45,14 @@ void DisplayComponent::initM5StickC()
     canvas.setTextSize((float)canvas.width() / 160);
     canvas.setTextScroll(true);
 }
+#endif
 
 void DisplayComponent::clearDisplay()
 {
+#if DISPLAY_TYPE == M5StickC
+    canvas.clear(TFT_BLACK);
+    display.clear();
+#endif
 }
 
 bool DisplayComponent::handleCommandInternal(const String &command, var *data, int numData)

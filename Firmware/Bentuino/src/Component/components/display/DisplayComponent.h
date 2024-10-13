@@ -38,7 +38,10 @@ bool initInternal(JsonObject o) override;
 void updateInternal() override;
 void clearInternal() override;
 
+#if DISPLAY_TYPE == M5StickC
 void initM5StickC();
+#endif
+
 void setDisplayText(const String &text, int x = 0, int y = 0, int size = DISPLAY_DEFAULT_TEXT_SIZE);
 void log(const String &text);
 void logWarning(const String &text);

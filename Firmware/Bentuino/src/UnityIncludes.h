@@ -36,12 +36,17 @@
 
 #ifdef USE_FILES
 
-#ifndef FILES_TYPE_MMC
+#ifdef FILES_TYPE_MM
+#elif defined FILES_TYPE_SPIFFS
+#else
+#ifndef FILES_TYPE_SD
 #define FILES_TYPE_SD
+#endif
 #endif
 
 #ifdef FILES_TYPE_MMC
 #include "SD_MMC.h"
+#elif defined FILES_TYPE_SPIFFS
 #else
 #include "SD.h"
 #include "ff.h"
