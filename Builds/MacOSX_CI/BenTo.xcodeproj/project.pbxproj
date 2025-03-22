@@ -81,6 +81,7 @@
 		FD63D2EE9C5301FAD6429F69 /* OpenGL.framework */ = {isa = PBXBuildFile; fileRef = BD281F63F59F33DAAC163F85; };
 		FD72E12D48DC13DD45E5B58B /* include_juce_simpleweb.cpp */ = {isa = PBXBuildFile; fileRef = 3CF751812457867DE7EF346A; };
 		FE224668E0B77890F729B94B /* CommonIncludes.cpp */ = {isa = PBXBuildFile; fileRef = B31B708EFF29E846E898817C; };
+		FEAAECAACD44A5321E51E964 /* include_juce_javascript.cpp */ = {isa = PBXBuildFile; fileRef = 3F351F8665E1ED3E0CE379E7; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -178,6 +179,7 @@
 		3CB40E424265CF9D5240523B /* BentoProp.cpp */ /* BentoProp.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = BentoProp.cpp; path = ../../Source/Prop/props/bento/BentoProp.cpp; sourceTree = SOURCE_ROOT; };
 		3CF751812457867DE7EF346A /* include_juce_simpleweb.cpp */ /* include_juce_simpleweb.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_simpleweb.cpp; path = ../../JuceLibraryCode/include_juce_simpleweb.cpp; sourceTree = SOURCE_ROOT; };
 		3EA271EE23512DABADB0DB9A /* UserLightBlockModelManager.cpp */ /* UserLightBlockModelManager.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = UserLightBlockModelManager.cpp; path = ../../Source/LightBlock/model/UserLightBlockModelManager.cpp; sourceTree = SOURCE_ROOT; };
+		3F351F8665E1ED3E0CE379E7 /* include_juce_javascript.cpp */ /* include_juce_javascript.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_javascript.cpp; path = ../../JuceLibraryCode/include_juce_javascript.cpp; sourceTree = SOURCE_ROOT; };
 		414654DC5F2DB306F91226BA /* RemapBlockFilter.h */ /* RemapBlockFilter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = RemapBlockFilter.h; path = ../../Source/LightBlock/model/blocks/filters/generic/remap/RemapBlockFilter.h; sourceTree = SOURCE_ROOT; };
 		4236786BFB7C6B16DEC0C427 /* SequenceIncludes.h */ /* SequenceIncludes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = SequenceIncludes.h; path = ../../Source/Sequence/SequenceIncludes.h; sourceTree = SOURCE_ROOT; };
 		4297491F00482662E47F3924 /* PatternBlock.cpp */ /* PatternBlock.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = PatternBlock.cpp; path = ../../Source/LightBlock/model/blocks/pattern/PatternBlock.cpp; sourceTree = SOURCE_ROOT; };
@@ -359,6 +361,7 @@
 		BC3D98E1734C5FDC34A1EAC1 /* NodeManager.h */ /* NodeManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = NodeManager.h; path = ../../Source/Node/NodeManager.h; sourceTree = SOURCE_ROOT; };
 		BD281F63F59F33DAAC163F85 /* OpenGL.framework */ /* OpenGL.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenGL.framework; path = System/Library/Frameworks/OpenGL.framework; sourceTree = SDKROOT; };
 		BD5468E6CF833A49BC640D7E /* include_juce_sharedtexture.mm */ /* include_juce_sharedtexture.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_sharedtexture.mm; path = ../../JuceLibraryCode/include_juce_sharedtexture.mm; sourceTree = SOURCE_ROOT; };
+		BD926452DC15233AD0A08AB6 /* juce_javascript */ /* juce_javascript */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_javascript; path = ../../JUCE/modules/juce_javascript; sourceTree = SOURCE_ROOT; };
 		BDFA3A8DCA3E6124656086EC /* fadeOut.png */ /* fadeOut.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; name = fadeOut.png; path = ../../Resources/fadeOut.png; sourceTree = SOURCE_ROOT; };
 		BE8152E81195DCC2AFC2C39D /* PictureBlockUI.h */ /* PictureBlockUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = PictureBlockUI.h; path = ../../Source/LightBlock/model/blocks/picture/ui/PictureBlockUI.h; sourceTree = SOURCE_ROOT; };
 		BE950B96A096623580B6C120 /* include_juce_audio_processors_lv2_libs.cpp */ /* include_juce_audio_processors_lv2_libs.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_audio_processors_lv2_libs.cpp; path = ../../JuceLibraryCode/include_juce_audio_processors_lv2_libs.cpp; sourceTree = SOURCE_ROOT; };
@@ -749,6 +752,7 @@
 				382C6CFF9993F61E54CBE124,
 				F80D5AF0C69B7197391A4E1C,
 				091DCFB72171D73649C6465B,
+				3F351F8665E1ED3E0CE379E7,
 				D239AAEE967D9E958B6ACAB3,
 				D6B4CB4780E26B5B19D4768A,
 				38F811D5159ADC42396F5517,
@@ -1325,6 +1329,7 @@
 				FCC2F0668B987B97721522EB,
 				D8C7FD42C2AFB9DE606BD047,
 				0ED403F6DF0B31F889C809E3,
+				BD926452DC15233AD0A08AB6,
 				F7DAA1025C2FF266D1125C8B,
 				BAEFF9889C95827D6D0A3AFE,
 				A5572BB25D5DE26014F52323,
@@ -1605,6 +1610,7 @@
 				D02DBB3A5A8805AB5F196F5E,
 				648EDD6472892B1E5BA11753,
 				A3AFC86C67024DF84AB349FB,
+				FEAAECAACD44A5321E51E964,
 				43EEF4DFA57501DE6D455005,
 				C81B7CA2C8D2947850A2243A,
 				EB901348F68195A64875526D,

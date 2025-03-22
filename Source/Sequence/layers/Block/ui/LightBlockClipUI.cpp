@@ -283,10 +283,10 @@ void LightBlockClipUI::mouseUp(const MouseEvent& e)
 	}
 }
 
-Rectangle<int> LightBlockClipUI::getDragBounds()
-{
-	return LayerBlockUI::getLocalBounds();
-}
+//Rectangle<int> LightBlockClipUI::getDragBounds()
+//{
+//	return LayerBlockUI::getLocalBounds();
+//}
 
 void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable* c)
 {

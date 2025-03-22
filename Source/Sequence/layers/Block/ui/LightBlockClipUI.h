@@ -68,7 +68,7 @@ public:
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 
-	Rectangle<int> getDragBounds() override;
+	//juce::Rectangle<int> getDragBounds() override;
 
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 

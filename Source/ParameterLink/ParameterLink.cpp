@@ -181,7 +181,7 @@ void ParameterLink::notifyLinkUpdated()
 }
 
 
-var ParameterLink::getJSONData(bool includeNonOverriden)
+var ParameterLink::getJSONData()
 {
 	var data(new DynamicObject());
 	if (isLinkable)

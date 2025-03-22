@@ -190,7 +190,7 @@ void BentoProp::sendColorsToPropInternal()
 		}
 
 		universes[u]->updateValues(data);
-		if (universes[u]->isDirty) artnet.sendDMXValues(universes[u]);
+		if (universes[u]->isDirty) artnet.setDMXValues(universes[u]);
 		wait(2);
 	}
 }
