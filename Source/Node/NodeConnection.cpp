@@ -57,9 +57,9 @@ void NodeConnection::insertNode(StringRef nodeType)
 	connectionListeners.call(&ConnectionListener::askToInsertNode, this, nodeType);
 }
 
-var NodeConnection::getJSONData()
+var NodeConnection::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	if (sourceSlot != nullptr && destSlot != nullptr)
 	{
 		data.getDynamicObject()->setProperty("sourceNode", sourceSlot->node->shortName);

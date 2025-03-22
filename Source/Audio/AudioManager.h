@@ -52,6 +52,6 @@ public:
 	virtual void audioDeviceAboutToStart(AudioIODevice* device) override;
 	virtual void audioDeviceStopped() override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 };

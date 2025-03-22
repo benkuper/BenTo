@@ -65,7 +65,7 @@ LightBlockModelUI * PictureBlock::createUI()
 	return new PictureBlockUI(this);
 }
 
-var PictureBlock::getJSONData()
+var PictureBlock::getJSONData(bool includeNonOverriden)
 {
 	return LightBlockModel::getJSONData();
 }

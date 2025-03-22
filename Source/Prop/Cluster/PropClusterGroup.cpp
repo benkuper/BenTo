@@ -86,9 +86,9 @@ int PropClusterGroup::getLocalPropID(Prop * p)
 	return -1;
 }
 
-var PropClusterGroup::getJSONData()
+var PropClusterGroup::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("clusterManager", clusterManager.getJSONData());
 	return data;
 }

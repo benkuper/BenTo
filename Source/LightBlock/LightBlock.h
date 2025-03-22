@@ -43,7 +43,7 @@ public:
 	void handleEnterExit(bool enter, Array<Prop *> props); //for timeline stuff
 
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 	
 	class  LightBlockListener
@@ -55,7 +55,7 @@ public:
 		//virtual void colorsUpdated() {}
 	};
 
-	DECLARE_INSPECTACLE_CRITICAL_LISTENER(LightBlock, block)
+	DECLARE_INSPECTACLE_SAFE_LISTENER(LightBlock, block)
 	
 
 

@@ -20,9 +20,9 @@ SpatLayout::~SpatLayout()
 {
 }
 
-var SpatLayout::getJSONData()
+var SpatLayout::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("itemManager", spatItemManager.getJSONData());
 	return data;
 }

@@ -131,7 +131,7 @@ public:
 	void addParamLinkContainerListener(ParamLinkContainerListener* newListener) { paramLinkContainerListeners.add(newListener); }
 	void removeParamLinkContainerListener(ParamLinkContainerListener* listener) { paramLinkContainerListeners.remove(listener); }
 
-	virtual var getJSONData() override;
+	virtual var getJSONData(bool includeNonOverriden = false) override;
 	virtual void loadJSONDataInternal(var data) override;
 
 	virtual InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = {}) override;

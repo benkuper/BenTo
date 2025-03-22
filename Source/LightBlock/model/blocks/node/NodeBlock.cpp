@@ -159,9 +159,9 @@ void NodeBlock::onExternalParameterRangeChanged(Parameter* p)
 	}
 }
 
-var NodeBlock::getJSONData()
+var NodeBlock::getJSONData(bool includeNonOverriden)
 {
-	var data = LightBlockModel::getJSONData();
+	var data = LightBlockModel::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("nodes", manager.getJSONData());
 	return data;
 }

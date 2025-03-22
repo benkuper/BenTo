@@ -72,9 +72,9 @@ void LightBlockModel::setCustomThumbnail(String path)
 	modelNotifier.addMessage(new ModelEvent(ModelEvent::CUSTOM_THUMBNAIL_CHANGED, this));
 }
 
-var LightBlockModel::getJSONData()
+var LightBlockModel::getJSONData(bool includeNonOverriden)
 {
-	var data = LightBlockColorProvider::getJSONData();
+	var data = LightBlockColorProvider::getJSONData(includeNonOverriden);
 	if (paramsContainer != nullptr)
 	{
 		var cData = paramsContainer->getJSONData();

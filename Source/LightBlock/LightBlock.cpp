@@ -193,9 +193,9 @@ PlaybackData LightBlock::getPlaybackDataForProp(Prop* p)
 }
 
 
-var LightBlock::getJSONData()
+var LightBlock::getJSONData(bool includeNonOverriden)
 {
-	var data = ControllableContainer::getJSONData();
+	var data = ControllableContainer::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("params", paramsContainer->getJSONData());
 	//data.getDynamicObject()->setProperty("automations", automationsManager.getJSONData());
 

@@ -55,7 +55,7 @@ public:
 
 	void clear() override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	Array<LightBlockModel*> getAllModels(bool includeUserModels = true);

@@ -31,7 +31,7 @@ public:
 
 	LightBlockModelUI * createUI() override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 
 	DECLARE_TYPE("Picture")
 

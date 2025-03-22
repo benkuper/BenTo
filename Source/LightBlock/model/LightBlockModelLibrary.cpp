@@ -100,9 +100,9 @@ void LightBlockModelLibrary::clear()
 	nodeBlocks.clear();
 }
 
-var LightBlockModelLibrary::getJSONData()
+var LightBlockModelLibrary::getJSONData(bool includeNonOverriden)
 {
-	var data = ControllableContainer::getJSONData();
+	var data = ControllableContainer::getJSONData(includeNonOverriden);
 
 	var gData = patternBlocks.getJSONData();
 	if (gData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty(patternBlocks.shortName, gData);

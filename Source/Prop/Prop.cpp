@@ -565,9 +565,9 @@ void Prop::providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackContro
 	}
 }
 
-var Prop::getJSONData()
+var Prop::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("block", currentBlock->getJSONData());
 	if (deviceID.isNotEmpty()) data.getDynamicObject()->setProperty("deviceID", deviceID);
 	return data;

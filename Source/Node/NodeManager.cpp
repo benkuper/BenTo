@@ -51,9 +51,9 @@ NodeConnectionSlot* NodeManager::getSlotForName(const String& nodeName, const St
 	return n->getSlotWithName(isInput, slotName);
 }
 
-var NodeManager::getJSONData()
+var NodeManager::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseManager::getJSONData();
+	var data = BaseManager::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("connections", connectionManager.getJSONData());
 	data.getDynamicObject()->setProperty("prop", propNode->getJSONData());
 

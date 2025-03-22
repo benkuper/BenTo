@@ -174,9 +174,9 @@ int PropFilterScript::getTargetIDForProp(Prop* p)
 	return script.callFunction("getID", args);
 }
 
-var PropFilterScript::getJSONData()
+var PropFilterScript::getJSONData(bool includeNonOverriden)
 {
-	var data = PropTargetFilter::getJSONData();
+	var data = PropTargetFilter::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("script", script.getJSONData());
 	return data;
 }

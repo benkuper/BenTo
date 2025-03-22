@@ -199,9 +199,9 @@ void LightBlockLayer::getSnapTimes(Array<float>* arrayToFill)
 
 
 
-var LightBlockLayer::getJSONData()
+var LightBlockLayer::getJSONData(bool includeNonOverriden)
 {
-	var data = SequenceLayer::getJSONData();
+	var data = SequenceLayer::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("blocks", blockClipManager.getJSONData());
 	data.getDynamicObject()->setProperty("filters", filterManager->getJSONData());
 	return data;

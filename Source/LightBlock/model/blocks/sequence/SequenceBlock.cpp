@@ -33,9 +33,9 @@ BentoSequenceBlock::~BentoSequenceBlock()
 {
 }
 
-var BentoSequenceBlock::getJSONData()
+var BentoSequenceBlock::getJSONData(bool includeNonOverriden)
 {
-	var data = LightBlockModel::getJSONData();
+	var data = LightBlockModel::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("sequence", sequence->getJSONData());
 	return data;
 }

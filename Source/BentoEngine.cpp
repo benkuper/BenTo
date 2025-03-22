@@ -203,9 +203,9 @@ void BentoEngine::processMessage(const OSCMessage& m, const String& clientId)
 }
 
 
-var BentoEngine::getJSONData()
+var BentoEngine::getJSONData(bool includeNonOverriden)
 {
-	var data = Engine::getJSONData();
+	var data = Engine::getJSONData(includeNonOverriden);
 
 	var mData = LightBlockModelLibrary::getInstance()->getJSONData();
 	if (!mData.isVoid() && mData.getDynamicObject()->getProperties().size() > 0) data.getDynamicObject()->setProperty("models", mData);
