@@ -847,7 +847,7 @@
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
                customPList="&lt;plist&gt;&#10;&lt;dict&gt;&#10;&lt;key&gt;NSAppTransportSecurity&lt;/key&gt;&#10;&#9;&lt;dict&gt;&#10;&#9;&#9;&lt;key&gt;NSAllowsArbitraryLoads&lt;/key&gt;&#10;&#9;&#9;&lt;true/&gt;&#10;&#9;&lt;/dict&gt;&#10;&lt;/dict&gt;&#10;&lt;/plist&gt;"
-               externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1"
+               externalLibraries="Servus" extraDefs="FILMSTRO_USE_FFMPEG=0&#10;JUCE_COREGRAPHICS_DRAW_ASYNC=1&#10;JUCE_SUPPORT_CARBON=0"
                xcodeValidArchs="arm64,x86_64" customXcodeResourceFolders="Resources/mac/esptool"
                documentExtensions="bento" hardenedRuntimeOptions="com.apple.security.cs.allow-jit"
                frameworkSearchPaths="../../External/syphon" embeddedFrameworks="../../External/syphon/Syphon.framework">
@@ -884,9 +884,9 @@
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
-    <LINUX_MAKE targetFolder="Builds/Raspberry" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                externalLibraries="curl&#10;Servus&#10;pthread" smallIcon="YlXmhK"
-                bigIcon="YlXmhK" extraDefs="FILMSTRO_USE_FFMPEG=0">
+    <LINUX_MAKE targetFolder="Builds/Raspberry" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
+                externalLibraries="curl&#10;Servus&#10;pthread&#10;atomic" smallIcon="YlXmhK"
+                bigIcon="YlXmhK" extraDefs="FILMSTRO_USE_FFMPEG=0" extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Debug" libraryPath="../../External/servus/lib/raspberry&#10;/usr/lib/arm-linux-gnueabihf"
                        linuxArchitecture="-march=armv8-a" headerPath="/usr/include/freetype2"/>
@@ -921,8 +921,9 @@
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry64" smallIcon="YlXmhK" bigIcon="YlXmhK"
-                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed"
-                externalLibraries="curl&#10;Servus&#10;pthread" extraDefs="FILMSTRO_USE_FFMPEG=0">
+                extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
+                externalLibraries="curl&#10;Servus&#10;pthread&#10;atomic" extraDefs="FILMSTRO_USE_FFMPEG=0"
+                extraCompilerFlags="-Wno-multichar">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/raspberry64&#10;/usr/lib/arm-linux-gnueabihf"
                        headerPath="/usr/include/freetype2"/>
