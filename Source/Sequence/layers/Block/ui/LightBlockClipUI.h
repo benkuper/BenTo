@@ -68,8 +68,6 @@ public:
 	void mouseDrag(const MouseEvent &e) override;
 	void mouseUp(const MouseEvent &e) override;
 
-	Rectangle<int> getDragBounds() override;
-
 	void controllableFeedbackUpdateInternal(Controllable *) override;
 
 	void newMessage(const LightBlockClip::ClipEvent& e) override;

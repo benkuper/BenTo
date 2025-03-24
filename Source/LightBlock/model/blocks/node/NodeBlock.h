@@ -37,7 +37,7 @@ public:
 	void onExternalParameterValueChanged(Parameter * p) override;
 	void onExternalParameterRangeChanged(Parameter * p) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	DECLARE_TYPE("Node")

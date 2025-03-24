@@ -203,9 +203,9 @@ void SpatItem::onControllableFeedbackUpdateInternal(ControllableContainer* cc, C
 
 }
 
-var SpatItem::getJSONData()
+var SpatItem::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("filters", filterManager->getJSONData());
 	data.getDynamicObject()->setProperty("handles", handlesCC.getJSONData());
 	return data;

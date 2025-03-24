@@ -45,5 +45,5 @@ void NodeBlockEditorToolItem::mouseDrag(const MouseEvent &e)
 
 int NodeBlockEditorToolItem::getWidthForHeight(int h)
 {
-	return Font(h - 2).getStringWidth(type) + 8;
+	return TextLayout::getStringWidth(Font(FontOptions(h - 2)), type) + 8;
 }

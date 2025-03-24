@@ -89,9 +89,9 @@ void StreamingScriptBlock::handleEnterExit(bool enter, Array<Prop *> props)
 	script.callFunction(enter ? "onEnter" : "onExit", args);
 }
 
-var StreamingScriptBlock::getJSONData()
+var StreamingScriptBlock::getJSONData(bool includeNonOverriden)
 {
-	var data = LightBlockModel::getJSONData();
+	var data = LightBlockModel::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("script", script.getJSONData());
 	return data;
 }

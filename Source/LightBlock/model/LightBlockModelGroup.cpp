@@ -8,9 +8,9 @@
   ==============================================================================
 */
 
-var LightBlockModelGroup::getJSONData()
+var LightBlockModelGroup::getJSONData(bool includeNonOverriden)
 {
-	var data = ControllableContainer::getJSONData();
+	var data = ControllableContainer::getJSONData(includeNonOverriden);
 	for (auto &cc : controllableContainers)
 	{
 		var ccData = cc->getJSONData();

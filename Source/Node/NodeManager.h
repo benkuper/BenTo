@@ -43,7 +43,7 @@ public:
 
 	NodeConnectionSlot * getSlotForName(const String &nodeName, const String &slotName, bool isInput);
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataManagerInternal(var data) override;
 
 };

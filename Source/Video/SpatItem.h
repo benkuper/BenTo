@@ -45,6 +45,6 @@ public:
 	void onContainerParameterChangedInternal(Parameter *) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 };

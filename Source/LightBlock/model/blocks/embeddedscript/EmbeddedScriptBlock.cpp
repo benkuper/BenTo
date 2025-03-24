@@ -108,8 +108,7 @@ void EmbeddedScriptBlock::compile()
 			uploadToPropsTrigger->trigger();
 			if (autoLaunch->boolValue())
 			{
-				std::function<void()> func = std::bind(&Trigger::trigger, loadOnPropsTrigger);
-				Timer::callAfterDelay(200, func);
+				Timer::callAfterDelay(200, [this]() {this->loadOnPropsTrigger->trigger(); });
 			}
 		}
 	}

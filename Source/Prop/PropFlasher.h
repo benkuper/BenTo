@@ -58,8 +58,8 @@ public:
 	BoolParameter* filterKnownDevices;
 
 	EnumParameter* fwType;
+	var firmwareData;
 	File firmwareFile;
-	File partitionsFile;
 
 	Trigger* updateFirmwareDefinitionsTrigger;
 	FileParameter* fwFileParam;
@@ -76,8 +76,6 @@ public:
 	Trigger* uploadTrigger;
 
 	File flasher;
-	File app0Bin;
-	File bootloaderBin;
 
 	int numFlashingProps;
 	var availableFirmwares;

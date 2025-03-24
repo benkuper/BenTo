@@ -17,6 +17,6 @@ public:
 	LightBlockModelGroup(const String &name) : ControllableContainer(name) {}
 	~LightBlockModelGroup() {}
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 };

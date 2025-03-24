@@ -31,9 +31,9 @@ InspectableEditor * LightBlockModelParameter::getEditorInternal(bool isRoot, Arr
 	return new LightBlockModelParameterEditor(this, isRoot);
 }
 
-var LightBlockModelParameter::getJSONData()
+var LightBlockModelParameter::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("param", param->getJSONData());
 	return data;
 }

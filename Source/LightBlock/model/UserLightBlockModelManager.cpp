@@ -74,9 +74,9 @@ LightBlockModel * UserLightBlockModelManager::createItem()
 	return nullptr;
 }
 
-var UserLightBlockModelManager::getJSONData()
+var UserLightBlockModelManager::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseManager::getJSONData();
+	var data = BaseManager::getJSONData(includeNonOverriden);
 
 	/*
 	LightBlockModel * editingBlock = nullptr;

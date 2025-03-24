@@ -53,7 +53,7 @@ public:
 	void onContainerParameterChangedInternal(Parameter * p) override;
 	virtual void controllableStateChanged(Controllable* c) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	String getTypeString() const override { return "LightBlockClip"; }
@@ -69,7 +69,7 @@ public:
 		virtual void clipFadesChanged (LightBlockClip *) {}
 	};
 
-	DECLARE_INSPECTACLE_CRITICAL_LISTENER(Clip, clip)
+	DECLARE_INSPECTACLE_SAFE_LISTENER(Clip, clip)
 
 	// ASYNC
 	class  ClipEvent

@@ -141,7 +141,7 @@ public:
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 
@@ -158,7 +158,7 @@ public:
 		virtual void colorsUpdated(Prop*) {}
 	};
 
-	DECLARE_INSPECTACLE_CRITICAL_LISTENER(Prop, prop);
+	DECLARE_INSPECTACLE_SAFE_LISTENER(Prop, prop);
 
 	// ASYNC
 	class  PropEvent

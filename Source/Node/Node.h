@@ -52,7 +52,7 @@ public:
 		virtual void slotRemoved(Node*, NodeConnectionSlot*, bool /*isInput*/) {}
 	};
 
-	DECLARE_INSPECTACLE_CRITICAL_LISTENER(Node, node);
+	DECLARE_INSPECTACLE_SAFE_LISTENER(Node, node);
 
 
 	// ASYNC

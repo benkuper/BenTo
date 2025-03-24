@@ -26,8 +26,8 @@ PropFlasher::PropFlasher() :
 
 	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
 
-	fwFileParam = addFileParameter("Firmware File", "The firmware.bin file to flash");
-	fwFileParam->fileTypeFilter = "*.bin";
+	fwFileParam = addFileParameter("Firmware File", "The folder of the firmware to flash");
+	fwFileParam->directoryMode = true;
 	fwFileParam->setEnabled(false);
 
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
@@ -36,8 +36,6 @@ PropFlasher::PropFlasher() :
 	wifiSSID = addStringParameter("Name", "Name (SSID) for the wifi to set", "");
 	wifiPass = addStringParameter("Pass", "Password for the wifi to set", "");
 	setAllWifiTrigger = addTrigger("Only Set Wifi", "Set wifi to all connected props but don't flash the firmware");
-
-	
 
 	//testing here, should come from internet
 
@@ -78,7 +76,7 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 {
 	fwType->clearOptions();
 	File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares");
-	if(force && f.exists()) f.deleteRecursively();
+	if (force && f.exists()) f.deleteRecursively();
 
 	if (!f.exists())
 	{
@@ -96,13 +94,23 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 			if (serverFilesParam->stringValue().isEmpty())  serverFilesParam->setValue(fold.getFullPathName());
 			continue; //ignore server folder for firmware listing
 		}
-
-		if (!fold.getChildFile("firmware.bin").existsAsFile() || !fold.getChildFile("partitions.bin").existsAsFile())
+		;
+		if (!fold.getChildFile("manifest.json").existsAsFile())
 		{
-			NLOGWARNING(niceName, "Firmware folder " << fold.getFullPathName() << " is missing firmware.bin or partitions.bin");
+			NLOGWARNING(niceName, "Firmware folder " << fold.getFullPathName() << " is missing manifest.json");
 			continue;
 		}
-		fwType->addOption(fold.getFileName(), fold.getFullPathName() + "/firmware.bin");
+
+
+		var fwData = JSON::parse(fold.getChildFile("manifest.json").loadFileAsString());
+		if (fwData.isVoid())
+		{
+			NLOGWARNING(niceName, "Firmware folder " << fold.getFullPathName() << " has invalid manifest.json");
+			continue;
+		}
+
+		String fwName = fwData.getProperty("name", "Unknown");
+		fwType->addOption(fwName, fold.getFullPathName());
 	}
 
 	fwType->addOption("Custom", "");
@@ -110,14 +118,6 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 	String ft = fwType->getValueData().toString();
 	fwFileParam->setEnabled(ft.isEmpty());
 
-	if (ft.isEmpty())
-	{
-		firmwareFile = fwFileParam->getFile();
-	}
-	else
-	{
-		firmwareFile = File(fwType->getValueData().toString());
-	}
 }
 
 void PropFlasher::setFlashProgression(SingleFlasher* flasher, float val)
@@ -167,19 +167,9 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 	{
 		String ft = fwType->getValueData().toString();
 		fwFileParam->setEnabled(ft.isEmpty());
-
-		if (ft.isEmpty())
-		{
-			firmwareFile = fwFileParam->getFile();
-		}
-		else
-		{
-			firmwareFile = File(fwType->getValueData().toString());
-		}
 	}
 	else if (p == fwFileParam)
 	{
-		if (fwFileParam->enabled) firmwareFile = fwFileParam->getFile();
 	}
 	else if (p == setWifiAfterFlash)
 	{
@@ -268,6 +258,32 @@ void PropFlasher::flashAll(bool onlySetWifi)
 		return;
 	}
 
+	File fwFolder;
+
+	if (fwType->getValueKey() == "Custom")
+	{
+		fwFolder = fwFileParam->getFile();
+		if (!fwFolder.exists())
+		{
+			LOGERROR("No folder provided");
+			return;
+		}
+	}
+	else
+	{
+		fwFolder = File(fwType->getValueData().toString());
+	}
+
+	File manifestFile;
+
+	if (!manifestFile.existsAsFile())
+	{
+		LOGERROR("No manifest file found in folder " << fwFolder.getFullPathName());
+		return;
+	}
+
+	firmwareData = JSON::parse(manifestFile.loadFileAsString());
+	firmwareFile = fwFolder.getChildFile("firmware.bin");
 
 	if (!firmwareFile.exists())
 	{
@@ -275,28 +291,15 @@ void PropFlasher::flashAll(bool onlySetWifi)
 		return;
 	}
 
-	partitionsFile = firmwareFile.getChildFile("../partitions.bin");
-
-	if (!partitionsFile.exists())
-	{
-		LOGERROR("Partitions file not found. It should be a file called partitions.bin aside the firmware.bin file");
-		return;
-	}
-
 	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
 
 #if JUCE_WINDOWS
 	flasher = appFolder.getChildFile("esptool.exe");
-	app0Bin = appFolder.getChildFile("boot_app0.bin");
-	bootloaderBin = appFolder.getChildFile("bootloader_qio_80m.bin");
 #elif JUCE_MAC
 	File bundle = juce::File::getSpecialLocation(juce::File::currentExecutableFile).getParentDirectory().getParentDirectory();
 	File espFolder = bundle.getChildFile("Resources").getChildFile("esptool");
 
 	flasher = espFolder.getChildFile("esptool");
-	app0Bin = espFolder.getChildFile("boot_app0.bin");
-	bootloaderBin = espFolder.getChildFile("bootloader_qio_80m.bin");
-
 #endif
 
 	if (!flasher.existsAsFile())
@@ -304,14 +307,6 @@ void PropFlasher::flashAll(bool onlySetWifi)
 		LOGERROR("Flasher file not found. It should be a file \"esptool\" inside Bento's Application folder. Expecting : " << flasher.getFullPathName());
 		return;
 	}
-
-	if (!app0Bin.existsAsFile() || !bootloaderBin.existsAsFile())
-	{
-		LOGERROR("Bootloader files not found :\n" << app0Bin.getFullPathName() << "\n" << bootloaderBin.getFullPathName());
-		return;
-	}
-
-	
 
 	LOG("Start flashing " << infos.size() << " props...");
 	for (auto& f : flashers) f->startThread();
@@ -322,7 +317,7 @@ void PropFlasher::flashAll(bool onlySetWifi)
 
 void PropFlasher::run()
 {
-	if(!setWifiNoDelay) sleep(500);
+	if (!setWifiNoDelay) sleep(500);
 	setAllWifi();
 }
 
@@ -346,7 +341,7 @@ void PropFlasher::setAllWifi()
 	for (auto& f : flashers)
 	{
 		SerialDevice* s = SerialManager::getInstance()->getPort(f->info, true);
-		
+
 		if (s == nullptr)
 		{
 			LOGWARNING("Could not connect !");
@@ -447,14 +442,20 @@ bool SingleFlasher::flashProp()
 	quotes = "";
 #endif
 
-	String parameters = " --chip esp32 --port " + info->port + " --baud 921600 --before default_reset --after hard_reset write_flash -z --flash_mode dio --flash_freq 80m --flash_size detect";
-	parameters += " 0xe000 " + quotes + PropFlasher::getInstance()->app0Bin.getFullPathName() + quotes;
-	parameters += " 0x1000 " + quotes + PropFlasher::getInstance()->bootloaderBin.getFullPathName() + quotes;
-	parameters += " 0x10000 " + quotes + PropFlasher::getInstance()->firmwareFile.getFullPathName() + quotes;
-	parameters += " 0x8000 " + quotes + PropFlasher::getInstance()->partitionsFile.getFullPathName() + quotes;
+	var data = PropFlasher::getInstance()->firmwareData;
+	String chipType = data["chip"];
+	NamedValueSet& options = data["options"].getDynamicObject()->getProperties();
+	String parameters = " --chip " + chipType;
+	for (auto& nv : options)
+	{
+		parameters += " --" + nv.name + " " + nv.value.toString() + " ";
+	}
+
+	parameters += " --port " + info->port;
+	parameters += " 0x0000 " + quotes + PropFlasher::getInstance()->firmwareFile.getFullPathName() + quotes;
 
 	LOG("[" + info->port + "] Flashing firmware...");
-	//LOG("Launch with parameters " + parameters);
+	LOG("Launch with parameters " + parameters);
 
 	ChildProcess cp;
 	cp.start(PropFlasher::getInstance()->flasher.getFullPathName() + parameters);

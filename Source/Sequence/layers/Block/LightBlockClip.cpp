@@ -258,9 +258,9 @@ void LightBlockClip::controllableStateChanged(Controllable* c)
 	}
 }
 
-var LightBlockClip::getJSONData()
+var LightBlockClip::getJSONData(bool includeNonOverriden)
 {
-	var data = LayerBlock::getJSONData();
+	var data = LayerBlock::getJSONData(includeNonOverriden);
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("blockData", currentBlock->getJSONData());
 	data.getDynamicObject()->setProperty("filters", filterManager->getJSONData());
 	data.getDynamicObject()->setProperty("effects", effects.getJSONData());

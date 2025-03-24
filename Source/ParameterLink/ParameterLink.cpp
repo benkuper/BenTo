@@ -320,9 +320,9 @@ void ParamLinkContainer::linkUpdated(ParameterLink* p)
 }
 
 
-var ParamLinkContainer::getJSONData()
+var ParamLinkContainer::getJSONData(bool includeNonOverriden)
 {
-	var data = ControllableContainer::getJSONData();
+	var data = ControllableContainer::getJSONData(includeNonOverriden);
 
 	var pLinkData(new DynamicObject());
 	for (auto& pLink : paramLinks)

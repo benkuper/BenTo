@@ -76,9 +76,9 @@ void LightBlockModelPreset::onControllableFeedbackUpdateInternal(ControllableCon
 	if(cc == &paramsContainer) providerListeners.call(&ColorProviderListener::providerParameterValueUpdated, this, dynamic_cast<Parameter *>(c));
 }
 
-var LightBlockModelPreset::getJSONData()
+var LightBlockModelPreset::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseItem::getJSONData();
+	var data = BaseItem::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("params", paramsContainer.getJSONData());
 	return data;
 }

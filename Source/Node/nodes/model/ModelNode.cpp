@@ -84,9 +84,9 @@ void ModelNode::onContainerParameterChanged(Parameter* p)
 }
 
 
-var ModelNode::getJSONData()
+var ModelNode::getJSONData(bool includeNonOverriden)
 {
-	var data = ColorNode::getJSONData();
+	var data = ColorNode::getJSONData(includeNonOverriden);
 	if (currentBlock != nullptr) data.getDynamicObject()->setProperty("block", currentBlock->getJSONData());
 	return data;
 }

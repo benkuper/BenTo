@@ -31,7 +31,7 @@ public:
 	void childStructureChanged(ControllableContainer * cc) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable *) override;
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 
 	Array<WeakReference<Controllable>> getModelParameters() override;

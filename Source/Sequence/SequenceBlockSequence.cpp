@@ -255,9 +255,9 @@ void SequenceBlockSequence::updateGroupList()
 	currentIdentityGroup = clusterGroupManager.getItemWithName(identityClusterGroup->getValueData());
 }
 
-var SequenceBlockSequence::getJSONData()
+var SequenceBlockSequence::getJSONData(bool includeNonOverriden)
 {
-	var data = Sequence::getJSONData();
+	var data = Sequence::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("clusterGroups", clusterGroupManager.getJSONData());
 	return data;
 }

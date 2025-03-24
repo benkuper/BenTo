@@ -41,9 +41,9 @@ public:
 	};
 
 
-	DECLARE_INSPECTACLE_CRITICAL_LISTENER(Connection, connection);
+	DECLARE_INSPECTACLE_SAFE_LISTENER(Connection, connection);
 
 
-	var getJSONData() override;
+	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
 };

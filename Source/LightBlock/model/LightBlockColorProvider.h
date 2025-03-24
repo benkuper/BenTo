@@ -74,7 +74,7 @@ public:
 		virtual void providerPlaybackControlUpdate(PlaybackControl control, var data = var()) {}
 	};
 
-	DECLARE_INSPECTACLE_CRITICAL_LISTENER(ColorProvider, provider)
+	DECLARE_INSPECTACLE_SAFE_LISTENER(ColorProvider, provider)
 
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables) override;

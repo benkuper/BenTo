@@ -33,9 +33,9 @@ void LightBlockEffect::onContainerParameterChangedInternal(Parameter* p)
     //
 }
 
-var LightBlockEffect::getJSONData()
+var LightBlockEffect::getJSONData(bool includeNonOverriden)
 {
-    var data = BaseItem::getJSONData();
+    var data = BaseItem::getJSONData(includeNonOverriden);
     if (lightBlock != nullptr)
     {
         data.getDynamicObject()->setProperty("provider", lightBlock->provider->getControlAddress(LightBlockModelLibrary::getInstance()));
