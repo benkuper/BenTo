@@ -82,5 +82,5 @@ public:
 
 	static var sendMessageToPropFromScript(const var::NativeFunctionArgs& a);
 
-	DECLARE_TYPE("Bento");
+	DECLARE_TYPE("BLIP");
 };

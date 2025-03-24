@@ -104,5 +104,5 @@ public:
 
 	void serialDataReceived(SerialDevice* s, const var& data) override;
 
-
+	DECLARE_ASYNC_EVENT(PropFlasher, PropFlasher, propFlasher, ENUM_LIST(DEFINITIONS_UPDATED), EVENT_NO_CHECK);
 };

@@ -218,3 +218,12 @@ void PropFlasherPanel::newMessage(const Parameter::ParameterEvent& e)
 	}
 }
 
+void PropFlasherPanel::newMessage(const PropFlasher::PropFlasherEvent& e)
+{
+	if (e.type == PropFlasher::PropFlasherEvent::DEFINITIONS_UPDATED)
+	{
+		updateInfos();
+		repaint();
+	}
+}
+

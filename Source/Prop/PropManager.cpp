@@ -32,6 +32,7 @@ PropManager::PropManager() :
 	factory.defs.add(Factory<Prop>::Definition::createDef<BentoProp>(""));
 
 
+
 	autoAddNetworkProps = connectionCC.addBoolParameter("Auto Add Network", "If checked, this will automatically add detected props on the network", false);
 	autoAddUSBProps = connectionCC.addBoolParameter("Auto Add USB", "If checked, this will automatically add detected props connected through USB", false);
 	detectProps = connectionCC.addTrigger("Detect Props", "Auto detect using the Yo protocol");

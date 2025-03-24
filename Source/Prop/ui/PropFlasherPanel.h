@@ -13,7 +13,8 @@
 class PropFlasherPanel :
 	public ShapeShifterContentComponent,
 	public SerialManager::SerialManagerListener,
-	public Parameter::AsyncListener
+	public Parameter::AsyncListener,
+	public PropFlasher::AsyncListener
 {
 public:
 	PropFlasherPanel();
@@ -52,6 +53,7 @@ public:
 	virtual void portRemoved(SerialDeviceInfo* info) override;
 
 	virtual void newMessage(const Parameter::ParameterEvent& e) override;
+	void newMessage(const PropFlasher::PropFlasherEvent& e) override;
 
 	void updateInfos();
 

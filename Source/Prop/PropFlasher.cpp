@@ -17,7 +17,8 @@ juce_ImplementSingleton(PropFlasher)
 PropFlasher::PropFlasher() :
 	ControllableContainer("Firmware Uploader"),
 	Thread("Prop Flasher Wifi"),
-	setWifiNoDelay(false)
+	setWifiNoDelay(false),
+	propFlasherNotifier(5)
 {
 
 	filterKnownDevices = addBoolParameter("Filter Known Devices", "Only upload firmware on devices that are compatible. If you don't see your connect props on the list, try disabling this option.", true);
@@ -37,25 +38,6 @@ PropFlasher::PropFlasher() :
 	wifiPass = addStringParameter("Pass", "Password for the wifi to set", "");
 	setAllWifiTrigger = addTrigger("Only Set Wifi", "Set wifi to all connected props but don't flash the firmware");
 
-	//testing here, should come from internet
-
-	var fwData(new DynamicObject());
-	fwData.getDynamicObject()->setProperty("name", "Flowtoys Creators Club");
-	var vids;
-	vids.append(0x10c4);
-	vids.append(0x0c);
-	var pids;
-	pids.append(0xea60);
-	pids.append(0xd0);
-	fwData.getDynamicObject()->setProperty("vids", vids);
-	fwData.getDynamicObject()->setProperty("pids", pids);
-	fwData.getDynamicObject()->setProperty("version", "1.0.0");
-	fwData.getDynamicObject()->setProperty("date", "2021-01-01");
-	fwData.getDynamicObject()->setProperty("firmware", "");
-	fwData.getDynamicObject()->setProperty("filename", "creatorclub");
-
-	availableFirmwares.append(fwData);
-
 	serverFilesParam = addFileParameter("Server Files", "Files to upload to the server");
 	serverFilesParam->directoryMode = true;
 	File sf = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/server");
@@ -74,6 +56,8 @@ PropFlasher::~PropFlasher()
 
 void PropFlasher::updateFirmwareDefinitions(bool force)
 {
+	availableFirmwares = var();
+
 	fwType->clearOptions();
 	File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares");
 	if (force && f.exists()) f.deleteRecursively();
@@ -84,6 +68,7 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 		fwDownloader.download([this]() { updateFirmwareDefinitions(); });
 		return;
 	}
+
 
 	Array<File> fwFolders = f.findChildFiles(File::TypesOfFileToFind::findDirectories, false);
 
@@ -111,6 +96,8 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 
 		String fwName = fwData.getProperty("name", "Unknown");
 		fwType->addOption(fwName, fold.getFullPathName());
+
+		availableFirmwares.append(fwData);
 	}
 
 	fwType->addOption("Custom", "");
@@ -118,6 +105,7 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 	String ft = fwType->getValueData().toString();
 	fwFileParam->setEnabled(ft.isEmpty());
 
+	propFlasherNotifier.addMessage(new PropFlasherEvent(PropFlasherEvent::DEFINITIONS_UPDATED, this));
 }
 
 void PropFlasher::setFlashProgression(SingleFlasher* flasher, float val)
@@ -205,7 +193,11 @@ Array<SerialDeviceInfo*> PropFlasher::getDevicesToFlash()
 
 				for (int n = 0; n < vids.size(); n++)
 				{
-					if ((int)vids[n] == info->vid)
+					int vid = 0;
+					if (vids[n].isString()) vid = vids[n].toString().startsWith("0x") ? vids[n].toString().getHexValue32() : vids[n].toString().getIntValue();
+					else vid = vids[n];
+
+					if (vid == info->vid)
 					{
 						foundVID = true;
 						break;
@@ -214,7 +206,11 @@ Array<SerialDeviceInfo*> PropFlasher::getDevicesToFlash()
 
 				for (int n = 0; n < pids.size(); n++)
 				{
-					if ((int)pids[n] == info->pid)
+					int pid = 0;
+					if (pids[n].isString()) pid = pids[n].toString().startsWith("0x") ? pids[n].toString().getHexValue32() : pids[n].toString().getIntValue();
+					else pid = pids[n];
+
+					if (pid == info->pid)
 					{
 						foundPID = true;
 						break;
@@ -274,7 +270,7 @@ void PropFlasher::flashAll(bool onlySetWifi)
 		fwFolder = File(fwType->getValueData().toString());
 	}
 
-	File manifestFile;
+	File manifestFile = fwFolder.getChildFile("manifest.json");
 
 	if (!manifestFile.existsAsFile())
 	{
@@ -444,14 +440,24 @@ bool SingleFlasher::flashProp()
 
 	var data = PropFlasher::getInstance()->firmwareData;
 	String chipType = data["chip"];
-	NamedValueSet& options = data["options"].getDynamicObject()->getProperties();
 	String parameters = " --chip " + chipType;
-	for (auto& nv : options)
+	parameters += " --port " + info->port;
+
+	NamedValueSet& espOptions = data["espOptions"].getDynamicObject()->getProperties();
+	for (auto& nv : espOptions)
 	{
 		parameters += " --" + nv.name + " " + nv.value.toString() + " ";
 	}
 
-	parameters += " --port " + info->port;
+	parameters += " write_flash -z";
+
+
+	NamedValueSet& flashOptions = data["flashOptions"].getDynamicObject()->getProperties();
+	for (auto& nv : flashOptions)
+	{
+		parameters += " --" + nv.name + " " + nv.value.toString() + " ";
+	}
+
 	parameters += " 0x0000 " + quotes + PropFlasher::getInstance()->firmwareFile.getFullPathName() + quotes;
 
 	LOG("[" + info->port + "] Flashing firmware...");
