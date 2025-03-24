@@ -21,6 +21,7 @@
 		1EAD56AF8481E0EFD54D9555 /* SequenceIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 7BF2429AF83ECCF9CEA6F54A; };
 		2B043E0ED0777E3A5E64017F /* IdentificationRuleManager.cpp */ = {isa = PBXBuildFile; fileRef = 9EB96EE07F38B874C10617A8; };
 		2E5CED55DDE98C321DF9D6A5 /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = 043E63CBD2E6B13AD6998374; settings = { ATTRIBUTES = (Weak, ); }; };
+		3D4BF2F4864A3D6B1D9145C7 /* Syphon.framework */ = {isa = PBXBuildFile; fileRef = 97450D363205BADBF21B5811; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		423EA5A481C18D4BC00F94CC /* BentoEngine.cpp */ = {isa = PBXBuildFile; fileRef = 34FDD8C4811BA347FB82415F; };
 		43EEF4DFA57501DE6D455005 /* include_juce_opengl.mm */ = {isa = PBXBuildFile; fileRef = D239AAEE967D9E958B6ACAB3; };
 		49DFC4FA3A10F43FF7F85B76 /* LinkableParameterEditor.cpp */ = {isa = PBXBuildFile; fileRef = 3C29712D1773F60DB0B0574D; };
@@ -83,6 +84,20 @@
 		FE224668E0B77890F729B94B /* CommonIncludes.cpp */ = {isa = PBXBuildFile; fileRef = B31B708EFF29E846E898817C; };
 		FEAAECAACD44A5321E51E964 /* include_juce_javascript.cpp */ = {isa = PBXBuildFile; fileRef = 3F351F8665E1ED3E0CE379E7; };
 /* End PBXBuildFile section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		9E1C87FC469063B466A291B8 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3D4BF2F4864A3D6B1D9145C7,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		01CDEF946B6BB684FF5A12DF /* VideoPreviewPanel.cpp */ /* VideoPreviewPanel.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = VideoPreviewPanel.cpp; path = ../../Source/VideoPreview/VideoPreviewPanel.cpp; sourceTree = SOURCE_ROOT; };
@@ -294,6 +309,7 @@
 		94E7764783E99087B327A706 /* include_juce_graphics.mm */ /* include_juce_graphics.mm */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.objcpp; name = include_juce_graphics.mm; path = ../../JuceLibraryCode/include_juce_graphics.mm; sourceTree = SOURCE_ROOT; };
 		9533A71B33D17A959A5841B3 /* NodeConnectionManagerUI.cpp */ /* NodeConnectionManagerUI.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnectionManagerUI.cpp; path = ../../Source/Node/ui/NodeConnectionManagerUI.cpp; sourceTree = SOURCE_ROOT; };
 		967ED1CDEC97558662D91937 /* LightBlockModelPresetManager.h */ /* LightBlockModelPresetManager.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelPresetManager.h; path = ../../Source/LightBlock/model/preset/LightBlockModelPresetManager.h; sourceTree = SOURCE_ROOT; };
+		97450D363205BADBF21B5811 /* Syphon.framework */ /* Syphon.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Syphon.framework; path = ../../External/syphon/Syphon.framework; sourceTree = "<group>"; };
 		97BD7D4EC3A2A377EBAD2E65 /* AudioManagerHardwareEditor.h */ /* AudioManagerHardwareEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = AudioManagerHardwareEditor.h; path = ../../Source/Audio/ui/AudioManagerHardwareEditor.h; sourceTree = SOURCE_ROOT; };
 		9990B1F8459DA7EDCEB16AAA /* NodeConnection.cpp */ /* NodeConnection.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = NodeConnection.cpp; path = ../../Source/Node/NodeConnection.cpp; sourceTree = SOURCE_ROOT; };
 		9A1C190C37DF4F6FB1EC82A4 /* ModelNodeUI.h */ /* ModelNodeUI.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ModelNodeUI.h; path = ../../Source/Node/nodes/model/ui/ModelNodeUI.h; sourceTree = SOURCE_ROOT; };
@@ -474,6 +490,7 @@
 				A5B64309CE58FAAFA6EE076B,
 				A4D974AB4C4C024E533E7120,
 				2E5CED55DDE98C321DF9D6A5,
+				3D4BF2F4864A3D6B1D9145C7,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1114,6 +1131,7 @@
 				EBFE82D98BAD390E587C3B13,
 				A2735CE26D03BF4A17804698,
 				043E63CBD2E6B13AD6998374,
+				97450D363205BADBF21B5811,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1490,6 +1508,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 132FFED683794E4997001441;
 			buildPhases = (
+				9E1C87FC469063B466A291B8,
 				A9ED4CD6A9E07D9876A8E8D2,
 				921EAE96AC7E23D66A2FA1D3,
 				B69D85D4A2EDBFCAFC7FB9A2,
@@ -1689,6 +1708,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				COPY_PHASE_STRIP = NO;
 				EXCLUDED_ARCHS = "i386 arm64 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/syphon", "$(inherited)");
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1722,6 +1742,7 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/debug\"",
@@ -1799,6 +1820,7 @@
 				CONFIGURATION_BUILD_DIR = "$(PROJECT_DIR)/build/$(CONFIGURATION)";
 				DEAD_CODE_STRIPPING = YES;
 				EXCLUDED_ARCHS = "i386 arm64 arm64e";
+				FRAMEWORK_SEARCH_PATHS = ("$(SRCROOT)/../../External/syphon", "$(inherited)");
 				GCC_GENERATE_DEBUGGING_SYMBOLS = NO;
 				GCC_OPTIMIZATION_LEVEL = 3;
 				GCC_PREPROCESSOR_DEFINITIONS = (
@@ -1832,6 +1854,7 @@
 				INFOPLIST_FILE = Info-App.plist;
 				INFOPLIST_PREPROCESS = NO;
 				INSTALL_PATH = "$(HOME)/Applications";
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @executable_path/../Frameworks";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"\"../../External/servus/lib/osx/release\"",
