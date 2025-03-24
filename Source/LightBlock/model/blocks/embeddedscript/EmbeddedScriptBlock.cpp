@@ -108,7 +108,7 @@ void EmbeddedScriptBlock::compile()
 			uploadToPropsTrigger->trigger();
 			if (autoLaunch->boolValue())
 			{
-				Timer::callAfterDelay(200, [this]() {this->loadOnPropsTrigger->trigger(); });
+				Timer::callAfterDelay(200, [this]() { this->loadOnPropsTrigger->trigger(); });
 			}
 		}
 	}
