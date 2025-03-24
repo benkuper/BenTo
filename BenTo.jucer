@@ -851,11 +851,10 @@
                xcodeValidArchs="arm64,x86_64" customXcodeResourceFolders="Resources/mac/esptool"
                documentExtensions="bento" hardenedRuntimeOptions="com.apple.security.cs.allow-jit">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.10 SDK" libraryPath="../../External/servus/lib/osx/release"
-                       macOSDeploymentTarget="10.10" binaryPath="Release"/>
-        <CONFIGURATION isDebug="0" name="ReleaseSilicon" osxCompatibility="10.10 SDK"
-                       libraryPath="../../External/servus/lib/silicon/release" macOSDeploymentTarget="10.10"
+        <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/osx/release"
                        binaryPath="Release"/>
+        <CONFIGURATION isDebug="0" name="ReleaseSilicon" osxCompatibility="10.13 SDK"
+                       libraryPath="../../External/servus/lib/silicon/release" binaryPath="Release"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
