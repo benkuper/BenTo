@@ -47,7 +47,7 @@ public:
 	Array<Controllable*> noFeedbackList;
 
 	void setupWSClient();
-
+	void closeWSClient();
 	//Script
 
 	void onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c) override;

@@ -13,6 +13,7 @@
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
+	artnet(false),
 	serialDevice(nullptr),
 	resolutionRef(nullptr),
 	brightnessRef(nullptr)
@@ -32,7 +33,6 @@ BentoProp::BentoProp(var params) :
 	clearLedsOnRemove = generalCC.addBoolParameter("Clear LEDs on remove", "Clear LEDs when the prop is removed", true);
 	enableLedsOnConnect = generalCC.addBoolParameter("Enable LEDs on connect", "Enable LEDs when the prop is connected", true);
 
-	artnet.inputCC->enabled->setValue(false);
 
 	serialParam = new SerialDeviceParameter("USB Port", "For connecting props through USB", true);
 	serialParam->setBaudrate(115200);
@@ -67,6 +67,8 @@ BentoProp::~BentoProp()
 void BentoProp::clearItem()
 {
 	if (clearLedsOnRemove->boolValue()) sendMessageToProp(OSCMessage(ledEnabledAddress, 0));
+	
+	componentsCC->closeWSClient();
 
 	Prop::clearItem();
 

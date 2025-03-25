@@ -45,6 +45,14 @@ void BentoComponentContainer::setupWSClient()
 	wsClient->start(url);
 }
 
+void BentoComponentContainer::closeWSClient()
+{
+	if (wsClient == nullptr) return;
+	wsClient->stop();
+
+	stopThread(1000);
+}
+
 
 void BentoComponentContainer::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
