@@ -111,18 +111,21 @@ void BentoComponentContainer::connectionOpened()
 {
 	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
 	prop->isConnected->setValue(true);
+	stopTimer();
 }
 
 void BentoComponentContainer::connectionClosed(int status, const String& reason)
 {
 	NLOG(niceName, "Websocket connection is closed, bye bye!");
 	prop->isConnected->setValue(false);
+	startTimer(5000);
 }
 
 void BentoComponentContainer::connectionError(const String& errorMessage)
 {
 	NLOGERROR(niceName, "Connection error " << errorMessage);
 	prop->isConnected->setValue(false);
+	startTimer(5000);
 }
 
 void BentoComponentContainer::dataReceived(const MemoryBlock& data)
@@ -153,6 +156,10 @@ void BentoComponentContainer::timerCallback()
 		stopThread(300);
 		startThread();
 	}
+	else
+	{
+		stopTimer();
+	}
 }
 
 void BentoComponentContainer::run()
@@ -165,7 +172,7 @@ void BentoComponentContainer::requestHostInfo()
 {
 	if (prop->remoteHost == nullptr || prop->remoteHost->stringValue().isEmpty()) return
 
-		prop->isConnected->setValue(false);
+	prop->isConnected->setValue(false);
 
 	URL url("http://" + prop->remoteHost->stringValue() + "/?HOST_INFO");
 	StringPairArray responseHeaders;
@@ -221,7 +228,7 @@ void BentoComponentContainer::requestHostInfo()
 
 void BentoComponentContainer::requestStructure()
 {
-	URL url("http://" + prop->remoteHost->stringValue() + "?config=0");
+	URL url("http://" + prop->remoteHost->stringValue());
 	StringPairArray responseHeaders;
 	int statusCode = 0;
 
