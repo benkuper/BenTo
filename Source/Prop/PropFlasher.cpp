@@ -377,7 +377,7 @@ void PropFlasher::setAllWifi()
 	LOG("All Props wifi are set !");
 }
 
-void PropFlasher::uploadServerFiles()
+void PropFlasher::uploadServerFiles(Prop* specificProp)
 {
 	Array<BentoProp*> props = PropManager::getInstance()->getItemsWithType<BentoProp>();
 	File folder = serverFilesParam->getFile();
@@ -385,9 +385,16 @@ void PropFlasher::uploadServerFiles()
 
 	Array<File> files = folder.findChildFiles(File::TypesOfFileToFind::findFiles, false);
 
-	for (auto& p : props)
+	if (specificProp != nullptr)
 	{
-		for (auto& f : files) p->addFileToUpload({ f,"server" });
+		for (auto& f : files) specificProp->addFileToUpload({ f ,"server" });
+	}
+	else
+	{
+		for (auto& p : props)
+		{
+			for (auto& f : files) p->addFileToUpload({ f,"server" });
+		}
 	}
 }
 

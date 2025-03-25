@@ -117,6 +117,17 @@ void PropUI::addContextMenuItems(PopupMenu& m)
 	controlMenu.addItem("Power Off", [this]() { item->powerOffTrigger->trigger(); });
 	controlMenu.addItem("Restart", [this]() { item->restartTrigger->trigger(); });
 
+	if (BentoProp* bp = dynamic_cast<BentoProp*>(item))
+	{
+		controlMenu.addSeparator();
+		controlMenu.addSeparator();
+		controlMenu.addItem("Open Web Interface", [this, bp]() {
+			URL url("http://" + bp->remoteHost->stringValue() + "/edit");
+			url.launchInDefaultBrowser();
+			});
+		controlMenu.addItem("Upload server files", [this, bp]() { PropFlasher::getInstance()->uploadServerFiles(bp); });
+	}
+
 	m.addSubMenu("Control", controlMenu);
 }
 

@@ -98,7 +98,7 @@ public:
 
 	void flashAll(bool onlySetWifi = false);
 	void setAllWifi();
-	void uploadServerFiles();
+	void uploadServerFiles(Prop* specificProp = nullptr);
 
 	void run();
 
