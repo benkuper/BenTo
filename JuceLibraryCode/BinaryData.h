@@ -9,16 +9,16 @@
 namespace BinaryData
 {
     extern const char*   edit_html;
-    const int            edit_htmlSize = 16535;
+    const int            edit_htmlSize = 17038;
 
     extern const char*   jquery_min_js;
-    const int            jquery_min_jsSize = 87533;
+    const int            jquery_min_jsSize = 87535;
 
     extern const char*   oscbrowser_min_js;
-    const int            oscbrowser_min_jsSize = 42964;
+    const int            oscbrowser_min_jsSize = 43791;
 
     extern const char*   upload_html;
-    const int            upload_htmlSize = 3434;
+    const int            upload_htmlSize = 3548;
 
     extern const char*   ledRange_png;
     const int            ledRange_pngSize = 3899;
@@ -66,7 +66,7 @@ namespace BinaryData
     const int            video_pngSize = 6004;
 
     extern const char*   default_btlayout;
-    const int            default_btlayoutSize = 2549;
+    const int            default_btlayoutSize = 2655;
 
     extern const char*   fadeIn_png;
     const int            fadeIn_pngSize = 1868;
@@ -84,7 +84,7 @@ namespace BinaryData
     const int            new_pngSize = 675;
 
     extern const char*   shader_frag;
-    const int            shader_fragSize = 975;
+    const int            shader_fragSize = 1012;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
     const int namedResourceListSize = 26;

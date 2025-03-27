@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source&#10;../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-              id="LP0of5" version="2.0.1b1" projectLineFeed="&#10;" jucerFormatVersion="1"
+              id="LP0of5" version="2.0.1b2" projectLineFeed="&#10;" jucerFormatVersion="1"
               cppLanguageStandard="17" includeBinaryInJuceHeader="1" bundleIdentifier="benkuper.Bento">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
@@ -745,9 +745,12 @@
                xcodeValidArchs="arm64,x86_64" customXcodeResourceFolders="Resources/mac/esptool"
                frameworkSearchPaths="../../External/syphon" embeddedFrameworks="../../External/syphon/Syphon.framework">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/osx/debug"/>
-        <CONFIGURATION name="Release" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/osx/release"/>
-        <CONFIGURATION name="ReleaseSilicon" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/silicon/release"/>
+        <CONFIGURATION isDebug="1" name="Debug" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/osx/debug"
+                       macOSDeploymentTarget="10.13"/>
+        <CONFIGURATION name="Release" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/osx/release"
+                       macOSDeploymentTarget="10.13"/>
+        <CONFIGURATION name="ReleaseSilicon" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/silicon/release"
+                       macOSDeploymentTarget="10.13"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
@@ -853,9 +856,10 @@
                frameworkSearchPaths="../../External/syphon" embeddedFrameworks="../../External/syphon/Syphon.framework">
       <CONFIGURATIONS>
         <CONFIGURATION isDebug="0" name="Release" osxCompatibility="10.13 SDK" libraryPath="../../External/servus/lib/osx/release"
-                       binaryPath="Release"/>
+                       binaryPath="Release" macOSDeploymentTarget="10.13"/>
         <CONFIGURATION isDebug="0" name="ReleaseSilicon" osxCompatibility="10.13 SDK"
-                       libraryPath="../../External/servus/lib/silicon/release" binaryPath="Release"/>
+                       libraryPath="../../External/servus/lib/silicon/release" binaryPath="Release"
+                       macOSDeploymentTarget="10.13"/>
       </CONFIGURATIONS>
       <MODULEPATHS>
         <MODULEPATH id="juce_timeline" path="Modules"/>
@@ -988,5 +992,5 @@
                JUCE_ALLOW_SPECIAL_CHARS_IN_ADDRESS="1" JUCE_USE_MP3AUDIOFORMAT="1"
                JUCE_USE_LAME_AUDIO_FORMAT="1" JUCE_USE_WINDOWS_MEDIA_FORMAT="1"
                ORGANICUI_USE_WEBSERVER="1" JUCE_IP_AND_PORT_DETECTION="1" JUCE_USE_WIN_WEBVIEW2="1"
-               ORGANICUI_USE_SHAREDTEXTURE="1"/>
+               ORGANICUI_USE_SHAREDTEXTURE="1" JUCE_FLOAT_COLOURS="1"/>
 </JUCERPROJECT>
