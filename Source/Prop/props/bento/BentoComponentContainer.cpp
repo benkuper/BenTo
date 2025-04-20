@@ -154,6 +154,11 @@ void BentoComponentContainer::dataReceived(const MemoryBlock& data)
 void BentoComponentContainer::messageReceived(const String& message)
 {
 	if (!prop->enabled->boolValue()) return;
+	if (message == "close")
+	{
+		prop->isConnected->setValue(false);
+		startTimer(5000);
+	}
 }
 
 
@@ -191,7 +196,7 @@ void BentoComponentContainer::requestHostInfo()
 		.withConnectionTimeoutMs(200)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
-		.withProgressCallback([this](int, int) { return !threadShouldExit(); })
+		.withProgressCallback([this](int, int) { return !isClearing && !Engine::mainEngine->isClearing && !threadShouldExit(); })
 	));
 
 	if (threadShouldExit()) return;
