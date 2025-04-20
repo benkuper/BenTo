@@ -30,8 +30,9 @@ BentoProp::BentoProp(var params) :
 	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", 1, 0, 1);
 	battery = generalCC.addFloatParameter("Battery", "Battery level of the prop", 1, 0, 1);
 	battery->setControllableFeedbackOnly(true);
-	clearLedsOnRemove = generalCC.addBoolParameter("Clear LEDs on remove", "Clear LEDs when the prop is removed", true);
 	enableLedsOnConnect = generalCC.addBoolParameter("Enable LEDs on connect", "Enable LEDs when the prop is connected", true);
+	actionOnRemove = generalCC.addEnumParameter("Action on remove", "Action to do when the prop is removed");
+	actionOnRemove->addOption("Nothing", NOTHING)->addOption("Disable led", DISABLE_LED)->addOption("Power off", POWER_OFF);
 
 
 	serialParam = new SerialDeviceParameter("USB Port", "For connecting props through USB", true);
@@ -66,8 +67,9 @@ BentoProp::~BentoProp()
 
 void BentoProp::clearItem()
 {
-	if (clearLedsOnRemove->boolValue()) sendMessageToProp(OSCMessage(ledEnabledAddress, 0));
-	
+	if (actionOnRemove->intValue() == DISABLE_LED) sendMessageToProp(OSCMessage(ledEnabledAddress, 0));
+	else if (actionOnRemove->intValue() == POWER_OFF) powerOffProp();
+
 	componentsCC->closeWSClient();
 
 	Prop::clearItem();

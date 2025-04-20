@@ -26,7 +26,6 @@ public:
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
 	BoolParameter* enableLedsOnConnect;
-	BoolParameter* clearLedsOnRemove;
 
 	DMXArtNetDevice artnet;
 	OwnedArray<DMXUniverse, CriticalSection> universes;
@@ -41,6 +40,9 @@ public:
 	String playbackAddress;
 	String streamingAddress;
 	String ledEnabledAddress;
+
+	enum ActionOnRemove { NOTHING, DISABLE_LED, POWER_OFF };
+	EnumParameter* actionOnRemove;
 
 	virtual void clearItem() override;
 
