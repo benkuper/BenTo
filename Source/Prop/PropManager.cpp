@@ -129,11 +129,18 @@ Prop* PropManager::createPropIfNotExist(const String& type, const String& host, 
 	Prop* p = getPropWithDeviceID(id);
 	if (p == nullptr)
 	{
-		p = static_cast<Prop*>(managerFactory->create(type));
-		if (p == nullptr)
+		if (managerFactory->hasDefinitionWithType(type))
 		{
+			LOG("Creating " << type << " with ID : " << id);
+			p = static_cast<Prop*>(managerFactory->create(type));
+			if (p == nullptr) p = new BentoProp();
+		}
+		else
+		{
+			LOG("Creating default BLIP prop with ID : " << id);
 			p = new BentoProp();
 		}
+
 		if (p != nullptr)
 		{
 			if (name.isNotEmpty()) p->setNiceName(name);
@@ -142,14 +149,8 @@ Prop* PropManager::createPropIfNotExist(const String& type, const String& host, 
 			BentoProp* bp = dynamic_cast<BentoProp*>(p);
 			if (bp != nullptr) bp->remoteHost->setValue(host);
 
-			LOG("Found " << p->shape->getValueKey() << " with ID : " << p->deviceID);
-
 			addItem(p);
 			autoAssignIdTrigger->trigger();
-		}
-		else
-		{
-			DBG("Type does not exist " << type);
 		}
 	}
 	else
