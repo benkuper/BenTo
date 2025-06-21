@@ -13,7 +13,6 @@
 
 LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	LayerBlockUI(_clip),
-	Thread(_clip->niceName + "_preview"),
 	clip(_clip),
 	fadeInHandle(ImageCache::getFromMemory(BinaryData::fadeIn_png, BinaryData::fadeIn_pngSize)),
 	fadeOutHandle(ImageCache::getFromMemory(BinaryData::fadeOut_png, BinaryData::fadeOut_pngSize)),
@@ -50,14 +49,13 @@ LightBlockClipUI::LightBlockClipUI(LightBlockClip* _clip) :
 	clip->addAsyncClipListener(this);
 
 	startTimerHz(10);
-	startThread();
+	LightBlockPreviewDispatcher::getInstance()->addClip(this);
 }
 
 LightBlockClipUI::~LightBlockClipUI()
 {
+	if(LightBlockPreviewDispatcher::getInstanceWithoutCreating()) LightBlockPreviewDispatcher::getInstance()->removeClip(this);
 	if (!inspectable.wasObjectDeleted()) clip->removeAsyncClipListener(this);
-	signalThreadShouldExit();
-	waitForThreadToExit(500);
 }
 
 void LightBlockClipUI::paint(Graphics& g)
@@ -99,16 +97,20 @@ void LightBlockClipUI::paintOverChildren(Graphics& g)
 	Colour fInColor = (clip->fadeIn->enabled ? Colours::yellow : BLUE_COLOR).withAlpha(.5f);
 	Colour fOutColor = (clip->fadeOut->enabled ? Colours::yellow : BLUE_COLOR).withAlpha(.5f);
 
-	if (clip->fadeIn->floatValue() > 0)
+	if (clip->fadeIn->floatValue() > 0 && fadeInHandle.isVisible())
 	{
 		g.setColour(fInColor);
-		g.drawLine(0, getHeight(), getWidth() * (clip->fadeIn->floatValue() / clip->getTotalLength()), fadeInHandle.getY() + fadeInHandle.getHeight() / 2);
+		int fadeInX = getRealXForTime(clip->fadeIn->floatValue());
+		int zeroX = getRealXForTime(0);
+		g.drawLine(zeroX, getHeight(), fadeInX, fadeInHandle.getY() + fadeInHandle.getHeight() / 2);
 	}
 
-	if (clip->fadeOut->floatValue() > 0)
+	if (clip->fadeOut->floatValue() > 0 && fadeOutHandle.isVisible())
 	{
 		g.setColour(fOutColor);
-		g.drawLine(getWidth() * (1 - (clip->fadeOut->floatValue() / clip->getTotalLength())), fadeOutHandle.getY() + fadeOutHandle.getHeight() / 2, getWidth(), getHeight());
+		int fadeOutX = getRealXForTime(clip->getTotalLength() - clip->fadeOut->floatValue());
+		int totalLengthX = getRealXForTime(clip->getTotalLength());
+		g.drawLine(fadeOutX, fadeOutHandle.getY() + fadeOutHandle.getHeight() / 2, totalLengthX, getHeight());
 	}
 
 	if (isDraggingModel) g.fillAll(BLUE_COLOR.withAlpha(.3f));
@@ -127,9 +129,18 @@ void LightBlockClipUI::resizedBlockInternal()
 		}
 	}
 
-	//Rectangle<int> r = getLocalBounds();
-	fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength()) * getWidth(), fadeInHandle.getHeight() / 2);
-	fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength()) * getWidth(), fadeOutHandle.getHeight() / 2);
+	if (clip->fadeIn->enabled)
+	{
+		int fadeInX = getRealXForTime(clip->fadeIn->floatValue());
+		fadeInHandle.setVisible(fadeInX >= 0);
+		fadeInHandle.setCentrePosition(fadeInX, fadeInHandle.getHeight() / 2);
+	}
+	if (clip->fadeOut->enabled)
+	{
+		int fadeOutX = getRealXForTime(clip->getTotalLength() - clip->fadeOut->floatValue());
+		fadeOutHandle.setVisible(fadeOutX <= getWidth());
+		fadeOutHandle.setCentrePosition(fadeOutX, fadeOutHandle.getHeight() / 2);
+	}
 }
 
 void LightBlockClipUI::generatePreview()
@@ -172,7 +183,14 @@ void LightBlockClipUI::setTargetAutomation(ParameterAutomation* a)
 		coreGrabber.setVisible(false);
 		grabber.setVisible(false);
 		loopGrabber.setVisible(false);
-		automationUI->addMouseListener(this, true);
+		if (AutomationUI* aui = dynamic_cast<AutomationUI*>(automationUI.get()))
+		{
+			automationUI->addMouseListener(this, false);
+		}
+		else if (GradientColorManagerUI* gui = dynamic_cast<GradientColorManagerUI*>(automationUI.get()))
+		{
+
+		}
 		addAndMakeVisible(automationUI.get());
 		resized();
 		shouldRepaint = true;
@@ -192,13 +210,18 @@ void LightBlockClipUI::mouseDown(const MouseEvent& e)
 		item->selectThis();
 	}
 
-	if (e.mods.isRightButtonDown() && (e.eventComponent == this || e.eventComponent == automationUI.get()))
+	bool showAutomationMenu = e.eventComponent == this;
+	if (AutomationUI* aui = dynamic_cast<AutomationUI*>(automationUI.get())) showAutomationMenu |= e.eventComponent == &aui->keysUI;
+	//else if (GradientColorManagerUI* gui = dynamic_cast<GradientColorManagerUI*>(automationUI.get())) showAutomationMenu |= e.eventComponent == gui;
+
+	if (e.mods.isRightButtonDown() && showAutomationMenu)
 	{
 		if (clip->currentBlock != nullptr)
 		{
 
 			PopupMenu p;
-			p.addItem(1, "Clear automation editor");
+
+			if (automationUI != nullptr) p.addItem(1, "Clear automation editor");
 
 			PopupMenu ap;
 
@@ -253,13 +276,15 @@ void LightBlockClipUI::mouseDrag(const MouseEvent& e)
 
 	if (e.eventComponent == &fadeInHandle)
 	{
-		clip->fadeIn->setValue((getMouseXYRelative().x * 1.0f / getWidth()) * clip->getTotalLength());
+		clip->fadeIn->setValue(getTimeForX(getMouseXYRelative().x));
 		resized();
+		repaint();
 	}
 	else if (e.eventComponent == &fadeOutHandle)
 	{
-		clip->fadeOut->setValue((1 - (getMouseXYRelative().x * 1.0f / getWidth())) * clip->getTotalLength());
+		clip->fadeOut->setValue(clip->getTotalLength() - getTimeForX(getMouseXYRelative().x));
 		resized();
+		repaint();
 	}
 	else if (automationUI != nullptr)
 	{
@@ -296,8 +321,7 @@ void LightBlockClipUI::controllableFeedbackUpdateInternal(Controllable* c)
 	}
 	else if (c->parentContainer->parentContainer == &clip->effects || c->parentContainer->parentContainer->parentContainer == &clip->effects) generatePreview();
 
-	if (c == clip->fadeIn) fadeInHandle.setCentrePosition((clip->fadeIn->floatValue() / clip->getTotalLength()) * getWidth(), fadeInHandle.getHeight() / 2);
-	else if (c == clip->fadeOut) fadeOutHandle.setCentrePosition((1 - clip->fadeOut->floatValue() / clip->getTotalLength()) * getWidth(), fadeOutHandle.getHeight() / 2);
+	if (c == clip->fadeIn || c == clip->fadeOut) resized();
 }
 
 void LightBlockClipUI::newMessage(const LightBlockClip::ClipEvent& e)
@@ -395,82 +419,69 @@ void LightBlockClipUI::timerCallback()
 	}
 }
 
-void LightBlockClipUI::run()
+void LightBlockClipUI::handleDrawPreview()
 {
-	while (!threadShouldExit())
+	if (!shouldUpdateImage || clip->currentBlock == nullptr) return;
+
+	shouldUpdateImage = false;
+	imageIsReady = false;
+
+	const int resX = jmin(getCoreWidth(), 600);
+	const int resY = 32; //to make dynamic
+
+	if (resX == 0) return;
+
+	Image tmpImg = Image(Image::ARGB, resX, resY, true);
+
+	int id = clip->layer->previewID->intValue();
+
+
+	previewProp->globalID->setValue(id, true);
+	previewProp->resolution->setValue(resY, true);
+
+	if (Prop* prop = PropManager::getInstance()->getPropWithId(id))
 	{
-		sleep(20);
+		previewProp->customParams->loadJSONData(prop->customParams->getJSONData());
+		//for (int i = 0; i < previewProp->customParams->controllables.size(); i++)
+		//{
+		//	((Parameter*)previewProp->customParams->controllables[i])->setValue(((Parameter*)prop->customParams->controllables[i])->getValue());
 
-		if (!shouldUpdateImage || clip->currentBlock == nullptr)
-		{
-			sleep(20);
-			continue;
-
-		}
-
-		shouldUpdateImage = false;
-		imageIsReady = false;
-
-		const int resX = jmin(getCoreWidth(), 600);
-		const int resY = 32; //to make dynamic
-
-		if (resX == 0)
-		{
-			sleep(20);
-			continue;
-		}
-
-		Image tmpImg = Image(Image::ARGB, resX, resY, true);
-
-		int id = clip->layer->previewID->intValue();
-
-
-		previewProp->globalID->setValue(id, true);
-		previewProp->resolution->setValue(resY, true);
-
-		if (Prop* prop = PropManager::getInstance()->getPropWithId(id))
-		{
-			previewProp->customParams->loadJSONData(prop->customParams->getJSONData());
-			//for (int i = 0; i < previewProp->customParams->controllables.size(); i++)
-			//{
-			//	((Parameter*)previewProp->customParams->controllables[i])->setValue(((Parameter*)prop->customParams->controllables[i])->getValue());
-
-			//	DBG(previewProp->customParams->controllables[i]->niceName << " > " << ((Parameter*)previewProp->customParams->controllables[i])->stringValue());
-			//}
-		}
-
-		var params = new DynamicObject();
-		params.getDynamicObject()->setProperty("updateAutomation", false);
-		//params.getDynamicObject()->setProperty("sequenceTime", false);
-
-		float start = clip->time->floatValue();
-		//float length = clip->getTotalLength();
-		float coreLength = clip->coreLength->floatValue();
-
-		for (int i = 0; i < resX; i++)
-		{
-			if (threadShouldExit()) return;
-			float relTotal = i * coreLength / resX;
-			float absT = start + relTotal;
-
-			Array<Colour> c = clip->getColors(previewProp.get(), absT, params);
-
-			for (int ty = 0; ty < resY; ty++)
-			{
-				int py = resY - 1 - ty;
-				if (relTotal > coreLength) c.set(ty, c[ty].darker());// c[ty].darker();
-				tmpImg.setPixelAt(i, py, c[ty]);
-			}
-
-		}
-
-		imgLock.enter();
-		previewImage = tmpImg.createCopy();
-		imgLock.exit();
-		imageIsReady = true;
-
-		shouldRepaint = true;
+		//	DBG(previewProp->customParams->controllables[i]->niceName << " > " << ((Parameter*)previewProp->customParams->controllables[i])->stringValue());
+		//}
 	}
+
+	var params = new DynamicObject();
+	params.getDynamicObject()->setProperty("updateAutomation", false);
+	//params.getDynamicObject()->setProperty("sequenceTime", false);
+
+	float start = clip->time->floatValue();
+	//float length = clip->getTotalLength();
+	float coreLength = clip->coreLength->floatValue();
+
+	for (int i = 0; i < resX; i++)
+	{
+		if (Thread::getCurrentThread()->threadShouldExit()) return;
+
+		float relTotal = i * coreLength / resX;
+		float absT = start + relTotal;
+
+		Array<Colour> c = clip->getColors(previewProp.get(), absT, params);
+
+		for (int ty = 0; ty < resY; ty++)
+		{
+			int py = resY - 1 - ty;
+			if (relTotal > coreLength) c.set(ty, c[ty].darker());// c[ty].darker();
+			tmpImg.setPixelAt(i, py, c[ty]);
+		}
+
+	}
+
+	imgLock.enter();
+	previewImage = tmpImg.createCopy();
+	imgLock.exit();
+	imageIsReady = true;
+
+	shouldRepaint = true;
 }
 
 LightBlockFadeHandle::LightBlockFadeHandle(const Image& image) :
@@ -484,3 +495,48 @@ void LightBlockFadeHandle::paint(Graphics& g)
 	g.setColour(Colours::white);
 	g.drawImage(img, getLocalBounds().toFloat().reduced(2));
 }
+
+
+juce_ImplementSingleton(LightBlockPreviewDispatcher)
+
+LightBlockPreviewDispatcher::LightBlockPreviewDispatcher() :
+	Thread("LightBlockPreviewDispatcher")
+{
+	startThread();
+}
+
+LightBlockPreviewDispatcher::~LightBlockPreviewDispatcher()
+{
+	stopThread(1000);
+}
+
+void LightBlockPreviewDispatcher::run()
+{
+	while (!threadShouldExit())
+	{
+		wait(20); // 20ms is plenty enough
+		if (Engine::mainEngine->isLoadingFile || Engine::mainEngine->isClearing) continue;
+
+		for (auto& c : clips)
+		{
+			if (threadShouldExit()) return;
+
+			if (c != nullptr && !c->inspectable.wasObjectDeleted())
+			{
+				c->handleDrawPreview();
+			}
+		}
+	}
+}
+
+void LightBlockPreviewDispatcher::addClip(LightBlockClipUI* clipUI)
+{
+	clips.addIfNotAlreadyThere(clipUI);
+
+}
+
+void LightBlockPreviewDispatcher::removeClip(LightBlockClipUI* clipUI)
+{
+	clips.removeAllInstancesOf(clipUI);
+}
+

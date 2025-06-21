@@ -9,7 +9,7 @@
 */
 
 LightBlockModelPresetManager::LightBlockModelPresetManager(LightBlockModel * model) :
-	BaseManager("Presets"),
+	Manager("Presets"),
 	model(model)
 {
 }

@@ -11,7 +11,7 @@
 #include "Node/NodeIncludes.h"
 
 NodeViewUI::NodeViewUI(Node * node, Direction direction) :
-	BaseItemUI(node, direction)
+	ItemUI(node, direction)
 {
 	for (auto & s : node->inSlots) addConnector(true, s, false);
 	for (auto & s : node->outSlots) addConnector(false, s, false);
@@ -30,7 +30,7 @@ NodeViewUI::~NodeViewUI()
 
 void NodeViewUI::resized()
 {
-	BaseItemUI::resized();
+	ItemUI::resized();
 
 	//place connectors
 
@@ -55,7 +55,7 @@ void NodeViewUI::resized()
 
 Rectangle<int> NodeViewUI::getMainBounds()
 {
-	return BaseItemUI::getMainBounds().reduced(connectorSize, 0);
+	return ItemUI::getMainBounds().reduced(connectorSize, 0);
 }
 
 Rectangle<int> NodeViewUI::getFeedbackBounds()

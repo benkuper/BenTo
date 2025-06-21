@@ -9,7 +9,7 @@
 */
 
 NodeConnectionManagerUI::NodeConnectionManagerUI(NodeConnectionManager * manager, NodeManagerUI * nmui) :
-	BaseManagerUI("Connections",manager,false),
+	ManagerUI("Connections",manager,false),
 	nmui(nmui)
 {
 	bringToFrontOnSelect = false;

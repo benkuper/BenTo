@@ -11,7 +11,7 @@
 #pragma once
 
 class LightBlockModelParameterManager :
-	public BaseManager<LightBlockModelParameter>
+	public Manager<LightBlockModelParameter>
 {
 public:
 	LightBlockModelParameterManager();

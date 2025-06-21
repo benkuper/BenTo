@@ -13,7 +13,7 @@
 juce_ImplementSingleton(NodeFactory)
 
 NodeManager::NodeManager() :
-	BaseManager("Nodes"),
+	Manager("Nodes"),
 	connectionManager(this)
 {
 	managerFactory = NodeFactory::getInstance();
@@ -53,7 +53,7 @@ NodeConnectionSlot* NodeManager::getSlotForName(const String& nodeName, const St
 
 var NodeManager::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseManager::getJSONData(includeNonOverriden);
+	var data = Manager::getJSONData(includeNonOverriden);
 	data.getDynamicObject()->setProperty("connections", connectionManager.getJSONData());
 	data.getDynamicObject()->setProperty("prop", propNode->getJSONData());
 
@@ -68,7 +68,7 @@ void NodeManager::loadJSONDataManagerInternal(var data)
 	addItem(propNode);
 	propNode->loadJSONData(data.getProperty("prop", var()));
 
-	BaseManager::loadJSONDataManagerInternal(data);
+	Manager::loadJSONDataManagerInternal(data);
 
 	connectionManager.loadJSONData(data.getProperty("connections", var()));
 }

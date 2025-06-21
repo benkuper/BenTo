@@ -11,7 +11,7 @@
 #include "Node/NodeIncludes.h"
 
 NodeConnectionManager::NodeConnectionManager(NodeManager* nodeManager) :
-	BaseManager("Connections"),
+	Manager("Connections"),
 	nodeManager(nodeManager)
 {
 	userCanAddItemsManually = false;

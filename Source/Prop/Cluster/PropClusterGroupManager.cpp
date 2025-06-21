@@ -11,7 +11,7 @@
 #include "BentoEngine.h"
 
 PropClusterGroupManager::PropClusterGroupManager() :
-	BaseManager("Cluster Groups")
+	Manager("Cluster Groups")
 {
 	selectItemWhenCreated = false;
 	PropManager::getInstance()->addControllableContainerListener(this);

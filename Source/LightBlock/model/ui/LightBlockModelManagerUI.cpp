@@ -11,7 +11,7 @@
 #include "LightBlock/LightBlockIncludes.h"
 
 LightBlockModelManagerUI::LightBlockModelManagerUI(const String &name, UserLightBlockModelManager * m) :
-	BaseManagerUI(name, m,false)
+	ManagerUI(name, m,false)
 {
 	animateItemOnAdd = false;
 	setSize(100, 100);

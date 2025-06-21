@@ -13,7 +13,7 @@
 #include "Sequence/SequenceIncludes.h"
 
 LightBlockModelUI::LightBlockModelUI(LightBlockModel* model) :
-	BaseItemMinimalUI(model),
+	ItemMinimalUI(model),
 	sequenceBlock(dynamic_cast<BentoSequenceBlock*>(model))
 {
 
@@ -78,7 +78,7 @@ void LightBlockModelUI::updateThumbnail()
 
 void LightBlockModelUI::mouseDown(const MouseEvent& e)
 {
-	BaseItemMinimalUI::mouseDown(e);
+	ItemMinimalUI::mouseDown(e);
 
 	if (e.mods.isLeftButtonDown())
 	{

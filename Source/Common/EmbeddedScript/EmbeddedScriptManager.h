@@ -13,7 +13,7 @@
 //#include "EmbeddedScript.h"
 //
 //class EmbeddedScriptManager :
-//    public BaseManager<EmbeddedScript>,
+//    public Manager<EmbeddedScript>,
 //    public Thread,
 //    public URL::DownloadTask::Listener,
 //    public Timer

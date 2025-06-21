@@ -24,7 +24,7 @@ public:
 
 
 class PropShapeLibrary :
-    public BaseManager<PropShape>
+    public Manager<PropShape>
 {
 public:
     juce_DeclareSingleton(PropShapeLibrary, true);

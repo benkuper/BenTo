@@ -15,7 +15,7 @@
 #include "Common/CommonIncludes.h"
 
 class PropManager :
-	public BaseManager<Prop>,
+	public Manager<Prop>,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
 	public Prop::PropListener,
 	public ZeroconfManager::ZeroconfSearcher::SearcherListener,

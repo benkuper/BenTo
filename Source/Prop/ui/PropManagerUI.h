@@ -12,7 +12,7 @@
 
 
 class PropManagerUI :
-	public BaseManagerShapeShifterUI<PropManager, Prop, PropUI>
+	public ManagerShapeShifterUI<PropManager, Prop, PropUI>
 {
 public:
 	PropManagerUI(const String &name, PropManager * manager);

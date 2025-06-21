@@ -11,7 +11,7 @@
 #pragma once
 
 class PropTargetFilterManager :
-	public BaseManager<PropTargetFilter>
+	public Manager<PropTargetFilter>
 {
 public:
 	PropTargetFilterManager(PropClusterGroupManager * clusterGroupManager = nullptr);

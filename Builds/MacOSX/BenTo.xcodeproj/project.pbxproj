@@ -20,6 +20,7 @@
 		1E849A37E6B9D259A86ECA08 /* include_filmstro_ffmpeg_FFmpegVideoReader.cpp */ = {isa = PBXBuildFile; fileRef = A926A72AFCFBAACC5BF0218B; };
 		1EAD56AF8481E0EFD54D9555 /* SequenceIncludes.cpp */ = {isa = PBXBuildFile; fileRef = 7BF2429AF83ECCF9CEA6F54A; };
 		2B043E0ED0777E3A5E64017F /* IdentificationRuleManager.cpp */ = {isa = PBXBuildFile; fileRef = 9EB96EE07F38B874C10617A8; };
+		2DFA268A8D90D8FCDBC55C78 /* include_juce_timeline2.cpp */ = {isa = PBXBuildFile; fileRef = 29F6D25D2794F2D423E244D6; };
 		2E5CED55DDE98C321DF9D6A5 /* MetalKit.framework */ = {isa = PBXBuildFile; fileRef = 043E63CBD2E6B13AD6998374; settings = { ATTRIBUTES = (Weak, ); }; };
 		3D4BF2F4864A3D6B1D9145C7 /* Syphon.framework */ = {isa = PBXBuildFile; fileRef = 97450D363205BADBF21B5811; settings = { ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		423EA5A481C18D4BC00F94CC /* BentoEngine.cpp */ = {isa = PBXBuildFile; fileRef = 34FDD8C4811BA347FB82415F; };
@@ -160,6 +161,7 @@
 		25A86663AB1BCEB88DE5C5ED /* JuceHeader.h */ /* JuceHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = JuceHeader.h; path = ../../JuceLibraryCode/JuceHeader.h; sourceTree = SOURCE_ROOT; };
 		27DE73926A22E3A853E791D4 /* esptool */ /* esptool */ = {isa = PBXFileReference; lastKnownFileType = folder; name = esptool; path = ../../Resources/mac/esptool; sourceTree = "<group>"; };
 		28B8FCD6E8665FDEDA16A088 /* LightBlockModelParameter.h */ /* LightBlockModelParameter.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = LightBlockModelParameter.h; path = ../../Source/LightBlock/model/LightBlockModelParameter.h; sourceTree = SOURCE_ROOT; };
+		29F6D25D2794F2D423E244D6 /* include_juce_timeline2.cpp */ /* include_juce_timeline2.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = include_juce_timeline2.cpp; path = ../../JuceLibraryCode/include_juce_timeline2.cpp; sourceTree = SOURCE_ROOT; };
 		2A0C477D5ED3CDD9953752E6 /* filmstro_ffmpeg */ /* filmstro_ffmpeg */ = {isa = PBXFileReference; lastKnownFileType = folder; name = filmstro_ffmpeg; path = ../../Modules/filmstro_ffmpeg; sourceTree = SOURCE_ROOT; };
 		2A35504BF657E68FB282B47E /* juce_serial */ /* juce_serial */ = {isa = PBXFileReference; lastKnownFileType = folder; name = juce_serial; path = ../../Modules/juce_serial; sourceTree = SOURCE_ROOT; };
 		2A4458583B4DE883FA1D4C65 /* RecentFilesMenuTemplate.nib */ /* RecentFilesMenuTemplate.nib */ = {isa = PBXFileReference; lastKnownFileType = file.nib; name = RecentFilesMenuTemplate.nib; path = RecentFilesMenuTemplate.nib; sourceTree = SOURCE_ROOT; };
@@ -782,6 +784,7 @@
 				3CF751812457867DE7EF346A,
 				8982AF698A695C3FEF7A7F56,
 				B3F00A16D10651397C0D1BAE,
+				29F6D25D2794F2D423E244D6,
 				E082A45CFF68EB4AF84C1BD0,
 				25A86663AB1BCEB88DE5C5ED,
 			);
@@ -1642,6 +1645,7 @@
 				FD72E12D48DC13DD45E5B58B,
 				B991E79A3AD2A65F32A2E148,
 				A198394E001844380ACD129F,
+				2DFA268A8D90D8FCDBC55C78,
 				B31597CD80327EFFF3C15E48,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1716,7 +1720,7 @@
 					"DEBUG=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=2.0.1b3",
+					"JUCE_APP_VERSION=2.0.1b4",
 					"JUCE_APP_VERSION_HEX=0x20001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -1876,7 +1880,7 @@
 					"NDEBUG=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=2.0.1b3",
+					"JUCE_APP_VERSION=2.0.1b4",
 					"JUCE_APP_VERSION_HEX=0x20001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",
@@ -1941,7 +1945,7 @@
 					"NDEBUG=1",
 					"FILMSTRO_USE_FFMPEG=0",
 					"JUCER_XCODE_MAC_F6D2F4CF=1",
-					"JUCE_APP_VERSION=2.0.1b3",
+					"JUCE_APP_VERSION=2.0.1b4",
 					"JUCE_APP_VERSION_HEX=0x20001",
 					"JucePlugin_Build_VST=0",
 					"JucePlugin_Build_VST3=0",

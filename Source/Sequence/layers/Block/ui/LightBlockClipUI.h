@@ -11,6 +11,7 @@
 #pragma once
 
 class Prop;
+class LightBlockClipUI;
 
 class LightBlockFadeHandle :
 	public Component
@@ -24,10 +25,26 @@ public:
 	void paint(Graphics &g) override;
 };
 
+
+class LightBlockPreviewDispatcher :
+	public Thread
+{
+public:
+	juce_DeclareSingleton(LightBlockPreviewDispatcher, true)
+
+	LightBlockPreviewDispatcher();
+	~LightBlockPreviewDispatcher();
+
+	Array<LightBlockClipUI*> clips;
+
+	void run() override;
+	void addClip(LightBlockClipUI * clipUI);
+	void removeClip(LightBlockClipUI* clipUI);
+};
+
 class LightBlockClipUI :
 	public LayerBlockUI,
 	public LightBlockClip::AsyncListener,
-	public Thread, //Threaded preview generation
 	public Timer
 {
 public:
@@ -76,6 +93,6 @@ public:
 
 	void timerCallback() override;
 
-	void run() override;
+	void handleDrawPreview();
 
 };

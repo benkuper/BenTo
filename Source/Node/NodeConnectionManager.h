@@ -12,7 +12,7 @@
 class NodeManager;
 
 class NodeConnectionManager :
-	public BaseManager<NodeConnection>,
+	public Manager<NodeConnection>,
 	public NodeConnection::ConnectionListener
 {
 public:

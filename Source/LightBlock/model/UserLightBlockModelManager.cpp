@@ -12,7 +12,7 @@
 #include "Sequence/SequenceIncludes.h"
 
 UserLightBlockModelManager::UserLightBlockModelManager(const String &name, BlockType type) :
-	BaseManager(name),
+	Manager(name),
 	type(type)
 {
 	itemDataType = name;
@@ -76,7 +76,7 @@ LightBlockModel * UserLightBlockModelManager::createItem()
 
 var UserLightBlockModelManager::getJSONData(bool includeNonOverriden)
 {
-	var data = BaseManager::getJSONData(includeNonOverriden);
+	var data = Manager::getJSONData(includeNonOverriden);
 
 	/*
 	LightBlockModel * editingBlock = nullptr;
@@ -96,7 +96,7 @@ var UserLightBlockModelManager::getJSONData(bool includeNonOverriden)
 
 void UserLightBlockModelManager::loadJSONDataInternal(var data)
 {
-	BaseManager::loadJSONDataInternal(data);
+	Manager::loadJSONDataInternal(data);
 	/*if (data.hasProperty("editingBlock"))
 	{
 		

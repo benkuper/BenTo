@@ -115,7 +115,7 @@ void SpatializerPanel::timerCallback()
 
 
 SpatLayoutView::SpatLayoutView(Spatializer * spat, SpatLayout * layout) :
-	BaseManagerShapeShifterUI(layout->niceName, &layout->spatItemManager, false),
+	ManagerShapeShifterUI(layout->niceName, &layout->spatItemManager, false),
 	spat(spat),
 	layout(layout)
 {

@@ -11,7 +11,7 @@
 juce_ImplementSingleton(PropShapeLibrary)
 
 PropShapeLibrary::PropShapeLibrary() :
-    BaseManager("Prop Shapes")
+    Manager("Prop Shapes")
 {
 }
 

@@ -11,7 +11,7 @@
 #pragma once
 
 class NodeManagerUI :
-	public BaseManagerViewUI<NodeManager, Node, NodeViewUI>,
+	public ManagerViewUI<NodeManager, Node, NodeViewUI>,
 	public Timer
 {
 public:

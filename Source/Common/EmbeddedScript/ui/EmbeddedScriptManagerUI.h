@@ -13,7 +13,7 @@
 #include "../EmbeddedScriptManager.h"
 
 class EmbeddedScriptManagerUI :
-    public BaseManagerShapeShifterUI<EmbeddedScriptManager, EmbeddedScript, BaseItemUI<EmbeddedScript>>
+    public ManagerShapeShifterUI<EmbeddedScriptManager, EmbeddedScript, ItemUI<EmbeddedScript>>
 {
 public:
     EmbeddedScriptManagerUI();

@@ -11,7 +11,7 @@
 #pragma once
 
 class LightBlockModelUI :
-	public BaseItemMinimalUI<LightBlockModel>,
+	public ItemMinimalUI<LightBlockModel>,
 	public LightBlockModel::AsyncListener
 {
 public:

@@ -11,7 +11,7 @@
 #pragma once
 
 class PropClusterGroupManager :
-	public BaseManager<PropClusterGroup>
+	public Manager<PropClusterGroup>
 {
 public:
 

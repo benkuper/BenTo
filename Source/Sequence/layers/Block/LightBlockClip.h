@@ -33,7 +33,7 @@ public:
 	FloatParameter* timeOffsetByID;
 
 	std::unique_ptr<PropTargetFilterManager> filterManager;
-	BaseManager<LightBlockEffect> effects;
+	Manager<LightBlockEffect> effects;
 
 	bool settingLengthFromMethod; //set length
 

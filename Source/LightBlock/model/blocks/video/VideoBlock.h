@@ -14,7 +14,7 @@ class Spatializer;
 
 class VideoBlock :
 	public LightBlockModel,
-	public BaseManager<SpatLayout>::ManagerListener
+	public Manager<SpatLayout>::ManagerListener
 {
 public:
 	VideoBlock(const String & name= "", var params = var());

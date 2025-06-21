@@ -17,13 +17,13 @@ NodeBlock::NodeBlock(var params) :
 	itemDataType = "Node";
 
 	addChildControllableContainer(&manager);
-	manager.addBaseManagerListener(this);
+	manager.addManagerListener(this);
 	manager.hideInEditor = true;
 }
 
 NodeBlock::~NodeBlock()
 {
-	manager.removeBaseManagerListener(this);
+	manager.removeManagerListener(this);
 }
 
 Array<Colour> NodeBlock::getColors(Prop* p, double time, var params)
@@ -169,7 +169,7 @@ var NodeBlock::getJSONData(bool includeNonOverriden)
 void NodeBlock::loadJSONDataInternal(var data)
 {
 	LightBlockModel::loadJSONDataInternal(data);
-	manager.loadJSONDataInternal(data.getProperty("nodes", ""));
+	manager.loadJSONData(data.getProperty("nodes", ""));
 }
 
 LightBlockModelUI* NodeBlock::createUI()

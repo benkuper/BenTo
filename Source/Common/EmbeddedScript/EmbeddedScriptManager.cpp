@@ -13,7 +13,7 @@
 //juce_ImplementSingleton(EmbeddedScriptManager)
 //
 //EmbeddedScriptManager::EmbeddedScriptManager() :
-//    BaseManager("WASM Scripts"),
+//    Manager("WASM Scripts"),
 //    Thread("DownloadCompiler")
 //{
 //    downloadCompiler = addTrigger("Download compiler", "Download the embedded compiler");

@@ -11,7 +11,7 @@
 #pragma once
 
 class LightBlockModelManagerUI :
-	public BaseManagerUI<UserLightBlockModelManager, LightBlockModel, LightBlockModelUI>
+	public ManagerUI<UserLightBlockModelManager, LightBlockModel, LightBlockModelUI>
 {
 public:
 	LightBlockModelManagerUI(const String &name, UserLightBlockModelManager * manager);

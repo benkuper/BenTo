@@ -127,7 +127,7 @@ void PropViz::handleRepaint()
 
 VizTimer::VizTimer()
 {
-	startTimerHz(20);
+	startTimerHz(50);
 }
 
 void VizTimer::registerViz(PropViz* viz)

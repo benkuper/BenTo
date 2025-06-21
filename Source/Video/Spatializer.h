@@ -13,7 +13,7 @@
 class Prop;
 
 class Spatializer :
-	public BaseManager<SpatLayout>
+	public Manager<SpatLayout>
 {
 public:
 	juce_DeclareSingleton(Spatializer, true)

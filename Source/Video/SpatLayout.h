@@ -17,7 +17,7 @@ public:
 	SpatLayout();
 	~SpatLayout();
 
-	BaseManager<SpatItem> spatItemManager;
+	Manager<SpatItem> spatItemManager;
 
 	String getTypeString() const override { return "Layout"; }
 

@@ -13,7 +13,7 @@
 class LightBlockModel;
 
 class LightBlockModelPresetManager :
-	public BaseManager<LightBlockModelPreset>
+	public Manager<LightBlockModelPreset>
 {
 public:
 	LightBlockModelPresetManager(LightBlockModel * model);

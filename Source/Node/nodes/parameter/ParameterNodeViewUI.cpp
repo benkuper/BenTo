@@ -39,7 +39,7 @@ void ParameterNodeViewUI::resizedInternalContent(Rectangle<int>& r)
 
 void ParameterNodeViewUI::newMessage(const Parameter::ParameterEvent & e)
 {
-	BaseItemUI::newMessage(e);
+	ItemUI::newMessage(e);
 
 	if (e.type == Parameter::ParameterEvent::BOUNDS_CHANGED)
 	{

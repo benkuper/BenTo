@@ -13,7 +13,7 @@
 class NodeManagerUI;
 
 class NodeConnectionManagerUI :
-	public BaseManagerUI<NodeConnectionManager, NodeConnection, NodeConnectionUI>
+	public ManagerUI<NodeConnectionManager, NodeConnection, NodeConnectionUI>
 {
 public:
 	NodeConnectionManagerUI(NodeConnectionManager * manager, NodeManagerUI * nodeManagerUI);

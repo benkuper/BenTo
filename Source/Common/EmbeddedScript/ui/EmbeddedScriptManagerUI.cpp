@@ -11,7 +11,7 @@
 #include "EmbeddedScriptManagerUI.h"
 
 EmbeddedScriptManagerUI::EmbeddedScriptManagerUI() :
-    BaseManagerShapeShifterUI(EmbeddedScriptManager::getInstance()->niceName, EmbeddedScriptManager::getInstance())
+    ManagerShapeShifterUI(EmbeddedScriptManager::getInstance()->niceName, EmbeddedScriptManager::getInstance())
 {
     addExistingItems();
 }

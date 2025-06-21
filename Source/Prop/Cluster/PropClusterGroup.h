@@ -19,7 +19,7 @@ public:
 
 	BoolParameter * sendFeedback;
 
-	BaseManager<PropCluster> clusterManager;
+	Manager<PropCluster> clusterManager;
 
 	PropCluster* getClusterForProp(Prop* p, int& localID);
 	int getClusterIDForProp(Prop * p);

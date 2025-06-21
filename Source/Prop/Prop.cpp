@@ -28,7 +28,6 @@ Prop::Prop(var params) :
 	playbackProvider(nullptr),
 	currentBlock(nullptr),
 	previousID(-1),
-	updateRate(10),
 	propNotifier(50)
 {
 	//registerFamily(params.getProperty("family", "Mistery Family").toString());
@@ -49,6 +48,7 @@ Prop::Prop(var params) :
 	fillTypeOptions(shape);
 	shape->setValueWithKey(params.getProperty("shape", shape->getValueKey()));
 	resolution = generalCC.addIntParameter("Resolution", "The resolution of the prop", 50, 1, 500);
+	updateRate = generalCC.addIntParameter("Update Rate", "The update rate of the prop in Hz", 60, 1, 500);
 	addChildControllableContainer(&generalCC);
 
 	colors.resize(getResolution());
@@ -631,7 +631,7 @@ void Prop::run()
 			if (enabled->boolValue()) update();
 
 			double diffTime = Time::getMillisecondCounterHiRes() - timeBeforeUpdate;
-			double sleepTime = 1000.0 / updateRate - diffTime;
+			double sleepTime = 1000.0 / updateRate->intValue() - diffTime;
 			//DBG("Sleep time " << sleepTime << " ms, diffTime " << diffTime << " ms");
 			if (sleepTime >= 1) sleep(sleepTime); //50fps
 		}

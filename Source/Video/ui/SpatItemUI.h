@@ -14,7 +14,7 @@ class Spatializer;
 class SpatLayoutView;
 
 class SpatItemUI :
-	public BaseItemMinimalUI<SpatItem>
+	public ItemMinimalUI<SpatItem>
 {
 public:
 	SpatItemUI(SpatItem * i, Spatializer * spat = nullptr, SpatLayoutView * panel = nullptr);

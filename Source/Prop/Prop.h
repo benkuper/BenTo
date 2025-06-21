@@ -35,6 +35,7 @@ public:
 	ControllableContainer generalCC;
 	IntParameter* resolution;
 	FloatParameter* brightness;
+	IntParameter* updateRate;
 
 	IntParameter* resolutionRef;
 	EnumParameter* shape;
@@ -86,7 +87,6 @@ public:
 	TargetParameter* activeProvider;
 
 	int previousID; //for swapping
-	int updateRate;
 
 	struct FileToUpload
 	{

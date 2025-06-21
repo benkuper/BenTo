@@ -25,7 +25,7 @@ void main() \
 juce_ImplementSingleton(Spatializer)
 
 Spatializer::Spatializer() :
-	BaseManager("Spatializer"),
+	Manager("Spatializer"),
 	currentLayout(nullptr),
 	isInit(false),
 	//shader(frag),

@@ -20,7 +20,7 @@ SequenceBlockSequence::SequenceBlockSequence() :
 	identityMode = addBoolParameter("Identity mode", "If checked, this will override the colors to show identity", false);
 
 	layerManager->managerFactory = &layerFactory;
-	clusterGroupManager.addBaseManagerListener(this);
+	clusterGroupManager.addManagerListener(this);
 	addChildControllableContainer(&clusterGroupManager);
 
 
@@ -34,7 +34,7 @@ SequenceBlockSequence::SequenceBlockSequence() :
 		layerManager->addItem(new LightBlockLayer(this));
 	}
 
-	layerManager->addBaseManagerListener(this);
+	layerManager->addManagerListener(this);
 	setAudioDeviceManager(&AudioManager::getInstance()->am);
 
 	updateGroupList();

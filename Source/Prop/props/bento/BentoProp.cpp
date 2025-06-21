@@ -9,7 +9,6 @@
 */
 
 #include "Prop/PropIncludes.h"
-#include "BentoProp.h"
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
@@ -20,7 +19,6 @@ BentoProp::BentoProp(var params) :
 {
 	universes.add(new DMXUniverse(0));
 
-	updateRate = 100;
 	useAlphaInPlaybackData = true;
 	invertLedsInUI = true;
 

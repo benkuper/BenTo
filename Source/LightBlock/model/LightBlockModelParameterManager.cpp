@@ -9,7 +9,7 @@
 */
 
 LightBlockModelParameterManager::LightBlockModelParameterManager() :
-	BaseManager("arguments")
+	Manager("arguments")
 {
 	selectItemWhenCreated = false;
 	userCanAddItemsManually = false;

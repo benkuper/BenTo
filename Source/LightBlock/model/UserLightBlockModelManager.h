@@ -11,7 +11,7 @@
 #pragma once
 
 class UserLightBlockModelManager :
-	public BaseManager<LightBlockModel>
+	public Manager<LightBlockModel>
 {
 public:
 	enum BlockType { PICTURE, NODE, STREAMING_SCRIPT, SEQUENCE, LIVE_FEED, VIDEO, EMBEDDED_SCRIPT};

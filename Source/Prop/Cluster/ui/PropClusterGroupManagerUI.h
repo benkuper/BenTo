@@ -13,7 +13,7 @@
 #include "../PropClusterGroupManager.h"
 
 class PropClusterGroupManagerUI :
-	public BaseManagerShapeShifterUI<PropClusterGroupManager, PropClusterGroup, BaseItemUI<PropClusterGroup>>
+	public ManagerShapeShifterUI<PropClusterGroupManager, PropClusterGroup, ItemUI<PropClusterGroup>>
 {
 public:
 	PropClusterGroupManagerUI(const String &name, PropClusterGroupManager * manager);

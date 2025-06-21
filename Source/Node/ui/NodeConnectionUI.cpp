@@ -9,7 +9,7 @@
 */
 
 NodeConnectionUI::NodeConnectionUI(NodeConnection * nc) :
-	BaseItemMinimalUI(nc),
+	ItemMinimalUI(nc),
 	sourceConnector(nullptr),
 	destConnector(nullptr),
 	isDraggingModel(false)
@@ -171,7 +171,7 @@ void NodeConnectionUI::itemDropped(const SourceDetails & source)
 	}
 
 	item->insertNode(nodeType);
-	BaseItemMinimalUI::itemDropped(source);
+	ItemMinimalUI::itemDropped(source);
 }
 
 

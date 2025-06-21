@@ -11,7 +11,7 @@
 #pragma once
 
 class PropUI :
-	public BaseItemUI<Prop>
+	public ItemUI<Prop>
 {
 public:
 	PropUI(Prop * p);

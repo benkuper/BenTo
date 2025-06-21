@@ -12,7 +12,7 @@
 #include "PropClusterGroupManagerUI.h"
 
 PropClusterGroupManagerUI::PropClusterGroupManagerUI(const String & name, PropClusterGroupManager * manager) :
-	BaseManagerShapeShifterUI(name, manager)
+	ManagerShapeShifterUI(name, manager)
 {
 }
 

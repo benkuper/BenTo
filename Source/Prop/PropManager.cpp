@@ -16,7 +16,7 @@
 juce_ImplementSingleton(PropManager)
 
 PropManager::PropManager() :
-	BaseManager("Props"),
+	Manager("Props"),
 	//Thread("PropsDownload"),
 	//familiesCC("Families"),
 	connectionCC("Connection"),
@@ -195,7 +195,7 @@ Prop* PropManager::getPropWithId(int id, Prop* excludeProp)
 
 void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Controllable* c)
 {
-	BaseManager::onControllableFeedbackUpdate(cc, c);
+	Manager::onControllableFeedbackUpdate(cc, c);
 
 	if (c == autoAssignIdTrigger)
 	{
@@ -368,7 +368,7 @@ void PropManager::removeItemsInternal(Array<Prop*> props)
 
 void PropManager::clear()
 {
-	BaseManager::clear();
+	Manager::clear();
 	//for (auto& f : families) f->props.clear();
 }
 

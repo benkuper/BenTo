@@ -11,7 +11,7 @@
 #pragma once
 
 class NodeConnectionUI :
-	public BaseItemMinimalUI<NodeConnection>,
+	public ItemMinimalUI<NodeConnection>,
 	public ComponentListener
 {
 public:

@@ -11,7 +11,7 @@
 #include "Prop/PropIncludes.h"
 
 PropUI::PropUI(Prop* p) :
-	BaseItemUI(p, HORIZONTAL),
+	ItemUI(p, HORIZONTAL),
 	viz(p)
 {
 	itemLabel.setVisible(false);
@@ -51,7 +51,7 @@ PropUI::~PropUI()
 
 void PropUI::paintOverChildren(Graphics& g)
 {
-	BaseItemUI::paintOverChildren(g);
+	ItemUI::paintOverChildren(g);
 	if (item->isGeneratingPlayback->boolValue())
 	{
 		g.fillAll(Colours::black.withAlpha(.3f));
@@ -93,7 +93,7 @@ void PropUI::paintOverChildren(Graphics& g)
 
 void PropUI::mouseDown(const MouseEvent& e)
 {
-	BaseItemUI::mouseDown(e);
+	ItemUI::mouseDown(e);
 
 	if (e.mods.isLeftButtonDown())
 	{
@@ -106,7 +106,7 @@ void PropUI::mouseDown(const MouseEvent& e)
 
 void PropUI::mouseUp(const MouseEvent& e)
 {
-	BaseItemUI::mouseUp(e);
+	ItemUI::mouseUp(e);
 	item->findPropMode->setValue(false);
 }
 
@@ -192,6 +192,6 @@ void PropUI::itemDropped(const SourceDetails& source)
 
 	}
 
-	BaseItemUI::itemDropped(source);
+	ItemUI::itemDropped(source);
 
 }

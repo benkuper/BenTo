@@ -11,7 +11,7 @@
 #include "Prop/PropIncludes.h"
 
 PropManagerUI::PropManagerUI(const String& name, PropManager* m) :
-	BaseManagerShapeShifterUI(name, m)
+	ManagerShapeShifterUI(name, m)
 {
 	headerSize = 150;
 
@@ -49,7 +49,7 @@ PropManagerUI::~PropManagerUI()
 void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
 {
 	Rectangle<int> addR = r.removeFromTop(24).removeFromRight(24);
-	BaseManagerUI::resizedInternalHeader(addR);
+	ManagerUI::resizedInternalHeader(addR);
 	Rectangle<int> hr = r.reduced(2);
 	autoDetectUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(2);
@@ -73,7 +73,7 @@ void PropManagerUI::showMenuAndAddItem(bool fromAddButton, Point<int> mouseDownP
 {
 	if (fromAddButton)
 	{
-		BaseManagerShapeShifterUI::showMenuAndAddItem(fromAddButton, mouseDownPos);
+		ManagerShapeShifterUI::showMenuAndAddItem(fromAddButton, mouseDownPos, nullptr);
 		return;
 	}
 

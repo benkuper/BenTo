@@ -11,7 +11,7 @@
 #pragma once
 
 class NodeViewUI :
-	public BaseItemUI<Node>,
+	public ItemUI<Node>,
 	public Node::AsyncListener
 {
 public:

@@ -71,6 +71,7 @@ BentoEngine::~BentoEngine()
 	ZeroconfManager::deleteInstance();
 
 	PropFlasher::deleteInstance();
+	LightBlockPreviewDispatcher::deleteInstance();
 }
 
 void BentoEngine::clearInternal()

@@ -34,7 +34,7 @@ Array<Colour> LightBlock::getColors(Prop* p, double time, var params)
 {
 	var localParams = getLocalParams(p, time, params);
 
-	if (provider.wasObjectDeleted())
+	if (provider == nullptr || provider.wasObjectDeleted() || provider->isClearing)
 	{
 		Array<Colour> result;
 		result.resize(p->getResolution());

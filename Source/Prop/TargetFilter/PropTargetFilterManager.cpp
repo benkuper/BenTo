@@ -11,7 +11,7 @@
 #include "Prop/PropIncludes.h"
 
 PropTargetFilterManager::PropTargetFilterManager(PropClusterGroupManager* clusterGroupManager) :
-	BaseManager<PropTargetFilter>("Prop Filters"),
+	Manager<PropTargetFilter>("Prop Filters"),
 	clusterGroupManager(clusterGroupManager)
 {
 	operationMode = addEnumParameter("Operation Mode", "Logic operation to apply");

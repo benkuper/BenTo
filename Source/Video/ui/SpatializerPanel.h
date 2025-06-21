@@ -13,7 +13,7 @@
 class VideoBlock;
 
 class SpatLayoutView :
-	public BaseManagerShapeShifterUI<BaseManager<SpatItem>, SpatItem, SpatItemUI>
+	public ManagerShapeShifterUI<Manager<SpatItem>, SpatItem, SpatItemUI>
 {
 public:
 	SpatLayoutView(Spatializer * spat, SpatLayout * layout);

@@ -14,7 +14,7 @@ VideoBlock::VideoBlock(const String &name, var params) :
 	LightBlockModel(name, params)
 {
 
-	Spatializer::getInstance()->addBaseManagerListener(this);
+	Spatializer::getInstance()->addManagerListener(this);
 
 	inputIsLive = addBoolParameter("Input is Live", "If there is something coming, you'll know it here", false);
 	inputIsLive->setControllableFeedbackOnly(true);
@@ -30,7 +30,7 @@ VideoBlock::VideoBlock(const String &name, var params) :
 
 VideoBlock::~VideoBlock()
 {
-	Spatializer::getInstance()->removeBaseManagerListener(this);
+	Spatializer::getInstance()->removeManagerListener(this);
 }
 
 void VideoBlock::clear()

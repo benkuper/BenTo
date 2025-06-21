@@ -9,7 +9,7 @@
 */
 
 NodeManagerUI::NodeManagerUI(NodeManager* manager) :
-	BaseManagerViewUI("Nodes", manager),
+	ManagerViewUI("Nodes", manager),
 	startConnector(nullptr),
 	dropConnector(nullptr)
 {
@@ -49,7 +49,7 @@ NodeManagerUI::~NodeManagerUI()
 
 void NodeManagerUI::paintOverChildren(Graphics& g)
 {
-	BaseManagerUI::paintOverChildren(g);
+	ManagerUI::paintOverChildren(g);
 	if (startConnector != nullptr) drawConnectionCreation(g);
 
 	/*if (!dragPosition.isOrigin())
@@ -79,7 +79,7 @@ void NodeManagerUI::resized()
 {
 	if (connectionsUI == nullptr) return;
 	connectionsUI->setBounds(getLocalBounds());
-	BaseManagerViewUI::resized();
+	ManagerViewUI::resized();
 }
 
 
@@ -128,7 +128,7 @@ NodeViewUI* NodeManagerUI::createUIForItem(Node* item)
 
 void NodeManagerUI::mouseDown(const MouseEvent& e)
 {
-	BaseManagerViewUI::mouseDown(e);
+	ManagerViewUI::mouseDown(e);
 
 	NodeViewUI::Connector* c = dynamic_cast<NodeViewUI::Connector*>(e.originalComponent);
 	if (c != nullptr)
@@ -140,7 +140,7 @@ void NodeManagerUI::mouseDown(const MouseEvent& e)
 
 void NodeManagerUI::mouseDrag(const MouseEvent& e)
 {
-	BaseManagerViewUI::mouseDrag(e);
+	ManagerViewUI::mouseDrag(e);
 
 	//Check for drop candidates
 	if (startConnector != nullptr)
@@ -152,7 +152,7 @@ void NodeManagerUI::mouseDrag(const MouseEvent& e)
 
 void NodeManagerUI::mouseUp(const MouseEvent& e)
 {
-	BaseManagerViewUI::mouseUp(e);
+	ManagerViewUI::mouseUp(e);
 
 	if (startConnector != nullptr && dropConnector != nullptr)
 	{
@@ -170,7 +170,7 @@ void NodeManagerUI::mouseUp(const MouseEvent& e)
 
 void NodeManagerUI::mouseEnter(const MouseEvent& e)
 {
-	BaseManagerViewUI::mouseEnter(e);
+	ManagerViewUI::mouseEnter(e);
 	/*NodeViewUI::Connector * c = dynamic_cast<NodeViewUI::Connector *>(e.originalComponent);
 	if (c != nullptr)
 	{
@@ -181,7 +181,7 @@ void NodeManagerUI::mouseEnter(const MouseEvent& e)
 
 void NodeManagerUI::itemDragEnter(const SourceDetails& source)
 {
-	BaseManagerViewUI::itemDragEnter(source);
+	ManagerViewUI::itemDragEnter(source);
 	dragPosition = getViewMousePosition().toFloat();
 	dragType = source.description.getProperty("dataType", "");
 	repaint();
@@ -189,21 +189,21 @@ void NodeManagerUI::itemDragEnter(const SourceDetails& source)
 
 void NodeManagerUI::itemDragExit(const SourceDetails& source)
 {
-	BaseManagerViewUI::itemDragExit(source);
+	ManagerViewUI::itemDragExit(source);
 	dragPosition = Point<float>();
 	repaint();
 }
 
 void NodeManagerUI::itemDragMove(const SourceDetails& source)
 {
-	BaseManagerViewUI::itemDragMove(source);
+	ManagerViewUI::itemDragMove(source);
 	dragPosition = getViewMousePosition().toFloat();
 	repaint();
 }
 
 void NodeManagerUI::itemDropped(const SourceDetails& source)
 {
-	BaseManagerViewUI::itemDropped(source);
+	ManagerViewUI::itemDropped(source);
 
 	dragType = source.description.getProperty("dataType", "");
 

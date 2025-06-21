@@ -9,7 +9,7 @@
 */
 
 SpatItemUI::SpatItemUI(SpatItem* i, Spatializer* spat, SpatLayoutView* panel) :
-	BaseItemMinimalUI(i),
+	ItemMinimalUI(i),
 	spat(spat),
 	panel(panel),
 	lockBounds(false)
@@ -210,7 +210,7 @@ void SpatItemUI::updateBounds()
 
 void SpatItemUI::mouseDown(const MouseEvent& e)
 {
-	BaseItemMinimalUI::mouseDown(e);
+	ItemMinimalUI::mouseDown(e);
 	if (e.eventComponent == this)
 	{
 		for (auto& h : handles) h->posAtDown = item->handles[h->index]->getPoint();
