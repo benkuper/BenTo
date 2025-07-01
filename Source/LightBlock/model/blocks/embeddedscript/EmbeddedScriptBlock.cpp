@@ -9,6 +9,7 @@
 */
 
 #include "Prop/PropIncludes.h"
+#include "EmbeddedScriptBlock.h"
 
 EmbeddedScriptBlock::EmbeddedScriptBlock(var params) :
 	LightBlockModel(getTypeString(), params),
@@ -84,9 +85,18 @@ void EmbeddedScriptBlock::compile()
 	}
 
 	//String buildCommand = "npm run build";
-	String arguments = "\"" + f.getFullPathName() + "\" -b \"" + folder.getChildFile(shortName + ".wasm").getFullPathName() + "\" " + /*" -t app.wat " +*/ options;
+	String arguments = "\"" + f.getFullPathName() + "\" -o \"" + folder.getChildFile(shortName + ".wasm").getFullPathName() + "\" " + /*" -t app.wat " +*/ options;
 
-	String command = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("Bento/wasm/wasmcompiler.exe").getFullPathName() + " " + arguments;
+	File nodeF = getNodeExecutable();
+	if (!nodeF.exists())
+	{
+		NLOGERROR(niceName, "Node executable not found at " + nodeF.getFullPathName() + ", cannot compile script.");
+		return;
+	}
+
+	String compilerPath = getCompilerFile().getFullPathName();
+
+	String command = "\"" + nodeF.getFullPathName() + "\" \"" + compilerPath + "\" " + arguments;
 
 	NLOG(niceName, command);
 	ChildProcess p;
@@ -96,7 +106,7 @@ void EmbeddedScriptBlock::compile()
 	//if (silentMode) WinExec(command.getCharPointer(), SW_HIDE);
 	//else result = system(command.getCharPointer());
 
-	if (pResult.isEmpty())
+	if (!pResult.toLowerCase().contains("error"))
 	{
 		File nwf = getWasmFile();
 		NLOG(niceName, "Script has been compiled successfully to " + nwf.getFileName());
@@ -157,6 +167,133 @@ void EmbeddedScriptBlock::generateParams()
 
 	}
 
+}
+
+File EmbeddedScriptBlock::getToolsFolder() const
+{
+	File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile("BenTo/tools");
+	if (!f.exists()) f.createDirectory();
+	return f;
+}
+
+File EmbeddedScriptBlock::getCompilerFile()
+{
+	File f = getToolsFolder().getChildFile("node_modules/assemblyscript/bin/asc.js");
+	if (!f.exists())
+	{
+		NLOGWARNING(niceName, "AssemblyScript compiler not found at " + f.getFullPathName() + ", downloading it now...");
+		downloadWasmCompiler();
+	}
+
+	return f;
+}
+
+File EmbeddedScriptBlock::getNodeExecutable()
+{
+#if JUCE_WINDOWS
+	String nodeFolder = "node-win";
+	String nodeExecutableName = "node.exe";
+#elif JUCE_LINUX
+	String nodeFolder = "node-linux";
+	String nodeExecutableName = "node";
+#elif JUCE_MAC
+	String nodeFolder = "node-mac";
+	String nodeExecutableName = "node";
+#endif
+
+	File f = getToolsFolder().getChildFile(nodeFolder);
+	if (!f.exists()) downloadWasmCompiler();
+
+	File nodeExecutable = f.getChildFile(nodeExecutableName);
+
+	if (!nodeExecutable.exists())
+	{
+		NLOGWARNING(niceName, "Node executable not found at " + nodeExecutable.getFullPathName() + ", downloading it now...");
+		downloadWasmCompiler();
+	}
+
+	return nodeExecutable;
+}
+
+void EmbeddedScriptBlock::downloadWasmCompiler()
+{
+#if JUCE_WINDOWS
+	String zipName = "wasm-win";
+#elif JUCE_LINUX
+	String zipName = "wasm-linux";
+#elif JUCE_MAC
+	String zipName = "wasm-mac";
+#endif
+
+	String url = "https://benjamin.kuperberg.fr/bento/download/" + zipName + ".zip";
+	File toolsFolder = getToolsFolder();
+
+	//download and extract
+	URL downloadUrl(url);
+	std::unique_ptr<InputStream> stream(downloadUrl.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withConnectionTimeoutMs(10000).withProgressCallback(std::bind(&EmbeddedScriptBlock::wasmDownloadProgressCallback, this, std::placeholders::_1, std::placeholders::_2))));
+
+	NLOG(niceName, "Downloading wasm compiler from " + url);
+
+	if (stream != nullptr)
+	{
+		File downloadedFile = toolsFolder.getChildFile(zipName + ".zip");
+		if (downloadedFile.existsAsFile()) downloadedFile.deleteFile();
+		FileOutputStream fos(downloadedFile);
+		fos.writeFromInputStream(*stream, -1);
+		fos.flush();
+
+		ZipFile zipFile(downloadedFile);
+		if (zipFile.uncompressTo(toolsFolder))
+		{
+			NLOG(niceName, "Wasm compiler downloaded and extracted to " + toolsFolder.getFullPathName());
+			downloadedFile.deleteFile();
+		}
+		else
+		{
+			NLOGERROR(niceName, "Error extracting wasm compiler from " + downloadedFile.getFullPathName());
+			return;
+		}
+	}
+	else
+	{
+		NLOGERROR(niceName, "Error downloading wasm compiler from " + url);
+		return;
+	}
+
+	if (getCompilerFile().exists() && getNodeExecutable().exists())
+	{
+		NLOG(niceName, "Wasm compiler and Node.js executable are ready to use.");
+	}
+	else
+	{
+		NLOGERROR(niceName, "Wasm compiler or Node.js executable not found after download.");
+		return;
+	}
+
+#if JUCE_MAX || JUCE_LINUX
+	// Make the node executable executable
+	File nodeExecutable = getNodeExecutable();
+	if (nodeExecutable.setExecutePermission(true))
+	{
+		NLOG(niceName, "Node executable permissions set to executable.");
+	}
+	else
+	{
+		NLOGERROR(niceName, "Node executable couldn't be set to executable");
+		return;
+	}
+
+#endif
+
+
+}
+
+bool EmbeddedScriptBlock::wasmDownloadProgressCallback(int bytesSent, int bytesTotal)
+{
+	if (threadShouldExit()) return false;
+	float p = bytesSent * 1.0f / bytesTotal;
+	NLOG(niceName, "Downloading wasm compiler...  " << String(p * 100, 2) + "%");
+	return true;
 }
 
 File EmbeddedScriptBlock::getWasmFile()

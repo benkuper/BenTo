@@ -44,6 +44,13 @@ public:
 	void loadScriptOnProp(Prop* p);
 	void stopScriptOnProp(Prop* p);
 	void sendParamControlToProp(Prop* p, int index, float val);
+	
+	File getToolsFolder() const;
+	File getCompilerFile();
+	File getNodeExecutable();
+
+	void downloadWasmCompiler();
+	bool wasmDownloadProgressCallback(int bytesSent, int bytesTotal);
 
 	File getWasmFile();
 
