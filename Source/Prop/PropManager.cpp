@@ -126,7 +126,9 @@ void PropManager::setupReceiver()
 
 Prop* PropManager::createPropIfNotExist(const String& type, const String& host, const String& id, const String& name)
 {
+	GenericScopedLock lock(items.getLock());
 	Prop* p = getPropWithDeviceID(id);
+
 	if (p == nullptr)
 	{
 		if (managerFactory->hasDefinitionWithType(type))
@@ -213,7 +215,14 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		{
 			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 			{
-				int propID = bp->componentsCC->getParameterByName("propID")->intValue();
+				Parameter* idP = bp->componentsCC->getParameterByName("propID");
+				if (idP == nullptr)
+				{
+					NLOGWARNING(niceName, "Prop ID parameter not found");
+					continue;
+				}
+
+				int propID = idP->intValue();
 				p->globalID->setValue(propID);
 			}
 		}
