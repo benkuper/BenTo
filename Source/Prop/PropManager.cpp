@@ -250,7 +250,24 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 	}
 	else if (c == powerOffAll)
 	{
-		for (auto& p : items) p->powerOffTrigger->trigger();
+		//ask before powering off all props
+		AlertWindow::showAsync(
+			MessageBoxOptions().withIconType(AlertWindow::WarningIcon)
+			.withTitle("Power Off All Props")
+			.withMessage("Are you sure you want to power off all the props ?")
+			.withButton("Yes")
+			.withButton("No"),
+			[&](int result)
+			{
+				if (result) 
+				{
+					for (auto& p : items) 
+					{
+						p->powerOffTrigger->trigger();
+					}
+				}
+
+			});
 	}
 	else if (c == resetAll)
 	{

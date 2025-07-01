@@ -23,6 +23,8 @@ public:
 	std::unique_ptr<TriggerButtonUI> assignPropIdUI;
 	std::unique_ptr<TriggerButtonUI> enableUI;
 	std::unique_ptr<TriggerButtonUI> disableUI;
+	std::unique_ptr<TriggerButtonUI> restartUI;
+	std::unique_ptr<TriggerButtonUI> powerOffUI;
 	std::unique_ptr<FloatSliderUI> globalBrightnessUI;
 	std::unique_ptr<TriggerButtonUI> uploadAllUI;
 	std::unique_ptr<BoolToggleUI> playbackModeUI;

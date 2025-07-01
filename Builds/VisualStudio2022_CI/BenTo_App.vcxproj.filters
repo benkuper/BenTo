@@ -5152,10 +5152,19 @@
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors.mm">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors_ara.cpp">
+      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_audio_processors_lv2_libs.cpp">
+      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core.mm">
+      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_core_CompilationTime.cpp">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_cryptography.cpp">
@@ -5180,6 +5189,12 @@
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics.mm">
+      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics_Harfbuzz.cpp">
+      <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_graphics_Sheenbidi.c">
       <Filter>JUCE Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Modules\juce_organicui\resources\organicui_resources\JuceLibraryCode\include_juce_gui_basics.cpp">
