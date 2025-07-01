@@ -15,7 +15,7 @@ BentoComponentContainer::BentoComponentContainer(BentoProp* prop) :
 	ControllableContainer("Components"),
 	Thread("Bento OSCQuery"),
 	prop(prop),
-	wsPort(80),
+	wsPort(-1),
 	isUpdatingStructure(false)
 {
 	startThread();
@@ -40,7 +40,8 @@ void BentoComponentContainer::setupWSClient()
 	wsClient->addWebSocketListener(this);
 
 	String host = prop->remoteHost->stringValue();
-	String url = host + ":81/";
+	String url = host;
+	if(wsPort != -1) url += ":" + String(wsPort) + "/";
 	DBG("Setting up client at " << url);
 	wsClient->start(url);
 }
@@ -185,7 +186,7 @@ void BentoComponentContainer::requestHostInfo()
 {
 	if (prop->remoteHost == nullptr || prop->remoteHost->stringValue().isEmpty()) return
 
-	prop->isConnected->setValue(false);
+		prop->isConnected->setValue(false);
 
 	URL url("http://" + prop->remoteHost->stringValue() + "/?HOST_INFO");
 	StringPairArray responseHeaders;
@@ -218,7 +219,7 @@ void BentoComponentContainer::requestHostInfo()
 		if (data.isObject())
 		{
 			//NLOG(niceName, "Received HOST_INFO :\n" << JSON::toString(data));
-			wsPort = data.getProperty("WS_PORT", wsPort);
+			wsPort = data.getProperty("WS_PORT", -1);
 			success = true;
 
 			requestStructure();
