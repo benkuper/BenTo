@@ -33,6 +33,7 @@ PropUI::PropUI(Prop* p) :
 	{
 		batteryUI.reset(item->battery->createSlider());
 		batteryUI->showLabel = false;
+		batteryUI->showValue = false;
 		addAndMakeVisible(batteryUI.get());
 	}
 
