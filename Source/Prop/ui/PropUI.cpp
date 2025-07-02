@@ -9,6 +9,7 @@
 */
 
 #include "Prop/PropIncludes.h"
+#include "PropUI.h"
 
 PropUI::PropUI(Prop* p) :
 	ItemUI(p, HORIZONTAL),
@@ -31,6 +32,7 @@ PropUI::PropUI(Prop* p) :
 	if (item->battery != nullptr)
 	{
 		batteryUI.reset(item->battery->createSlider());
+		batteryUI->showLabel = false;
 		addAndMakeVisible(batteryUI.get());
 	}
 
@@ -41,6 +43,8 @@ PropUI::PropUI(Prop* p) :
 	viz.setInterceptsMouseClicks(false, false);
 
 	Prop::Shape shape = p->shape->getValueDataAsEnum<Prop::Shape>();
+
+	updateBatteryUI();
 
 	setSize(shape == Prop::HOOP ? 100 : 50, 100);
 }
@@ -158,6 +162,10 @@ void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 		Prop::Shape shape = item->shape->getValueDataAsEnum<Prop::Shape>();
 		setSize(shape == Prop::HOOP ? 100 : 50, 100);
 	}
+	else if (c == item->chargingRef || c == item->batteryRef)
+	{
+		updateBatteryUI();
+	}
 }
 
 void PropUI::itemDropped(const SourceDetails& source)
@@ -194,4 +202,23 @@ void PropUI::itemDropped(const SourceDetails& source)
 
 	ItemUI::itemDropped(source);
 
+}
+
+void PropUI::updateBatteryUI()
+{
+	if (item->chargingRef == nullptr) return;
+
+	if (item->chargingRef->boolValue() == batteryUI->useCustomFGColor) return;
+
+	if (item->chargingRef->boolValue())
+	{
+		batteryUI->useCustomFGColor = true;
+		batteryUI->customFGColor = Colours::yellow.withAlpha(.8f);
+	}
+	else
+	{
+		batteryUI->useCustomFGColor = false;
+	}
+
+	batteryUI->repaint();
 }

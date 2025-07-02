@@ -43,6 +43,7 @@ public:
 
 	FloatParameter* battery;
 	FloatParameter* batteryRef;
+	BoolParameter* chargingRef;
 	BoolParameter* motionRef;
 
 	ControllableContainer connectionCC;

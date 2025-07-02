@@ -33,4 +33,5 @@ public:
 	void controllableFeedbackUpdateInternal(Controllable * c) override;
 
 	void itemDropped(const SourceDetails &source) override;
+	void updateBatteryUI();
 };

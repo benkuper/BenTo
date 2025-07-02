@@ -28,6 +28,7 @@ BentoProp::BentoProp(var params) :
 	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", .5, 0, 1);
 	battery = generalCC.addFloatParameter("Battery", "Battery level of the prop", 1, 0, 1);
 	battery->setControllableFeedbackOnly(true);
+
 	enableLedsOnConnect = generalCC.addBoolParameter("Enable LEDs on connect", "Enable LEDs when the prop is connected", true);
 	actionOnRemove = generalCC.addEnumParameter("Action on remove", "Action to do when the prop is removed");
 	actionOnRemove->addOption("Nothing", NOTHING)->addOption("Disable led", DISABLE_LED)->addOption("Power off", POWER_OFF);

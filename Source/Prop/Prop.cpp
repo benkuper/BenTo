@@ -20,6 +20,7 @@ Prop::Prop(var params) :
 	invertLedsInUI(true),
 	battery(nullptr),
 	batteryRef(nullptr),
+	chargingRef(nullptr),
 	motionRef(nullptr),
 	connectionCC("Connection"),
 	controlsCC("Controls"),

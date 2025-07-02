@@ -318,6 +318,9 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 			container->prop->batteryRef = ((FloatParameter*)c);
 			container->prop->battery->setRange(container->prop->batteryRef->minimumValue, container->prop->batteryRef->maximumValue);
 			container->prop->battery->setValue(container->prop->batteryRef->floatValue());
+		}else if (c->shortName == "charging")
+		{
+			container->prop->chargingRef = ((BoolParameter*)c);
 		}
 	}
 	else if (shortName == "motion")
