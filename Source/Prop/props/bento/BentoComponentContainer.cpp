@@ -307,6 +307,7 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 		else if (c->shortName == "brightness")
 		{
 			container->prop->brightnessRef = ((FloatParameter*)c);
+			container->prop->brightness->setRange(container->prop->brightnessRef->minimumValue, container->prop->brightnessRef->maximumValue);
 			container->prop->brightness->setValue(container->prop->brightnessRef->floatValue());
 		}
 	}

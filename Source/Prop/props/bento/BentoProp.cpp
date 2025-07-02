@@ -25,7 +25,7 @@ BentoProp::BentoProp(var params) :
 	remoteHost = connectionCC.addStringParameter("Network IP", "IP of the prop on the network", "");
 
 	resolution->setDefaultValue(32);
-	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", 1, 0, 1);
+	brightness = generalCC.addFloatParameter("Brightness", "Brightness of the prop", .5, 0, 1);
 	battery = generalCC.addFloatParameter("Battery", "Battery level of the prop", 1, 0, 1);
 	battery->setControllableFeedbackOnly(true);
 	enableLedsOnConnect = generalCC.addBoolParameter("Enable LEDs on connect", "Enable LEDs when the prop is connected", true);

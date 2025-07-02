@@ -44,7 +44,7 @@ PropManager::PropManager() :
 	clearAll = controlsCC.addTrigger("Clear all props", "Remove all props from manager");
 	enableAll = controlsCC.addTrigger("Enable All", "");
 	disableAll = controlsCC.addTrigger("Disable All", "");
-	globalBrightness = controlsCC.addFloatParameter("Brightness", "Global Brightness of all props", .3f, 0, 1);
+	globalBrightness = controlsCC.addFloatParameter("Brightness", "Global Brightness of all props", .5f, 0, 2);
 	disablePreview = controlsCC.addBoolParameter("Disable preview", "If checked, this will disable preview in prop UI, it reduces considerably the cpu/gpu consumption.", false);
 	addChildControllableContainer(&controlsCC);
 
