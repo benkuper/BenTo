@@ -58,6 +58,7 @@ public:
 	BoolParameter* filterKnownDevices;
 
 	EnumParameter* fwType;
+	EnumParameter* fwVersion;
 	var firmwareData;
 	File firmwareFile;
 
@@ -87,6 +88,7 @@ public:
 	Array<FlashResult> flasherDones;
 
 	void updateFirmwareDefinitions(bool force = false);
+	void updateVersionEnumForFWType();
 
 	void setFlashProgression(SingleFlasher*, float val);;
 	void setFlashingDone(SingleFlasher*, FlashResult val);

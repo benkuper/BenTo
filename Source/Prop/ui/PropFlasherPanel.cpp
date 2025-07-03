@@ -17,6 +17,7 @@ PropFlasherPanel::PropFlasherPanel() :
 {
 	filterKnownDevicesUI.reset(PropFlasher::getInstance()->filterKnownDevices->createToggle());
 	firmwareToUploadUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwType->createDefaultUI());
+	firmwareVersionUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwVersion->createDefaultUI());
 	firmwareCustomFileUI.reset((StringParameterFileUI*)PropFlasher::getInstance()->fwFileParam->createStringParameterFileUI());
 	updateFirmwareDefinitionsUI.reset(PropFlasher::getInstance()->updateFirmwareDefinitionsTrigger->createButtonUI());
 
@@ -48,6 +49,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	addAndMakeVisible(updateFirmwareDefinitionsUI.get());
 	addAndMakeVisible(filterKnownDevicesUI.get());
 	addAndMakeVisible(firmwareToUploadUI.get());
+	addAndMakeVisible(firmwareVersionUI.get());
 	addAndMakeVisible(firmwareCustomFileUI.get());
 	addAndMakeVisible(setWifiAfterFlashUI.get());
 	addAndMakeVisible(wifiSSIDUI.get());
@@ -99,7 +101,7 @@ void PropFlasherPanel::paint(Graphics& g)
 
 	g.setColour(TEXT_COLOR);
 	g.setFont(18);
-	g.drawText("1. Choose Firmware", fwRect.withHeight(24), Justification::centred);
+	g.drawText("1. Choose Firmware and version", fwRect.withHeight(24), Justification::centred);
 	g.drawText("2. Set Wifi Informations", wifiRect.withHeight(24), Justification::centred);
 	g.drawText("3. Upload Firmware", flashRect.withHeight(24), Justification::centred);
 	g.drawText("Extra. Upload Server files (not mandatory)", uploadRect.withHeight(24), Justification::centred);
@@ -142,7 +144,9 @@ void PropFlasherPanel::resized()
 	Rectangle<int> fwr = fwRect.reduced(10);
 	fwr.removeFromTop(20);
 	updateFirmwareDefinitionsUI->setBounds(fwr.removeFromLeft(120).reduced(4));
-	firmwareToUploadUI->setBounds(fwr.removeFromLeft(200).reduced(4));
+	firmwareToUploadUI->setBounds(fwr.removeFromLeft(150).reduced(4));
+	fwr.removeFromLeft(4);
+	firmwareVersionUI->setBounds(fwr.removeFromLeft(100).reduced(4));
 	fwr.removeFromLeft(20);
 	firmwareCustomFileUI->setBounds(fwr.reduced(4));
 

@@ -26,6 +26,7 @@ PropFlasher::PropFlasher() :
 	updateFirmwareDefinitionsTrigger = addTrigger("Update List", "Update the list of available firmwares");
 
 	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
+	fwVersion = addEnumParameter("Firmware Version", "Version of the firmware to upload");
 
 	fwFileParam = addFileParameter("Firmware File", "The folder of the firmware to flash");
 	fwFileParam->directoryMode = true;
@@ -73,40 +74,76 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 
 	Array<File> fwFolders = f.findChildFiles(File::TypesOfFileToFind::findDirectories, false);
 
+	fwVersion->clearOptions();
+
 	for (auto& fold : fwFolders)
 	{
-		if (fold.getFileName() == "server")
-		{
-			if (serverFilesParam->stringValue().isEmpty())  serverFilesParam->setValue(fold.getFullPathName());
-			continue; //ignore server folder for firmware listing
-		}
-		;
-		if (!fold.getChildFile("manifest.json").existsAsFile())
-		{
-			NLOGWARNING(niceName, "Firmware folder " << fold.getFullPathName() << " is missing manifest.json");
+		if (fold.getFileName() == "server") {
+			if (serverFilesParam->stringValue().isEmpty())
+				serverFilesParam->setValue(fold.getFullPathName());
 			continue;
 		}
 
-
-		var fwData = JSON::parse(fold.getChildFile("manifest.json").loadFileAsString());
-		if (fwData.isVoid())
+		Array<File> versionFolders = fold.findChildFiles(File::findDirectories, false);
+		for (auto& versionFolder : versionFolders)
 		{
-			NLOGWARNING(niceName, "Firmware folder " << fold.getFullPathName() << " has invalid manifest.json");
-			continue;
+			File manifestFile = versionFolder.getChildFile("manifest.json");
+			if (!manifestFile.existsAsFile()) {
+				NLOGWARNING(niceName, "Missing manifest.json in " << versionFolder.getFullPathName());
+				continue;
+			}
+
+			var fwData = JSON::parse(manifestFile.loadFileAsString());
+			if (fwData.isVoid()) {
+				NLOGWARNING(niceName, "Invalid manifest.json in " << versionFolder.getFullPathName());
+				continue;
+			}
+
+			String fwName = fwData["name"].toString();
+			fwType->addOption(fwName, fold.getFullPathName());
+
+			// Store all firmware data
+			availableFirmwares.append(fwData);
 		}
-
-		String fwName = fwData.getProperty("name", "Unknown");
-		fwType->addOption(fwName, fold.getFullPathName());
-
-		availableFirmwares.append(fwData);
 	}
 
 	fwType->addOption("Custom", "");
 
+
 	String ft = fwType->getValueData().toString();
 	fwFileParam->setEnabled(ft.isEmpty());
 
+	updateVersionEnumForFWType();
+
 	propFlasherNotifier.addMessage(new PropFlasherEvent(PropFlasherEvent::DEFINITIONS_UPDATED, this));
+}
+
+void PropFlasher::updateVersionEnumForFWType()
+{
+	fwVersion->clearOptions();
+
+	File typeFolder = File(fwType->getValueData().toString());
+
+	if (typeFolder.isDirectory())
+	{
+		Array<File> versionFolders = typeFolder.findChildFiles(File::findDirectories, false);
+		for (auto& versionFolder : versionFolders)
+		{
+			File manifestFile = versionFolder.getChildFile("manifest.json");
+			if (!manifestFile.existsAsFile())
+				continue;
+
+			var fwData = JSON::parse(manifestFile.loadFileAsString());
+			if (fwData.isVoid())
+				continue;
+
+			String fwVersionName = fwData["version"].toString();
+
+			// UI shows only version, value is full path
+			fwVersion->addOption(fwVersionName, versionFolder.getFullPathName());
+		}
+	}
+
 }
 
 void PropFlasher::setFlashProgression(SingleFlasher* flasher, float val)
@@ -154,8 +191,11 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 {
 	if (p == fwType)
 	{
-		String ft = fwType->getValueData().toString();
-		fwFileParam->setEnabled(ft.isEmpty());
+		String typeName = fwType->getValueKey();
+		fwFileParam->setEnabled(typeName.isEmpty());
+
+		updateVersionEnumForFWType();
+		// Enable/disable custom folder selection
 	}
 	else if (p == fwFileParam)
 	{
@@ -268,7 +308,7 @@ void PropFlasher::flashAll(bool onlySetWifi)
 	}
 	else
 	{
-		fwFolder = File(fwType->getValueData().toString());
+		fwFolder = File(fwVersion->getValueData().toString());
 	}
 
 	File manifestFile = fwFolder.getChildFile("manifest.json");

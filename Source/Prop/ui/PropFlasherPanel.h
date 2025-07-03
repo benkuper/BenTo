@@ -34,6 +34,7 @@ public:
 
 	std::unique_ptr<TriggerButtonUI> updateFirmwareDefinitionsUI;
 	std::unique_ptr<EnumParameterUI> firmwareToUploadUI;
+	std::unique_ptr<EnumParameterUI> firmwareVersionUI;
 	std::unique_ptr<StringParameterFileUI> firmwareCustomFileUI;
 	std::unique_ptr<BoolToggleUI> setWifiAfterFlashUI;
 	std::unique_ptr<StringParameterUI> wifiSSIDUI;
