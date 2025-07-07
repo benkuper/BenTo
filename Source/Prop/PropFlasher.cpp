@@ -85,26 +85,29 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 		}
 
 		Array<File> versionFolders = fold.findChildFiles(File::findDirectories, false);
-		for (auto& versionFolder : versionFolders)
-		{
-			File manifestFile = versionFolder.getChildFile("manifest.json");
-			if (!manifestFile.existsAsFile()) {
-				NLOGWARNING(niceName, "Missing manifest.json in " << versionFolder.getFullPathName());
-				continue;
-			}
+        // Replace this block in updateFirmwareDefinitions:
+        for (auto& versionFolder : versionFolders)
+        {
+            File manifestFile = versionFolder.getChildFile("manifest.json");
+            if (!manifestFile.existsAsFile()) {
+                NLOGWARNING(niceName, "Missing manifest.json in " << versionFolder.getFullPathName());
+                continue;
+            }
 
-			var fwData = JSON::parse(manifestFile.loadFileAsString());
-			if (fwData.isVoid()) {
-				NLOGWARNING(niceName, "Invalid manifest.json in " << versionFolder.getFullPathName());
-				continue;
-			}
+            var fwData = JSON::parse(manifestFile.loadFileAsString());
+            if (fwData.isVoid()) {
+                NLOGWARNING(niceName, "Invalid manifest.json in " << versionFolder.getFullPathName());
+                continue;
+            }
 
-			String fwName = fwData["name"].toString();
-			fwType->addOption(fwName, fold.getFullPathName());
+            // Only add the first valid version as an option for this firmware
+            String fwName = fwData["name"].toString();
+            fwType->addOption(fwName, fold.getFullPathName());
 
-			// Store all firmware data
-			availableFirmwares.append(fwData);
-		}
+            // Store all firmware data
+            availableFirmwares.append(fwData);
+            break; // Only show one option per firmware
+        }
 	}
 
 	fwType->addOption("Custom", "");
@@ -127,6 +130,15 @@ void PropFlasher::updateVersionEnumForFWType()
 	if (typeFolder.isDirectory())
 	{
 		Array<File> versionFolders = typeFolder.findChildFiles(File::findDirectories, false);
+
+		//order backwaards so first option is the latest version
+		std::sort(versionFolders.begin(), versionFolders.end(),[](const File& a, const File& b) {
+			return a.getFileName().compareNatural(b.getFileName()) > 0; // sort descending
+			});
+
+
+		bool firstOption = true;
+
 		for (auto& versionFolder : versionFolders)
 		{
 			File manifestFile = versionFolder.getChildFile("manifest.json");
@@ -140,7 +152,10 @@ void PropFlasher::updateVersionEnumForFWType()
 			String fwVersionName = fwData["version"].toString();
 
 			// UI shows only version, value is full path
-			fwVersion->addOption(fwVersionName, versionFolder.getFullPathName());
+			String label = firstOption ? "Latest (" + fwVersionName + ")" : fwVersionName;
+			fwVersion->addOption(label, versionFolder.getFullPathName());
+
+			firstOption = false;
 		}
 	}
 

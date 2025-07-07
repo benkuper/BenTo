@@ -23,9 +23,12 @@ public:
 	BoolParameter* imuRef;
 
 	bool shouldRepaint;
+	bool updateDrawing;
 
 	void paint(Graphics& g) override;
 	void newMessage(const Prop::PropEvent& e) override;
+
+	void mouseDown(const MouseEvent& e) override;
 
 	void handleRepaint();
 };

@@ -48,7 +48,7 @@ Prop::Prop(var params) :
 	shape = generalCC.addEnumParameter("Type", "The type of the prop");
 	fillTypeOptions(shape);
 	shape->setValueWithKey(params.getProperty("shape", shape->getValueKey()));
-	resolution = generalCC.addIntParameter("Resolution", "The resolution of the prop", 50, 1, 500);
+	resolution = generalCC.addIntParameter("Resolution", "The resolution of the prop", 50, 1, 5000);
 	updateRate = generalCC.addIntParameter("Update Rate", "The update rate of the prop in Hz", 60, 1, 500);
 	addChildControllableContainer(&generalCC);
 

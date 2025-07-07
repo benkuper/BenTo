@@ -106,6 +106,8 @@ void PropUI::mouseDown(const MouseEvent& e)
 		{
 			item->findPropMode->setValue(true);
 		}
+
+
 	}
 }
 

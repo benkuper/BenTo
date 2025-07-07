@@ -9,13 +9,15 @@
 */
 
 #include "Prop/PropIncludes.h"
+#include "PropViz.h"
 
 juce_ImplementSingleton(VizTimer);
 
 PropViz::PropViz(Prop* prop) :
 	prop(prop),
 	propRef(prop),
-	shouldRepaint(true)
+	shouldRepaint(true),
+	updateDrawing(true)
 {
 	prop->addAsyncCoalescedPropListener(this);
 	VizTimer::getInstance()->registerViz(this);
@@ -49,7 +51,7 @@ void PropViz::paint(Graphics& g)
 	case Prop::Shape::CLUB:
 	{
 		float ratio = getWidth() * 1.0f / getHeight();
-		int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 2);
+		int ledSize = jmax((ratio > (1.0f / numLeds) ? getHeight() : getWidth()) / numLeds, 3);
 
 		Rectangle<int> lr(getLocalBounds().reduced(0, ledSize));
 
@@ -112,9 +114,17 @@ void PropViz::newMessage(const Prop::PropEvent& e)
 	}
 }
 
+void PropViz::mouseDown(const MouseEvent& e)
+{
+	if (e.mods.isAltDown() && e.mods.isShiftDown())
+	{
+		updateDrawing = !updateDrawing;
+	}
+}
+
 void PropViz::handleRepaint()
 {
-	if (shouldRepaint)
+	if (shouldRepaint && updateDrawing)
 	{
 		//if (prop->colorLock.tryEnter())
 	//	{
