@@ -455,7 +455,7 @@ bool BentoProp::uploadProgressCallback(int bytesSent, int totalBytes)
 	if (threadShouldExit()) return false;
 	float p = bytesSent * 1.0f / totalBytes;
 	uploadProgress->setValue(.1f + p * .9f);
-	NLOG(niceName, "Uploading ... (" << bytesSent << " / " << totalBytes << ")");
+	//NLOG(niceName, "Uploading ... (" << bytesSent << " / " << totalBytes << ")");
 
 	return true;
 }

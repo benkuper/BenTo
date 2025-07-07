@@ -558,7 +558,8 @@ bool SingleFlasher::flashProp()
 				if (relProg != 1)
 				{
 					PropFlasher::getInstance()->setFlashProgression(this, relProg); //not using 1 to avoid double 100% log from partitions and firmware.
-					LOG("[" + info->port + "] Flashing... " << (int)(relProg * 100) << " % ");
+
+					//LOG("[" + info->port + "] Flashing... " << (int)(relProg * 100) << " % ");
 				}
 				else
 				{
