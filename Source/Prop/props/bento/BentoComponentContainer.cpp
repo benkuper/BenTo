@@ -144,6 +144,15 @@ void BentoComponentContainer::dataReceived(const MemoryBlock& data)
 	OSCPacketParser parser(data.getData(), (int)data.getSize());
 	OSCMessage m = parser.readMessage();
 
+	if (m.getAddressPattern().toString() == "/bye")
+	{
+		NLOG(niceName, "Prop is saying bye, prop will : " << (m.size() > 0 ? m[0].getString() : "[notset]"));
+
+		prop->isConnected->setValue(false);
+		startTimer(5000);
+		return;
+	}
+
 	if (Controllable* c = OSCHelpers::findControllable(this, m))
 	{
 		noFeedbackList.add(c);
@@ -155,11 +164,7 @@ void BentoComponentContainer::dataReceived(const MemoryBlock& data)
 void BentoComponentContainer::messageReceived(const String& message)
 {
 	if (!prop->enabled->boolValue()) return;
-	if (message == "close")
-	{
-		prop->isConnected->setValue(false);
-		startTimer(5000);
-	}
+	
 }
 
 
@@ -321,6 +326,7 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 		}else if (c->shortName == "charging")
 		{
 			container->prop->chargingRef = ((BoolParameter*)c);
+			container->prop->chargingRef->setValue(container->prop->chargingRef->boolValue(), true); //force update
 		}
 	}
 	else if (shortName == "motion")
@@ -328,6 +334,7 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 		if (c->shortName == "enabled")
 		{
 			container->prop->motionRef = ((BoolParameter*)c);
+			container->prop->motionRef->setValue(container->prop->motionRef->boolValue(), true); //force update
 		}
 	}
 

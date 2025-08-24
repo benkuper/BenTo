@@ -165,7 +165,9 @@ void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 		Prop::Shape shape = item->shape->getValueDataAsEnum<Prop::Shape>();
 		setSize(shape == Prop::HOOP ? 100 : 50, 100);
 	}
-	else if (c == item->chargingRef || c == item->batteryRef)
+	
+	
+	if (c == item->isConnected || c == item->chargingRef || c == item->batteryRef)
 	{
 		updateBatteryUI();
 	}

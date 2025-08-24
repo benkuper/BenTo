@@ -70,7 +70,7 @@
       <Optimization>Disabled</Optimization>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\Modules;..\..\JUCE\modules;D:\Softwares\JUCE\modules;../../Source;../../External/asio;../../External/serial/include;../../External/servus/include;../../External/ffmpeg/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b7;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b8;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -84,7 +84,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\Modules;..\..\JUCE\modules;D:\Softwares\JUCE\modules;../../Source;../../External/asio;../../External/serial/include;../../External/servus/include;../../External/ffmpeg/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b7;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;DEBUG;_DEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b8;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <OutputFile>$(OutDir)\BenTo.exe</OutputFile>
@@ -118,7 +118,7 @@
       <Optimization>Full</Optimization>
       <DebugInformationFormat>OldStyle</DebugInformationFormat>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\Modules;..\..\JUCE\modules;D:\Softwares\JUCE\modules;../../Source;../../External/asio;../../External/serial/include;../../External/servus/include;../../External/ffmpeg/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b7;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b8;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <RuntimeTypeInfo>true</RuntimeTypeInfo>
       <PrecompiledHeader>NotUsing</PrecompiledHeader>
@@ -132,7 +132,7 @@
     </ClCompile>
     <ResourceCompile>
       <AdditionalIncludeDirectories>..\..\JuceLibraryCode;..\..\Modules;..\..\JUCE\modules;D:\Softwares\JUCE\modules;../../Source;../../External/asio;../../External/serial/include;../../External/servus/include;../../External/ffmpeg/include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b7;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>_CRT_SECURE_NO_WARNINGS;WIN32;_WINDOWS;NDEBUG;JUCER_VS2022_78B14C07=1;JUCE_APP_VERSION=2.0.1b8;JUCE_APP_VERSION_HEX=0x20001;JucePlugin_Build_VST=0;JucePlugin_Build_VST3=0;JucePlugin_Build_AU=0;JucePlugin_Build_AUv3=0;JucePlugin_Build_AAX=0;JucePlugin_Build_Standalone=0;JucePlugin_Build_Unity=0;JucePlugin_Build_LV2=0;%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ResourceCompile>
     <Link>
       <OutputFile>$(OutDir)\BenTo.exe</OutputFile>
@@ -2272,6 +2272,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\fonts\juce_Font.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontFeatures.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontOptions.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2311,10 +2314,16 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\geometry\juce_Rectangle_test.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jaricom.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcapimin.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcapistd.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcarith.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jccoefct.c">
@@ -2347,9 +2356,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcparam.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcphuff.c">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcprepct.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2363,6 +2369,12 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdapistd.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdarith.c">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdatadst.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdatasrc.c">
@@ -2395,9 +2407,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdmerge.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdphuff.c">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdpostct.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2428,9 +2437,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jidctint.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jidctred.c">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jmemmgr.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
@@ -2444,9 +2450,6 @@
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jutils.c">
-      <ExcludedFromBuild>true</ExcludedFromBuild>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\transupp.c">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\pnglib\png.c">
@@ -4577,6 +4580,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioFormatReader.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioFormatReaderSource.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioFormatWriter.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioFormatWriterOptions.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioSubsectionReader.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_BufferingAudioFormatReader.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_MemoryMappedAudioFormatReader.h"/>
@@ -4872,6 +4876,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_EnumHelpers.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Functional.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_OptionsHelpers.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_OrderedContainerHelpers.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Result.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_RuntimePermissions.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_ScopeGuard.h"/>
@@ -5318,6 +5323,7 @@
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\harfbuzz\hb.hh"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_AttributedString.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_Font.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontFeatures.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontOptions.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FunctionPointerDestructor.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_GlyphArrangement.h"/>
@@ -5337,10 +5343,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\geometry\juce_Rectangle.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\geometry\juce_RectangleList.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\cderror.h"/>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jchuff.h"/>
+    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\cdjpeg.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jconfig.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdct.h"/>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdhuff.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jerror.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jinclude.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jmemsys.h"/>
@@ -5348,7 +5353,6 @@
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jpegint.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jpeglib.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jversion.h"/>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\transupp.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\pnglib\png.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\pnglib\pngconf.h"/>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\pnglib\pngdebug.h"/>

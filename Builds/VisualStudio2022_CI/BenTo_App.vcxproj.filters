@@ -3592,6 +3592,9 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\fonts\juce_Font.cpp">
       <Filter>JUCE Modules\juce_graphics\fonts</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontFeatures.cpp">
+      <Filter>JUCE Modules\juce_graphics\fonts</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontOptions.cpp">
       <Filter>JUCE Modules\juce_graphics\fonts</Filter>
     </ClCompile>
@@ -3631,10 +3634,16 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\geometry\juce_Rectangle_test.cpp">
       <Filter>JUCE Modules\juce_graphics\geometry</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jaricom.c">
+      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcapimin.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcapistd.c">
+      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcarith.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jccoefct.c">
@@ -3667,9 +3676,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcparam.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcphuff.c">
-      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jcprepct.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
@@ -3683,6 +3689,12 @@
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdapistd.c">
+      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdarith.c">
+      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdatadst.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdatasrc.c">
@@ -3715,9 +3727,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdmerge.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdphuff.c">
-      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdpostct.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
@@ -3748,9 +3757,6 @@
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jidctint.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jidctred.c">
-      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jmemmgr.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
@@ -3764,9 +3770,6 @@
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jutils.c">
-      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\transupp.c">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClCompile>
     <ClCompile Include="..\..\JUCE\modules\juce_graphics\image_formats\pnglib\png.c">
@@ -6843,6 +6846,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioFormatWriter.h">
       <Filter>JUCE Modules\juce_audio_formats\format</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioFormatWriterOptions.h">
+      <Filter>JUCE Modules\juce_audio_formats\format</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_audio_formats\format\juce_AudioSubsectionReader.h">
       <Filter>JUCE Modules\juce_audio_formats\format</Filter>
     </ClInclude>
@@ -7726,6 +7732,9 @@
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_OptionsHelpers.h">
+      <Filter>JUCE Modules\juce_core\misc</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_OrderedContainerHelpers.h">
       <Filter>JUCE Modules\juce_core\misc</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_core\misc\juce_Result.h">
@@ -9066,6 +9075,9 @@
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_Font.h">
       <Filter>JUCE Modules\juce_graphics\fonts</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontFeatures.h">
+      <Filter>JUCE Modules\juce_graphics\fonts</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\fonts\juce_FontOptions.h">
       <Filter>JUCE Modules\juce_graphics\fonts</Filter>
     </ClInclude>
@@ -9123,16 +9135,13 @@
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\cderror.h">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jchuff.h">
+    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\cdjpeg.h">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jconfig.h">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdct.h">
-      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jdhuff.h">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jerror.h">
@@ -9154,9 +9163,6 @@
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\jversion.h">
-      <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\jpglib\transupp.h">
       <Filter>JUCE Modules\juce_graphics\image_formats\jpglib</Filter>
     </ClInclude>
     <ClInclude Include="..\..\JUCE\modules\juce_graphics\image_formats\pnglib\png.h">
