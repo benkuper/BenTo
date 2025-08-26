@@ -102,6 +102,10 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 	{
 		sendMessageToProp(OSCMessage(ledEnabledAddress, enabled->boolValue() ? 1 : 0));
 	}
+	else if (p == globalID)
+	{
+		if (idRef != nullptr) idRef->setValue(globalID->intValue());
+	}
 }
 
 void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -151,6 +155,10 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 		{
 			if (enableLedsOnConnect->boolValue()) sendMessageToProp(OSCMessage(ledEnabledAddress, 1));
 		}
+	}
+	else if (c == idRef)
+	{
+		globalID->setValue(idRef->intValue());
 	}
 }
 

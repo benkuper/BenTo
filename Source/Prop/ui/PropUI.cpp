@@ -47,7 +47,7 @@ PropUI::PropUI(Prop* p) :
 
 	updateBatteryUI();
 
-	setSize(shape == Prop::HOOP ? 100 : 50, 100);
+	setSize(shape == Prop::HOOP ? 100 : 60, 100);
 }
 
 PropUI::~PropUI()
@@ -57,6 +57,13 @@ PropUI::~PropUI()
 void PropUI::paintOverChildren(Graphics& g)
 {
 	ItemUI::paintOverChildren(g);
+
+
+	Rectangle<int> footer = getMainBounds().removeFromBottom(20).reduced(2);
+	g.setFont(FontOptions(12));
+	g.setColour(Colours::white.withAlpha(.8f));
+	g.drawFittedText(item->niceName, footer, Justification::centred, 1);
+
 	if (item->isGeneratingPlayback->boolValue())
 	{
 		g.fillAll(Colours::black.withAlpha(.3f));
@@ -104,17 +111,15 @@ void PropUI::mouseDown(const MouseEvent& e)
 	{
 		if (e.mods.isAltDown())
 		{
-			item->findPropMode->setValue(true);
+			item->flashPropMode->setValue(true);
 		}
-
-
 	}
 }
 
 void PropUI::mouseUp(const MouseEvent& e)
 {
 	ItemUI::mouseUp(e);
-	item->findPropMode->setValue(false);
+	item->flashPropMode->setValue(false);
 }
 
 void PropUI::addContextMenuItems(PopupMenu& m)
@@ -154,6 +159,7 @@ void PropUI::resizedInternalContent(Rectangle<int>& r)
 		batteryUI->setBounds(r.removeFromTop(14).reduced(2));
 	}
 
+	r.removeFromBottom(20);
 	viz.setBounds(r.reduced(2));
 }
 

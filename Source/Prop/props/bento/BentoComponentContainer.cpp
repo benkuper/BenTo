@@ -337,5 +337,13 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 			container->prop->motionRef->setValue(container->prop->motionRef->boolValue(), true); //force update
 		}
 	}
+	else if (shortName == "settings")
+	{
+		if (c->shortName == "propID")
+		{
+			container->prop->idRef = ((IntParameter*)c);
+			container->prop->globalID->setValue(container->prop->idRef->intValue());
+		}
+	}
 
 }

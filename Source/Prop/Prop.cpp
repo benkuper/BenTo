@@ -33,6 +33,8 @@ Prop::Prop(var params) :
 {
 	//registerFamily(params.getProperty("family", "Mistery Family").toString());
 
+	setHasCustomColor(true);
+
 	hideInEditor = true;
 
 	logIncoming = addBoolParameter("Log Incoming", "Log all incoming messages from the prop", false);
@@ -58,9 +60,8 @@ Prop::Prop(var params) :
 	isConnected->setControllableFeedbackOnly(true);
 	isConnected->isSavable = false;
 
-	findPropMode = connectionCC.addBoolParameter("Find Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
-	findPropMode->setControllableFeedbackOnly(true);
-	findPropMode->isSavable = false;
+	flashPropMode = connectionCC.addBoolParameter("Flash Prop", "When active, the prop will lit up 50% white fixed to be able to find it", false);
+	flashPropMode->isSavable = false;
 	addChildControllableContainer(&connectionCC);
 
 
@@ -254,7 +255,7 @@ void Prop::update()
 	//HashMap<String, PropComponent*>::Iterator it(components);
 	//while (it.next()) it.getValue()->update();
 
-	if (findPropMode->boolValue())
+	if (flashPropMode->boolValue())
 	{
 		colors.fill(Colours::white.withBrightness(.5f));
 
@@ -327,9 +328,9 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 	{
 		initGeneratePlayback(currentBlock.get(), c == uploadPlaybackTrigger ? UPLOAD : EXPORT);
 	}
-	else if (c == findPropMode)
+	else if (c == flashPropMode)
 	{
-		colors.fill(findPropMode->boolValue() ? Colours::white : Colours::black);
+		colors.fill(flashPropMode->boolValue() ? Colours::white : Colours::black);
 		update();
 	}
 	else if (c == powerOffTrigger)

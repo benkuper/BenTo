@@ -49,7 +49,7 @@ public:
 	ControllableContainer connectionCC;
 	BoolParameter* isConnected;
 
-	BoolParameter* findPropMode;
+	BoolParameter* flashPropMode;
 
 	ControllableContainer controlsCC;
 	Trigger* powerOffTrigger;

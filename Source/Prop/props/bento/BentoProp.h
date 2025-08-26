@@ -35,6 +35,7 @@ public:
 
 	IntParameter* resolutionRef;
 	FloatParameter* brightnessRef;
+	IntParameter* idRef;
 
 
 	String playbackAddress;
