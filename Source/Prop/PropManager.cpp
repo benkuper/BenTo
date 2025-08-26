@@ -152,7 +152,7 @@ Prop* PropManager::createPropIfNotExist(const String& type, const String& host, 
 			if (bp != nullptr) bp->remoteHost->setValue(host);
 
 			addItem(p);
-			autoAssignIdTrigger->trigger();
+			//autoAssignIdTrigger->trigger();
 		}
 	}
 	else
