@@ -15,8 +15,7 @@ LightBlockColorProvider::LightBlockColorProvider(const String& name, bool canBeD
 	BaseItem(name, canBeDisabled, canHaveScripts),
 	providerType(providerType)
 {
-	assignToAll = addTrigger("Assign To All", "Assign this Model or Preset to all props");
-	assignToAll->hideInEditor = true;
+
 	viewUISize->isSavable = false;
 }
 
@@ -30,18 +29,6 @@ PlaybackData LightBlockColorProvider::getPlaybackDataForProp(Prop*)
 	return PlaybackData();
 }
 
-void LightBlockColorProvider::onContainerTriggerTriggered(Trigger* t)
-{
-	BaseItem::onContainerTriggerTriggered(t);
-	if (t == assignToAll)
-	{
-		for (auto& p : PropManager::getInstance()->items)
-		{
-			p->activeProvider->setValueFromTarget(this);
-		}
-	}
-
-}
 
 InspectableEditor* LightBlockColorProvider::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {

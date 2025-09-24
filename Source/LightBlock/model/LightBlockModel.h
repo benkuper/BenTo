@@ -23,6 +23,7 @@ public:
 
 	//ui
 	String customThumbnailPath;
+	Trigger* assignToAll;
 
 	bool isBeingEdited;
 	void setBeingEdited(bool value);
@@ -42,6 +43,7 @@ public:
 	template<class T>
 	T getParamValue(Parameter * p, var params);
 
+	void onContainerTriggerTriggered(Trigger* t) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c) override;
 	void childStructureChanged(ControllableContainer * cc) override;
 

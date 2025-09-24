@@ -72,6 +72,7 @@ public:
 	bool setWifiNoDelay;
 
 	Trigger* flashTrigger;
+	BoolParameter* forceSlowFlash;
 
 	FileParameter* serverFilesParam;
 	Trigger* uploadTrigger;

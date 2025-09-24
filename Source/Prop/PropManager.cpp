@@ -414,6 +414,14 @@ void PropManager::propIDChanged(Prop* p, int previousID)
 	if (otherPropWithSameID != nullptr) otherPropWithSameID->globalID->setValue(previousID);
 }
 
+void PropManager::assignModelToAllProps(LightBlockModel* model)
+{
+	for(auto& p : items)
+	{
+		p->setBlockFromProvider(model);
+	}
+}
+
 void PropManager::oscMessageReceived(const OSCMessage& m)
 {
 	String address = m.getAddressPattern().toString();

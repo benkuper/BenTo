@@ -15,8 +15,11 @@ LightBlockColorProviderEditor::LightBlockColorProviderEditor(Array<LightBlockCol
 	BaseItemEditor(Inspectable::getArrayAs<LightBlockColorProvider, BaseItem>(providers), isRoot),
 	provider(providers[0])
 {
-	assignUI.reset(provider->assignToAll->createButtonUI());
-	addAndMakeVisible(assignUI.get());
+	if (LightBlockModel* model = dynamic_cast<LightBlockModel*>(provider))
+	{
+		assignUI.reset(model->assignToAll->createButtonUI());
+		addAndMakeVisible(assignUI.get());
+	}
 }
 
 LightBlockColorProviderEditor::~LightBlockColorProviderEditor()
@@ -25,6 +28,7 @@ LightBlockColorProviderEditor::~LightBlockColorProviderEditor()
 
 void LightBlockColorProviderEditor::resizedInternalHeaderItemInternal(Rectangle<int>& r)
 {
+	if (assignUI == nullptr) return;
 	assignUI->setBounds(r.removeFromRight(120).reduced(2));
 	r.removeFromRight(4);
 }

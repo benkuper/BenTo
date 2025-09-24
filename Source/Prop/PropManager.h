@@ -93,6 +93,8 @@ public:
 	int getFirstAvailableID();
 	void propIDChanged(Prop* p, int previousID) override;
 
+	void assignModelToAllProps(LightBlockModel* model);
+
 	// Inherited via Listener
 	virtual void oscMessageReceived(const OSCMessage& message) override;
 

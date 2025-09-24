@@ -1,3 +1,4 @@
+#include "LightBlockModel.h"
 /*
   ==============================================================================
 
@@ -16,6 +17,9 @@ LightBlockModel::LightBlockModel(const String &name, var params, ProviderType pr
 {
 	setHasCustomColor(true);
 	//itemColor->hideInEditor = true;
+
+	assignToAll = addTrigger("Assign To All", "Assign this Model or Preset to all props");
+	assignToAll->hideInEditor = true;
 
 	itemDataType = "LightBlockModel";
 	paramsContainer.reset(new ControllableContainer("Parameters"));
@@ -94,6 +98,16 @@ LightBlockModelUI * LightBlockModel::createUI()
 {
 	return new LightBlockModelUI(this);
 }
+void LightBlockModel::onContainerTriggerTriggered(Trigger* t)
+{
+	LightBlockColorProvider::onContainerTriggerTriggered(t);
+
+	if (t == assignToAll)
+	{
+		PropManager::getInstance()->assignModelToAllProps(this);
+	}
+}
+
 void LightBlockModel::onControllableFeedbackUpdateInternal(ControllableContainer * cc, Controllable * c)
 {
 	if (Engine::mainEngine->isClearing) return;

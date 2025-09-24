@@ -20,6 +20,8 @@ PropFlasherPanel::PropFlasherPanel() :
 	firmwareVersionUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwVersion->createDefaultUI());
 	firmwareCustomFileUI.reset((StringParameterFileUI*)PropFlasher::getInstance()->fwFileParam->createStringParameterFileUI());
 	updateFirmwareDefinitionsUI.reset(PropFlasher::getInstance()->updateFirmwareDefinitionsTrigger->createButtonUI());
+	forceSlowFlashUI.reset(PropFlasher::getInstance()->forceSlowFlash->createToggle());
+
 
 	setWifiAfterFlashUI.reset(PropFlasher::getInstance()->setWifiAfterFlash->createToggle());
 	wifiSSIDUI.reset(PropFlasher::getInstance()->wifiSSID->createStringParameterUI());
@@ -51,6 +53,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	addAndMakeVisible(firmwareToUploadUI.get());
 	addAndMakeVisible(firmwareVersionUI.get());
 	addAndMakeVisible(firmwareCustomFileUI.get());
+	addAndMakeVisible(forceSlowFlashUI.get());
 	addAndMakeVisible(setWifiAfterFlashUI.get());
 	addAndMakeVisible(wifiSSIDUI.get());
 	addAndMakeVisible(wifiPassUI.get());
@@ -147,6 +150,8 @@ void PropFlasherPanel::resized()
 	firmwareToUploadUI->setBounds(fwr.removeFromLeft(150).reduced(4));
 	fwr.removeFromLeft(4);
 	firmwareVersionUI->setBounds(fwr.removeFromLeft(100).reduced(4));
+	fwr.removeFromLeft(4);
+	forceSlowFlashUI->setBounds(fwr.removeFromLeft(100).reduced(4));
 	fwr.removeFromLeft(20);
 	firmwareCustomFileUI->setBounds(fwr.reduced(4));
 

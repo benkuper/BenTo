@@ -51,7 +51,6 @@ public:
 	
 	ProviderType providerType;
 
-	Trigger * assignToAll;
 
 	//Bake info
 	enum PlaybackControl { PLAY, PAUSE, STOP, SEEK, SHOW_ID };
@@ -61,7 +60,6 @@ public:
 	virtual Array<Colour> getColors(Prop* p, double time, var params) override;
 	virtual PlaybackData getPlaybackDataForProp(Prop*) override;
 
-	void onContainerTriggerTriggered(Trigger *) override;
 
 	virtual void handleEnterExit(bool enter, Array<Prop *> props) {}
 

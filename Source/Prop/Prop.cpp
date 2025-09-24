@@ -46,11 +46,11 @@ Prop::Prop(var params) :
 	editorIsCollapsed = true;
 	saveAndLoadRecursiveData = true;
 
-	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0, 100);
+	globalID = generalCC.addIntParameter("Global ID", "The Global Prop ID, it is a unique ID but it can be swapped between props", 0, 0);
 	shape = generalCC.addEnumParameter("Type", "The type of the prop");
 	fillTypeOptions(shape);
 	shape->setValueWithKey(params.getProperty("shape", shape->getValueKey()));
-	resolution = generalCC.addIntParameter("Resolution", "The resolution of the prop", 50, 1, 5000);
+	resolution = generalCC.addIntParameter("Resolution", "The resolution of the prop", 50, 1);
 	updateRate = generalCC.addIntParameter("Update Rate", "The update rate of the prop in Hz", 60, 1, 500);
 	addChildControllableContainer(&generalCC);
 
@@ -233,7 +233,7 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 		//}
 	}
 
-
+	updatePlaybackModeOnProp();
 
 	if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
 	{

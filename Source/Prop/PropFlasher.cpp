@@ -31,6 +31,7 @@ PropFlasher::PropFlasher() :
 	fwFileParam = addFileParameter("Firmware File", "The folder of the firmware to flash");
 	fwFileParam->directoryMode = true;
 	fwFileParam->setEnabled(false);
+	forceSlowFlash = addBoolParameter("Force Slow Flash", "Force using the slow flashing method (slower but more reliable)", false);
 
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
 	progression = addFloatParameter("Progression", "Progression", 0, 0, 1);
@@ -509,7 +510,10 @@ bool SingleFlasher::flashProp()
 	NamedValueSet& espOptions = data["espOptions"].getDynamicObject()->getProperties();
 	for (auto& nv : espOptions)
 	{
-		parameters += " --" + nv.name + " " + nv.value.toString() + " ";
+		String valStr = nv.value.toString();
+		if (nv.name.toString() == "baud" && PropFlasher::getInstance()->forceSlowFlash->boolValue()) valStr = "115200";
+
+		parameters += " --" + nv.name + " " + valStr + " ";
 	}
 
 	parameters += " write_flash -z";

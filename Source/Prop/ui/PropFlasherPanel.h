@@ -36,6 +36,7 @@ public:
 	std::unique_ptr<EnumParameterUI> firmwareToUploadUI;
 	std::unique_ptr<EnumParameterUI> firmwareVersionUI;
 	std::unique_ptr<StringParameterFileUI> firmwareCustomFileUI;
+	std::unique_ptr<BoolToggleUI> forceSlowFlashUI;
 	std::unique_ptr<BoolToggleUI> setWifiAfterFlashUI;
 	std::unique_ptr<StringParameterUI> wifiSSIDUI;
 	std::unique_ptr<StringParameterUI> wifiPassUI;
