@@ -31,8 +31,6 @@ PropManager::PropManager() :
 	factory.defs.add(Factory<Prop>::Definition::createDef<Prop>(""));
 	factory.defs.add(Factory<Prop>::Definition::createDef<BentoProp>(""));
 
-
-
 	autoAddNetworkProps = connectionCC.addBoolParameter("Auto Add Network", "If checked, this will automatically add detected props on the network", false);
 	autoAddUSBProps = connectionCC.addBoolParameter("Auto Add USB", "If checked, this will automatically add detected props connected through USB", false);
 	detectProps = connectionCC.addTrigger("Detect Props", "Auto detect using the Yo protocol");
@@ -62,13 +60,18 @@ PropManager::PropManager() :
 	deleteAllScripts = playbackCC.addTrigger("Delete All Embedded Scripts", "Delete all Wasm scripts on all devices");
 
 	loop = playbackCC.addBoolParameter("Loop Playback", "If checked, this will tell the player to loop the playing", false);
+
+	loadSendRepeat = playbackCC.addIntParameter("Load Send Repeat", "When loading a playback, how many times to send the data to the prop. 0 = disabled", 5, 0, 100);
+	playSendRepeat = playbackCC.addIntParameter("Play Send Repeat", "When playing a playback, how many times to send the play command to the prop. 0 = disabled", 3, 0, 100);
+	playSyncSendInterval = playbackCC.addIntParameter("Play Sync Send Interval", "When playing a playback, how often (in s) to send the playSync command to the prop. 0 = disabled", 2, 0, 60);
+
+
+
 	addChildControllableContainer(&playbackCC);
 
 	String localIp = NetworkHelpers::getLocalIP();
 
 	//addChildControllableContainer(&familiesCC);
-
-
 
 	receiver.addListener(this);
 
@@ -86,6 +89,8 @@ PropManager::PropManager() :
 	//{
 	//	startThread(); // if no props detected, check online
 	//}
+
+	startTimer(PLAYSYNC_TIMER_ID, 1000 * playSyncSendInterval->intValue());
 }
 
 
@@ -268,9 +273,9 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 			.withButton("No"),
 			[&](int result)
 			{
-				if (result) 
+				if (result)
 				{
-					for (auto& p : items) 
+					for (auto& p : items)
 					{
 						p->powerOffTrigger->trigger();
 					}
@@ -303,7 +308,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		{
 			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 			{
-				if (c == loadAll) bp->loadPlayback(fileName->stringValue());
+				if (c == loadAll) bp->loadPlayback(fileName->stringValue(), false);
 				else if (c == playAll) bp->playPlayback(0, loop->boolValue());
 				else if (c == stopAll) bp->stopPlaybackPlaying();
 			}
@@ -335,6 +340,11 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 					}
 				}
 			});
+	}
+	else if (c == playSyncSendInterval)
+	{
+		if (playSyncSendInterval->intValue() == 0) stopTimer(PLAYSYNC_TIMER_ID);
+		else startTimer(PLAYSYNC_TIMER_ID, 1000 * playSyncSendInterval->intValue());
 	}
 	else
 	{
@@ -416,7 +426,7 @@ void PropManager::propIDChanged(Prop* p, int previousID)
 
 void PropManager::assignModelToAllProps(LightBlockModel* model)
 {
-	for(auto& p : items)
+	for (auto& p : items)
 	{
 		p->setBlockFromProvider(model);
 	}
@@ -599,8 +609,8 @@ void PropManager::checkDeviceDeviceID(SerialDeviceInfo* info)
 	{
 		d->addSerialDeviceListener(this);
 
-		startTimer(1, 200);
-		startTimer(2, 1000);
+		startTimer(YO_TIMER_ID, 200);
+		startTimer(SERIAL_TIMER_ID, 1000);
 
 		pendingDevices.addIfNotAlreadyThere(d);
 	}
@@ -650,14 +660,14 @@ void PropManager::serialDataReceived(SerialDevice* d, const var& data)
 
 void PropManager::timerCallback(int timerID)
 {
-	if (timerID == 1)
+	if (timerID == YO_TIMER_ID)
 	{
 		for (auto& d : pendingDevices)
 		{
 			d->writeString("yo\n");
 		}
 	}
-	else if (timerID == 2)
+	else if (timerID == SERIAL_TIMER_ID)
 	{
 		for (auto& d : pendingDevices)
 		{
@@ -666,6 +676,16 @@ void PropManager::timerCallback(int timerID)
 		pendingDevices.clear();
 		stopTimer(1);
 		stopTimer(2);
+	}
+	else if (timerID == PLAYSYNC_TIMER_ID)
+	{
+		for (auto& p : items)
+		{
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+			{
+				bp->checkAndSendPlaySync();
+			}
+		}
 	}
 
 }

@@ -29,6 +29,10 @@ PlaybackData LightBlockColorProvider::getPlaybackDataForProp(Prop*)
 	return PlaybackData();
 }
 
+Sequence* LightBlockColorProvider::getSequence()
+{
+	return nullptr;
+}
 
 InspectableEditor* LightBlockColorProvider::getEditorInternal(bool isRoot, Array<Inspectable*> inspectables)
 {

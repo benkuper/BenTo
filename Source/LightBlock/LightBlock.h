@@ -33,6 +33,7 @@ public:
 	var getLocalParams(Prop* p, double time, var params);
 
 	PlaybackData getPlaybackDataForProp(Prop* prop) override;
+	Sequence* getSequence();
 
 	void rebuildArgsFromModel();
 

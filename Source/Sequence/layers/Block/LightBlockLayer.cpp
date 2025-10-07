@@ -181,7 +181,7 @@ void LightBlockLayer::onContainerParameterChangedInternal(Parameter* p)
 
 bool LightBlockLayer::paste()
 {
-	Array<BaseItem*> p = blockClipManager.addItemsFromClipboard(false);
+	Array<LayerBlock*> p = blockClipManager.addItemsFromClipboard(false);
 	if (p.isEmpty()) return SequenceLayer::paste();
 	return true;
 }

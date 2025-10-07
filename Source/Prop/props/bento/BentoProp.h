@@ -64,8 +64,9 @@ public:
 
 	virtual void setPlaybackEnabled(bool enabled) override;
 	virtual void setStreamingEnabled(bool enabled) override;
-	virtual void loadPlayback(StringRef fileName, bool autoPlay = false) override;
-	virtual void playPlayback(float time = 0, bool loop = false) override;
+	virtual void loadPlaybackInternal(StringRef fileName, bool autoPlay = false) override;
+	virtual void playPlaybackInternal(float time = 0, bool loop = false) override;
+	virtual void sendPlaySyncInternal(StringRef fileName, float time) override;
 	virtual void pausePlaybackPlaying() override;
 	virtual void seekPlaybackPlaying(float time) override;
 	virtual void stopPlaybackPlaying() override;

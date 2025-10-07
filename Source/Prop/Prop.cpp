@@ -87,6 +87,7 @@ Prop::Prop(var params) :
 
 	playbackMode = playbackCC.addBoolParameter("Playback Mode", "Play the playback file with name set above, or revert to streaming", false);
 
+
 	sendCompressedFile = playbackCC.addBoolParameter("Send Compressed File", "Send Compressed File instead of raw", false);
 
 	isGeneratingPlayback = playbackCC.addBoolParameter("Is Generating", "Is this prop currently generating ?", false);
@@ -112,7 +113,7 @@ Prop::Prop(var params) :
 	activeProvider = addTargetParameter("Active Block", "The current active block for this prop");
 	activeProvider->targetType = TargetParameter::CONTAINER;
 	activeProvider->customGetTargetContainerFunc = &LightBlockModelLibrary::showSourcesAndGet;
-	activeProvider->hideInEditor = true;
+	//activeProvider->hideInEditor = true;
 
 	//proprefactor
 	//setupComponentsJSONDefinition(params.getProperty("components", var()));
@@ -535,6 +536,48 @@ void Prop::updatePlaybackModeOnProp()
 			}
 		}
 
+	}
+}
+
+void Prop::loadPlayback(StringRef path, bool autoPlay)
+{
+	loadPlaybackInternal(path, autoPlay);
+	for (int i = 0; i < PropManager::getInstance()->loadSendRepeat->intValue(); i++)
+	{
+		Timer::callAfterDelay(100 * (i + 1), [this, path, autoPlay]()
+			{
+				loadPlaybackInternal(path, autoPlay);
+			}
+		);
+	}
+}
+
+void Prop::playPlayback(float time, bool loop)
+{
+	playPlaybackInternal(time, loop);
+
+	for (int i = 0; i < PropManager::getInstance()->playSendRepeat->intValue(); i++)
+	{
+		int delayMS = 10 * (i + 1);
+		Timer::callAfterDelay(delayMS, [this, time, loop, delayMS]()
+			{
+				playPlaybackInternal(time + delayMS / 1000.0, loop);
+			}
+		);
+	}
+
+}
+
+void Prop::checkAndSendPlaySync()
+{
+	if (currentBlock == nullptr) return;
+
+	if (Sequence* s = currentBlock->getSequence())
+	{
+		if (s->isPlaying->boolValue())
+		{
+			sendPlaySyncInternal(currentBlock->shortName, s->currentTime->floatValue());
+		}
 	}
 }
 

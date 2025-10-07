@@ -60,6 +60,8 @@ public:
 	virtual Array<Colour> getColors(Prop* p, double time, var params) override;
 	virtual PlaybackData getPlaybackDataForProp(Prop*) override;
 
+	virtual Sequence* getSequence();
+
 
 	virtual void handleEnterExit(bool enter, Array<Prop *> props) {}
 

@@ -56,6 +56,7 @@ public:
 	Trigger* restartTrigger;
 
 	ControllableContainer playbackCC;
+	
 	FloatParameter* playbackStartTime;
 	FloatParameter* playbackEndTime;
 	IntParameter* playbackFrequency;
@@ -129,8 +130,12 @@ public:
 	virtual void updatePlaybackModeOnProp();
 	virtual void setPlaybackEnabled(bool value) {}
 	virtual void setStreamingEnabled(bool value) {}
-	virtual void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/) {}
-	virtual void playPlayback(float /*time */ = 0, bool /* loop */ = false) {}
+	void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/);
+	virtual void loadPlaybackInternal(StringRef /*fileName*/, bool /*autoPlay*/) {}
+	void playPlayback(float /*time */ = 0, bool /* loop */ = false);
+	virtual void playPlaybackInternal(float /*time */, bool /*loop */) {}
+	void checkAndSendPlaySync();
+	virtual void sendPlaySyncInternal(StringRef /*fileName*/, float /*time */) {}
 	virtual void pausePlaybackPlaying() {}
 	virtual void resumePlaybackPlaying() {}
 	virtual void seekPlaybackPlaying(float /*time */) {}

@@ -14,6 +14,10 @@
 #include "PropFamily.h"
 #include "Common/CommonIncludes.h"
 
+#define YO_TIMER_ID 1
+#define SERIAL_TIMER_ID 2
+#define PLAYSYNC_TIMER_ID 3
+
 class PropManager :
 	public Manager<Prop>,
 	public OSCReceiver::Listener<OSCReceiver::RealtimeCallback>,
@@ -61,6 +65,9 @@ public:
 	Trigger* deleteAllPlayback;
 	Trigger* deleteAllScripts;
 	BoolParameter* loop;
+	IntParameter* loadSendRepeat;
+	IntParameter* playSendRepeat;
+	IntParameter* playSyncSendInterval;
 
 	BoolParameter* autoAddNetworkProps;
 	BoolParameter* autoAddUSBProps;

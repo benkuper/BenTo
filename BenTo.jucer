@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source&#10;../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-              id="LP0of5" version="2.0.1b10" projectLineFeed="&#10;" jucerFormatVersion="1"
+              id="LP0of5" version="2.0.1b11" projectLineFeed="&#10;" jucerFormatVersion="1"
               cppLanguageStandard="17" includeBinaryInJuceHeader="1" bundleIdentifier="benkuper.Bento">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
@@ -737,6 +737,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_audio_processors"/>
         <MODULEPATH id="juce_javascript"/>
+        <MODULEPATH id="juce_audio_processors_headless"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -777,6 +778,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_audio_processors"/>
         <MODULEPATH id="juce_javascript"/>
+        <MODULEPATH id="juce_audio_processors_headless"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/LinuxMakefile" externalLibraries="curl&#10;Servus"
@@ -811,6 +813,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <VS2022 targetFolder="Builds/VisualStudio2022_CI" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
@@ -846,6 +849,7 @@
         <MODULEPATH id="juce_video" path="D:\Softwares\JUCE\modules"/>
         <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </VS2022>
     <XCODE_MAC targetFolder="Builds/MacOSX_CI" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -886,6 +890,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </XCODE_MAC>
     <LINUX_MAKE targetFolder="Builds/Raspberry" extraLinkerFlags="-Wl,-rpath,&quot;lib&quot;&#10;-Wl,--as-needed&#10;-Wl,--export-dynamic&#10;-fvisibility=default"
@@ -922,6 +927,7 @@
         <MODULEPATH id="juce_dmx" path="Modules"/>
         <MODULEPATH id="juce_audio_processors" path="JUCE/modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
     <LINUX_MAKE targetFolder="Builds/Raspberry64" smallIcon="YlXmhK" bigIcon="YlXmhK"
@@ -959,6 +965,7 @@
         <MODULEPATH id="juce_timeline" path="Modules"/>
         <MODULEPATH id="juce_video" path="JUCE/modules"/>
         <MODULEPATH id="juce_javascript" path="JUCE/modules"/>
+        <MODULEPATH id="juce_audio_processors_headless" path="JUCE/modules"/>
       </MODULEPATHS>
     </LINUX_MAKE>
   </EXPORTFORMATS>
@@ -969,6 +976,8 @@
     <MODULE id="juce_audio_devices" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_formats" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_audio_processors" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
+    <MODULE id="juce_audio_processors_headless" showAllCode="1" useLocalCopy="0"
+            useGlobalPath="0"/>
     <MODULE id="juce_audio_utils" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_core" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>
     <MODULE id="juce_cryptography" showAllCode="1" useLocalCopy="0" useGlobalPath="0"/>

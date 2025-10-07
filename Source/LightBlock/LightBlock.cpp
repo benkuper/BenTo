@@ -186,6 +186,17 @@ PlaybackData LightBlock::getPlaybackDataForProp(Prop* p)
 	return result;
 }
 
+Sequence* LightBlock::getSequence()
+{
+	if (provider.wasObjectDeleted()) return nullptr;
+	if (BentoSequenceBlock* s = dynamic_cast<BentoSequenceBlock*>(provider.get()))
+	{
+		return s->sequence.get();
+	}
+
+	return nullptr;
+}
+
 
 var LightBlock::getJSONData(bool includeNonOverriden)
 {

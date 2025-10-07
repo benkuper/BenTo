@@ -368,7 +368,7 @@ void BentoProp::setStreamingEnabled(bool value)
 	}
 }
 
-void BentoProp::loadPlayback(StringRef fileName, bool autoPlay)
+void BentoProp::loadPlaybackInternal(StringRef fileName, bool autoPlay)
 {
 	if (serialDevice != nullptr)
 	{
@@ -382,7 +382,7 @@ void BentoProp::loadPlayback(StringRef fileName, bool autoPlay)
 	}
 }
 
-void BentoProp::playPlayback(float time, bool loop)
+void BentoProp::playPlaybackInternal(float time, bool loop)
 {
 	if (serialDevice != nullptr)
 	{
@@ -397,6 +397,14 @@ void BentoProp::playPlayback(float time, bool loop)
 		m.addInt32(loop ? 1 : 0);
 		sendMessageToProp(m);
 	}
+}
+
+void BentoProp::sendPlaySyncInternal(StringRef fileName, float time)
+{
+	OSCMessage m(playbackAddress + "/playSync");
+	m.addString(fileName);
+	m.addFloat32(time);
+	sendMessageToProp(m);
 }
 
 void BentoProp::pausePlaybackPlaying()
