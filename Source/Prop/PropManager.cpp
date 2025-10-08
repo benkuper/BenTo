@@ -679,11 +679,14 @@ void PropManager::timerCallback(int timerID)
 	}
 	else if (timerID == PLAYSYNC_TIMER_ID)
 	{
-		for (auto& p : items)
+		if (playbackMode->boolValue())
 		{
-			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+			for (auto& p : items)
 			{
-				bp->checkAndSendPlaySync();
+				if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+				{
+					bp->checkAndSendPlaySync();
+				}
 			}
 		}
 	}
