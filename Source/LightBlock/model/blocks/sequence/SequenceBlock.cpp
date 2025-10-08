@@ -1,9 +1,9 @@
 /*
   ==============================================================================
 
-    SequenceBlock.cpp
-    Created: 10 Apr 2018 6:59:02pm
-    Author:  Ben
+	SequenceBlock.cpp
+	Created: 10 Apr 2018 6:59:02pm
+	Author:  Ben
 
   ==============================================================================
 */
@@ -17,9 +17,14 @@ BentoSequenceBlock::BentoSequenceBlock(var params) :
 {
 	itemDataType = getTypeString();
 
+	assignAndPlay = addTrigger("Assign To All", "Assign this sequence to all props play from start");
 	uploadPlaybackToProps = addTrigger("Upload Playback", "");
 
-	autoSetPropEnabled = addBoolParameter("Auto Set enabled", "If checked, this will automatically enable / disable prop based on whether they are filtered by the sequence", false);
+	autoSetPropEnabled = addBoolParameter("Auto Set enabled", "If checked, this will automatically enable / disable prop based on whether they are filtered by the sequence when assign To All", false);
+
+	assignBehaviour = addEnumParameter("Assign Behaviour", "Behaviour when using assign To All");
+	assignBehaviour->addOption("None", NONE)->addOption("Stop", STOP)->addOption("Play from start", PLAY_FROM_START)->addOption("Resume", RESUME);
+
 
 	sequence.reset(new SequenceBlockSequence());
 	sequence->userCanRemove = false;
@@ -119,6 +124,33 @@ void BentoSequenceBlock::onContainerTriggerTriggered(Trigger* t)
 	{
 		for (auto& p : PropManager::getInstance()->items) p->initGeneratePlayback(this, Prop::AfterPlaybackGenAction::UPLOAD);
 	}
+	else if (t == assignToAll)
+	{
+		AssignBehaviour b = (AssignBehaviour)assignBehaviour->getValueDataAsEnum<AssignBehaviour>();
+		switch (b)
+		{
+		case NONE:
+			break;
+
+		case STOP:
+			sequence->stopTrigger->trigger();
+			break;
+
+		case PLAY_FROM_START:
+			sequence->stopTrigger->trigger();
+			sequence->playTrigger->trigger();
+			break;
+
+		case RESUME:
+			sequence->playTrigger->trigger();
+			break;
+		}
+	}
+	else if (t == assignAndPlay)
+	{
+		assignToAll->trigger();
+		sequence->playTrigger->trigger();
+	}
 }
 
 void BentoSequenceBlock::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c)
@@ -127,6 +159,6 @@ void BentoSequenceBlock::onControllableFeedbackUpdateInternal(ControllableContai
 	if (c == sequence->identityMode)
 	{
 		providerListeners.call(&ColorProviderListener::providerPlaybackControlUpdate, SHOW_ID, sequence->identityMode->boolValue());
-	} 
+	}
 }
 
