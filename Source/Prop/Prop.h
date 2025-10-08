@@ -24,10 +24,8 @@ public:
 	Prop(var params = var());
 	virtual ~Prop();
 
-
 	String deviceID;
 	IntParameter* globalID;
-
 
 	BoolParameter* logIncoming;
 	BoolParameter* logOutgoing;

@@ -15,9 +15,10 @@ BentoProp::BentoProp(var params) :
 	artnet(false),
 	serialDevice(nullptr),
 	resolutionRef(nullptr),
-	brightnessRef(nullptr)
+	brightnessRef(nullptr),
+	universeRef(nullptr),
+	startChannelRef(nullptr)
 {
-	universes.add(new DMXUniverse(0));
 
 	useAlphaInPlaybackData = true;
 	invertLedsInUI = true;
@@ -120,18 +121,9 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 		//sendYo();
 		artnet.remoteHost->setValue(remoteHost->stringValue());
 	}
-	else if (c == resolution)
+	else if (c == resolution || c == universeRef || c == startChannelRef)
 	{
-		if (resolutionRef != nullptr) resolutionRef->setValue(resolution->intValue());
-		int numUniverses = ceil(resolution->intValue() * 1.0f / 170);
-		while (numUniverses > universes.size())
-		{
-			universes.add(new DMXUniverse(universes.size()));
-		}
-		while (numUniverses < universes.size())
-		{
-			universes.remove(universes.size() - 1);
-		};
+		updateUniverses();
 	}
 	else if (c == resolutionRef)
 	{
@@ -160,6 +152,37 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		globalID->setValue(idRef->intValue());
 	}
+}
+
+void BentoProp::updateUniverses()
+{
+	if (componentsCC == nullptr || componentsCC->isUpdatingStructure) return;
+
+	if (resolutionRef != nullptr) resolutionRef->setValue(resolution->intValue());
+
+	int numUniverses = ceil(resolution->intValue() * 1.0f / 170);
+	
+	int startUniverse = universeRef != nullptr ? universeRef->intValue() : 0;
+	
+	while (numUniverses < universes.size())
+	{
+		universes.remove(universes.size() - 1);
+	};
+
+	for (int i = 0; i < universes.size(); i++)
+	{
+		universes[i]->universe = startUniverse + i;
+	}
+
+	while (numUniverses > universes.size())
+	{
+		universes.add(new DMXUniverse(startUniverse + universes.size()));
+	}
+
+	
+
+	
+
 }
 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)

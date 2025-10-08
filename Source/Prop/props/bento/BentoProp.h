@@ -37,6 +37,8 @@ public:
 	FloatParameter* brightnessRef;
 	IntParameter* idRef;
 
+	IntParameter* universeRef;
+	IntParameter* startChannelRef;
 
 	String playbackAddress;
 	String streamingAddress;
@@ -51,6 +53,8 @@ public:
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
+
+	void updateUniverses();
 
 	virtual void serialDataReceived(SerialDevice* d, const var&) override;
 	virtual void portRemoved(SerialDevice* d) override;

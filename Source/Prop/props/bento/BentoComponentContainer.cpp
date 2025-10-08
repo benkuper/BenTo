@@ -114,6 +114,8 @@ void BentoComponentContainer::updateTreeFromData(var data)
 	OSCQueryHelpers::updateContainerFromData(this, data, false, [this](const String& ccName) { return new BentoSubComponent(ccName, this); });
 
 	isUpdatingStructure = false;
+
+	prop->updateUniverses();
 }
 
 void BentoComponentContainer::connectionOpened()
@@ -343,6 +345,27 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 		{
 			container->prop->idRef = ((IntParameter*)c);
 			container->prop->globalID->setValue(container->prop->idRef->intValue());
+		}
+	}
+	else if (shortName == "streamLayer")
+	{
+		if (c->shortName == "universe")
+		{
+			container->prop->universeRef = ((IntParameter*)c);
+		}
+		else if (c->shortName == "startChannel")
+		{
+			container->prop->startChannelRef = ((IntParameter*)c);
+		}
+	}
+	else if (shortName == "espnow")
+	{
+		if (c->shortName == "streamUniverse")
+		{
+			container->prop->universeRef = ((IntParameter*)c);
+		}else if(c->shortName == "streamStartChannel")
+		{
+			container->prop->startChannelRef = ((IntParameter*)c);
 		}
 	}
 
