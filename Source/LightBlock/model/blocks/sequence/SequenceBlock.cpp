@@ -17,7 +17,7 @@ BentoSequenceBlock::BentoSequenceBlock(var params) :
 {
 	itemDataType = getTypeString();
 
-	assignAndPlay = addTrigger("Assign To All", "Assign this sequence to all props play from start");
+	assignAndPlay = addTrigger("Assign And Play", "Assign this sequence to all props play from start");
 	uploadPlaybackToProps = addTrigger("Upload Playback", "");
 
 	autoSetPropEnabled = addBoolParameter("Auto Set enabled", "If checked, this will automatically enable / disable prop based on whether they are filtered by the sequence when assign To All", false);
