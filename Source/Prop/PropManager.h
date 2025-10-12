@@ -53,6 +53,7 @@ public:
 	Trigger* disableAll;
 	Trigger* powerOffAll;
 	Trigger* resetAll;
+	BoolParameter* showBattery;
 	FloatParameter* globalBrightness;
 
 	ControllableContainer playbackCC;

@@ -42,6 +42,8 @@ PropManager::PropManager() :
 	clearAll = controlsCC.addTrigger("Clear all props", "Remove all props from manager");
 	enableAll = controlsCC.addTrigger("Enable All", "");
 	disableAll = controlsCC.addTrigger("Disable All", "");
+	showBattery = controlsCC.addBoolParameter("Show Battery", "If checked, this will show battery level on props leds", false);
+
 	globalBrightness = controlsCC.addFloatParameter("Brightness", "Global Brightness of all props", .5f, 0, 2);
 	disablePreview = controlsCC.addBoolParameter("Disable preview", "If checked, this will disable preview in prop UI, it reduces considerably the cpu/gpu consumption.", false);
 	addChildControllableContainer(&controlsCC);
@@ -300,7 +302,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 	}
 	else if (c == globalBrightness)
 	{
-		for (auto& p : items) p->brightness->setValue(globalBrightness->floatValue());
+		for (auto& p : items) p->sendBrightness(globalBrightness->floatValue());
 	}
 	else if (c == loadAll || c == playAll || c == stopAll)
 	{
@@ -346,6 +348,10 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		if (playSyncSendInterval->intValue() == 0) stopTimer(PLAYSYNC_TIMER_ID);
 		else startTimer(PLAYSYNC_TIMER_ID, 1000 * playSyncSendInterval->intValue());
 	}
+	else if (c == showBattery)
+	{
+		for (auto& p : items) p->sendShowBattery(showBattery->boolValue());
+	}
 	else
 	{
 		Prop* p = ControllableUtil::findParentAs<Prop>(c);
@@ -369,326 +375,326 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 			*/
 		}
 	}
-}
+	}
 
-void PropManager::addItemInternal(Prop* p, var)
-{
-	p->addPropListener(this);
-
-	if (Engine::mainEngine->isLoadingFile) return;
-	if (items.size() > 1) p->globalID->setValue(getFirstAvailableID());
-}
-
-void PropManager::addItemsInternal(Array<Prop*> props, var)
-{
-	for (auto& p : props)
+	void PropManager::addItemInternal(Prop * p, var)
 	{
-		if (p == nullptr) continue;
 		p->addPropListener(this);
 
-		if (Engine::mainEngine->isLoadingFile) continue;
+		if (Engine::mainEngine->isLoadingFile) return;
 		if (items.size() > 1) p->globalID->setValue(getFirstAvailableID());
 	}
-}
 
-
-void PropManager::removeItemInternal(Prop* p)
-{
-	p->removePropListener(this);
-}
-
-void PropManager::removeItemsInternal(Array<Prop*> props)
-{
-	for (auto& p : props) p->removePropListener(this);
-}
-
-void PropManager::clear()
-{
-	Manager::clear();
-	//for (auto& f : families) f->props.clear();
-}
-
-int PropManager::getFirstAvailableID()
-{
-	int numItems = items.size();
-	for (int i = 0; i < numItems; i++)
+	void PropManager::addItemsInternal(Array<Prop*> props, var)
 	{
-		if (getPropWithId(i) == nullptr) return i;
-	}
-	return numItems;
-}
-
-void PropManager::propIDChanged(Prop* p, int previousID)
-{
-	Prop* otherPropWithSameID = getPropWithId(p->globalID->intValue(), p);
-	if (otherPropWithSameID != nullptr) otherPropWithSameID->globalID->setValue(previousID);
-}
-
-void PropManager::assignModelToAllProps(LightBlockModel* model)
-{
-	for (auto& p : items)
-	{
-		p->setBlockFromProvider(model);
-	}
-}
-
-void PropManager::oscMessageReceived(const OSCMessage& m)
-{
-	String address = m.getAddressPattern().toString();
-
-	if (address == "/wassup")
-	{
-		if (m.size() < 4)
+		for (auto& p : props)
 		{
-			LOGERROR("Not enough arguments for /wassup");
-			return;
+			if (p == nullptr) continue;
+			p->addPropListener(this);
+
+			if (Engine::mainEngine->isLoadingFile) continue;
+			if (items.size() > 1) p->globalID->setValue(getFirstAvailableID());
+		}
+	}
+
+
+	void PropManager::removeItemInternal(Prop * p)
+	{
+		p->removePropListener(this);
+	}
+
+	void PropManager::removeItemsInternal(Array<Prop*> props)
+	{
+		for (auto& p : props) p->removePropListener(this);
+	}
+
+	void PropManager::clear()
+	{
+		Manager::clear();
+		//for (auto& f : families) f->props.clear();
+	}
+
+	int PropManager::getFirstAvailableID()
+	{
+		int numItems = items.size();
+		for (int i = 0; i < numItems; i++)
+		{
+			if (getPropWithId(i) == nullptr) return i;
+		}
+		return numItems;
+	}
+
+	void PropManager::propIDChanged(Prop * p, int previousID)
+	{
+		Prop* otherPropWithSameID = getPropWithId(p->globalID->intValue(), p);
+		if (otherPropWithSameID != nullptr) otherPropWithSameID->globalID->setValue(previousID);
+	}
+
+	void PropManager::assignModelToAllProps(LightBlockModel * model)
+	{
+		for (auto& p : items)
+		{
+			p->setBlockFromProvider(model);
+		}
+	}
+
+	void PropManager::oscMessageReceived(const OSCMessage & m)
+	{
+		String address = m.getAddressPattern().toString();
+
+		if (address == "/wassup")
+		{
+			if (m.size() < 4)
+			{
+				LOGERROR("Not enough arguments for /wassup");
+				return;
+			}
+
+			String pHost = OSCHelpers::getStringArg(m[0]);
+			String pid = OSCHelpers::getStringArg(m[1]);
+			String pType = m.size() > 2 ? OSCHelpers::getStringArg(m[2]) : BentoProp::getTypeStringStatic();
+			String pName = m.size() > 3 ? OSCHelpers::getStringArg(m[3]) : "Prop";
+			//String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Bento";
+
+			LOG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
+			createPropIfNotExist(pType, pHost, pid, pName);
+		}
+		//else  if (m.size() > 0 && m[0].isString())
+		//{
+		//	if (Prop* p = getPropWithDeviceID(OSCHelpers::getStringArg(m[0])))
+		//	{
+		//		p->handleOSCMessage(m);
+		//	}
+		//}
+	}
+
+	void PropManager::serviceAdded(ZeroconfManager::ServiceInfo * s)
+	{
+		if (!autoAddNetworkProps->boolValue()) return;
+
+	}
+
+	void PropManager::addPropForService(ZeroconfManager::ServiceInfo * s)
+	{
+
+		StringArray  nameSplit;
+		nameSplit.addTokens(s->name, "-", "\"");
+
+		String deviceType = s->getKey("deviceType");
+		if (deviceType.isNotEmpty())
+		{
+			createPropIfNotExist(deviceType, s->ip, s->getKey("deviceID"), s->getKey("deviceName"));
 		}
 
-		String pHost = OSCHelpers::getStringArg(m[0]);
-		String pid = OSCHelpers::getStringArg(m[1]);
-		String pType = m.size() > 2 ? OSCHelpers::getStringArg(m[2]) : BentoProp::getTypeStringStatic();
-		String pName = m.size() > 3 ? OSCHelpers::getStringArg(m[3]) : "Prop";
-		//String pType = m.size() >= 3 ? OSCHelpers::getStringArg(m[2]) : "Bento";
-
-		LOG("Got wassup : " << pHost << " : " << pid << ", type is " << pType);
-		createPropIfNotExist(pType, pHost, pid, pName);
 	}
-	//else  if (m.size() > 0 && m[0].isString())
+
+	//void PropManager::updatePropsAndFamiliesDefinitions()
 	//{
-	//	if (Prop* p = getPropWithDeviceID(OSCHelpers::getStringArg(m[0])))
+	//	factory.defs.clear();
+	//
+	//	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props");
+	//	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, true, "*.json");
+	//
+	//	for (auto& f : propFiles)
 	//	{
-	//		p->handleOSCMessage(m);
+	//		if (f.getParentDirectory().getFileName() == "families") continue; //not treating the families folder here
+	//
+	//		var pData = JSON::parse(f);
+	//		if (pData.isObject())
+	//		{
+	//			std::function<Prop* (var params)> createFunc = &Prop::create;
+	//			String propType = pData.getProperty("type", "");
+	//			if (propType == "Bento") createFunc = &BentoProp::create;
+	//
+	//			if (pData.hasProperty("vid") && pData.hasProperty("pid"))
+	//			{
+	//				vidpids.add({ pData.getProperty("vid","").toString().getHexValue32(),pData.getProperty("pid","").toString().getHexValue32() });
+	//			}
+	//
+	//
+	//			File fw = f.getParentDirectory().getChildFile("firmware.bin");
+	//			if (fw.existsAsFile()) pData.getDynamicObject()->setProperty("firmware", fw.getFullPathName());
+	//
+	//			factory.defs.add(FactorySimpleParametricDefinition<Prop>::createDef(pData.getProperty("menu", "").toString(), pData.getProperty("name", "").toString(), createFunc, pData));
+	//		}
+	//	}
+	//
+	//	for (auto& f : families) familiesCC.removeChildControllableContainer(f);
+	//	families.clear();
+	//
+	//	File familyFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props/families");
+	//	if (!familyFolder.exists()) familyFolder.createDirectory();
+	//
+	//	Array<File> familyFiles = familyFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
+	//
+	//	for (auto& f : familyFiles)
+	//	{
+	//		var fData = JSON::parse(f);
+	//		if (fData.isObject())
+	//		{
+	//			PropFamily* fam = new PropFamily(fData);
+	//			families.add(fam);
+	//			familiesCC.addChildControllableContainer(fam, true);
+	//		}
 	//	}
 	//}
-}
 
-void PropManager::serviceAdded(ZeroconfManager::ServiceInfo* s)
-{
-	if (!autoAddNetworkProps->boolValue()) return;
-
-}
-
-void PropManager::addPropForService(ZeroconfManager::ServiceInfo* s)
-{
-
-	StringArray  nameSplit;
-	nameSplit.addTokens(s->name, "-", "\"");
-
-	String deviceType = s->getKey("deviceType");
-	if (deviceType.isNotEmpty())
+	void PropManager::afterLoadJSONDataInternal()
 	{
-		createPropIfNotExist(deviceType, s->ip, s->getKey("deviceID"), s->getKey("deviceName"));
-	}
-
-}
-
-//void PropManager::updatePropsAndFamiliesDefinitions()
-//{
-//	factory.defs.clear();
-//
-//	File propFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props");
-//	Array<File> propFiles = propFolder.findChildFiles(File::TypesOfFileToFind::findFiles, true, "*.json");
-//
-//	for (auto& f : propFiles)
-//	{
-//		if (f.getParentDirectory().getFileName() == "families") continue; //not treating the families folder here
-//
-//		var pData = JSON::parse(f);
-//		if (pData.isObject())
-//		{
-//			std::function<Prop* (var params)> createFunc = &Prop::create;
-//			String propType = pData.getProperty("type", "");
-//			if (propType == "Bento") createFunc = &BentoProp::create;
-//
-//			if (pData.hasProperty("vid") && pData.hasProperty("pid"))
-//			{
-//				vidpids.add({ pData.getProperty("vid","").toString().getHexValue32(),pData.getProperty("pid","").toString().getHexValue32() });
-//			}
-//
-//
-//			File fw = f.getParentDirectory().getChildFile("firmware.bin");
-//			if (fw.existsAsFile()) pData.getDynamicObject()->setProperty("firmware", fw.getFullPathName());
-//
-//			factory.defs.add(FactorySimpleParametricDefinition<Prop>::createDef(pData.getProperty("menu", "").toString(), pData.getProperty("name", "").toString(), createFunc, pData));
-//		}
-//	}
-//
-//	for (auto& f : families) familiesCC.removeChildControllableContainer(f);
-//	families.clear();
-//
-//	File familyFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props/families");
-//	if (!familyFolder.exists()) familyFolder.createDirectory();
-//
-//	Array<File> familyFiles = familyFolder.findChildFiles(File::TypesOfFileToFind::findFiles, false, "*.json");
-//
-//	for (auto& f : familyFiles)
-//	{
-//		var fData = JSON::parse(f);
-//		if (fData.isObject())
-//		{
-//			PropFamily* fam = new PropFamily(fData);
-//			families.add(fam);
-//			familiesCC.addChildControllableContainer(fam, true);
-//		}
-//	}
-//}
-
-void PropManager::afterLoadJSONDataInternal()
-{
-	if (autoAddNetworkProps->boolValue())
-	{
-		for (auto& s : zeroconfSearcher->services) serviceAdded(s);
-	}
-}
-
-//void PropManager::run()
-//{
-//	LOG("Updating prop definitions...");
-//	URL url("https://benjamin.kuperberg.fr/bento/getProps.php");
-//
-//	std::unique_ptr<URL::DownloadTask> t = url.downloadToFile(File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip"), URL::DownloadTaskOptions().withListener(this));
-//	if (t != nullptr) propDownloadTask.reset(t.release());
-//	else LOGERROR("Error downloading");
-//}
-
-//void PropManager::finished(URL::DownloadTask* task, bool success)
-//{
-//	File f = File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip");
-//	ZipFile zip(f);
-//	zip.uncompressTo(File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props"), true);
-//
-//	f.deleteFile();
-//
-//	updatePropsAndFamiliesDefinitions();
-//
-//	LOG("Prop definitions updated");
-//}
-
-
-// USB Detection
-void PropManager::portAdded(SerialDeviceInfo* info)
-{
-	if (autoAddUSBProps->boolValue())
-	{
-		for (auto& vp : vidpids)
+		if (autoAddNetworkProps->boolValue())
 		{
-			if (info->vid == vp.vid && info->pid == vp.pid) checkDeviceDeviceID(info);
-		}
-	}
-}
-
-void PropManager::portRemoved(SerialDeviceInfo* info)
-{
-	pendingDevices.removeAllInstancesOf(SerialManager::getInstance()->getPort(info, false));
-}
-
-void PropManager::checkSerialDevices()
-{
-	for (auto& info : SerialManager::getInstance()->portInfos)
-	{
-		for (auto& vp : vidpids)
-		{
-			if (info->vid == vp.vid && info->pid == vp.pid) checkDeviceDeviceID(info);
+			for (auto& s : zeroconfSearcher->services) serviceAdded(s);
 		}
 	}
 
-}
+	//void PropManager::run()
+	//{
+	//	LOG("Updating prop definitions...");
+	//	URL url("https://benjamin.kuperberg.fr/bento/getProps.php");
+	//
+	//	std::unique_ptr<URL::DownloadTask> t = url.downloadToFile(File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip"), URL::DownloadTaskOptions().withListener(this));
+	//	if (t != nullptr) propDownloadTask.reset(t.release());
+	//	else LOGERROR("Error downloading");
+	//}
 
-void PropManager::checkDeviceDeviceID(SerialDeviceInfo* info)
-{
-	SerialDevice* d = SerialManager::getInstance()->getPort(info, true);
-	if (d == nullptr)
+	//void PropManager::finished(URL::DownloadTask* task, bool success)
+	//{
+	//	File f = File::getSpecialLocation(File::tempDirectory).getChildFile("props.zip");
+	//	ZipFile zip(f);
+	//	zip.uncompressTo(File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/props"), true);
+	//
+	//	f.deleteFile();
+	//
+	//	updatePropsAndFamiliesDefinitions();
+	//
+	//	LOG("Prop definitions updated");
+	//}
+
+
+	// USB Detection
+	void PropManager::portAdded(SerialDeviceInfo * info)
 	{
-		LOGWARNING("Port already opened : " << info->uniqueDescription);
-		return;
-	}
-
-	d->setMode(SerialDevice::LINES);
-
-	if (d->isOpen())
-	{
-		d->addSerialDeviceListener(this);
-
-		startTimer(YO_TIMER_ID, 200);
-		startTimer(SERIAL_TIMER_ID, 1000);
-
-		pendingDevices.addIfNotAlreadyThere(d);
-	}
-}
-
-Prop* PropManager::addPropForHardwareID(SerialDevice* device, String deviceID, String type)
-{
-	Prop* p = PropManager::getInstance()->getPropWithDeviceID(deviceID);
-	if (p == nullptr)
-	{
-		p = static_cast<Prop*>(PropManager::getInstance()->managerFactory->create(type));
-		if (p != nullptr)
+		if (autoAddUSBProps->boolValue())
 		{
-			p->deviceID = deviceID;
-			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueFromDevice(device);
-			PropManager::getInstance()->addItem(p);
-		}
-	}
-	else
-	{
-		LOG(p->deviceID << " already there, updating prop's serial device");
-		if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueFromDevice(device);
-	}
-
-	return p;
-}
-
-void PropManager::serialDataReceived(SerialDevice* d, const var& data)
-{
-
-	StringArray dataSplit;
-	dataSplit.addTokens(data.toString(), true);
-	if (dataSplit.size() == 0) return;
-	if (dataSplit[0] == "wassup")
-	{
-		String fw = dataSplit[1];
-		String type = dataSplit[2].removeCharacters("\"");
-		LOG("Got wassup from " << d->info->description << " : " << fw);
-		Prop* p = addPropForHardwareID(d, fw, type);
-		if (p != nullptr)
-		{
-			d->removeSerialDeviceListener(this); //only remove after so it's not deleted 
-			pendingDevices.removeAllInstancesOf(d);
-		}
-	}
-}
-
-void PropManager::timerCallback(int timerID)
-{
-	if (timerID == YO_TIMER_ID)
-	{
-		for (auto& d : pendingDevices)
-		{
-			d->writeString("yo\n");
-		}
-	}
-	else if (timerID == SERIAL_TIMER_ID)
-	{
-		for (auto& d : pendingDevices)
-		{
-			d->removeSerialDeviceListener(this);
-		}
-		pendingDevices.clear();
-		stopTimer(1);
-		stopTimer(2);
-	}
-	else if (timerID == PLAYSYNC_TIMER_ID)
-	{
-		if (playbackMode->boolValue())
-		{
-			for (auto& p : items)
+			for (auto& vp : vidpids)
 			{
-				if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
-				{
-					bp->checkAndSendPlaySync();
-				}
+				if (info->vid == vp.vid && info->pid == vp.pid) checkDeviceDeviceID(info);
 			}
 		}
 	}
 
-}
+	void PropManager::portRemoved(SerialDeviceInfo * info)
+	{
+		pendingDevices.removeAllInstancesOf(SerialManager::getInstance()->getPort(info, false));
+	}
+
+	void PropManager::checkSerialDevices()
+	{
+		for (auto& info : SerialManager::getInstance()->portInfos)
+		{
+			for (auto& vp : vidpids)
+			{
+				if (info->vid == vp.vid && info->pid == vp.pid) checkDeviceDeviceID(info);
+			}
+		}
+
+	}
+
+	void PropManager::checkDeviceDeviceID(SerialDeviceInfo * info)
+	{
+		SerialDevice* d = SerialManager::getInstance()->getPort(info, true);
+		if (d == nullptr)
+		{
+			LOGWARNING("Port already opened : " << info->uniqueDescription);
+			return;
+		}
+
+		d->setMode(SerialDevice::LINES);
+
+		if (d->isOpen())
+		{
+			d->addSerialDeviceListener(this);
+
+			startTimer(YO_TIMER_ID, 200);
+			startTimer(SERIAL_TIMER_ID, 1000);
+
+			pendingDevices.addIfNotAlreadyThere(d);
+		}
+	}
+
+	Prop* PropManager::addPropForHardwareID(SerialDevice * device, String deviceID, String type)
+	{
+		Prop* p = PropManager::getInstance()->getPropWithDeviceID(deviceID);
+		if (p == nullptr)
+		{
+			p = static_cast<Prop*>(PropManager::getInstance()->managerFactory->create(type));
+			if (p != nullptr)
+			{
+				p->deviceID = deviceID;
+				if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueFromDevice(device);
+				PropManager::getInstance()->addItem(p);
+			}
+		}
+		else
+		{
+			LOG(p->deviceID << " already there, updating prop's serial device");
+			if (BentoProp* bp = dynamic_cast<BentoProp*>(p)) bp->serialParam->setValueFromDevice(device);
+		}
+
+		return p;
+	}
+
+	void PropManager::serialDataReceived(SerialDevice * d, const var & data)
+	{
+
+		StringArray dataSplit;
+		dataSplit.addTokens(data.toString(), true);
+		if (dataSplit.size() == 0) return;
+		if (dataSplit[0] == "wassup")
+		{
+			String fw = dataSplit[1];
+			String type = dataSplit[2].removeCharacters("\"");
+			LOG("Got wassup from " << d->info->description << " : " << fw);
+			Prop* p = addPropForHardwareID(d, fw, type);
+			if (p != nullptr)
+			{
+				d->removeSerialDeviceListener(this); //only remove after so it's not deleted 
+				pendingDevices.removeAllInstancesOf(d);
+			}
+		}
+	}
+
+	void PropManager::timerCallback(int timerID)
+	{
+		if (timerID == YO_TIMER_ID)
+		{
+			for (auto& d : pendingDevices)
+			{
+				d->writeString("yo\n");
+			}
+		}
+		else if (timerID == SERIAL_TIMER_ID)
+		{
+			for (auto& d : pendingDevices)
+			{
+				d->removeSerialDeviceListener(this);
+			}
+			pendingDevices.clear();
+			stopTimer(1);
+			stopTimer(2);
+		}
+		else if (timerID == PLAYSYNC_TIMER_ID)
+		{
+			if (playbackMode->boolValue())
+			{
+				for (auto& p : items)
+				{
+					if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+					{
+						bp->checkAndSendPlaySync();
+					}
+				}
+			}
+		}
+
+	}

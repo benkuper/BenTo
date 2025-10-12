@@ -20,6 +20,7 @@ Prop::Prop(var params) :
 	invertLedsInUI(true),
 	battery(nullptr),
 	batteryRef(nullptr),
+	showBatteryRef(nullptr),
 	chargingRef(nullptr),
 	motionRef(nullptr),
 	connectionCC("Connection"),
@@ -298,6 +299,11 @@ void Prop::update()
 	//}
 }
 
+void Prop::updateColorsArraySize()
+{
+	colors.resize(getResolution());
+}
+
 void Prop::onContainerParameterChangedInternal(Parameter* p)
 {
 	if (p == activeProvider)
@@ -318,7 +324,7 @@ void Prop::onControllableFeedbackUpdateInternal(ControllableContainer* cc, Contr
 {
 	if (c == resolution)
 	{
-		colors.resize(getResolution());
+		updateColorsArraySize();
 	}
 	else if (c == globalID)
 	{
@@ -581,6 +587,16 @@ void Prop::checkAndSendPlaySync()
 	}
 }
 
+
+void Prop::sendBrightness(float val)
+{
+	if (brightness != nullptr) brightness->setValue(val);
+}
+
+void Prop::sendShowBattery(bool val)
+{
+	if (showBatteryRef != nullptr) showBatteryRef->setValue(val);
+}
 
 void Prop::providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data)
 {

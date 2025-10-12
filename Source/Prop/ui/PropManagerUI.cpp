@@ -27,6 +27,7 @@ PropManagerUI::PropManagerUI(const String& name, PropManager* m) :
 	disableUI.reset(manager->disableAll->createButtonUI());
 	restartUI.reset(manager->resetAll->createButtonUI());
 	powerOffUI.reset(manager->powerOffAll->createButtonUI());
+	showBatteryUI.reset(manager->showBattery->createToggle());
 	globalBrightnessUI.reset(manager->globalBrightness->createSlider());
 
 
@@ -38,6 +39,7 @@ PropManagerUI::PropManagerUI(const String& name, PropManager* m) :
 	addAndMakeVisible(autoAssignUI.get());
 	addAndMakeVisible(uploadAllUI.get());
 	addAndMakeVisible(playbackModeUI.get());
+	addAndMakeVisible(showBatteryUI.get());
 
 	addAndMakeVisible(enableUI.get());
 	addAndMakeVisible(disableUI.get());
@@ -70,6 +72,8 @@ void PropManagerUI::resizedInternalHeader(Rectangle<int>& r)
 	powerOffUI->setBounds(hr.removeFromTop(20));
 	hr.removeFromTop(8);
 	globalBrightnessUI->setBounds(hr.removeFromTop(20));
+	hr.removeFromTop(2);
+	showBatteryUI->setBounds(hr.removeFromTop(20));
 
 	//hr.removeFromBottom(2);
 	uploadAllUI->setBounds(hr.removeFromBottom(20));

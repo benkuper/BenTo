@@ -41,6 +41,7 @@ public:
 
 	FloatParameter* battery;
 	FloatParameter* batteryRef;
+	BoolParameter* showBatteryRef;
 	BoolParameter* chargingRef;
 	BoolParameter* motionRef;
 
@@ -101,8 +102,10 @@ public:
 	virtual void clearItem() override;
 
 	void setBlockFromProvider(LightBlockColorProvider* model);
-	int getResolution();
+	virtual int getResolution();
 	void update();
+
+	void updateColorsArraySize();
 
 	void onContainerParameterChangedInternal(Parameter* p) override;
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
@@ -140,6 +143,9 @@ public:
 	virtual void stopPlaybackPlaying() {}
 	virtual void sendShowPropID(bool value) {}
 
+	virtual void sendBrightness(float val);
+	virtual void sendShowBattery(bool val);
+
 	void providerPlaybackControlUpdate(LightBlockColorProvider::PlaybackControl control, var data) override;
 
 	virtual void powerOffProp() {}
@@ -147,6 +153,8 @@ public:
 
 	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
+
+
 
 
 	InspectableEditor* getEditorInternal(bool isRoot, Array<Inspectable*> inspectables = {}) override;

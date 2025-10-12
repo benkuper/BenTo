@@ -22,6 +22,7 @@ public:
 	const int remotePort = 9000;
 	OSCSender oscSender;
 
+	bool isESPNowBridge;
 
 	SerialDeviceParameter* serialParam;
 	SerialDevice* serialDevice;
@@ -33,12 +34,13 @@ public:
 
 	std::unique_ptr<BentoComponentContainer> componentsCC;
 
-	IntParameter* resolutionRef;
 	FloatParameter* brightnessRef;
 	IntParameter* idRef;
 
 	IntParameter* universeRef;
 	IntParameter* startChannelRef;
+
+	EnumParameter* multiLedModeRef;
 
 	String playbackAddress;
 	String streamingAddress;
@@ -46,6 +48,7 @@ public:
 
 	enum ActionOnRemove { NOTHING, DISABLE_LED, POWER_OFF };
 	EnumParameter* actionOnRemove;
+
 
 	virtual void clearItem() override;
 
@@ -55,6 +58,7 @@ public:
 	void onControllableFeedbackUpdateInternal(ControllableContainer* cc, Controllable* c) override;
 
 	void updateUniverses();
+	int getResolution() override;
 
 	virtual void serialDataReceived(SerialDevice* d, const var&) override;
 	virtual void portRemoved(SerialDevice* d) override;
@@ -75,6 +79,9 @@ public:
 	virtual void seekPlaybackPlaying(float time) override;
 	virtual void stopPlaybackPlaying() override;
 	virtual void sendShowPropID(bool value) override;
+
+	virtual void sendBrightness(float val) override;
+	virtual void sendShowBattery(bool val) override;
 
 	bool uploadProgressCallback(int bytesSent, int totalBytes);
 	bool uploadMetaDataProgressCallback(int bytesSent, int totalBytes);

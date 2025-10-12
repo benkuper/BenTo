@@ -41,7 +41,7 @@ void BentoComponentContainer::setupWSClient()
 
 	String host = prop->remoteHost->stringValue();
 	String url = host;
-	if(wsPort != -1) url += ":" + String(wsPort) + "/";
+	if (wsPort != -1) url += ":" + String(wsPort) + "/";
 	DBG("Setting up client at " << url);
 	wsClient->start(url);
 }
@@ -166,7 +166,7 @@ void BentoComponentContainer::dataReceived(const MemoryBlock& data)
 void BentoComponentContainer::messageReceived(const String& message)
 {
 	if (!prop->enabled->boolValue()) return;
-	
+
 }
 
 
@@ -304,6 +304,7 @@ BentoSubComponent::~BentoSubComponent()
 void BentoSubComponent::onControllableAdded(Controllable* c)
 {
 	EnablingControllableContainer::onControllableAdded(c);
+
 	if (shortName == "strip1") //hardcoded for now
 	{
 		if (c->shortName == "count")
@@ -317,6 +318,11 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 			container->prop->brightness->setRange(container->prop->brightnessRef->minimumValue, container->prop->brightnessRef->maximumValue);
 			container->prop->brightness->setValue(container->prop->brightnessRef->floatValue());
 		}
+		else if (c->shortName == "multiLedMode")
+		{
+			container->prop->multiLedModeRef = ((EnumParameter*)c);
+			container->prop->updateColorsArraySize();
+		}
 	}
 	else if (shortName == "battery")
 	{
@@ -325,7 +331,8 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 			container->prop->batteryRef = ((FloatParameter*)c);
 			container->prop->battery->setRange(container->prop->batteryRef->minimumValue, container->prop->batteryRef->maximumValue);
 			container->prop->battery->setValue(container->prop->batteryRef->floatValue());
-		}else if (c->shortName == "charging")
+		}
+		else if (c->shortName == "charging")
 		{
 			container->prop->chargingRef = ((BoolParameter*)c);
 			container->prop->chargingRef->setValue(container->prop->chargingRef->boolValue(), true); //force update
@@ -346,6 +353,13 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 			container->prop->idRef = ((IntParameter*)c);
 			container->prop->globalID->setValue(container->prop->idRef->intValue());
 		}
+		else if (c->shortName == "deviceType")
+		{
+			if (StringParameter* dr = dynamic_cast<StringParameter*>(c))
+			{
+				if (dr->stringValue() == "Olimex POE Bridge") container->prop->isESPNowBridge = true;
+			}
+		}
 	}
 	else if (shortName == "streamLayer")
 	{
@@ -363,9 +377,17 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 		if (c->shortName == "streamUniverse")
 		{
 			container->prop->universeRef = ((IntParameter*)c);
-		}else if(c->shortName == "streamStartChannel")
+		}
+		else if (c->shortName == "streamStartChannel")
 		{
 			container->prop->startChannelRef = ((IntParameter*)c);
+		}
+	}
+	else if (shortName == "systemLayer")
+	{
+		if (c->shortName == "showBattery")
+		{
+			container->prop->showBatteryRef = ((BoolParameter*)c);
 		}
 	}
 

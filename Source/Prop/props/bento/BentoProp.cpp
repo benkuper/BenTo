@@ -9,15 +9,17 @@
 */
 
 #include "Prop/PropIncludes.h"
+#include "BentoProp.h"
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
+	isESPNowBridge(false),
 	artnet(false),
 	serialDevice(nullptr),
-	resolutionRef(nullptr),
 	brightnessRef(nullptr),
 	universeRef(nullptr),
-	startChannelRef(nullptr)
+	startChannelRef(nullptr),
+	multiLedModeRef(nullptr)
 {
 
 	useAlphaInPlaybackData = true;
@@ -101,7 +103,12 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 
 	if (p == enabled)
 	{
-		sendMessageToProp(OSCMessage(ledEnabledAddress, enabled->boolValue() ? 1 : 0));
+		for (int i = 0; i < 5; i++)
+		{
+			Timer::callAfterDelay(20 * i, [this]() {
+				sendMessageToProp(OSCMessage(ledEnabledAddress, enabled->boolValue() ? 1 : 0));
+			});
+		}
 	}
 	else if (p == globalID)
 	{
@@ -141,6 +148,10 @@ void BentoProp::onControllableFeedbackUpdateInternal(ControllableContainer* cc, 
 	{
 		battery->setValue(batteryRef->floatValue());
 	}
+	else if (c == multiLedModeRef)
+	{
+		updateColorsArraySize();
+	}
 	else if (c == isConnected)
 	{
 		if (isConnected->boolValue() && enabled->boolValue())
@@ -160,10 +171,10 @@ void BentoProp::updateUniverses()
 
 	if (resolutionRef != nullptr) resolutionRef->setValue(resolution->intValue());
 
-	int numUniverses = ceil(resolution->intValue() * 1.0f / 170);
-	
+	int numUniverses = ceil(getResolution() * 1.0f / 170);
+
 	int startUniverse = universeRef != nullptr ? universeRef->intValue() : 0;
-	
+
 	while (numUniverses < universes.size())
 	{
 		universes.remove(universes.size() - 1);
@@ -178,11 +189,23 @@ void BentoProp::updateUniverses()
 	{
 		universes.add(new DMXUniverse(startUniverse + universes.size()));
 	}
+}
 
-	
+int BentoProp::getResolution()
+{
+	if (multiLedModeRef == nullptr) return Prop::getResolution();
 
-	
+	int multiLedMode = multiLedModeRef->intValue();
+	switch (multiLedMode)
+	{
+	case 0: return Prop::getResolution();
+	case 1: return 1;
+	case 2: return 2;
+	default:
+		break;
+	}
 
+	return Prop::getResolution();
 }
 
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
@@ -485,6 +508,43 @@ void BentoProp::sendShowPropID(bool value)
 		OSCMessage m(playbackAddress + "/idMode");
 		m.addInt32(value);
 		sendMessageToProp(m);
+	}
+}
+
+void BentoProp::sendBrightness(float val)
+{
+	Prop::sendBrightness(val);
+
+	if (isESPNowBridge)
+	{
+		if (serialDevice != nullptr)
+		{
+			serialDevice->writeString("dev.-1.leds.strip1.brightness " + String((int)(val * 255)) + "\n");
+		}
+		else
+		{
+			OSCMessage m("/dev/-1/leds/strip1/brightness");
+			m.addFloat32(val);
+			sendMessageToProp(m);
+		}
+	}
+}
+
+void BentoProp::sendShowBattery(bool val)
+{
+	Prop::sendShowBattery(val);
+	if (isESPNowBridge)
+	{
+		if (serialDevice != nullptr)
+		{
+			serialDevice->writeString("dev.-1.leds.strip1.systemLayer.showBattery " + String(val ? 1 : 0) + "\n");
+		}
+		else
+		{
+			OSCMessage m("/dev/-1/leds/strip1/systemLayer/showBattery");
+			m.addInt32(val ? 1 : 0);
+			sendMessageToProp(m);
+		}
 	}
 }
 
