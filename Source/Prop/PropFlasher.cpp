@@ -32,6 +32,7 @@ PropFlasher::PropFlasher() :
 	fwFileParam->directoryMode = true;
 	fwFileParam->setEnabled(false);
 	forceSlowFlash = addBoolParameter("Force Slow Flash", "Force using the slow flashing method (slower but more reliable)", false);
+	fullFlash = addBoolParameter("Full Flash", "Erase the full flash of the prop, not only the program area (needed for some major version changes). This will loose the settings !", false);
 
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
 	progression = addFloatParameter("Progression", "Progression", 0, 0, 1);
@@ -86,38 +87,39 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 		}
 
 		Array<File> versionFolders = fold.findChildFiles(File::findDirectories, false);
-        // Replace this block in updateFirmwareDefinitions:
-        for (auto& versionFolder : versionFolders)
-        {
-            File manifestFile = versionFolder.getChildFile("manifest.json");
-            if (!manifestFile.existsAsFile()) {
-                NLOGWARNING(niceName, "Missing manifest.json in " << versionFolder.getFullPathName());
-                continue;
-            }
+		// Replace this block in updateFirmwareDefinitions:
+		for (auto& versionFolder : versionFolders)
+		{
+			File manifestFile = versionFolder.getChildFile("manifest.json");
+			if (!manifestFile.existsAsFile()) {
+				NLOGWARNING(niceName, "Missing manifest.json in " << versionFolder.getFullPathName());
+				continue;
+			}
 
-            var fwData = JSON::parse(manifestFile.loadFileAsString());
-            if (fwData.isVoid()) {
-                NLOGWARNING(niceName, "Invalid manifest.json in " << versionFolder.getFullPathName());
-                continue;
-            }
+			var fwData = JSON::parse(manifestFile.loadFileAsString());
+			if (fwData.isVoid()) {
+				NLOGWARNING(niceName, "Invalid manifest.json in " << versionFolder.getFullPathName());
+				continue;
+			}
 
-            // Only add the first valid version as an option for this firmware
-            String fwName = fwData["name"].toString();
-            fwType->addOption(fwName, fold.getFullPathName());
+			// Only add the first valid version as an option for this firmware
+			String fwName = fwData["name"].toString();
+			fwType->addOption(fwName, fold.getFullPathName());
 
-            // Store all firmware data
-            availableFirmwares.append(fwData);
-            break; // Only show one option per firmware
-        }
+			// Store all firmware data
+			availableFirmwares.append(fwData);
+			break; // Only show one option per firmware
+		}
 	}
 
-	fwType->addOption("Custom", "");
+	fwType->addOption("Custom", "custom");
 
 
 	String ft = fwType->getValueData().toString();
-	fwFileParam->setEnabled(ft.isEmpty());
+	fwFileParam->setEnabled(ft == "custom");
 
 	updateVersionEnumForFWType();
+	updateCompatibleVIDPIDs();
 
 	propFlasherNotifier.addMessage(new PropFlasherEvent(PropFlasherEvent::DEFINITIONS_UPDATED, this));
 }
@@ -133,7 +135,7 @@ void PropFlasher::updateVersionEnumForFWType()
 		Array<File> versionFolders = typeFolder.findChildFiles(File::findDirectories, false);
 
 		//order backwaards so first option is the latest version
-		std::sort(versionFolders.begin(), versionFolders.end(),[](const File& a, const File& b) {
+		std::sort(versionFolders.begin(), versionFolders.end(), [](const File& a, const File& b) {
 			return a.getFileName().compareNatural(b.getFileName()) > 0; // sort descending
 			});
 
@@ -160,6 +162,43 @@ void PropFlasher::updateVersionEnumForFWType()
 		}
 	}
 
+}
+
+void PropFlasher::updateCompatibleVIDPIDs()
+{
+	compatibleVIDs.clear();
+	compatibleVIDs.clear();
+
+	String typeName = fwType->getValueKey();
+	if (typeName == "custom")
+	{
+	}
+	else
+	{
+		for (int i = 0; i < availableFirmwares.size(); i++)
+		{
+			var fw = availableFirmwares[i];
+			if (fw["name"].toString() == typeName)
+			{
+				var vids = fw["vids"];
+				var pids = fw["pids"];
+
+				for (int j = 0; j < pids.size(); j++)
+				{
+					int pid = pids[j].toString().startsWith("0x") ? pids[j].toString().getHexValue32() : pids[j].toString().getIntValue();
+					compatiblePIDs.addIfNotAlreadyThere(pid);
+				}
+
+				for (int j = 0; j < vids.size(); j++)
+				{
+					int vid = vids[j].toString().startsWith("0x") ? vids[j].toString().getHexValue32() : vids[j].toString().getIntValue();
+					compatibleVIDs.addIfNotAlreadyThere(vid);
+				}
+			}
+		}
+	}
+
+	propFlasherNotifier.addMessage(new PropFlasherEvent(PropFlasherEvent::DEFINITIONS_UPDATED, this));
 }
 
 void PropFlasher::setFlashProgression(SingleFlasher* flasher, float val)
@@ -207,11 +246,17 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 {
 	if (p == fwType)
 	{
-		String typeName = fwType->getValueKey();
-		fwFileParam->setEnabled(typeName.isEmpty());
+		String typeName = fwType->getValueData().toString();
+		fwFileParam->setEnabled(typeName == "custom");
 
 		updateVersionEnumForFWType();
+		updateCompatibleVIDPIDs();
+
+
 		// Enable/disable custom folder selection
+	}else if(p == filterKnownDevices)
+	{
+		updateCompatibleVIDPIDs();
 	}
 	else if (p == fwFileParam)
 	{
@@ -240,40 +285,8 @@ Array<SerialDeviceInfo*> PropFlasher::getDevicesToFlash()
 	{
 		for (auto& info : SerialManager::getInstance()->portInfos)
 		{
-			bool foundVID = false;
-			bool foundPID = false;
-
-			for (int i = 0; i < availableFirmwares.size(); i++)
-			{
-				var vids = availableFirmwares[i].getDynamicObject()->getProperty("vids");
-				var pids = availableFirmwares[i].getDynamicObject()->getProperty("pids");
-
-				for (int n = 0; n < vids.size(); n++)
-				{
-					int vid = 0;
-					if (vids[n].isString()) vid = vids[n].toString().startsWith("0x") ? vids[n].toString().getHexValue32() : vids[n].toString().getIntValue();
-					else vid = vids[n];
-
-					if (vid == info->vid)
-					{
-						foundVID = true;
-						break;
-					}
-				}
-
-				for (int n = 0; n < pids.size(); n++)
-				{
-					int pid = 0;
-					if (pids[n].isString()) pid = pids[n].toString().startsWith("0x") ? pids[n].toString().getHexValue32() : pids[n].toString().getIntValue();
-					else pid = pids[n];
-
-					if (pid == info->pid)
-					{
-						foundPID = true;
-						break;
-					}
-				}
-			}
+			bool foundVID = compatibleVIDs.contains(info->vid);
+			bool foundPID = compatiblePIDs.contains(info->pid);
 
 			if (foundVID && foundPID) infos.addIfNotAlreadyThere(info);
 		}
@@ -336,7 +349,9 @@ void PropFlasher::flashAll(bool onlySetWifi)
 	}
 
 	firmwareData = JSON::parse(manifestFile.loadFileAsString());
-	firmwareFile = fwFolder.getChildFile("firmware.bin");
+
+	String fwName = fullFlash->boolValue() ? "firmware_full.bin" : "firmware.bin";
+	firmwareFile = fwFolder.getChildFile(fwName);
 
 	if (!firmwareFile.exists())
 	{
@@ -525,10 +540,13 @@ bool SingleFlasher::flashProp()
 		parameters += " --" + nv.name + " " + nv.value.toString() + " ";
 	}
 
-	parameters += " 0x0000 " + quotes + PropFlasher::getInstance()->firmwareFile.getFullPathName() + quotes;
+	String fwOffset = PropFlasher::getInstance()->fullFlash->boolValue() ? "0x00000" : data["firmwareOffset"].toString();
 
-	LOG("[" + info->port + "] Flashing firmware...");
-	LOG("Launch with parameters " + parameters);
+	parameters += " " + fwOffset + " " + quotes + PropFlasher::getInstance()->firmwareFile.getFullPathName() + quotes;
+
+
+	LOG("[" + info->port + "] Flashing firmware with parameters :");
+	LOG(parameters);
 
 	ChildProcess cp;
 	cp.start(PropFlasher::getInstance()->flasher.getFullPathName() + parameters);

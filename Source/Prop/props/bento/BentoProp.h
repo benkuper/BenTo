@@ -40,6 +40,7 @@ public:
 	IntParameter* universeRef;
 	IntParameter* startChannelRef;
 
+	Trigger* saveSettingsRef;
 	EnumParameter* multiLedModeRef;
 
 	String playbackAddress;
@@ -82,6 +83,7 @@ public:
 
 	virtual void sendBrightness(float val) override;
 	virtual void sendShowBattery(bool val) override;
+	virtual void savePropSettings() override;
 
 	bool uploadProgressCallback(int bytesSent, int totalBytes);
 	bool uploadMetaDataProgressCallback(int bytesSent, int totalBytes);

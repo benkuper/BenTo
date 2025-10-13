@@ -360,6 +360,10 @@ void BentoSubComponent::onControllableAdded(Controllable* c)
 				if (dr->stringValue() == "Olimex POE Bridge") container->prop->isESPNowBridge = true;
 			}
 		}
+		else if (c->shortName == "saveSettings")
+		{
+			container->prop->saveSettingsRef = ((Trigger*)c);
+		}
 	}
 	else if (shortName == "streamLayer")
 	{

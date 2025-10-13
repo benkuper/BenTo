@@ -73,6 +73,7 @@ public:
 
 	Trigger* flashTrigger;
 	BoolParameter* forceSlowFlash;
+	BoolParameter* fullFlash;
 
 	FileParameter* serverFilesParam;
 	Trigger* uploadTrigger;
@@ -82,6 +83,8 @@ public:
 	int numFlashingProps;
 	var availableFirmwares;
 	std::unique_ptr<URL::DownloadTask> firmwareDownloadTask;
+	Array<int> compatibleVIDs;
+	Array<int> compatiblePIDs;
 
 	enum FlashResult { None, Success, Fail };
 	OwnedArray<SingleFlasher> flashers;
@@ -90,6 +93,7 @@ public:
 
 	void updateFirmwareDefinitions(bool force = false);
 	void updateVersionEnumForFWType();
+	void updateCompatibleVIDPIDs();
 
 	void setFlashProgression(SingleFlasher*, float val);;
 	void setFlashingDone(SingleFlasher*, FlashResult val);

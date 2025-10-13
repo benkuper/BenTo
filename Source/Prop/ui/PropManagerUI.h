@@ -25,6 +25,7 @@ public:
 	std::unique_ptr<TriggerButtonUI> disableUI;
 	std::unique_ptr<TriggerButtonUI> restartUI;
 	std::unique_ptr<TriggerButtonUI> powerOffUI;
+	std::unique_ptr<TriggerButtonUI> saveSettingsUI;
 	std::unique_ptr<BoolToggleUI> showBatteryUI;
 	std::unique_ptr<FloatSliderUI> globalBrightnessUI;
 	std::unique_ptr<TriggerButtonUI> uploadAllUI;

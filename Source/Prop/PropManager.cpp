@@ -52,6 +52,8 @@ PropManager::PropManager() :
 	playbackMode = playbackCC.addBoolParameter("Playback Mode", "Switch between live stream from the software, or playback from the prop's uploaded playback file.", false);
 	powerOffAll = playbackCC.addTrigger("Poweroff All", "");
 	resetAll = playbackCC.addTrigger("Reset All", "");
+	saveAll = playbackCC.addTrigger("Save All", "Save all current prop settings to their flash");
+
 
 
 	fileName = playbackCC.addStringParameter("Playback Filename", "Filename of the playback", "sequence");
@@ -288,6 +290,27 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 	else if (c == resetAll)
 	{
 		for (auto& p : items) p->restartTrigger->trigger();
+	}
+	else if(c == saveAll)
+	{
+		AlertWindow::showAsync(
+			MessageBoxOptions().withIconType(AlertWindow::WarningIcon)
+			.withTitle("Save All Props Settings")
+			.withMessage("Are you sure you want to save settings on all the props ?")
+			.withButton("Yes")
+			.withButton("No"),
+			[&](int result)
+			{
+				if (result)
+				{
+					for (auto& p : items)
+					{
+						p->savePropSettings();
+					}
+				}
+
+			});
+
 	}
 	else if (c == clearAll)
 	{

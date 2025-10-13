@@ -53,6 +53,7 @@ public:
 	Trigger* disableAll;
 	Trigger* powerOffAll;
 	Trigger* resetAll;
+	Trigger* saveAll;
 	BoolParameter* showBattery;
 	FloatParameter* globalBrightness;
 

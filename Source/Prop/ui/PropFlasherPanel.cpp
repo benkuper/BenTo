@@ -21,7 +21,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	firmwareCustomFileUI.reset((StringParameterFileUI*)PropFlasher::getInstance()->fwFileParam->createStringParameterFileUI());
 	updateFirmwareDefinitionsUI.reset(PropFlasher::getInstance()->updateFirmwareDefinitionsTrigger->createButtonUI());
 	forceSlowFlashUI.reset(PropFlasher::getInstance()->forceSlowFlash->createToggle());
-
+	fullFlashUI.reset(PropFlasher::getInstance()->fullFlash->createToggle());
 
 	setWifiAfterFlashUI.reset(PropFlasher::getInstance()->setWifiAfterFlash->createToggle());
 	wifiSSIDUI.reset(PropFlasher::getInstance()->wifiSSID->createStringParameterUI());
@@ -54,6 +54,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	addAndMakeVisible(firmwareVersionUI.get());
 	addAndMakeVisible(firmwareCustomFileUI.get());
 	addAndMakeVisible(forceSlowFlashUI.get());
+	addAndMakeVisible(fullFlashUI.get());
 	addAndMakeVisible(setWifiAfterFlashUI.get());
 	addAndMakeVisible(wifiSSIDUI.get());
 	addAndMakeVisible(wifiPassUI.get());
@@ -73,7 +74,7 @@ PropFlasherPanel::PropFlasherPanel() :
 
 
 	SerialManager::getInstance()->addSerialManagerListener(this);
-	PropFlasher::getInstance()->filterKnownDevices->addAsyncCoalescedParameterListener(this);
+	PropFlasher::getInstance()->addAsyncPropFlasherListener(this);
 
 	updateInfos();
 }
@@ -81,7 +82,11 @@ PropFlasherPanel::PropFlasherPanel() :
 PropFlasherPanel::~PropFlasherPanel()
 {
 	if (SerialManager::getInstanceWithoutCreating()) SerialManager::getInstance()->removeSerialManagerListener(this);
-	if (PropFlasher::getInstanceWithoutCreating()) PropFlasher::getInstance()->filterKnownDevices->removeAsyncParameterListener(this);
+	if (PropFlasher::getInstanceWithoutCreating())
+	{
+		PropFlasher::getInstance()->removeAsyncPropFlasherListener(this);
+	}
+
 }
 
 void PropFlasherPanel::paint(Graphics& g)
@@ -114,7 +119,7 @@ void PropFlasherPanel::paint(Graphics& g)
 	Rectangle<int> r = propInfosRect.reduced(10);
 	g.setColour(TEXT_COLOR);
 	g.setFont(16);
-	g.drawText(String(numDevices) + " Connected Devices", r.removeFromTop(30).toFloat(), Justification::centred);
+	g.drawText(String(numDevices) + " Compatible Device" + (numDevices <= 1 ? "" : "s"), r.removeFromTop(30).toFloat(), Justification::centred);
 
 	r.removeFromTop(10);
 
@@ -130,7 +135,7 @@ void PropFlasherPanel::resized()
 	Rectangle<int> r = getLocalBounds().reduced(10);
 	r.removeFromTop(40);
 
-	propInfosRect = r.withWidth(jmin<int>(400, r.getWidth() * .3f));
+	propInfosRect = r.withWidth(jmin<int>(340, r.getWidth() * .3f));
 
 	filterKnownDevicesUI->setBounds(propInfosRect.removeFromBottom(30).withSizeKeepingCentre(160, 20));
 
@@ -152,6 +157,8 @@ void PropFlasherPanel::resized()
 	firmwareVersionUI->setBounds(fwr.removeFromLeft(100).reduced(4));
 	fwr.removeFromLeft(4);
 	forceSlowFlashUI->setBounds(fwr.removeFromLeft(100).reduced(4));
+	fwr.removeFromLeft(4);
+	fullFlashUI->setBounds(fwr.removeFromLeft(80).reduced(4));
 	fwr.removeFromLeft(20);
 	firmwareCustomFileUI->setBounds(fwr.reduced(4));
 

@@ -55,7 +55,7 @@ public:
 	Trigger* restartTrigger;
 
 	ControllableContainer playbackCC;
-	
+
 	FloatParameter* playbackStartTime;
 	FloatParameter* playbackEndTime;
 	IntParameter* playbackFrequency;
@@ -150,6 +150,7 @@ public:
 
 	virtual void powerOffProp() {}
 	virtual void restartProp() {}
+	virtual void savePropSettings() {}
 
 	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;

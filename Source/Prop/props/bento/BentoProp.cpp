@@ -9,7 +9,6 @@
 */
 
 #include "Prop/PropIncludes.h"
-#include "BentoProp.h"
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
@@ -19,7 +18,8 @@ BentoProp::BentoProp(var params) :
 	brightnessRef(nullptr),
 	universeRef(nullptr),
 	startChannelRef(nullptr),
-	multiLedModeRef(nullptr)
+	multiLedModeRef(nullptr),
+	saveSettingsRef(nullptr)
 {
 
 	useAlphaInPlaybackData = true;
@@ -546,6 +546,24 @@ void BentoProp::sendShowBattery(bool val)
 			sendMessageToProp(m);
 		}
 	}
+}
+
+void BentoProp::savePropSettings()
+{
+	Prop::savePropSettings();
+	if (isESPNowBridge)
+	{
+		if (serialDevice != nullptr)
+		{
+			serialDevice->writeString("dev.-1.settings.save\n");
+		}
+		else
+		{
+			OSCMessage m("/dev/-1/settings/save");
+			sendMessageToProp(m);
+		}
+	}
+	else if (saveSettingsRef != nullptr) saveSettingsRef->trigger();
 }
 
 bool BentoProp::uploadProgressCallback(int bytesSent, int totalBytes)
