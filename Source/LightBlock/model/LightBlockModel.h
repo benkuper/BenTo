@@ -12,6 +12,7 @@
 
 class LightBlock;
 class LightBlockModelUI;
+class Prop;
 
 class LightBlockModel :
 	public LightBlockColorProvider
@@ -52,6 +53,9 @@ public:
 
 	var getJSONData(bool includeNonOverriden = false) override;
 	void loadJSONDataInternal(var data) override;
+
+
+	Array<Prop*> getAssignedProps();
 
 	
 	virtual LightBlockModelUI * createUI();

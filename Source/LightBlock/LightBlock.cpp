@@ -74,14 +74,14 @@ var LightBlock::getLocalParams(Prop* p, double time, var params)
 
 				if (a->automationContainer == nullptr) continue;
 
-				if (dynamic_cast<Automation*>(a->automationContainer) != nullptr)
+				if (Automation* aa = dynamic_cast<Automation*>(a->automationContainer))
 				{
-					float value = ((Automation*)a->automationContainer)->getValueAtPosition(fmodf(time, a->lengthParamRef->floatValue()));
+					float value = aa->getValueAtPosition(fmodf(time, a->lengthParamRef->floatValue()));
 					localParams.getDynamicObject()->setProperty(param->shortName, value);
 				}
-				else if (dynamic_cast<GradientColorManager*>(a->automationContainer) != nullptr)
+				else if (GradientColorManager* gcm = dynamic_cast<GradientColorManager*>(a->automationContainer))
 				{
-					Colour value = ((GradientColorManager*)a->automationContainer)->getColorForPosition(fmodf(time, a->lengthParamRef->floatValue()));
+					Colour value = gcm->getColorForPosition(fmodf(time, a->lengthParamRef->floatValue()));
 					var colorParam;
 					colorParam.append(value.getFloatRed());
 					colorParam.append(value.getFloatGreen());

@@ -107,7 +107,7 @@ void BentoProp::onContainerParameterChangedInternal(Parameter* p)
 		{
 			Timer::callAfterDelay(20 * i, [this]() {
 				sendMessageToProp(OSCMessage(ledEnabledAddress, enabled->boolValue() ? 1 : 0));
-			});
+				});
 		}
 	}
 	else if (p == globalID)
@@ -312,7 +312,7 @@ void BentoProp::uploadPlaybackData(PlaybackData data)
 	{
 		String response = stream->readEntireStreamAsString();
 		DBG("Got response : " << response);
-		NLOG(niceName, "Upload complete");
+		NLOG(niceName, "Playback data upload complete");
 	}
 	else
 	{
@@ -363,7 +363,7 @@ void BentoProp::uploadFile(FileToUpload f)
 	{
 		String response = stream->readEntireStreamAsString();
 		DBG("Got response : " << response);
-		NLOG(niceName, "Upload complete");
+		NLOG(niceName, "Upload complete : " + f.remoteFolder + "/" + String(f.file.getFileName()));
 	}
 	else
 	{
@@ -598,10 +598,10 @@ void BentoProp::sendYo()
 void BentoProp::sendControlToProp(String control, var value)
 {
 	if (!enabled->boolValue()) return;
-	if (logOutgoing->boolValue())
-	{
-		NLOG(niceName, "Sending " + control + " : " + value.toString());
-	}
+	//if (logOutgoing->boolValue())
+	//{
+	//	NLOG(niceName, "Sending " + control + " : " + value.toString());
+	//}
 
 	OSCMessage m("/" + control.replaceCharacter('.', '/'));
 	if (value.isArray())

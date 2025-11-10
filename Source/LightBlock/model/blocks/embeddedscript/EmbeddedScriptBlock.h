@@ -35,15 +35,18 @@ public:
 	Time lastModTime;
 
 	Array<Parameter*> scriptParams;
+	var scriptMetaData;
 
 	void checkAutoCompile();
 	void compile();
 
-	void generateParams();
+	// Parse variables, functions and events and return the modified code as string
+	String generateParams();
 
-	void loadScriptOnProp(Prop* p);
-	void stopScriptOnProp(Prop* p);
-	void sendParamControlToProp(Prop* p, int index, float val);
+	void loadScriptOnProps(Prop* p = nullptr);
+	void stopScriptOnProps(Prop* p = nullptr);
+	void sendParamControlToProps(const String& paramName, float value, Prop* p = nullptr);
+	void sendTriggerFunctionToProps(const String& functionName, Prop * p = nullptr);
 	
 	File getToolsFolder() const;
 	File getCompilerFile();
@@ -53,6 +56,7 @@ public:
 	bool wasmDownloadProgressCallback(int bytesSent, int bytesTotal);
 
 	File getWasmFile();
+	File getMetadataFile();
 
 	void run() override;
 

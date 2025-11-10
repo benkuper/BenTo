@@ -30,7 +30,7 @@ Array<Colour> PropShapeCurve::getTestColors(int maxCount)
             for (int pix = 0; pix < numPixels; pix++)
             {
                 if (maxCount >= 0 && result.size() >= maxCount) return result;
-                result.add(Colour::fromHSV(hue, 1, 1, 1));
+                result.add(Colour::fromHSV(hue, 1.f, 1.f, 1.f));
             }
         }
         hue += .37f;

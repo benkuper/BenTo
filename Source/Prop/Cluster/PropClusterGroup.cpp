@@ -69,7 +69,7 @@ Array<Colour> PropClusterGroup::getColorsForProp(Prop* p)
 	if (c != nullptr)
 	{
 		for (int i = 0; i < 3 && i < numPixels / 2; i++) result.set(numPixels-1-i, c->color->getColor());
-		for (int i = numPixels - 1; i > numPixels - 1 - id -1 && i > numPixels / 2; i--) result.set(numPixels-1-i, Colour::fromHSV(id * 1.0f / 4, 1, 1, 1));
+		for (int i = numPixels - 1; i > numPixels - 1 - id -1 && i > numPixels / 2; i--) result.set(numPixels-1-i, Colour::fromHSV(id * 1.0f / 4, 1.f, 1.f, 1.f));
 	}
 
 	return result;

@@ -163,7 +163,31 @@ void LightBlockLayer::sequenceCurrentTimeChanged(Sequence* s, float prevTime, bo
 	{
 		Array<Prop*> props;
 		for (auto& p : PropManager::getInstance()->items) if (filterManager->getTargetIDForProp(p) >= 0) props.add(p);
-		((LightBlockClip*)c)->handleEnterExit(c->isInRange(s->currentTime->floatValue()), props);
+		
+		LightBlockClip* lc = (LightBlockClip*)c;
+		bool isInRange = lc->isInRange(s->currentTime->floatValue());
+		lc->handleEnterExit(isInRange, props);
+		
+		if (isInRange)
+		{
+			if (EmbeddedScriptBlock* sb = lc->activeProvider->getTargetContainerAs<EmbeddedScriptBlock>())
+			{
+				float relTime = s->currentTime->floatValue() - lc->time->floatValue();
+				Array<WeakReference<Parameter>> params = lc->currentBlock->paramsContainer->getAllParameters();
+				for (auto& param : params)
+				{
+					if (param->controlMode == Parameter::AUTOMATION)
+					{
+						if (Automation* a = dynamic_cast<Automation*>(param->automation->automationContainer))
+						{
+							float value = a->getValueAtPosition(fmodf(relTime, param->automation->lengthParamRef->floatValue()));
+
+							for(auto & p : props) sb->sendParamControlToProps(param->shortName, value, p);
+						}
+					}
+				}
+			}
+		}
 	}
 }
 

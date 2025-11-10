@@ -146,6 +146,7 @@ Prop::Prop(var params) :
 
 Prop::~Prop()
 {
+	stopThread(100);
 	clearItem();
 	masterReference.clear();
 }
@@ -512,6 +513,7 @@ void Prop::uploadFileQueue()
 {
 	while (filesToUpload.size() > 0)
 	{
+		if (threadShouldExit()) return;
 		FileToUpload f = filesToUpload.removeAndReturn(0);
 		uploadFile(f);
 	}
@@ -519,7 +521,7 @@ void Prop::uploadFileQueue()
 
 void Prop::uploadFile(FileToUpload f)
 {
-	NLOG(niceName, "Uploading file " + f.file.getFullPathName() + "...");
+	NLOG(niceName, "Uploading file " + f.file.getFileName() + "...");
 }
 
 void Prop::updatePlaybackModeOnProp()

@@ -45,7 +45,7 @@ void RainbowPattern::getColorsInternal(Array<Colour>* result, Prop* p, double ti
 	for (int i = 0; i < resolution; i++)
 	{
 		double rel = fmod((1 - (i * 1.0 / resolution)) * bDensity + curOffset, 1);
-		result->set(i, Colour::fromHSV(rel, 1, bBrightness, 1));
+		result->set(i, Colour::fromHSV(rel, 1.f, bBrightness, 1.f));
 	}
 }
 

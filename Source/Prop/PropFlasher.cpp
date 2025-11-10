@@ -627,7 +627,19 @@ void PropFlasher::FirmwareDownloader::run()
 
 void PropFlasher::FirmwareDownloader::progress(URL::DownloadTask* task, int64 bytesDownloaded, int64 totalLength)
 {
-	//LOG("Downloading firmware files...");
+	if(Time::getMillisecondCounter() - lastLogTime > 1000)
+	{
+		if (totalLength > 0)
+		{
+			float prog = (float)bytesDownloaded / (float)totalLength;
+			LOG("Downloading firmware files... " << (int)(prog * 100) << " % ");
+		}
+		else
+		{
+			LOG("Downloading firmware files... " << bytesDownloaded << " bytes downloaded");
+		}
+		lastLogTime = Time::getMillisecondCounter();
+	}
 }
 
 void PropFlasher::FirmwareDownloader::finished(URL::DownloadTask* task, bool success)

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source&#10;../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-              id="LP0of5" version="2.0.1b15" projectLineFeed="&#10;" jucerFormatVersion="1"
+              id="LP0of5" version="2.0.1b16" projectLineFeed="&#10;" jucerFormatVersion="1"
               cppLanguageStandard="17" includeBinaryInJuceHeader="1" bundleIdentifier="benkuper.Bento">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
@@ -161,22 +161,6 @@
           <FILE id="Tsva2O" name="BlockVizPanel.cpp" compile="0" resource="0"
                 file="Source/Common/BlockViz/BlockVizPanel.cpp"/>
           <FILE id="QuLuTw" name="BlockVizPanel.h" compile="0" resource="0" file="Source/Common/BlockViz/BlockVizPanel.h"/>
-        </GROUP>
-        <GROUP id="{47A27C4D-2349-A229-1644-7FF1CF8E7CBC}" name="EmbeddedScript">
-          <GROUP id="{834378A3-C0DF-3604-8156-D1C3C7D68509}" name="ui">
-            <FILE id="nWQw57" name="EmbeddedScriptManagerUI.cpp" compile="0" resource="0"
-                  file="Source/Common/EmbeddedScript/ui/EmbeddedScriptManagerUI.cpp"/>
-            <FILE id="PBNeAa" name="EmbeddedScriptManagerUI.h" compile="0" resource="0"
-                  file="Source/Common/EmbeddedScript/ui/EmbeddedScriptManagerUI.h"/>
-          </GROUP>
-          <FILE id="ZIStgD" name="EmbeddedScript.cpp" compile="0" resource="0"
-                file="Source/Common/EmbeddedScript/EmbeddedScript.cpp"/>
-          <FILE id="EPqExs" name="EmbeddedScript.h" compile="0" resource="0"
-                file="Source/Common/EmbeddedScript/EmbeddedScript.h"/>
-          <FILE id="z008W4" name="EmbeddedScriptManager.cpp" compile="0" resource="0"
-                file="Source/Common/EmbeddedScript/EmbeddedScriptManager.cpp"/>
-          <FILE id="yAD4gg" name="EmbeddedScriptManager.h" compile="0" resource="0"
-                file="Source/Common/EmbeddedScript/EmbeddedScriptManager.h"/>
         </GROUP>
         <GROUP id="{55BB23A5-EB03-B7C5-9575-A8E09D7410A0}" name="Identification">
           <FILE id="radum6" name="IdentificationRule.cpp" compile="0" resource="0"

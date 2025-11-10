@@ -9,7 +9,6 @@
 */
 
 #include "Prop/PropIncludes.h"
-#include "BentoComponentContainer.h"
 
 BentoComponentContainer::BentoComponentContainer(BentoProp* prop) :
 	ControllableContainer("Components"),

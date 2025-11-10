@@ -46,6 +46,8 @@ public:
 
 		std::unique_ptr<URL::DownloadTask> downloadTask;
 		std::function<void()> onDownloaded;
+		
+		unsigned long lastLogTime = 0;
 
 		void download(std::function<void()> callback);
 		void run() override;

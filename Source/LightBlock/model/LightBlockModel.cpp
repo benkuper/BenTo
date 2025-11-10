@@ -94,6 +94,21 @@ void LightBlockModel::loadJSONDataInternal(var data)
 	if (paramsContainer != nullptr) paramsContainer->loadJSONData(data.getProperty("modelParams", var()));
 	presetManager.loadJSONData(data.getProperty("presets", var()));
 }
+Array<Prop*> LightBlockModel::getAssignedProps()
+{
+	Array<Prop*> result;
+	for (auto& p : PropManager::getInstance()->items)
+	{
+		if (p->currentBlock != nullptr && p->currentBlock->provider == this)
+		{
+			result.add(p);
+		}
+	}
+
+	return result;
+
+}
+
 LightBlockModelUI * LightBlockModel::createUI()
 {
 	return new LightBlockModelUI(this);
