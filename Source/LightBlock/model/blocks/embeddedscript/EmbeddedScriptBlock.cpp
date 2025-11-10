@@ -557,8 +557,9 @@ void EmbeddedScriptBlock::onContainerParameterChangedInternal(Parameter* p)
 		File f = scriptFile->getFile();
 		if (f.existsAsFile())
 		{
+			generateParams();
+			
 			lastModTime = f.getLastModificationTime();
-
 			if (!isCurrentlyLoadingData) {
 				setNiceName(f.getFileNameWithoutExtension());
 			}
@@ -627,7 +628,6 @@ void EmbeddedScriptBlock::handleEnterExit(bool enter, Array<Prop*> props)
 
 void EmbeddedScriptBlock::afterLoadJSONDataInternal()
 {
-	//generateParams();
 }
 
 
