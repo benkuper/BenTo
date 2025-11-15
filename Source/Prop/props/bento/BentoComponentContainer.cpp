@@ -18,13 +18,12 @@ BentoComponentContainer::BentoComponentContainer(BentoProp* prop) :
 	isUpdatingStructure(false)
 {
 	startThread();
-	startTimer(5000); //would be better in PropManager
 }
 
 BentoComponentContainer::~BentoComponentContainer()
 {
-	if (wsClient != nullptr) wsClient->stop();
 	stopThread(2000);
+	if (wsClient != nullptr) wsClient->stop();
 }
 
 void BentoComponentContainer::setupWSClient()
@@ -95,7 +94,7 @@ void BentoComponentContainer::onContainerTriggerTriggered(Trigger* t)
 void BentoComponentContainer::syncData()
 {
 	if (isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile) return;
-
+	if (prop->isConnected->boolValue()) return;
 	startThread();
 }
 
@@ -121,21 +120,18 @@ void BentoComponentContainer::connectionOpened()
 {
 	NLOG(niceName, "Websocket connection is opened, let's get bi, baby !");
 	prop->isConnected->setValue(true);
-	stopTimer();
 }
 
 void BentoComponentContainer::connectionClosed(int status, const String& reason)
 {
 	NLOG(niceName, "Websocket connection is closed, bye bye!");
 	prop->isConnected->setValue(false);
-	startTimer(5000);
 }
 
 void BentoComponentContainer::connectionError(const String& errorMessage)
 {
 	NLOGERROR(niceName, "Connection error " << errorMessage);
 	prop->isConnected->setValue(false);
-	startTimer(5000);
 }
 
 void BentoComponentContainer::dataReceived(const MemoryBlock& data)
@@ -150,7 +146,6 @@ void BentoComponentContainer::dataReceived(const MemoryBlock& data)
 		NLOG(niceName, "Prop is saying bye, prop will : " << (m.size() > 0 ? m[0].getString() : "[notset]"));
 
 		prop->isConnected->setValue(false);
-		startTimer(5000);
 		return;
 	}
 
@@ -166,20 +161,6 @@ void BentoComponentContainer::messageReceived(const String& message)
 {
 	if (!prop->enabled->boolValue()) return;
 
-}
-
-
-void BentoComponentContainer::timerCallback()
-{
-	if (!prop->isConnected->boolValue())
-	{
-		stopThread(300);
-		startThread();
-	}
-	else
-	{
-		stopTimer();
-	}
 }
 
 void BentoComponentContainer::run()
@@ -200,10 +181,10 @@ void BentoComponentContainer::requestHostInfo()
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(
 		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(200)
+		.withConnectionTimeoutMs(1000)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
-		.withProgressCallback([this](int, int) { return !isClearing && !Engine::mainEngine->isClearing && !threadShouldExit(); })
+		.withProgressCallback([this](int, int) { LOG("check here"); return !isClearing && !Engine::mainEngine->isClearing && !threadShouldExit(); })
 	));
 
 	if (threadShouldExit()) return;
@@ -254,10 +235,10 @@ void BentoComponentContainer::requestStructure()
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(
 		URL::InputStreamOptions(URL::ParameterHandling::inAddress)
-		.withConnectionTimeoutMs(200)
+		.withConnectionTimeoutMs(1000)
 		.withResponseHeaders(&responseHeaders)
 		.withStatusCode(&statusCode)
-		.withProgressCallback([this](int, int) { return !threadShouldExit(); })
+		.withProgressCallback([this](int, int) { return !isClearing && !Engine::mainEngine->isClearing && !threadShouldExit(); })
 	));
 
 	if (threadShouldExit()) return;

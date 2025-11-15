@@ -95,6 +95,7 @@ PropManager::PropManager() :
 	//}
 
 	startTimer(PLAYSYNC_TIMER_ID, 1000 * playSyncSendInterval->intValue());
+	startTimer(BLIP_SYNC_TIMER_ID, 5000);
 }
 
 
@@ -716,6 +717,15 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 					{
 						bp->checkAndSendPlaySync();
 					}
+				}
+			}
+		}else if(timerID == BLIP_SYNC_TIMER_ID)
+		{
+			for (auto& p : items)
+			{
+				if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
+				{
+					if(bp->componentsCC != nullptr) bp->componentsCC->syncData();
 				}
 			}
 		}

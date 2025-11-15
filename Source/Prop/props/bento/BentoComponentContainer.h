@@ -28,8 +28,7 @@ public:
 class BentoComponentContainer :
 	public ControllableContainer,
 	public SimpleWebSocketClientBase::Listener,
-	public Thread,
-	public Timer
+	public Thread
 {
 public:
 	BentoComponentContainer(BentoProp* prop);
@@ -64,8 +63,6 @@ public:
 	void dataReceived(const MemoryBlock& data) override;
 	void messageReceived(const String& message) override;
 
-	// Inherited via Timer
-	void timerCallback() override;
 
 	// Inherited via Thread
 	virtual void run() override;

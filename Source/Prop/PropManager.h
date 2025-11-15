@@ -17,6 +17,7 @@
 #define YO_TIMER_ID 1
 #define SERIAL_TIMER_ID 2
 #define PLAYSYNC_TIMER_ID 3
+#define BLIP_SYNC_TIMER_ID 4
 
 class PropManager :
 	public Manager<Prop>,
