@@ -153,10 +153,9 @@ Prop::~Prop()
 
 void Prop::clearItem()
 {
+	BaseItem::clearItem();
 	colors.fill(Colours::black);
 	sendColorsToProp();
-	setBlockFromProvider(nullptr);
-	//if (!Engine::mainEngine->isClearing && family != nullptr) family->unregisterProp(this);
 	signalThreadShouldExit();
 	waitForThreadToExit(1000);
 	setBlockFromProvider(nullptr);

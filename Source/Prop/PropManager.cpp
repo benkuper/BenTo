@@ -242,6 +242,11 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		Array<IPAddress> addresses;
 		IPAddress::findAllAddresses(addresses);
 
+		for (auto& p : items)
+		{
+			p->isConnected->setValue(false);
+		}
+
 		LOG("Auto detecting props");
 		for (auto& ad : addresses)
 		{
@@ -261,6 +266,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		for (auto& s : zeroconfSearcher->services) addPropForService(s);
 
 		checkSerialDevices();
+
 
 	}
 	else if (c == uploadAll)

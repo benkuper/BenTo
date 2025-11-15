@@ -53,7 +53,7 @@ public:
 	void onContainerParameterChanged(Parameter* p) override;
 	void onContainerTriggerTriggered(Trigger* t) override;
 
-	virtual void syncData();
+	virtual void syncData(bool force = false);
 	virtual void updateTreeFromData(var data);
 
 	void connectionOpened() override;

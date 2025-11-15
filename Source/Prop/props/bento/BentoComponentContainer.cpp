@@ -91,10 +91,10 @@ void BentoComponentContainer::onContainerTriggerTriggered(Trigger* t)
 }
 
 
-void BentoComponentContainer::syncData()
+void BentoComponentContainer::syncData(bool force)
 {
 	if (isCurrentlyLoadingData || Engine::mainEngine->isLoadingFile) return;
-	if (prop->isConnected->boolValue()) return;
+	if (!force && prop->isConnected->boolValue()) return;
 	startThread();
 }
 
