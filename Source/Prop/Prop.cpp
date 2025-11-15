@@ -180,60 +180,65 @@ void Prop::setBlockFromProvider(LightBlockColorProvider* model)
 	if (model != nullptr && currentBlock != nullptr && currentBlock->provider == model) return;
 	if (isGeneratingPlayback->boolValue()) return;
 
-	if (currentBlock != nullptr)
+	
 	{
+		GenericScopedLock lock(colorLock);
 
-		removeChildControllableContainer(currentBlock.get());
-		if (!currentBlock->provider.wasObjectDeleted())
+		if (currentBlock != nullptr)
 		{
-			currentBlock->provider->setHighlighted(false);
 
-			unregisterLinkedInspectable(currentBlock->provider.get());
-			currentBlock->provider->removeColorProviderListener(this);
-			currentBlock->provider->removeInspectableListener(this);
-			currentBlock->provider->handleEnterExit(false, this);
+			removeChildControllableContainer(currentBlock.get());
+			if (!currentBlock->provider.wasObjectDeleted())
+			{
+				currentBlock->provider->setHighlighted(false);
+
+				unregisterLinkedInspectable(currentBlock->provider.get());
+				currentBlock->provider->removeColorProviderListener(this);
+				currentBlock->provider->removeInspectableListener(this);
+				currentBlock->provider->handleEnterExit(false, this);
+			}
+
+			//currentBlock->removeLightBlockListener(this);
+			currentBlock = nullptr;
 		}
 
-		//currentBlock->removeLightBlockListener(this);
-		currentBlock = nullptr;
-	}
-
-	if (model != nullptr) currentBlock.reset(new LightBlock(model));
+		if (model != nullptr) currentBlock.reset(new LightBlock(model));
 
 
-	if (currentBlock != nullptr)
-	{
-		addChildControllableContainer(currentBlock.get());
-		currentBlock->provider->addInspectableListener(this);
-		currentBlock->provider->addColorProviderListener(this);
-		currentBlock->provider->handleEnterExit(true, this);
-
-		registerLinkedInspectable(currentBlock->provider.get());
-
-
-
-		if (BentoSequenceBlock* tb = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
+		if (currentBlock != nullptr)
 		{
-			if (tb->autoSetPropEnabled->boolValue())
+			addChildControllableContainer(currentBlock.get());
+			currentBlock->provider->addInspectableListener(this);
+			currentBlock->provider->addColorProviderListener(this);
+			currentBlock->provider->handleEnterExit(true, this);
+
+			registerLinkedInspectable(currentBlock->provider.get());
+
+
+
+			if (BentoSequenceBlock* tb = dynamic_cast<BentoSequenceBlock*>(currentBlock->provider.get()))
 			{
-				bool hasLayers = !tb->sequence->getLayersForProp(this).isEmpty();
-				enabled->setValue(hasLayers);
+				if (tb->autoSetPropEnabled->boolValue())
+				{
+					bool hasLayers = !tb->sequence->getLayersForProp(this).isEmpty();
+					enabled->setValue(hasLayers);
+				}
 			}
 		}
-	}
 
-	if (currentBlock != nullptr && enabled->boolValue())
-	{
-		//if(!isThreadRunning()) startThread();
+		if (currentBlock != nullptr && enabled->boolValue())
+		{
+			//if(!isThreadRunning()) startThread();
 
-	}
-	else
-	{
-		//if (isThreadRunning())
-		//{
-		//	signalThreadShouldExit();
-		//	waitForThreadToExit(50);
-		//}
+		}
+		else
+		{
+			//if (isThreadRunning())
+			//{
+			//	signalThreadShouldExit();
+			//	waitForThreadToExit(50);
+			//}
+		}
 	}
 
 	updatePlaybackModeOnProp();
@@ -272,9 +277,11 @@ void Prop::update()
 	{
 		double time = fmod(Time::getMillisecondCounterHiRes(), (int)1e9) / 1000.0;
 
-		colorLock.enter();
-		colors = currentBlock->getColors(this, time, var());
-		colorLock.exit();
+		{
+			GenericScopedLock lock(colorLock);
+			colors = currentBlock->getColors(this, time, var());
+		}
+
 
 		if (Engine::mainEngine != nullptr && !Engine::mainEngine->isClearing)
 		{

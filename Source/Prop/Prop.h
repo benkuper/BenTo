@@ -81,7 +81,7 @@ public:
 
 	File exportFile;
 
-	SpinLock colorLock;
+	CriticalSection colorLock;
 	Array<Colour> colors;
 
 	std::unique_ptr<LightBlock> currentBlock;
