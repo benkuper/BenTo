@@ -14090,13 +14090,7 @@
     <None Include="..\..\Resources\firmware\server\edit.html">
       <Filter>BenTo\Resources\firmware\server</Filter>
     </None>
-    <None Include="..\..\Resources\firmware\server\jquery.min.js">
-      <Filter>BenTo\Resources\firmware\server</Filter>
-    </None>
-    <None Include="..\..\Resources\firmware\server\osc-browser.min.js">
-      <Filter>BenTo\Resources\firmware\server</Filter>
-    </None>
-    <None Include="..\..\Resources\firmware\server\upload.html">
+    <None Include="..\..\Resources\firmware\server\osc-mini.js">
       <Filter>BenTo\Resources\firmware\server</Filter>
     </None>
     <None Include="..\..\Resources\models\patterns\ledRange.png">

@@ -46,10 +46,13 @@ public:
 
 		std::unique_ptr<URL::DownloadTask> downloadTask;
 		std::function<void()> onDownloaded;
-		
+		String deviceToDownload;
+		String versionToDownload;
+
 		unsigned long lastLogTime = 0;
 
-		void download(std::function<void()> callback);
+
+		void download(std::function<void()> callback, String device, String version);
 		void run() override;
 		void progress(URL::DownloadTask* task, int64 bytesDownloaded, int64 totalLength) override;
 		void finished(URL::DownloadTask* task, bool success) override;
@@ -79,12 +82,12 @@ public:
 
 	FileParameter* serverFilesParam;
 	Trigger* uploadTrigger;
+	Trigger* otaUploadTrigger;
 
 	File flasher;
 
 	int numFlashingProps;
 	var availableFirmwares;
-	std::unique_ptr<URL::DownloadTask> firmwareDownloadTask;
 	Array<int> compatibleVIDs;
 	Array<int> compatiblePIDs;
 
@@ -94,6 +97,7 @@ public:
 	Array<FlashResult> flasherDones;
 
 	void updateFirmwareDefinitions(bool force = false);
+
 	void updateVersionEnumForFWType();
 	void updateCompatibleVIDPIDs();
 
@@ -108,10 +112,15 @@ public:
 	void flashAll(bool onlySetWifi = false);
 	void setAllWifi();
 	void uploadServerFiles(Prop* specificProp = nullptr);
+	void otaUploadFirmware();
 
 	void run();
+
+	void setupFirmwareFile();
 
 	void serialDataReceived(SerialDevice* s, const var& data) override;
 
 	DECLARE_ASYNC_EVENT(PropFlasher, PropFlasher, propFlasher, ENUM_LIST(DEFINITIONS_UPDATED), EVENT_NO_CHECK);
+
+	// Inherited via DownloadTaskListener
 };

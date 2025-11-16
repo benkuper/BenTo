@@ -1,17 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <JUCERPROJECT name="BenTo" projectType="guiapp" headerPath="../../Source&#10;../../External/asio&#10;../../External/serial/include&#10;../../External/servus/include&#10;../../External/ffmpeg/include"
-              id="LP0of5" version="2.0.1b17" projectLineFeed="&#10;" jucerFormatVersion="1"
+              id="LP0of5" version="2.1.0b1" projectLineFeed="&#10;" jucerFormatVersion="1"
               cppLanguageStandard="17" includeBinaryInJuceHeader="1" bundleIdentifier="benkuper.Bento">
   <MAINGROUP id="zy2ady" name="BenTo">
     <GROUP id="{870E4241-9C31-E9AA-906B-7213EC4B54C1}" name="Resources">
       <GROUP id="{C587F002-A9ED-4F66-C0EE-B59995027012}" name="firmware">
         <GROUP id="{CB7BEF62-D2BA-4929-D0CE-62FE2B145E39}" name="server">
           <FILE id="RYCTym" name="edit.html" compile="0" resource="1" file="Resources/firmware/server/edit.html"/>
-          <FILE id="hyA4YN" name="jquery.min.js" compile="0" resource="1" file="Resources/firmware/server/jquery.min.js"/>
-          <FILE id="lOhTbP" name="osc-browser.min.js" compile="0" resource="1"
-                file="Resources/firmware/server/osc-browser.min.js"/>
-          <FILE id="XU6m07" name="upload.html" compile="0" resource="1" file="Resources/firmware/server/upload.html"/>
+          <FILE id="NTJsrH" name="osc-mini.js" compile="0" resource="1" file="Resources/firmware/server/osc-mini.js"/>
         </GROUP>
       </GROUP>
       <GROUP id="{9DFF626B-2FA9-675B-A3EB-1B7780D709F0}" name="models">

@@ -2,503 +2,1274 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script type="text/javascript" src="http://192.168.1.162/server/osc-browser.min.js"></script>
-    <script type="text/javascript" src="http://192.168.1.162/server/jquery.min.js"></script>
-    <script type="text/javascript" src="/server/osc-browser.min.js"></script>
-    <script type="text/javascript" src="/server/jquery.min.js"></script>
-    <title>Bentuino Settings</title>
-    <style>
-        body {
-            background-color: #222;
-            color: #fff;
-            font-family: system-ui;
-            /* text-align: center; */
-            font-size: 12px;
-            color-scheme: dark;
-        }
+  <meta charset="UTF-8" />
+  <title>Bentuino Control Panel</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="color-scheme" content="dark" />
+  <script src="osc-mini.js"></script>
 
+  <style>
+    :root {
+      --bg: #0f172a;
+      --card-bg: #020617;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.15);
+      --accent-strong: #16a34a;
+      --text-main: #e5e7eb;
+      --text-soft: #9ca3af;
+      --border: #1f2937;
+      --danger: #ef4444;
+      --danger-soft: rgba(239, 68, 68, 0.18);
+      --warning: #f59e0b;
+      --muted: #374151;
+      --radius-xl: 18px;
+      --radius-lg: 999px;
+      --shadow-soft: 0 18px 60px rgba(0, 0, 0, 0.55);
+    }
 
+    * {
+      box-sizing: border-box;
+    }
 
-        div#controls {
-            margin: 10px;
-            text-align: center;
-            /* font-size: 12px; */
-        }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+        sans-serif;
+      background: radial-gradient(circle at top, #1f2937 0, #020617 48%, #000 100%);
+      color: var(--text-main);
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding: 16px;
+    }
 
-        h1 {
-            text-align: center;
-        }
+    .shell {
+      width: 100%;
+      max-width: 1120px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+    }
 
-        #controls input {
-            border-radius: 4px;
-            border: solid 1px #777;
-            padding: 5px;
-            background-color: #555;
-            cursor: pointer;
-            font-size: 12px;
-        }
+    .card {
+      background: radial-gradient(circle at top left, #111827 0, #020617 50%);
+      border-radius: 24px;
+      padding: 20px 18px 18px;
+      border: 1px solid rgba(148, 163, 184, 0.18);
+      box-shadow: var(--shadow-soft);
+      position: relative;
+      overflow: hidden;
+    }
 
-        .input-group {
-            display: inline-block;
-            margin: 0px 4px;
-        }
+    .card::before {
+      content: "";
+      position: absolute;
+      inset: -40%;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(56, 189, 248, 0.08) 0, transparent 60%),
+        radial-gradient(circle at 90% 0%, rgba(34, 197, 94, 0.12) 0, transparent 55%);
+      opacity: 0.9;
+      pointer-events: none;
+    }
 
-        #controls .control-block {
-            display: inline-block;
-            margin-left: 10px;
-            /* font-size: 12px; */
-            background-color: #333;
-            padding: 8px;
-            border-radius: 6px;
-            border: solid 1px #444;
-        }
+    .card-inner {
+      position: relative;
+      z-index: 1;
+    }
 
-        #controls input:hover {
-            background-color: #888;
-        }
+    .header-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 10px;
+    }
 
+    .chip {
+      width: 36px;
+      height: 36px;
+      border-radius: 16px;
+      border: 1px solid rgba(148, 163, 184, 0.25);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: radial-gradient(circle at 30% 0, #22c55e33 0, #020617 70%);
+      box-shadow: 0 0 0 1px rgba(15, 23, 42, 0.8),
+        0 10px 25px rgba(0, 0, 0, 0.65);
+    }
 
-        .component {
-            width: auto;
-            margin: 2px 0;
-            padding: 2px 8px;
-            background-color: rgba(255, 255, 255, .1);
-            border-radius: 6px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
-            display: block;
-            position: relative;
-        }
+    .chip svg {
+      width: 22px;
+      height: 22px;
+    }
 
-        .component.level0 {
-            width: auto;
-        }
+    .title-block {
+      flex: 1;
+    }
 
-        .component.level0,
-        .component.level1 {
-            margin: 0;
-        }
+    h1.title {
+      font-size: 1.4rem;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+      margin: 0 0 2px;
+    }
 
-        .components {
-            display: block;
-            margin: 0;
-        }
+    .subtitle {
+      margin: 0;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
 
-        .component.level0>.components {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
-            grid-gap: 0.5rem;
-            margin: 0;
-            padding: 2px;
-        }
+    .badge {
+      font-size: 0.7rem;
+      padding: 4px 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(52, 211, 153, 0.45);
+      color: #bbf7d0;
+      background: radial-gradient(circle at 0 0, #22c55e33 0, transparent 65%);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      font-weight: 500;
+      white-space: nowrap;
+    }
 
-        p.title {
-            font-size: 1.6em;
-            margin: 0em 0;
-            text-align: center;
-            font-weight: bold;
-            color: rgba(255, 255, 255, 0.7);
-        }
+    .controls-row {
+      margin-top: 10px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      align-items: center;
+      justify-content: space-between;
+    }
 
-        .parameter {
-            margin: 4px 0;
-        }
+    .btn-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
 
-        .parameter label {
-            width: 9em;
-            display: inline-block;
-        }
+    .btn {
+      padding: 6px 14px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: var(--text-main);
+      font-size: 0.8rem;
+      letter-spacing: 0.03em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      transition: background 0.08s ease-out, transform 0.08s ease-out,
+        box-shadow 0.08s ease-out;
+    }
 
-        input {
-            margin: 0;
-            /* width: auto; */
-            /* display: inline; */
-        }
+    .btn-primary {
+      border-color: rgba(34, 197, 94, 0.9);
+      background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+      color: #022c22;
+      box-shadow:
+        0 0 0 1px rgba(16, 185, 129, 0.95),
+        0 12px 26px rgba(16, 185, 129, 0.45);
+    }
 
-        input[type=number] {
-            /* width: 80px; */
-        }
+    .btn-danger {
+      border-color: rgba(248, 113, 113, 0.9);
+      background: radial-gradient(circle at 0 0, #ef44441f 0, #111827 70%);
+      color: #fecaca;
+    }
 
-        input[type="checkbox"],
-        input[type="range"] {
-            accent-color: limegreen;
-        }
+    .btn:hover {
+      transform: translateY(-0.5px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.45);
+    }
 
-        input[type="checkbox"]:disabled {
-            accent-color: lightblue;
-        }
+    .btn:active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow: 0 5px 14px rgba(0, 0, 0, 0.5);
+    }
 
-        input:disabled {
-            color: lightblue;
-        }
+    .toggle-wrap {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.8rem;
+      color: var(--text-soft);
+    }
 
-        input[type="text"],
-        input[type="number"] {
-            max-width: 8.6em;
-        }
+    .toggle-label {
+      font-size: 0.8rem;
+    }
 
-        input[type="range"] {
-            max-width: 5.5em;
-        }
+    .toggle {
+      position: relative;
+      width: 42px;
+      height: 22px;
+    }
 
-        .sliderText {
-            max-width: 2.8em !important;
-            vertical-align: bottom;
-            margin-left: 10px;
-        }
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
 
-        .parameter.enable-param {
-            position: absolute;
-            left: 5px;
-            top: 5px;
-        }
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      inset: 0;
+      background-color: #111827;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      transition: 0.15s;
+    }
 
-        .enable-param label {
-            display: none;
-        }
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      top: 2px;
+      border-radius: 999px;
+      background-color: #9ca3af;
+      transition: 0.15s;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.6);
+    }
 
-        .enable-param input[type="checkbox"] {
-            accent-color: antiquewhite;
-        }
-    </style>
+    .toggle input:checked+.slider {
+      background-color: rgba(34, 197, 94, 0.18);
+      border-color: rgba(34, 197, 94, 0.95);
+    }
 
+    .toggle input:checked+.slider:before {
+      transform: translateX(18px);
+      background-color: #bbf7d0;
+    }
 
+    /* OTA uploader card */
+    .section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text-soft);
+      margin-bottom: 8px;
+    }
+
+    .file-row {
+      display: grid;
+      grid-template-columns: minmax(0, 1.1fr);
+      gap: 10px;
+      align-items: center;
+    }
+
+    .file-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 12px;
+      border-radius: 999px;
+      border: 1px dashed rgba(148, 163, 184, 0.55);
+      background: rgba(15, 23, 42, 0.9);
+      cursor: pointer;
+      font-size: 0.85rem;
+      color: var(--text-soft);
+    }
+
+    .file-label span.icon {
+      width: 20px;
+      height: 20px;
+      border-radius: 999px;
+      background: rgba(148, 163, 184, 0.15);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.9rem;
+    }
+
+    .file-label span.text-strong {
+      color: var(--text-main);
+      font-weight: 500;
+    }
+
+    #firmware {
+      display: none;
+    }
+
+    .file-meta {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+      margin-top: 4px;
+    }
+
+    .file-pill {
+      padding: 4px 9px;
+      border-radius: 999px;
+      background: rgba(30, 64, 175, 0.28);
+      border: 1px solid rgba(129, 140, 248, 0.8);
+      font-size: 0.72rem;
+      color: #e0e7ff;
+    }
+
+    .file-pill.muted {
+      background: rgba(31, 41, 55, 0.8);
+      border-color: rgba(75, 85, 99, 0.9);
+      color: #9ca3af;
+    }
+
+    .file-pill.warn {
+      background: var(--danger-soft);
+      border-color: var(--danger);
+      color: #fecaca;
+    }
+
+    .progress-wrapper {
+      margin-top: 14px;
+    }
+
+    .progress-bar {
+      height: 9px;
+      border-radius: var(--radius-lg);
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(31, 41, 55, 0.95);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      position: absolute;
+      inset: 0;
+      transform-origin: left center;
+      transform: scaleX(0);
+      background: linear-gradient(90deg,
+          var(--accent),
+          var(--accent-strong),
+          #22c55e);
+      transition: transform 0.18s ease-out;
+    }
+
+    .progress-text {
+      margin-top: 4px;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+    }
+
+    .progress-text span.value {
+      color: #bbf7d0;
+      font-feature-settings: "tnum" 1, "lnum" 1;
+    }
+
+    .footer-row {
+      margin-top: 14px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .status {
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    .status strong {
+      font-weight: 600;
+    }
+
+    .status.ok strong {
+      color: #bbf7d0;
+    }
+
+    .status.error strong {
+      color: #fecaca;
+    }
+
+    .status.warn strong {
+      color: #fed7aa;
+    }
+
+    .btn-upload {
+      padding: 8px 18px;
+      border-radius: var(--radius-lg);
+      border: none;
+      font-size: 0.8rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: linear-gradient(135deg, var(--accent-strong), var(--accent));
+      color: #022c22;
+      box-shadow:
+        0 0 0 1px rgba(16, 185, 129, 0.95),
+        0 12px 30px rgba(16, 185, 129, 0.45);
+      transition: transform 0.08s ease-out, box-shadow 0.08s ease-out,
+        opacity 0.1s ease-out, filter 0.1s ease-out;
+    }
+
+    .btn-upload:disabled {
+      cursor: default;
+      opacity: 0.35;
+      box-shadow: 0 0 0 1px rgba(55, 65, 81, 0.9);
+      background: linear-gradient(135deg, #4b5563, #374151);
+      color: #d1d5db;
+      filter: grayscale(0.2);
+    }
+
+    .btn-upload:not(:disabled):active {
+      transform: translateY(1px) scale(0.99);
+      box-shadow:
+        0 0 0 1px rgba(16, 185, 129, 0.95),
+        0 6px 18px rgba(16, 185, 129, 0.4);
+    }
+
+    .btn-upload .spinner {
+      width: 12px;
+      height: 12px;
+      border-radius: 999px;
+      border: 2px solid rgba(6, 78, 59, 0.3);
+      border-top-color: #022c22;
+      animation: spin 0.7s linear infinite;
+    }
+
+    .hint-row {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .hint-pill {
+      padding: 2px 8px;
+      border-radius: 999px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      background: rgba(15, 23, 42, 0.9);
+      font-size: 0.72rem;
+      color: #9ca3af;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* Editor / parameters styling */
+    .editor-card .section-title {
+      margin-bottom: 6px;
+    }
+
+    #editor {
+      margin-top: 6px;
+      max-height: calc(100vh - 260px);
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+
+    #editor::-webkit-scrollbar {
+      width: 6px;
+    }
+
+    #editor::-webkit-scrollbar-track {
+      background: transparent;
+    }
+
+    #editor::-webkit-scrollbar-thumb {
+      background: rgba(55, 65, 81, 0.9);
+      border-radius: 999px;
+    }
+
+    .component {
+      width: auto;
+      margin: 2px 0;
+      padding: 6px 8px 8px;
+      background-color: rgba(15, 23, 42, 0.9);
+      border-radius: 12px;
+      border: 1px solid rgba(55, 65, 81, 0.9);
+      box-shadow: 0 18px 40px rgba(0, 0, 0, 0.35);
+      position: relative;
+    }
+
+    .component.level0 {
+      margin: 8px 0;
+      background: radial-gradient(circle at top left, #0f172a, #020617 60%);
+    }
+
+    .components {
+      display: block;
+      margin: 0;
+    }
+
+    .component.level0>.components {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+      grid-gap: 0.5rem;
+      margin: 4px 0 0;
+      padding: 2px;
+    }
+
+    p.title {
+      font-size: 0.9rem;
+      margin: 0 0 4px;
+      font-weight: 600;
+      color: rgba(248, 250, 252, 0.9);
+      text-align: left;
+    }
+
+    .parameters {
+      margin-top: 2px;
+    }
+
+    .parameter {
+      margin: 4px 0;
+      font-size: 0.8rem;
+      display: flex;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 4px;
+      position: relative;
+    }
+
+    .parameter label {
+      min-width: 9em;
+      color: var(--text-soft);
+    }
+
+    .parameter input,
+    .parameter select {
+      font-family: inherit;
+      font-size: 0.8rem;
+      border-radius: 6px;
+      border: 1px solid rgba(75, 85, 99, 0.9);
+      padding: 4px 6px;
+      background-color: #020617;
+      color: var(--text-main);
+    }
+
+    .parameter input[type="button"] {
+      border-radius: 999px;
+      padding-inline: 10px;
+      text-transform: none;
+      border-color: rgba(148, 163, 184, 0.8);
+      background: radial-gradient(circle at 0 0, #22c55e22 0, #020617 60%);
+      cursor: pointer;
+    }
+
+    .parameter input[type="button"]:hover {
+      background: radial-gradient(circle at 0 0, #22c55e33 0, #020617 60%);
+    }
+
+    .parameter input[type="checkbox"],
+    .parameter input[type="range"] {
+      accent-color: limegreen;
+      width: auto;
+    }
+
+    .parameter input[type="checkbox"]:disabled {
+      accent-color: lightblue;
+    }
+
+    .parameter input:disabled {
+      color: lightblue;
+      opacity: 0.7;
+    }
+
+    .parameter input[type="text"],
+    .parameter input[type="number"] {
+      max-width: 8.6em;
+    }
+
+    .parameter input[type="range"] {
+      max-width: 5.5em;
+    }
+
+    .sliderText {
+      max-width: 2.8em !important;
+      vertical-align: bottom;
+      margin-left: 10px;
+    }
+
+    .parameter.enable-param {
+      position: absolute;
+      left: 8px;
+      top: 6px;
+    }
+
+    .parameter.enable-param label {
+      display: none;
+    }
+
+    .parameter.enable-param input[type="checkbox"] {
+      accent-color: antiquewhite;
+    }
+
+    @media (min-width: 960px) {
+      .card {
+        padding: 22px 22px 20px;
+      }
+    }
+
+    @media (max-width: 720px) {
+      .controls-row {
+        align-items: flex-start;
+      }
+
+      .btn-group {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
 
-
 <body>
-    <h1>Bentuino Settings</h1>
-    <div id="controls">
-        <div class="control-block">
-            <input type="button" value="Save Settings" onclick="sendCommand('/root/saveSettings');restartDevice();" />
-            <input type="button" value="Shutdown" onclick="sendCommand('/root/shutdown')" />
-            <input type="button" value="Restart" onclick="restartDevice();" />
-            <input type="button" value="Test Mode" onclick="sendCommand('/root/test');" />
-            Show Config<input id="showConfig" type="checkbox" value="Show Config" checked
-                onchange="updateShowConfig()" />
+  <div class="shell">
+    <!-- Top controls -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="header-row">
+          <div class="chip" aria-hidden="true">
+            <svg viewBox="0 0 24 24" fill="none">
+              <rect x="4" y="4" width="16" height="16" rx="3" stroke="rgba(148,163,184,0.75)" stroke-width="1.4" />
+              <rect x="8" y="8" width="8" height="8" rx="1.6" stroke="#22c55e" stroke-width="1.4" />
+              <circle cx="12" cy="12" r="1.4" fill="#22c55e" />
+            </svg>
+          </div>
+          <div class="title-block">
+            <h1 class="title">Bentuino Control Panel</h1>
+            <p class="subtitle">
+              Live settings, OSC control and firmware updates — without touching your stored config.
+            </p>
+          </div>
+          <div class="badge">Online</div>
         </div>
 
-        <form id="upload-form" class="control-block" enctype="multipart/form-data">
-            <div class="input-group">
-                <label for="file">Upload files : </label>
-                <input type="file" id="file" name="file" multiple>
-            </div>
-            <div class="input-group">
-                <label for="folder">Target :</label>
-                <select id="folder" name="folder">
-                    <option value="server">Server</option>
-                    <option value="scripts">Scripts</option>
-                    <option value="playback">Playback</option>
-                </select>
+        <div class="controls-row">
+          <div class="btn-group">
+            <button type="button" class="btn btn-primary" onclick="sendCommand('/settings/save'); restartDevice();">
+              Save &amp; Restart
+            </button>
+            <button type="button" class="btn" onclick="sendCommand('/settings/save');">
+              Save Settings
+            </button>
+            <button type="button" class="btn" onclick="restartDevice();">
+              Restart
+            </button>
+            <button type="button" class="btn btn-danger" onclick="sendCommand('/shutdown');">
+              Shutdown
+            </button>
+            <button type="button" class="btn" onclick="sendCommand('/settings/testMode');">
+              Test Mode
+            </button>
+          </div>
 
-            </div>
-            <button class="btn" type="submit">Upload</button>
-        </form>
+          <div class="toggle-wrap">
+            <span class="toggle-label">Show config</span>
+            <label class="toggle">
+              <input id="showConfig" type="checkbox" checked />
+              <span class="slider"></span>
+            </label>
+          </div>
+        </div>
+      </div>
     </div>
-    <div id="editor"></div>
 
-    <script>
-
-        var local = window.location.hostname.startsWith("192");
-        var ip = local ? window.location.hostname : "192.168.1.162";
-        setTimeout(() => { connectToServer(); }, 100);
-        var data = {};
-
-        var oscWS;
-
-        function connectToServer() {
-            const editorContainer = document.getElementById('editor');
-            editorContainer.innerHTML = 'Connecting to server...';
-
-            var showConfig = true;
-
-            $.get("http://" + ip + "?config=" + (showConfig ? "1" : "0"), function (_data) {
-                data = _data;
-                console.log(data);
-                buildStructure();
-                initWebSocket();
-            });
-            // const response = await fetch("http://" + ip);
-            // data = await response.json();
-            // buildStructure();
-            // initWebSocket();
-        }
-
-        function initWebSocket() {
-            oscWS = new osc.WebSocketPort({
-                url: "ws://" + ip + ":81",
-                metadata: true
-            });
-
-            oscWS.on('message', function (oscMsg) {
-
-                var pid = oscMsg.address.substring(1).replace(/\//g, "-");
-                var p = document.getElementById(pid);
-                // console.log("feedback", oscMsg, p);
-                var val = oscMsg.args[0].value;
-                if (p != undefined) {
-                    processParameterFeedback(p, val);
-                }
-            });
-
-            oscWS.on('error', function (error) {
-                console.log("Websocket Error", error);
-                connectToServer();
-            });
-
-            oscWS.on('open', function () {
-                console.log("Websocket opened");
-
-            });
-
-            oscWS.on('close', function () {
-                console.log("Websocket closed");
-                connectToServer();
-            });
-
-
-            this.oscWS.open();
-        }
-
-
-        function buildStructure() {
-            const editorContainer = document.getElementById('editor');
-            editorContainer.innerHTML = '';
-            generateEditor(data, editorContainer, 0);
-        }
-
-        // Function to generate the editor interface
-        async function generateEditor(node, parentElement, level) {
-            var containerDiv = parentElement.appendChild(createContainerEditor(node, node.DESCRIPTION, level));
-
-            for (const key in node.CONTENTS) {
-                var item = node.CONTENTS[key];
-
-                if (item.TYPE) {
-                    // Handle parameters
-                    var paramsContainer = containerDiv.querySelector(".parameters");
-                    paramsContainer.appendChild(createParameterEditor(item, level + 1));
-                } else if (item.CONTENTS) {
-                    // Handle nested containers
-                    var componentsContainer = containerDiv.querySelector(".components");
-
-                    generateEditor(item, componentsContainer, level + 1);
-                }
-            }
-        }
-
-        function createContainerEditor(item, key, level) {
-            var itemDiv = document.createElement('div');
-            itemDiv.classList.add("component", "level" + level);
-            itemDiv.innerHTML = `<p class="title">${key}</p><div class="parameters"></div><div class="components"></div></div>`;
-            return itemDiv;
-        }
-
-        function createParameterEditor(item, level) {
-
-            item.id = item.FULL_PATH.substring(1).replace(/\//g, "-");
-
-            var paramDiv;
-
-            if (item.RANGE != null && item.RANGE[0].VALS != null) {
-
-                paramDiv = createEnumParameterEditor(item, level);
-            } else {
-
-                //generate the parameter editor depending on its type
-                switch (item.TYPE) {
-                    case "I":
-                        paramDiv = createTriggerEditor(item, level);
-                        break;
-
-                    case "i":
-                        paramDiv = createIntParameterEditor(item, level);
-                        break;
-
-                    case "f":
-                        paramDiv = createFloatParameterEditor(item, level);
-                        break;
-
-                    case "s":
-                        paramDiv = createStringParameterEditor(item, level);
-                        break;
-
-                    case "b":
-                    case "T":
-                    case "F":
-                        paramDiv = createBoolParameterEditor(item, level);
-                        break;
-
-
-
-
-                    default:
-                        paramDiv = createDefaultParameterEditor(item, level);
-                        break;
-
-                }
-            }
-
-            if (item.ACCESS == 1) {
-                paramDiv.querySelector(`#${item.id}`).disabled = true;
-                var pVal = paramDiv.querySelector(`#${item.id}-value`);
-                if (pVal) pVal.disabled = true;
-            }
-
-            if (item.TAGS != undefined && item.TAGS.includes("config")) {
-                $(paramDiv).addClass("config");
-                if ($("#showConfig").is(":checked")) $(paramDiv).show();
-                else $(paramDiv).hide();
-            }
-
-
-
-            return paramDiv;
-        }
-
-        function createTriggerEditor(item, level) {
-            var paramDiv = document.createElement('div');
-            paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<input type="button" id="${item.id}" value="${item.DESCRIPTION}" onclick='sendTrigger("${item.FULL_PATH}")'/>`;
-            return paramDiv;
-        }
-
-        function createIntParameterEditor(item, level) {
-            var paramDiv = document.createElement('div');
-            paramDiv.classList.add("parameter");
-            var range = item.RANGE != undefined ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}` : "";
-            paramDiv.innerHTML = `<label>${item.DESCRIPTION}</label><input type="number" ${range} id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "i", this.value)'/>`;
-            return paramDiv;
-        }
-
-        function createFloatParameterEditor(item, level) {
-            var paramDiv = document.createElement('div');
-            paramDiv.classList.add("parameter");
-            var range = item.RANGE != null ? `min="${item.RANGE[0].MIN}" max="${item.RANGE[0].MAX}"` : "";
-            var inputType = item.RANGE != null ? "range" : "number";
-            var rangeText = item.RANGE != null ? `<input type="text" class="sliderText" id="${item.id}-value" value="${item.VALUE[0].toFixed(3)}">` : '';
-            var updateRange = item.RANGE != null ? 'this.nextElementSibling.value = parseFloat(this.value).toFixed(3)' : '';
-            paramDiv.innerHTML = `<label>${item.DESCRIPTION}</label><input type="${inputType}" ${range} step="any" id="${item.id}" value="${item.VALUE[0]}" oninput='${updateRange};sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>${rangeText}`;
-            return paramDiv;
-        }
-
-        function createStringParameterEditor(item, level) {
-            var paramDiv = document.createElement('div');
-            paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<label>${item.DESCRIPTION}</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" onchange='sendParameterValue("${item.FULL_PATH}", "s", this.value)'/>`;
-            return paramDiv;
-        }
-
-        function createBoolParameterEditor(item, level) {
-            var paramDiv = document.createElement('div');
-            paramDiv.classList.add("parameter");
-            var checked = item.VALUE[0] ? "checked" : "";
-            paramDiv.innerHTML = `<label>${item.DESCRIPTION}</label><input type="checkbox" id="${item.id}" ${checked} oninput='sendParameterValue("${item.FULL_PATH}", "i", this.checked)'/>`;
-
-            if (item.DESCRIPTION == "enabled") $(paramDiv).addClass("enable-param");
-
-            return paramDiv;
-        }
-
-        function createEnumParameterEditor(item, level) {
-            var paramDiv = document.createElement('div');
-            paramDiv.classList.add("parameter");
-            var options = "";
-            for (const key in item.RANGE[0].VALS) {
-                var selected = item.RANGE[0].VALS[key] == item.VALUE[0] ? "selected" : "";
-                options += `<option value="${item.RANGE[0].VALS[key]}" ${selected}>${item.RANGE[0].VALS[key]}</option>`;
-            }
-            paramDiv.innerHTML = `<label>${item.DESCRIPTION}</label><select id="${item.id}" oninput='sendParameterValue("${item.FULL_PATH}", "s", this.value)'>${options}</select>`;
-            return paramDiv;
-        }
-
-
-
-        function createDefaultParameterEditor(item, level) {
-            var paramDiv = document.createElement('div');
-            paramDiv.classList.add("parameter");
-            paramDiv.innerHTML = `<label>${item.DESCRIPTION}</label><input type="text" id="${item.id}" value="${item.VALUE[0]}" oninput='sendParameterValue("${item.FULL_PATH}", "f", this.value)'/>`;
-            return paramDiv;
-        }
-
-
-        function sendTrigger(fullPath) {
-            oscWS.send({ address: fullPath, args: [{ "type": type, "value": value }] });
-        }
-
-        function sendParameterValue(fullPath, type, value) {
-            oscWS.send({ address: fullPath, args: [{ "type": type, "value": value }] });
-        }
-
-        function sendCommand(command) {
-            oscWS.send({ address: command });
-        }
-
-        function restartDevice() {
-            sendCommand('/root/restart');
-            setTimeout(() => connectToServer(), 1000);
-        }
-
-        function updateShowConfig() {
-            console.log("updateShowConfig", $("#showConfig").is(":checked"));
-            if ($("#showConfig").is(":checked")) $(".config").show();
-            else $(".config").hide();
-        }
-
-        function processParameterFeedback(p, val) {
-            if (p.type == "checkbox") p.checked = val;
-            else p.value = val;
-            if (p.type == "range") p.nextElementSibling.value = parseFloat(p.value).toFixed(3)
-        }
-
-
-
-        //Helpers
-
-        // function inputString){
-        //     // Split the input string into words based on uppercase letters
-        //     const words = inputString.split(/(?=[A-Z])/);
-
-        //     // Capitalize the first letter of each word and join them with spaces
-        //     const titleCaseString = words.map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
-
-        //     return titleCaseString;
-        // }
-
-    </script>
-
-
-    <script>
-
-        //UPLOAD FORM
-
-
-        const form = document.getElementById('upload-form');
-        const folder = document.getElementById('folder');
-        form.addEventListener('submit', async (e) => {
-            e.preventDefault();
-
-            const formData = new FormData(form);
-
-            const response = await fetch("http://" + ip + '/uploadFile?folder=' + folder.value, {
-                method: 'POST',
-                body: formData,
-            });
-
-            if (response.ok) {
-                alert('File(s) uploaded successfully!');
-
-            } else {
-                alert('File upload failed.');
-            }
-
-            // Reset the form and progress bar
-            form.reset();
+    <!-- OTA firmware uploader -->
+    <div class="card">
+      <div class="card-inner">
+        <div class="section-title">Firmware update</div>
+
+        <div class="file-row">
+          <label class="file-label" for="firmware">
+            <span class="icon">📁</span>
+            <span>
+              <span class="text-strong">Choose firmware</span>
+              <span style="display:block;font-size:0.75rem;color:var(--text-soft);">
+                ESP32 <code>.bin</code> built with your current partition table
+              </span>
+            </span>
+          </label>
+          <input type="file" id="firmware" accept=".bin" />
+        </div>
+        <div class="file-meta" id="fileMeta">
+          <span class="file-pill muted">No file selected</span>
+        </div>
+
+        <div class="progress-wrapper">
+          <div class="progress-bar" aria-hidden="true">
+            <div class="progress-fill" id="progressFill"></div>
+          </div>
+          <div class="progress-text">
+            <span id="progressLabel">Waiting for upload…</span>
+            <span class="value" id="progressValue">0%</span>
+          </div>
+
+          <div class="footer-row">
+            <div class="status" id="statusText">
+              <strong>Status:</strong> idle
+            </div>
+            <button class="btn-upload" id="uploadBtn" disabled>
+              <span id="uploadBtnLabel">Upload firmware</span>
+              <span id="uploadSpinner" class="spinner" style="display:none;"></span>
+            </button>
+          </div>
+
+          <div class="hint-row">
+            <span class="hint-pill">Tip</span>
+            <span>Device will reboot automatically after a successful OTA flash.</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Editor / parameters -->
+    <div class="card editor-card">
+      <div class="card-inner">
+        <div class="section-title">Live parameters</div>
+        <div id="editor">Connecting…</div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==============================
+    // Connection & configuration
+    // ==============================
+    let local = window.location.hostname.startsWith("1") || window.location.hostname.includes(".local");
+    let ip = local ? window.location.hostname : "192.168.1.115";
+    let data = {};
+    let oscWS;
+
+    setTimeout(() => {
+      connectToServer();
+    }, 100);
+
+    function connectToServer() {
+      const editorContainer = document.getElementById("editor");
+      editorContainer.textContent = "Connecting to server: " + ip + "…";
+
+      const showConfig = true;
+
+      fetch("http://" + ip + "?config=" + (showConfig ? "1" : "0"))
+        .then((response) => response.json())
+        .then((_data) => {
+          data = _data;
+          console.log("Config:", data);
+          buildStructure();
+          initWebSocket();
+        })
+        .catch((err) => {
+          console.error("Error fetching config:", err);
+          editorContainer.textContent =
+            "Error connecting to server. Retrying…";
+          setTimeout(connectToServer, 1500);
         });
+    }
 
-    </script>
+    function initWebSocket() {
+      // Create native WebSocket
+      oscWS = new WebSocket("ws://" + ip);
+      oscWS.binaryType = "arraybuffer";
 
+      oscWS.addEventListener("open", function () {
+        console.log("WebSocket opened");
+      });
+
+      oscWS.addEventListener("close", function () {
+        console.log("WebSocket closed, reconnecting…");
+        setTimeout(connectToServer, 800);
+      });
+
+      oscWS.addEventListener("error", function (error) {
+        console.log("WebSocket Error", error);
+      });
+
+      oscWS.addEventListener("message", function (event) {
+        // Expect binary OSC data, decode with osc-mini:
+        const oscMsg = OscMini.unpack(event.data);
+
+        const pid = oscMsg.address.substring(1).replace(/\//g, "-");
+        const p = document.getElementById(pid);
+        const val =
+          oscMsg.args && oscMsg.args[0] ? oscMsg.args[0].value : undefined;
+
+        if (p !== undefined && p !== null && val !== undefined) {
+          processParameterFeedback(p, val);
+        }
+      });
+    }
+
+    // ==============================
+    // Editor generation
+    // ==============================
+    function buildStructure() {
+      const editorContainer = document.getElementById("editor");
+      editorContainer.innerHTML = "";
+      generateEditor(data, editorContainer, 0);
+    }
+
+    async function generateEditor(node, parentElement, level) {
+      const containerDiv = parentElement.appendChild(
+        createContainerEditor(node, node.DESCRIPTION, level)
+      );
+
+      for (const key in node.CONTENTS) {
+        const item = node.CONTENTS[key];
+
+        if (item.TYPE) {
+          const paramsContainer = containerDiv.querySelector(".parameters");
+          paramsContainer.appendChild(createParameterEditor(item, level + 1));
+        } else if (item.CONTENTS) {
+          const componentsContainer = containerDiv.querySelector(".components");
+          generateEditor(item, componentsContainer, level + 1);
+        }
+      }
+    }
+
+    function createContainerEditor(item, key, level) {
+      const itemDiv = document.createElement("div");
+      itemDiv.classList.add("component", "level" + level);
+      itemDiv.innerHTML =
+        '<p class="title">' +
+        key +
+        '</p><div class="parameters"></div><div class="components"></div>';
+      return itemDiv;
+    }
+
+    function createParameterEditor(item, level) {
+      item.id = item.FULL_PATH.substring(1).replace(/\//g, "-");
+      let paramDiv;
+
+      if (item.RANGE != null && item.RANGE[0].VALS != null) {
+        paramDiv = createEnumParameterEditor(item, level);
+      } else {
+        switch (item.TYPE) {
+          case "I":
+            paramDiv = createTriggerEditor(item, level);
+            break;
+          case "i":
+            paramDiv = createIntParameterEditor(item, level);
+            break;
+          case "f":
+            paramDiv = createFloatParameterEditor(item, level);
+            break;
+          case "s":
+            paramDiv = createStringParameterEditor(item, level);
+            break;
+          case "b":
+          case "T":
+          case "F":
+            paramDiv = createBoolParameterEditor(item, level);
+            break;
+          default:
+            paramDiv = createDefaultParameterEditor(item, level);
+            break;
+        }
+      }
+
+      if (item.ACCESS === 1) {
+        const pMain = paramDiv.querySelector("#" + item.id);
+        if (pMain) pMain.disabled = true;
+        const pVal = paramDiv.querySelector("#" + item.id + "-value");
+        if (pVal) pVal.disabled = true;
+      }
+
+      if (item.TAGS !== undefined && item.TAGS.includes("config")) {
+        paramDiv.classList.add("config");
+        const showConfigCheckbox = document.getElementById("showConfig");
+        if (showConfigCheckbox && !showConfigCheckbox.checked) {
+          paramDiv.style.display = "none";
+        }
+      }
+
+      return paramDiv;
+    }
+
+    function createTriggerEditor(item, level) {
+      const paramDiv = document.createElement("div");
+      paramDiv.classList.add("parameter");
+      paramDiv.innerHTML =
+        '<input type="button" id="' +
+        item.id +
+        '" value="' +
+        item.DESCRIPTION +
+        '" onclick=\'sendTrigger("' +
+        item.FULL_PATH +
+        '")\' />';
+      return paramDiv;
+    }
+
+    function createIntParameterEditor(item, level) {
+      const paramDiv = document.createElement("div");
+      paramDiv.classList.add("parameter");
+      const range =
+        item.RANGE !== undefined
+          ? 'min="' +
+          item.RANGE[0].MIN +
+          '" max="' +
+          item.RANGE[0].MAX +
+          '"'
+          : "";
+      paramDiv.innerHTML =
+        "<label>" +
+        item.DESCRIPTION +
+        "</label><input type=\"number\" " +
+        range +
+        ' id="' +
+        item.id +
+        '" value="' +
+        item.VALUE[0] +
+        '" oninput=\'sendParameterValue("' +
+        item.FULL_PATH +
+        '", "i", this.value)\' />';
+      return paramDiv;
+    }
+
+    function createFloatParameterEditor(item, level) {
+      const paramDiv = document.createElement("div");
+      paramDiv.classList.add("parameter");
+      const hasRange = item.RANGE != null;
+      const range = hasRange
+        ? 'min="' +
+        item.RANGE[0].MIN +
+        '" max="' +
+        item.RANGE[0].MAX +
+        '"'
+        : "";
+      const inputType = hasRange ? "range" : "number";
+      const rangeText = hasRange
+        ? '<input type="text" class="sliderText" id="' +
+        item.id +
+        '-value" value="' +
+        item.VALUE[0].toFixed(3) +
+        '">'
+        : "";
+      const updateRange = hasRange
+        ? "this.nextElementSibling.value = parseFloat(this.value).toFixed(3);"
+        : "";
+
+      paramDiv.innerHTML =
+        "<label>" +
+        item.DESCRIPTION +
+        "</label><input type=\"" +
+        inputType +
+        "\" " +
+        range +
+        ' step="any" id="' +
+        item.id +
+        '" value="' +
+        item.VALUE[0] +
+        '" oninput=\'' +
+        updateRange +
+        'sendParameterValue("' +
+        item.FULL_PATH +
+        '", "f", this.value)\' />' +
+        rangeText;
+      return paramDiv;
+    }
+
+    function createStringParameterEditor(item, level) {
+      const paramDiv = document.createElement("div");
+      paramDiv.classList.add("parameter");
+      paramDiv.innerHTML =
+        "<label>" +
+        item.DESCRIPTION +
+        '</label><input type="text" id="' +
+        item.id +
+        '" value="' +
+        item.VALUE[0] +
+        '" onchange=\'sendParameterValue("' +
+        item.FULL_PATH +
+        '", "s", this.value)\' />';
+      return paramDiv;
+    }
+
+    function createBoolParameterEditor(item, level) {
+      const paramDiv = document.createElement("div");
+      paramDiv.classList.add("parameter");
+      const checked = item.VALUE[0] ? "checked" : "";
+      paramDiv.innerHTML =
+        "<label>" +
+        item.DESCRIPTION +
+        '</label><input type="checkbox" id="' +
+        item.id +
+        '" ' +
+        checked +
+        ' oninput=\'sendParameterValue("' +
+        item.FULL_PATH +
+        '", "i", this.checked)\' />';
+
+      if (item.DESCRIPTION === "enabled") {
+        paramDiv.classList.add("enable-param");
+      }
+
+      return paramDiv;
+    }
+
+    function createEnumParameterEditor(item, level) {
+      const paramDiv = document.createElement("div");
+      paramDiv.classList.add("parameter");
+      let options = "";
+      for (const key in item.RANGE[0].VALS) {
+        const value = item.RANGE[0].VALS[key];
+        const selected = value === item.VALUE[0] ? "selected" : "";
+        options +=
+          '<option value="' +
+          value +
+          '" ' +
+          selected +
+          ">" +
+          value +
+          "</option>";
+      }
+      paramDiv.innerHTML =
+        "<label>" +
+        item.DESCRIPTION +
+        '</label><select id="' +
+        item.id +
+        '" oninput=\'sendParameterValue("' +
+        item.FULL_PATH +
+        '", "s", this.value)\'>' +
+        options +
+        "</select>";
+      return paramDiv;
+    }
+
+    function createDefaultParameterEditor(item, level) {
+      const paramDiv = document.createElement("div");
+      paramDiv.classList.add("parameter");
+      paramDiv.innerHTML =
+        "<label>" +
+        item.DESCRIPTION +
+        '</label><input type="text" id="' +
+        item.id +
+        '" value="' +
+        item.VALUE[0] +
+        '" oninput=\'sendParameterValue("' +
+        item.FULL_PATH +
+        '", "f", this.value)\' />';
+      return paramDiv;
+    }
+
+    // ==============================
+    // OSC helpers
+    // ==============================
+    function isWsOpen() {
+      return oscWS && oscWS.readyState === WebSocket.OPEN;
+    }
+
+    function sendTrigger(fullPath) {
+      if (!isWsOpen()) return;
+      const msg = { address: fullPath };
+      oscWS.send(OscMini.pack(msg));
+    }
+
+    function sendParameterValue(fullPath, type, value) {
+      if (!isWsOpen()) return;
+      const msg = {
+        address: fullPath,
+        args: [{ type: type, value: value }]
+      };
+      oscWS.send(OscMini.pack(msg));
+    }
+
+    function sendCommand(command) {
+      if (!isWsOpen()) return;
+      const msg = { address: command };
+      oscWS.send(OscMini.pack(msg));
+    }
+
+    function restartDevice() {
+      sendCommand("/restart");
+      setTimeout(() => connectToServer(), 1000);
+    }
+
+    function updateShowConfig() {
+      const show = document.getElementById("showConfig").checked;
+      const configElems = document.querySelectorAll(".parameter.config");
+      configElems.forEach((el) => {
+        el.style.display = show ? "" : "none";
+      });
+    }
+
+    function processParameterFeedback(p, val) {
+      if (p.type === "checkbox") {
+        p.checked = !!val;
+      } else {
+        p.value = val;
+      }
+      if (p.type === "range" && p.nextElementSibling) {
+        p.nextElementSibling.value = parseFloat(p.value).toFixed(3);
+      }
+    }
+
+    document
+      .getElementById("showConfig")
+      .addEventListener("change", updateShowConfig);
+
+    // ==============================
+    // OTA upload logic (no jQuery)
+    // ==============================
+    (function setupOtaUploader() {
+      const fileInput = document.getElementById("firmware");
+      const fileMeta = document.getElementById("fileMeta");
+      const uploadBtn = document.getElementById("uploadBtn");
+      const uploadBtnLabel = document.getElementById("uploadBtnLabel");
+      const uploadSpinner = document.getElementById("uploadSpinner");
+      const progressFill = document.getElementById("progressFill");
+      const progressLabel = document.getElementById("progressLabel");
+      const progressValue = document.getElementById("progressValue");
+      const statusText = document.getElementById("statusText");
+
+      let selectedFile = null;
+
+      function formatBytes(bytes) {
+        if (bytes === undefined || bytes === null) return "–";
+        const units = ["B", "KB", "MB", "GB"];
+        let i = 0;
+        let value = bytes;
+        while (value >= 1024 && i < units.length - 1) {
+          value /= 1024;
+          i++;
+        }
+        return value.toFixed(i === 0 ? 0 : 1) + " " + units[i];
+      }
+
+      function setStatus(mode, message) {
+        statusText.classList.remove("ok", "error", "warn");
+        if (mode) statusText.classList.add(mode);
+        statusText.innerHTML =
+          "<strong>Status:</strong> " + (message || "idle");
+      }
+
+      function setProgress(percent, label) {
+        const clamped = Math.max(0, Math.min(100, percent || 0));
+        progressFill.style.transform = "scaleX(" + clamped / 100 + ")";
+        progressValue.textContent = clamped.toFixed(0) + "%";
+        if (label) progressLabel.textContent = label;
+      }
+
+      fileInput.addEventListener("change", () => {
+        const file = fileInput.files[0];
+        selectedFile = file || null;
+
+        if (!selectedFile) {
+          fileMeta.innerHTML =
+            '<span class="file-pill muted">No file selected</span>';
+          uploadBtn.disabled = true;
+          setStatus("", "idle");
+          setProgress(0, "Waiting for upload…");
+          return;
+        }
+
+        const tooBig = selectedFile.size > 3 * 1024 * 1024; // soft warning
+
+        fileMeta.innerHTML =
+          '<span class="file-pill">' +
+          selectedFile.name +
+          "</span>" +
+          '<span class="file-pill ' +
+          (tooBig ? "warn" : "") +
+          '">' +
+          formatBytes(selectedFile.size) +
+          "</span>";
+
+        setStatus(
+          tooBig ? "warn" : "",
+          tooBig
+            ? "Large file — make sure it matches your partition size."
+            : "Ready to upload."
+        );
+        uploadBtn.disabled = false;
+        setProgress(0, "Ready.");
+      });
+
+      uploadBtn.addEventListener("click", () => {
+        if (!selectedFile) return;
+
+        uploadBtn.disabled = true;
+        uploadSpinner.style.display = "inline-block";
+        uploadBtnLabel.textContent = "Uploading…";
+
+        setStatus("", "Uploading firmware… do not power off.");
+        setProgress(2, "Starting upload…");
+
+        const xhr = new XMLHttpRequest();
+        xhr.open("POST", "http://" + ip + "/uploadFile", true);
+
+        // IMPORTANT: do NOT set Content-Type manually here.
+        // The browser will set the multipart/form-data boundary.
+
+
+        xhr.upload.onprogress = function (evt) {
+          if (evt.lengthComputable) {
+            const percent = (evt.loaded / evt.total) * 100;
+            setProgress(percent, "Uploading…");
+          } else {
+            setProgress(20, "Uploading…");
+          }
+        };
+
+        xhr.onload = function () {
+          const ok = xhr.status >= 200 && xhr.status < 300;
+          if (ok) {
+            setProgress(100, "Upload complete. Rebooting…");
+            setStatus(
+              "ok",
+              "Upload successful — device should reboot into the new firmware."
+            );
+          } else {
+            setProgress(0, "Upload failed.");
+            setStatus(
+              "error",
+              "Upload failed with status " + xhr.status + "."
+            );
+          }
+
+          uploadSpinner.style.display = "none";
+          uploadBtnLabel.textContent = ok ? "Uploaded" : "Upload failed";
+          if (!ok) {
+            uploadBtn.disabled = false; // allow retry
+          }
+        };
+
+        xhr.onerror = function () {
+          setProgress(0, "Network error.");
+          setStatus("error", "Network error during upload.");
+          uploadSpinner.style.display = "none";
+          uploadBtnLabel.textContent = "Upload firmware";
+          uploadBtn.disabled = false;
+        };
+
+        // ---- This is the JUCE-compatible part ----
+        const formData = new FormData();
+
+        // If you want to mirror mime type "text/plain" from JUCE:
+        const fileForJuiceStyle = new File(
+          [selectedFile],
+          selectedFile.name,
+          { type: "text/plain" }
+        );
+
+        // Field name must be exactly the same as in JUCE: "uploadData"
+        formData.append("uploadData", fileForJuiceStyle, selectedFile.name);
+
+        xhr.send(formData);
+      });
+    })();
+  </script>
 </body>
 
 </html>

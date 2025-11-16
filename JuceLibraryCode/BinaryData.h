@@ -9,16 +9,10 @@
 namespace BinaryData
 {
     extern const char*   edit_html;
-    const int            edit_htmlSize = 17038;
+    const int            edit_htmlSize = 35600;
 
-    extern const char*   jquery_min_js;
-    const int            jquery_min_jsSize = 87535;
-
-    extern const char*   oscbrowser_min_js;
-    const int            oscbrowser_min_jsSize = 43791;
-
-    extern const char*   upload_html;
-    const int            upload_htmlSize = 3548;
+    extern const char*   oscmini_js;
+    const int            oscmini_jsSize = 6063;
 
     extern const char*   ledRange_png;
     const int            ledRange_pngSize = 3899;
@@ -87,7 +81,7 @@ namespace BinaryData
     const int            shader_fragSize = 1012;
 
     // Number of elements in the namedResourceList and originalFileNames arrays.
-    const int namedResourceListSize = 26;
+    const int namedResourceListSize = 24;
 
     // Points to the start of a list of resource names.
     extern const char* namedResourceList[];

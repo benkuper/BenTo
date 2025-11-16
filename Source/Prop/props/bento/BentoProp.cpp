@@ -9,6 +9,7 @@
 */
 
 #include "Prop/PropIncludes.h"
+#include "BentoProp.h"
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
@@ -208,6 +209,13 @@ int BentoProp::getResolution()
 	return Prop::getResolution();
 }
 
+String BentoProp::getDeviceType()
+{
+	if (componentsCC == nullptr) return String();
+	StringParameter* deviceType = (StringParameter*)componentsCC->getControllableForAddress("/settings/deviceType");
+	return deviceType != nullptr ? deviceType->stringValue() : String();
+}
+
 void BentoProp::serialDataReceived(SerialDevice* d, const var& data)
 {
 	//todo : parse to set sensors values
@@ -354,6 +362,8 @@ void BentoProp::uploadFile(FileToUpload f)
 	fs.readIntoMemoryBlock(b);
 
 	URL url = URL(target).withDataToUpload("uploadData", f.file.getFileName(), b, "text/plain");
+
+	NLOG(niceName, "Uploading " << f.file.getFileName() << " to " << f.remoteFolder << " :\n > " << (int)(b.getSize()) << " bytes");
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withConnectionTimeoutMs(10000)));
 

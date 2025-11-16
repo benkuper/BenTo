@@ -48,6 +48,7 @@ PropFlasher::PropFlasher() :
 	if (sf.exists()) serverFilesParam->setValue(sf.getFullPathName());
 
 	uploadTrigger = addTrigger("Upload", "Upload files to the server");
+	otaUploadTrigger = addTrigger("OTA Upload", "Upload firmware using OTA");
 
 	updateFirmwareDefinitions();
 
@@ -60,56 +61,50 @@ PropFlasher::~PropFlasher()
 
 void PropFlasher::updateFirmwareDefinitions(bool force)
 {
-	availableFirmwares = var();
 
-	fwType->clearOptions();
-	File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares");
-	if (force && f.exists()) f.deleteRecursively();
+	File f = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/firmwareList.json");
+	if (force && f.exists()) f.deleteFile();
 
 	if (!f.exists())
 	{
-		LOG("No firmware folder found, downloading...");
-		fwDownloader.download([this]() { updateFirmwareDefinitions(); });
+		LOG("Downloading firmware list...");
+		URL url("https://www.goldengeek.org/blip/download/firmware/getFirmwares.php?list");
+		std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inAddress).withConnectionTimeoutMs(500)));
+
+		if (stream != nullptr)
+		{
+			File firmwareFolder = f.getParentDirectory();
+			if (!firmwareFolder.exists()) firmwareFolder.createDirectory();
+			FileOutputStream fos(f);
+			fos.writeFromInputStream(*stream, -1);
+			fos.flush();
+			LOG("Firmware definitions downloaded");
+		}
+		else
+		{
+			LOGERROR("Failed to download firmware definitions");
+			return;
+		}
+	}
+
+	availableFirmwares = JSON::fromString(f.loadFileAsString());
+
+	if (!availableFirmwares.isObject())
+	{
+		LOGERROR("Firmware definitions file is corrupted");
 		return;
 	}
 
-
-	Array<File> fwFolders = f.findChildFiles(File::TypesOfFileToFind::findDirectories, false);
-
+	fwType->clearOptions();
 	fwVersion->clearOptions();
 
-	for (auto& fold : fwFolders)
+	NamedValueSet deviceProps = availableFirmwares.getDynamicObject()->getProperties();
+	for (auto& nv : deviceProps)
 	{
-		if (fold.getFileName() == "server") {
-			if (serverFilesParam->stringValue().isEmpty())
-				serverFilesParam->setValue(fold.getFullPathName());
-			continue;
-		}
-
-		Array<File> versionFolders = fold.findChildFiles(File::findDirectories, false);
-		// Replace this block in updateFirmwareDefinitions:
-		for (auto& versionFolder : versionFolders)
-		{
-			File manifestFile = versionFolder.getChildFile("manifest.json");
-			if (!manifestFile.existsAsFile()) {
-				NLOGWARNING(niceName, "Missing manifest.json in " << versionFolder.getFullPathName());
-				continue;
-			}
-
-			var fwData = JSON::parse(manifestFile.loadFileAsString());
-			if (fwData.isVoid()) {
-				NLOGWARNING(niceName, "Invalid manifest.json in " << versionFolder.getFullPathName());
-				continue;
-			}
-
-			// Only add the first valid version as an option for this firmware
-			String fwName = fwData["name"].toString();
-			fwType->addOption(fwName, fold.getFullPathName());
-
-			// Store all firmware data
-			availableFirmwares.append(fwData);
-			break; // Only show one option per firmware
-		}
+		var fw = nv.value;
+		String fwName = fw["name"].toString();
+		String fwPath = nv.name.toString();
+		fwType->addOption(fwName, fwPath);
 	}
 
 	fwType->addOption("Custom", "custom");
@@ -124,50 +119,44 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 	propFlasherNotifier.addMessage(new PropFlasherEvent(PropFlasherEvent::DEFINITIONS_UPDATED, this));
 }
 
+
+
+
 void PropFlasher::updateVersionEnumForFWType()
 {
-	fwVersion->clearOptions();
-
-	File typeFolder = File(fwType->getValueData().toString());
-
-	if (typeFolder.isDirectory())
+	if (!availableFirmwares.isObject())
 	{
-		Array<File> versionFolders = typeFolder.findChildFiles(File::findDirectories, false);
-
-		//order backwaards so first option is the latest version
-		std::sort(versionFolders.begin(), versionFolders.end(), [](const File& a, const File& b) {
-			return a.getFileName().compareNatural(b.getFileName()) > 0; // sort descending
-			});
-
-
-		bool firstOption = true;
-
-		for (auto& versionFolder : versionFolders)
-		{
-			File manifestFile = versionFolder.getChildFile("manifest.json");
-			if (!manifestFile.existsAsFile())
-				continue;
-
-			var fwData = JSON::parse(manifestFile.loadFileAsString());
-			if (fwData.isVoid())
-				continue;
-
-			String fwVersionName = fwData["version"].toString();
-
-			// UI shows only version, value is full path
-			String label = firstOption ? "Latest (" + fwVersionName + ")" : fwVersionName;
-			fwVersion->addOption(label, versionFolder.getFullPathName());
-
-			firstOption = false;
-		}
+		return;
 	}
 
+	fwVersion->clearOptions();
+
+
+	String fwPath = fwType->getValueData().toString();
+	if (fwPath.isEmpty()) return;
+
+	var fwData = availableFirmwares.getProperty(fwPath, var());
+	if (fwData.isVoid()) return;
+
+	var versionData = fwData["versions"];
+
+	for (int i = 0; i < versionData.size(); i++)
+	{
+		var v = versionData[i].toString();
+		String label = v + String(i == 0 ? " (latest)" : "");
+		fwVersion->addOption(label, v);
+	}
 }
 
 void PropFlasher::updateCompatibleVIDPIDs()
 {
 	compatibleVIDs.clear();
-	compatibleVIDs.clear();
+	compatiblePIDs.clear();
+
+	if (!availableFirmwares.isObject())
+	{
+		return;
+	}
 
 	String typeName = fwType->getValueKey();
 	if (typeName == "custom")
@@ -175,26 +164,24 @@ void PropFlasher::updateCompatibleVIDPIDs()
 	}
 	else
 	{
-		for (int i = 0; i < availableFirmwares.size(); i++)
+		String fwPath = fwType->getValueData().toString();
+		if (fwPath.isEmpty()) return;
+		var fwData = availableFirmwares.getProperty(fwPath, var());
+		if (fwData.isVoid()) return;
+
+		var vids = fwData["vids"];
+		var pids = fwData["pids"];
+
+		for (int j = 0; j < pids.size(); j++)
 		{
-			var fw = availableFirmwares[i];
-			if (fw["name"].toString() == typeName)
-			{
-				var vids = fw["vids"];
-				var pids = fw["pids"];
+			int pid = pids[j].toString().startsWith("0x") ? pids[j].toString().getHexValue32() : pids[j].toString().getIntValue();
+			compatiblePIDs.addIfNotAlreadyThere(pid);
+		}
 
-				for (int j = 0; j < pids.size(); j++)
-				{
-					int pid = pids[j].toString().startsWith("0x") ? pids[j].toString().getHexValue32() : pids[j].toString().getIntValue();
-					compatiblePIDs.addIfNotAlreadyThere(pid);
-				}
-
-				for (int j = 0; j < vids.size(); j++)
-				{
-					int vid = vids[j].toString().startsWith("0x") ? vids[j].toString().getHexValue32() : vids[j].toString().getIntValue();
-					compatibleVIDs.addIfNotAlreadyThere(vid);
-				}
-			}
+		for (int j = 0; j < vids.size(); j++)
+		{
+			int vid = vids[j].toString().startsWith("0x") ? vids[j].toString().getHexValue32() : vids[j].toString().getIntValue();
+			compatibleVIDs.addIfNotAlreadyThere(vid);
 		}
 	}
 
@@ -254,7 +241,8 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 
 
 		// Enable/disable custom folder selection
-	}else if(p == filterKnownDevices)
+	}
+	else if (p == filterKnownDevices)
 	{
 		updateCompatibleVIDPIDs();
 	}
@@ -272,6 +260,7 @@ void PropFlasher::onContainerTriggerTriggered(Trigger* t)
 {
 	if (t == flashTrigger) flashAll();
 	else if (t == uploadTrigger) uploadServerFiles();
+	else if (t == otaUploadTrigger) otaUploadFirmware();
 	if (t == updateFirmwareDefinitionsTrigger) updateFirmwareDefinitions(true);
 	else if (t == setAllWifiTrigger) flashAll(true);
 }
@@ -324,40 +313,18 @@ void PropFlasher::flashAll(bool onlySetWifi)
 		return;
 	}
 
-	File fwFolder;
+	File fwFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/").getChildFile(fwType->getValueData().toString()).getChildFile(fwVersion->getValueData().toString());
 
-	if (fwType->getValueKey() == "Custom")
+	if (!fwFolder.exists())
 	{
-		fwFolder = fwFileParam->getFile();
-		if (!fwFolder.exists())
-		{
-			LOGERROR("No folder provided");
-			return;
-		}
-	}
-	else
-	{
-		fwFolder = File(fwVersion->getValueData().toString());
-	}
+		fwDownloader.download([this]() {
+			flashAll(false);
+			}, fwType->getValueData().toString(), fwVersion->getValueData().toString());
 
-	File manifestFile = fwFolder.getChildFile("manifest.json");
-
-	if (!manifestFile.existsAsFile())
-	{
-		LOGERROR("No manifest file found in folder " << fwFolder.getFullPathName());
 		return;
 	}
 
-	firmwareData = JSON::parse(manifestFile.loadFileAsString());
-
-	String fwName = fullFlash->boolValue() ? "firmware_full.bin" : "firmware.bin";
-	firmwareFile = fwFolder.getChildFile(fwName);
-
-	if (!firmwareFile.exists())
-	{
-		LOGERROR("Firmware file doesn't exist !");
-		return;
-	}
+	setupFirmwareFile();
 
 	File appFolder = File::getSpecialLocation(File::currentApplicationFile).getParentDirectory();
 
@@ -387,6 +354,45 @@ void PropFlasher::run()
 {
 	if (!setWifiNoDelay) sleep(500);
 	setAllWifi();
+}
+
+void PropFlasher::setupFirmwareFile()
+{
+	File fwFolder;
+
+	if (fwType->getValueKey() == "Custom")
+	{
+		fwFolder = fwFileParam->getFile();
+		if (!fwFolder.exists())
+		{
+			LOGERROR("No folder provided");
+			return;
+		}
+	}
+	else
+	{
+		File firmwaresFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/");
+		fwFolder = firmwaresFolder.getChildFile(fwType->getValueData().toString()).getChildFile(fwVersion->getValueData().toString());
+	}
+
+	File manifestFile = fwFolder.getChildFile("manifest.json");
+
+	if (!manifestFile.existsAsFile())
+	{
+		LOGERROR("No manifest file found in folder " << fwFolder.getFullPathName());
+		return;
+	}
+
+	firmwareData = JSON::parse(manifestFile.loadFileAsString());
+
+	String fwName = fullFlash->boolValue() ? "firmware_full.bin" : "firmware.bin";
+	firmwareFile = fwFolder.getChildFile(fwName);
+
+	if (!firmwareFile.exists())
+	{
+		LOGERROR("Firmware file doesn't exist !");
+		return;
+	}
 }
 
 
@@ -470,9 +476,40 @@ void PropFlasher::uploadServerFiles(Prop* specificProp)
 	}
 }
 
+void PropFlasher::otaUploadFirmware()
+{
+
+	File fwFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/").getChildFile(fwType->getValueData().toString()).getChildFile(fwVersion->getValueData().toString());
+
+	if (!fwFolder.exists())
+	{
+		fwDownloader.download([this]() {
+			otaUploadFirmware();
+			}, fwType->getValueData().toString(), fwVersion->getValueData().toString());
+
+		return;
+	}
+
+	setupFirmwareFile();
+	String type = fwType->getValueKey();
+
+	if (!firmwareFile.exists())
+	{
+		LOGWARNING("Firmware file doesn't exist !");
+		return;
+	}
+
+	Array<BentoProp*> props = PropManager::getInstance()->getItemsWithType<BentoProp>();
+	for (auto& p : props)
+	{
+		if (p->getDeviceType() != type) continue;
+		p->addFileToUpload({ firmwareFile });
+	}
+}
 
 SingleFlasher::SingleFlasher(SerialDeviceInfo* info) :
 	Thread("SingleFlasher (" + info->port + ")"),
+	progression(0),
 	info(info)
 {
 }
@@ -612,22 +649,28 @@ bool SingleFlasher::flashProp()
 	return true;
 }
 
-void PropFlasher::FirmwareDownloader::download(std::function<void()> callback)
+void PropFlasher::FirmwareDownloader::download(std::function<void()> callback, String device, String version)
 {
+	deviceToDownload = device;
+	versionToDownload = version;
 	onDownloaded = callback;
 	startThread();
 }
 
+
 void PropFlasher::FirmwareDownloader::run()
 {
-	URL url("https://benjamin.kuperberg.fr/bentuino/getFirmwares.php");
-	File target = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares.zip");
+	URL url("https://www.goldengeek.org/blip/download/firmware/getFirmwares.php?device=" + deviceToDownload + "&version=" + versionToDownload);
+
+	LOG("Downloading firmware files for " << deviceToDownload << " : " << versionToDownload << " from " << url.toString(true));
+
+	File target = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmware.zip");
 	downloadTask = url.downloadToFile(target, URL::DownloadTaskOptions().withListener(this));
 }
 
 void PropFlasher::FirmwareDownloader::progress(URL::DownloadTask* task, int64 bytesDownloaded, int64 totalLength)
 {
-	if(Time::getMillisecondCounter() - lastLogTime > 1000)
+	if (Time::getMillisecondCounter() - lastLogTime > 1000)
 	{
 		if (totalLength > 0)
 		{
@@ -650,7 +693,7 @@ void PropFlasher::FirmwareDownloader::finished(URL::DownloadTask* task, bool suc
 		return;
 	}
 
-	LOG("Firmware files downloaded");
+	LOG("Firmware files downloaded : " << deviceToDownload << ", version " << versionToDownload);
 	ZipFile zip(task->getTargetLocation());
 	zip.uncompressTo(File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares"), true);
 	task->getTargetLocation().deleteFile();

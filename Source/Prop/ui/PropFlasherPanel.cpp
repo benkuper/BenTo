@@ -27,6 +27,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	wifiSSIDUI.reset(PropFlasher::getInstance()->wifiSSID->createStringParameterUI());
 	wifiPassUI.reset(PropFlasher::getInstance()->wifiPass->createStringParameterUI());
 	flashAllUI.reset(PropFlasher::getInstance()->flashTrigger->createButtonUI());
+	otaUploadUI.reset(PropFlasher::getInstance()->otaUploadTrigger->createButtonUI());
 	setWifiUI.reset(PropFlasher::getInstance()->setAllWifiTrigger->createButtonUI());
 	progressUI.reset(PropFlasher::getInstance()->progression->createSlider());
 
@@ -59,6 +60,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	addAndMakeVisible(wifiSSIDUI.get());
 	addAndMakeVisible(wifiPassUI.get());
 	addAndMakeVisible(flashAllUI.get());
+	addAndMakeVisible(otaUploadUI.get());
 	addAndMakeVisible(setWifiUI.get());
 	addAndMakeVisible(progressUI.get());
 
@@ -179,8 +181,9 @@ void PropFlasherPanel::resized()
 	flashRect = cr.removeFromTop(140);
 	Rectangle<int> fr = flashRect.reduced(10);
 	fr.removeFromTop(20);
-	Rectangle<int> fr2 = fr.removeFromTop(70).withSizeKeepingCentre(jmin(fr.getWidth(), 400), 50);
-	flashAllUI->setBounds(fr2.removeFromLeft(fr2.getWidth() / 2).reduced(4));
+	Rectangle<int> fr2 = fr.removeFromTop(70).withSizeKeepingCentre(jmin(fr.getWidth(), 460), 50);
+	otaUploadUI->setBounds(fr2.removeFromRight(fr2.getWidth() / 3.5f).reduced(4));
+	flashAllUI->setBounds(fr2.removeFromLeft(fr2.getWidth() / 2.5f).reduced(4));
 	setWifiUI->setBounds(fr2.reduced(4));
 	progressUI->setBounds(fr.removeFromBottom(40));
 

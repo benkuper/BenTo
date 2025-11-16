@@ -61,6 +61,8 @@ public:
 	void updateUniverses();
 	int getResolution() override;
 
+	String getDeviceType();
+
 	virtual void serialDataReceived(SerialDevice* d, const var&) override;
 	virtual void portRemoved(SerialDevice* d) override;
 
