@@ -64,7 +64,7 @@ void PropUI::paintOverChildren(Graphics& g)
 	g.setColour(Colours::white.withAlpha(.8f));
 	g.drawFittedText(item->niceName, footer, Justification::centred, 1);
 
-	if (item->isGeneratingPlayback->boolValue())
+	if (item->isGeneratingPlayback->boolValue() || item->isUploading->boolValue())
 	{
 		g.fillAll(Colours::black.withAlpha(.3f));
 
@@ -165,7 +165,10 @@ void PropUI::resizedInternalContent(Rectangle<int>& r)
 
 void PropUI::controllableFeedbackUpdateInternal(Controllable* c)
 {
-	if (c == item->isGeneratingPlayback || c == item->playbackGenProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == item->motionRef /*|| c == item->isFlashing || c == item->flashingProgression*/) repaint();
+	if (c == item->isGeneratingPlayback || c == item->playbackGenProgress || c == item->isUploading || c == item->uploadProgress || c == item->isConnected || c == item->motionRef /*|| c == item->isFlashing || c == item->flashingProgression*/)
+	{
+		repaint();
+	}
 	else if (c == item->shape)
 	{
 		Prop::Shape shape = item->shape->getValueDataAsEnum<Prop::Shape>();

@@ -511,18 +511,19 @@ void Prop::exportPlaybackData(PlaybackData data)
 void Prop::addFileToUpload(FileToUpload f)
 {
 	filesToUpload.add(f);
-	isUploading->setValue(true);
 }
 
 
 void Prop::uploadFileQueue()
 {
+	isUploading->setValue(true);
 	while (filesToUpload.size() > 0)
 	{
 		if (threadShouldExit()) return;
 		FileToUpload f = filesToUpload.removeAndReturn(0);
 		uploadFile(f);
 	}
+	isUploading->setValue(false);
 }
 
 void Prop::uploadFile(FileToUpload f)

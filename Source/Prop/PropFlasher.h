@@ -62,6 +62,7 @@ public:
 
 	BoolParameter* filterKnownDevices;
 
+	EnumParameter* fwCategory;
 	EnumParameter* fwType;
 	EnumParameter* fwVersion;
 	var firmwareData;
@@ -98,6 +99,7 @@ public:
 
 	void updateFirmwareDefinitions(bool force = false);
 
+	void updateTypeEnumForFWCategory();
 	void updateVersionEnumForFWType();
 	void updateCompatibleVIDPIDs();
 

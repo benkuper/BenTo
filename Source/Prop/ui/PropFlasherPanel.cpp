@@ -16,6 +16,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	noDeviceLabel("NoDeviceLabel", "No device detected. If you already plugged a device, you may need to install the driver. Click here to get the instructions.")
 {
 	filterKnownDevicesUI.reset(PropFlasher::getInstance()->filterKnownDevices->createToggle());
+	firmwareCategoryUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwCategory->createDefaultUI());
 	firmwareToUploadUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwType->createDefaultUI());
 	firmwareVersionUI.reset((EnumParameterUI*)PropFlasher::getInstance()->fwVersion->createDefaultUI());
 	firmwareCustomFileUI.reset((StringParameterFileUI*)PropFlasher::getInstance()->fwFileParam->createStringParameterFileUI());
@@ -50,6 +51,7 @@ PropFlasherPanel::PropFlasherPanel() :
 	wifiPassUI->updateUIParams();
 
 	addAndMakeVisible(updateFirmwareDefinitionsUI.get());
+	addAndMakeVisible(firmwareCategoryUI.get());
 	addAndMakeVisible(filterKnownDevicesUI.get());
 	addAndMakeVisible(firmwareToUploadUI.get());
 	addAndMakeVisible(firmwareVersionUI.get());
@@ -154,8 +156,11 @@ void PropFlasherPanel::resized()
 	Rectangle<int> fwr = fwRect.reduced(10);
 	fwr.removeFromTop(20);
 	updateFirmwareDefinitionsUI->setBounds(fwr.removeFromLeft(120).reduced(4));
-	firmwareToUploadUI->setBounds(fwr.removeFromLeft(150).reduced(4));
 	fwr.removeFromLeft(4);
+	firmwareCategoryUI->setBounds(fwr.removeFromLeft(120).reduced(4));
+	fwr.removeFromLeft(2);
+	firmwareToUploadUI->setBounds(fwr.removeFromLeft(150).reduced(4));
+	fwr.removeFromLeft(2);
 	firmwareVersionUI->setBounds(fwr.removeFromLeft(100).reduced(4));
 	fwr.removeFromLeft(4);
 	forceSlowFlashUI->setBounds(fwr.removeFromLeft(100).reduced(4));

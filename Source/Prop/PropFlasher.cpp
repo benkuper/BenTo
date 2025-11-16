@@ -25,6 +25,7 @@ PropFlasher::PropFlasher() :
 
 	updateFirmwareDefinitionsTrigger = addTrigger("Update List", "Update the list of available firmwares");
 
+	fwCategory = addEnumParameter("Firmware Category", "Category of prop to upload");
 	fwType = addEnumParameter("Firmware Type", "Type of prop to upload");
 	fwVersion = addEnumParameter("Firmware Version", "Version of the firmware to upload");
 
@@ -95,32 +96,64 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 		return;
 	}
 
-	fwType->clearOptions();
 	fwVersion->clearOptions();
+	fwType->clearOptions();
+	fwCategory->clearOptions();
 
 	NamedValueSet deviceProps = availableFirmwares.getDynamicObject()->getProperties();
+
+	StringArray categories;
+
 	for (auto& nv : deviceProps)
 	{
 		var fw = nv.value;
-		String fwName = fw["name"].toString();
-		String fwPath = nv.name.toString();
-		fwType->addOption(fwName, fwPath);
+		String category = fw.getProperty("category", "").toString();
+		String categoryLabel = category;
+		if (categoryLabel.isEmpty()) categoryLabel = "Uncategorized";
+
+		if (!categories.contains(category))
+		{
+			categories.add(category);
+			fwCategory->addOption(categoryLabel, category);
+		}
 	}
 
-	fwType->addOption("Custom", "custom");
 
 
-	String ft = fwType->getValueData().toString();
-	fwFileParam->setEnabled(ft == "custom");
 
-	updateVersionEnumForFWType();
-	updateCompatibleVIDPIDs();
+	updateTypeEnumForFWCategory();
+
 
 	propFlasherNotifier.addMessage(new PropFlasherEvent(PropFlasherEvent::DEFINITIONS_UPDATED, this));
 }
 
 
 
+
+void PropFlasher::updateTypeEnumForFWCategory()
+{
+	if (!availableFirmwares.isObject())
+	{
+		return;
+	}
+	fwType->clearOptions();
+
+
+	String category = fwCategory->getValueData().toString();
+	NamedValueSet deviceProps = availableFirmwares.getDynamicObject()->getProperties();
+	for (auto& nv : deviceProps)
+	{
+		var fw = nv.value;
+		if (fw["category"].toString() != category) continue;
+		String fwName = fw["name"].toString();
+		String fwPath = nv.name.toString();
+		fwType->addOption(fwName, fwPath);
+	}
+
+	updateVersionEnumForFWType();
+	updateCompatibleVIDPIDs();
+
+}
 
 void PropFlasher::updateVersionEnumForFWType()
 {
@@ -231,7 +264,11 @@ void PropFlasher::setFlashingDone(SingleFlasher* flasher, FlashResult val)
 }
 void PropFlasher::onContainerParameterChanged(Parameter* p)
 {
-	if (p == fwType)
+	if (p == fwCategory)
+	{
+		updateTypeEnumForFWCategory();
+	}
+	else if (p == fwType)
 	{
 		String typeName = fwType->getValueData().toString();
 		fwFileParam->setEnabled(typeName == "custom");
