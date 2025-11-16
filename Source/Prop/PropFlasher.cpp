@@ -176,7 +176,8 @@ void PropFlasher::updateVersionEnumForFWType()
 	for (int i = 0; i < versionData.size(); i++)
 	{
 		var v = versionData[i].toString();
-		String label = v + String(i == 0 ? " (latest)" : "");
+		String label = v;
+		if (i == 0) v.append(" (latest)");
 		fwVersion->addOption(label, v);
 	}
 }
