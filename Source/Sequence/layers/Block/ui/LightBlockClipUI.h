@@ -44,8 +44,7 @@ public:
 
 class LightBlockClipUI :
 	public LayerBlockUI,
-	public LightBlockClip::AsyncListener,
-	public Timer
+	public LightBlockClip::AsyncListener
 {
 public:
 	LightBlockClipUI(LightBlockClip * clip);
@@ -64,7 +63,6 @@ public:
 	std::unique_ptr<Prop> previewProp;
 	bool shouldUpdateImage;
 	bool imageIsReady;
-	bool shouldRepaint;
 
 	SpinLock imgLock;
 	Image previewImage;
@@ -91,8 +89,5 @@ public:
 
 	void itemDropped(const SourceDetails &source) override;
 
-	void timerCallback() override;
-
 	void handleDrawPreview();
-
 };
