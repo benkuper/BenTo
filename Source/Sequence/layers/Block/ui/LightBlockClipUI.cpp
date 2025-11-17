@@ -415,8 +415,10 @@ void LightBlockClipUI::handleDrawPreview()
 
 	shouldUpdateImage = false;
 	imageIsReady = false;
+	
 
-	const int resX = jmin(getCoreWidth(), 600);
+	
+	const int resX = jmin(getWidth(), 600);
 	const int resY = jmin(getHeight(), 60); //to make dynamic
 
 	if (resX == 0) return;
@@ -442,11 +444,13 @@ void LightBlockClipUI::handleDrawPreview()
 
 	var params = new DynamicObject();
 	params.getDynamicObject()->setProperty("updateAutomation", false);
-	//params.getDynamicObject()->setProperty("sequenceTime", false);
+	//params.getDynamicObject()->setProperty("sequenceTitmpme", false);
 
 	float viewRange = viewEnd - viewStart;
 	float coreLength = clip->coreLength->floatValue();
 	float clipTime = clip->time->floatValue();
+
+	
 
 	for (int i = 0; i < resX; i++)
 	{
