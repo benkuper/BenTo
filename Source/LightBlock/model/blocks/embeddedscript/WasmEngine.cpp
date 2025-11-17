@@ -23,7 +23,7 @@ WasmEngine::WasmEngine(EmbeddedScriptBlock* block) :
 	testButton = addBoolParameter("Test Button", "A test button", false);
 	testOrientation = addPoint3DParameter("Test Orientation", "A test 3D orientation");
 	testOrientation->setBounds(-180.0f, -90.0f, -180.0f, 180.0f, 90.0f, 180.0f);
-	testDistance = addFloatParameter("Test Distance", "A test distance", 0.0f, 0.0f, 100.0f);
+	testDistance = addFloatParameter("Test Distance", "A test distance", 0.0f, 0.0f, 1.0f);
 
 	ledColors.resize(testResolution->intValue());
 }

@@ -647,6 +647,11 @@ void EmbeddedScriptBlock::afterLoadJSONDataInternal()
 
 void EmbeddedScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
 {
+	if (!wasmEngine.enabled->boolValue())
+	{
+		return;
+	}
+
 	GenericScopedLock lock(wasmEngine.ledColors.getLock());
 	for(int i=0;i< jmin(resolution, wasmEngine.ledColors.size()); i++)
 		result->set(i, wasmEngine.ledColors[i]);
