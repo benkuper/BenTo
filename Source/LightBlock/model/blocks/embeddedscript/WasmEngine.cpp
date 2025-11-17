@@ -328,7 +328,7 @@ m3ApiRawFunction(m3_printString)
 m3ApiRawFunction(m3_sendEvent)
 {
 	m3ApiGetArg(uint32_t, eventId);
-	LOG("Sending script event : " << eventId);
+	LOG("Sending script event : " << String(eventId));
 	m3ApiSuccess();
 }
 
@@ -336,7 +336,7 @@ m3ApiRawFunction(m3_sendParamFeedback)
 {
 	m3ApiGetArg(uint32_t, paramId);
 	m3ApiGetArg(float, value);
-	LOG("Sending script param feedback : " << paramId << " = " << value);
+	LOG("Sending script param feedback : " << String(paramId) << " = " << value);
 	m3ApiSuccess();
 }
 
