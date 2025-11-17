@@ -225,15 +225,13 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		{
 			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 			{
-				Parameter* idP = bp->componentsCC->getParameterByName("propID");
-				if (idP == nullptr)
+				if (bp->idRef == nullptr)
 				{
 					NLOGWARNING(niceName, "Prop ID parameter not found");
 					continue;
 				}
 
-				int propID = idP->intValue();
-				p->globalID->setValue(propID);
+				p->globalID->setValue(bp->idRef->intValue());
 			}
 		}
 	}
