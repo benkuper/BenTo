@@ -125,6 +125,7 @@ M3Result WasmEngine::linkFunctions()
 	m3_LinkRawFunction(mod, arduino, "sendParamFeedback", "v(if)", &m3_sendParamFeedback);
 	m3_LinkRawFunction(mod, arduino, "getPropID", "i()", &m3_getPropID);
 
+	m3_LinkRawFunction(mod, arduino, "getLedCount", "i()", &m3_getLedCount);
 	m3_LinkRawFunction(mod, arduino, "clearLeds", "v()", &m3_clearLeds);
 	m3_LinkRawFunction(mod, arduino, "dimLeds", "v(f)", &m3_dimLeds);
 	m3_LinkRawFunction(mod, arduino, "fillLeds", "v(i)", &m3_fillLeds);
@@ -204,6 +205,10 @@ void WasmEngine::run()
 				GenericScopedLock<CriticalSection> lock(ledColors.getLock());
 				M3Result result = m3_CallV(updateFunc);
 				logWasm("update", result);
+				if (result != m3Err_none)
+				{
+					return;
+				}
 			}
 		}
 		catch (...)
@@ -346,6 +351,15 @@ m3ApiRawFunction(m3_getPropID)
 	WasmEngine* engine = (WasmEngine*)m3_GetUserData(runtime);
 	uint32_t deviceId = engine->testPropID->intValue();
 	m3ApiReturn(deviceId);
+}
+
+
+m3ApiRawFunction(m3_getLedCount)
+{
+	m3ApiReturnType(uint32_t);
+	WasmEngine* engine = (WasmEngine*)m3_GetUserData(runtime);
+	uint32_t ledCount = engine->testResolution->intValue();
+	m3ApiReturn(ledCount);
 }
 
 m3ApiRawFunction(m3_clearLeds)
