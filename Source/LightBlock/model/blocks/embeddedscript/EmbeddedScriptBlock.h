@@ -71,6 +71,8 @@ public:
 	void handleEnterExit(bool enter, Array<Prop*> props) override;
 
 
+	var getJSONData(bool includeNonOverriden) override;
+	void loadJSONDataItemInternal(var data) override;
 	void afterLoadJSONDataInternal() override;
 
 	DECLARE_TYPE("Embedded Script")

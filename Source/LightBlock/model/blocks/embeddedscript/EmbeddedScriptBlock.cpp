@@ -31,7 +31,7 @@ EmbeddedScriptBlock::EmbeddedScriptBlock(var params) :
 	autoLaunch = addBoolParameter("Auto Launch", "", true);
 	stopOnPropsTrigger = addTrigger("Stop on Props", "");
 
-	addChildControllableContainer(&wasmEngine);
+	addChildControllableContainer(&wasmEngine); 
 }
 
 EmbeddedScriptBlock::~EmbeddedScriptBlock()
@@ -641,8 +641,26 @@ void EmbeddedScriptBlock::handleEnterExit(bool enter, Array<Prop*> props)
 	}
 }
 
+var EmbeddedScriptBlock::getJSONData(bool includeNonOverriden)
+{
+	var data = LightBlockModel::getJSONData(includeNonOverriden);
+	data.getDynamicObject()->setProperty(wasmEngine.shortName, wasmEngine.getJSONData(includeNonOverriden));
+	return data;
+}
+
+void EmbeddedScriptBlock::loadJSONDataItemInternal(var data)
+{
+	LightBlockModel::loadJSONDataItemInternal(data);
+	wasmEngine.loadJSONData(data.getProperty(wasmEngine.shortName, var()));
+}
+
 void EmbeddedScriptBlock::afterLoadJSONDataInternal()
 {
+	LightBlockModel::afterLoadJSONDataInternal();
+	if(autoCompile->boolValue())
+	{
+		compile();
+	}
 }
 
 void EmbeddedScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
