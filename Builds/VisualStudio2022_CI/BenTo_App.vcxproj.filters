@@ -116,6 +116,9 @@
     <Filter Include="BenTo\Source\LightBlock\model\ui">
       <UniqueIdentifier>{B383C455-EF1C-7AEC-66DF-D469CE5E13A6}</UniqueIdentifier>
     </Filter>
+    <Filter Include="BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3">
+      <UniqueIdentifier>{ECFF64A5-1AF9-26DC-EF12-8194E0948611}</UniqueIdentifier>
+    </Filter>
     <Filter Include="BenTo\Source\LightBlock\model\blocks\embeddedscript">
       <UniqueIdentifier>{2309BA42-FD01-D90A-4AC7-E676A43E2FDA}</UniqueIdentifier>
     </Filter>
@@ -1573,7 +1576,64 @@
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_libc.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_meta_wasi.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_tracer.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_uvwasi.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_wasi.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_bind.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_code.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_compile.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_core.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_emit.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_env.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exec.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_function.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_info.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_module.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_optimize.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_parse.c">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\EmbeddedScriptBlock.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\SimplexNoise.cpp">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\WasmEngine.cpp">
       <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp">
@@ -5964,7 +6024,73 @@
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h">
       <Filter>BenTo\Source\LightBlock\model\ui</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_defs.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_libc.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_tracer.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_wasi.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_bind.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_code.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_compile.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_config.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_config_platforms.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_core.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_emit.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_env.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exception.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exec.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exec_defs.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_function.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_info.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_math_utils.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\wasm3.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\wasm3_defs.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript\wasm3</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\EmbeddedScriptBlock.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\SimplexNoise.h">
+      <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\WasmEngine.h">
       <Filter>BenTo\Source\LightBlock\model\blocks\embeddedscript</Filter>
     </ClInclude>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h">

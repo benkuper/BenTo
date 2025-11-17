@@ -24,6 +24,7 @@ public:
 	FileParameter* scriptFile;
 	EnumParameter* compileType;
 	BoolParameter* lowMemory;
+
 	Trigger* compileTrigger;
 	Trigger* uploadToPropsTrigger;
 	Trigger* loadOnPropsTrigger;
@@ -36,6 +37,8 @@ public:
 
 	Array<Parameter*> scriptParams;
 	var scriptMetaData;
+
+	WasmEngine wasmEngine;
 
 	void checkAutoCompile();
 	void compile();

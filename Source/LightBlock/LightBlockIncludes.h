@@ -45,6 +45,9 @@
 #include "model/blocks/picture/PictureBlock.h"
 
 #include "model/blocks/streamingscript/StreamingScriptBlock.h"
+
+#include "model/blocks/embeddedscript/SimplexNoise.h"
+#include "model/blocks/embeddedscript/WasmEngine.h"
 #include "model/blocks/embeddedscript/EmbeddedScriptBlock.h"
 
 #include "model/blocks/shape/PropShapeBlock.h"

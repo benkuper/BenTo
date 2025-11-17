@@ -422,10 +422,56 @@
           </GROUP>
           <GROUP id="{C96AC654-4C64-8355-A87B-58ED8C1FD39F}" name="blocks">
             <GROUP id="{EE5C0264-0254-0301-E4F8-139423483011}" name="embeddedscript">
+              <GROUP id="{3E073171-1643-F0AE-84D4-8840DAC8838A}" name="wasm3">
+                <FILE id="UGgU95" name="m3_api_defs.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_defs.h"/>
+                <FILE id="g8Ezfn" name="m3_api_libc.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_libc.c"/>
+                <FILE id="XSSp4p" name="m3_api_libc.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_libc.h"/>
+                <FILE id="jkcqtG" name="m3_api_meta_wasi.c" compile="1" resource="0"
+                      file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_meta_wasi.c"/>
+                <FILE id="S8d9Ny" name="m3_api_tracer.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_tracer.c"/>
+                <FILE id="aHwR29" name="m3_api_tracer.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_tracer.h"/>
+                <FILE id="kT6QP9" name="m3_api_uvwasi.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_uvwasi.c"/>
+                <FILE id="lHyb9s" name="m3_api_wasi.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_wasi.c"/>
+                <FILE id="yKmQhZ" name="m3_api_wasi.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_wasi.h"/>
+                <FILE id="eDfjQm" name="m3_bind.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_bind.c"/>
+                <FILE id="CmPfhL" name="m3_bind.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_bind.h"/>
+                <FILE id="NcyDrn" name="m3_code.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_code.c"/>
+                <FILE id="jXL6vB" name="m3_code.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_code.h"/>
+                <FILE id="Y2z3n7" name="m3_compile.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_compile.c"/>
+                <FILE id="FMzxK5" name="m3_compile.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_compile.h"/>
+                <FILE id="wPWhtJ" name="m3_config.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_config.h"/>
+                <FILE id="jgz7Ci" name="m3_config_platforms.h" compile="0" resource="0"
+                      file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_config_platforms.h"/>
+                <FILE id="XnL4j7" name="m3_core.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_core.c"/>
+                <FILE id="zmcy1r" name="m3_core.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_core.h"/>
+                <FILE id="mbbA97" name="m3_emit.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_emit.c"/>
+                <FILE id="PL5iZv" name="m3_emit.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_emit.h"/>
+                <FILE id="ELAjgp" name="m3_env.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_env.c"/>
+                <FILE id="Gjpt8D" name="m3_env.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_env.h"/>
+                <FILE id="b116ip" name="m3_exception.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_exception.h"/>
+                <FILE id="evMOkj" name="m3_exec.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_exec.c"/>
+                <FILE id="QF9ou0" name="m3_exec.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_exec.h"/>
+                <FILE id="IrAbRC" name="m3_exec_defs.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_exec_defs.h"/>
+                <FILE id="cjdrIw" name="m3_function.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_function.c"/>
+                <FILE id="hnYnsB" name="m3_function.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_function.h"/>
+                <FILE id="aFEbKo" name="m3_info.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_info.c"/>
+                <FILE id="udv8o2" name="m3_info.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_info.h"/>
+                <FILE id="sbWats" name="m3_math_utils.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_math_utils.h"/>
+                <FILE id="pd31p4" name="m3_module.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_module.c"/>
+                <FILE id="u5iKvU" name="m3_optimize.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_optimize.c"/>
+                <FILE id="pN7t1f" name="m3_parse.c" compile="1" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_parse.c"/>
+                <FILE id="xI2Knq" name="wasm3.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/wasm3.h"/>
+                <FILE id="bpEqpm" name="wasm3_defs.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/wasm3/wasm3_defs.h"/>
+              </GROUP>
               <FILE id="tGiwQF" name="EmbeddedScriptBlock.cpp" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/embeddedscript/EmbeddedScriptBlock.cpp"/>
               <FILE id="pC9M6J" name="EmbeddedScriptBlock.h" compile="0" resource="0"
                     file="Source/LightBlock/model/blocks/embeddedscript/EmbeddedScriptBlock.h"/>
+              <FILE id="x8VwUe" name="SimplexNoise.cpp" compile="0" resource="0"
+                    file="Source/LightBlock/model/blocks/embeddedscript/SimplexNoise.cpp"/>
+              <FILE id="r95ao1" name="SimplexNoise.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/SimplexNoise.h"/>
+              <FILE id="HhAMHN" name="WasmEngine.cpp" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/WasmEngine.cpp"/>
+              <FILE id="abqCVi" name="WasmEngine.h" compile="0" resource="0" file="Source/LightBlock/model/blocks/embeddedscript/WasmEngine.h"/>
             </GROUP>
             <GROUP id="{D937E358-C3AF-2A4E-107D-7B9701E30F09}" name="shape">
               <FILE id="FO2Ik9" name="PropShapeBlock.h" compile="0" resource="0"
@@ -688,9 +734,9 @@
     <VS2022 targetFolder="Builds/VisualStudio2022" externalLibraries="Setupapi.lib&#10;Servus.lib&#10;avcodec.lib&#10;avformat.lib&#10;avutil.lib&#10;swresample.lib&#10;swscale.lib"
             smallIcon="YlXmhK" bigIcon="YlXmhK" extraCompilerFlags="/bigobj">
       <CONFIGURATIONS>
-        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib"
+        <CONFIGURATION isDebug="1" name="Debug" libraryPath="../../External/servus/lib/win/x64/debug&#10;../../External/ffmpeg/lib&#10;"
                        binaryPath="Binaries/Debug"/>
-        <CONFIGURATION isDebug="0" name="Release" headerPath="&#10;" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib"
+        <CONFIGURATION isDebug="0" name="Release" headerPath="&#10;" libraryPath="../../External/servus/lib/win/x64/release&#10;../../External/ffmpeg/lib&#10;"
                        binaryPath="Binaries"/>
       </CONFIGURATIONS>
       <MODULEPATHS>

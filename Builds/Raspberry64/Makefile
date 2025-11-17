@@ -81,6 +81,23 @@ OBJECTS_APP := \
   $(JUCE_OBJDIR)/VideoIncludes_4f736913.o \
   $(JUCE_OBJDIR)/SequenceIncludes_1f9bb4bb.o \
   $(JUCE_OBJDIR)/NodeIncludes_261ff85b.o \
+  $(JUCE_OBJDIR)/m3_api_libc_266e8f96.o \
+  $(JUCE_OBJDIR)/m3_api_meta_wasi_5bd5234c.o \
+  $(JUCE_OBJDIR)/m3_api_tracer_5e8ee465.o \
+  $(JUCE_OBJDIR)/m3_api_uvwasi_bf7da859.o \
+  $(JUCE_OBJDIR)/m3_api_wasi_38caf338.o \
+  $(JUCE_OBJDIR)/m3_bind_cb9aded0.o \
+  $(JUCE_OBJDIR)/m3_code_cd9fbc80.o \
+  $(JUCE_OBJDIR)/m3_compile_a1d35aca.o \
+  $(JUCE_OBJDIR)/m3_core_cda619b2.o \
+  $(JUCE_OBJDIR)/m3_emit_d0efbce6.o \
+  $(JUCE_OBJDIR)/m3_env_e5b5c404.o \
+  $(JUCE_OBJDIR)/m3_exec_d188ae24.o \
+  $(JUCE_OBJDIR)/m3_function_b9df94ab.o \
+  $(JUCE_OBJDIR)/m3_info_d7cfc701.o \
+  $(JUCE_OBJDIR)/m3_module_f46c11bf.o \
+  $(JUCE_OBJDIR)/m3_optimize_bddc670.o \
+  $(JUCE_OBJDIR)/m3_parse_7ef16bca.o \
   $(JUCE_OBJDIR)/LightBlockIncludes_4bd1d97b.o \
   $(JUCE_OBJDIR)/VideoPreviewPanel_e2748d5e.o \
   $(JUCE_OBJDIR)/PropIncludes_3ad3cfb.o \
@@ -185,6 +202,91 @@ $(JUCE_OBJDIR)/NodeIncludes_261ff85b.o: ../../Source/Node/NodeIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)
 	@echo "Compiling NodeIncludes.cpp"
 	$(V_AT)$(CXX) $(JUCE_CXXFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_api_libc_266e8f96.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_libc.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_api_libc.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_api_meta_wasi_5bd5234c.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_meta_wasi.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_api_meta_wasi.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_api_tracer_5e8ee465.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_tracer.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_api_tracer.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_api_uvwasi_bf7da859.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_uvwasi.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_api_uvwasi.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_api_wasi_38caf338.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_api_wasi.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_api_wasi.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_bind_cb9aded0.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_bind.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_bind.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_code_cd9fbc80.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_code.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_code.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_compile_a1d35aca.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_compile.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_compile.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_core_cda619b2.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_core.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_core.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_emit_d0efbce6.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_emit.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_emit.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_env_e5b5c404.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_env.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_env.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_exec_d188ae24.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_exec.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_exec.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_function_b9df94ab.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_function.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_function.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_info_d7cfc701.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_info.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_info.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_module_f46c11bf.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_module.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_module.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_optimize_bddc670.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_optimize.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_optimize.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
+
+$(JUCE_OBJDIR)/m3_parse_7ef16bca.o: ../../Source/LightBlock/model/blocks/embeddedscript/wasm3/m3_parse.c
+	-$(V_AT)mkdir -p $(@D)
+	@echo "Compiling m3_parse.c"
+	$(V_AT)$(CC) $(JUCE_CFLAGS) $(JUCE_CPPFLAGS_APP) $(JUCE_CFLAGS_APP) -o "$@" -c "$<"
 
 $(JUCE_OBJDIR)/LightBlockIncludes_4bd1d97b.o: ../../Source/LightBlock/LightBlockIncludes.cpp
 	-$(V_AT)mkdir -p $(@D)

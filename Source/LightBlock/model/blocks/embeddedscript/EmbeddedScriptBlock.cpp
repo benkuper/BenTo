@@ -13,7 +13,8 @@
 
 EmbeddedScriptBlock::EmbeddedScriptBlock(var params) :
 	LightBlockModel(getTypeString(), params),
-	Thread("WasmCompile")
+	Thread("WasmCompile"),
+	wasmEngine(this)
 {
 	scriptFile = addFileParameter("Script", "Path to the script");
 	scriptFile->fileTypeFilter = "*.ts";
@@ -29,6 +30,8 @@ EmbeddedScriptBlock::EmbeddedScriptBlock(var params) :
 	loadOnPropsTrigger = addTrigger("Load on Props", "");
 	autoLaunch = addBoolParameter("Auto Launch", "", true);
 	stopOnPropsTrigger = addTrigger("Stop on Props", "");
+
+	addChildControllableContainer(&wasmEngine);
 }
 
 EmbeddedScriptBlock::~EmbeddedScriptBlock()
@@ -110,12 +113,14 @@ void EmbeddedScriptBlock::compile()
 	toCompileFOS.writeText(modifiedFileString, false, false, "\n");
 	toCompileFOS.flush();
 
+	File compiledFile = folder.getChildFile(shortName + ".wasm");
+
 	StringArray args;
 	args.add(nodeF.getFullPathName());
 	args.add(getCompilerFile().getFullPathName());
 	args.add(toCompileF.getFullPathName());
 	args.add("-o");
-	args.add(folder.getChildFile(shortName + ".wasm").getFullPathName());
+	args.add(compiledFile.getFullPathName());
 	args.add(options);
 
 	NLOG(niceName, args.joinIntoString(" "));
@@ -125,6 +130,8 @@ void EmbeddedScriptBlock::compile()
 
 	//if (silentMode) WinExec(command.getCharPointer(), SW_HIDE);
 	//else result = system(command.getCharPointer());
+
+	bool success = false;
 
 	if (!pResult.toLowerCase().contains("error"))
 	{
@@ -140,11 +147,19 @@ void EmbeddedScriptBlock::compile()
 				Timer::callAfterDelay(200, [this]() { this->loadOnPropsTrigger->trigger(); });
 			}
 		}
+
+		success = true;
 	}
 	else
 	{
 		NLOGERROR(niceName, "Error compiling script : \n" << pResult);
 	}
+
+	if (success)
+	{
+		if(wasmEngine.enabled->boolValue()) wasmEngine.init(compiledFile);
+	}
+
 }
 
 String EmbeddedScriptBlock::generateParams()
@@ -630,10 +645,11 @@ void EmbeddedScriptBlock::afterLoadJSONDataInternal()
 {
 }
 
-
 void EmbeddedScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
 {
-	result->fill(Colours::black.withAlpha(.2f));
+	GenericScopedLock lock(wasmEngine.ledColors.getLock());
+	for(int i=0;i< jmin(resolution, wasmEngine.ledColors.size()); i++)
+		result->set(i, wasmEngine.ledColors[i]);
 }
 
 void EmbeddedScriptBlockManager::timerCallback()

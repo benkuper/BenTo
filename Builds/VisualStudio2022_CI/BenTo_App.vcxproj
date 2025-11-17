@@ -329,7 +329,30 @@
     <ClCompile Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_libc.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_meta_wasi.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_tracer.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_uvwasi.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_wasi.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_bind.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_code.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_compile.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_core.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_emit.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_env.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exec.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_function.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_info.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_module.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_optimize.c"/>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_parse.c"/>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\EmbeddedScriptBlock.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\SimplexNoise.cpp">
+      <ExcludedFromBuild>true</ExcludedFromBuild>
+    </ClCompile>
+    <ClCompile Include="..\..\Source\LightBlock\model\blocks\embeddedscript\WasmEngine.cpp">
       <ExcludedFromBuild>true</ExcludedFromBuild>
     </ClCompile>
     <ClCompile Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.cpp">
@@ -4307,7 +4330,29 @@
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelParameterManagerEditor.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\ui\LightBlockModelUI.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_defs.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_libc.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_tracer.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_api_wasi.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_bind.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_code.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_compile.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_config.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_config_platforms.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_core.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_emit.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_env.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exception.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exec.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_exec_defs.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_function.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_info.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\m3_math_utils.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\wasm3.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\wasm3\wasm3_defs.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\EmbeddedScriptBlock.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\SimplexNoise.h"/>
+    <ClInclude Include="..\..\Source\LightBlock\model\blocks\embeddedscript\WasmEngine.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\shape\PropShapeBlock.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\LightBlockFilter.h"/>
     <ClInclude Include="..\..\Source\LightBlock\model\blocks\filters\generic\brightnesscontrast\BrightnessContrastBlockFilter.h"/>

@@ -510,6 +510,11 @@ void Prop::exportPlaybackData(PlaybackData data)
 
 void Prop::addFileToUpload(FileToUpload f)
 {
+	if (!isConnected->boolValue())
+	{
+		NLOGWARNING(niceName, "Not connected, not adding file to upload");
+		return;
+	}
 	filesToUpload.add(f);
 }
 
