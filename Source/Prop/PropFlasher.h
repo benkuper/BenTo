@@ -118,7 +118,7 @@ public:
 
 	void run();
 
-	void setupFirmwareFile();
+	void setupFirmwareFile(bool canUseFullFlash = true);
 
 	void serialDataReceived(SerialDevice* s, const var& data) override;
 

@@ -118,7 +118,7 @@ void PropFlasher::updateFirmwareDefinitions(bool force)
 		}
 	}
 
-
+	fwCategory->addOption("Custom", "custom");
 
 
 	updateTypeEnumForFWCategory();
@@ -140,6 +140,8 @@ void PropFlasher::updateTypeEnumForFWCategory()
 
 
 	String category = fwCategory->getValueData().toString();
+	if (category == "custom") return;
+
 	NamedValueSet deviceProps = availableFirmwares.getDynamicObject()->getProperties();
 	for (auto& nv : deviceProps)
 	{
@@ -163,6 +165,7 @@ void PropFlasher::updateVersionEnumForFWType()
 	}
 
 	fwVersion->clearOptions();
+	if (fwCategory->getValueData().toString() == "custom") return;
 
 
 	String fwPath = fwType->getValueData().toString();
@@ -192,7 +195,7 @@ void PropFlasher::updateCompatibleVIDPIDs()
 		return;
 	}
 
-	String typeName = fwType->getValueKey();
+	String typeName = fwCategory->getValueKey();
 	if (typeName == "custom")
 	{
 	}
@@ -267,13 +270,12 @@ void PropFlasher::onContainerParameterChanged(Parameter* p)
 {
 	if (p == fwCategory)
 	{
+		String typeName = fwCategory->getValueData().toString();
+		fwFileParam->setEnabled(typeName == "custom"); 
 		updateTypeEnumForFWCategory();
 	}
 	else if (p == fwType)
 	{
-		String typeName = fwType->getValueData().toString();
-		fwFileParam->setEnabled(typeName == "custom");
-
 		updateVersionEnumForFWType();
 		updateCompatibleVIDPIDs();
 
@@ -351,15 +353,19 @@ void PropFlasher::flashAll(bool onlySetWifi)
 		return;
 	}
 
-	File fwFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/").getChildFile(fwType->getValueData().toString()).getChildFile(fwVersion->getValueData().toString());
-
-	if (!fwFolder.exists())
+	bool isCustom = fwCategory->getValueData().toString() == "custom";
+	if (!isCustom)
 	{
-		fwDownloader.download([this]() {
-			flashAll(false);
-			}, fwType->getValueData().toString(), fwVersion->getValueData().toString());
+		File fwFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/").getChildFile(fwType->getValueData().toString()).getChildFile(fwVersion->getValueData().toString());
 
-		return;
+		if (!fwFolder.exists())
+		{
+			fwDownloader.download([this]() {
+				otaUploadFirmware();
+				}, fwType->getValueData().toString(), fwVersion->getValueData().toString());
+
+			return;
+		}
 	}
 
 	setupFirmwareFile();
@@ -394,11 +400,11 @@ void PropFlasher::run()
 	setAllWifi();
 }
 
-void PropFlasher::setupFirmwareFile()
+void PropFlasher::setupFirmwareFile(bool canUseFullFlash)
 {
 	File fwFolder;
 
-	if (fwType->getValueKey() == "Custom")
+	if (fwCategory->getValueData().toString() == "custom")
 	{
 		fwFolder = fwFileParam->getFile();
 		if (!fwFolder.exists())
@@ -423,7 +429,7 @@ void PropFlasher::setupFirmwareFile()
 
 	firmwareData = JSON::parse(manifestFile.loadFileAsString());
 
-	String fwName = fullFlash->boolValue() ? "firmware_full.bin" : "firmware.bin";
+	String fwName = (canUseFullFlash && fullFlash->boolValue()) ? "firmware_full.bin" : "firmware.bin";
 	firmwareFile = fwFolder.getChildFile(fwName);
 
 	if (!firmwareFile.exists())
@@ -516,19 +522,22 @@ void PropFlasher::uploadServerFiles(Prop* specificProp)
 
 void PropFlasher::otaUploadFirmware()
 {
-
-	File fwFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/").getChildFile(fwType->getValueData().toString()).getChildFile(fwVersion->getValueData().toString());
-
-	if (!fwFolder.exists())
+	bool isCustom = fwCategory->getValueData().toString() == "custom";
+	if (!isCustom)
 	{
-		fwDownloader.download([this]() {
-			otaUploadFirmware();
-			}, fwType->getValueData().toString(), fwVersion->getValueData().toString());
+		File fwFolder = File::getSpecialLocation(File::userDocumentsDirectory).getChildFile(String(ProjectInfo::projectName) + "/firmwares/").getChildFile(fwType->getValueData().toString()).getChildFile(fwVersion->getValueData().toString());
 
-		return;
+		if (!fwFolder.exists())
+		{
+			fwDownloader.download([this]() {
+				otaUploadFirmware();
+				}, fwType->getValueData().toString(), fwVersion->getValueData().toString());
+
+			return;
+		}
 	}
 
-	setupFirmwareFile();
+	setupFirmwareFile(false);
 	String type = fwType->getValueKey();
 
 	if (!firmwareFile.exists())
