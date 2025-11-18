@@ -538,6 +538,8 @@ void Prop::uploadFile(FileToUpload f)
 
 void Prop::updatePlaybackModeOnProp()
 {
+	if (isUploading->boolValue() || isGeneratingPlayback->boolValue()) return;
+
 	setPlaybackEnabled(playbackMode->boolValue());
 	setStreamingEnabled(!playbackMode->boolValue());
 
