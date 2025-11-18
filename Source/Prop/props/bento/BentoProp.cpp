@@ -400,7 +400,7 @@ void BentoProp::setPlaybackEnabled(bool value)
 {
 	if (serialDevice != nullptr)
 	{
-		serialDevice->writeString("player.load " + String(value ? 1 : 0) + "\n");// +" " + (autoPlay ? "1" : "0") + " \n");
+		serialDevice->writeString(playbackAddress + ".load " + String(value ? 1 : 0) + "\n");// +" " + (autoPlay ? "1" : "0") + " \n");
 	}
 	else
 	{
@@ -424,7 +424,7 @@ void BentoProp::setStreamingEnabled(bool value)
 	}
 }
 
-void BentoProp::loadPlaybackInternal(StringRef fileName, bool autoPlay)
+void BentoProp::loadPlaybackInternal(StringRef fileName, bool force)
 {
 	if (serialDevice != nullptr)
 	{
@@ -434,6 +434,7 @@ void BentoProp::loadPlaybackInternal(StringRef fileName, bool autoPlay)
 	{
 		OSCMessage m(playbackAddress + "/load");
 		m.addString(fileName);
+		m.addBool(force);
 		sendMessageToProp(m);
 	}
 }

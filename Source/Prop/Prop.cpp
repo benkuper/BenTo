@@ -541,10 +541,11 @@ void Prop::updatePlaybackModeOnProp()
 	setPlaybackEnabled(playbackMode->boolValue());
 	setStreamingEnabled(!playbackMode->boolValue());
 
+	String filename = currentBlock != nullptr ? currentBlock->shortName : (playbackFileName->enabled ? playbackFileName->stringValue() : "");
+	
 	if (playbackMode->boolValue())
 	{
-		String filename = currentBlock != nullptr ? currentBlock->shortName : (playbackFileName->enabled ? playbackFileName->stringValue() : "");
-		if (filename.isNotEmpty()) loadPlayback(filename, false);
+		if (filename.isNotEmpty()) loadPlayback(filename);
 
 		if (currentBlock != nullptr)
 		{
@@ -559,14 +560,14 @@ void Prop::updatePlaybackModeOnProp()
 	}
 }
 
-void Prop::loadPlayback(StringRef path, bool autoPlay)
+void Prop::loadPlayback(StringRef path)
 {
-	loadPlaybackInternal(path, autoPlay);
+	loadPlaybackInternal(path);
 	for (int i = 0; i < PropManager::getInstance()->loadSendRepeat->intValue(); i++)
 	{
-		Timer::callAfterDelay(100 * (i + 1), [this, path, autoPlay]()
+		Timer::callAfterDelay(100 * (i + 1), [this, path]()
 			{
-				loadPlaybackInternal(path, autoPlay);
+				loadPlaybackInternal(path);
 			}
 		);
 	}
@@ -677,12 +678,13 @@ void Prop::run()
 			switch (afterGeneratePlayback)
 			{
 			case UPLOAD:
+				playbackMode->setValue(false);
 				isUploading->setValue(true);
 				uploadPlaybackData(data);
 				if (threadShouldExit()) return;
 				isUploading->setValue(false);
 
-				playbackMode->setValue(playbackMode->value, false, true); //force resend playbackMode
+				playbackMode->setValue(true); //force resend playbackMode
 				break;
 
 			case EXPORT:

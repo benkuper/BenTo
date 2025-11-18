@@ -65,7 +65,7 @@ PropManager::PropManager() :
 
 	loop = playbackCC.addBoolParameter("Loop Playback", "If checked, this will tell the player to loop the playing", false);
 
-	loadSendRepeat = playbackCC.addIntParameter("Load Send Repeat", "When loading a playback, how many times to send the data to the prop. 0 = disabled", 5, 0, 100);
+	loadSendRepeat = playbackCC.addIntParameter("Load Send Repeat", "When loading a playback, how many times to send the data to the prop. 0 = disabled", 0, 0, 100);
 	playSendRepeat = playbackCC.addIntParameter("Play Send Repeat", "When playing a playback, how many times to send the play command to the prop. 0 = disabled", 3, 0, 100);
 	playSyncSendInterval = playbackCC.addIntParameter("Play Sync Send Interval", "When playing a playback, how often (in s) to send the playSync command to the prop. 0 = disabled", 2, 0, 60);
 
@@ -338,7 +338,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 		{
 			if (BentoProp* bp = dynamic_cast<BentoProp*>(p))
 			{
-				if (c == loadAll) bp->loadPlayback(fileName->stringValue(), false);
+				if (c == loadAll) bp->loadPlayback(fileName->stringValue());
 				else if (c == playAll) bp->playPlayback(0, loop->boolValue());
 				else if (c == stopAll) bp->stopPlaybackPlaying();
 			}

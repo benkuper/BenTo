@@ -131,8 +131,8 @@ public:
 	virtual void updatePlaybackModeOnProp();
 	virtual void setPlaybackEnabled(bool value) {}
 	virtual void setStreamingEnabled(bool value) {}
-	void loadPlayback(StringRef /*fileName*/, bool /*autoPlay*/);
-	virtual void loadPlaybackInternal(StringRef /*fileName*/, bool /*autoPlay*/) {}
+	void loadPlayback(StringRef /*fileName*/);
+	virtual void loadPlaybackInternal(StringRef /*fileName*/, bool /*force*/ = false) {}
 	void playPlayback(float /*time */ = 0, bool /* loop */ = false);
 	virtual void playPlaybackInternal(float /*time */, bool /*loop */) {}
 	void checkAndSendPlaySync();
