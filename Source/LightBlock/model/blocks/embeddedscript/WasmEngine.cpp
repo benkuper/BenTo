@@ -10,6 +10,9 @@
 
 #include "LightBlock/LightBlockIncludes.h"
 
+#pragma warning(push)
+#pragma warning(disable: 4018 4189)
+
 WasmEngine::WasmEngine(EmbeddedScriptBlock* block) :
 	EnablingControllableContainer("Wasm Engine", true),
 	Thread("WasmEngineThread"),
@@ -789,3 +792,5 @@ m3ApiRawFunction(m3_noise)
 
 	m3ApiReturn(n);
 }
+
+#pragma warning (pop)
