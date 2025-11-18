@@ -36,6 +36,7 @@ PropFlasher::PropFlasher() :
 	fullFlash = addBoolParameter("Full Flash", "Erase the full flash of the prop, not only the program area (needed for some major version changes). This will loose the settings !", false);
 
 	flashTrigger = addTrigger("Upload firmware", "Flash all connected props");
+	otaUploadTrigger = addTrigger("OTA Upload", "Upload firmware using OTA");
 	progression = addFloatParameter("Progression", "Progression", 0, 0, 1);
 	progression->setControllableFeedbackOnly(true);
 	setWifiAfterFlash = addBoolParameter("Set Wifi During flash", "Set wifi credentials in flashed props", true);
@@ -49,7 +50,7 @@ PropFlasher::PropFlasher() :
 	if (sf.exists()) serverFilesParam->setValue(sf.getFullPathName());
 
 	uploadTrigger = addTrigger("Upload", "Upload files to the server");
-	otaUploadTrigger = addTrigger("OTA Upload", "Upload firmware using OTA");
+	sendCompressed = addBoolParameter("Send Compressed", "Send compressed files to the server", false);
 
 	updateFirmwareDefinitions();
 
@@ -509,13 +510,13 @@ void PropFlasher::uploadServerFiles(Prop* specificProp)
 
 	if (specificProp != nullptr)
 	{
-		for (auto& f : files) specificProp->addFileToUpload({ f ,"server" });
+		for (auto& f : files) specificProp->addFileToUpload({ f ,"server", sendCompressed->boolValue()  });
 	}
 	else
 	{
 		for (auto& p : props)
 		{
-			for (auto& f : files) p->addFileToUpload({ f,"server" });
+			for (auto& f : files) p->addFileToUpload({ f,"server", sendCompressed->boolValue() });
 		}
 	}
 }

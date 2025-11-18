@@ -622,10 +622,18 @@ void EmbeddedScriptBlock::onControllableFeedbackUpdateInternal(ControllableConta
 	{
 		if (c->type == Controllable::TRIGGER)
 		{
+			if (wasmEngine.enabled->boolValue())
+			{
+				wasmEngine.triggerFunction(c->shortName);
+			}
 			sendTriggerFunctionToProps(c->shortName);
 		}
 		else
 		{
+			if (wasmEngine.enabled->boolValue())
+			{
+				wasmEngine.setScriptParam(c->shortName, ((Parameter*)c)->floatValue());
+			}
 			sendParamControlToProps(c->shortName, ((Parameter*)c)->floatValue());
 		}
 
@@ -665,7 +673,7 @@ void EmbeddedScriptBlock::afterLoadJSONDataInternal()
 
 void EmbeddedScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, double time, int id, int resolution, var params)
 {
-	if (!wasmEngine.enabled->boolValue())
+	if (!p->isFake || !wasmEngine.enabled->boolValue()) //only send to fake props with wasmEngine enabled
 	{
 		return;
 	}

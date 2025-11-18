@@ -39,6 +39,7 @@ public:
 
 	Factory<Prop> factory;
 
+
 	const int localPort = 10000;
 
 	Trigger* autoAssignIdTrigger;

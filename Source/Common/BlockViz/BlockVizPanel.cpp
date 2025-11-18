@@ -14,7 +14,9 @@
 BlockViz::BlockViz(const String& contentName) :
 	ShapeShifterContentComponent(contentName)
 {
-	vizProp.reset(new Prop());
+	var params(new DynamicObject());
+	params.getDynamicObject()->setProperty("fake", true);
+	vizProp.reset(new Prop(params));
 	vizProp->resolution->setValue(32);
 	vizProp->shape->setValueWithData(Prop::CLUB);
 

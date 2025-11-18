@@ -15,6 +15,7 @@
 Prop::Prop(var params) :
 	BaseItem(params.getProperty("name", "Unknown").toString(), true),
 	Thread("Prop"),
+	isFake(params.getProperty("fake", false)),
 	generalCC("Main Parameters"),
 	resolutionRef(nullptr),
 	invertLedsInUI(true),
@@ -564,7 +565,7 @@ void Prop::updatePlaybackModeOnProp()
 
 void Prop::loadPlayback(StringRef path)
 {
-	loadPlaybackInternal(path);
+	loadPlaybackInternal(path, true);
 	for (int i = 0; i < PropManager::getInstance()->loadSendRepeat->intValue(); i++)
 	{
 		Timer::callAfterDelay(100 * (i + 1), [this, path]()
@@ -686,7 +687,6 @@ void Prop::run()
 				if (threadShouldExit()) return;
 				isUploading->setValue(false);
 
-				playbackMode->setValue(true); //force resend playbackMode
 				break;
 
 			case EXPORT:
@@ -698,6 +698,7 @@ void Prop::run()
 			}
 
 			isGeneratingPlayback->setValue(false);
+			if (afterGeneratePlayback == UPLOAD) playbackMode->setValue(true, false, true); //force resend playbackMode
 		}
 		else if (filesToUpload.size() > 0)
 		{

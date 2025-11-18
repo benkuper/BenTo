@@ -270,7 +270,7 @@ void PropManager::onControllableFeedbackUpdate(ControllableContainer* cc, Contro
 	else if (c == uploadAll)
 	{
 		for (auto& p : items) p->uploadPlaybackTrigger->trigger();
-		playbackMode->setValue(true);
+		playbackMode->setValue(true); 
 	}
 	else if (c == powerOffAll)
 	{

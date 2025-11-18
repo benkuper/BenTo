@@ -361,9 +361,18 @@ void BentoProp::uploadFile(FileToUpload f)
 	MemoryBlock b;
 	fs.readIntoMemoryBlock(b);
 
+	if (f.compressed) //gzip compression
+	{
+		MemoryOutputStream compressedOS;
+		GZIPCompressorOutputStream builder(compressedOS, 9);
+		builder.write(b.getData(), (size_t)b.getSize());
+		builder.flush();
+		b = compressedOS.getMemoryBlock();
+	}
+
 	URL url = URL(target).withDataToUpload("uploadData", f.file.getFileName(), b, "text/plain");
 
-	NLOG(niceName, "Uploading " << f.file.getFileName() << " to " << f.remoteFolder << " :\n > " << (int)(b.getSize()) << " bytes");
+	NLOG(niceName, "Uploading " << (f.compressed ? "(compressed) ": "") << f.file.getFileName() << " to " << f.remoteFolder << " :\n > " << (int)(b.getSize() / 1024) << " KB");
 
 	std::unique_ptr<InputStream> stream(url.createInputStream(URL::InputStreamOptions(URL::ParameterHandling::inPostData).withProgressCallback(std::bind(&BentoProp::uploadProgressCallback, this, std::placeholders::_1, std::placeholders::_2)).withConnectionTimeoutMs(10000)));
 

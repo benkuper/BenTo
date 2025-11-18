@@ -82,6 +82,7 @@ public:
 	BoolParameter* fullFlash;
 
 	FileParameter* serverFilesParam;
+	BoolParameter* sendCompressed;
 	Trigger* uploadTrigger;
 	Trigger* otaUploadTrigger;
 

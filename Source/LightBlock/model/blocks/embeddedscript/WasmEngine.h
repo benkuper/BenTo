@@ -53,7 +53,12 @@ public:
 	SimplexNoise noise;
 	float timeAtLaunch;
 
+	StringArray variableNames;
+	StringArray triggerNames;
+	StringArray eventNames;
+
 	bool init(File f = File());
+	void parseMetadata(File f);
 	M3Result linkFunctions();
 	void stop();
 
@@ -62,6 +67,9 @@ public:
 	void logWasm(String funcName, M3Result r);
 
 	void onContainerParameterChanged(Parameter* p) override;
+
+	void setScriptParam(String paramName, float value);
+	void triggerFunction(String funcName);
 
 	//led functioins 
 

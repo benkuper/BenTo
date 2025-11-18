@@ -24,8 +24,10 @@ public:
 	Prop(var params = var());
 	virtual ~Prop();
 
+
 	String deviceID;
 	IntParameter* globalID;
+	bool isFake;
 
 	BoolParameter* logIncoming;
 	BoolParameter* logOutgoing;
@@ -93,6 +95,7 @@ public:
 	{
 		File file;
 		String remoteFolder;
+		bool compressed = false;
 	};
 	Array<FileToUpload, CriticalSection> filesToUpload;
 

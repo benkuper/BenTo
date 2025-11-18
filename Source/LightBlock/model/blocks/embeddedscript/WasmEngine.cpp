@@ -9,6 +9,7 @@
 */
 
 #include "LightBlock/LightBlockIncludes.h"
+#include "WasmEngine.h"
 
 #pragma warning(push)
 #pragma warning(disable: 4018 4189)
@@ -39,6 +40,7 @@ WasmEngine::~WasmEngine()
 bool WasmEngine::init(File f)
 {
 	stop();
+
 
 	M3Result result = m3Err_none;
 
@@ -92,23 +94,64 @@ bool WasmEngine::init(File f)
 	LOG("Found functions : " + foundFunc);
 
 
+	parseMetadata(f.getParentDirectory().getChildFile(f.getFileNameWithoutExtension() + ".wmeta"));
+
 	timeAtLaunch = Time::getMillisecondCounterHiRes() / 1000.0f;
 
 	LOG("Running WebAssembly...");
 
 	if (initFunc != NULL)
 	{
-		LOG("[script] Calling init");
+		NLOG(niceName, "Calling init");
 		result = m3_CallV(initFunc);
 		logWasm("init", result);
 	}
 	else
 	{
-		LOG("[script] No init function found");
+		NLOG(niceName, "No init function found");
 	}
+
+
 	startThread();
 
 	return true;
+}
+
+void WasmEngine::parseMetadata(File f)
+{
+	
+	variableNames.clear();
+	triggerNames.clear();
+	eventNames.clear();
+
+	//file to json
+	var metaData = JSON::parse(f);
+	if(!metaData.isObject())
+	{
+		NLOG(niceName, "No metadata found in wasm file");
+		return;
+	}
+
+	var varData = metaData["variables"];
+	for (int i = 0; i < varData.size(); i++)
+	{
+		variableNames.add(varData[i].getProperty("name", ""));
+	}
+	NLOG(niceName, "Loaded " + String(variableNames.size()) + " variable names from metadata");
+
+	var trigData = metaData["triggers"];
+	for(int i = 0;i<trigData.size();i++)
+	{
+		triggerNames.add(trigData[i].getProperty("name", ""));
+	}
+	NLOG(niceName, "Loaded " + String(triggerNames.size()) + " trigger names from metadata");
+
+	var eventData = metaData["events"];
+	for (int i = 0; i < eventData.size(); i++)
+	{
+		eventNames.add(eventData[i].toString());
+	}
+	NLOG(niceName, "Loaded " + String(eventNames.size()) + " event names from metadata");
 }
 
 M3Result WasmEngine::linkFunctions()
@@ -216,7 +259,7 @@ void WasmEngine::run()
 		}
 		catch (...)
 		{
-			LOG("[script] Error occurred");
+			NLOG(niceName, "Error occurred");
 			return;
 		}
 		wait(10);
@@ -224,7 +267,7 @@ void WasmEngine::run()
 
 	if (stopFunc != NULL)
 	{
-		LOG("[script] Calling stop");
+		NLOG(niceName, "Calling stop");
 		M3Result result = m3_CallV(stopFunc);
 		logWasm("stop", result);
 	}
@@ -252,6 +295,24 @@ void WasmEngine::onContainerParameterChanged(Parameter* p)
 	else if (p == enabled)
 	{
 		if(!enabled->boolValue()) stop();
+	}
+}
+
+void WasmEngine::setScriptParam(String paramName, float value)
+{
+	int paramIndex = variableNames.indexOf(paramName);
+
+	if (paramIndex != -1 && setScriptParamFunc != NULL)
+		m3_CallV(setScriptParamFunc, paramIndex, value);
+}
+
+void WasmEngine::triggerFunction(String funcName)
+{
+	int funcIndex = triggerNames.indexOf(funcName);
+
+	if (funcIndex != -1 && triggerFunctionFunc != NULL)
+	{
+		m3_CallV(triggerFunctionFunc, funcIndex);
 	}
 }
 

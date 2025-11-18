@@ -33,6 +33,7 @@ public:
 	BoolParameter* autoUpload;
 	BoolParameter* autoLaunch;
 	Trigger* stopOnPropsTrigger;
+
 	Time lastModTime;
 
 	Array<Parameter*> scriptParams;
