@@ -94,7 +94,7 @@ bool WasmEngine::init(File f)
 	LOG("Found functions : " + foundFunc);
 
 
-	parseMetadata(f.getParentDirectory().getChildFile(f.getFileNameWithoutExtension() + ".wmeta"));
+	parseMetadata(f.getParentDirectory().getChildFile(f.getFileNameWithoutExtension() + "_metadata.wmeta"));
 
 	timeAtLaunch = Time::getMillisecondCounterHiRes() / 1000.0f;
 
@@ -126,9 +126,15 @@ void WasmEngine::parseMetadata(File f)
 
 	//file to json
 	var metaData = JSON::parse(f);
+	if (!f.exists())
+	{
+		NLOG(niceName, "Metadata file not found: " + f.getFullPathName());
+		return;
+	}
 	if(!metaData.isObject())
 	{
 		NLOG(niceName, "No metadata found in wasm file");
+
 		return;
 	}
 
@@ -139,7 +145,7 @@ void WasmEngine::parseMetadata(File f)
 	}
 	NLOG(niceName, "Loaded " + String(variableNames.size()) + " variable names from metadata");
 
-	var trigData = metaData["triggers"];
+	var trigData = metaData["functions"];
 	for(int i = 0;i<trigData.size();i++)
 	{
 		triggerNames.add(trigData[i].getProperty("name", ""));

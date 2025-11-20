@@ -104,7 +104,9 @@ void EmbeddedScriptBlock::compile()
 	File metaDataFile = getMetadataFile();
 	if (metaDataFile.existsAsFile()) metaDataFile.deleteFile();
 	FileOutputStream metaDataFOS(metaDataFile);
-	JSON::writeToStream(metaDataFOS, scriptMetaData);
+	metaDataFOS.writeString(JSON::toString(scriptMetaData, true));
+	metaDataFOS.flush();
+	
 
 	File toCompileF = folder.getChildFile("compile_temp.ts");
 	if (toCompileF.existsAsFile()) toCompileF.deleteFile();
@@ -237,11 +239,11 @@ String EmbeddedScriptBlock::generateParams()
 
 				var varData = var(new DynamicObject());
 				varData.getDynamicObject()->setProperty("name", name);
-				varData.getDynamicObject()->setProperty("niceName", niceName);
-				if (p->isControllableFeedbackOnly) varData.getDynamicObject()->setProperty("feedback", true);
+				//varData.getDynamicObject()->setProperty("niceName", niceName);
+				//if (p->isControllableFeedbackOnly) varData.getDynamicObject()->setProperty("feedback", true);
 
-				varData.getDynamicObject()->setProperty("type", type);
-				varData.getDynamicObject()->setProperty("default", p->getValue());
+				//varData.getDynamicObject()->setProperty("type", type);
+				//varData.getDynamicObject()->setProperty("default", p->getValue());
 				scriptVariablesData.append(varData);
 			}
 		}

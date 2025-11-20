@@ -9,13 +9,13 @@
 */
 
 #include "Prop/PropIncludes.h"
-#include "BentoProp.h"
 
 BentoProp::BentoProp(var params) :
 	Prop(params),
 	isESPNowBridge(false),
 	artnet(false),
 	serialDevice(nullptr),
+	idRef(nullptr),
 	brightnessRef(nullptr),
 	universeRef(nullptr),
 	startChannelRef(nullptr),
