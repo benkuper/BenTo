@@ -279,6 +279,7 @@ void Prop::update()
 
 		{
 			GenericScopedLock lock(colorLock);
+			jassert(currentBlock != nullptr);
 			colors = currentBlock->getColors(this, time, var());
 		}
 

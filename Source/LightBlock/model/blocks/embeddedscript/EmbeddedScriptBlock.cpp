@@ -31,7 +31,7 @@ EmbeddedScriptBlock::EmbeddedScriptBlock(var params) :
 	autoLaunch = addBoolParameter("Auto Launch", "", true);
 	stopOnPropsTrigger = addTrigger("Stop on Props", "");
 
-	addChildControllableContainer(&wasmEngine); 
+	addChildControllableContainer(&wasmEngine);
 }
 
 EmbeddedScriptBlock::~EmbeddedScriptBlock()
@@ -106,7 +106,7 @@ void EmbeddedScriptBlock::compile()
 	FileOutputStream metaDataFOS(metaDataFile);
 	metaDataFOS.writeString(JSON::toString(scriptMetaData, true));
 	metaDataFOS.flush();
-	
+
 
 	File toCompileF = folder.getChildFile("compile_temp.ts");
 	if (toCompileF.existsAsFile()) toCompileF.deleteFile();
@@ -159,7 +159,7 @@ void EmbeddedScriptBlock::compile()
 
 	if (success)
 	{
-		if(wasmEngine.enabled->boolValue()) wasmEngine.init(compiledFile);
+		if (wasmEngine.enabled->boolValue()) wasmEngine.init(compiledFile);
 	}
 
 }
@@ -215,6 +215,10 @@ String EmbeddedScriptBlock::generateParams()
 
 			if (p != nullptr)
 			{
+				var varData = var(new DynamicObject());
+				varData.getDynamicObject()->setProperty("name", name);
+				varData.getDynamicObject()->setProperty("type", type);
+
 				if (metadata.isNotEmpty())
 				{
 					StringArray metaParts = StringArray::fromTokens(metadata, ";", "");
@@ -224,26 +228,22 @@ String EmbeddedScriptBlock::generateParams()
 						if (part == "feedback" || part == "readonly")
 						{
 							p->setControllableFeedbackOnly(true);
+							varData.getDynamicObject()->setProperty("feedback", true);
 						}
 						else if (part.contains(":")) // Range
 						{
 							float min = part.upToFirstOccurrenceOf(":", false, false).getFloatValue();
 							float max = part.fromFirstOccurrenceOf(":", false, false).getFloatValue();
 							p->setRange(min, max);
+							
+							varData.getDynamicObject()->setProperty("min", min);
+							varData.getDynamicObject()->setProperty("max", max);
 						}
 					}
 				}
 
 				p->setCustomShortName(name);
 				paramsContainer->addParameter(p);
-
-				var varData = var(new DynamicObject());
-				varData.getDynamicObject()->setProperty("name", name);
-				varData.getDynamicObject()->setProperty("type", type);
-				//varData.getDynamicObject()->setProperty("niceName", niceName);
-				//if (p->isControllableFeedbackOnly) varData.getDynamicObject()->setProperty("feedback", true);
-
-				//varData.getDynamicObject()->setProperty("default", p->getValue());
 				scriptVariablesData.append(varData);
 			}
 		}
@@ -290,8 +290,8 @@ String EmbeddedScriptBlock::generateParams()
 	{
 		String setParamFunc = "export function setParam(paramIndex: i32, value: f32): void {\n \
 			switch (paramIndex) { \n";
-				
-		
+
+
 		for (int i = 0; i < scriptVariablesData.size(); i++)
 		{
 			var varData = scriptVariablesData[i];
@@ -529,7 +529,7 @@ void EmbeddedScriptBlock::stopScriptOnProps(Prop* p)
 	}
 }
 
-void EmbeddedScriptBlock::sendParamControlToProps(const String& paramName, float val, Prop *p)
+void EmbeddedScriptBlock::sendParamControlToProps(const String& paramName, float val, Prop* p)
 {
 	Array<Prop*> props;
 	if (p != nullptr) props.add(p);
@@ -546,7 +546,7 @@ void EmbeddedScriptBlock::sendParamControlToProps(const String& paramName, float
 	}
 }
 
-void EmbeddedScriptBlock::sendTriggerFunctionToProps(const String& functionName, Prop * p)
+void EmbeddedScriptBlock::sendTriggerFunctionToProps(const String& functionName, Prop* p)
 {
 	Array<Prop*> props;
 	if (p != nullptr) props.add(p);
@@ -578,7 +578,7 @@ void EmbeddedScriptBlock::onContainerParameterChangedInternal(Parameter* p)
 		if (f.existsAsFile())
 		{
 			generateParams();
-			
+
 			lastModTime = f.getLastModificationTime();
 			if (!isCurrentlyLoadingData) {
 				setNiceName(f.getFileNameWithoutExtension());
@@ -670,7 +670,7 @@ void EmbeddedScriptBlock::loadJSONDataItemInternal(var data)
 void EmbeddedScriptBlock::afterLoadJSONDataInternal()
 {
 	LightBlockModel::afterLoadJSONDataInternal();
-	if(autoCompile->boolValue())
+	if (autoCompile->boolValue())
 	{
 		compile();
 	}
@@ -684,7 +684,7 @@ void EmbeddedScriptBlock::getColorsInternal(Array<Colour>* result, Prop* p, doub
 	}
 
 	GenericScopedLock lock(wasmEngine.ledColors.getLock());
-	for(int i=0;i< jmin(resolution, wasmEngine.ledColors.size()); i++)
+	for (int i = 0; i < jmin(resolution, wasmEngine.ledColors.size()); i++)
 		result->set(i, wasmEngine.ledColors[i]);
 }
 
