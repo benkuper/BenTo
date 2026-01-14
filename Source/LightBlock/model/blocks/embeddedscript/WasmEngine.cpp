@@ -41,6 +41,13 @@ bool WasmEngine::init(File f)
 {
 	stop();
 
+	if (f == File()) f = currentFile;
+	if (f == File())
+	{
+		NLOG(niceName, "No file provided to init");
+		return false;
+	}
+
 
 	M3Result result = m3Err_none;
 
@@ -48,6 +55,8 @@ bool WasmEngine::init(File f)
 	runtime = m3_NewRuntime(env, 16 * 64, this);
 
 	// Load wasm file
+	currentFile = f;
+
 	FileInputStream wasmFileStream(f);
 	if (!wasmFileStream.openedOk()) {
 		LOGERROR("Failed to open WASM file: " + f.getFullPathName());
@@ -110,6 +119,7 @@ bool WasmEngine::init(File f)
 	{
 		NLOG(niceName, "No init function found");
 	}
+
 
 
 	startThread();
@@ -300,12 +310,14 @@ void WasmEngine::onContainerParameterChanged(Parameter* p)
 	}
 	else if (p == enabled)
 	{
-		if(!enabled->boolValue()) stop();
+		if (!enabled->boolValue()) stop();
+		else init();
 	}
 }
 
 void WasmEngine::setScriptParam(String paramName, float value)
 {
+	if (env == NULL || mod == NULL) return;
 	int paramIndex = variableNames.indexOf(paramName);
 
 	if (paramIndex != -1 && setScriptParamFunc != NULL)
@@ -314,6 +326,7 @@ void WasmEngine::setScriptParam(String paramName, float value)
 
 void WasmEngine::triggerFunction(String funcName)
 {
+	if (env == NULL || mod == NULL) return;
 	int funcIndex = triggerNames.indexOf(funcName);
 
 	if (funcIndex != -1 && triggerFunctionFunc != NULL)

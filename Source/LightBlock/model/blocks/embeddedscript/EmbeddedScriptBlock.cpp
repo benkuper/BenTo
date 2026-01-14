@@ -239,10 +239,10 @@ String EmbeddedScriptBlock::generateParams()
 
 				var varData = var(new DynamicObject());
 				varData.getDynamicObject()->setProperty("name", name);
+				varData.getDynamicObject()->setProperty("type", type);
 				//varData.getDynamicObject()->setProperty("niceName", niceName);
 				//if (p->isControllableFeedbackOnly) varData.getDynamicObject()->setProperty("feedback", true);
 
-				//varData.getDynamicObject()->setProperty("type", type);
 				//varData.getDynamicObject()->setProperty("default", p->getValue());
 				scriptVariablesData.append(varData);
 			}
@@ -289,8 +289,9 @@ String EmbeddedScriptBlock::generateParams()
 	if (scriptVariablesData.size() > 0)
 	{
 		String setParamFunc = "export function setParam(paramIndex: i32, value: f32): void {\n \
-				switch (paramIndex) { \n";
-
+			switch (paramIndex) { \n";
+				
+		
 		for (int i = 0; i < scriptVariablesData.size(); i++)
 		{
 			var varData = scriptVariablesData[i];
@@ -324,6 +325,8 @@ String EmbeddedScriptBlock::generateParams()
 
 		setParamFunc += "default: break;\n} \n}\n";
 		generatedCode += setParamFunc;
+
+		//NLOG(niceName, "Set Param Func : " << setParamFunc);
 	}
 
 	if (scriptFunctionsData.size() > 0)

@@ -20,7 +20,7 @@
 
 // [END_USER_CODE_SECTION]
 
-#define JUCE_PROJUCER_VERSION 0x8000a
+#define JUCE_PROJUCER_VERSION 0x8000b
 
 //==============================================================================
 #define JUCE_MODULE_AVAILABLE_filmstro_audiohelpers               1

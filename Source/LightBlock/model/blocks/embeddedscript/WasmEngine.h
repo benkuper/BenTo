@@ -57,6 +57,8 @@ public:
 	StringArray triggerNames;
 	StringArray eventNames;
 
+	File currentFile;
+
 	bool init(File f = File());
 	void parseMetadata(File f);
 	M3Result linkFunctions();
